@@ -1,0 +1,14 @@
+/**
+ * The main CSS file for the Semantic Drilldown extension.
+ */
+
+div.drilldown_categories {
+        border-bottom: 1px #aaaaaa solid;
+	margin-bottom: 10px;
+}
+
+div.drilldown_filters {
+	background: #e2e2e2;
+	padding: 2px 0px 2px 10px;
+	margin-bottom: 15px;
+}

@@ -1,0 +1,19 @@
+== About ==
+
+Semantic Drilldown is an extension to MediaWiki that works in
+conjunction with another extension, Semantic MediaWiki, to allow
+for the creation and usage of forms to add and edit semantic data.
+For more information on Semantic Drilldown, see the extension
+homepage at
+http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown
+
+Notes on installing Semantic Drilldown can be found in the file INSTALL.
+
+== Credits ==
+
+Semantic Drilldown was written by Yaron Koren.
+
+== Contact ==
+
+Most comments, questions, suggestions and bug reports should be
+sent to Yaron at yaron57@gmail.com.
