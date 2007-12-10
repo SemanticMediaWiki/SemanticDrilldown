@@ -27,7 +27,7 @@ class SDFilter {
 		} else {
 			$attribute_ns = SMW_NS_PROPERTY;
 		}
-		$attributes_used = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, $sd_props[SD_SP_COVERS_PROPERTY], true, SMW_NS_ATTRIBUTE);
+		$attributes_used = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, $sd_props[SD_SP_COVERS_PROPERTY], true, $attribute_ns);
 		if (count($relations_used) > 0) {
 			$f->property = $relations_used[0];
 			$f->is_relation = true;
