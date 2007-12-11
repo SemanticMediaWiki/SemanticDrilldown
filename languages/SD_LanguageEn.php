@@ -33,5 +33,3 @@ var $m_Namespaces = array(
 );
 
 }
-
-?>

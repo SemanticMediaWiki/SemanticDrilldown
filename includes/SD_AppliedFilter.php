@@ -71,5 +71,3 @@ class SDAppliedFilter {
 		return $sql;
 	}
 }
-
-?>

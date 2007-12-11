@@ -16,7 +16,7 @@ abstract class SD_Language {
 	protected $m_SpecialPropertyAliases = array();
 	protected $m_Namespaces;
 	protected $m_NamespaceAliases = array();
-	
+
 
 	/**
 	 * Function that returns an array of namespace identifiers.
@@ -62,5 +62,3 @@ abstract class SD_Language {
 		return $this->m_UserMessages;
 	}
 }
-
-?>

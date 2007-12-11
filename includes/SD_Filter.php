@@ -17,7 +17,7 @@ class SDFilter {
 	function load($filter_name) {
 		global $sdgContLang;
 		$sd_props = $sdgContLang->getSpecialPropertiesArray();
- 
+
 		$f = new SDFilter();
 		$f->name = $filter_name;
 		$relations_used = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, $sd_props[SD_SP_COVERS_PROPERTY], true, SMW_NS_RELATION);
@@ -118,5 +118,3 @@ class SDFilter {
 		$dbr->query($sql);
 	}
 }
-
-?>

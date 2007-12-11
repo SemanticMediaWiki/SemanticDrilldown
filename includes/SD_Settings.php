@@ -36,5 +36,3 @@ if (!isset($sdgNamespaceIndex)) {
 } else {
         sdfInitNamespaces();
 }
-
-?>

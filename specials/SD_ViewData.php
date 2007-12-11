@@ -440,7 +440,7 @@ function doSpecialViewData() {
 			$remaining_filters[] = $filter;
 		}
 	}
-	
+
 	$rep = new ViewDataPage($category, $subcategory, $applied_filters, $remaining_filters);
 	return $rep->doQuery( $offset, $limit );
 }
