@@ -20,7 +20,7 @@ class SD_LanguageZh_cn extends SD_Language {
 
 /* private */ var $m_SpecialProperties = array(
         //always start upper-case
-        SD_SP_HAS_FILTER  => '设置筛选器',　　//It's mean "Setting Filter" in English.
+        SD_SP_HAS_FILTER  => '设置筛选器',//It's mean "Setting Filter" in English.
         SD_SP_COVERS_PROPERTY  => '涵盖性质',
         SD_SP_HAS_VALUE  => '筛选值',  //It's mean "the values which the filter depend on them" in English.
 	SD_SP_GETS_VALUES_FROM_CATEGORY => '应用筛选值于分类', //It's mean "applying to filter values on the category" in English.
