@@ -48,13 +48,8 @@ function sdgSetupExtension() {
 	/**********************************************/
 	/***** credits (see "Special:Version")    *****/
 	/**********************************************/
-	$wgExtensionCredits['specialpage'][]= array(
-		'name'        => 'Semantic Drilldown',
-		'version'     => SD_VERSION,
-		'author'      => 'Yaron Koren',
-		'url'         => 'http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
-		'description' =>  'A drilldown interface for navigating through semantic data',
-	);
+	$wgExtensionCredits['specialpage'][]= array('name'=>'Semantic Drilldown', 'version'=>SD_VERSION, 'author'=>'Yaron Koren',
+          'url'=>'http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown', 'description' => 'A drilldown interface for navigating through semantic data');
 
 	return true;
 }
@@ -240,7 +235,7 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $property, $is_re
 function sdfLoadFiltersForCategory($category) {
 	global $sdgContLang;
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
-
+ 
 	$filters = array();
 	$filter_names = sdfGetValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, $sd_props[SD_SP_HAS_FILTER], true, SD_NS_FILTER);
 	foreach ($filter_names as $filter_name) {
@@ -284,3 +279,5 @@ function sdfGetCategoryChildren($category_name, $get_categories, $levels) {
 	}
 	return $pages;
 }
+
+?>
