@@ -36,3 +36,8 @@ if (!isset($sdgNamespaceIndex)) {
 } else {
         sdfInitNamespaces();
 }
+
+###
+## List separator character
+###
+$sdgListSeparator = ",";
