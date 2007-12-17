@@ -199,17 +199,6 @@ function sdfGetTopLevelCategories() {
         return $categories;
 }
 
-// Custom sort function, used in both sdfGetSemanticProperties() functions
-function sd_cmp($a, $b) {
-	if ($a == $b) {
-		return 0;
-	} elseif ($a < $b) {
-		return -1;
-	} else {
-		return 1;
-	}
-}
-
 function sdfGetSemanticProperties_0_7() {
 	global $smwgContLang;
 	$smw_namespace_labels = $smwgContLang->getNamespaceArray();
@@ -233,10 +222,6 @@ function sdfGetSemanticProperties_0_7() {
 		$all_properties[$relation_name] = $smw_namespace_labels[SMW_NS_RELATION];
 	}
 	$dbr->freeResult($res);
-
-	// sort properties list alphabetically - custom sort function is needed
-	// because the regular sort function destroys the "keys" of the array
-	uasort($all_properties, "sd_cmp");
 	return $all_properties;
 }
 
@@ -254,17 +239,13 @@ function sdfGetSemanticProperties_1_0() {
 	$used_properties = smwfGetStore()->getPropertiesSpecial($options);
 	foreach ($used_properties as $property) {
 	$property_name = $property[0]->getText();
-		$all_properties[$property_name] = $property_name;
+		$all_properties[$property_name] = $smw_namespace_labels[SMW_NS_PROPERTY];
 	}
 	$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial($options);
 	foreach ($unused_properties as $property) {
 		$property_name = $property->getText();
 		$all_properties[$property_name] = $smw_namespace_labels[SMW_NS_PROPERTY];
 	}
-
-	// sort properties list alphabetically - custom sort function is needed
-	// because the regular sort function destroys the "keys" of the array
-	uasort($all_properties, "sd_cmp");
 	return $all_properties;
 }
 
@@ -274,10 +255,25 @@ function sdfGetSemanticProperties_1_0() {
 function sdfGetSemanticProperties() {
 	$smw_version = SMW_VERSION;
 	if ($smw_version{0} == '0') {
-		return sdfGetSemanticProperties_0_7();
+		$all_properties = sdfGetSemanticProperties_0_7();
 	} else {
-		return sdfGetSemanticProperties_1_0();
+		$all_properties = sdfGetSemanticProperties_1_0();
 	}
+	// remove the special properties of Semantic Drilldown from this list...
+	global $sdgContLang;
+	$sd_props = $sdgContLang->getSpecialPropertiesArray();
+	foreach (array_keys($all_properties) as $prop_name) {
+	if ($prop_name == $sd_props[SD_SP_COVERS_PROPERTY] ||
+	    $prop_name == $sd_props[SD_SP_GETS_VALUES_FROM_CATEGORY] ||
+	    $prop_name == $sd_props[SD_SP_HAS_FILTER] ||
+	    $prop_name == $sd_props[SD_SP_HAS_LABEL] ||
+	    $prop_name == $sd_props[SD_SP_HAS_VALUE])
+		unset($all_properties[$prop_name]);
+	}
+
+	// sort properties array by the key, which is the property name
+	ksort($all_properties);
+	return $all_properties;
 }
 
 /**
