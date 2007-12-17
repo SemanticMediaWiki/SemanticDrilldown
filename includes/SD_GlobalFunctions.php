@@ -5,7 +5,7 @@
  * @author Yaron Koren
  */
 
-define('SD_VERSION','0.1');
+define('SD_VERSION','0.2');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -36,6 +36,7 @@ function sdgSetupExtension() {
 
 	require_once($sdgIP . '/specials/SD_ViewData.php');
 	require_once($sdgIP . '/specials/SD_Filters.php');
+	require_once($sdgIP . '/specials/SD_CreateFilter.php');
 
 	/**********************************************/
 	/***** register hooks                     *****/
@@ -48,8 +49,13 @@ function sdgSetupExtension() {
 	/**********************************************/
 	/***** credits (see "Special:Version")    *****/
 	/**********************************************/
-	$wgExtensionCredits['specialpage'][]= array('name'=>'Semantic Drilldown', 'version'=>SD_VERSION, 'author'=>'Yaron Koren',
-          'url'=>'http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown', 'description' => 'A drilldown interface for navigating through semantic data');
+	$wgExtensionCredits['specialpage'][]= array(
+		'name'        => 'Semantic Drilldown',
+		'version'     => SD_VERSION,
+		'author'      => 'Yaron Koren',
+		'url'         => 'http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
+		'description' =>  'A drilldown interface for navigating through semantic data',
+	);
 
 	return true;
 }
@@ -193,6 +199,87 @@ function sdfGetTopLevelCategories() {
         return $categories;
 }
 
+// Custom sort function, used in both sdfGetSemanticProperties() functions
+function sd_cmp($a, $b) {
+	if ($a == $b) {
+		return 0;
+	} elseif ($a < $b) {
+		return -1;
+	} else {
+		return 1;
+	}
+}
+
+function sdfGetSemanticProperties_0_7() {
+	global $smwgContLang;
+	$smw_namespace_labels = $smwgContLang->getNamespaceArray();
+	$dbr = wfGetDB( DB_SLAVE );
+	$all_properties = array();
+
+	$res = $dbr->query("SELECT page_title FROM " . $dbr->tableName('page') .
+		" WHERE page_namespace = " . SMW_NS_ATTRIBUTE .
+		" AND page_is_redirect = 0");
+	while ($row = $dbr->fetchRow($res)) {
+		$attribute_name = str_replace('_', ' ', $row[0]);
+		$all_properties[$attribute_name] = $smw_namespace_labels[SMW_NS_ATTRIBUTE];
+	}
+	$dbr->freeResult($res);
+
+	$res = $dbr->query("SELECT page_title FROM " . $dbr->tableName('page') .
+		" WHERE page_namespace = " . SMW_NS_RELATION .
+		" AND page_is_redirect = 0");
+	while ($row = $dbr->fetchRow($res)) {
+		$relation_name = str_replace('_', ' ', $row[0]);
+		$all_properties[$relation_name] = $smw_namespace_labels[SMW_NS_RELATION];
+	}
+	$dbr->freeResult($res);
+
+	// sort properties list alphabetically - custom sort function is needed
+	// because the regular sort function destroys the "keys" of the array
+	uasort($all_properties, "sd_cmp");
+	return $all_properties;
+}
+
+function sdfGetSemanticProperties_1_0() {
+	global $smwgContLang;
+	$smw_namespace_labels = $smwgContLang->getNamespaces();
+	$all_properties = array();
+
+	// set limit on results - a temporary fix until SMW's getProperties()
+	// functions stop requiring a limit
+	global $smwgIP;
+	include_once($smwgIP . '/includes/storage/SMW_Store.php');
+	$options = new SMWRequestOptions();
+	$options->limit = 10000;
+	$used_properties = smwfGetStore()->getPropertiesSpecial($options);
+	foreach ($used_properties as $property) {
+	$property_name = $property[0]->getText();
+		$all_properties[$property_name] = $property_name;
+	}
+	$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial($options);
+	foreach ($unused_properties as $property) {
+		$property_name = $property->getText();
+		$all_properties[$property_name] = $smw_namespace_labels[SMW_NS_PROPERTY];
+	}
+
+	// sort properties list alphabetically - custom sort function is needed
+	// because the regular sort function destroys the "keys" of the array
+	uasort($all_properties, "sd_cmp");
+	return $all_properties;
+}
+
+/**
+ * Gets a list of the names of all properties in the wiki
+ */
+function sdfGetSemanticProperties() {
+	$smw_version = SMW_VERSION;
+	if ($smw_version{0} == '0') {
+		return sdfGetSemanticProperties_0_7();
+	} else {
+		return sdfGetSemanticProperties_1_0();
+	}
+}
+
 /**
  * Generic database-access function - gets all the values that a specific
  * page points to with a specific property, that also match some other
@@ -200,32 +287,44 @@ function sdfGetTopLevelCategories() {
  */
 function sdfGetValuesForProperty($subject, $subject_namespace, $property, $is_relation, $object_namespace) {
 	$values = array();
-	$dbr = wfGetDB( DB_SLAVE );
-	$cat_ns = NS_CATEGORY;
-	if ($is_relation) {
-		$table_name = $dbr->tableName( 'smw_relations' );
-		$property_field = 'relation_title';
-		$value_field = 'object_title';
-	} else {
-		$table_name = $dbr->tableName( 'smw_attributes' );
-		$property_field = 'attribute_title';
-		$value_field = 'value_xsd';
-	}
 	$property = str_replace(' ', '_', $property);
 	$subject = str_replace(' ', '_', $subject);
-	$sql = "SELECT $value_field
-		FROM $table_name
-		WHERE subject_title = '$subject'
-		AND subject_namespace = $subject_namespace
-		AND $property_field = '$property' ";
-	if ($is_relation) {
-		$sql .= "AND object_namespace = $object_namespace";
+
+	$smw_version = SMW_VERSION;
+	if ($smw_version{0} == '0') {
+		$dbr = wfGetDB( DB_SLAVE );
+		$cat_ns = NS_CATEGORY;
+		if ($is_relation) {
+			$table_name = $dbr->tableName( 'smw_relations' );
+			$property_field = 'relation_title';
+			$value_field = 'object_title';
+		} else {
+			$table_name = $dbr->tableName( 'smw_attributes' );
+			$property_field = 'attribute_title';
+			$value_field = 'value_xsd';
+		}
+		$sql = "SELECT $value_field
+			FROM $table_name
+			WHERE subject_title = '$subject'
+			AND subject_namespace = $subject_namespace
+			AND $property_field = '$property' ";
+		if ($is_relation) {
+			$sql .= "AND object_namespace = $object_namespace";
+		}
+		$res = $dbr->query($sql);
+		while ($row = $dbr->fetchRow($res)) {
+			$values[] = str_replace('_', ' ', htmlspecialchars_decode($row[0]));
+		}
+		$dbr->freeResult($res);
+	} else {
+		$store = smwfGetStore();
+		$subject_title = Title::newFromText($subject, $subject_namespace);
+		$property_title = Title::newFromText($property, $object_namespace);
+		$prop_vals = $store->getPropertyValues($subject_title, $property_title);
+		foreach ($prop_vals as $prop_val) {
+			$values[] = $prop_val->getTitle()->getText();
+		}
 	}
-	$res = $dbr->query($sql);
-	while ($row = $dbr->fetchRow($res)) {
-		$values[] = str_replace('_', ' ', htmlspecialchars_decode($row[0]));
-	}
-	$dbr->freeResult($res);
 	return $values;
 }
 
@@ -235,7 +334,7 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $property, $is_re
 function sdfLoadFiltersForCategory($category) {
 	global $sdgContLang;
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
- 
+
 	$filters = array();
 	$filter_names = sdfGetValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, $sd_props[SD_SP_HAS_FILTER], true, SD_NS_FILTER);
 	foreach ($filter_names as $filter_name) {
@@ -280,4 +379,49 @@ function sdfGetCategoryChildren($category_name, $get_categories, $levels) {
 	return $pages;
 }
 
-?>
+/**
+ * Prints the mini-form contained at the bottom of various pages, that
+ * allows pages to spoof a normal edit page, that can preview, save,
+ * etc.
+ */
+function sdfPrintRedirectForm($title, $page_contents, $edit_summary, $is_save, $is_preview, $is_diff, $is_minor_edit, $watch_this) {
+	$article = new Article($title);
+	$new_url = $title->getLocalURL('action=submit');
+	$starttime = wfTimestampNow();
+	$edittime = $article->getTimestamp();
+	global $wgUser;
+	if ( $wgUser->isLoggedIn() )
+		$token = htmlspecialchars($wgUser->editToken());
+	else
+		$token = EDIT_TOKEN_SUFFIX;
+
+	if ($is_save)
+		$action = "wpSave";
+	elseif ($is_preview)
+		$action = "wpPreview";
+	else // $is_diff
+		$action = "wpDiff";
+
+	$text =<<<END
+	<form id="editform" name="editform" method="post" action="$new_url">
+	<input type="hidden" name="wpTextbox1" id="wpTextbox1" value="$page_contents" />
+	<input type="hidden" name="wpSummary" value="$edit_summary" />
+	<input type="hidden" name="wpStarttime" value="$starttime" />
+	<input type="hidden" name="wpEdittime" value="$edittime" />
+	<input type="hidden" name="wpEditToken" value="$token" />
+	<input type="hidden" name="$action" />
+
+END;
+	if ($is_minor_edit)
+		$text .= '    <input type="hidden" name="wpMinoredit">' . "\n";
+	if ($watch_this)
+		$text .= '    <input type="hidden" name="wpWatchthis">' . "\n";
+	$text .=<<<END
+	</form>
+	<script type="text/javascript">
+	document.editform.submit();
+	</script>
+
+END;
+	return $text;
+}
