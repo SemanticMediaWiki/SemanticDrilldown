@@ -59,6 +59,14 @@ class SDAppliedFilter {
 				$sql .= "$value_field > {$this->lower_limit} ";
 			elseif ($this->upper_limit)
 				$sql .= "$value_field < {$this->upper_limit} ";
+		} elseif ($this->filter->time_period != NULL) {
+			if ($this->filter->time_period == wfMsg('sd_filter_month')) {
+				list($month_str, $year) = explode(' ', $this->value);
+				$month = sdfStringToMonth($month_str);
+				$sql .= "YEAR($value_field) = $year AND MONTH($value_field) = $month ";
+			} else {
+				$sql .= "YEAR($value_field) = {$this->value} ";
+			}
 		} else {
 			$dbr = wfGetDB( DB_SLAVE );
 			if ($this->filter->is_relation) {
