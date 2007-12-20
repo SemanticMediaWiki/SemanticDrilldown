@@ -63,7 +63,7 @@ class FiltersPage extends QueryPage {
 			page_title as value
 			FROM $page
 			WHERE page_namespace = $filter_ns";
-               }
+	}
 
 	function sortDescending() {
 		return false;
