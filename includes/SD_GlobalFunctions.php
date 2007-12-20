@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.2');
+define('SD_VERSION','0.2.1');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -279,6 +279,24 @@ function sdfGetSemanticProperties() {
 }
 
 /**
+ *
+ */
+function sdfGetFilters() {
+	$filters = array();
+	$filter_ns = SD_NS_FILTER;
+	$dbr = wfGetDB( DB_SLAVE );
+	$page = $dbr->tableName( 'page' );
+	$sql = "SELECT page_title FROM $page
+		WHERE page_namespace = $filter_ns";
+	$res = $dbr->query($sql);
+	while ($row = $dbr->fetchRow($res)) {
+		$filters[] = $row[0];
+	}
+	$dbr->freeResult($res);
+	return $filters;
+}
+
+/**
  * Generic database-access function - gets all the values that a specific
  * page points to with a specific property, that also match some other
  * constraints
@@ -375,6 +393,62 @@ function sdfGetCategoryChildren($category_name, $get_categories, $levels) {
 		$pages = array_merge($pages, sdfGetCategoryChildren($subcategory, $get_categories, $levels - 1));
 	}
 	return $pages;
+}
+
+function sdfMonthToString($month) {
+	if ($month == 1) {
+		return wfMsg('january');
+	} elseif ($month == 2) {
+		return wfMsg('february');
+	} elseif ($month == 3) {
+		return wfMsg('march');
+	} elseif ($month == 4) {
+		return wfMsg('april');
+	} elseif ($month == 5) {
+		return wfMsg('may');
+	} elseif ($month == 6) {
+		return wfMsg('june');
+	} elseif ($month == 7) {
+		return wfMsg('july');
+	} elseif ($month == 8) {
+		return wfMsg('august');
+	} elseif ($month == 9) {
+		return wfMsg('september');
+	} elseif ($month == 10) {
+		return wfMsg('october');
+	} elseif ($month == 11) {
+		return wfMsg('november');
+	} else { //if ($month == 12) {
+		return wfMsg('december');
+	}
+}
+
+function sdfStringToMonth($str) {
+	if ($str == wfMsg('january')) {
+		return 1;
+	} elseif ($str == wfMsg('february')) {
+		return 2;
+	} elseif ($str == wfMsg('march')) {
+		return 3;
+	} elseif ($str == wfMsg('april')) {
+		return 4;
+	} elseif ($str == wfMsg('may')) {
+		return 5;
+	} elseif ($str == wfMsg('june')) {
+		return 6;
+	} elseif ($str == wfMsg('july')) {
+		return 7;
+	} elseif ($str == wfMsg('august')) {
+		return 8;
+	} elseif ($str == wfMsg('september')) {
+		return 9;
+	} elseif ($str == wfMsg('october')) {
+		return 10;
+	} elseif ($str == wfMsg('november')) {
+		return 11;
+	} else { //if ($strmonth == wfMsg('december')) {
+		return 12;
+	}
 }
 
 /**
