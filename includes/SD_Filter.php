@@ -11,6 +11,7 @@ class SDFilter {
 	var $property;
 	var $is_relation;
 	var $category;
+	var $time_period = NULL;
 	var $allowed_values;
 	var $possible_applied_filters = array();
 
@@ -52,9 +53,13 @@ class SDFilter {
 			}
 		}
 		$categories = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, $sd_props[SD_SP_GETS_VALUES_FROM_CATEGORY], true, NS_CATEGORY);
+		$time_periods = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, $sd_props[SD_SP_USES_TIME_PERIOD], false, NS_MAIN);
 		if (count($categories) > 0) {
 			$f->category = $categories[0];
 			$f->allowed_values = sdfGetCategoryChildren($f->category, false, 5);
+		} elseif (count($time_periods) > 0) {
+			$f->time_period = $time_periods[0];
+			$f->allowed_values = array();
 		} else {
 			$values = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, $sd_props[SD_SP_HAS_VALUE], false, NS_MAIN);
 			if (count($values) > 0) {
