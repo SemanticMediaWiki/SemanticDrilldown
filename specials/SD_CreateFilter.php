@@ -34,24 +34,26 @@ if ($sdgSpecialPagesSpecialInit) {
 	SpecialPage::addPage( new SpecialPage('CreateFilter','',true,'doSpecialCreateFilter',false) );
 }
 
-function createFilterText($property_string, $values_source, $category_used, $filter_values, $filter_label) {
-	global $smwgContLang, $sdgContLang;
+function createFilterText($property_string, $values_source, $category_used, $time_period, $filter_values, $required_filter, $filter_label) {
+	global $sdgContLang;
 
 	list($namespace, $property_name) = explode(",", $property_string, 2);
-	//$namespace_labels = $smwgContLang->getNamespaceArray();
-	//$property_label = $namespace_labels[$namespace];
-	$specprops = $sdgContLang->getSpecialPropertiesArray();
+	$sd_props = $sdgContLang->getSpecialPropertiesArray();
 	$smw_version = SMW_VERSION;
-	$property_tag = "[[" . $specprops[SD_SP_COVERS_PROPERTY] .
+	$property_tag = "[[" . $sd_props[SD_SP_COVERS_PROPERTY] .
 		"::$namespace:$property_name|$property_name]]";
 	$text = wfMsg('sd_filter_coversproperty', $property_tag);
 	if ($values_source == 'category') {
 		global $wgContLang;
 		$namespace_labels = $wgContLang->getNamespaces();
 		$category_namespace = $namespace_labels[NS_CATEGORY];
-		$category_tag = "[[" . $specprops[SD_SP_GETS_VALUES_FROM_CATEGORY] . "::$category_namespace:$category_used|$category_used]]";
+		$category_tag = "[[" . $sd_props[SD_SP_GETS_VALUES_FROM_CATEGORY] . "::$category_namespace:$category_used|$category_used]]";
 		$text .= " " . wfMsg('sd_filter_getsvaluesfromcategory', $category_tag);
 	} elseif ($values_source == 'property') {
+		// do nothing
+	} elseif ($values_source == 'dates') {
+		$time_period_tag = "[[" . $sd_props[SD_SP_USES_TIME_PERIOD] . ":=$time_period]]";
+		$text .= " " . wfMsg('sd_filter_usestimeperiod', $time_period_tag);
 	} elseif ($values_source == 'manual') {
 		// replace the comma substitution character that has no
 		// chance of being included in the values list - namely,
@@ -66,13 +68,19 @@ function createFilterText($property_string, $values_source, $category_used, $fil
 			}
 			// replace beep with comma, trim
 			$filter_value = str_replace("\a", $sdgListSeparator, trim($filter_value));
-			$filter_values_tag .= "[[" . $specprops[SD_SP_HAS_VALUE] . ":=$filter_value]]";
+			$filter_values_tag .= "[[" . $sd_props[SD_SP_HAS_VALUE] . ":=$filter_value]]";
 		}
 		$text .= " " . wfMsg('sd_filter_hasvalues', $filter_values_tag);
 	}
+	if ($required_filter != '') {
+		$sd_namespace_labels = $sdgContLang->getNamespaces();
+		$filter_namespace = $sd_namespace_labels[SD_NS_FILTER];
+		$filter_tag = "[[" . $sd_props[SD_SP_REQUIRES_FILTER] . "::$filter_namespace:$required_filter|$required_filter]]";
+		$text .= " " . wfMsg('sd_filter_requiresfilter', $filter_tag);
+	}
 	if ($filter_label != '') {
-		$filter_tag = "[[" . $specprops[SD_SP_HAS_LABEL] . ":=$filter_label]]";
-		$text .= " " . wfMsg('sd_filter_haslabel', $filter_tag);
+		$filter_label_tag = "[[" . $sd_props[SD_SP_HAS_LABEL] . ":=$filter_label]]";
+		$text .= " " . wfMsg('sd_filter_haslabel', $filter_label_tag);
 	}
 	return $text;
 }
@@ -85,7 +93,9 @@ function doSpecialCreateFilter() {
   $values_source = $wgRequest->getVal('values_source');
   $property_name = $wgRequest->getVal('property_name');
   $category_name = $wgRequest->getVal('category_name');
+  $time_period = $wgRequest->getVal('time_period');
   $filter_values = $wgRequest->getVal('filter_values');
+  $required_filter = $wgRequest->getVal('required_filter');
   $filter_label = $wgRequest->getVal('filter_label');
 
   $save_button_text = wfMsg('savearticle');
@@ -101,7 +111,7 @@ function doSpecialCreateFilter() {
       # redirect to wiki interface
       $namespace = SD_NS_FILTER;
       $title = Title::newFromText($filter_name, $namespace);
-      $full_text = createFilterText($property_name, $values_source, $category_name, $filter_values, $filter_label);
+      $full_text = createFilterText($property_name, $values_source, $category_name, $time_period, $filter_values, $required_filter, $filter_label);
       // HTML-encode
       $full_text = str_replace('"', '&quot;', $full_text);
       $text .= sdfPrintRedirectForm($title, $full_text, "", $save_page, $preview_page, false, false, false);
@@ -134,18 +144,23 @@ END;
 
   $values_from_property_label = wfMsg('sd_createfilter_usepropertyvalues');
   $values_from_category_label = wfMsg('sd_createfilter_usecategoryvalues');
+  $date_values_label = wfMsg('sd_createfilter_usedatevalues');
   $enter_values_label = wfMsg('sd_createfilter_entervalues');
-  $categories = sdfGetTopLevelCategories();
+  $year_label = wfMsg('sd_filter_year');
+  $month_label = wfMsg('sd_filter_month');
+  $require_filter_label = wfMsg('sd_createfilter_requirefilter');
   $text .=<<<END
 	</select>
 	</p>
-	<p><input type="radio" name="values_source" value="propertyy">
+	<p><input type="radio" name="values_source" value="property">
 	$values_from_property_label
+	</p>
 	<p><input type="radio" name="values_source" checked value="category">
 	$values_from_category_label
 	<select id="category_dropdown" name="category_name">
 
 END;
+  $categories = sdfGetTopLevelCategories();
   foreach ($categories as $category) {
     $category = str_replace('_', ' ', $category);
     $text .= "	<option>$category</option>\n";
@@ -153,10 +168,30 @@ END;
   $text .=<<<END
 	</select>
 	</p>
+	<p><input type="radio" name="values_source" checked value="dates">
+	$date_values_label
+	<select id="time_period_dropdown" name="time_period">
+	<option>$year_label</option>
+	<option>$month_label</option>
+	</select>
+	</p>
 	<p><input type="radio" name="values_source" value="manual">
 	$enter_values_label <input size="40" name="filter_values" value="">
 	</p>
-	<p>$label_label <input size="25" name="filter_label" value="">
+	<p>$require_filter_label
+	<select id="required_filter_dropdown" name="required_filter">
+	<option />
+
+END;
+  $filters = sdfGetFilters();
+  foreach ($filters as $filter) {
+    $filter = str_replace('_', ' ', $filter);
+    $text .= "	<option>$filter</option>\n";
+  }
+  $text .=<<<END
+	</select>
+	</p>
+	<p>$label_label <input size="25" name="filter_label" value=""></p>
 	<div class="editButtons">
 	<input type="submit" id="wpSave" name="wpSave" value="$save_button_text"></p>
 	<input type="submit" id="wpPreview" name="wpPreview" value="$preview_button_text"></p>
