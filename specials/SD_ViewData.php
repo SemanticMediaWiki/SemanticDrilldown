@@ -59,6 +59,11 @@ class ViewDataPage extends QueryPage {
 		return $query;
 	}
 
+	/**
+	 * Creates a temporary database table of values that match the current
+	 * set of filters selected by the user - used for displaying
+	 * all remaining filters
+	 */
 	function createTempTable($category, $subcategory, $subcategories, $applied_filters) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$page = $dbr->tableName( 'page' );
@@ -75,10 +80,14 @@ class ViewDataPage extends QueryPage {
 		$dbr->query($sql2);
 	}
 
+	/**
+	 * Creates a SQL statement, lacking only the initial "SELECT"
+	 * clause, to get all the pages that match all the previously-
+	 * selected filters, plus the one new filter (with value) that
+	 * was passed in to this function.
+	 */
 	function getSQLFromClauseForField($new_filter) {
 		$dbr = wfGetDB( DB_SLAVE );
-		$smw_relations = $dbr->tableName( 'smw_relations' );
-		$smw_attributes = $dbr->tableName( 'smw_attributes' );
 		$sql = "FROM semantic_drilldown_values sdv ";
 		if ($new_filter->value == ' none') {
 			$sql .= "LEFT OUTER ";
@@ -103,6 +112,11 @@ class ViewDataPage extends QueryPage {
 		return $sql;
 	}
 
+	/**
+	 * Very similar to getSQLFromClauseForField(), except that instead
+	 * of a new filter passed in, it's a subcategory, plus all that
+	 * subcategory's child subcategories, to ensure completeness.
+	 */
 	function getSQLFromClauseForCategory($subcategory, $subcategories) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$categorylinks = $dbr->tableName( 'categorylinks' );
@@ -202,7 +216,11 @@ class ViewDataPage extends QueryPage {
 		return $sql;
 	}
 
-	function getNumResults($subcategory, $subcategories, $applied_filters, $new_filter = null) {
+	/**
+	 * Gets the number of pages matching both the currently-selected
+	 * set of filters and either a new subcategory or a new filter.
+	 */
+	function getNumResults($subcategory, $subcategories, $new_filter = null) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$sql = "SELECT COUNT(*) ";
 		if ($new_filter)
@@ -213,6 +231,43 @@ class ViewDataPage extends QueryPage {
 		$row = $dbr->fetchRow($res);
 		$dbr->freeResult($res);
 		return $row[0];
+	}
+
+	/**
+	 * Gets an array of the possible time period values (e.g., years,
+	 * years and months) for a given date filter, and, for each one,
+	 * the number of pages that match that time period.
+	 */
+	function getTimePeriodValues($date_filter) {
+		$possible_dates = array();
+		$property_value = str_replace(' ', '_', $date_filter->property);
+		$dbr = wfGetDB( DB_SLAVE );
+		$smw_attributes = $dbr->tableName( 'smw_attributes' );
+		if ($date_filter->time_period == wfMsg('sd_filter_month')) {
+			$fields = "YEAR(value_xsd), MONTH(value_xsd)";
+		} else {
+			$fields = "YEAR(value_xsd)";
+		}
+		$sql = "SELECT $fields, count(*)
+			FROM semantic_drilldown_values sdv 
+			JOIN $smw_attributes a
+			ON sdv.page_id = a.subject_id
+			WHERE a.attribute_title = '$property_value'
+			GROUP BY $fields
+			ORDER BY $fields";
+		$res = $dbr->query($sql);
+		while ($row = $dbr->fetchRow($res)) {
+			if ($date_filter->time_period == wfMsg('sd_filter_month')) {
+				global $sdgMonthValues;
+				$date_string = sdfMonthToString($row[1]) . " " . $row[0];
+				$possible_dates[$date_string] = $row[2];
+			} else {
+				$date_string = $row[0];
+				$possible_dates[$date_string] = $row[1];
+			}
+		}
+		$dbr->freeResult($res);
+		return $possible_dates;
 	}
 
 	function getName() {
@@ -254,6 +309,10 @@ class ViewDataPage extends QueryPage {
 			$header .= $skin->makeLinkObj($this->view_data_title, $this->category, $this->makeURLQuery($this->category, array()));
 		else
 			$header .= $this->category;
+		// link to actual category
+		$cat_title = Title::newFromText($this->category, NS_CATEGORY);
+		$sk = $wgUser->getSkin();
+		$header .= " (" . $sk->makeKnownLinkObj($cat_title, wfMsg('sd_viewdata_viewcategory')) . ")";;
 		if ($this->subcategory) {
 			$header .= " > ";
 			$filter_string = "$subcategory_text: " . str_replace('_', ' ', $this->subcategory);
@@ -295,7 +354,7 @@ class ViewDataPage extends QueryPage {
 			$results_line = "";
 			foreach ($this->next_level_subcategories as $i => $subcat) {
 				$further_subcats = sdfGetCategoryChildren($subcat, true, 10);
-				$num_results = $this->getNumResults($subcat, $further_subcats, $this->applied_filters);
+				$num_results = $this->getNumResults($subcat, $further_subcats);
 				if ($num_results > 0) {
 					if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
 					$results_line .= $skin->makeLinkObj($this->view_data_title, str_replace('_', ' ', $subcat) . " ($num_results)", $cur_url . '_subcat=' . urlencode($subcat));
@@ -305,31 +364,47 @@ class ViewDataPage extends QueryPage {
 				$header .= "<p><strong>$subcategory_text:</strong> $results_line</p>\n";
 			}
 		}
+		// print a line of values for each filter that hasn't
+		// already been selected by the user
 		foreach ($this->remaining_filters as $rf) {
 			$num_printed_values = 0;
 			$results_line = "";
 			$rf->createTempTable();
 			$found_results_for_filter = false;
-			foreach ($rf->allowed_values as $value) {
-				$new_filter = SDAppliedFilter::create($rf, $value);
-				$num_results = $this->getNumResults($this->subcategory, $this->all_subcategories, $this->applied_filters, $new_filter);
-				if ($num_results > 0) {
+			if ($rf->time_period != NULL) {
+				$date_values = $this->getTimePeriodValues($rf);
+				if (count($date_values) > 0)
 					$found_results_for_filter = true;
+				foreach ($date_values as $date_str => $num_results) {
 					if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
-					$results_line .= $skin->makeLinkObj($this->view_data_title, str_replace('_', ' ', $value) . " ($num_results)", $cur_url . urlencode(str_replace(' ', '_', $rf->name)) . '=' . urlencode(str_replace(' ', '_', $value)));
+					$results_line .= $skin->makeLinkObj($this->view_data_title, $date_str . " ($num_results)", $cur_url . urlencode(str_replace(' ', '_', $rf->name)) . '=' . str_replace(' ', '_', $date_str));
+				}
+			} else {
+				foreach ($rf->allowed_values as $value) {
+					$new_filter = SDAppliedFilter::create($rf, $value);
+					$num_results = $this->getNumResults($this->subcategory, $this->all_subcategories, $new_filter);
+					if ($num_results > 0) {
+						$found_results_for_filter = true;
+						if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
+						$results_line .= $skin->makeLinkObj($this->view_data_title, str_replace('_', ' ', $value) . " ($num_results)", $cur_url . urlencode(str_replace(' ', '_', $rf->name)) . '=' . urlencode(str_replace(' ', '_', $value)));
+					}
 				}
 			}
 			// now get values for 'Other' and 'None', as well
-			$other_filter = SDAppliedFilter::create($rf, ' other');
-			$num_results = $this->getNumResults($this->subcategory, $this->all_subcategories, $this->applied_filters, $other_filter);
-			if ($num_results > 0) {
-				$found_results_for_filter = true;
-				if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
-				$results_line .= $skin->makeLinkObj($this->view_data_title, "$other_str ($num_results)", $cur_url . urlencode($rf->name) . '=_other');
+			// - don't show 'Other' if this is a date filter
+			if ($rf->time_period == NULL) {
+				$other_filter = SDAppliedFilter::create($rf, ' other');
+				$num_results = $this->getNumResults($this->subcategory, $this->all_subcategories, $other_filter);
+				if ($num_results > 0) {
+					$found_results_for_filter = true;
+					if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
+					$results_line .= $skin->makeLinkObj($this->view_data_title, "$other_str ($num_results)", $cur_url . urlencode($rf->name) . '=_other');
+				}
 			}
+			// show 'None' only if any other results have been found
 			if ($found_results_for_filter) {
 				$none_filter = SDAppliedFilter::create($rf, ' none');
-				$num_results = $this->getNumResults($this->subcategory, $this->all_subcategories, $this->applied_filters, $none_filter);
+				$num_results = $this->getNumResults($this->subcategory, $this->all_subcategories, $none_filter);
 				if ($num_results > 0) {
 					if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
 					$results_line .= $skin->makeLinkObj($this->view_data_title, "$none_str ($num_results)", $cur_url . urlencode($rf->name) . '=_none');
@@ -391,7 +466,8 @@ class ViewDataPage extends QueryPage {
 }
 
 function doSpecialViewData() {
-	global $wgRequest, $wgOut, $sdgScriptPath;
+	global $wgRequest, $wgOut, $sdgScriptPath, $sdgContLang;
+	$sd_props = $sdgContLang->getSpecialPropertiesArray();
 
 	$mainCssUrl = $sdgScriptPath . '/skins/SD_main.css';
 	$wgOut->addLink( array(
@@ -435,9 +511,26 @@ function doSpecialViewData() {
 			}
 		}
 	}
+	// add every unused filter to the remaining_filters array, unless
+	// it requires some other filter that hasn't been applied
 	foreach ($filters as $i => $filter) {
 		if (! $filter_used[$i]) {
-			$remaining_filters[] = $filter;
+			$required_filters = sdfGetValuesForProperty($filter->name, SD_NS_FILTER, $sd_props[SD_SP_REQUIRES_FILTER], true, SD_NS_FILTER);
+			$matched_all_required_filters = true;
+			foreach ($required_filters as $required_filter) {
+				$found_match = false;
+				foreach ($applied_filters as $af) {
+					if ($af->filter->name == $required_filter) {
+						$found_match = true;
+					}
+				}
+				if (! $found_match) {
+					$matched_all_required_filters = false;
+					continue;
+				}
+			}
+			if ($matched_all_required_filters)
+				$remaining_filters[] = $filter;
 		}
 	}
 
