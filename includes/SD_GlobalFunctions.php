@@ -5,6 +5,8 @@
  * @author Yaron Koren
  */
 
+if (!defined('MEDIAWIKI')) die();
+
 define('SD_VERSION','0.2');
 
 // constants for special properties
