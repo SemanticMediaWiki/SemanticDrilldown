@@ -41,6 +41,7 @@ class SDFilter {
 		// "is_relation" value; for that, we need to get this
 		// "special value" separately
                 if ($smw_version{0} != '0') {
+			$f->is_relation = false;
 			$proptitle = Title::newFromText($f->property, SMW_NS_PROPERTY);
 			if ($proptitle != NULL) {
 				$store = smwfGetStore();
