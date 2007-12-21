@@ -14,7 +14,9 @@ define('SD_SP_HAS_FILTER', 1);
 define('SD_SP_COVERS_PROPERTY', 2);
 define('SD_SP_HAS_VALUE', 3);
 define('SD_SP_GETS_VALUES_FROM_CATEGORY', 4);
-define('SD_SP_HAS_LABEL', 5);
+define('SD_SP_USES_TIME_PERIOD', 5);
+define('SD_SP_REQUIRES_FILTER', 6);
+define('SD_SP_HAS_LABEL', 7);
 
 $wgExtensionFunctions[] = 'sdgSetupExtension';
 
@@ -267,6 +269,8 @@ function sdfGetSemanticProperties() {
 	foreach (array_keys($all_properties) as $prop_name) {
 	if ($prop_name == $sd_props[SD_SP_COVERS_PROPERTY] ||
 	    $prop_name == $sd_props[SD_SP_GETS_VALUES_FROM_CATEGORY] ||
+	    $prop_name == $sd_props[SD_SP_USES_TIME_PERIOD] ||
+	    $prop_name == $sd_props[SD_SP_REQUIRES_FILTER] ||
 	    $prop_name == $sd_props[SD_SP_HAS_FILTER] ||
 	    $prop_name == $sd_props[SD_SP_HAS_LABEL] ||
 	    $prop_name == $sd_props[SD_SP_HAS_VALUE])
