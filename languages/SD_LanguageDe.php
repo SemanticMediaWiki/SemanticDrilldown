@@ -28,7 +28,7 @@ class SD_LanguageDe extends SD_Language {
 	'createfilter' => 'Erstelle einen Filter',
 	'sd_createfilter_name' => 'Name:',
 	'sd_createfilter_property' => 'Attribut dieses Filters:',
-	'sd_createfilter_usepropertyvalues' => 'Verwende die erlaubten Werte dieses Attributs für den Filter',
+	'sd_createfilter_usepropertyvalues' => 'Verwende alle Werte dieses Attributs für den Filter.',
 	'sd_createfilter_usecategoryvalues' => 'Verwende die Werte für den Filter von dieser Kategorie:',
 	'sd_createfilter_usedatevalues' => 'Verwende folgende Zeitangabe für diesen Filter:',
 	'sd_createfilter_entervalues' => 'Verwende diese Werte für den Filter (Werte durch Komma getrennt eingeben. Wenn ein Wert ein Komma enthält, mit "\," ersetzen.):',

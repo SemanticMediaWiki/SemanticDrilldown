@@ -29,7 +29,7 @@ class SD_LanguageZh_tw extends SD_Language {
 	'createfilter' => '建立篩選器',
 	'sd_createfilter_name' => '名稱：',
 	'sd_createfilter_property' => '此一篩選器所涵蓋的性質：',  //Property that this filter covers:
-	'sd_createfilter_usepropertyvalues' => '使用此一性質的「允許值」做為篩選器',  //Use allowed values for this property for the filter
+	'sd_createfilter_usepropertyvalues' => '將此一性質的值設給篩選器所用',  //Use all of this property's values for the filter
 	'sd_createfilter_usecategoryvalues' => '從此分類中為篩選器取得篩選值：',  //Get values for filter from this category:
 	'sd_createfilter_usedatevalues' => '以此一期間為此篩選器設置日期範圍值：',  //Use date ranges for this filter with this time period:
 	'sd_createfilter_entervalues' => '以手工賦予值的方式設置此一篩選器(其值必須以半型逗號分隔「,」，如果您的資料中已含有半型逗號，則須以「\,」符號取代)：',  //Enter values for filter manually (values should be separated by commas - if a value contains a comma, replace it with "\,"):

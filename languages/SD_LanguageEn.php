@@ -28,7 +28,7 @@ class SD_LanguageEn extends SD_Language {
 	'createfilter' => 'Create a filter',
 	'sd_createfilter_name' => 'Name:',
 	'sd_createfilter_property' => 'Property that this filter covers:',
-	'sd_createfilter_usepropertyvalues' => 'Use allowed values for this property for the filter',
+	'sd_createfilter_usepropertyvalues' => 'Use all values of this property for the filter',
 	'sd_createfilter_usecategoryvalues' => 'Get values for filter from this category:',
 	'sd_createfilter_usedatevalues' => 'Use date ranges for this filter with this time period:',
 	'sd_createfilter_entervalues' => 'Enter values for filter manually (values should be separated by commas - if a value contains a comma, replace it with "\,"):',
