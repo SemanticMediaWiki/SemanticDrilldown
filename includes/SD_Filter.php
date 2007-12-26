@@ -63,24 +63,10 @@ class SDFilter {
 			$f->allowed_values = array();
 		} else {
 			$values = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, $sd_props[SD_SP_HAS_VALUE], false, NS_MAIN);
-			if (count($values) > 0) {
-				$f->allowed_values = $values;
-			} else {
-				$f->allowed_values = array();
-				$dbr = wfGetDB( DB_SLAVE );
-				$smw_specialprops = $dbr->tableName( 'smw_specialprops' );
-				$query_property = str_replace(' ', '_', $f->property);
-				$sql = "SELECT value_string
-					FROM $smw_specialprops
-					WHERE subject_title = '$query_property'
-					AND property_id = 14";
-				$res = $dbr->query($sql);
-				while ($row = $dbr->fetchRow($res)) {
-					$f->allowed_values[] = $row[0];
-				}
-				$dbr->freeResult($res);
-			}
+			$f->allowed_values = $values;
 		}
+		// set list of possible applied filters if allowed values
+		// array was set
 		foreach($f->allowed_values as $allowed_value) {
 			$f->possible_applied_filters[] = SDAppliedFilter::create($f, $allowed_value);
 		}
