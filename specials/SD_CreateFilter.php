@@ -86,50 +86,50 @@ function createFilterText($property_string, $values_source, $category_used, $tim
 }
 
 function doSpecialCreateFilter() {
-  global $wgOut, $wgRequest, $wgUser, $sdgScriptPath;
+	global $wgOut, $wgRequest, $wgUser, $sdgScriptPath;
 
-  # cycle through the query values, setting the appropriate local variables
-  $filter_name = $wgRequest->getVal('filter_name');
-  $values_source = $wgRequest->getVal('values_source');
-  $property_name = $wgRequest->getVal('property_name');
-  $category_name = $wgRequest->getVal('category_name');
-  $time_period = $wgRequest->getVal('time_period');
-  $filter_values = $wgRequest->getVal('filter_values');
-  $required_filter = $wgRequest->getVal('required_filter');
-  $filter_label = $wgRequest->getVal('filter_label');
+	# cycle through the query values, setting the appropriate local variables
+	$filter_name = $wgRequest->getVal('filter_name');
+	$values_source = $wgRequest->getVal('values_source');
+	$property_name = $wgRequest->getVal('property_name');
+	$category_name = $wgRequest->getVal('category_name');
+	$time_period = $wgRequest->getVal('time_period');
+	$filter_values = $wgRequest->getVal('filter_values');
+	$required_filter = $wgRequest->getVal('required_filter');
+	$filter_label = $wgRequest->getVal('filter_label');
 
-  $save_button_text = wfMsg('savearticle');
-  $preview_button_text = wfMsg('preview');
-  $filter_name_error_str = '';
-  $save_page = $wgRequest->getCheck('wpSave');
-  $preview_page = $wgRequest->getCheck('wpPreview');
-  if ($save_page || $preview_page) {
-    # validate filter name
-    if ($filter_name == '') {
-      $filter_name_error_str = wfMsg('sd_blank_error');
-    } else {
-      # redirect to wiki interface
-      $namespace = SD_NS_FILTER;
-      $title = Title::newFromText($filter_name, $namespace);
-      $full_text = createFilterText($property_name, $values_source, $category_name, $time_period, $filter_values, $required_filter, $filter_label);
-      // HTML-encode
-      $full_text = str_replace('"', '&quot;', $full_text);
-      $text .= sdfPrintRedirectForm($title, $full_text, "", $save_page, $preview_page, false, false, false);
-      $wgOut->addHTML($text);
-      return;
-    }
-  }
+	$save_button_text = wfMsg('savearticle');
+	$preview_button_text = wfMsg('preview');
+	$filter_name_error_str = '';
+	$save_page = $wgRequest->getCheck('wpSave');
+	$preview_page = $wgRequest->getCheck('wpPreview');
+	if ($save_page || $preview_page) {
+		# validate filter name
+		if ($filter_name == '') {
+			$filter_name_error_str = wfMsg('sd_blank_error');
+		} else {
+			# redirect to wiki interface
+			$namespace = SD_NS_FILTER;
+			$title = Title::newFromText($filter_name, $namespace);
+			$full_text = createFilterText($property_name, $values_source, $category_name, $time_period, $filter_values, $required_filter, $filter_label);
+			// HTML-encode
+			$full_text = str_replace('"', '&quot;', $full_text);
+			$text .= sdfPrintRedirectForm($title, $full_text, "", $save_page, $preview_page, false, false, false);
+			$wgOut->addHTML($text);
+			return;
+		}
+	}
 
-  $all_properties = sdfGetSemanticProperties();
+	$all_properties = sdfGetSemanticProperties();
 
-  // set 'title' as hidden field, in case there's no URL niceness
-  global $wgContLang;
-  $mw_namespace_labels = $wgContLang->getNamespaces();
-  $special_namespace = $mw_namespace_labels[NS_SPECIAL];
-  $name_label = wfMsg('sd_createfilter_name');
-  $property_label = wfMsg('sd_createfilter_property');
-  $label_label = wfMsg('sd_createfilter_label');
-  $text =<<<END
+	// set 'title' as hidden field, in case there's no URL niceness
+	global $wgContLang;
+	$mw_namespace_labels = $wgContLang->getNamespaces();
+	$special_namespace = $mw_namespace_labels[NS_SPECIAL];
+	$name_label = wfMsg('sd_createfilter_name');
+	$property_label = wfMsg('sd_createfilter_property');
+	$label_label = wfMsg('sd_createfilter_label');
+	$text =<<<END
 	<form action="" method="get">
 	<input type="hidden" name="title" value="$special_namespace:CreateFilter">
 	<p>$name_label <input size="25" name="filter_name" value="">
@@ -138,37 +138,37 @@ function doSpecialCreateFilter() {
 	<select id="property_dropdown" name="property_name">
 
 END;
-  foreach ($all_properties as $property => $namespace) {
-    $text .= "	<option value=\"$namespace,$property\">$property</option>\n";
-  }
+	foreach ($all_properties as $property => $namespace) {
+		$text .= "	<option value=\"$namespace,$property\">$property</option>\n";
+	}
 
-  $values_from_property_label = wfMsg('sd_createfilter_usepropertyvalues');
-  $values_from_category_label = wfMsg('sd_createfilter_usecategoryvalues');
-  $date_values_label = wfMsg('sd_createfilter_usedatevalues');
-  $enter_values_label = wfMsg('sd_createfilter_entervalues');
-  $year_label = wfMsg('sd_filter_year');
-  $month_label = wfMsg('sd_filter_month');
-  $require_filter_label = wfMsg('sd_createfilter_requirefilter');
-  $text .=<<<END
+	$values_from_property_label = wfMsg('sd_createfilter_usepropertyvalues');
+	$values_from_category_label = wfMsg('sd_createfilter_usecategoryvalues');
+	$date_values_label = wfMsg('sd_createfilter_usedatevalues');
+	$enter_values_label = wfMsg('sd_createfilter_entervalues');
+	$year_label = wfMsg('sd_filter_year');
+	$month_label = wfMsg('sd_filter_month');
+	$require_filter_label = wfMsg('sd_createfilter_requirefilter');
+	$text .=<<<END
 	</select>
 	</p>
-	<p><input type="radio" name="values_source" value="property">
+	<p><input type="radio" name="values_source" checked value="property">
 	$values_from_property_label
 	</p>
-	<p><input type="radio" name="values_source" checked value="category">
+	<p><input type="radio" name="values_source" value="category">
 	$values_from_category_label
 	<select id="category_dropdown" name="category_name">
 
 END;
-  $categories = sdfGetTopLevelCategories();
-  foreach ($categories as $category) {
-    $category = str_replace('_', ' ', $category);
-    $text .= "	<option>$category</option>\n";
-  }
-  $text .=<<<END
+	$categories = sdfGetTopLevelCategories();
+	foreach ($categories as $category) {
+		$category = str_replace('_', ' ', $category);
+		$text .= "	<option>$category</option>\n";
+	}
+	$text .=<<<END
 	</select>
 	</p>
-	<p><input type="radio" name="values_source" checked value="dates">
+	<p><input type="radio" name="values_source" value="dates">
 	$date_values_label
 	<select id="time_period_dropdown" name="time_period">
 	<option>$year_label</option>
@@ -183,12 +183,12 @@ END;
 	<option />
 
 END;
-  $filters = sdfGetFilters();
-  foreach ($filters as $filter) {
-    $filter = str_replace('_', ' ', $filter);
-    $text .= "	<option>$filter</option>\n";
-  }
-  $text .=<<<END
+	$filters = sdfGetFilters();
+	foreach ($filters as $filter) {
+		$filter = str_replace('_', ' ', $filter);
+		$text .= "	<option>$filter</option>\n";
+	}
+	$text .=<<<END
 	</select>
 	</p>
 	<p>$label_label <input size="25" name="filter_label" value=""></p>
@@ -199,13 +199,13 @@ END;
 
 END;
 
-  $text .= "	</form>\n";
+	$text .= "	</form>\n";
 
-  $wgOut->addLink( array(
-    'rel' => 'stylesheet',
-    'type' => 'text/css',
-    'media' => "screen, projection",
-    'href' => $sdgScriptPath . "/skins/SD_main.css"
-  ));
-  $wgOut->addHTML($text);
+	$wgOut->addLink( array(
+		'rel' => 'stylesheet',
+		'type' => 'text/css',
+		'media' => "screen, projection",
+		'href' => $sdgScriptPath . "/skins/SD_main.css"
+	));
+	$wgOut->addHTML($text);
 }
