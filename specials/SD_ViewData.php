@@ -270,6 +270,43 @@ class ViewDataPage extends QueryPage {
 		return $possible_dates;
 	}
 
+	/**
+	 * Gets an array of all values that the property belonging to the
+	 * passed-in filter has, and, for each one, the number of pages
+	 * that match that value.
+	 */
+	function getAllValues($filter) {
+		$possible_values = array();
+		$property_value = str_replace(' ', '_', $filter->property);
+		$dbr = wfGetDB( DB_SLAVE );
+		if ($filter->is_relation) {
+			$property_table_name = $dbr->tableName('smw_relations');
+			$property_table_nickname = "r";
+			$property_field = 'relation_title';
+			$value_field = 'object_title';
+		} else {
+			$property_table_name = $dbr->tableName('smw_attributes');
+			$property_table_nickname = "a";
+			$property_field = 'attribute_title';
+			$value_field = 'value_xsd';
+		}
+		$sql = "SELECT $value_field, count(*)
+			FROM semantic_drilldown_values sdv 
+			JOIN $property_table_name $property_table_nickname
+			ON sdv.page_id = $property_table_nickname.subject_id
+			WHERE $property_table_nickname.$property_field = '$property_value'
+			AND $value_field != ''
+			GROUP BY $value_field
+			ORDER BY $value_field";
+		$res = $dbr->query($sql);
+		while ($row = $dbr->fetchRow($res)) {
+			$value_string = str_replace('_', ' ', $row[0]);
+			$possible_values[$value_string] = $row[1];
+		}
+		$dbr->freeResult($res);
+		return $possible_values;
+	}
+
 	function getName() {
 		return "ViewData";
 	}
@@ -371,13 +408,17 @@ class ViewDataPage extends QueryPage {
 			$results_line = "";
 			$rf->createTempTable();
 			$found_results_for_filter = false;
-			if ($rf->time_period != NULL) {
-				$date_values = $this->getTimePeriodValues($rf);
-				if (count($date_values) > 0)
+			if (count($rf->allowed_values) == 0) {
+				if ($rf->time_period != NULL) {
+					$found_values = $this->getTimePeriodValues($rf);
+				} else {
+					$found_values = $this->getAllValues($rf);
+				}
+				if (count($found_values) > 0)
 					$found_results_for_filter = true;
-				foreach ($date_values as $date_str => $num_results) {
+				foreach ($found_values as $value_str => $num_results) {
 					if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
-					$results_line .= $skin->makeLinkObj($this->view_data_title, $date_str . " ($num_results)", $cur_url . urlencode(str_replace(' ', '_', $rf->name)) . '=' . str_replace(' ', '_', $date_str));
+					$results_line .= $skin->makeLinkObj($this->view_data_title, $value_str . " ($num_results)", $cur_url . urlencode(str_replace(' ', '_', $rf->name)) . '=' . str_replace(' ', '_', $value_str));
 				}
 			} else {
 				foreach ($rf->allowed_values as $value) {
@@ -391,8 +432,9 @@ class ViewDataPage extends QueryPage {
 				}
 			}
 			// now get values for 'Other' and 'None', as well
-			// - don't show 'Other' if this is a date filter
-			if ($rf->time_period == NULL) {
+			// - don't show 'Other' if filter values were
+			// obtained dynamically
+			if (count($rf->allowed_values) > 0) {
 				$other_filter = SDAppliedFilter::create($rf, ' other');
 				$num_results = $this->getNumResults($this->subcategory, $this->all_subcategories, $other_filter);
 				if ($num_results > 0) {
