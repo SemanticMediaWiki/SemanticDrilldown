@@ -18,7 +18,7 @@ class SD_LanguageDe extends SD_Language {
 
 /* private */ var $m_UserMessages = array(
 	'viewdata' => 'Daten ansehen',
-	'sd_viewdata_choosecategory' => 'Wählen Sie eine Kategorie',
+	'sd_viewdata_choosecategory' => 'Wähl eine Kategorie',
 	'sd_viewdata_viewcategory' => 'Kategorie ansehen',
 	'sd_viewdata_subcategory' => 'Unterkategorie',
 	'sd_viewdata_other' => 'Anderes',
@@ -33,9 +33,7 @@ class SD_LanguageDe extends SD_Language {
 	'sd_createfilter_usedatevalues' => 'Verwende folgende Zeitangabe für diesen Filter:',
 	'sd_createfilter_entervalues' => 'Verwende diese Werte für den Filter (Werte durch Komma getrennt eingeben. Wenn ein Wert ein Komma enthält, mit "\," ersetzen.):',
 	'sd_createfilter_label' => 'Bezeichnung dieses Filters (optional):',
-	'sd_createfilter_requirefilter' => 'Bevor dieser Filter angezeigt wird,
-muss folgender anderer Filter gesetzt sein:',
-
+	'sd_createfilter_requirefilter' => 'Bevor dieser Filter angezeigt wird, muss folgender anderer Filter gesetzt sein:',
 	'sd_blank_error' => 'darf nicht leer sein'
 );
 
