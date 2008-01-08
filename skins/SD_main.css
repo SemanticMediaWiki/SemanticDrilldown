@@ -14,7 +14,7 @@ div.drilldown_header {
 	font-weight: bold;
 	padding: 5px;
         border: 1px #aaaaaa solid;
-	background: #f2f2f2;
+	background: #e0e0e0;
 }
 
 div.drilldown_category {
@@ -23,7 +23,7 @@ div.drilldown_category {
         border-bottom: 1px #aaaaaa solid;
 	padding: 4px;
 	margin: 0px;
-	background: #f2f2f2;
+	background: #e0e0e0;
 }
 
 div.selected_category {
