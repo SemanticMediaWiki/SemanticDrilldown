@@ -21,14 +21,14 @@ class SDFilter {
 
 		$f = new SDFilter();
 		$f->name = $filter_name;
-		$relations_used = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, $sd_props[SD_SP_COVERS_PROPERTY], true, SMW_NS_RELATION);
+		$relations_used = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_COVERS_PROPERTY, true, SMW_NS_RELATION);
 		$smw_version = SMW_VERSION;
 		if ($smw_version{0} == '0') {
 			$attribute_ns = SMW_NS_ATTRIBUTE;
 		} else {
 			$attribute_ns = SMW_NS_PROPERTY;
 		}
-		$attributes_used = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, $sd_props[SD_SP_COVERS_PROPERTY], true, $attribute_ns);
+		$attributes_used = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_COVERS_PROPERTY, true, $attribute_ns);
 		if (count($relations_used) > 0) {
 			$f->property = $relations_used[0];
 			$f->is_relation = true;
@@ -53,8 +53,8 @@ class SDFilter {
 				}
 			}
 		}
-		$categories = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, $sd_props[SD_SP_GETS_VALUES_FROM_CATEGORY], true, NS_CATEGORY);
-		$time_periods = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, $sd_props[SD_SP_USES_TIME_PERIOD], false, NS_MAIN);
+		$categories = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_GETS_VALUES_FROM_CATEGORY, true, NS_CATEGORY);
+		$time_periods = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_USES_TIME_PERIOD, false, NS_MAIN);
 		if (count($categories) > 0) {
 			$f->category = $categories[0];
 			$f->allowed_values = sdfGetCategoryChildren($f->category, false, 5);
@@ -62,7 +62,7 @@ class SDFilter {
 			$f->time_period = $time_periods[0];
 			$f->allowed_values = array();
 		} else {
-			$values = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, $sd_props[SD_SP_HAS_VALUE], false, NS_MAIN);
+			$values = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_HAS_VALUE, false, NS_MAIN);
 			$f->allowed_values = $values;
 		}
 		// set list of possible applied filters if allowed values

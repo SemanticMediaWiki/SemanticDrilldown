@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.2.2');
+define('SD_VERSION','0.3');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -38,7 +38,7 @@ function sdgSetupExtension() {
 	/***** register specials                  *****/
 	/**********************************************/
 
-	require_once($sdgIP . '/specials/SD_ViewData.php');
+	require_once($sdgIP . '/specials/SD_BrowseData.php');
 	require_once($sdgIP . '/specials/SD_Filters.php');
 	require_once($sdgIP . '/specials/SD_CreateFilter.php');
 
@@ -68,100 +68,100 @@ function sdgSetupExtension() {
 /***** namespace settings                 *****/
 /**********************************************/
 
-	/**
-	 * Init the additional namespaces used by Semantic Drilldown.
-	 */
-	function sdfInitNamespaces() {
-		global $sdgNamespaceIndex, $wgExtraNamespaces, $wgNamespaceAliases, $wgNamespacesWithSubpages, $smwgNamespacesWithSemanticLinks;
-		global $wgLanguageCode, $sdgContLang;
+/**
+ * Init the additional namespaces used by Semantic Drilldown.
+ */
+function sdfInitNamespaces() {
+	global $sdgNamespaceIndex, $wgExtraNamespaces, $wgNamespaceAliases, $wgNamespacesWithSubpages, $smwgNamespacesWithSemanticLinks;
+	global $wgLanguageCode, $sdgContLang;
 
-		if (!isset($sdgNamespaceIndex)) {
-			$sdgNamespaceIndex = 170;
-		}
-
-		define('SD_NS_FILTER',       $sdgNamespaceIndex);
-		define('SD_NS_FILTER_TALK',  $sdgNamespaceIndex+1);
-
-		sdfInitContentLanguage($wgLanguageCode);
-
-		// Register namespace identifiers
-		if (!is_array($wgExtraNamespaces)) { $wgExtraNamespaces=array(); }
-		$wgExtraNamespaces = $wgExtraNamespaces + $sdgContLang->getNamespaces();
-		// this code doesn't work, for some reason - leave it out for now
-		//$wgNamespaceAliases = $wgNamespaceAliases + $sdgContLang->getNamespaceAliases();
-
-		// Support subpages only for talk pages by default
-		$wgNamespacesWithSubpages = $wgNamespacesWithSubpages + array(
-			      SD_NS_FILTER_TALK => true
-		);
-
-		// Enable semantic links on filter pages
-		$smwgNamespacesWithSemanticLinks = $smwgNamespacesWithSemanticLinks + array(
-                      SD_NS_FILTER => true,
-                      SD_NS_FILTER_TALK => false
-		);
+	if (!isset($sdgNamespaceIndex)) {
+		$sdgNamespaceIndex = 170;
 	}
+
+	define('SD_NS_FILTER',       $sdgNamespaceIndex);
+	define('SD_NS_FILTER_TALK',  $sdgNamespaceIndex+1);
+
+	sdfInitContentLanguage($wgLanguageCode);
+
+	// Register namespace identifiers
+	if (!is_array($wgExtraNamespaces)) { $wgExtraNamespaces=array(); }
+	$wgExtraNamespaces = $wgExtraNamespaces + $sdgContLang->getNamespaces();
+	// this code doesn't work, for some reason - leave it out for now
+	//$wgNamespaceAliases = $wgNamespaceAliases + $sdgContLang->getNamespaceAliases();
+
+	// Support subpages only for talk pages by default
+	$wgNamespacesWithSubpages = $wgNamespacesWithSubpages + array(
+		      SD_NS_FILTER_TALK => true
+	);
+
+	// Enable semantic links on filter pages
+	$smwgNamespacesWithSemanticLinks = $smwgNamespacesWithSemanticLinks + array(
+		SD_NS_FILTER => true,
+		SD_NS_FILTER_TALK => false
+	);
+}
 
 /**********************************************/
 /***** language settings                  *****/
 /**********************************************/
 
-	/**
-	 * Initialise a global language object for content language. This
-	 * must happen early on, even before user language is known, to
-	 * determine labels for additional namespaces. In contrast, messages
-	 * can be initialised much later when they are actually needed.
-	 */
-	function sdfInitContentLanguage($langcode) {
-		global $sdgIP, $sdgContLang;
+/**
+ * Initialise a global language object for content language. This
+ * must happen early on, even before user language is known, to
+ * determine labels for additional namespaces. In contrast, messages
+ * can be initialised much later when they are actually needed.
+ */
+function sdfInitContentLanguage($langcode) {
+	global $sdgIP, $sdgContLang;
 
-		if (!empty($sdgContLang)) { return; }
+	if (!empty($sdgContLang)) { return; }
 
-		$sdContLangClass = 'SD_Language' . str_replace( '-', '_', ucfirst( $langcode ) );
+	$sdContLangClass = 'SD_Language' . str_replace( '-', '_', ucfirst( $langcode ) );
 
-		if (file_exists($sdgIP . '/languages/'. $sdContLangClass . '.php')) {
-			include_once( $sdgIP . '/languages/'. $sdContLangClass . '.php' );
-		}
-
-		// fallback if language not supported
-		if ( !class_exists($sdContLangClass)) {
-			include_once($sdgIP . '/languages/SD_LanguageEn.php');
-			$sdContLangClass = 'SD_LanguageEn';
-		}
-
-		$sdgContLang = new $sdContLangClass();
+	if (file_exists($sdgIP . '/languages/'. $sdContLangClass . '.php')) {
+		include_once( $sdgIP . '/languages/'. $sdContLangClass . '.php' );
 	}
 
-	/**
-	 * Initialise the global language object for user language. This
-	 * must happen after the content language was initialised, since
-	 * this language is used as a fallback.
-	 */
-	function sdfInitUserLanguage($langcode) {
-		global $sdgIP, $sdgLang;
-
-		if (!empty($sdgLang)) { return; }
-
-		$sdLangClass = 'SD_Language' . str_replace( '-', '_', ucfirst( $langcode ) );
-
-		if (file_exists($sdgIP . '/languages/'. $sdLangClass . '.php')) {
-			include_once( $sdgIP . '/languages/'. $sdLangClass . '.php' );
-		}
-
-		// fallback if language not supported
-		if ( !class_exists($sdLangClass)) {
-			global $sdgContLang;
-			$sdgLang = $sdgContLang;
-		} else {
-			$sdgLang = new $sdLangClass();
-		}
+	// fallback if language not supported
+	if ( !class_exists($sdContLangClass)) {
+		include_once($sdgIP . '/languages/SD_LanguageEn.php');
+		$sdContLangClass = 'SD_LanguageEn';
 	}
+
+	$sdgContLang = new $sdContLangClass();
+}
+
+/**
+ * Initialise the global language object for user language. This
+ * must happen after the content language was initialised, since
+ * this language is used as a fallback.
+ */
+function sdfInitUserLanguage($langcode) {
+	global $sdgIP, $sdgLang;
+
+	if (!empty($sdgLang)) { return; }
+
+	$sdLangClass = 'SD_Language' . str_replace( '-', '_', ucfirst( $langcode ) );
+	if (file_exists($sdgIP . '/languages/'. $sdLangClass . '.php')) {
+		include_once( $sdgIP . '/languages/'. $sdLangClass . '.php' );
+	}
+
+	// fallback if language not supported
+	if ( !class_exists($sdLangClass)) {
+		global $sdgContLang;
+		$sdgLang = $sdgContLang;
+	} else {
+		$sdgLang = new $sdLangClass();
+	}
+}
 
 	/**
 	 * Initialise messages. These settings must be applied later on, since
 	 * the MessageCache does not exist yet when the settings are loaded in
 	 * LocalSettings.php.
 	 */
+/*
 	function sdfInitMessages() {
 		global $sdgMessagesInPlace; // record whether the function was already called
 		if ($sdgMessagesInPlace) { return; }
@@ -176,6 +176,37 @@ function sdgSetupExtension() {
 
 		$sdgMessagesInPlace = true;
 	}
+*/
+
+/**
+ * Initialize messages - these settings must be applied later on, since
+ * the MessageCache does not exist yet when the settings are loaded in
+ * LocalSettings.php.
+ * Function based on version in ContributionScores extension
+ */
+function sdfInitMessages() {
+        global $wgVersion, $wgExtensionFunctions;
+        if (version_compare($wgVersion, '1.11', '>=' )) {
+                wfLoadExtensionMessages( 'SemanticDrilldown' );
+        } else {
+                $wgExtensionFunctions[] = 'sdfLoadMessagesManually';
+        }
+}
+
+/**
+ * Setting of message cache for versions of MediaWiki that do not support
+ * wgExtensionFunctions - based on ceContributionScores() in
+ * ContributionScores extension
+ */
+function sdfLoadMessagesManually() {
+        global $sdgIP, $wgMessageCache;
+
+        # add messages
+        require($sdgIP . '/languages/SD_Messages.php');
+        foreach($messages as $key => $value) {
+                $wgMessageCache->addMessages($messages[$key], $key);
+        }
+}
 
 /**********************************************/
 /***** other global helpers               *****/
@@ -305,9 +336,12 @@ function sdfGetFilters() {
  * page points to with a specific property, that also match some other
  * constraints
  */
-function sdfGetValuesForProperty($subject, $subject_namespace, $property, $is_relation, $object_namespace) {
+function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $is_relation, $object_namespace) {
+	global $sdgContLang;
+
+	$sd_props = $sdgContLang->getSpecialPropertiesArray();
 	$values = array();
-	$property = str_replace(' ', '_', $property);
+	$property = str_replace(' ', '_', $sd_props[$prop]);
 	$subject = str_replace(' ', '_', $subject);
 
 	$smw_version = SMW_VERSION;
@@ -327,7 +361,15 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $property, $is_re
 			FROM $table_name
 			WHERE subject_title = '$subject'
 			AND subject_namespace = $subject_namespace
-			AND $property_field = '$property' ";
+			AND ($property_field = '$property' ";
+		// try aliases as well
+		foreach ($sdgContLang->getSpecialPropertyAliases() as $alias => $cur_prop) {
+			if ($cur_prop == $prop) {
+				$sql .= " OR $property_field = '" . str_replace(' ', '_', $alias) . "'";
+			}
+		}
+		$sql .= ')';
+
 		if ($is_relation) {
 			$sql .= "AND object_namespace = $object_namespace";
 		}
@@ -344,6 +386,16 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $property, $is_re
 		foreach ($prop_vals as $prop_val) {
 			$values[] = $prop_val->getTitle()->getText();
 		}
+		// try aliases as well
+		foreach ($sdgContLang->getSpecialPropertyAliases() as $alias => $cur_prop) {
+			if ($cur_prop == $prop) {
+				$property_title = Title::newFromText($property, $object_namespace);
+				$prop_vals = $store->getPropertyValues($subject_title, $property_title);
+				foreach ($prop_vals as $prop_val) {
+					$values[] = $prop_val->getTitle()->getText();
+				}
+			}
+		}
 	}
 	return $values;
 }
@@ -356,7 +408,7 @@ function sdfLoadFiltersForCategory($category) {
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
 
 	$filters = array();
-	$filter_names = sdfGetValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, $sd_props[SD_SP_HAS_FILTER], true, SD_NS_FILTER);
+	$filter_names = sdfGetValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, SD_SP_HAS_FILTER, true, SD_NS_FILTER);
 	foreach ($filter_names as $filter_name) {
 		$filters[] = SDFilter::load($filter_name);
 	}

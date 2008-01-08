@@ -12,26 +12,26 @@ if (!defined('MEDIAWIKI')) die();
 global $IP;
 require_once( "$IP/includes/SpecialPage.php" );
 
-SpecialPage::addPage( new SpecialPage('ViewData','',true,'doSpecialViewData',false) );
+SpecialPage::addPage( new SpecialPage('BrowseData','',true,'doSpecialBrowseData',false) );
 
-class ViewDataPage extends QueryPage {
+class BrowseDataPage extends QueryPage {
 	var $category = "";
 	var $subcategory = "";
 	var $next_level_subcategories = array();
 	var $all_subcategories = array();
 	var $applied_filters = array();
 	var $remaining_filters = array();
-	var $view_data_title;
+	var $browse_data_title;
 
 	/**
 	 * Initialize the variables of this page
 	 */
-	function ViewDataPage($category, $subcategory, $applied_filters, $remaining_filters) {
+	function BrowseDataPage($category, $subcategory, $applied_filters, $remaining_filters) {
 		$this->category = $category;
 		$this->subcategory = $subcategory;
 		$this->applied_filters = $applied_filters;
 		$this->remaining_filters = $remaining_filters;
-		$this->view_data_title = Title::newFromText('ViewData', NS_SPECIAL);
+		$this->browse_data_title = Title::newFromText('BrowseData', NS_SPECIAL);
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$categorylinks = $dbr->tableName( 'categorylinks' );
@@ -308,7 +308,7 @@ class ViewDataPage extends QueryPage {
 	}
 
 	function getName() {
-		return "ViewData";
+		return "BrowseData";
 	}
 
 	function isExpensive() { return false; }
@@ -320,45 +320,52 @@ class ViewDataPage extends QueryPage {
 		global $sdgContLang;
 
 		$skin = $wgUser->getSkin();
-		$view_data_title = Title::newFromText('ViewData', NS_SPECIAL);
+		$browse_data_title = Title::newFromText('BrowseData', NS_SPECIAL);
 		$categories = sdfGetTopLevelCategories();
 		$sd_props = $sdgContLang->getSpecialPropertiesArray();
-		$subcategory_text = wfMsg('sd_viewdata_subcategory');
-		$choose_category_text = wfMsg('sd_viewdata_choosecategory');
-		$other_str = wfMsg('sd_viewdata_other');
-		$none_str = wfMsg('sd_viewdata_none');
+		$subcategory_text = wfMsg('sd_browsedata_subcategory');
+		$choose_category_text = wfMsg('sd_browsedata_choosecategory');
+		$other_str = wfMsg('sd_browsedata_other');
+		$none_str = wfMsg('sd_browsedata_none');
 
 		$header = "<div class=\"drilldown_categories\">\n";
-		$header .= "<p><strong>$choose_category_text:</strong>\n";
+		$header .= "<p><div class=\"drilldown_header\">$choose_category_text:</div>\n";
 		foreach ($categories as $i => $category) {
-			if ($i > 0) { $header .= " &middot; "; }
+			//if ($i > 0) { $header .= " &middot; "; }
 			$category_children = sdfGetCategoryChildren($category, false, 5);
 			$category_str = $category . " (" . count($category_children) . ")";
-			if ($this->category == $category)
+			if ($this->category == $category) {
+				$header .= "<div class=\"drilldown_category selected_category\">\n";
 				$header .= $category_str;
-			else
-				$header .= $skin->makeLinkObj($this->view_data_title, $category_str, $this->makeURLQuery($category, array()));
+			} else {
+				$header .= "<div class=\"drilldown_category\">\n";
+				$category_url = $browse_data_title->getFullURL($this->makeURLQuery($category, array()));
+				$header .= '<a href="' . $category_url . '" title="Choose category">' . $category_str . '</a>';
+			}
+			$header .= "</div>\n";
 		}
 		$header .= "</p>\n";
 		$header .= "</div>\n";
 		$header .= '<h3>';
-		if (count ($this->applied_filters) > 0 || $this->subcategory)
-			$header .= $skin->makeLinkObj($this->view_data_title, $this->category, $this->makeURLQuery($this->category, array()));
-		else
+		if (count ($this->applied_filters) > 0 || $this->subcategory) {
+			$category_url = $browse_data_title->getFullURL($this->makeURLQuery($this->category, array()));
+			$header .= '<a href="' . $category_url . '" title="' . wfMsg('sd_browsedata_resetfilters') . '">' . $this->category . '</a>';
+		} else
 			$header .= $this->category;
 		// link to actual category
 		$cat_title = Title::newFromText($this->category, NS_CATEGORY);
 		$sk = $wgUser->getSkin();
-		$header .= " (" . $sk->makeKnownLinkObj($cat_title, wfMsg('sd_viewdata_viewcategory')) . ")";;
+		$header .= " (" . $sk->makeKnownLinkObj($cat_title, wfMsg('sd_browsedata_viewcategory')) . ")";;
 		if ($this->subcategory) {
 			$header .= " > ";
 			$filter_string = "$subcategory_text: " . str_replace('_', ' ', $this->subcategory);
 			$header .= $filter_string;
-			$header .= ' (' . $skin->makeLinkObj($this->view_data_title, 'x', $this->makeURLQuery($this->category, $this->applied_filters)) . ') ';
+			$remove_filter_url = $browse_data_title->getFullURL($this->makeURLQuery($this->category, $this->applied_filters));
+			$header .= ' (<a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removesubcategoryfilter') . '">x</a>)';
 		}
 		foreach ($this->applied_filters as $i => $af) {
 			$header .= " > ";
-			$labels_for_filter = sdfGetValuesForProperty($af->filter->name, SD_NS_FILTER, $sd_props[SD_SP_HAS_LABEL], false, NS_MAIN);
+			$labels_for_filter = sdfGetValuesForProperty($af->filter->name, SD_NS_FILTER, SD_SP_HAS_LABEL, false, NS_MAIN);
 			if (count($labels_for_filter) > 0) {
 				$filter_label = $labels_for_filter[0];
 			} else {
@@ -375,7 +382,8 @@ class ViewDataPage extends QueryPage {
 			$header .= $filter_string;
 			$temp_filters_array = $this->applied_filters;
 			array_splice($temp_filters_array, $i, 1);
-			$header .= ' (' . $skin->makeLinkObj($this->view_data_title, 'x', $this->makeURLQuery($this->category, $temp_filters_array, $this->subcategory)) . ') ';
+			$remove_filter_url = $browse_data_title->getFullURL($this->makeURLQuery($this->category, $temp_filters_array, $this->subcategory));
+			$header .= ' (<a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removefilter') . '">x</a>)';
 		}
 		$header .= "</h3>\n";
 		// display the list of subcategories on one line, and below
@@ -383,7 +391,8 @@ class ViewDataPage extends QueryPage {
 		// contain the possible values, and, in parentheses, the
 		// number of pages that match that value
 		$header .= "<div class=\"drilldown_filters\">\n";
-		$cur_url = $this->makeURLQuery($this->category, $this->applied_filters, $this->subcategory);
+		$title = Title::newFromText('BrowseData', NS_SPECIAL);
+		$cur_url = $title->getFullURL($this->makeURLQuery($this->category, $this->applied_filters, $this->subcategory));
 		$cur_url .= "&";
 		$this->createTempTable($this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters);
 		$num_printed_values = 0;
@@ -394,7 +403,9 @@ class ViewDataPage extends QueryPage {
 				$num_results = $this->getNumResults($subcat, $further_subcats);
 				if ($num_results > 0) {
 					if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
-					$results_line .= $skin->makeLinkObj($this->view_data_title, str_replace('_', ' ', $subcat) . " ($num_results)", $cur_url . '_subcat=' . urlencode($subcat));
+					$filter_text = str_replace('_', ' ', $subcat) . " ($num_results)";
+					$filter_url = $cur_url . '_subcat=' . urlencode($subcat);
+					$results_line .= '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_filterbysubcategory') . '">' . $filter_text . '</a>';
 				}
 			}
 			if ($results_line != "") {
@@ -418,7 +429,9 @@ class ViewDataPage extends QueryPage {
 					$found_results_for_filter = true;
 				foreach ($found_values as $value_str => $num_results) {
 					if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
-					$results_line .= $skin->makeLinkObj($this->view_data_title, $value_str . " ($num_results)", $cur_url . urlencode(str_replace(' ', '_', $rf->name)) . '=' . str_replace(' ', '_', $value_str));
+					$filter_text = $value_str . " ($num_results)";
+					$filter_url = $cur_url . urlencode(str_replace(' ', '_', $rf->name)) . '=' . str_replace(' ', '_', $value_str);
+					$results_line .= '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_filterbyvalue') . '">' . $filter_text . '</a>';
 				}
 			} else {
 				foreach ($rf->allowed_values as $value) {
@@ -427,7 +440,9 @@ class ViewDataPage extends QueryPage {
 					if ($num_results > 0) {
 						$found_results_for_filter = true;
 						if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
-						$results_line .= $skin->makeLinkObj($this->view_data_title, str_replace('_', ' ', $value) . " ($num_results)", $cur_url . urlencode(str_replace(' ', '_', $rf->name)) . '=' . urlencode(str_replace(' ', '_', $value)));
+						$filter_text = str_replace('_', ' ', $value) . " ($num_results)";
+						$filter_url = $cur_url . urlencode(str_replace(' ', '_', $rf->name)) . '=' . urlencode(str_replace(' ', '_', $value));
+						$results_line .= '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_filterbyvalue') . '">' . $filter_text . '</a>';
 					}
 				}
 			}
@@ -440,7 +455,9 @@ class ViewDataPage extends QueryPage {
 				if ($num_results > 0) {
 					$found_results_for_filter = true;
 					if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
-					$results_line .= $skin->makeLinkObj($this->view_data_title, "$other_str ($num_results)", $cur_url . urlencode($rf->name) . '=_other');
+					$filter_text = "$other_str ($num_results)";
+					$filter_url = $cur_url . urlencode($rf->name) . '=_other';
+					$results_line .= '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_otherfilter') . '">' . $filter_text . '</a>';
 				}
 			}
 			// show 'None' only if any other results have been found
@@ -449,7 +466,9 @@ class ViewDataPage extends QueryPage {
 				$num_results = $this->getNumResults($this->subcategory, $this->all_subcategories, $none_filter);
 				if ($num_results > 0) {
 					if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
-					$results_line .= $skin->makeLinkObj($this->view_data_title, "$none_str ($num_results)", $cur_url . urlencode($rf->name) . '=_none');
+					$filter_text = "$none_str ($num_results)";
+					$filter_url = $cur_url . urlencode($rf->name) . '=_none';
+					$results_line .= '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_nonefilter') . '">' . $filter_text . '</a>';
 				}
 			} else {
 			// if there weren't any results for any of the possible
@@ -458,7 +477,7 @@ class ViewDataPage extends QueryPage {
 				$results_line = "";
 			}
 			if ($results_line != "") {
-				$labels_for_filter = sdfGetValuesForProperty($rf->name, SD_NS_FILTER, $sd_props[SD_SP_HAS_LABEL], false, NS_MAIN);
+				$labels_for_filter = sdfGetValuesForProperty($rf->name, SD_NS_FILTER, SD_SP_HAS_LABEL, false, NS_MAIN);
 				if (count($labels_for_filter) > 0) {
 					$filter_label = $labels_for_filter[0];
 				} else {
@@ -507,7 +526,7 @@ class ViewDataPage extends QueryPage {
 	}
 }
 
-function doSpecialViewData() {
+function doSpecialBrowseData() {
 	global $wgRequest, $wgOut, $sdgScriptPath, $sdgContLang;
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
 
@@ -557,7 +576,7 @@ function doSpecialViewData() {
 	// it requires some other filter that hasn't been applied
 	foreach ($filters as $i => $filter) {
 		if (! $filter_used[$i]) {
-			$required_filters = sdfGetValuesForProperty($filter->name, SD_NS_FILTER, $sd_props[SD_SP_REQUIRES_FILTER], true, SD_NS_FILTER);
+			$required_filters = sdfGetValuesForProperty($filter->name, SD_NS_FILTER, SD_SP_REQUIRES_FILTER, true, SD_NS_FILTER);
 			$matched_all_required_filters = true;
 			foreach ($required_filters as $required_filter) {
 				$found_match = false;
@@ -576,6 +595,6 @@ function doSpecialViewData() {
 		}
 	}
 
-	$rep = new ViewDataPage($category, $subcategory, $applied_filters, $remaining_filters);
+	$rep = new BrowseDataPage($category, $subcategory, $applied_filters, $remaining_filters);
 	return $rep->doQuery( $offset, $limit );
 }
