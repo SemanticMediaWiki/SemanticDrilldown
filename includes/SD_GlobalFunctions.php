@@ -157,28 +157,6 @@ function sdfInitUserLanguage($langcode) {
 	}
 }
 
-	/**
-	 * Initialise messages. These settings must be applied later on, since
-	 * the MessageCache does not exist yet when the settings are loaded in
-	 * LocalSettings.php.
-	 */
-/*
-	function sdfInitMessages() {
-		global $sdgMessagesInPlace; // record whether the function was already called
-		if ($sdgMessagesInPlace) { return; }
-
-		global $wgMessageCache, $sdgContLang, $sdgLang, $wgContLang, $wgLang;
-		// make sure that language objects exist
-		sdfInitContentLanguage($wgContLang->getCode());
-		sdfInitUserLanguage($wgLang->getCode());
-
-		$wgMessageCache->addMessages($sdgContLang->getContentMsgArray(), $wgContLang->getCode());
-		$wgMessageCache->addMessages($sdgLang->getUserMsgArray(), $wgLang->getCode());
-
-		$sdgMessagesInPlace = true;
-	}
-*/
-
 /**
  * Initialize messages - these settings must be applied later on, since
  * the MessageCache does not exist yet when the settings are loaded in
@@ -389,10 +367,12 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $is_relati
 	} else {
 		$store = smwfGetStore();
 		$subject_title = Title::newFromText($subject, $subject_namespace);
-		$property_title = Title::newFromText($property, $object_namespace);
-		$prop_vals = $store->getPropertyValues($subject_title, $property_title);
-		foreach ($prop_vals as $prop_val) {
-			$values[] = $prop_val->getTitle()->getText();
+		if ($property != '') {
+			$property_title = Title::newFromText($property, $object_namespace);
+			$prop_vals = $store->getPropertyValues($subject_title, $property_title);
+			foreach ($prop_vals as $prop_val) {
+				$values[] = $prop_val->getTitle()->getText();
+			}
 		}
 		// try aliases as well
 		foreach ($sdgContLang->getSpecialPropertyAliases() as $alias => $cur_prop) {
