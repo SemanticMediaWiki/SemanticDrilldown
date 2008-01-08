@@ -26,7 +26,7 @@ $messages['en'] = array(
         'sd_browsedata_removesubcategoryfilter' => 'Remove this subcategory filter',
         'sd_browsedata_resetfilters' => 'Reset filters',
 	'filters' => 'Filters',
-	'sd_filters_docu' => 'The following filters exist in the wiki:',
+	'sd_filters_docu' => 'The following filters exist in {{SITENAME}}:',
 	'createfilter' => 'Create a filter',
 	'sd_createfilter_name' => 'Name:',
 	'sd_createfilter_property' => 'Property that this filter covers:',
@@ -120,6 +120,45 @@ $messages['fa'] = array(
 	'sd_filter_haslabel' => 'برچسب $1 دارد.',
 );
 
+/** Dutch (Nederlands)
+ * @author Siebrand
+ * @author SPQRobin
+ */
+$messages['nl'] = array(
+	'browsedata'                            => 'Gegevens bekijken',
+	'sd_browsedata_choosecategory'          => 'Kies een categorie',
+	'sd_browsedata_viewcategory'            => 'categorie bekijken',
+	'sd_browsedata_subcategory'             => 'Ondercategorie',
+	'sd_browsedata_other'                   => 'Andere',
+	'sd_browsedata_none'                    => 'Geen',
+	'sd_browsedata_filterbyvalue'           => 'Op deze waarde filteren',
+	'sd_browsedata_filterbysubcategory'     => 'Op deze ondercategorie filteren',
+	'sd_browsedata_otherfilter'             => "Pagina's met een andere waarde voor deze filter tonen",
+	'sd_browsedata_nonefilter'              => "Pagina's zonder waarde voor deze filter tonen",
+	'sd_browsedata_removefilter'            => 'Deze filter verwijderen',
+	'sd_browsedata_removesubcategoryfilter' => 'Deze ondercategoriefilter verwijderen',
+	'sd_browsedata_resetfilters'            => 'Filters opnieuw instellen',
+	'filters'                               => 'Filters',
+	'sd_filters_docu'                       => 'In {{SITENAME}} bestaan de volgende filters:',
+	'createfilter'                          => 'Filter aanmaken',
+	'sd_createfilter_name'                  => 'Naam:',
+	'sd_createfilter_property'              => 'Eigenschap voor deze filter:',
+	'sd_createfilter_usepropertyvalues'     => 'Alle waarden voor deze eigenschap voor deze filter gebruiken',
+	'sd_createfilter_usecategoryvalues'     => 'Waarden voor deze filter uit de volgende categorie halen:',
+	'sd_createfilter_usedatevalues'         => 'Gebruik voor deze filter de volgende datumreeks:',
+	'sd_createfilter_entervalues'           => 'Waarden voor de filter handmatig invoeren (waarden moeten gescheiden worden door komma\'s - als de waarde een komma bevast, vervang die dan door "\\,"):',
+	'sd_createfilter_label'                 => 'Label voor deze filter (optioneel):',
+	'sd_createfilter_requirefilter'         => 'Selectie van een andere filter voor deze filter zichtbaar is vereisen:',
+	'sd_blank_error'                        => 'mag niet leeg zijn',
+	'sd_filter_coversproperty'              => 'Deze filter heeft betrekking op de eigenschap $1.',
+	'sd_filter_getsvaluesfromcategory'      => 'Het haalt de waarden van de categorie $1.',
+	'sd_filter_usestimeperiod'              => 'Het gebruikt $1 als de tijdsduur.',
+	'sd_filter_year'                        => 'Jaar',
+	'sd_filter_month'                       => 'Maand',
+	'sd_filter_hasvalues'                   => 'Het heeft de waarden $1.',
+	'sd_filter_requiresfilter'              => 'De filter $1 moet aanwezig zijn.',
+	'sd_filter_haslabel'                    => 'Het heeft het label $1.',
+);
 
 /** Mainland Chinese
  * @author Roc Michael
