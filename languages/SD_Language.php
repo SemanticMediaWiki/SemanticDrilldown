@@ -9,14 +9,27 @@
  */
 abstract class SD_Language {
 
-	// the message arrays ...
-	protected $m_ContentMessages;
-	protected $m_UserMessages;
 	protected $m_SpecialProperties;
-	protected $m_SpecialPropertyAliases = array();
 	protected $m_Namespaces;
-	protected $m_NamespaceAliases = array();
 
+	// By default, every language has English-language aliases for
+	// special properties and namespaces
+	protected $m_SpecialPropertyAliases = array(
+		// category properties
+		'Has filter' => SD_SP_HAS_FILTER,
+		// filter properties
+		'Covers property' => SD_SP_COVERS_PROPERTY,
+		'Has value' => SD_SP_HAS_VALUE,
+		'Gets values from category' => SD_SP_GETS_VALUES_FROM_CATEGORY,
+		'Uses time period' => SD_SP_USES_TIME_PERIOD,
+		'Requires filter' => SD_SP_REQUIRES_FILTER,
+		'Has label' => SD_SP_HAS_LABEL  
+	);
+
+	protected $m_NamespaceAliases = array(
+		'Filter'	=> SD_NS_FILTER,
+		'Filter_talk'	=> SD_NS_FILTER_TALK
+	);
 
 	/**
 	 * Function that returns an array of namespace identifiers.
@@ -46,19 +59,4 @@ abstract class SD_Language {
 		return $this->m_SpecialPropertyAliases;
 	}
 
-	/**
-	 * Function that returns all content messages (those that are stored
-	 * in some article, and thus cannot be translated to individual users).
-	 */
-	function getContentMsgArray() {
-		return $this->m_ContentMessages;
-	}
-
-	/**
-	 * Function that returns all user messages (those that are given only to
-	 * the current user, and thus can be given in the individual user language).
-	 */
-	function getUserMsgArray() {
-		return $this->m_UserMessages;
-	}
 }
