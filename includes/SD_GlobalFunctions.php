@@ -19,6 +19,7 @@ define('SD_SP_REQUIRES_FILTER', 6);
 define('SD_SP_HAS_LABEL', 7);
 
 $wgExtensionFunctions[] = 'sdgSetupExtension';
+$wgExtensionMessagesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Messages.php';
 
 require_once($sdgIP . '/languages/SD_Language.php');
 
@@ -297,15 +298,18 @@ function sdfGetSemanticProperties() {
 	// remove the special properties of Semantic Drilldown from this list...
 	global $sdgContLang;
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
+	$sd_prop_aliases = $sdgContLang->getSpecialPropertyAliases();
 	foreach (array_keys($all_properties) as $prop_name) {
-	if ($prop_name == $sd_props[SD_SP_COVERS_PROPERTY] ||
-	    $prop_name == $sd_props[SD_SP_GETS_VALUES_FROM_CATEGORY] ||
-	    $prop_name == $sd_props[SD_SP_USES_TIME_PERIOD] ||
-	    $prop_name == $sd_props[SD_SP_REQUIRES_FILTER] ||
-	    $prop_name == $sd_props[SD_SP_HAS_FILTER] ||
-	    $prop_name == $sd_props[SD_SP_HAS_LABEL] ||
-	    $prop_name == $sd_props[SD_SP_HAS_VALUE])
-		unset($all_properties[$prop_name]);
+		foreach ($sd_props as $prop => $label) {
+			if ($prop_name == $label) {
+				unset($all_properties[$prop_name]);
+			}
+		}
+		foreach ($sd_prop_aliases as $alias => $cur_prop) {
+			if ($prop_name == $alias) {
+				unset($all_properties[$prop_name]);
+			}
+		}
 	}
 
 	// sort properties array by the key, which is the property name
@@ -341,7 +345,11 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $is_relati
 
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
 	$values = array();
-	$property = str_replace(' ', '_', $sd_props[$prop]);
+	if (array_key_exists($prop, $sd_props)) {
+		$property = str_replace(' ', '_', $sd_props[$prop]);
+	} else {
+		$property = "";
+	}
 	$subject = str_replace(' ', '_', $subject);
 
 	$smw_version = SMW_VERSION;
@@ -389,7 +397,7 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $is_relati
 		// try aliases as well
 		foreach ($sdgContLang->getSpecialPropertyAliases() as $alias => $cur_prop) {
 			if ($cur_prop == $prop) {
-				$property_title = Title::newFromText($property, $object_namespace);
+				$property_title = Title::newFromText($alias, $object_namespace);
 				$prop_vals = $store->getPropertyValues($subject_title, $property_title);
 				foreach ($prop_vals as $prop_val) {
 					$values[] = $prop_val->getTitle()->getText();
