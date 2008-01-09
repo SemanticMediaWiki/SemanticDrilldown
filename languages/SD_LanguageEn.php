@@ -5,11 +5,17 @@
 
 class SD_LanguageEn extends SD_Language {
 
-// no need to define properties or namespaces - the English-language
-// values are already specified in the default aliases
-// (namespaces are still defined because namespace aliases don't work yet)
-
 /* private */ var $m_SpecialProperties = array(
+	//always start upper-case 	 
+	// category properties 	 
+	SD_SP_HAS_FILTER  => 'Has filter', 	 
+	// filter properties 	 
+	SD_SP_COVERS_PROPERTY  => 'Covers property', 	 
+	SD_SP_HAS_VALUE  => 'Has value', 	 
+	SD_SP_GETS_VALUES_FROM_CATEGORY => 'Gets values from category', 	 
+	SD_SP_USES_TIME_PERIOD => 'Uses time period', 	 
+	SD_SP_REQUIRES_FILTER => 'Requires filter', 	 
+	SD_SP_HAS_LABEL  => 'Has label'
 );
 
 var $m_Namespaces = array(
