@@ -49,6 +49,59 @@ $messages['en'] = array(
 	'sd_filter_haslabel' => 'It has the label $1.',
 );
 
+/** Arabic (العربية)
+ * @author Meno25
+ */
+$messages['ar'] = array(
+	'browsedata'                            => 'تصفح البيانات',
+	'sd_browsedata_choosecategory'          => 'اختر تصنيفا',
+	'sd_browsedata_viewcategory'            => 'عرض التصنيف',
+	'sd_browsedata_subcategory'             => 'تصنيف فرعي',
+	'sd_browsedata_other'                   => 'آخر',
+	'sd_browsedata_none'                    => 'لا شيء',
+	'sd_browsedata_filterbyvalue'           => 'فلترة بواسطة هذه القيمة',
+	'sd_browsedata_filterbysubcategory'     => 'فلترة بواسطة هذا التصنيف الفرعي',
+	'sd_browsedata_otherfilter'             => 'اعرض الصفحات بقيمة أخرى لهذا الفلتر',
+	'sd_browsedata_nonefilter'              => 'اعرض الصفحات التي هي بدون قيمة لهذا الفلتر',
+	'sd_browsedata_removefilter'            => 'أزل هذا الفلتر',
+	'sd_browsedata_removesubcategoryfilter' => 'أزل فلتر التصنيف الفرعي هذا',
+	'sd_browsedata_resetfilters'            => 'أعد ضبط الفلاتر',
+	'filters'                               => 'فلاتر',
+	'sd_filters_docu'                       => 'الفلاتر التالية موجودة في {{SITENAME}}:',
+	'createfilter'                          => 'إنشاء فلتر',
+	'sd_createfilter_name'                  => 'الاسم:',
+	'sd_createfilter_property'              => 'الخاصية التي يغطيها هذا الفلتر:',
+	'sd_createfilter_usepropertyvalues'     => 'استخدم كل قيم هذه الخاصية للفلتر',
+	'sd_createfilter_usecategoryvalues'     => 'احصل على القيم للفلتر من هذا التصنيف:',
+	'sd_createfilter_usedatevalues'         => 'استخدم نطاقات زمنية لهذا الفلتر بهذه الفترة الزمنية:',
+	'sd_createfilter_entervalues'           => 'أدخل القيم للفلتر يدويا (القيم ينبغي أن يتم فصلها بواسطة فاصلات - لو أن قيمة ما تحتوي على فاصلة، استبدلها ب "\\,"):',
+	'sd_createfilter_label'                 => 'علامة لهذا الفلتر (اختياري):',
+	'sd_createfilter_requirefilter'         => 'يتطلب اختيار فلتر آخر قبل أن يتم عرض هذا:',
+	'sd_blank_error'                        => 'لا يمكن أن يكون فارغا',
+	'sd_filter_coversproperty'              => 'هذا الفلتر يغطي الخاصية $1.',
+	'sd_filter_getsvaluesfromcategory'      => 'يحصل على قيمه من التصنيف $1.',
+	'sd_filter_usestimeperiod'              => 'يستخدم $1 كفترته الزمنية.',
+	'sd_filter_year'                        => 'عام',
+	'sd_filter_month'                       => 'شهر',
+	'sd_filter_hasvalues'                   => 'يمتلك القيم $1.',
+	'sd_filter_requiresfilter'              => 'يتطلب وجود الفلتر $1.',
+	'sd_filter_haslabel'                    => 'يمتلك العلامة $1.',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'sd_browsedata_choosecategory' => 'Избор на категория',
+	'sd_browsedata_subcategory'    => 'Подкатегория',
+	'sd_browsedata_removefilter'   => 'Премахване на филтъра',
+	'filters'                      => 'Филтри',
+	'createfilter'                 => 'Създаване на филтър',
+	'sd_createfilter_name'         => 'Име:',
+	'sd_filter_year'               => 'Година',
+	'sd_filter_month'              => 'Месец',
+);
+
 /** German
  * @author Bernhard Krabina
  */
@@ -118,6 +171,27 @@ $messages['fa'] = array(
 	'sd_filter_hasvalues' => 'مقادیر $1 را دارد.',
 	'sd_filter_requiresfilter' => 'به وجود فیلتر $1 احتیاج دارد.',
 	'sd_filter_haslabel' => 'برچسب $1 دارد.',
+);
+
+/** Finnish (Suomi)
+ * @author Nike
+ */
+$messages['fi'] = array(
+	'browsedata'                   => 'Datan selaus',
+	'sd_browsedata_choosecategory' => 'Valitse luokka',
+	'sd_browsedata_viewcategory'   => 'näytä luokka',
+	'sd_browsedata_subcategory'    => 'Alaluokka',
+	'sd_browsedata_other'          => 'Muu',
+	'sd_browsedata_none'           => 'Ei mikään',
+	'sd_browsedata_removefilter'   => 'Poista suodin',
+	'sd_browsedata_resetfilters'   => 'Nollaa suotimet',
+	'filters'                      => 'Suotimet',
+	'sd_filters_docu'              => 'Tässä wikissä on seuraavat suotimet:',
+	'createfilter'                 => 'Luo suodin',
+	'sd_createfilter_name'         => 'Nimi',
+	'sd_blank_error'               => 'ei voi olla tyhjä',
+	'sd_filter_year'               => 'Vuosi',
+	'sd_filter_month'              => 'Kuukausi',
 );
 
 /** Dutch (Nederlands)
@@ -236,3 +310,4 @@ $messages['zh-tw'] = array(
 	'sd_filter_hasvalues' => '其有著$1的這些值。',
 	'sd_filter_haslabel' => '其有著此一$1標籤'  ,
 );
+
