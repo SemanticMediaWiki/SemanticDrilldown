@@ -2,32 +2,30 @@
  * The main CSS file for the Semantic Drilldown extension.
  */
 
-div.drilldown_categories {
+div.drilldown_categories_wrapper {
 	float: right;
-	margin-left: 10px;
-	margin-bottom: 3px;
-	padding: 0px 25px 25px 25px;
 	background: white;
+	padding: 0px 25px 25px 25px;
+}
+
+div.drilldown_categories {
+	border: 2px #888888 solid;
 }
 
 div.drilldown_header {
 	font-weight: bold;
-	padding: 4px 10px 4px 10px;
-        border: 1px #aaaaaa solid;
+	padding: 3px 8px 3px 8px;
 	background: #e0e0e0;
 }
 
 div.drilldown_category {
-        border-left: 1px #aaaaaa solid;
-        border-right: 1px #aaaaaa solid;
-        border-bottom: 1px #aaaaaa solid;
-	padding: 4px 10px 4px 10px;
+	border-top: 1px #aaaaaa solid;
+	padding: 3px 8px 3px 8px;
 	margin: 0px;
 	background: #e0e0e0;
 }
 
 div.selected_category {
-	font-weight: bold;
 	background: white;
 }
 

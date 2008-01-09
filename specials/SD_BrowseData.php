@@ -328,8 +328,9 @@ class BrowseDataPage extends QueryPage {
 		$other_str = wfMsg('sd_browsedata_other');
 		$none_str = wfMsg('sd_browsedata_none');
 
-		$header = "<div class=\"drilldown_categories\">\n";
-		$header .= "<p><div class=\"drilldown_header\">$choose_category_text:</div>\n";
+		$header = "<div class=\"drilldown_categories_wrapper\">\n";
+		$header .= "<div class=\"drilldown_categories\">\n";
+		$header .= "<div class=\"drilldown_header\">$choose_category_text:</div>\n";
 		foreach ($categories as $i => $category) {
 			//if ($i > 0) { $header .= " &middot; "; }
 			$category_children = sdfGetCategoryChildren($category, false, 5);
@@ -344,7 +345,7 @@ class BrowseDataPage extends QueryPage {
 			}
 			$header .= "</div>\n";
 		}
-		$header .= "</p>\n";
+		$header .= "</div>\n";
 		$header .= "</div>\n";
 		$header .= '<h3>';
 		if (count ($this->applied_filters) > 0 || $this->subcategory) {
