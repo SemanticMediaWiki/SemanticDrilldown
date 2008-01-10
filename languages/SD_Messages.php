@@ -194,6 +194,84 @@ $messages['fi'] = array(
 	'sd_filter_month'              => 'Kuukausi',
 );
 
+/** French (Français)
+ * @author Grondin
+ */
+$messages['fr'] = array(
+	'browsedata'                            => 'Chercher les données',
+	'sd_browsedata_choosecategory'          => 'Choisir une catégorie',
+	'sd_browsedata_viewcategory'            => 'Voir la catégorie',
+	'sd_browsedata_subcategory'             => 'Sous-catégorie',
+	'sd_browsedata_other'                   => 'Autre',
+	'sd_browsedata_none'                    => 'Néant',
+	'sd_browsedata_filterbyvalue'           => 'Filtré par valeur',
+	'sd_browsedata_filterbysubcategory'     => 'Filtrer par cette sous-catégorie',
+	'sd_browsedata_otherfilter'             => 'Voir les pages avec une autre valeur pour ce filtre',
+	'sd_browsedata_nonefilter'              => 'Voir les pages avec aucune valeur pour ce filtre',
+	'sd_browsedata_removefilter'            => 'Retirer ce filtre',
+	'sd_browsedata_removesubcategoryfilter' => 'Retirer cette sous-catégorie de filtre',
+	'sd_browsedata_resetfilters'            => 'Remise à zéro des filtres',
+	'filters'                               => 'Filtres',
+	'sd_filters_docu'                       => 'Le filtre suivant existe sur {{SITENAME}} :',
+	'createfilter'                          => 'Créer un filtre',
+	'sd_createfilter_name'                  => 'Nom :',
+	'sd_createfilter_property'              => 'Propriété que ce filtre couvrira :',
+	'sd_createfilter_usepropertyvalues'     => 'Utiliser, pour ce filtre, toutes les valeurs de cette propriété',
+	'sd_createfilter_usecategoryvalues'     => 'Obtenir les valeurs pour ce filtre à partir de cette catégorie :',
+	'sd_createfilter_usedatevalues'         => 'Utilise des blocs de date pour ce filtre avec cette période temporelle :',
+	'sd_createfilter_entervalues'           => 'Entrer manuellement les valeurs pour ce filtre (les valeurs devront être séparées par des virgules - si une valeur contient une virgule, remplacer là avec « \\, ») :',
+	'sd_createfilter_label'                 => 'Étiquette pour ce filtre (facultatif) :',
+	'sd_createfilter_requirefilter'         => 'Nécessite un filtre devant être sélectionné avant que celui-ci soit affiché :',
+	'sd_blank_error'                        => 'ne peut être laissé en blanc',
+	'sd_filter_coversproperty'              => 'Ce filtre couvre la propriété $1.',
+	'sd_filter_getsvaluesfromcategory'      => 'Il obtient ses valeurs à partir de la catégorie $1.',
+	'sd_filter_usestimeperiod'              => 'Il utilise $1 comme durée de sa période',
+	'sd_filter_year'                        => 'Année',
+	'sd_filter_month'                       => 'Mois',
+	'sd_filter_hasvalues'                   => 'Il a $1 comme valeur',
+	'sd_filter_requiresfilter'              => 'Il nécessite la présence du filtre $1.',
+	'sd_filter_haslabel'                    => 'Il dispose du label $1.',
+);
+
+/** Upper Sorbian (Hornjoserbsce)
+ * @author Michawiki
+ */
+$messages['hsb'] = array(
+	'browsedata'                            => 'Daty přepytać',
+	'sd_browsedata_choosecategory'          => 'Wubjer kategoriju',
+	'sd_browsedata_viewcategory'            => 'Kategoriju wobhladać',
+	'sd_browsedata_subcategory'             => 'Podkategorija',
+	'sd_browsedata_other'                   => 'Druhe',
+	'sd_browsedata_none'                    => 'Žane',
+	'sd_browsedata_filterbyvalue'           => 'Po tutej hódnoće filtrować',
+	'sd_browsedata_filterbysubcategory'     => 'Po tutej podkategoriji filtorwać',
+	'sd_browsedata_otherfilter'             => 'Strony z druhej hódnotu za tutón filter pokazać',
+	'sd_browsedata_nonefilter'              => 'Strony bjez hódnoty za tutón filter pokazać',
+	'sd_browsedata_removefilter'            => 'Tutón filter wotstronić',
+	'sd_browsedata_removesubcategoryfilter' => 'Tutón podkategorijny filter wotstronić',
+	'sd_browsedata_resetfilters'            => 'Filtry wróćo stajić',
+	'filters'                               => 'Filtry',
+	'sd_filters_docu'                       => 'Slědowace filtry we {{GRAMMAR:Lokatiw|{{SITENAME}}}} eksistuja:',
+	'createfilter'                          => 'Wutwor filter',
+	'sd_createfilter_name'                  => 'Mjeno:',
+	'sd_createfilter_property'              => 'Kajkosć tutho filtra:',
+	'sd_createfilter_usepropertyvalues'     => 'Wužij wšě hódnoty tuteje kajkosće za filter',
+	'sd_createfilter_usecategoryvalues'     => 'Wobstaraj hódnoty za filter z tuteje kategorije:',
+	'sd_createfilter_usedatevalues'         => 'Wužij datumowe wotrězk za tutón filter z tutej dobu:',
+	'sd_createfilter_entervalues'           => 'Zapodaj hódnoty za filter manuelnje (hódnoty měli so z komami rozdźělić  - jeli hódnota komu wobsahuje, narunaj ju přez "\\", "):',
+	'sd_createfilter_label'                 => 'Mjeno tutoho filtra (opcionalny):',
+	'sd_createfilter_requirefilter'         => 'Zo by tutón filter zwobrazniło, je druhi filter trjeba:',
+	'sd_blank_error'                        => 'njesmě prózdny być',
+	'sd_filter_coversproperty'              => 'Tutón filter wobsahuje kajkosć $1.',
+	'sd_filter_getsvaluesfromcategory'      => 'Wobsahuje swoje hódnoty z kategorije $1.',
+	'sd_filter_usestimeperiod'              => 'Wužiwa $1 jako dobu.',
+	'sd_filter_year'                        => 'Lěto',
+	'sd_filter_month'                       => 'Měsac',
+	'sd_filter_hasvalues'                   => 'Ma hódnoty $1.',
+	'sd_filter_requiresfilter'              => 'Trjeba filter $1.',
+	'sd_filter_haslabel'                    => 'Ma mjeno $1.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  * @author SPQRobin
