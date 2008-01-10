@@ -324,7 +324,7 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $is_relati
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
 	$values = array();
 	if (array_key_exists($prop, $sd_props)) {
-		$property = str_replace(' ', '_', $sd_props[$prop]);
+		$property = $sd_props[$prop];
 	} else {
 		$property = "";
 	}
@@ -332,6 +332,7 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $is_relati
 
 	$smw_version = SMW_VERSION;
 	if ($smw_version{0} == '0') {
+		$property = str_replace(' ', '_', $property);
 		$dbr = wfGetDB( DB_SLAVE );
 		$cat_ns = NS_CATEGORY;
 		if ($is_relation) {
@@ -376,7 +377,10 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $is_relati
 		}
 		// try aliases as well
 		foreach ($sdgContLang->getSpecialPropertyAliases() as $alias => $cur_prop) {
-			if ($cur_prop == $prop) {
+			// make sure alias doesn't match actual property
+			// name - this is an issue for English, since the
+			// English-language values are used for aliases
+			if ($alias != $property && $cur_prop == $prop) {
 				$property_title = Title::newFromText($alias, $object_namespace);
 				$prop_vals = $store->getPropertyValues($subject_title, $property_title);
 				foreach ($prop_vals as $prop_val) {
