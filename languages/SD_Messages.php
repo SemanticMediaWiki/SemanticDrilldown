@@ -313,6 +313,45 @@ $messages['nl'] = array(
 	'sd_filter_haslabel'                    => 'Het heeft het label $1.',
 );
 
+/** Slovak (Slovenčina)
+ * @author Helix84
+ */
+$messages['sk'] = array(
+	'browsedata'                            => 'Prehliadať údaje',
+	'sd_browsedata_choosecategory'          => 'Vyberte kategóriu',
+	'sd_browsedata_viewcategory'            => 'zobraziť kategóriu',
+	'sd_browsedata_subcategory'             => 'Podkategória',
+	'sd_browsedata_other'                   => 'Iné',
+	'sd_browsedata_none'                    => 'Žiadne',
+	'sd_browsedata_filterbyvalue'           => 'Filtrovať podľa tejto hodnoty',
+	'sd_browsedata_filterbysubcategory'     => 'Filtrovať podľa tejto podkategórie',
+	'sd_browsedata_otherfilter'             => 'Zobraziť stránky s inou hodnotou tohto filtra',
+	'sd_browsedata_nonefilter'              => 'Zobraziť stránky s bez hodnoty tohto filtra',
+	'sd_browsedata_removefilter'            => 'Odstrániť tento filter',
+	'sd_browsedata_removesubcategoryfilter' => 'Odstrániť tento filter podkategórie',
+	'sd_browsedata_resetfilters'            => 'Resetovať filtre',
+	'filters'                               => 'Filtre',
+	'sd_filters_docu'                       => 'Na {{GRAMMAR:lokál|{{SITENAME}}}} existujú nasledovné filtre:',
+	'createfilter'                          => 'Vytvoriť filter',
+	'sd_createfilter_name'                  => 'Názov:',
+	'sd_createfilter_property'              => 'Vlastnosť, ktorú tento filter pokrýva:',
+	'sd_createfilter_usepropertyvalues'     => 'Použiť všetky hodnoty tejto vlastnosti pre tento filter',
+	'sd_createfilter_usecategoryvalues'     => 'Získať hodnoty filtra z tejto kategórie:',
+	'sd_createfilter_usedatevalues'         => 'Použiť rozsahy dátumov pre tento filter z tohoto časového intervalu:',
+	'sd_createfilter_entervalues'           => 'Zadajte hodnoty pre tento filter ručne (hodnoty by mali byť oddelené čiarkami - ak hodnota obsahuje čiarku, nahraďte ju „\\,“):',
+	'sd_createfilter_label'                 => 'Označenie tohto filtra (voliteľné):',
+	'sd_createfilter_requirefilter'         => 'Vyžadovať, aby bol vybraný iný filter než sa zobrazí tento:',
+	'sd_blank_error'                        => 'nemôže byť nevyplnené',
+	'sd_filter_coversproperty'              => 'Tento filter pokrýva vlastnosť $1.',
+	'sd_filter_getsvaluesfromcategory'      => 'Získava hodnoty z kategórie $1.',
+	'sd_filter_usestimeperiod'              => 'Používa ako časový interval $1.',
+	'sd_filter_year'                        => 'Rok',
+	'sd_filter_month'                       => 'Mesiac',
+	'sd_filter_hasvalues'                   => 'Má hodnoty $1.',
+	'sd_filter_requiresfilter'              => 'Vyžaduje prítomnosť filtra $1.',
+	'sd_filter_haslabel'                    => 'Má označenie $1.',
+);
+
 /** Mainland Chinese
  * @author Roc Michael
  */
