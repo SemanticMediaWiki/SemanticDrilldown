@@ -137,40 +137,43 @@ $messages['de'] = array(
 	'sd_filter_haslabel' => 'Hat die Bezeichnung $1.'
 );
 
-
-/** Persian
- * @author Ghassem Tofighi
+/** Persian (فارسی)
+ * @author Tofighi
  */
 $messages['fa'] = array(
-	// user messages
-	'browsedata' => 'نمایش اطلاعات',
-	'sd_browsedata_choosecategory' => 'انتخاب یک رده',
-	'sd_browsedata_viewcategory' => 'نمایش رده',
-	'sd_browsedata_subcategory' => 'زیررده',
-	'sd_browsedata_other' => 'دیگر',
-	'sd_browsedata_none' => 'هیچکدام',
-	'filters' => 'فیلترها',
-	'sd_filters_docu' => 'فیلترهای زیر در این ویکی وجود دارد:',
-	'createfilter' => 'فیلتر بسازید',
-	'sd_createfilter_name' => 'نام:',
-	'sd_createfilter_property' => 'ویژگی که این فیلتر شامل آن می‌شود:',
-	'sd_createfilter_usepropertyvalues' => 'همه مقادیر این ویژگی را برای این فیلتر به‌کار برید',
-	'sd_createfilter_usecategoryvalues' => 'مقادیر فیلتر را از این رده بگیرید:',
-	'sd_createfilter_usedatevalues' => 'بازه زمانی که به عنوان پریود زمانی این فیلتر به‌کار گرفته شود:',
-	'sd_createfilter_entervalues' => 'مقادیر فیلتر را دستی وارد کنید (مقادیر باید با کاما جدا شوند، اگر یک مقدار کاما دارد، آن‌را با "\،" جایگزین کنید):',
-	'sd_createfilter_label' => 'برچسب این فیلتر (دلخواه)',
-	'sd_createfilter_requirefilter' => 'قبل از نمایش این یکی، یک فیلتر دیگر باید انتخاب شود:',
-	'sd_blank_error' => 'نمی‌تواند خالی باشد',
-
-	// content messages
-	'sd_filter_coversproperty' => 'این فیلتر ویژگی $1 را شامل می‌شود.',
-	'sd_filter_getsvaluesfromcategory' => 'مقادیرش را از رده $1 می‌گیرد',
-	'sd_filter_usestimeperiod' => '$1 را به عنوان پریود زمانی به‌کار می‌برد',
-	'sd_filter_year' => 'سال',
-	'sd_filter_month' => 'ماه',
-	'sd_filter_hasvalues' => 'مقادیر $1 را دارد.',
-	'sd_filter_requiresfilter' => 'به وجود فیلتر $1 احتیاج دارد.',
-	'sd_filter_haslabel' => 'برچسب $1 دارد.',
+	'browsedata'                            => 'نمایش اطلاعات',
+	'sd_browsedata_choosecategory'          => 'انتخاب یک رده',
+	'sd_browsedata_viewcategory'            => 'نمایش رده',
+	'sd_browsedata_subcategory'             => 'زیررده',
+	'sd_browsedata_other'                   => 'دیگر',
+	'sd_browsedata_none'                    => 'هیچکدام',
+	'sd_browsedata_filterbyvalue'           => 'فیلتر با این مقدار',
+	'sd_browsedata_filterbysubcategory'     => 'فیلتر با این زیر رده',
+	'sd_browsedata_otherfilter'             => 'نمایش صفحاتی با مقدار دیگر برای این فیلتر',
+	'sd_browsedata_nonefilter'              => 'نمایش صفحات بدون مقدار برای این فیلتر',
+	'sd_browsedata_removefilter'            => 'حذف این فیلتر',
+	'sd_browsedata_removesubcategoryfilter' => 'حذف این فیلتر زیر رده',
+	'sd_browsedata_resetfilters'            => 'تنظیم فیلترها از نو',
+	'filters'                               => 'فیلترها',
+	'sd_filters_docu'                       => 'فیلترهای زیر در این ویکی وجود دارد:',
+	'createfilter'                          => 'فیلتر بسازید',
+	'sd_createfilter_name'                  => 'نام:',
+	'sd_createfilter_property'              => 'ویژگی که این فیلتر شامل آن می‌شود:',
+	'sd_createfilter_usepropertyvalues'     => 'همه مقادیر این ویژگی را برای این فیلتر به‌کار برید',
+	'sd_createfilter_usecategoryvalues'     => 'مقادیر فیلتر را از این رده بگیرید:',
+	'sd_createfilter_usedatevalues'         => 'بازه زمانی که به عنوان پریود زمانی این فیلتر به‌کار گرفته شود:',
+	'sd_createfilter_entervalues'           => 'مقادیر فیلتر را دستی وارد کنید (مقادیر باید با کاما جدا شوند، اگر یک مقدار کاما دارد، آن‌را با "\\،" جایگزین کنید):',
+	'sd_createfilter_label'                 => 'برچسب این فیلتر (دلخواه)',
+	'sd_createfilter_requirefilter'         => 'قبل از نمایش این یکی، یک فیلتر دیگر باید انتخاب شود:',
+	'sd_blank_error'                        => 'نمی‌تواند خالی باشد',
+	'sd_filter_coversproperty'              => 'این فیلتر ویژگی $1 را شامل می‌شود.',
+	'sd_filter_getsvaluesfromcategory'      => 'مقادیرش را از رده $1 می‌گیرد',
+	'sd_filter_usestimeperiod'              => '$1 را به عنوان پریود زمانی به‌کار می‌برد',
+	'sd_filter_year'                        => 'سال',
+	'sd_filter_month'                       => 'ماه',
+	'sd_filter_hasvalues'                   => 'مقادیر $1 را دارد.',
+	'sd_filter_requiresfilter'              => 'به وجود فیلتر $1 احتیاج دارد.',
+	'sd_filter_haslabel'                    => 'برچسب $1 دارد.',
 );
 
 /** Finnish (Suomi)
