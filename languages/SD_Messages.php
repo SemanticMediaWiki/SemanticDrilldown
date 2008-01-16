@@ -237,6 +237,20 @@ $messages['fr'] = array(
 	'sd_filter_haslabel'                    => 'Il dispose du label $1.',
 );
 
+/** Galician (Galego)
+ * @author Alma
+ */
+$messages['gl'] = array(
+	'sd_browsedata_choosecategory' => 'Elexir unha categoría',
+	'sd_browsedata_viewcategory'   => 'ver categoría',
+	'sd_browsedata_subcategory'    => 'Subcategoría',
+	'sd_browsedata_other'          => 'Outro',
+	'sd_browsedata_none'           => 'Ningún',
+	'sd_createfilter_name'         => 'Nome:',
+	'sd_filter_year'               => 'Ano',
+	'sd_filter_month'              => 'Mes',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
