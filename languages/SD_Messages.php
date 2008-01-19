@@ -49,42 +49,6 @@ $messages['en'] = array(
 	'sd_filter_haslabel' => 'It has the label $1.',
 );
 
-/** Kotava (Kotava)
- * @author Wikimistusik
- */
-$messages['avk'] = array(
-	'browsedata'                            => 'Origwigara',
-	'sd_browsedata_choosecategory'          => 'Kiblara va loma',
-	'sd_browsedata_viewcategory'            => 'Wira va loma',
-	'sd_browsedata_subcategory'             => 'Volveyloma',
-	'sd_browsedata_other'                   => 'Ar',
-	'sd_browsedata_none'                    => 'Mek',
-	'sd_browsedata_filterbyvalue'           => 'Espara kan bata voda',
-	'sd_browsedata_filterbysubcategory'     => 'Espara kan bata volveyloma',
-	'sd_browsedata_otherfilter'             => 'Nedira va bueem vadjes va ara esparavoda',
-	'sd_browsedata_nonefilter'              => 'Nedira va bueem mevadjes va bata espara',
-	'sd_browsedata_removefilter'            => 'Tioltera va bata espara',
-	'sd_browsedata_removesubcategoryfilter' => 'Tioltera va bata volveylomafa espara',
-	'sd_browsedata_resetfilters'            => 'Dimplekura va espara',
-	'filters'                               => 'Espasikieem',
-	'sd_filters_docu'                       => 'Bata espara se tid in {{SITENAME}} :',
-	'createfilter'                          => 'Redura va espara',
-	'sd_createfilter_name'                  => 'Yolt :',
-	'sd_createfilter_property'              => 'Pilkaca espanon skuna :',
-	'sd_createfilter_usepropertyvalues'     => 'Favera va vodeem ke bata esparapilkaca',
-	'sd_createfilter_usecategoryvalues'     => 'Plekura va esparavoda mal bata loma :',
-	'sd_createfilter_label'                 => 'Kral tori bata espara (rotisa) :',
-	'sd_blank_error'                        => 'me rotir vlardafa',
-	'sd_filter_coversproperty'              => 'Bata espara va $1 pilkaca skur.',
-	'sd_filter_getsvaluesfromcategory'      => 'Mal $1 loma in va voda plekur.',
-	'sd_filter_usestimeperiod'              => 'In wetce intaf ugalolk va $1 faver.',
-	'sd_filter_year'                        => 'Ilana',
-	'sd_filter_month'                       => 'Aksat',
-	'sd_filter_hasvalues'                   => 'In va $1 voda se digir.',
-	'sd_filter_requiresfilter'              => 'Batcoba va tira ke $1 espasiki kucilar.',
-	'sd_filter_haslabel'                    => 'In tir dem $1 kral.',
-);
-
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -122,6 +86,42 @@ $messages['ar'] = array(
 	'sd_filter_hasvalues'                   => 'يمتلك القيم $1.',
 	'sd_filter_requiresfilter'              => 'يتطلب وجود الفلتر $1.',
 	'sd_filter_haslabel'                    => 'يمتلك العلامة $1.',
+);
+
+/** Kotava (Kotava)
+ * @author Wikimistusik
+ */
+$messages['avk'] = array(
+	'browsedata'                            => 'Origwigara',
+	'sd_browsedata_choosecategory'          => 'Kiblara va loma',
+	'sd_browsedata_viewcategory'            => 'Wira va loma',
+	'sd_browsedata_subcategory'             => 'Volveyloma',
+	'sd_browsedata_other'                   => 'Ar',
+	'sd_browsedata_none'                    => 'Mek',
+	'sd_browsedata_filterbyvalue'           => 'Espara kan bata voda',
+	'sd_browsedata_filterbysubcategory'     => 'Espara kan bata volveyloma',
+	'sd_browsedata_otherfilter'             => 'Nedira va bueem vadjes va ara esparavoda',
+	'sd_browsedata_nonefilter'              => 'Nedira va bueem mevadjes va bata espara',
+	'sd_browsedata_removefilter'            => 'Tioltera va bata espara',
+	'sd_browsedata_removesubcategoryfilter' => 'Tioltera va bata volveylomafa espara',
+	'sd_browsedata_resetfilters'            => 'Dimplekura va espara',
+	'filters'                               => 'Espasikieem',
+	'sd_filters_docu'                       => 'Bata espara se tid in {{SITENAME}} :',
+	'createfilter'                          => 'Redura va espara',
+	'sd_createfilter_name'                  => 'Yolt :',
+	'sd_createfilter_property'              => 'Pilkaca espanon skuna :',
+	'sd_createfilter_usepropertyvalues'     => 'Favera va vodeem ke bata esparapilkaca',
+	'sd_createfilter_usecategoryvalues'     => 'Plekura va esparavoda mal bata loma :',
+	'sd_createfilter_label'                 => 'Kral tori bata espara (rotisa) :',
+	'sd_blank_error'                        => 'me rotir vlardafa',
+	'sd_filter_coversproperty'              => 'Bata espara va $1 pilkaca skur.',
+	'sd_filter_getsvaluesfromcategory'      => 'Mal $1 loma in va voda plekur.',
+	'sd_filter_usestimeperiod'              => 'In wetce intaf ugalolk va $1 faver.',
+	'sd_filter_year'                        => 'Ilana',
+	'sd_filter_month'                       => 'Aksat',
+	'sd_filter_hasvalues'                   => 'In va $1 voda se digir.',
+	'sd_filter_requiresfilter'              => 'Batcoba va tira ke $1 espasiki kucilar.',
+	'sd_filter_haslabel'                    => 'In tir dem $1 kral.',
 );
 
 /** Bulgarian (Български)
@@ -364,6 +364,45 @@ $messages['nl'] = array(
 	'sd_filter_hasvalues'                   => 'Het heeft de waarden $1.',
 	'sd_filter_requiresfilter'              => 'De filter $1 moet aanwezig zijn.',
 	'sd_filter_haslabel'                    => 'Het heeft het label $1.',
+);
+
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'browsedata'                            => 'Cercar las donadas',
+	'sd_browsedata_choosecategory'          => 'Causir una categoria',
+	'sd_browsedata_viewcategory'            => 'Veire la categoria',
+	'sd_browsedata_subcategory'             => 'Soscategoria',
+	'sd_browsedata_other'                   => 'Autre',
+	'sd_browsedata_none'                    => 'Nonrés',
+	'sd_browsedata_filterbyvalue'           => 'Filtrat per valor',
+	'sd_browsedata_filterbysubcategory'     => 'Filtrar per aquesta soscategoria',
+	'sd_browsedata_otherfilter'             => 'Veire las paginas amb una autra valor per aqueste filtre',
+	'sd_browsedata_nonefilter'              => 'Veire las paginas amb pas cap de valor per aqueste filtre',
+	'sd_browsedata_removefilter'            => 'Levar aqueste filtre',
+	'sd_browsedata_removesubcategoryfilter' => 'Levar aquesta soscategoria de filtre',
+	'sd_browsedata_resetfilters'            => 'Remesa a zèro dels filtres',
+	'filters'                               => 'Filtres',
+	'sd_filters_docu'                       => 'Lo filtre seguent existís sus {{SITENAME}} :',
+	'createfilter'                          => 'Crear un filtre',
+	'sd_createfilter_name'                  => 'Nom :',
+	'sd_createfilter_property'              => "Proprietat qu'aqueste filtre cobrirà :",
+	'sd_createfilter_usepropertyvalues'     => "Utilizar, per aqueste filtre, totas las valors d'aquesta proprietat",
+	'sd_createfilter_usecategoryvalues'     => "Obténer las valors per aqueste filtre a partir d'aquesta categoria :",
+	'sd_createfilter_usedatevalues'         => 'Utiliza de blòts de data per aqueste filtre amb aqueste periòde temporal :',
+	'sd_createfilter_entervalues'           => 'Entrar manualament las valors per aqueste filtre (las valors deuràn èsser separadas per de virgulas - se una valor conten una virgula, remplaçatz-la per « \\, ») :',
+	'sd_createfilter_label'                 => 'Etiqueta per aqueste filtre (facultatiu) :',
+	'sd_createfilter_requirefilter'         => "Necessita un filtre devent èsser seleccionat abans qu'aqueste siá afichat :",
+	'sd_blank_error'                        => 'pòt pas èsser daissat en blanc',
+	'sd_filter_coversproperty'              => 'Aqueste filtre cobrís la proprietat $1.',
+	'sd_filter_getsvaluesfromcategory'      => 'Obten sas valors a partir de la categoria $1.',
+	'sd_filter_usestimeperiod'              => 'Utiliza $1 coma durada de son periòde',
+	'sd_filter_year'                        => 'Annada',
+	'sd_filter_month'                       => 'Mes',
+	'sd_filter_hasvalues'                   => 'A $1 coma valor',
+	'sd_filter_requiresfilter'              => 'Necessita la preséncia del filtre $1.',
+	'sd_filter_haslabel'                    => 'Dispausa del labèl $1.',
 );
 
 /** Slovak (Slovenčina)
