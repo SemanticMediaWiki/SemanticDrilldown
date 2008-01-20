@@ -326,6 +326,14 @@ $messages['hsb'] = array(
 	'sd_filter_haslabel'                    => 'Ma mjeno $1.',
 );
 
+/** Hungarian (Magyar)
+ * @author Dorgan
+ */
+$messages['hu'] = array(
+	'sd_filter_year'  => 'Év',
+	'sd_filter_month' => 'Hónap',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  * @author SPQRobin
