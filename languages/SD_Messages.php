@@ -173,6 +173,16 @@ $messages['de'] = array(
 	'sd_filter_haslabel' => 'Hat die Bezeichnung $1.'
 );
 
+/** Greek (Ελληνικά)
+ * @author Consta
+ */
+$messages['el'] = array(
+	'sd_browsedata_choosecategory' => 'Επιλέξτε μια κατηγορία',
+	'filters'                      => 'Φίλτρα',
+	'sd_createfilter_name'         => 'Όνομα:',
+	'sd_filter_month'              => 'Μήνας',
+);
+
 /** Persian (فارسی)
  * @author Tofighi
  */
