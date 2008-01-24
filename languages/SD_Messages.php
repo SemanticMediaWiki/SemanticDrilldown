@@ -347,6 +347,15 @@ $messages['hu'] = array(
 	'sd_filter_month' => 'Hónap',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'sd_createfilter_name' => 'Numm:',
+	'sd_filter_year'       => 'Joer',
+	'sd_filter_month'      => 'Mount',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  * @author SPQRobin
@@ -463,6 +472,38 @@ $messages['sk'] = array(
 	'sd_filter_hasvalues'                   => 'Má hodnoty $1.',
 	'sd_filter_requiresfilter'              => 'Vyžaduje prítomnosť filtra $1.',
 	'sd_filter_haslabel'                    => 'Má označenie $1.',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'browsedata'                        => 'Doaten bekiekje',
+	'sd_browsedata_choosecategory'      => 'Wääl ne Kategorie',
+	'sd_browsedata_viewcategory'        => 'Kategorie bekiekje',
+	'sd_browsedata_subcategory'         => 'Unnerkategorie',
+	'sd_browsedata_other'               => 'Uur',
+	'sd_browsedata_none'                => 'Neen',
+	'filters'                           => 'Filter',
+	'sd_filters_docu'                   => 'Do foulgjende Filtere existierje in disse Wiki:',
+	'createfilter'                      => 'Moak n Filter',
+	'sd_createfilter_name'              => 'Noome:',
+	'sd_createfilter_property'          => 'Attribut fon dit Filter:',
+	'sd_createfilter_usepropertyvalues' => 'Ferweend aal Wäide fon dit Attribut foar dän Filter.',
+	'sd_createfilter_usecategoryvalues' => 'Ferweend do Wäide foar dän Filter fon disse Kategorie:',
+	'sd_createfilter_usedatevalues'     => 'Ferweend foulgjende Tiedangoawe foar dissen Filter:',
+	'sd_createfilter_entervalues'       => 'Ferweend disse Wäide foar dän Filter (Wäide truch Komma tränd ienreeke. Wan n Wäid n Komma änthaalt, mäd "\\,"ärsätte.):',
+	'sd_createfilter_label'             => 'Beteekenge fon dit Filter (optionoal):',
+	'sd_createfilter_requirefilter'     => 'Eer dissen Filter anwiest wäd, mout foulgjenden uur Filter sät weese:',
+	'sd_blank_error'                    => 'duur nit loos weese',
+	'sd_filter_coversproperty'          => 'Dissen Filter beträft dät Attribut $1.',
+	'sd_filter_getsvaluesfromcategory'  => 'Hie kricht sien Wäide uut ju Kategorie $1.',
+	'sd_filter_usestimeperiod'          => 'Ferwoant $1 as Tiedangoawe.',
+	'sd_filter_year'                    => 'Jier',
+	'sd_filter_month'                   => 'Mound',
+	'sd_filter_hasvalues'               => 'Häd dän Wäid $1.',
+	'sd_filter_requiresfilter'          => 'Sät dän Filter $1 foaruut.',
+	'sd_filter_haslabel'                => 'Häd ju Beteekenge $1.',
 );
 
 /** Mainland Chinese
