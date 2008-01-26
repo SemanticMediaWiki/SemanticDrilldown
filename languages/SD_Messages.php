@@ -134,6 +134,7 @@ $messages['bg'] = array(
 	'filters'                      => 'Филтри',
 	'createfilter'                 => 'Създаване на филтър',
 	'sd_createfilter_name'         => 'Име:',
+	'sd_blank_error'               => 'не може да бъде празно',
 	'sd_filter_year'               => 'Година',
 	'sd_filter_month'              => 'Месец',
 );
@@ -435,6 +436,39 @@ $messages['oc'] = array(
 	'sd_filter_haslabel'                    => 'Dispausa del labèl $1.',
 );
 
+/** Portuguese (Português)
+ * @author 555
+ */
+$messages['pt'] = array(
+	'browsedata'                            => 'Navegar pelos dados',
+	'sd_browsedata_choosecategory'          => 'Escolha uma categoria',
+	'sd_browsedata_viewcategory'            => 'ver categoria',
+	'sd_browsedata_subcategory'             => 'subcategoria',
+	'sd_browsedata_other'                   => 'Outro',
+	'sd_browsedata_none'                    => 'Nenhum',
+	'sd_browsedata_filterbyvalue'           => 'Filtrar por este valor',
+	'sd_browsedata_filterbysubcategory'     => 'Filtrar por esta subcategoria',
+	'sd_browsedata_otherfilter'             => 'Exibir páginas com outro valor para este filtro',
+	'sd_browsedata_nonefilter'              => 'Exibir páginas sem valores para este filtro',
+	'sd_browsedata_removefilter'            => 'Remover este filtro',
+	'sd_browsedata_removesubcategoryfilter' => 'Remover esta subcategoria da função de filtro',
+	'sd_browsedata_resetfilters'            => 'Zerar filtros',
+	'filters'                               => 'Filtros',
+	'sd_filters_docu'                       => '{{SITENAME}} possui os seguintes filtros:',
+	'createfilter'                          => 'Criar um filtro',
+	'sd_createfilter_name'                  => 'Nome:',
+	'sd_createfilter_label'                 => 'Etiqueta para este filtro (opcional):',
+	'sd_createfilter_requirefilter'         => 'Necessita de outro filtro seleccionado antes deste ser exibido:',
+	'sd_blank_error'                        => 'não pode estar em branco',
+	'sd_filter_coversproperty'              => 'Este filtro abrange a propriedade $1.',
+	'sd_filter_usestimeperiod'              => 'Utiliza $1 como seu período de tempo.',
+	'sd_filter_year'                        => 'Ano',
+	'sd_filter_month'                       => 'Mês',
+	'sd_filter_hasvalues'                   => 'Possui os valores $1.',
+	'sd_filter_requiresfilter'              => 'Requer a presença do filtro $1.',
+	'sd_filter_haslabel'                    => 'Possui a etiqueta $1.',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -545,41 +579,41 @@ $messages['zh-cn'] = array(
 	'sd_filter_haslabel' => '其有着此一$1标签'  ,
 );
 
-/** Taiwanese Chinese
- * @author Roc Michael
+/** ‪Taiwanese Chinese‬ (‪中文(台灣)‬)
+ * @author Roc michael
  */
 $messages['zh-tw'] = array(
-	// user messages
-	'browsedata' => '查看資料',
-	'sd_browsedata_choosecategory' => '選取某項分類(category)',
-	'sd_browsedata_viewcategory' => '查看分類頁面',
-	'sd_browsedata_subcategory' => '子分類',
-	'sd_browsedata_other' => '其他的',
-	'sd_browsedata_none' => '無',
-	'filters' => '篩選器',
-	'sd_filters_docu' => '此wiki系統內已設有如下的篩選器(filters)',
-	'createfilter' => '建立篩選器',
-	'sd_createfilter_name' => '名稱：',
-	'sd_createfilter_property' => '此一篩選器所涵蓋的性質：',
-	'sd_createfilter_usepropertyvalues' => '將此一性質的值設給篩選器所用',
-	'sd_createfilter_usecategoryvalues' => '從此分類中為篩選器取得篩選值：',
-	'sd_createfilter_usedatevalues' => '以此一期間為此篩選器設置日期範圍值：',
-	'sd_createfilter_entervalues' => '以手工賦予值的方式設置此一篩選器(其值必須以半型逗號分隔「,」，如果您的資料中已含有半型逗號，則須以「\,」符號取代)：',
-	'sd_createfilter_label' => '為此一篩選器設置標籤(選擇性的)：',
-	'sd_createfilter_requirefilter' => '在此一篩選器展示其作用之前要求須選取其他的篩選器(即此一篩選器的作用係以另一篩選器為其基礎)：',
-	'sd_createfilter_entervalues' => '以手工的方式鍵入篩選器的篩選值(其值必須以半型逗號","分隔，如果您的輸入值內包含半型逗號則須則"\,"取代):',
-	'sd_createfilter_label' => '為此一篩選選器設定標籤(選擇性的)：',
-	'sd_blank_error' => '不得為空白',
-
-	// content messages
-	'sd_filter_coversproperty' => '此篩選器涵蓋了$1性質。',
-	'sd_filter_getsvaluesfromcategory' => '其從$1分類取得它的值。',
-	'sd_filter_usestimeperiod' => '其使用「$1」做為時間期限值',
-	'sd_filter_year' => '年',
-	'sd_filter_month' => '月',
-	'sd_filter_hasvalues' => '其含有$1值。',
-	'sd_filter_requiresfilter' => '其以$1篩選器為基礎。',
-	'sd_filter_hasvalues' => '其有著$1的這些值。',
-	'sd_filter_haslabel' => '其有著此一$1標籤'  ,
+	'browsedata'                            => '瀏覽資料',
+	'sd_browsedata_choosecategory'          => '選取某項分類(category)',
+	'sd_browsedata_viewcategory'            => '查看分類頁面',
+	'sd_browsedata_subcategory'             => '子分類',
+	'sd_browsedata_other'                   => '其他的',
+	'sd_browsedata_none'                    => '無',
+	'sd_browsedata_filterbyvalue'           => '依此值設置篩選器',
+	'sd_browsedata_filterbysubcategory'     => '依此子分類(subcategory)設置篩選器',
+	'sd_browsedata_otherfilter'             => '查看屬於此篩選器中其他值的頁面，',
+	'sd_browsedata_nonefilter'              => '查看此篩選器設置條件中無任何值的頁面',
+	'sd_browsedata_removefilter'            => '移除此篩選器',
+	'sd_browsedata_removesubcategoryfilter' => '移除此子分類(subcategory)篩選器',
+	'sd_browsedata_resetfilters'            => '重置篩選器',
+	'filters'                               => '篩選器',
+	'sd_filters_docu'                       => '此wiki系統內已設有如下的篩選器(filters)',
+	'createfilter'                          => '建立篩選器',
+	'sd_createfilter_name'                  => '名稱：',
+	'sd_createfilter_property'              => '此一篩選器所涵蓋的性質：',
+	'sd_createfilter_usepropertyvalues'     => '將此一性質的值設給篩選器所用',
+	'sd_createfilter_usecategoryvalues'     => '從此分類中為篩選器取得篩選值：',
+	'sd_createfilter_usedatevalues'         => '以此一期間為此篩選器設置日期範圍值：',
+	'sd_createfilter_entervalues'           => '以手工的方式鍵入篩選器的篩選值(其值必須以半型逗號","分隔，如果您的輸入值內包含半型逗號則須則"\\,"取代):',
+	'sd_createfilter_label'                 => '為此一篩選選器設定標籤(選擇性的)：',
+	'sd_createfilter_requirefilter'         => '在此一篩選器展示其作用之前要求須選取其他的篩選器(即此一篩選器的作用係以另一篩選器為其基礎)：',
+	'sd_blank_error'                        => '不得為空白',
+	'sd_filter_coversproperty'              => '此篩選器涵蓋了$1性質。',
+	'sd_filter_getsvaluesfromcategory'      => '其從$1分類取得它的值。',
+	'sd_filter_usestimeperiod'              => '其使用「$1」做為時間期限值',
+	'sd_filter_year'                        => '年',
+	'sd_filter_month'                       => '月',
+	'sd_filter_hasvalues'                   => '其有著$1的這些值。',
+	'sd_filter_requiresfilter'              => '其以$1篩選器為基礎。',
+	'sd_filter_haslabel'                    => '其有著此一$1標籤',
 );
-
