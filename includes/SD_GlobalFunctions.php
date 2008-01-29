@@ -252,7 +252,7 @@ function sdfGetSemanticProperties_1_0() {
 	$options->limit = 10000;
 	$used_properties = smwfGetStore()->getPropertiesSpecial($options);
 	foreach ($used_properties as $property) {
-	$property_name = $property[0]->getText();
+		$property_name = $property[0]->getText();
 		$all_properties[$property_name] = $smw_namespace_labels[SMW_NS_PROPERTY];
 	}
 	$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial($options);
