@@ -457,6 +457,8 @@ $messages['pt'] = array(
 	'sd_filters_docu'                       => '{{SITENAME}} possui os seguintes filtros:',
 	'createfilter'                          => 'Criar um filtro',
 	'sd_createfilter_name'                  => 'Nome:',
+	'sd_createfilter_property'              => 'Propriedades que este filtro abrange:',
+	'sd_createfilter_usecategoryvalues'     => 'Obter valores de filtro a partir desta categoria:',
 	'sd_createfilter_label'                 => 'Etiqueta para este filtro (opcional):',
 	'sd_createfilter_requirefilter'         => 'Necessita de outro filtro seleccionado antes deste ser exibido:',
 	'sd_blank_error'                        => 'não pode estar em branco',
@@ -579,7 +581,7 @@ $messages['zh-cn'] = array(
 	'sd_filter_haslabel' => '其有着此一$1标签'  ,
 );
 
-/** ‪Taiwanese Chinese‬ (‪中文(台灣)‬)
+/** ‪中文(台灣)‬ (‪中文(台灣)‬)
  * @author Roc michael
  */
 $messages['zh-tw'] = array(
