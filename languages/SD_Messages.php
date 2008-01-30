@@ -288,17 +288,24 @@ $messages['fr'] = array(
  * @author Alma
  */
 $messages['gl'] = array(
-	'sd_browsedata_choosecategory' => 'Elexir unha categoría',
-	'sd_browsedata_viewcategory'   => 'ver categoría',
-	'sd_browsedata_subcategory'    => 'Subcategoría',
-	'sd_browsedata_other'          => 'Outro',
-	'sd_browsedata_none'           => 'Ningún',
-	'filters'                      => 'Filtros',
-	'sd_filters_docu'              => 'Os seguintes filtros existen en {{SITENAME}}:',
-	'createfilter'                 => 'Crear un filtro',
-	'sd_createfilter_name'         => 'Nome:',
-	'sd_filter_year'               => 'Ano',
-	'sd_filter_month'              => 'Mes',
+	'sd_browsedata_choosecategory'          => 'Elexir unha categoría',
+	'sd_browsedata_viewcategory'            => 'ver categoría',
+	'sd_browsedata_subcategory'             => 'Subcategoría',
+	'sd_browsedata_other'                   => 'Outro',
+	'sd_browsedata_none'                    => 'Ningún',
+	'sd_browsedata_filterbyvalue'           => 'Filtrar por este valor',
+	'sd_browsedata_filterbysubcategory'     => 'Filtrar por esta subcategoría',
+	'sd_browsedata_otherfilter'             => 'Amosar páxinas con outro valor para este filtro',
+	'sd_browsedata_nonefilter'              => 'Amosar páxinas con ningún valor para este filtro',
+	'sd_browsedata_removefilter'            => 'Eliminar este filtro',
+	'sd_browsedata_removesubcategoryfilter' => 'Eliminar este filtro de subcategorías',
+	'filters'                               => 'Filtros',
+	'sd_filters_docu'                       => 'Os seguintes filtros existen en {{SITENAME}}:',
+	'createfilter'                          => 'Crear un filtro',
+	'sd_createfilter_name'                  => 'Nome:',
+	'sd_createfilter_entervalues'           => 'Introduza valores para filtrar manualmente (os valores deben separarse por comas - se o valor contén unha coma, substitúaa por "\\,"):',
+	'sd_filter_year'                        => 'Ano',
+	'sd_filter_month'                       => 'Mes',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
