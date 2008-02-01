@@ -145,7 +145,7 @@ $messages['bg'] = array(
 $messages['de'] = array(
 	// user messages
 	'browsedata' => 'Daten ansehen',
-	'sd_browsedata_choosecategory' => 'Wähleneine Kategorie',
+	'sd_browsedata_choosecategory' => 'Kategorie auswählen',
 	'sd_browsedata_viewcategory' => 'Kategorie ansehen',
 	'sd_browsedata_subcategory' => 'Unterkategorie',
 	'sd_browsedata_other' => 'Anderes',
@@ -166,12 +166,12 @@ $messages['de'] = array(
 	// content messages
 	'sd_filter_coversproperty' => 'Dieser Filter betrifft das Attribut $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Er erhält seine Werte aus der Kategorie $1.',
-	'sd_filter_usestimeperiod' => 'Verwendet $1 als Zeitangabe.',
+	'sd_filter_usestimeperiod' => 'Er verwendet $1 als Zeitangabe.',
 	'sd_filter_year' => 'Jahr',
 	'sd_filter_month' => 'Monat',
-	'sd_filter_hasvalues' => 'Hat den Wert $1.',
-	'sd_filter_requiresfilter' => 'Setzt den Filter $1 voraus.',
-	'sd_filter_haslabel' => 'Hat die Bezeichnung $1.'
+	'sd_filter_hasvalues' => 'Er hat den Wert $1.',
+	'sd_filter_requiresfilter' => 'Er setzt den Filter $1 voraus.',
+	'sd_filter_haslabel' => 'Er hat die Bezeichnung $1.'
 );
 
 /** Greek (Ελληνικά)
