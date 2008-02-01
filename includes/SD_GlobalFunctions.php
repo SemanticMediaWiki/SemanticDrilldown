@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.3.3');
+define('SD_VERSION','0.3.4');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -369,10 +369,13 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $is_relati
 		$store = smwfGetStore();
 		$subject_title = Title::newFromText($subject, $subject_namespace);
 		if ($property != '') {
-			$property_title = Title::newFromText($property, $object_namespace);
+			$property_title = Title::newFromText($property, SMW_NS_PROPERTY);
 			$prop_vals = $store->getPropertyValues($subject_title, $property_title);
 			foreach ($prop_vals as $prop_val) {
-				$values[] = $prop_val->getTitle()->getText();
+				// make sure it's in the right namespace
+				if ($prop_val->getNamespace() == $object_namespace) {
+					$values[] = $prop_val->getTitle()->getText();
+				}
 			}
 		}
 		// try aliases as well
@@ -381,10 +384,13 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $is_relati
 			// name - this is an issue for English, since the
 			// English-language values are used for aliases
 			if ($alias != $property && $cur_prop == $prop) {
-				$property_title = Title::newFromText($alias, $object_namespace);
+				$property_title = Title::newFromText($alias, SMW_NS_PROPERTY);
 				$prop_vals = $store->getPropertyValues($subject_title, $property_title);
 				foreach ($prop_vals as $prop_val) {
-					$values[] = $prop_val->getTitle()->getText();
+					// make sure it's in the right namespace
+					if ($prop_val->getNamespace() == $object_namespace) {
+						$values[] = $prop_val->getTitle()->getText();
+					}
 				}
 			}
 		}
