@@ -54,7 +54,7 @@ class SDFilter {
 			}
 		}
 		$categories = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_GETS_VALUES_FROM_CATEGORY, true, NS_CATEGORY);
-		$time_periods = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_USES_TIME_PERIOD, false, NS_MAIN);
+		$time_periods = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_USES_TIME_PERIOD, false, null);
 		if (count($categories) > 0) {
 			$f->category = $categories[0];
 			$f->allowed_values = sdfGetCategoryChildren($f->category, false, 5);
@@ -62,7 +62,7 @@ class SDFilter {
 			$f->time_period = $time_periods[0];
 			$f->allowed_values = array();
 		} else {
-			$values = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_HAS_VALUE, false, NS_MAIN);
+			$values = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_HAS_VALUE, false, null);
 			$f->allowed_values = $values;
 		}
 		// set list of possible applied filters if allowed values
