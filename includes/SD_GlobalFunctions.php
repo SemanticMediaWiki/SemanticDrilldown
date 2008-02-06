@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.3.4');
+define('SD_VERSION','0.3.5');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -329,6 +329,7 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $is_relati
 		$property = "";
 	}
 	$subject = str_replace(' ', '_', $subject);
+	$subject = str_replace("'", "\'", $subject);
 
 	$smw_version = SMW_VERSION;
 	if ($smw_version{0} == '0') {
@@ -372,8 +373,11 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $is_relati
 			$property_title = Title::newFromText($property, SMW_NS_PROPERTY);
 			$prop_vals = $store->getPropertyValues($subject_title, $property_title);
 			foreach ($prop_vals as $prop_val) {
-				// make sure it's in the right namespace
-				if ($prop_val->getNamespace() == $object_namespace) {
+				// make sure it's in the right namespace, if
+				// it's a page
+				if (! $is_relation) {
+					$values[] = $prop_val->getXSDValue();
+				} elseif ($prop_val->getNamespace() == $object_namespace) {
 					$values[] = $prop_val->getTitle()->getText();
 				}
 			}
@@ -424,6 +428,7 @@ function sdfGetCategoryChildren($category_name, $get_categories, $levels) {
 	$page = $dbr->tableName( 'page' );
 	$cat_ns = NS_CATEGORY;
 	$query_category = str_replace(' ', '_', $category_name);
+	$query_category = str_replace("'", "\'", $query_category);
 	$sql = "SELECT p.page_title, p.page_namespace FROM $categorylinks cl
 		JOIN $page p on cl.cl_from = p.page_id
 		WHERE cl.cl_to = '$query_category'\n";
