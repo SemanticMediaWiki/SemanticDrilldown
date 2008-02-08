@@ -139,39 +139,42 @@ $messages['bg'] = array(
 	'sd_filter_month'              => 'Месец',
 );
 
-/** German
- * @author Bernhard Krabina
+/** German (Deutsch)
+ * @author Krabina
  */
 $messages['de'] = array(
-	// user messages
-	'browsedata' => 'Daten ansehen',
-	'sd_browsedata_choosecategory' => 'Kategorie auswählen',
-	'sd_browsedata_viewcategory' => 'Kategorie ansehen',
-	'sd_browsedata_subcategory' => 'Unterkategorie',
-	'sd_browsedata_other' => 'Anderes',
-	'sd_browsedata_none' => 'Keines',
-	'filters' => 'Filter',
-	'sd_filters_docu' => 'Die folgenden Filter existieren in diesem Wiki:',
-	'createfilter' => 'Erstelle einen Filter',
-	'sd_createfilter_name' => 'Name:',
-	'sd_createfilter_property' => 'Attribut dieses Filters:',
-	'sd_createfilter_usepropertyvalues' => 'Verwende alle Werte dieses Attributs für den Filter.',
-	'sd_createfilter_usecategoryvalues' => 'Verwende die Werte für den Filter von dieser Kategorie:',
-	'sd_createfilter_usedatevalues' => 'Verwende folgende Zeitangabe für diesen Filter:',
-	'sd_createfilter_entervalues' => 'Verwende diese Werte für den Filter (Werte durch Komma getrennt eingeben. Wenn ein Wert ein Komma enthält, mit "\," ersetzen.):',
-	'sd_createfilter_label' => 'Bezeichnung dieses Filters (optional):',
-	'sd_createfilter_requirefilter' => 'Bevor dieser Filter angezeigt wird, muss folgender anderer Filter gesetzt sein:',
-	'sd_blank_error' => 'darf nicht leer sein',
-
-	// content messages
-	'sd_filter_coversproperty' => 'Dieser Filter betrifft das Attribut $1.',
-	'sd_filter_getsvaluesfromcategory' => 'Er erhält seine Werte aus der Kategorie $1.',
-	'sd_filter_usestimeperiod' => 'Er verwendet $1 als Zeitangabe.',
-	'sd_filter_year' => 'Jahr',
-	'sd_filter_month' => 'Monat',
-	'sd_filter_hasvalues' => 'Er hat den Wert $1.',
-	'sd_filter_requiresfilter' => 'Er setzt den Filter $1 voraus.',
-	'sd_filter_haslabel' => 'Er hat die Bezeichnung $1.'
+	'browsedata'                            => 'Daten ansehen',
+	'sd_browsedata_choosecategory'          => 'Kategorie auswählen',
+	'sd_browsedata_viewcategory'            => 'Kategorie ansehen',
+	'sd_browsedata_subcategory'             => 'Unterkategorie',
+	'sd_browsedata_other'                   => 'Anderes',
+	'sd_browsedata_none'                    => 'Keines',
+	'sd_browsedata_filterbyvalue'           => 'Filter für diesen Wert',
+	'sd_browsedata_filterbysubcategory'     => 'Filter für diese Subkategorie',
+	'sd_browsedata_otherfilter'             => 'Zeige Seiten mit einem anderen Wert für diesen Filter',
+	'sd_browsedata_nonefilter'              => 'Zeige Seiten mit keinem Wert für diesen Filter',
+	'sd_browsedata_removefilter'            => 'Lösche diesen Filter',
+	'sd_browsedata_removesubcategoryfilter' => 'Lösche diesen Subkategorie-Filter',
+	'sd_browsedata_resetfilters'            => 'Filter zurücksetzen',
+	'filters'                               => 'Filter',
+	'sd_filters_docu'                       => 'Die folgenden Filter existieren in diesem Wiki:',
+	'createfilter'                          => 'Erstelle einen Filter',
+	'sd_createfilter_property'              => 'Attribut dieses Filters:',
+	'sd_createfilter_usepropertyvalues'     => 'Verwende alle Werte dieses Attributs für den Filter.',
+	'sd_createfilter_usecategoryvalues'     => 'Verwende die Werte für den Filter von dieser Kategorie:',
+	'sd_createfilter_usedatevalues'         => 'Verwende folgende Zeitangabe für diesen Filter:',
+	'sd_createfilter_entervalues'           => 'Verwende diese Werte für den Filter (Werte durch Komma getrennt eingeben. Wenn ein Wert ein Komma enthält, mit "\\," ersetzen.):',
+	'sd_createfilter_label'                 => 'Bezeichnung dieses Filters (optional):',
+	'sd_createfilter_requirefilter'         => 'Bevor dieser Filter angezeigt wird, muss folgender anderer Filter gesetzt sein:',
+	'sd_blank_error'                        => 'darf nicht leer sein',
+	'sd_filter_coversproperty'              => 'Dieser Filter betrifft das Attribut $1.',
+	'sd_filter_getsvaluesfromcategory'      => 'Er erhält seine Werte aus der Kategorie $1.',
+	'sd_filter_usestimeperiod'              => 'Er verwendet $1 als Zeitangabe.',
+	'sd_filter_year'                        => 'Jahr',
+	'sd_filter_month'                       => 'Monat',
+	'sd_filter_hasvalues'                   => 'Er hat den Wert $1.',
+	'sd_filter_requiresfilter'              => 'Er setzt den Filter $1 voraus.',
+	'sd_filter_haslabel'                    => 'Er hat die Bezeichnung $1.',
 );
 
 /** Greek (Ελληνικά)
