@@ -49,6 +49,14 @@ $messages['en'] = array(
 	'sd_filter_haslabel' => 'It has the label $1.',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author SPQRobin
+ */
+$messages['af'] = array(
+	'sd_createfilter_name' => 'Naam:',
+	'sd_filter_month'      => 'Maand',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
