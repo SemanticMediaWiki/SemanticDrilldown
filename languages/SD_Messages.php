@@ -560,6 +560,16 @@ $messages['stq'] = array(
 	'sd_filter_haslabel'                => 'Häd ju Beteekenge $1.',
 );
 
+/** Volapük (Volapük)
+ * @author Malafaya
+ */
+$messages['vo'] = array(
+	'sd_browsedata_other'  => 'Votik',
+	'sd_createfilter_name' => 'Nem:',
+	'sd_filter_year'       => 'Yel',
+	'sd_filter_month'      => 'Mul',
+);
+
 /** Mainland Chinese
  * @author Roc Michael
  */
