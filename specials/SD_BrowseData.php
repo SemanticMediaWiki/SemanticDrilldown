@@ -162,6 +162,7 @@ class BrowseDataPage extends QueryPage {
 					$value_field = 'value_xsd';
 				}
 				$property_value = str_replace(' ', '_', $af->filter->property);
+				$property_value = str_replace("'", "\'", $property_value);
 				$sql .= "LEFT OUTER JOIN
 			(SELECT subject_id, $value_field
 			FROM $property_table_name
@@ -184,6 +185,7 @@ class BrowseDataPage extends QueryPage {
 			$actual_cat = str_replace(' ', '_', $subcategory);
 		else
 			$actual_cat = str_replace(' ', '_', $category);
+		$actual_cat = str_replace("'", "\'", $actual_cat);
 		$sql .= "WHERE (c.cl_to = '$actual_cat' ";
 		foreach ($subcategories as $i => $subcat) {
 			$sql .= "OR c.cl_to = '{$subcat}' ";
@@ -322,6 +324,10 @@ class BrowseDataPage extends QueryPage {
 		$skin = $wgUser->getSkin();
 		$browse_data_title = Title::newFromText('BrowseData', NS_SPECIAL);
 		$categories = sdfGetTopLevelCategories();
+		// if there are no categories, escape quickly
+		if (count($categories) == 0) {
+			return "";
+		}
 		$sd_props = $sdgContLang->getSpecialPropertiesArray();
 		$subcategory_text = wfMsg('sd_browsedata_subcategory');
 		$choose_category_text = wfMsg('sd_browsedata_choosecategory');
