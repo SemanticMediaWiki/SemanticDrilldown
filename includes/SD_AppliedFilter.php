@@ -17,29 +17,35 @@ class SDAppliedFilter {
 		$af = new SDAppliedFilter();
 		$af->filter = $filter;
 		$af->value = $value;
-		if (! $af->filter->is_relation) {
-			if ($af->value{0} == '<') {
-				$possible_number = str_replace(',', '', trim(substr($af->value, 1)));
-				if (is_numeric($possible_number)) {
-					$af->upper_limit = $possible_number;
+
+		// try to parse this value to see if it's a numerical range -
+		// if so,  set the appropriate fields
+
+		// SMW 1.0 HTML-encodes the value; un-encode it here
+		$originals = array('&lt;', '&gt;');
+		$replacements = array('<', '>');
+		$af->value = str_replace($originals, $replacements, $af->value);
+		if ($af->value{0} == '<') {
+			$possible_number = str_replace(',', '', trim(substr($af->value, 1)));
+			if (is_numeric($possible_number)) {
+				$af->upper_limit = $possible_number;
+				$af->is_numeric = true;
+			}
+		} elseif ($af->value{0} == '>') {
+			$possible_number = str_replace(',', '', trim(substr($af->value, 1)));
+			if (is_numeric($possible_number)) {
+				$af->lower_limit = $possible_number;
+				$af->is_numeric = true;
+			}
+		} else {
+			$elements = explode('-', $af->value);
+			if (count($elements) == 2) {
+				$first_elem = str_replace(',', '', trim($elements[0]));
+				$second_elem = str_replace(',', '', trim($elements[1]));
+				if (is_numeric($first_elem) && is_numeric($second_elem)) {
+					$af->lower_limit = $first_elem;
+					$af->upper_limit = $second_elem;
 					$af->is_numeric = true;
-				}
-			} elseif ($af->value{0} == '>') {
-				$possible_number = str_replace(',', '', trim(substr($af->value, 1)));
-				if (is_numeric($possible_number)) {
-					$af->lower_limit = $possible_number;
-					$af->is_numeric = true;
-				}
-			} else {
-				$elements = explode('-', $af->value);
-				if (count($elements) == 2) {
-					$first_elem = str_replace(',', '', trim($elements[0]));
-					$second_elem = str_replace(',', '', trim($elements[1]));
-					if (is_numeric($first_elem) && is_numeric($second_elem)) {
-						$af->lower_limit = $first_elem;
-						$af->upper_limit = $second_elem;
-						$af->is_numeric = true;
-					}
 				}
 			}
 		}
