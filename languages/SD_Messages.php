@@ -415,6 +415,17 @@ $messages['nl'] = array(
 	'sd_filter_haslabel'                    => 'Het heeft het label $1.',
 );
 
+/** Northern Sotho (Sesotho sa Leboa)
+ * @author Mohau
+ */
+$messages['nso'] = array(
+	'sd_browsedata_viewcategory' => 'Nyakorela sehlopha',
+	'sd_browsedata_subcategory'  => 'Sehlophana',
+	'sd_createfilter_name'       => 'Leina:',
+	'sd_filter_year'             => 'Ngwaga',
+	'sd_filter_month'            => 'Kgwedi',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
