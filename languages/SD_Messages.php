@@ -571,6 +571,15 @@ $messages['stq'] = array(
 	'sd_filter_haslabel'                => 'Häd ju Beteekenge $1.',
 );
 
+/** Swedish (Svenska)
+ * @author M.M.S.
+ */
+$messages['sv'] = array(
+	'sd_browsedata_choosecategory' => 'Välj en kategori',
+	'sd_browsedata_viewcategory'   => 'visa kategori',
+	'sd_browsedata_subcategory'    => 'Subkategori',
+);
+
 /** Volapük (Volapük)
  * @author Malafaya
  */
