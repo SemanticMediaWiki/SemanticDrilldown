@@ -418,6 +418,14 @@ $messages['nl'] = array(
 	'sd_filter_haslabel'                    => 'Het heeft het label $1.',
 );
 
+/** Norwegian (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['no'] = array(
+	'sd_filter_year'  => 'År',
+	'sd_filter_month' => 'Måned',
+);
+
 /** Northern Sotho (Sesotho sa Leboa)
  * @author Mohau
  */
