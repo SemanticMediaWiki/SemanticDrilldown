@@ -597,6 +597,14 @@ $messages['sv'] = array(
 	'sd_browsedata_subcategory'    => 'Subkategori',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'sd_browsedata_other'  => 'ఇతర',
+	'sd_createfilter_name' => 'పేరు:',
+);
+
 /** Volapük (Volapük)
  * @author Malafaya
  */
