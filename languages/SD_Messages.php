@@ -379,6 +379,7 @@ $messages['hu'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'filters'              => 'Filteren',
 	'sd_createfilter_name' => 'Numm:',
 	'sd_filter_year'       => 'Joer',
 	'sd_filter_month'      => 'Mount',
@@ -428,8 +429,25 @@ $messages['nl'] = array(
  * @author Jon Harald Søby
  */
 $messages['no'] = array(
-	'sd_filter_year'  => 'År',
-	'sd_filter_month' => 'Måned',
+	'sd_browsedata_choosecategory'          => 'Velg en kategori',
+	'sd_browsedata_viewcategory'            => 'se kategori',
+	'sd_browsedata_subcategory'             => 'Underkategori',
+	'sd_browsedata_other'                   => 'Annen',
+	'sd_browsedata_none'                    => 'Ingen',
+	'sd_browsedata_filterbyvalue'           => 'Foøtrer etter denne verdien',
+	'sd_browsedata_filterbysubcategory'     => 'Filtrer etter denne underkategorien',
+	'sd_browsedata_otherfilter'             => 'Vis sider med en annen verdi for dette filteret',
+	'sd_browsedata_nonefilter'              => 'Vis sider uten noen verdi for dette filteret',
+	'sd_browsedata_removefilter'            => 'Fjern dette filteret',
+	'sd_browsedata_removesubcategoryfilter' => 'Fjern dette underkategorifilteret',
+	'sd_browsedata_resetfilters'            => 'Resett filtre',
+	'filters'                               => 'Filtre',
+	'sd_filters_docu'                       => 'Følgende filtre finnes på {{SITENAME}}:',
+	'createfilter'                          => 'Opprett et filter',
+	'sd_createfilter_name'                  => 'Navn:',
+	'sd_blank_error'                        => 'kan ikke være blank',
+	'sd_filter_year'                        => 'År',
+	'sd_filter_month'                       => 'Måned',
 );
 
 /** Northern Sotho (Sesotho sa Leboa)
