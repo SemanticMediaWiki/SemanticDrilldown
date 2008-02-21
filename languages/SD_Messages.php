@@ -448,6 +448,7 @@ $messages['no'] = array(
 	'sd_blank_error'                        => 'kan ikke være blank',
 	'sd_filter_year'                        => 'År',
 	'sd_filter_month'                       => 'Måned',
+	'sd_filter_hasvalues'                   => 'Den har verdiene $1.',
 );
 
 /** Northern Sotho (Sesotho sa Leboa)
@@ -619,8 +620,11 @@ $messages['sv'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
-	'sd_browsedata_other'  => 'ఇతర',
-	'sd_createfilter_name' => 'పేరు:',
+	'sd_browsedata_subcategory' => 'ఉపవర్గం',
+	'sd_browsedata_other'       => 'ఇతర',
+	'sd_createfilter_name'      => 'పేరు:',
+	'sd_filter_year'            => 'సంవత్సరం',
+	'sd_filter_month'           => 'నెల',
 );
 
 /** Volapük (Volapük)
