@@ -614,6 +614,10 @@ $messages['sv'] = array(
 	'sd_browsedata_choosecategory' => 'Välj en kategori',
 	'sd_browsedata_viewcategory'   => 'visa kategori',
 	'sd_browsedata_subcategory'    => 'Subkategori',
+	'sd_browsedata_other'          => 'Andra',
+	'sd_createfilter_name'         => 'Namn:',
+	'sd_filter_year'               => 'År',
+	'sd_filter_month'              => 'Månad',
 );
 
 /** Telugu (తెలుగు)
