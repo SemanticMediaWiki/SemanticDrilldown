@@ -429,6 +429,7 @@ $messages['nl'] = array(
  * @author Jon Harald Søby
  */
 $messages['no'] = array(
+	'browsedata'                            => 'Bla gjennom data',
 	'sd_browsedata_choosecategory'          => 'Velg en kategori',
 	'sd_browsedata_viewcategory'            => 'se kategori',
 	'sd_browsedata_subcategory'             => 'Underkategori',
@@ -445,10 +446,22 @@ $messages['no'] = array(
 	'sd_filters_docu'                       => 'Følgende filtre finnes på {{SITENAME}}:',
 	'createfilter'                          => 'Opprett et filter',
 	'sd_createfilter_name'                  => 'Navn:',
+	'sd_createfilter_property'              => 'Egenskap dette filteret dekker:',
+	'sd_createfilter_usepropertyvalues'     => 'Bruk alle verdier av denne egenskapen for filteret',
+	'sd_createfilter_usecategoryvalues'     => 'Få verdier for filteret fra denne kategorien:',
+	'sd_createfilter_usedatevalues'         => 'Bruk datoområder for dette filteret med denne tidsperioden:',
+	'sd_createfilter_entervalues'           => 'Skriv inn verdier for filteret manuelt (verdier burde adskilles med komma – om en verdi inneholder et komma, erstatt det med «\\,»);',
+	'sd_createfilter_label'                 => 'Etikett for dette filteret (valgfritt):',
+	'sd_createfilter_requirefilter'         => 'Krev at et annet filter velges før dette vises:',
 	'sd_blank_error'                        => 'kan ikke være blank',
+	'sd_filter_coversproperty'              => 'Dette filteret dekker egenskapen $1.',
+	'sd_filter_getsvaluesfromcategory'      => 'Det får verdiene sine fra kategorien $1.',
+	'sd_filter_usestimeperiod'              => 'Det bruker $1 som tidsperiode.',
 	'sd_filter_year'                        => 'År',
 	'sd_filter_month'                       => 'Måned',
 	'sd_filter_hasvalues'                   => 'Den har verdiene $1.',
+	'sd_filter_requiresfilter'              => 'Det krever at filteret $1 er til stede.',
+	'sd_filter_haslabel'                    => 'Det har etiketten $1.',
 );
 
 /** Northern Sotho (Sesotho sa Leboa)
@@ -624,11 +637,12 @@ $messages['sv'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
-	'sd_browsedata_subcategory' => 'ఉపవర్గం',
-	'sd_browsedata_other'       => 'ఇతర',
-	'sd_createfilter_name'      => 'పేరు:',
-	'sd_filter_year'            => 'సంవత్సరం',
-	'sd_filter_month'           => 'నెల',
+	'sd_browsedata_viewcategory' => 'వర్గాన్ని చూడండి',
+	'sd_browsedata_subcategory'  => 'ఉపవర్గం',
+	'sd_browsedata_other'        => 'ఇతర',
+	'sd_createfilter_name'       => 'పేరు:',
+	'sd_filter_year'             => 'సంవత్సరం',
+	'sd_filter_month'            => 'నెల',
 );
 
 /** Volapük (Volapük)
