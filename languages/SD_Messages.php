@@ -261,6 +261,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Grondin
  * @author Sherbrooke
+ * @author Urhixidur
  */
 $messages['fr'] = array(
 	'browsedata'                            => 'Chercher les données',
@@ -284,9 +285,9 @@ $messages['fr'] = array(
 	'sd_createfilter_usepropertyvalues'     => 'Utiliser, pour ce filtre, toutes les valeurs de cette propriété',
 	'sd_createfilter_usecategoryvalues'     => 'Obtenir les valeurs pour ce filtre à partir de cette catégorie :',
 	'sd_createfilter_usedatevalues'         => 'Utilise des blocs de date pour ce filtre avec cette période temporelle :',
-	'sd_createfilter_entervalues'           => 'Entrer manuellement les valeurs pour ce filtre (les valeurs devront être séparées par des virgules - si une valeur contient une virgule, remplacez-la par « \\, ») :',
+	'sd_createfilter_entervalues'           => 'Entrez manuellement les valeurs pour ce filtre (les valeurs devront être séparées par des virgules - si une valeur contient une virgule, remplacez-la par « \\, ») :',
 	'sd_createfilter_label'                 => 'Étiquette pour ce filtre (facultatif) :',
-	'sd_createfilter_requirefilter'         => 'Nécessite un filtre devant être sélectionné avant que celui-ci ne soit affiché :',
+	'sd_createfilter_requirefilter'         => 'Exiger qu’un autre filtre soit sélectionné avant que celui-ci ne soit affiché :',
 	'sd_blank_error'                        => 'ne peut être laissé en blanc',
 	'sd_filter_coversproperty'              => 'Ce filtre couvre la propriété $1.',
 	'sd_filter_getsvaluesfromcategory'      => 'Il obtient ses valeurs à partir de la catégorie $1.',
@@ -295,7 +296,7 @@ $messages['fr'] = array(
 	'sd_filter_month'                       => 'Mois',
 	'sd_filter_hasvalues'                   => 'Il a $1 comme valeur',
 	'sd_filter_requiresfilter'              => 'Il nécessite la présence du filtre $1.',
-	'sd_filter_haslabel'                    => 'Il dispose du label $1.',
+	'sd_filter_haslabel'                    => 'Étiqueté $1.',
 );
 
 /** Galician (Galego)
