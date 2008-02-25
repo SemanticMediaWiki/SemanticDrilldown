@@ -376,6 +376,16 @@ $messages['hu'] = array(
 	'sd_filter_month' => 'Hónap',
 );
 
+/** Khmer (ភាសាខ្មែរ)
+ * @author Chhorran
+ */
+$messages['km'] = array(
+	'sd_browsedata_choosecategory' => 'ជ្រើសរើស មួយចំណាត់ក្រុម',
+	'sd_browsedata_viewcategory'   => 'មើល ចំណាត់ក្រុម',
+	'sd_browsedata_subcategory'    => 'ចំណាត់ក្រុមរង',
+	'sd_createfilter_name'         => 'ឈ្មោះ ៖',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -638,12 +648,13 @@ $messages['sv'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
-	'sd_browsedata_viewcategory' => 'వర్గాన్ని చూడండి',
-	'sd_browsedata_subcategory'  => 'ఉపవర్గం',
-	'sd_browsedata_other'        => 'ఇతర',
-	'sd_createfilter_name'       => 'పేరు:',
-	'sd_filter_year'             => 'సంవత్సరం',
-	'sd_filter_month'            => 'నెల',
+	'sd_browsedata_choosecategory' => 'ఓ వర్గాన్ని ఎంచుకోండి',
+	'sd_browsedata_viewcategory'   => 'వర్గాన్ని చూడండి',
+	'sd_browsedata_subcategory'    => 'ఉపవర్గం',
+	'sd_browsedata_other'          => 'ఇతర',
+	'sd_createfilter_name'         => 'పేరు:',
+	'sd_filter_year'               => 'సంవత్సరం',
+	'sd_filter_month'              => 'నెల',
 );
 
 /** Volapük (Volapük)
