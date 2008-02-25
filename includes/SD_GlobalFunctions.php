@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.3.6');
+define('SD_VERSION','0.3.7');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
