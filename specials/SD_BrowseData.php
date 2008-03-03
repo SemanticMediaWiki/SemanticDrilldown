@@ -346,7 +346,7 @@ class BrowseDataPage extends QueryPage {
 			//if ($i > 0) { $header .= " &middot; "; }
 			$category_children = sdfGetCategoryChildren($category, false, 5);
 			$category_str = $category . " (" . count($category_children) . ")";
-			if ($this->category == $category) {
+			if (str_replace('_', ' ', $this->category) == $category) {
 				$header .= "<div class=\"drilldown_category selected_category\">\n";
 				$header .= $category_str;
 			} else {
@@ -504,18 +504,6 @@ class BrowseDataPage extends QueryPage {
 	}
 
 	function getPageFooter() {
-	}
-
-	function linkParameters() {
-		$params = array();
-		$params['_cat'] = $this->category;
-		if ($this->subcategory)
-			$params['_subcat'] = $this->subcategory;
-		$params['_cat'] = $this->category;
-		foreach ($this->applied_filters as $i => $af) {
-			$params[$af->filter->name] = $af->value;
-		}
-		return $params;
 	}
 
 	function getSQL() {
