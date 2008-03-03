@@ -361,9 +361,9 @@ class BrowseDataPage extends QueryPage {
 		$header .= '<h3>';
 		if (count ($this->applied_filters) > 0 || $this->subcategory) {
 			$category_url = $browse_data_title->getFullURL() . '/' .$this->category;
-			$header .= '<a href="' . $category_url . '" title="' . wfMsg('sd_browsedata_resetfilters') . '">' . $this->category . '</a>';
+			$header .= '<a href="' . $category_url . '" title="' . wfMsg('sd_browsedata_resetfilters') . '">' . str_replace('_', ' ', $this->category) . '</a>';
 		} else
-			$header .= $this->category;
+			$header .= str_replace('_', ' ', $this->category);
 		// link to actual category
 		$cat_title = Title::newFromText($this->category, NS_CATEGORY);
 		$sk = $wgUser->getSkin();
