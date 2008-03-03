@@ -506,6 +506,20 @@ class BrowseDataPage extends QueryPage {
 	function getPageFooter() {
 	}
 
+	/*
+	 * Used to set URL for additional pages of results
+	 */
+	function linkParameters() {
+		$params = array();
+		$params['_cat'] = $this->category;
+		if ($this->subcategory)
+			$params['_subcat'] = $this->subcategory;
+		foreach ($this->applied_filters as $i => $af) {
+			$params[$af->filter->name] = $af->value;
+		}
+		return $params;
+	}
+
 	function getSQL() {
 		// QueryPage uses the value from this SQL in an ORDER clause,
 		// so return page_title as title.
