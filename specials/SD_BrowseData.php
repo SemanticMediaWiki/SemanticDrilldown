@@ -48,15 +48,20 @@ class BrowseDataPage extends QueryPage {
 		$this->all_subcategories = sdfGetCategoryChildren($actual_cat, true, 10);
 	}
 
-	function makeURLQuery($category, $applied_filters, $subcategory = null) {
-		$query = "_cat=" . str_replace(' ', '_', $category);
-		foreach ($applied_filters as $i => $af) {
-			$query .= '&' . urlencode(str_replace(' ', '_', $af->filter->name)) . '=' . urlencode(str_replace(' ', '_', $af->value));
-		}
+	function makeBrowseURL($browse_data_title, $category, $applied_filters = array(), $subcategory = null) {
+		$url = $browse_data_title->getFullURL() . '/' . $category;
 		if ($subcategory) {
-			$query .= "&_subcat=" . $subcategory;
+			$url .= (strpos($url, '?')) ? '&' : '?';
+			$url .= "_subcat=" . $subcategory;
 		}
-		return $query;
+		foreach ($applied_filters as $i => $af) {
+			if ($i > 0 || strpos($url, '?'))
+				$url .= '&';
+			else
+				$url .= '?';
+			$url .= urlencode(str_replace(' ', '_', $af->filter->name)) . '=' . urlencode(str_replace(' ', '_', $af->value));
+		}
+		return $url;
 	}
 
 	/**
@@ -346,7 +351,7 @@ class BrowseDataPage extends QueryPage {
 				$header .= $category_str;
 			} else {
 				$header .= "<div class=\"drilldown_category\">\n";
-				$category_url = $browse_data_title->getFullURL($this->makeURLQuery($category, array()));
+				$category_url = $this->makeBrowseURL($browse_data_title, $category);
 				$header .= '<a href="' . $category_url . '" title="Choose category">' . $category_str . '</a>';
 			}
 			$header .= "</div>\n";
@@ -355,7 +360,7 @@ class BrowseDataPage extends QueryPage {
 		$header .= "</div>\n";
 		$header .= '<h3>';
 		if (count ($this->applied_filters) > 0 || $this->subcategory) {
-			$category_url = $browse_data_title->getFullURL($this->makeURLQuery($this->category, array()));
+			$category_url = $browse_data_title->getFullURL() . '/' .$this->category;
 			$header .= '<a href="' . $category_url . '" title="' . wfMsg('sd_browsedata_resetfilters') . '">' . $this->category . '</a>';
 		} else
 			$header .= $this->category;
@@ -367,7 +372,7 @@ class BrowseDataPage extends QueryPage {
 			$header .= " > ";
 			$filter_string = "$subcategory_text: " . str_replace('_', ' ', $this->subcategory);
 			$header .= $filter_string;
-			$remove_filter_url = $browse_data_title->getFullURL($this->makeURLQuery($this->category, $this->applied_filters));
+			$remove_filter_url = $this->makeBrowseURL($browse_data_title, $this->category, $this->applied_filters);
 			$header .= ' (<a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removesubcategoryfilter') . '">x</a>)';
 		}
 		foreach ($this->applied_filters as $i => $af) {
@@ -389,7 +394,7 @@ class BrowseDataPage extends QueryPage {
 			$header .= $filter_string;
 			$temp_filters_array = $this->applied_filters;
 			array_splice($temp_filters_array, $i, 1);
-			$remove_filter_url = $browse_data_title->getFullURL($this->makeURLQuery($this->category, $temp_filters_array, $this->subcategory));
+			$remove_filter_url = $this->makeBrowseURL($browse_data_title, $this->category, $temp_filters_array, $this->subcategory);
 			$header .= ' (<a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removefilter') . '">x</a>)';
 		}
 		$header .= "</h3>\n";
@@ -399,8 +404,8 @@ class BrowseDataPage extends QueryPage {
 		// number of pages that match that value
 		$header .= "<div class=\"drilldown_filters\">\n";
 		$title = Title::newFromText('BrowseData', NS_SPECIAL);
-		$cur_url = $title->getFullURL($this->makeURLQuery($this->category, $this->applied_filters, $this->subcategory));
-		$cur_url .= "&";
+		$cur_url = $this->makeBrowseURL($title, $this->category, $this->applied_filters, $this->subcategory);
+		$cur_url .= (strpos($cur_url, '?')) ? '&' : '?';
 		$this->createTempTable($this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters);
 		$num_printed_values = 0;
 		if (count($this->next_level_subcategories) > 0) {
@@ -474,7 +479,7 @@ class BrowseDataPage extends QueryPage {
 				if ($num_results > 0) {
 					if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
 					$filter_text = "$none_str ($num_results)";
-					$filter_url = $cur_url . urlencode($rf->name) . '=_none';
+					$filter_url = $cur_url . urlencode(str_replace(' ', '_', $rf->name)) . '=_none';
 					$results_line .= '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_nonefilter') . '">' . $filter_text . '</a>';
 				}
 			} else {
@@ -533,7 +538,7 @@ class BrowseDataPage extends QueryPage {
 	}
 }
 
-function doSpecialBrowseData() {
+function doSpecialBrowseData($query = '') {
 	global $wgRequest, $wgOut, $sdgScriptPath, $sdgContLang;
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
 
@@ -551,9 +556,14 @@ function doSpecialBrowseData() {
 	// get information on current category, subcategory and filters that
 	// have already been applied from the query string
 	$category = str_replace('_', ' ', $wgRequest->getVal('_cat'));
+        // if query string did not contain this variables, try the URL
+        if (! $category) {
+                $queryparts = explode('/', $query, 1);
+                $category = isset($queryparts[0]) ? $queryparts[0] : '';
+        }
+	// if no category was specified, go with the first
+	// category on the site, alphabetically
 	if (! $category) {
-		// if no category was specified, go with the first
-		// category on the site, alphabetically
 		$categories = sdfGetTopLevelCategories();
 		if (count($categories) > 0) {
 			$category = $categories[0];
