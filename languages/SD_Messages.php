@@ -376,6 +376,13 @@ $messages['hu'] = array(
 	'sd_filter_month' => 'Hónap',
 );
 
+/** Icelandic (Íslenska)
+ * @author SPQRobin
+ */
+$messages['is'] = array(
+	'sd_createfilter_name' => 'Nafn:',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author Chhorran
  */
@@ -523,6 +530,20 @@ $messages['oc'] = array(
 	'sd_filter_hasvalues'                   => 'A $1 coma valor',
 	'sd_filter_requiresfilter'              => 'Necessita la preséncia del filtre $1.',
 	'sd_filter_haslabel'                    => 'Dispausa del labèl $1.',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'sd_browsedata_choosecategory' => 'يوه وېشنيزه ټاکل',
+	'sd_browsedata_viewcategory'   => 'وېشنيزه ښکاره کول',
+	'sd_browsedata_subcategory'    => 'وړه-وېشنيزه',
+	'sd_browsedata_other'          => 'بل',
+	'sd_browsedata_none'           => 'هېڅ',
+	'sd_createfilter_name'         => 'نوم:',
+	'sd_filter_year'               => 'کال',
+	'sd_filter_month'              => 'مياشت',
 );
 
 /** Portuguese (Português)
