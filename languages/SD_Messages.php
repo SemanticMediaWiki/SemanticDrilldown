@@ -674,7 +674,10 @@ $messages['te'] = array(
 	'sd_browsedata_viewcategory'   => 'వర్గాన్ని చూడండి',
 	'sd_browsedata_subcategory'    => 'ఉపవర్గం',
 	'sd_browsedata_other'          => 'ఇతర',
+	'sd_browsedata_removefilter'   => 'ఈ వడపోతని తొలగించు',
+	'filters'                      => 'వడపోతలు',
 	'sd_createfilter_name'         => 'పేరు:',
+	'sd_blank_error'               => 'ఖాళీగా ఉండకూడదు',
 	'sd_filter_year'               => 'సంవత్సరం',
 	'sd_filter_month'              => 'నెల',
 );
