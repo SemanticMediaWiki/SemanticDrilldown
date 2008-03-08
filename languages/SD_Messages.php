@@ -397,10 +397,15 @@ $messages['km'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'filters'              => 'Filteren',
-	'sd_createfilter_name' => 'Numm:',
-	'sd_filter_year'       => 'Joer',
-	'sd_filter_month'      => 'Mount',
+	'sd_browsedata_choosecategory' => 'Eng Kategorie wielen',
+	'sd_browsedata_viewcategory'   => 'Kategorie weisen',
+	'sd_browsedata_subcategory'    => 'Ënnerkategorie',
+	'sd_browsedata_other'          => 'Aner',
+	'sd_browsedata_none'           => 'Keen',
+	'filters'                      => 'Filteren',
+	'sd_createfilter_name'         => 'Numm:',
+	'sd_filter_year'               => 'Joer',
+	'sd_filter_month'              => 'Mount',
 );
 
 /** Dutch (Nederlands)
@@ -548,6 +553,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author 555
+ * @author Lijealso
  */
 $messages['pt'] = array(
 	'browsedata'                            => 'Navegar pelos dados',
@@ -568,6 +574,7 @@ $messages['pt'] = array(
 	'createfilter'                          => 'Criar um filtro',
 	'sd_createfilter_name'                  => 'Nome:',
 	'sd_createfilter_property'              => 'Propriedades que este filtro abrange:',
+	'sd_createfilter_usepropertyvalues'     => 'Usar todos os valores desta propriedade no filtro',
 	'sd_createfilter_usecategoryvalues'     => 'Obter valores de filtro a partir desta categoria:',
 	'sd_createfilter_label'                 => 'Etiqueta para este filtro (opcional):',
 	'sd_createfilter_requirefilter'         => 'Necessita de outro filtro seleccionado antes deste ser exibido:',
@@ -674,6 +681,7 @@ $messages['te'] = array(
 	'sd_browsedata_viewcategory'   => 'వర్గాన్ని చూడండి',
 	'sd_browsedata_subcategory'    => 'ఉపవర్గం',
 	'sd_browsedata_other'          => 'ఇతర',
+	'sd_browsedata_none'           => 'ఏమీలేదు',
 	'sd_browsedata_removefilter'   => 'ఈ వడపోతని తొలగించు',
 	'filters'                      => 'వడపోతలు',
 	'sd_createfilter_name'         => 'పేరు:',
