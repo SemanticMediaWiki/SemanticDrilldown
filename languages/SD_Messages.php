@@ -408,6 +408,14 @@ $messages['lb'] = array(
 	'sd_filter_month'              => 'Mount',
 );
 
+/** Marathi (मराठी)
+ * @author Mahitgar
+ */
+$messages['mr'] = array(
+	'sd_browsedata_other' => 'इतर',
+	'sd_filter_year'      => 'वर्ष',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  * @author SPQRobin
