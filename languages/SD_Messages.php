@@ -198,6 +198,16 @@ $messages['el'] = array(
 	'sd_filter_month'              => 'Μήνας',
 );
 
+/** Esperanto (Esperanto)
+ * @author Yekrats
+ */
+$messages['eo'] = array(
+	'sd_browsedata_other'  => 'Alia',
+	'sd_createfilter_name' => 'Nomo:',
+	'sd_filter_year'       => 'Jaro',
+	'sd_filter_month'      => 'Monato',
+);
+
 /** Persian (فارسی)
  * @author Tofighi
  */
@@ -385,12 +395,16 @@ $messages['is'] = array(
 
 /** Khmer (ភាសាខ្មែរ)
  * @author Chhorran
+ * @author Lovekhmer
  */
 $messages['km'] = array(
 	'sd_browsedata_choosecategory' => 'ជ្រើសរើស មួយចំណាត់ក្រុម',
 	'sd_browsedata_viewcategory'   => 'មើល ចំណាត់ក្រុម',
 	'sd_browsedata_subcategory'    => 'ចំណាត់ក្រុមរង',
+	'sd_browsedata_other'          => 'ផ្សេងៗទៀត',
 	'sd_createfilter_name'         => 'ឈ្មោះ ៖',
+	'sd_filter_year'               => 'ឆ្នាំ',
+	'sd_filter_month'              => 'ខែ',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -429,8 +443,8 @@ $messages['nl'] = array(
 	'sd_browsedata_none'                    => 'Geen',
 	'sd_browsedata_filterbyvalue'           => 'Op deze waarde filteren',
 	'sd_browsedata_filterbysubcategory'     => 'Op deze ondercategorie filteren',
-	'sd_browsedata_otherfilter'             => "Pagina's met een andere waarde voor deze filter tonen",
-	'sd_browsedata_nonefilter'              => "Pagina's zonder waarde voor deze filter tonen",
+	'sd_browsedata_otherfilter'             => "Pagina's met een andere waarde voor deze filter bekijken",
+	'sd_browsedata_nonefilter'              => "Pagina's zonder waarde voor deze filter bekijken",
 	'sd_browsedata_removefilter'            => 'Deze filter verwijderen',
 	'sd_browsedata_removesubcategoryfilter' => 'Deze ondercategoriefilter verwijderen',
 	'sd_browsedata_resetfilters'            => 'Filters opnieuw instellen',
@@ -543,6 +557,16 @@ $messages['oc'] = array(
 	'sd_filter_hasvalues'                   => 'A $1 coma valor',
 	'sd_filter_requiresfilter'              => 'Necessita la preséncia del filtre $1.',
 	'sd_filter_haslabel'                    => 'Dispausa del labèl $1.',
+);
+
+/** Polish (Polski)
+ * @author Maire
+ */
+$messages['pl'] = array(
+	'browsedata'                   => 'Przeglądaj dane',
+	'sd_browsedata_choosecategory' => 'Wybierz kategorię',
+	'sd_browsedata_viewcategory'   => 'podgląd kategorii',
+	'sd_browsedata_subcategory'    => 'Kategoria podrzędna',
 );
 
 /** Pashto (پښتو)
@@ -685,17 +709,19 @@ $messages['sv'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
-	'sd_browsedata_choosecategory' => 'ఓ వర్గాన్ని ఎంచుకోండి',
-	'sd_browsedata_viewcategory'   => 'వర్గాన్ని చూడండి',
-	'sd_browsedata_subcategory'    => 'ఉపవర్గం',
-	'sd_browsedata_other'          => 'ఇతర',
-	'sd_browsedata_none'           => 'ఏమీలేదు',
-	'sd_browsedata_removefilter'   => 'ఈ వడపోతని తొలగించు',
-	'filters'                      => 'వడపోతలు',
-	'sd_createfilter_name'         => 'పేరు:',
-	'sd_blank_error'               => 'ఖాళీగా ఉండకూడదు',
-	'sd_filter_year'               => 'సంవత్సరం',
-	'sd_filter_month'              => 'నెల',
+	'browsedata'                        => 'భోగట్టాని చూడండి',
+	'sd_browsedata_choosecategory'      => 'ఓ వర్గాన్ని ఎంచుకోండి',
+	'sd_browsedata_viewcategory'        => 'వర్గాన్ని చూడండి',
+	'sd_browsedata_subcategory'         => 'ఉపవర్గం',
+	'sd_browsedata_other'               => 'ఇతర',
+	'sd_browsedata_none'                => 'ఏమీలేదు',
+	'sd_browsedata_removefilter'        => 'ఈ వడపోతని తొలగించు',
+	'filters'                           => 'వడపోతలు',
+	'sd_createfilter_name'              => 'పేరు:',
+	'sd_createfilter_usecategoryvalues' => 'వడపోతకి విలువలని ఈ వర్గంనుండి తీసుకోవాలి:',
+	'sd_blank_error'                    => 'ఖాళీగా ఉండకూడదు',
+	'sd_filter_year'                    => 'సంవత్సరం',
+	'sd_filter_month'                   => 'నెల',
 );
 
 /** Volapük (Volapük)
