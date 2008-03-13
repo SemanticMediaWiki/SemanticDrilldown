@@ -343,7 +343,6 @@ class BrowseDataPage extends QueryPage {
 		$header .= "<div class=\"drilldown_categories\">\n";
 		$header .= "<div class=\"drilldown_header\">$choose_category_text:</div>\n";
 		foreach ($categories as $i => $category) {
-			//if ($i > 0) { $header .= " &middot; "; }
 			$category_children = sdfGetCategoryChildren($category, false, 5);
 			$category_str = $category . " (" . count($category_children) . ")";
 			if (str_replace('_', ' ', $this->category) == $category) {
@@ -442,6 +441,14 @@ class BrowseDataPage extends QueryPage {
 				foreach ($found_values as $value_str => $num_results) {
 					if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
 					$filter_text = $value_str . " ($num_results)";
+					// if it's boolean, display something nicer than "0" or "1"
+					if ($rf->is_boolean) {
+						$filter_text = sdfBooleanToString($value_str);
+					} else {
+						$filter_text = $value_str;
+					}
+					$filter_text .= " ($num_results)";
+
 					$filter_url = $cur_url . urlencode(str_replace(' ', '_', $rf->name)) . '=' . str_replace(' ', '_', $value_str);
 					$results_line .= '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_filterbyvalue') . '">' . $filter_text . '</a>';
 				}
