@@ -10,6 +10,7 @@ class SDFilter {
 	var $name;
 	var $property;
 	var $is_relation;
+	var $is_boolean;
 	var $category;
 	var $time_period = NULL;
 	var $allowed_values;
@@ -48,8 +49,12 @@ class SDFilter {
 				$types = $store->getSpecialValues($proptitle, SMW_SP_HAS_TYPE);
 				global $smwgContLang;
 				$datatypeLabels =  $smwgContLang->getDatatypeLabels();
-				if (count($types) > 0 && $types[0]->getWikiValue() == $datatypeLabels['_wpg']) {
-					$f->is_relation = true;
+				if (count($types) > 0) {
+					if ($types[0]->getWikiValue() == $datatypeLabels['_wpg']) {
+						$f->is_relation = true;
+					} elseif ($types[0]->getWikiValue() == $datatypeLabels['_boo']) {
+						$f->is_boolean = true;
+					}
 				}
 			}
 		}
