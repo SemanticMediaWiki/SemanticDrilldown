@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.3.8');
+define('SD_VERSION','0.3.9');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -508,6 +508,27 @@ function sdfStringToMonth($str) {
 	} else { //if ($strmonth == wfMsg('december')) {
 		return 12;
 	}
+}
+
+function sdfBooleanToString($bool_value) {
+	$words_field_name = ($bool_value == true) ? 'smw_true_words' : 'smw_false_words';
+	$words_array = explode(',', wfMsgForContent($words_field_name));
+	// go with the value in the array that tends to be "yes" or "no" -
+	// for SMW 0.7 it's the 2nd word, and for SMW 1.0 it's the 3rd
+	$smw_version = SMW_VERSION;
+	if ($smw_version{0} == '0')
+		$index_of_word = 1;
+	else
+		$index_of_word = 2;
+	// capitalize first letter of word
+	if (count($words_array) > $index_of_word) {
+		$string_value = ucwords($words_array[$index_of_word]);
+	} elseif (count($words_array) == 0) {
+		$string_value = $bool_value; // a safe value if no words are found
+	} else {
+		$string_value = ucwords($words_array[0]);
+	}
+	return $string_value;
 }
 
 /**
