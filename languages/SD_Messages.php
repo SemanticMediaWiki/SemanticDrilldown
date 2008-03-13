@@ -724,6 +724,16 @@ $messages['te'] = array(
 	'sd_filter_month'                   => 'నెల',
 );
 
+/** Tajik (Тоҷикӣ)
+ * @author Ibrahim
+ */
+$messages['tg'] = array(
+	'sd_browsedata_other'  => 'Дигар',
+	'sd_createfilter_name' => 'Ном:',
+	'sd_filter_year'       => 'Сол',
+	'sd_filter_month'      => 'Моҳ',
+);
+
 /** Volapük (Volapük)
  * @author Malafaya
  */
