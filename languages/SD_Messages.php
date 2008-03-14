@@ -394,15 +394,17 @@ $messages['is'] = array(
 );
 
 /** Khmer (ភាសាខ្មែរ)
- * @author Chhorran
  * @author Lovekhmer
+ * @author Chhorran
  */
 $messages['km'] = array(
-	'sd_browsedata_choosecategory' => 'ជ្រើសរើស មួយចំណាត់ក្រុម',
-	'sd_browsedata_viewcategory'   => 'មើល ចំណាត់ក្រុម',
+	'browsedata'                   => 'រាវរកទិន្នន័យ',
+	'sd_browsedata_choosecategory' => 'ជ្រើសរើសចំណាត់ថ្នាក់ក្រុម',
+	'sd_browsedata_viewcategory'   => 'មើលចំណាត់ថ្នាក់ក្រុម',
 	'sd_browsedata_subcategory'    => 'ចំណាត់ក្រុមរង',
 	'sd_browsedata_other'          => 'ផ្សេងៗទៀត',
-	'sd_createfilter_name'         => 'ឈ្មោះ ៖',
+	'sd_browsedata_none'           => 'ទទេ',
+	'sd_createfilter_name'         => 'ឈ្មោះ៖',
 	'sd_filter_year'               => 'ឆ្នាំ',
 	'sd_filter_month'              => 'ខែ',
 );
