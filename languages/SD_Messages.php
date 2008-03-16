@@ -730,10 +730,20 @@ $messages['te'] = array(
  * @author Ibrahim
  */
 $messages['tg'] = array(
-	'sd_browsedata_other'  => 'Дигар',
-	'sd_createfilter_name' => 'Ном:',
-	'sd_filter_year'       => 'Сол',
-	'sd_filter_month'      => 'Моҳ',
+	'sd_browsedata_other'              => 'Дигар',
+	'sd_createfilter_name'             => 'Ном:',
+	'sd_createfilter_entervalues'      => 'Миқдорҳоро барои филтр дастӣ ворид кунед (миқдорҳо бояд бо вергулҳо ҷудо шаванд - агар миқдор вергул дошта бошад, онро бо "\\," иваз кунед):',
+	'sd_createfilter_label'            => 'Барчасб барои ин филтр (ихтиёрӣ):',
+	'sd_createfilter_requirefilter'    => 'Қабл аз намоиши ин яке, филтри дигар бояд интихоб шавад:',
+	'sd_blank_error'                   => 'наметавонад холӣ бошад',
+	'sd_filter_coversproperty'         => 'Ин филтр вижагии $1-ро шомил мешавад.',
+	'sd_filter_getsvaluesfromcategory' => 'Миқдорҳояшро аз гурӯҳи $1 мегирад.',
+	'sd_filter_usestimeperiod'         => '$1-ро ба унвони давраи вақти худ ба кор мебарад.',
+	'sd_filter_year'                   => 'Сол',
+	'sd_filter_month'                  => 'Моҳ',
+	'sd_filter_hasvalues'              => 'Миқдорҳои $1-ро дорад.',
+	'sd_filter_requiresfilter'         => 'Ба вуҷуди филтри $1 эҳтиёҷ дорад.',
+	'sd_filter_haslabel'               => 'Ин барчасби $1 дорад.',
 );
 
 /** Volapük (Volapük)
