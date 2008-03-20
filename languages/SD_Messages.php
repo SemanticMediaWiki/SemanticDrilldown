@@ -195,6 +195,7 @@ $messages['el'] = array(
 	'sd_browsedata_choosecategory' => 'Επιλέξτε μια κατηγορία',
 	'filters'                      => 'Φίλτρα',
 	'sd_createfilter_name'         => 'Όνομα:',
+	'sd_filter_year'               => 'Χρόνος',
 	'sd_filter_month'              => 'Μήνας',
 );
 
