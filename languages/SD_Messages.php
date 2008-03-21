@@ -203,10 +203,12 @@ $messages['el'] = array(
  * @author Yekrats
  */
 $messages['eo'] = array(
-	'sd_browsedata_other'  => 'Alia',
-	'sd_createfilter_name' => 'Nomo:',
-	'sd_filter_year'       => 'Jaro',
-	'sd_filter_month'      => 'Monato',
+	'sd_browsedata_subcategory'   => 'Subkategorio',
+	'sd_browsedata_other'         => 'Alia',
+	'sd_browsedata_filterbyvalue' => 'Filtru laŭ ĉi tiu valuto',
+	'sd_createfilter_name'        => 'Nomo:',
+	'sd_filter_year'              => 'Jaro',
+	'sd_filter_month'             => 'Monato',
 );
 
 /** Persian (فارسی)
