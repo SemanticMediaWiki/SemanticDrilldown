@@ -136,6 +136,7 @@ $messages['avk'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'browsedata'                   => 'Разглеждане на данните',
 	'sd_browsedata_choosecategory' => 'Избор на категория',
 	'sd_browsedata_subcategory'    => 'Подкатегория',
 	'sd_browsedata_other'          => 'Други',
@@ -206,6 +207,7 @@ $messages['eo'] = array(
 	'sd_browsedata_subcategory'   => 'Subkategorio',
 	'sd_browsedata_other'         => 'Alia',
 	'sd_browsedata_filterbyvalue' => 'Filtru laŭ ĉi tiu valuto',
+	'filters'                     => 'Filtriloj',
 	'sd_createfilter_name'        => 'Nomo:',
 	'sd_filter_year'              => 'Jaro',
 	'sd_filter_month'             => 'Monato',
