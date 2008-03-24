@@ -151,6 +151,16 @@ $messages['bg'] = array(
 	'sd_filter_month'              => 'Месец',
 );
 
+/** Danish (Dansk)
+ * @author Jon Harald Søby
+ */
+$messages['da'] = array(
+	'sd_browsedata_none'   => 'Ingen',
+	'sd_createfilter_name' => 'Navn:',
+	'sd_filter_year'       => 'År',
+	'sd_filter_month'      => 'Måned',
+);
+
 /** German (Deutsch)
  * @author Krabina
  */
@@ -204,14 +214,20 @@ $messages['el'] = array(
  * @author Yekrats
  */
 $messages['eo'] = array(
+	'sd_browsedata_choosecategory'      => 'Elektu kategorion',
+	'sd_browsedata_viewcategory'        => 'rigardu kategorion',
 	'sd_browsedata_subcategory'         => 'Subkategorio',
 	'sd_browsedata_other'               => 'Alia',
 	'sd_browsedata_none'                => 'Neniu',
 	'sd_browsedata_filterbyvalue'       => 'Filtru laŭ ĉi tiu valuto',
 	'sd_browsedata_filterbysubcategory' => 'Filtru laŭ ĉi tiu subkategorio',
+	'sd_browsedata_removefilter'        => 'Forigu filtrilon',
+	'sd_browsedata_resetfilters'        => 'Restarigu filtrilojn',
 	'filters'                           => 'Filtriloj',
+	'sd_filters_docu'                   => 'La jenaj filtriloj ekzistas en {{SITENAME}}:',
 	'createfilter'                      => 'Kreu filtrilon',
 	'sd_createfilter_name'              => 'Nomo:',
+	'sd_blank_error'                    => 'ne povas esti malplena',
 	'sd_filter_year'                    => 'Jaro',
 	'sd_filter_month'                   => 'Monato',
 );
@@ -480,6 +496,16 @@ $messages['nl'] = array(
 	'sd_filter_haslabel'                    => 'Het heeft het label $1.',
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nn'] = array(
+	'sd_browsedata_none'   => 'Ingen',
+	'sd_createfilter_name' => 'Namn:',
+	'sd_filter_year'       => 'År',
+	'sd_filter_month'      => 'Månad',
+);
+
 /** Norwegian (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
@@ -734,6 +760,13 @@ $messages['te'] = array(
 	'sd_filter_month'                   => 'నెల',
 );
 
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'sd_createfilter_name' => 'Naran:',
+);
+
 /** Tajik (Тоҷикӣ)
  * @author Ibrahim
  */
@@ -752,6 +785,13 @@ $messages['tg'] = array(
 	'sd_filter_hasvalues'              => 'Миқдорҳои $1-ро дорад.',
 	'sd_filter_requiresfilter'         => 'Ба вуҷуди филтри $1 эҳтиёҷ дорад.',
 	'sd_filter_haslabel'               => 'Ин барчасби $1 дорад.',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Vinhtantran
+ */
+$messages['vi'] = array(
+	'sd_browsedata_none' => 'Không có',
 );
 
 /** Volapük (Volapük)
