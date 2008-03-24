@@ -765,6 +765,7 @@ $messages['te'] = array(
  */
 $messages['tet'] = array(
 	'sd_createfilter_name' => 'Naran:',
+	'sd_filter_year'       => 'Tinan',
 );
 
 /** Tajik (Тоҷикӣ)
