@@ -764,6 +764,7 @@ $messages['te'] = array(
  * @author MF-Warburg
  */
 $messages['tet'] = array(
+	'sd_browsedata_other'  => 'Seluk',
 	'sd_createfilter_name' => 'Naran:',
 	'sd_filter_year'       => 'Tinan',
 );
