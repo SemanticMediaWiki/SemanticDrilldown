@@ -790,10 +790,12 @@ $messages['tg'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
  * @author Vinhtantran
  */
 $messages['vi'] = array(
 	'sd_browsedata_none' => 'Không có',
+	'sd_blank_error'     => 'không được để trống',
 );
 
 /** Volapük (Volapük)
