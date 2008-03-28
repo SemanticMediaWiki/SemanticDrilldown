@@ -449,11 +449,43 @@ $messages['lb'] = array(
 );
 
 /** Marathi (मराठी)
+ * @author Kaustubh
  * @author Mahitgar
  */
 $messages['mr'] = array(
-	'sd_browsedata_other' => 'इतर',
-	'sd_filter_year'      => 'वर्ष',
+	'browsedata'                            => 'डाटा न्याहाळा',
+	'sd_browsedata_choosecategory'          => 'एक वर्ग निवडा',
+	'sd_browsedata_viewcategory'            => 'वर्ग पहा',
+	'sd_browsedata_subcategory'             => 'उपवर्ग',
+	'sd_browsedata_other'                   => 'इतर',
+	'sd_browsedata_none'                    => '(काहीही नाही)',
+	'sd_browsedata_filterbyvalue'           => 'या किंमती प्रमाणे फिल्टर करा',
+	'sd_browsedata_filterbysubcategory'     => 'या उपवर्गा प्रमाणे फिल्टर करा',
+	'sd_browsedata_otherfilter'             => 'या फिल्टरच्या दुसर्‍या किंमतीसाठीची पाने दाखवा',
+	'sd_browsedata_nonefilter'              => 'या फिल्टरच्या शून्य किंमतीसाठीची पाने दाखवा',
+	'sd_browsedata_removefilter'            => 'हा फिल्टर काढा',
+	'sd_browsedata_removesubcategoryfilter' => 'हा उपवर्ग फिल्टर काढा',
+	'sd_browsedata_resetfilters'            => 'फिल्टर पूर्ववत करा',
+	'filters'                               => 'फिल्टर्स',
+	'sd_filters_docu'                       => '{{SITENAME}} वर खालील फिल्टर्स उपलब्ध आहेत:',
+	'createfilter'                          => 'नवीन फिल्टर बनवा',
+	'sd_createfilter_name'                  => 'नाव:',
+	'sd_createfilter_property'              => 'हा फिल्टर कुठल्या गुणधर्मासाठी वापरायचा आहे:',
+	'sd_createfilter_usepropertyvalues'     => 'या फिल्टरकरीता या गुणधर्माच्या सर्व किंमती वापरा',
+	'sd_createfilter_usecategoryvalues'     => 'या फिल्टरकरीता या वर्गातून किंमती मिळवा:',
+	'sd_createfilter_usedatevalues'         => 'या फिल्टरकरीता या कालावधीतील तारखा वापरा:',
+	'sd_createfilter_entervalues'           => 'फिल्टरसाठी स्वत: किंमती भरा (किंमती स्वल्पविराम "," वापरून लिहाव्या, जर एखाद्या किंमतीतच स्वल्पविराम येत असेल तर त्याजागी "\\," लिहा):',
+	'sd_createfilter_label'                 => 'या फिल्टरकरीत लेबल (वैकल्पिक):',
+	'sd_createfilter_requirefilter'         => 'हा फिल्टर दर्शविण्याआधी जर दुसरा फिल्टर वापरायचा असेल तर त्याचे नाव:',
+	'sd_blank_error'                        => 'रिकामे असू शकत नाही',
+	'sd_filter_coversproperty'              => 'हा फिल्टर $1 या गुणधर्मावर चालतो.',
+	'sd_filter_getsvaluesfromcategory'      => 'तो $1 या वर्गातून किंमती घेतो.',
+	'sd_filter_usestimeperiod'              => 'तो $1 कालावधी वापरतो.',
+	'sd_filter_year'                        => 'वर्ष',
+	'sd_filter_month'                       => 'महीना',
+	'sd_filter_hasvalues'                   => 'त्यामध्ये $1 या किंमती आहेत.',
+	'sd_filter_requiresfilter'              => 'या साठी $1 हा फिल्टर असणे आवश्यक आहे.',
+	'sd_filter_haslabel'                    => 'त्याला $1 हे लेबल आहे.',
 );
 
 /** Dutch (Nederlands)
@@ -609,14 +641,15 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'sd_browsedata_choosecategory' => 'يوه وېشنيزه ټاکل',
-	'sd_browsedata_viewcategory'   => 'وېشنيزه ښکاره کول',
-	'sd_browsedata_subcategory'    => 'وړه-وېشنيزه',
-	'sd_browsedata_other'          => 'بل',
-	'sd_browsedata_none'           => 'هېڅ',
-	'sd_createfilter_name'         => 'نوم:',
-	'sd_filter_year'               => 'کال',
-	'sd_filter_month'              => 'مياشت',
+	'sd_browsedata_choosecategory'      => 'يوه وېشنيزه ټاکل',
+	'sd_browsedata_viewcategory'        => 'وېشنيزه ښکاره کول',
+	'sd_browsedata_subcategory'         => 'وړه-وېشنيزه',
+	'sd_browsedata_other'               => 'بل',
+	'sd_browsedata_none'                => 'هېڅ',
+	'sd_browsedata_filterbysubcategory' => 'د همدې وړې-وېشنيزې له مخې چاڼول',
+	'sd_createfilter_name'              => 'نوم:',
+	'sd_filter_year'                    => 'کال',
+	'sd_filter_month'                   => 'مياشت',
 );
 
 /** Portuguese (Português)
