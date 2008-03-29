@@ -404,10 +404,12 @@ $messages['hsb'] = array(
 
 /** Hungarian (Magyar)
  * @author Dorgan
+ * @author Dani
  */
 $messages['hu'] = array(
-	'sd_filter_year'  => 'Év',
-	'sd_filter_month' => 'Hónap',
+	'sd_browsedata_none' => 'Nincs',
+	'sd_filter_year'     => 'Év',
+	'sd_filter_month'    => 'Hónap',
 );
 
 /** Icelandic (Íslenska)
