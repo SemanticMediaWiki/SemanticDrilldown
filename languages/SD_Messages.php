@@ -335,9 +335,10 @@ $messages['fr'] = array(
 
 /** Galician (Galego)
  * @author Alma
+ * @author Toliño
  */
 $messages['gl'] = array(
-	'sd_browsedata_choosecategory'          => 'Elexir unha categoría',
+	'sd_browsedata_choosecategory'          => 'Elixir unha categoría',
 	'sd_browsedata_viewcategory'            => 'ver categoría',
 	'sd_browsedata_subcategory'             => 'Subcategoría',
 	'sd_browsedata_other'                   => 'Outro',
@@ -689,6 +690,45 @@ $messages['pt'] = array(
 	'sd_filter_hasvalues'                   => 'Possui os valores $1.',
 	'sd_filter_requiresfilter'              => 'Requer a presença do filtro $1.',
 	'sd_filter_haslabel'                    => 'Possui a etiqueta $1.',
+);
+
+/** Russian (Русский)
+ * @author .:Ajvol:.
+ */
+$messages['ru'] = array(
+	'browsedata'                            => 'Обзор данных',
+	'sd_browsedata_choosecategory'          => 'Выберите категорию',
+	'sd_browsedata_viewcategory'            => 'просмотр категории',
+	'sd_browsedata_subcategory'             => 'Подкатегория',
+	'sd_browsedata_other'                   => 'Другие',
+	'sd_browsedata_none'                    => 'Нет',
+	'sd_browsedata_filterbyvalue'           => 'Фильтр по этому значению',
+	'sd_browsedata_filterbysubcategory'     => 'Фильтр по этой подкатегории',
+	'sd_browsedata_otherfilter'             => 'Показать страницы с другими значениями по этому фильтру',
+	'sd_browsedata_nonefilter'              => 'Показать страницы без значений по этому фильтру',
+	'sd_browsedata_removefilter'            => 'Убрать этот фильтр',
+	'sd_browsedata_removesubcategoryfilter' => 'Убрать этот фильтр по подкатегории',
+	'sd_browsedata_resetfilters'            => 'Сбросить фильтры',
+	'filters'                               => 'Фильтры',
+	'sd_filters_docu'                       => '{{SITENAME}} содержит следующие фильтры:',
+	'createfilter'                          => 'Создать фильтр',
+	'sd_createfilter_name'                  => 'Имя:',
+	'sd_createfilter_property'              => 'Свойство, которое покрывает этот фильтр:',
+	'sd_createfilter_usepropertyvalues'     => 'Использовать все значения этого свойства для фильтра',
+	'sd_createfilter_usecategoryvalues'     => 'Получить значения для фильтра из этой категории:',
+	'sd_createfilter_usedatevalues'         => 'Использовать следующий диапазон дат для фильтра:',
+	'sd_createfilter_entervalues'           => 'Введите значения для фильтра вручную (значения должны разделяться запятыми, если значение содержит запятую, замените её на «\\,»):',
+	'sd_createfilter_label'                 => 'Пометка для этого фильтра (необязательно):',
+	'sd_createfilter_requirefilter'         => 'Требовать выбора другого фильтра, перед тем, как отображать этот:',
+	'sd_blank_error'                        => 'не может быть пустым',
+	'sd_filter_coversproperty'              => 'Этот фильтр покрывает свойство $1.',
+	'sd_filter_getsvaluesfromcategory'      => 'Получает свои значения из категории $1.',
+	'sd_filter_usestimeperiod'              => 'Использует $1 как временной диапазон.',
+	'sd_filter_year'                        => 'Год',
+	'sd_filter_month'                       => 'Месяц',
+	'sd_filter_hasvalues'                   => 'Имеет значения $1.',
+	'sd_filter_requiresfilter'              => 'Требует наличия фильтра $1.',
+	'sd_filter_haslabel'                    => 'Имеет пометку $1.',
 );
 
 /** Slovak (Slovenčina)
