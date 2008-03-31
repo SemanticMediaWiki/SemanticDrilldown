@@ -847,7 +847,7 @@ $messages['tet'] = array(
 /** Tajik (Тоҷикӣ)
  * @author Ibrahim
  */
-$messages['tg'] = array(
+$messages['tg-cyrl'] = array(
 	'sd_browsedata_other'              => 'Дигар',
 	'sd_createfilter_name'             => 'Ном:',
 	'sd_createfilter_entervalues'      => 'Миқдорҳоро барои филтр дастӣ ворид кунед (миқдорҳо бояд бо вергулҳо ҷудо шаванд - агар миқдор вергул дошта бошад, онро бо "\\," иваз кунед):',
