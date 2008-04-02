@@ -770,6 +770,13 @@ $messages['sk'] = array(
 	'sd_filter_haslabel'                    => 'Má označenie $1.',
 );
 
+/** Serbian Cyrillic ekavian (ћирилица)
+ * @author Sasa Stefanovic
+ */
+$messages['sr-ec'] = array(
+	'sd_browsedata_none' => 'Нема',
+);
+
 /** Seeltersk (Seeltersk)
  * @author Pyt
  */
