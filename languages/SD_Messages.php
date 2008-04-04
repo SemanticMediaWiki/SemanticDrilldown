@@ -364,6 +364,13 @@ $messages['gl'] = array(
 	'sd_filter_month'                       => 'Mes',
 );
 
+/** Hindi (हिन्दी)
+ * @author Kaustubh
+ */
+$messages['hi'] = array(
+	'sd_createfilter_name' => 'नाम:',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
