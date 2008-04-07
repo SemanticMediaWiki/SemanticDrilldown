@@ -136,19 +136,22 @@ $messages['avk'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
-	'browsedata'                   => 'Разглеждане на данните',
-	'sd_browsedata_choosecategory' => 'Избор на категория',
-	'sd_browsedata_subcategory'    => 'Подкатегория',
-	'sd_browsedata_other'          => 'Други',
-	'sd_browsedata_none'           => 'Няма',
-	'sd_browsedata_removefilter'   => 'Премахване на филтъра',
-	'filters'                      => 'Филтри',
-	'createfilter'                 => 'Създаване на филтър',
-	'sd_createfilter_name'         => 'Име:',
-	'sd_createfilter_label'        => 'Заглавие за този филтър (незадължително):',
-	'sd_blank_error'               => 'не може да бъде празно',
-	'sd_filter_year'               => 'Година',
-	'sd_filter_month'              => 'Месец',
+	'browsedata'                        => 'Разглеждане на данните',
+	'sd_browsedata_choosecategory'      => 'Избор на категория',
+	'sd_browsedata_viewcategory'        => 'преглед на категорията',
+	'sd_browsedata_subcategory'         => 'Подкатегория',
+	'sd_browsedata_other'               => 'Други',
+	'sd_browsedata_none'                => 'Няма',
+	'sd_browsedata_filterbyvalue'       => 'Филтриране по тази стойност',
+	'sd_browsedata_filterbysubcategory' => 'Филтриране по тази подкатегория',
+	'sd_browsedata_removefilter'        => 'Премахване на филтъра',
+	'filters'                           => 'Филтри',
+	'createfilter'                      => 'Създаване на филтър',
+	'sd_createfilter_name'              => 'Име:',
+	'sd_createfilter_label'             => 'Заглавие за този филтър (незадължително):',
+	'sd_blank_error'                    => 'не може да бъде празно',
+	'sd_filter_year'                    => 'Година',
+	'sd_filter_month'                   => 'Месец',
 );
 
 /** Danish (Dansk)
@@ -230,6 +233,8 @@ $messages['eo'] = array(
 	'sd_blank_error'                    => 'ne povas esti malplena',
 	'sd_filter_year'                    => 'Jaro',
 	'sd_filter_month'                   => 'Monato',
+	'sd_filter_hasvalues'               => 'Ĝi havas valutojn $1.',
+	'sd_filter_haslabel'                => 'Ĝi havas etikedon $1.',
 );
 
 /** Persian (فارسی)
@@ -858,11 +863,17 @@ $messages['tet'] = array(
 	'sd_filter_year'       => 'Tinan',
 );
 
-/** Tajik (Тоҷикӣ)
+/** Tajik (Cyrillic) (Тоҷикӣ/tojikī (Cyrillic))
  * @author Ibrahim
+ * @author Siebrand
  */
 $messages['tg-cyrl'] = array(
+	'browsedata'                       => 'Мурури дода',
+	'sd_browsedata_choosecategory'     => 'Гурӯҳеро интихоб кунед',
+	'sd_browsedata_viewcategory'       => 'нигаристан гурӯҳ',
+	'sd_browsedata_subcategory'        => 'Зергурӯҳ',
 	'sd_browsedata_other'              => 'Дигар',
+	'sd_browsedata_none'               => 'Ҳеҷ',
 	'sd_createfilter_name'             => 'Ном:',
 	'sd_createfilter_entervalues'      => 'Миқдорҳоро барои филтр дастӣ ворид кунед (миқдорҳо бояд бо вергулҳо ҷудо шаванд - агар миқдор вергул дошта бошад, онро бо "\\," иваз кунед):',
 	'sd_createfilter_label'            => 'Барчасб барои ин филтр (ихтиёрӣ):',
