@@ -373,6 +373,7 @@ $messages['gl'] = array(
  * @author Kaustubh
  */
 $messages['hi'] = array(
+	'sd_browsedata_none'   => 'बिल्कुल नहीं',
 	'sd_createfilter_name' => 'नाम:',
 );
 
