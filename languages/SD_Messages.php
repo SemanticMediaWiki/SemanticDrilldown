@@ -857,6 +857,13 @@ $messages['sv'] = array(
 	'sd_filter_month'              => 'Månad',
 );
 
+/** Silesian (ślůnski)
+ * @author Herr Kriss
+ */
+$messages['szl'] = array(
+	'sd_createfilter_name' => 'Mjano:',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
