@@ -369,6 +369,17 @@ $messages['gl'] = array(
 	'sd_filter_month'                       => 'Mes',
 );
 
+/** Manx (Gaelg)
+ * @author MacTire02
+ */
+$messages['gv'] = array(
+	'sd_browsedata_viewcategory' => 'jeeagh er ronney',
+	'sd_browsedata_other'        => 'Elley',
+	'sd_createfilter_name'       => 'Ennym:',
+	'sd_filter_year'             => 'Blein',
+	'sd_filter_month'            => 'Mee',
+);
+
 /** Hindi (हिन्दी)
  * @author Kaustubh
  */
