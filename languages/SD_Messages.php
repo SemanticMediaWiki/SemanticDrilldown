@@ -676,6 +676,13 @@ $messages['oc'] = array(
 	'sd_filter_haslabel'                    => 'Dispausa del labèl $1.',
 );
 
+/** Ossetic (Иронау)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'sd_filter_year' => 'Аз',
+);
+
 /** Polish (Polski)
  * @author Maire
  */
