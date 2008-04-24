@@ -81,6 +81,10 @@ class SDFilterValue {
 			}
 			return ($fv1->year > $fv2->year) ? 1 : -1;
 		}
+		if ($fv1->is_numeric) {
+			if ($fv1->lower_limit == null) return -1;
+			return ($fv1->lower_limit > $fv2->lower_limit) ? 1 : -1;
+		}
 		if ($fv1->text == $fv2->text) return 0;
 		return ($fv1->text > $fv2->text) ? 1 : -1;
 	}
