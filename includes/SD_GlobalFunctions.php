@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.3.9');
+define('SD_VERSION','0.4');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -17,22 +17,30 @@ define('SD_SP_GETS_VALUES_FROM_CATEGORY', 4);
 define('SD_SP_USES_TIME_PERIOD', 5);
 define('SD_SP_REQUIRES_FILTER', 6);
 define('SD_SP_HAS_LABEL', 7);
+define('SD_SP_HAS_DRILLDOWN_TITLE', 8);
 
 $wgExtensionFunctions[] = 'sdgSetupExtension';
-$wgExtensionMessagesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Messages.php';
 
 require_once($sdgIP . '/languages/SD_Language.php');
+
+if (version_compare($wgVersion, '1.11', '>=' )) {
+	$wgExtensionMessagesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Messages.php';
+} else {
+	$wgExtensionFunctions[] = 'sdfLoadMessagesManually';
+}
 
 /**
  *  Do the actual intialization of the extension. This is just a delayed init that makes sure
  *  MediaWiki is set up properly before we add our stuff.
  */
 function sdgSetupExtension() {
-	global $sdgNamespace, $sdgIP, $wgExtensionCredits, $wgArticlePath, $wgScriptPath, $wgServer;
+	global $sdgNamespace, $sdgIP, $wgVersion, $wgExtensionCredits;
 
-	sdfInitMessages();
+	if (version_compare($wgVersion, '1.11', '>='))
+		wfLoadExtensionMessages('SemanticDrilldown');
 
 	require_once($sdgIP . '/includes/SD_Filter.php');
+	require_once($sdgIP . '/includes/SD_FilterValue.php');
 	require_once($sdgIP . '/includes/SD_AppliedFilter.php');
 
 	/**********************************************/
@@ -88,8 +96,7 @@ function sdfInitNamespaces() {
 	// Register namespace identifiers
 	if (!is_array($wgExtraNamespaces)) { $wgExtraNamespaces=array(); }
 	$wgExtraNamespaces = $wgExtraNamespaces + $sdgContLang->getNamespaces();
-	// this code doesn't work, for some reason - leave it out for now
-	//$wgNamespaceAliases = $wgNamespaceAliases + $sdgContLang->getNamespaceAliases();
+	$wgNamespaceAliases = $wgNamespaceAliases + $sdgContLang->getNamespaceAliases();
 
 	// Support subpages only for talk pages by default
 	$wgNamespacesWithSubpages = $wgNamespacesWithSubpages + array(
@@ -158,33 +165,18 @@ function sdfInitUserLanguage($langcode) {
 }
 
 /**
- * Initialize messages - these settings must be applied later on, since
- * the MessageCache does not exist yet when the settings are loaded in
- * LocalSettings.php.
- * Function based on version in ContributionScores extension
- */
-function sdfInitMessages() {
-        global $wgVersion, $wgExtensionFunctions;
-        if (version_compare($wgVersion, '1.11', '>=' )) {
-                wfLoadExtensionMessages( 'SemanticDrilldown' );
-        } else {
-                $wgExtensionFunctions[] = 'sdfLoadMessagesManually';
-        }
-}
-
-/**
  * Setting of message cache for versions of MediaWiki that do not support
- * wgExtensionFunctions - based on ceContributionScores() in
+ * wgExtensionMessagesFiles - based on ceContributionScores() in
  * ContributionScores extension
  */
 function sdfLoadMessagesManually() {
-        global $sdgIP, $wgMessageCache;
+	global $sdgIP, $wgMessageCache;
 
-        # add messages
-        require($sdgIP . '/languages/SD_Messages.php');
-        foreach($messages as $key => $value) {
-                $wgMessageCache->addMessages($messages[$key], $key);
-        }
+	# add messages
+	require($sdgIP . '/languages/SD_Messages.php');
+	foreach($messages as $key => $value) {
+		$wgMessageCache->addMessages($messages[$key], $key);
+	}
 }
 
 /**********************************************/
