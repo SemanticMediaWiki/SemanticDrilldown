@@ -429,7 +429,7 @@ END;
 			if ($i > 0) { $results_line .= " &middot; "; }
 			$value = str_replace('_', ' ', $value);
 			// if it's boolean, display something nicer than "0" or "1"
-			if ($rf->is_boolean) {
+			if ($af->filter->is_boolean) {
 				$filter_text = sdfBooleanToString($value);
 			} elseif ($value == ' other') {
 				$filter_text = wfMsg('sd_browsedata_other');
@@ -466,11 +466,12 @@ END;
 				}
 			}
 		}
+		$add_another_str = wfMsg('sd_browsedata_addanothervalue');
 		$results_div_id = strtolower(str_replace(' ', '_', $filter_label)) . "_values";
 		$text =<<<END
 	<div class="drilldown_filter_label">
 		<a onclick="toggleDiv('$results_div_id', this)" style="cursor: default;"><img src="$sdgScriptPath/skins/right-arrow.png"></a>
-		$filter_label: <span class="drilldown_filter_notes">(add another value)</span>
+		$filter_label: <span class="drilldown_filter_notes">($add_another_str)</span>
 	</div>
 	<div class="drilldown_filter_values" id="$results_div_id" style="display: none;">$results_line
 	</div>
@@ -605,17 +606,12 @@ END;
 			$header .= '	<a href="' . $category_url . '" title="' . wfMsg('sd_browsedata_resetfilters') . '">' . str_replace('_', ' ', $this->category) . '</a>';
 		} else
 			$header .= str_replace('_', ' ', $this->category);
-		// link to actual category
-		//$cat_title = Title::newFromText($this->category, NS_CATEGORY);
-		//$sk = $wgUser->getSkin();
-		//$header .= " (" . $sk->makeKnownLinkObj($cat_title, wfMsg('sd_browsedata_viewcategory')) . ")";;
-		//$header .= '<a href="' . $cat_title->getFullURL() . '" title="' . wfMsg('sd_browsedata_viewcategory') . '">' . $this->category . "</a>";;
 		if ($this->subcategory) {
 			$header .= " > ";
 			$header .= "\n	$subcategory_text: ";
-			$filter_string .= str_replace('_', ' ', $this->subcategory);
+			$subcat_string .= str_replace('_', ' ', $this->subcategory);
 			$remove_filter_url = $this->makeBrowseURL($this->category, $this->applied_filters);
-			$header .= '<span class="drilldown_header_value">' . $filter_string . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removesubcategoryfilter') . '" class="remove"></a>';
+			$header .= '<span class="drilldown_header_value">' . $subcat_string . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removesubcategoryfilter') . '" class="remove"></a>';
 		}
 		foreach ($this->applied_filters as $i => $af) {
 			$header .= (! $this->subcategory && $i == 0) ? " > " : "\n	<span class=\"drilldown_header_value\">&</span> ";
@@ -709,7 +705,22 @@ END;
 		if ($this->subcategory)
 			$params['_subcat'] = $this->subcategory;
 		foreach ($this->applied_filters as $i => $af) {
-			$params[$af->filter->name] = $af->value;
+			if (count($af->values) == 1) {
+				$key_string = str_replace(' ', '_', $af->filter->name);
+				$value_string = str_replace(' ', '_', $af->values[0]->text);
+				$params[$key_string] = $value_string;
+			} else {
+				// HACK - QueryPage's pagination-URL code,
+				// which uses wfArrayToCGI(), doesn't support
+				// two-dimensional arrays, which is what we
+				// need - instead, add the brackets directly
+				// to the key string
+				foreach ($af->values as $i => $value) {
+					$key_string = str_replace(' ', '_', $af->filter->name . "[$i]");
+					$value_string = str_replace(' ', '_', $value->text);
+					$params[$key_string] = $value_string;
+				}
+			}
 		}
 		return $params;
 	}
