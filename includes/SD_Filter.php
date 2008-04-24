@@ -66,6 +66,8 @@ class SDFilter {
 		} elseif (count($time_periods) > 0) {
 			$f->time_period = $time_periods[0];
 			$f->allowed_values = array();
+		} elseif ($f->is_boolean) {
+			$f->allowed_values = array('0', '1');
 		} else {
 			$values = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_HAS_VALUE, false, null);
 			$f->allowed_values = $values;
