@@ -41,3 +41,11 @@ if (!isset($sdgNamespaceIndex)) {
 ## List separator character
 ###
 $sdgListSeparator = ",";
+
+###
+## Variables for display
+###
+# $sdgNumResultsColumns = 3;
+# $sdgNumResultsPerPage = 250;
+# $sdgFiltersSmallestFontSize=9;
+# $sdgFiltersLargestFontSize=25;
