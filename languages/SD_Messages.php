@@ -304,6 +304,7 @@ $messages['fi'] = array(
  * @author Grondin
  * @author Sherbrooke
  * @author Urhixidur
+ * @author IAlex
  */
 $messages['fr'] = array(
 	'browsedata'                            => 'Chercher les données',
@@ -316,9 +317,11 @@ $messages['fr'] = array(
 	'sd_browsedata_filterbysubcategory'     => 'Filtrer par cette sous-catégorie',
 	'sd_browsedata_otherfilter'             => 'Voir les pages avec une autre valeur pour ce filtre',
 	'sd_browsedata_nonefilter'              => 'Voir les pages avec aucune valeur pour ce filtre',
+	'sd_browsedata_or'                      => 'ou',
 	'sd_browsedata_removefilter'            => 'Retirer ce filtre',
 	'sd_browsedata_removesubcategoryfilter' => 'Retirer cette sous-catégorie de filtre',
 	'sd_browsedata_resetfilters'            => 'Remise à zéro des filtres',
+	'sd_browsedata_addanothervalue'         => 'Ajouter une autre valeur',
 	'filters'                               => 'Filtres',
 	'sd_filters_docu'                       => 'Le filtre suivant existe sur {{SITENAME}} :',
 	'createfilter'                          => 'Créer un filtre',
