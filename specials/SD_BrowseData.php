@@ -609,7 +609,7 @@ END;
 		if ($this->subcategory) {
 			$header .= " > ";
 			$header .= "\n	$subcategory_text: ";
-			$subcat_string .= str_replace('_', ' ', $this->subcategory);
+			$subcat_string = str_replace('_', ' ', $this->subcategory);
 			$remove_filter_url = $this->makeBrowseURL($this->category, $this->applied_filters);
 			$header .= '<span class="drilldown_header_value">' . $subcat_string . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removesubcategoryfilter') . '" class="remove"></a>';
 		}
@@ -627,7 +627,7 @@ END;
 				$temp_filters_array = $this->applied_filters;
 				array_splice($temp_filters_array, $i, 1);
 				$remove_filter_url = $this->makeBrowseURL($this->category, $temp_filters_array, $this->subcategory);
-				array_splice($temp_filters_array, $i, 0, $filter_value_str);
+				array_splice($temp_filters_array, $i, 0);
 				$header .= $filter_label . ' <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removefilter') . "\" class=\"remove\"></a> : ";
 			} else {
 				$header .= "$filter_label: ";
