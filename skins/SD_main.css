@@ -12,7 +12,7 @@ div.drilldown_categories {
 	border: 2px #888888 solid;
 }
 
-div.drilldown_header {
+div.drilldown_categories_header {
 	font-weight: bold;
 	padding: 3px 8px 3px 8px;
 	background: #c9c9c9;
@@ -29,10 +29,46 @@ div.selected_category {
 	background: white;
 }
 
+div.drilldown_header {
+	font-size: larger;
+	font-weight: bold;
+}
+
+span.drilldown_header_value {
+	font-weight: normal;
+}
+
+div.drilldown_header a.remove {
+	color: black; /* no 'auto' value for color */
+	text-decoration: none;
+	padding: 0px 7px 0px 7px;
+	background: url(filter-x.png) center no-repeat;
+}
+
+div.drilldown_header a.remove:hover {
+	background: url(filter-x-active.png) center no-repeat;
+}
+
 div.drilldown_filters {
 	/* background: #e2e2e2; */
 	margin-top: 10px;
 	padding-bottom: 8px;
 	margin-bottom: 8px;
 	border-bottom: 1px #aaaaaa solid;
+}
+span.drilldown_or {
+	color: gray;
+	font-weight: normal;
+}
+
+div.drilldown_filter_label {
+	font-weight: bold;
+}
+
+span.drilldown_filter_notes {
+	font-weight: normal;
+}
+
+div.drilldown_filter_values {
+	margin-bottom: 10px;
 }
