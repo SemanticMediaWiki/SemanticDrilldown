@@ -8,7 +8,6 @@
 
 class SDAppliedFilter {
 	var $filter;
-	var $value;
 	var $values;
 
 	function create($filter, $values) {
@@ -21,7 +20,6 @@ class SDAppliedFilter {
 			$filter_val = SDFilterValue::create($val, $filter->time_period);
 			$af->values[] = $filter_val;
 		}
-		$af->value = $value[0];
 		return $af;
 	}
 
