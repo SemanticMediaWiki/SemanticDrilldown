@@ -9,46 +9,19 @@
 class SDAppliedFilter {
 	var $filter;
 	var $value;
-	var $is_numeric = false;
-	var $lower_limit = null;
-	var $upper_limit = null;
+	var $values;
 
-	function create($filter, $value) {
+	function create($filter, $values) {
 		$af = new SDAppliedFilter();
 		$af->filter = $filter;
-		$af->value = $value;
-
-		// try to parse this value to see if it's a numerical range -
-		// if so,  set the appropriate fields
-
-		// SMW 1.0 HTML-encodes the value; un-encode it here
-		$originals = array('&lt;', '&gt;');
-		$replacements = array('<', '>');
-		$af->value = str_replace($originals, $replacements, $af->value);
-		if ($af->value{0} == '<') {
-			$possible_number = str_replace(',', '', trim(substr($af->value, 1)));
-			if (is_numeric($possible_number)) {
-				$af->upper_limit = $possible_number;
-				$af->is_numeric = true;
-			}
-		} elseif ($af->value{0} == '>') {
-			$possible_number = str_replace(',', '', trim(substr($af->value, 1)));
-			if (is_numeric($possible_number)) {
-				$af->lower_limit = $possible_number;
-				$af->is_numeric = true;
-			}
-		} else {
-			$elements = explode('-', $af->value);
-			if (count($elements) == 2) {
-				$first_elem = str_replace(',', '', trim($elements[0]));
-				$second_elem = str_replace(',', '', trim($elements[1]));
-				if (is_numeric($first_elem) && is_numeric($second_elem)) {
-					$af->lower_limit = $first_elem;
-					$af->upper_limit = $second_elem;
-					$af->is_numeric = true;
-				}
-			}
+		if (! is_array($values)) {
+			$values = array($values);
 		}
+		foreach ($values as $val) {
+			$filter_val = SDFilterValue::create($val, $filter->time_period);
+			$af->values[] = $filter_val;
+		}
+		$af->value = $value[0];
 		return $af;
 	}
 
@@ -57,31 +30,41 @@ class SDAppliedFilter {
 	 * combination to an SQL "WHERE" clause.
 	 */
 	function checkSQL($value_field) {
-		$sql = "";
-		if ($this->is_numeric) {
-			if ($this->lower_limit && $this->upper_limit)
-				$sql .= "($value_field >= {$this->lower_limit} AND $value_field <= {$this->upper_limit}) ";
-			elseif ($this->lower_limit)
-				$sql .= "$value_field > {$this->lower_limit} ";
-			elseif ($this->upper_limit)
-				$sql .= "$value_field < {$this->upper_limit} ";
-		} elseif ($this->filter->time_period != NULL) {
-			if ($this->filter->time_period == wfMsg('sd_filter_month')) {
-				list($month_str, $year) = explode(' ', $this->value);
-				$month = sdfStringToMonth($month_str);
-				$sql .= "YEAR($value_field) = $year AND MONTH($value_field) = $month ";
+		$sql = "(";
+		$dbr = wfGetDB( DB_SLAVE );
+		foreach ($this->values as $i => $fv) {
+			if ($i > 0) {$sql .= " OR ";}
+			if ($fv->is_other) {
+				$sql .= "(! ($value_field IS NULL OR $value_field = '' ";
+				foreach ($this->filter->possible_applied_filters as $paf) {
+					$sql .= " OR ";
+					$sql .= $paf->checkSQL($value_field);
+				}
+				$sql .= "))";
+			} elseif ($fv->is_none) {
+				$sql .= "($value_field = '' OR $value_field IS NULL) ";
+			} elseif ($fv->is_numeric) {
+				if ($fv->lower_limit && $fv->upper_limit)
+					$sql .= "($value_field >= {$fv->lower_limit} AND $value_field <= {$fv->upper_limit}) ";
+				elseif ($fv->lower_limit)
+					$sql .= "$value_field > {$fv->lower_limit} ";
+				elseif ($fv->upper_limit)
+					$sql .= "$value_field < {$fv->upper_limit} ";
+			} elseif ($this->filter->time_period != NULL) {
+				if ($this->filter->time_period == wfMsg('sd_filter_month')) {
+					$sql .= "YEAR($value_field) = {$fv->year} AND MONTH($value_field) = {$fv->month} ";
+				} else {
+					$sql .= "YEAR($value_field) = {$fv->year} ";
+				}
 			} else {
-				$sql .= "YEAR($value_field) = {$this->value} ";
+				$value = $fv->text;
+				if ($this->filter->is_relation) {
+					$value = str_replace(' ', '_', $value);
+				}
+				$sql .= "$value_field = '{$dbr->strencode($value)}'";
 			}
-		} else {
-			$dbr = wfGetDB( DB_SLAVE );
-			if ($this->filter->is_relation) {
-				$query_value = str_replace(' ', '_', $this->value);
-			} else {
-				$query_value = $this->value;
-			}
-			$sql .= "$value_field = '{$dbr->strencode($query_value)}' ";
 		}
+		$sql .= ")";
 		return $sql;
 	}
 }
