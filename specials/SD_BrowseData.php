@@ -105,7 +105,7 @@ class BrowseDataPage extends QueryPage {
 	 */
 	function getSQLFromClauseForField($new_filter) {
 		$sql = "FROM semantic_drilldown_values sdv
-			JOIN semantic_drilldown_filter_values sdfv
+			LEFT OUTER JOIN semantic_drilldown_filter_values sdfv
 			ON sdv.page_id = sdfv.subject_id
 			WHERE ";
 		$sql .= $new_filter->checkSQL("sdfv.value");
@@ -325,14 +325,7 @@ class BrowseDataPage extends QueryPage {
 			$property_field = 'attribute_title';
 			$value_field = 'value_xsd';
 		}
-                if ($applied_filter->is_numeric) {
-                        if ($applied_filter->lower_limit && $applied_filter->upper_limit)
-                                $sql .= "($value_field >= {$applied_filter->lower_limit} AND $value_field <= {$applied_filter->upper_limit}) ";
-                        elseif ($applied_filter->lower_limit)
-                                $sql .= "$value_field > {$applied_filter->lower_limit} ";
-                        elseif ($applied_filter->upper_limit)
-                                $sql .= "$value_field < {$applied_filter->upper_limit} ";
-                } elseif ($applied_filter->filter->time_period != NULL) {
+                if ($applied_filter->filter->time_period != NULL) {
 			if ($applied_filter->filter->time_period == wfMsg('sd_filter_month')) {
 				$value_field = "YEAR(value_xsd), MONTH(value_xsd)";
 			} else {
@@ -429,15 +422,14 @@ END;
 			if ($i > 0) { $results_line .= " &middot; "; }
 			$value = str_replace('_', ' ', $value);
 			// if it's boolean, display something nicer than "0" or "1"
-			if ($af->filter->is_boolean) {
-				$filter_text = sdfBooleanToString($value);
-			} elseif ($value == ' other') {
+			if ($value == ' other')
 				$filter_text = wfMsg('sd_browsedata_other');
-			} elseif ($value == ' none') {
+			elseif ($value == ' none')
 				$filter_text = wfMsg('sd_browsedata_none');
-			} else {
+			elseif ($af->filter->is_boolean)
+				$filter_text = sdfBooleanToString($value);
+			else
 				$filter_text = $value;
-			}
 			$applied_filters = $this->applied_filters;
 			foreach ($applied_filters as $af2) {
 				if ($af->filter->name == $af2->filter->name) {
@@ -541,15 +533,14 @@ END;
 		foreach ($filter_values as $value_str => $num_results) {
 			if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
 			// if it's boolean, display something nicer than "0" or "1"
-			if ($f->is_boolean) {
-				$filter_text = sdfBooleanToString($value_str);
-			} elseif ($value_str == '_other') {
+			if ($value_str == '_other')
 				$filter_text = wfMsg('sd_browsedata_other');
-			} elseif ($value_str == '_none') {
+			elseif ($value_str == '_none')
 				$filter_text = wfMsg('sd_browsedata_none');
-			} else {
+			elseif ($f->is_boolean)
+				$filter_text = sdfBooleanToString($value_str);
+			else
 				$filter_text = str_replace('_', ' ', $value_str);
-			}
 			$filter_text .= " ($num_results)";
 			$filter_url = $cur_url . urlencode(str_replace(' ', '_', $f->name)) . '=' . urlencode(str_replace(' ', '_', $value_str));
 			if (isset($sdgFiltersSmallestFontSize) && isset($sdgFiltersLargestFontSize)) {
@@ -634,12 +625,12 @@ END;
 			}
 			foreach ($af->values as $j => $fv) {
 				if ($j > 0) {$header .= ' <span class="drilldown_or">' . wfMsg('sd_browsedata_or') . '</span> ';}
-				if ($af->filter->is_boolean)
-					$filter_value = sdfBooleanToString($fv->text);
-				elseif ($fv->text == ' other')
+				if ($fv->text == ' other')
 					$filter_value_str = wfMsg('sd_browsedata_other');
 				elseif ($fv->text == ' none')
 					$filter_value_str = wfMsg('sd_browsedata_none');
+				elseif ($af->filter->is_boolean)
+					$filter_value = sdfBooleanToString($fv->text);
 				else
 					$filter_value_str = $fv->text;
 				$temp_filters_array = $this->applied_filters;
@@ -871,7 +862,7 @@ END;
 		if (count($titles_for_category) > 0) {
 			$category_title = str_replace('_', ' ', $titles_for_category[0]);
 		} else {
-			$category_title = wfMsg('browsedata') . ": " . $category;
+			$category_title = wfMsg('browsedata') . ": " . str_replace('_', ' ', $category);
 		}
 	}
 	// if no category was specified, go with the first
