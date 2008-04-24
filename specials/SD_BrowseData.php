@@ -682,9 +682,6 @@ END;
 		return $header;
 	}
 
-	function getPageFooter() {
-	}
-
 	/*
 	 * Used to set URL for additional pages of results
 	 */
@@ -795,17 +792,17 @@ END;
 					$html[] = "<li>$line</li>\n";
 				}
 			}
-			$html[] = "</div>\n";
-			
-			if( !$this->listoutput )
-				$html[] = $this->closeList();
-			
-			$html = $this->listoutput
-				? $wgContLang->listToText( $html )
-				: implode( '', $html );
-			
-			$out->addHtml( $html );
 		}
+		$html[] = "</div>\n";
+
+		if( !$this->listoutput )
+			$html[] = $this->closeList();
+
+		$html = $this->listoutput
+			? $wgContLang->listToText( $html )
+			: implode( '', $html );
+
+		$out->addHtml( $html );
 	}
 
 	function openList( $offset ) {
