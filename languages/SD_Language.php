@@ -17,6 +17,7 @@ abstract class SD_Language {
 	protected $m_SpecialPropertyAliases = array(
 		// category properties
 		'Has filter' => SD_SP_HAS_FILTER,
+		'Has drilldown title' => SD_SP_HAS_DRILLDOWN_TITLE,
 		// filter properties
 		'Covers property' => SD_SP_COVERS_PROPERTY,
 		'Has value' => SD_SP_HAS_VALUE,
