@@ -2,73 +2,62 @@
  * The main CSS file for the Semantic Drilldown extension.
  */
 
-div.drilldown_categories_wrapper {
+div.drilldown-categories-wrapper {
 	float: right;
 	background: white;
 	padding: 0px 25px 25px 25px;
 }
 
-div.drilldown_categories {
+div.drilldown-categories {
 	border: 2px #888888 solid;
 }
 
-div.drilldown_categories_header {
+div.drilldown-categories-header {
 	font-weight: bold;
 	padding: 3px 8px 3px 8px;
 	background: #c9c9c9;
 }
 
-div.drilldown_category {
+div.drilldown-category {
 	border-top: 1px #aaaaaa solid;
 	padding: 3px 8px 3px 8px;
 	margin: 0px;
 	background: #e9e9e9;
 }
 
-div.selected_category {
+div.selected-category {
 	background: white;
 }
 
-div.drilldown_header {
+div.drilldown-header {
 	font-size: large;
 	font-weight: bold;
 }
 
-span.drilldown_header_value {
+span.drilldown-header-value {
 	font-weight: normal;
 }
 
-div.drilldown_header a.remove {
-	color: black; /* no 'auto' value for color */
-	text-decoration: none;
-	padding: 0px 7px 0px 7px;
-	background: url(filter-x.png) center no-repeat;
-}
-
-div.drilldown_header a.remove:hover {
-	background: url(filter-x-active.png) center no-repeat;
-}
-
-div.drilldown_filters {
+div.drilldown-filters {
 	/* background: #e2e2e2; */
 	margin-top: 10px;
 	padding-bottom: 8px;
 	margin-bottom: 8px;
 	border-bottom: 1px #aaaaaa solid;
 }
-span.drilldown_or {
+span.drilldown-or {
 	color: gray;
 	font-weight: normal;
 }
 
-div.drilldown_filter_label {
+div.drilldown-filter-label {
 	font-weight: bold;
 }
 
-span.drilldown_filter_notes {
+span.drilldown-filter-notes {
 	font-weight: normal;
 }
 
-div.drilldown_filter_values {
+div.drilldown-filter-values {
 	margin-bottom: 10px;
 }
