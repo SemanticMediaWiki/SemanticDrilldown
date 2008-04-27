@@ -168,6 +168,7 @@ $messages['da'] = array(
 
 /** German (Deutsch)
  * @author Krabina
+ * @author DaSch
  */
 $messages['de'] = array(
 	'browsedata'                            => 'Daten ansehen',
@@ -180,9 +181,11 @@ $messages['de'] = array(
 	'sd_browsedata_filterbysubcategory'     => 'Filter für diese Subkategorie',
 	'sd_browsedata_otherfilter'             => 'Zeige Seiten mit einem anderen Wert für diesen Filter',
 	'sd_browsedata_nonefilter'              => 'Zeige Seiten mit keinem Wert für diesen Filter',
+	'sd_browsedata_or'                      => 'oder',
 	'sd_browsedata_removefilter'            => 'Lösche diesen Filter',
 	'sd_browsedata_removesubcategoryfilter' => 'Lösche diesen Subkategorie-Filter',
 	'sd_browsedata_resetfilters'            => 'Filter zurücksetzen',
+	'sd_browsedata_addanothervalue'         => 'Anderen Wert hinzufügen',
 	'filters'                               => 'Filter',
 	'sd_filters_docu'                       => 'Die folgenden Filter existieren in diesem Wiki:',
 	'createfilter'                          => 'Erstelle einen Filter',
@@ -491,15 +494,22 @@ $messages['km'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'sd_browsedata_choosecategory' => 'Eng Kategorie wielen',
-	'sd_browsedata_viewcategory'   => 'Kategorie weisen',
-	'sd_browsedata_subcategory'    => 'Ënnerkategorie',
-	'sd_browsedata_other'          => 'Aner',
-	'sd_browsedata_none'           => 'Keen',
-	'filters'                      => 'Filteren',
-	'sd_createfilter_name'         => 'Numm:',
-	'sd_filter_year'               => 'Joer',
-	'sd_filter_month'              => 'Mount',
+	'sd_browsedata_choosecategory'  => 'Eng Kategorie wielen',
+	'sd_browsedata_viewcategory'    => 'Kategorie weisen',
+	'sd_browsedata_subcategory'     => 'Ënnerkategorie',
+	'sd_browsedata_other'           => 'Aner',
+	'sd_browsedata_none'            => 'Keen',
+	'sd_browsedata_filterbyvalue'   => 'Filter fir dëse Wert',
+	'sd_browsedata_or'              => 'oder',
+	'sd_browsedata_removefilter'    => 'Dëse filtr ewechhuelen',
+	'sd_browsedata_resetfilters'    => 'Filteren zrécksetzen',
+	'sd_browsedata_addanothervalue' => 'Een anere Wert derbäisetzen',
+	'filters'                       => 'Filteren',
+	'sd_createfilter_name'          => 'Numm:',
+	'sd_createfilter_label'         => 'Etiquette fir dëse Filter (fakultativ):',
+	'sd_blank_error'                => 'däerf net eidel sinn',
+	'sd_filter_year'                => 'Joer',
+	'sd_filter_month'               => 'Mount',
 );
 
 /** Marathi (मराठी)
@@ -517,9 +527,11 @@ $messages['mr'] = array(
 	'sd_browsedata_filterbysubcategory'     => 'या उपवर्गा प्रमाणे फिल्टर करा',
 	'sd_browsedata_otherfilter'             => 'या फिल्टरच्या दुसर्‍या किंमतीसाठीची पाने दाखवा',
 	'sd_browsedata_nonefilter'              => 'या फिल्टरच्या शून्य किंमतीसाठीची पाने दाखवा',
+	'sd_browsedata_or'                      => 'किंवा',
 	'sd_browsedata_removefilter'            => 'हा फिल्टर काढा',
 	'sd_browsedata_removesubcategoryfilter' => 'हा उपवर्ग फिल्टर काढा',
 	'sd_browsedata_resetfilters'            => 'फिल्टर पूर्ववत करा',
+	'sd_browsedata_addanothervalue'         => 'दुसरी किंमत वाढवा',
 	'filters'                               => 'फिल्टर्स',
 	'sd_filters_docu'                       => '{{SITENAME}} वर खालील फिल्टर्स उपलब्ध आहेत:',
 	'createfilter'                          => 'नवीन फिल्टर बनवा',
@@ -557,9 +569,11 @@ $messages['nl'] = array(
 	'sd_browsedata_filterbysubcategory'     => 'Op deze ondercategorie filteren',
 	'sd_browsedata_otherfilter'             => "Pagina's met een andere waarde voor deze filter bekijken",
 	'sd_browsedata_nonefilter'              => "Pagina's zonder waarde voor deze filter bekijken",
+	'sd_browsedata_or'                      => 'of',
 	'sd_browsedata_removefilter'            => 'Deze filter verwijderen',
 	'sd_browsedata_removesubcategoryfilter' => 'Deze ondercategoriefilter verwijderen',
 	'sd_browsedata_resetfilters'            => 'Filters opnieuw instellen',
+	'sd_browsedata_addanothervalue'         => 'Waarde toevoegen',
 	'filters'                               => 'Filters',
 	'sd_filters_docu'                       => 'In {{SITENAME}} bestaan de volgende filters:',
 	'createfilter'                          => 'Filter aanmaken',
@@ -592,7 +606,7 @@ $messages['nn'] = array(
 	'sd_filter_month'      => 'Månad',
 );
 
-/** Norwegian (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
 $messages['no'] = array(
@@ -606,9 +620,11 @@ $messages['no'] = array(
 	'sd_browsedata_filterbysubcategory'     => 'Filtrer etter denne underkategorien',
 	'sd_browsedata_otherfilter'             => 'Vis sider med en annen verdi for dette filteret',
 	'sd_browsedata_nonefilter'              => 'Vis sider uten noen verdi for dette filteret',
+	'sd_browsedata_or'                      => 'eller',
 	'sd_browsedata_removefilter'            => 'Fjern dette filteret',
 	'sd_browsedata_removesubcategoryfilter' => 'Fjern dette underkategorifilteret',
 	'sd_browsedata_resetfilters'            => 'Resett filtre',
+	'sd_browsedata_addanothervalue'         => 'Legg til ny verdi',
 	'filters'                               => 'Filtre',
 	'sd_filters_docu'                       => 'Følgende filtre finnes på {{SITENAME}}:',
 	'createfilter'                          => 'Opprett et filter',
@@ -716,6 +732,7 @@ $messages['ps'] = array(
 /** Portuguese (Português)
  * @author 555
  * @author Lijealso
+ * @author Malafaya
  */
 $messages['pt'] = array(
 	'browsedata'                            => 'Navegar pelos dados',
@@ -728,6 +745,7 @@ $messages['pt'] = array(
 	'sd_browsedata_filterbysubcategory'     => 'Filtrar por esta subcategoria',
 	'sd_browsedata_otherfilter'             => 'Exibir páginas com outro valor para este filtro',
 	'sd_browsedata_nonefilter'              => 'Exibir páginas sem valores para este filtro',
+	'sd_browsedata_or'                      => 'ou',
 	'sd_browsedata_removefilter'            => 'Remover este filtro',
 	'sd_browsedata_removesubcategoryfilter' => 'Remover esta subcategoria da função de filtro',
 	'sd_browsedata_resetfilters'            => 'Zerar filtros',
@@ -803,9 +821,11 @@ $messages['sk'] = array(
 	'sd_browsedata_filterbysubcategory'     => 'Filtrovať podľa tejto podkategórie',
 	'sd_browsedata_otherfilter'             => 'Zobraziť stránky s inou hodnotou tohto filtra',
 	'sd_browsedata_nonefilter'              => 'Zobraziť stránky s bez hodnoty tohto filtra',
+	'sd_browsedata_or'                      => 'alebo',
 	'sd_browsedata_removefilter'            => 'Odstrániť tento filter',
 	'sd_browsedata_removesubcategoryfilter' => 'Odstrániť tento filter podkategórie',
 	'sd_browsedata_resetfilters'            => 'Resetovať filtre',
+	'sd_browsedata_addanothervalue'         => 'Pridať ďalšiu hodnotu',
 	'filters'                               => 'Filtre',
 	'sd_filters_docu'                       => 'Na {{GRAMMAR:lokál|{{SITENAME}}}} existujú nasledovné filtre:',
 	'createfilter'                          => 'Vytvoriť filter',
@@ -1014,9 +1034,11 @@ $messages['zh-tw'] = array(
 	'sd_browsedata_filterbysubcategory'     => '依此子分類(subcategory)設置篩選器',
 	'sd_browsedata_otherfilter'             => '查看屬於此篩選器中其他值的頁面，',
 	'sd_browsedata_nonefilter'              => '查看此篩選器設置條件中無任何值的頁面',
+	'sd_browsedata_or'                      => '或',
 	'sd_browsedata_removefilter'            => '移除此篩選器',
 	'sd_browsedata_removesubcategoryfilter' => '移除此子分類(subcategory)篩選器',
 	'sd_browsedata_resetfilters'            => '重置篩選器',
+	'sd_browsedata_addanothervalue'         => '增加其他值',
 	'filters'                               => '篩選器',
 	'sd_filters_docu'                       => '此wiki系統內已設有如下的篩選器(filters)',
 	'createfilter'                          => '建立篩選器',
