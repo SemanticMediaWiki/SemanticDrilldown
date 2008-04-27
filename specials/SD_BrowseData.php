@@ -93,7 +93,7 @@ class BrowseDataPage extends QueryPage {
 		$dbr->query($sql);
 		// create an index to speed up subsequent queries
 		// (does this help?)
-		$sql2 = "CREATE INDEX page_id_index ON semantic_drilldown_values (page_id)";
+		$sql2 = "ALTER TABLE semantic_drilldown_values ADD INDEX page_id_index (page_id)";
 		$dbr->query($sql2);
 	}
 
@@ -126,6 +126,7 @@ class BrowseDataPage extends QueryPage {
 			ON sdv.page_id = c.cl_from
 			WHERE (c.cl_to = '$subcategory' ";
 		foreach ($child_subcategories as $i => $subcat) {
+			$subcat = str_replace("'", "\'", $subcat);
 			$sql .= "OR c.cl_to = '$subcat' ";
 		}
 		$sql .= ") ";
@@ -196,6 +197,7 @@ class BrowseDataPage extends QueryPage {
 		$actual_cat = str_replace("'", "\'", $actual_cat);
 		$sql .= "WHERE (c.cl_to = '$actual_cat' ";
 		foreach ($subcategories as $i => $subcat) {
+			$subcat = str_replace("'", "\'", $subcat);
 			$sql .= "OR c.cl_to = '{$subcat}' ";
 		}
 		$sql .= ") ";
@@ -332,9 +334,10 @@ class BrowseDataPage extends QueryPage {
 				$value_field = "YEAR(value_xsd)";
 			}
 		}
+		$categorylinks = $dbr->tableName( 'categorylinks' );
 		$sql = "SELECT $value_field
 			FROM $property_table_name $property_table_nickname
-			JOIN categorylinks c
+			JOIN $categorylinks c
 			ON $property_table_nickname.subject_id = c.cl_from
 			WHERE $property_table_nickname.$property_field = '$property_value'
 			AND c.cl_to = '{$this->category}'
@@ -365,19 +368,19 @@ class BrowseDataPage extends QueryPage {
 		$choose_category_text = wfMsg('sd_browsedata_choosecategory');
 		$text =<<<END
 
-<div class="drilldown_categories_wrapper">
-	<div class="drilldown_categories">
-		<div class="drilldown_categories_header">$choose_category_text:</div>
+<div class="drilldown-categories-wrapper">
+	<div class="drilldown-categories">
+		<div class="drilldown-categories-header">$choose_category_text:</div>
 
 END;
 		foreach ($categories as $i => $category) {
 			$category_children = sdfGetCategoryChildren($category, false, 5);
 			$category_str = $category . " (" . count($category_children) . ")";
 			if (str_replace('_', ' ', $this->category) == $category) {
-				$text .= "		<div class=\"drilldown_category selected_category\">";
+				$text .= "		<div class=\"drilldown-category selected-category\">";
 				$text .= $category_str;
 			} else {
-				$text .= "		<div class=\"drilldown_category\">";
+				$text .= "		<div class=\"drilldown-category\">";
 				$category_url = $this->makeBrowseURL($category);
 				$text .= '<a href="' . $category_url . '" title="Choose category">' . $category_str . '</a>';
 			}
@@ -461,11 +464,11 @@ END;
 		$add_another_str = wfMsg('sd_browsedata_addanothervalue');
 		$results_div_id = strtolower(str_replace(' ', '_', $filter_label)) . "_values";
 		$text =<<<END
-	<div class="drilldown_filter_label">
-		<a onclick="toggleDiv('$results_div_id', this)" style="cursor: default;"><img src="$sdgScriptPath/skins/right-arrow.png"></a>
-		$filter_label: <span class="drilldown_filter_notes">($add_another_str)</span>
+	<div class="drilldown-filter-label">
+		<a onclick="toggleFilterDiv('$results_div_id', this)" style="cursor: default;"><img src="$sdgScriptPath/skins/right-arrow.png"></a>
+		$filter_label: <span class="drilldown-filter-notes">($add_another_str)</span>
 	</div>
-	<div class="drilldown_filter_values" id="$results_div_id" style="display: none;">$results_line
+	<div class="drilldown-filter-values" id="$results_div_id" style="display: none;">$results_line
 	</div>
 
 END;
@@ -560,10 +563,10 @@ END;
 			}
 			$results_div_id = strtolower(str_replace(' ', '_', $filter_label)) . "_values";
 			$text .=<<<END
-	<div class="drilldown_filter_label"><a onclick="toggleDiv('$results_div_id', this)" style="cursor: default;"><img src="$sdgScriptPath/skins/down-arrow.png"></a>
+	<div class="drilldown-filter-label"><a onclick="toggleFilterDiv('$results_div_id', this)" style="cursor: default;"><img src="$sdgScriptPath/skins/down-arrow.png"></a>
 	$filter_label:
 	</div>
-	<div class="drilldown_filter_values" id="$results_div_id">$results_line
+	<div class="drilldown-filter-values" id="$results_div_id">$results_line
 	</div>
 
 END;
@@ -591,7 +594,7 @@ END;
 		if (! $this->show_single_cat) {
 			$header .= $this->printCategoriesList($categories);
 		}
-		$header .= '<div class="drilldown_header">' . "\n";
+		$header .= '<div class="drilldown-header">' . "\n";
 		if (count ($this->applied_filters) > 0 || $this->subcategory) {
 			$category_url = $this->makeBrowseURL($this->category);
 			$header .= '	<a href="' . $category_url . '" title="' . wfMsg('sd_browsedata_resetfilters') . '">' . str_replace('_', ' ', $this->category) . '</a>';
@@ -602,10 +605,11 @@ END;
 			$header .= "\n	$subcategory_text: ";
 			$subcat_string = str_replace('_', ' ', $this->subcategory);
 			$remove_filter_url = $this->makeBrowseURL($this->category, $this->applied_filters);
-			$header .= '<span class="drilldown_header_value">' . $subcat_string . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removesubcategoryfilter') . '" class="remove"></a>';
+			//$header .= '<span class="drilldown-header-value">' . $subcat_string . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removesubcategoryfilter') . '" onMouseOver="highlightRemoveDiv(this)" onMouseOut="unhighlightRemoveDiv(this)"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
+			$header .= '<span class="drilldown-header-value">' . $subcat_string . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removesubcategoryfilter') . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
 		}
 		foreach ($this->applied_filters as $i => $af) {
-			$header .= (! $this->subcategory && $i == 0) ? " > " : "\n	<span class=\"drilldown_header_value\">&</span> ";
+			$header .= (! $this->subcategory && $i == 0) ? " > " : "\n	<span class=\"drilldown-header-value\">&</span> ";
 			$labels_for_filter = sdfGetValuesForProperty($af->filter->name, SD_NS_FILTER, SD_SP_HAS_LABEL, false, NS_MAIN);
 			if (count($labels_for_filter) > 0) {
 				$filter_label = $labels_for_filter[0];
@@ -619,12 +623,13 @@ END;
 				array_splice($temp_filters_array, $i, 1);
 				$remove_filter_url = $this->makeBrowseURL($this->category, $temp_filters_array, $this->subcategory);
 				array_splice($temp_filters_array, $i, 0);
-				$header .= $filter_label . ' <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removefilter') . "\" class=\"remove\"></a> : ";
+				//$header .= $filter_label . ' <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removefilter') . '" onMouseOver="highlightRemoveDiv(this)" onMouseOut="unhighlightRemoveDiv(this)"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
+				$header .= $filter_label . ' <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removefilter') . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
 			} else {
 				$header .= "$filter_label: ";
 			}
 			foreach ($af->values as $j => $fv) {
-				if ($j > 0) {$header .= ' <span class="drilldown_or">' . wfMsg('sd_browsedata_or') . '</span> ';}
+				if ($j > 0) {$header .= ' <span class="drilldown-or">' . wfMsg('sd_browsedata_or') . '</span> ';}
 				if ($fv->text == ' other')
 					$filter_value_str = wfMsg('sd_browsedata_other');
 				elseif ($fv->text == ' none')
@@ -637,7 +642,8 @@ END;
 				$removed_values = array_splice($temp_filters_array[$i]->values, $j, 1);
 				$remove_filter_url = $this->makeBrowseURL($this->category, $temp_filters_array, $this->subcategory);
 				array_splice($temp_filters_array[$i]->values, $j, 0, $removed_values);
-				$header .= "\n	" . '<span class="drilldown_header_value">' . $filter_value_str . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removefilter') . '" class="remove"></a>';
+				//$header .= "\n	" . '<span class="drilldown-header-value">' . $filter_value_str . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removefilter') . '" onMouseOver="highlightRemoveDiv(this)" onMouseOut="unhighlightRemoveDiv(this)"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
+				$header .= "\n	" . '<span class="drilldown-header-value">' . $filter_value_str . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removefilter') . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
 			}
 		}
 		$header .= "\n</div>\n";
@@ -645,7 +651,7 @@ END;
 		// it every filter, each on its own line; each line will
 		// contain the possible values, and, in parentheses, the
 		// number of pages that match that value
-		$header .= "<div class=\"drilldown_filters\">\n";
+		$header .= "<div class=\"drilldown-filters\">\n";
 		$cur_url = $this->makeBrowseURL($this->category, $this->applied_filters, $this->subcategory);
 		$cur_url .= (strpos($cur_url, '?')) ? '&' : '?';
 		$this->createTempTable($this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters);
@@ -678,7 +684,7 @@ END;
 			}
 		}
 		$header .= "</div>\n";
-		$header .= "<div class=\"drilldown_results\">\n";
+		$header .= "<div class=\"drilldown-results\">\n";
 		return $header;
 	}
 
@@ -825,7 +831,7 @@ function doSpecialBrowseData($query = '') {
 		'href' => $mainCssUrl
 	));
 	$javascript_text =<<<END
-function toggleDiv(element_id, label_element) {
+function toggleFilterDiv(element_id, label_element) {
 	element = document.getElementById(element_id);
 	if (element.style.display == "none") {
 		element.style.display = "block";
@@ -835,6 +841,14 @@ function toggleDiv(element_id, label_element) {
 		label_element.innerHTML = "<img src=\"$sdgScriptPath/skins/right-arrow.png\">";
 	}
 }
+
+function highlightRemoveDiv(element) {
+	element.innerHTML = "<img src=\"$sdgScriptPath/skins/filter-x-active.png\">";
+}
+function unhighlightRemoveDiv(element) {
+	element.innerHTML = "<img src=\"$sdgScriptPath/skins/filter-x.png\">";
+}
+
 END;
 	$wgOut->addScript('             <script type="text/javascript">' . "\n" . $javascript_text . '</script>' . "\n");
 
