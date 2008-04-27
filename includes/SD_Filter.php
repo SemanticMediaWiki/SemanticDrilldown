@@ -104,7 +104,7 @@ class SDFilter {
 			FROM $table_name
 			WHERE $property_field = '$query_property'";
 		$dbr->query($sql);
-		$sql = "CREATE INDEX sdfv_subject_id_index ON semantic_drilldown_filter_values (subject_id)";
+		$sql = "ALTER TABLE semantic_drilldown_filter_values ADD INDEX sdfv_subject_id_index (subject_id)";
 		$dbr->query($sql);
 	}
 
