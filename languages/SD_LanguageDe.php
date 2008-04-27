@@ -20,7 +20,7 @@ class SD_LanguageDe extends SD_Language {
 
 var $m_Namespaces = array(
 	SD_NS_FILTER		=> 'Filter',
-	SD_NS_FILTER_TALK	=> 'Filter_talk'
+	SD_NS_FILTER_TALK	=> 'Filter_Diskussion'
 );
 
 }
