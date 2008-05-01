@@ -222,6 +222,7 @@ $messages['el'] = array(
  * @author Yekrats
  */
 $messages['eo'] = array(
+	'browsedata'                            => 'Rigardu datenojn',
 	'sd_browsedata_choosecategory'          => 'Elektu kategorion',
 	'sd_browsedata_viewcategory'            => 'rigardu kategorion',
 	'sd_browsedata_subcategory'             => 'Subkategorio',
@@ -229,17 +230,32 @@ $messages['eo'] = array(
 	'sd_browsedata_none'                    => 'Neniu',
 	'sd_browsedata_filterbyvalue'           => 'Filtru laŭ ĉi tiu valuto',
 	'sd_browsedata_filterbysubcategory'     => 'Filtru laŭ ĉi tiu subkategorio',
+	'sd_browsedata_otherfilter'             => 'Montru paĝojn kun alia valuto por ĉi tiu filtrilo',
+	'sd_browsedata_nonefilter'              => 'Montru paĝojn kun neniu valuto por ĉi tiu filtrilo',
+	'sd_browsedata_or'                      => 'aŭ',
 	'sd_browsedata_removefilter'            => 'Forigu filtrilon',
 	'sd_browsedata_removesubcategoryfilter' => 'Forigu ĉi tiun subkategorian filtrilon',
 	'sd_browsedata_resetfilters'            => 'Restarigu filtrilojn',
+	'sd_browsedata_addanothervalue'         => 'Aldonu plian valuton',
 	'filters'                               => 'Filtriloj',
 	'sd_filters_docu'                       => 'La jenaj filtriloj ekzistas en {{SITENAME}}:',
 	'createfilter'                          => 'Kreu filtrilon',
 	'sd_createfilter_name'                  => 'Nomo:',
+	'sd_createfilter_property'              => 'Eco kovrita de ĉi tiu filtrilo:',
+	'sd_createfilter_usepropertyvalues'     => 'Uzu ĉiujn valutojn de ĉi tiu eco por la filtrilo',
+	'sd_createfilter_usecategoryvalues'     => 'Akiru valutojn por filtrilo de ĉi tiu kategorio:',
+	'sd_createfilter_usedatevalues'         => 'Uzu dat-intervalojn por ĉi tiu filtrilo kun ĉi tiu tempo-periodo:',
+	'sd_createfilter_entervalues'           => 'Enigu valutojn por filtrilo permane (valutoj estu apartigitaj de komoj - se valuto enhavas komon, anstataŭigu ĝin per "\\,"):',
+	'sd_createfilter_label'                 => 'Etikedo por ĉi tiu filtrilo (nedeviga):',
+	'sd_createfilter_requirefilter'         => 'Devigu alian filtrilon esti selektita antaŭ ĉi tiu estas montrita:',
 	'sd_blank_error'                        => 'ne povas esti malplena',
+	'sd_filter_coversproperty'              => 'Ĉi tiu filtrilo kovras la econ $1.',
+	'sd_filter_getsvaluesfromcategory'      => 'Ĝi akiras ties valutojn de la kategorio $1.',
+	'sd_filter_usestimeperiod'              => 'Ĝi uzas $1 kiel ies tempdaŭron.',
 	'sd_filter_year'                        => 'Jaro',
 	'sd_filter_month'                       => 'Monato',
 	'sd_filter_hasvalues'                   => 'Ĝi havas valutojn $1.',
+	'sd_filter_requiresfilter'              => 'Ĝi devigas la eston de la filtrilo $1.',
 	'sd_filter_haslabel'                    => 'Ĝi havas etikedon $1.',
 );
 
@@ -474,6 +490,13 @@ $messages['is'] = array(
 	'sd_createfilter_name' => 'Nafn:',
 );
 
+/** Javanese (Basa Jawa)
+ * @author Meursault2004
+ */
+$messages['jv'] = array(
+	'sd_createfilter_name' => 'Jeneng:',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author Lovekhmer
  * @author Chhorran
@@ -510,6 +533,13 @@ $messages['lb'] = array(
 	'sd_blank_error'                => 'däerf net eidel sinn',
 	'sd_filter_year'                => 'Joer',
 	'sd_filter_month'               => 'Mount',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Shijualex
+ */
+$messages['ml'] = array(
+	'sd_createfilter_name' => 'പേര്‌:',
 );
 
 /** Marathi (मराठी)
@@ -672,9 +702,11 @@ $messages['oc'] = array(
 	'sd_browsedata_filterbysubcategory'     => 'Filtrar per aquesta soscategoria',
 	'sd_browsedata_otherfilter'             => 'Veire las paginas amb una autra valor per aqueste filtre',
 	'sd_browsedata_nonefilter'              => 'Veire las paginas amb pas cap de valor per aqueste filtre',
+	'sd_browsedata_or'                      => 'o',
 	'sd_browsedata_removefilter'            => 'Levar aqueste filtre',
 	'sd_browsedata_removesubcategoryfilter' => 'Levar aquesta soscategoria de filtre',
 	'sd_browsedata_resetfilters'            => 'Remesa a zèro dels filtres',
+	'sd_browsedata_addanothervalue'         => 'Apondre una autra valor',
 	'filters'                               => 'Filtres',
 	'sd_filters_docu'                       => 'Lo filtre seguent existís sus {{SITENAME}} :',
 	'createfilter'                          => 'Crear un filtre',
@@ -891,14 +923,30 @@ $messages['stq'] = array(
  * @author M.M.S.
  */
 $messages['sv'] = array(
-	'sd_browsedata_choosecategory' => 'Välj en kategori',
-	'sd_browsedata_viewcategory'   => 'visa kategori',
-	'sd_browsedata_subcategory'    => 'Subkategori',
-	'sd_browsedata_other'          => 'Andra',
-	'sd_browsedata_none'           => 'Ingen',
-	'sd_createfilter_name'         => 'Namn:',
-	'sd_filter_year'               => 'År',
-	'sd_filter_month'              => 'Månad',
+	'browsedata'                            => 'Bläddra genom data',
+	'sd_browsedata_choosecategory'          => 'Välj en kategori',
+	'sd_browsedata_viewcategory'            => 'visa kategori',
+	'sd_browsedata_subcategory'             => 'Subkategori',
+	'sd_browsedata_other'                   => 'Andra',
+	'sd_browsedata_none'                    => 'Ingen',
+	'sd_browsedata_filterbyvalue'           => 'Filtrera efter det här värdet',
+	'sd_browsedata_filterbysubcategory'     => 'Filtrera efter den här underkategorin',
+	'sd_browsedata_otherfilter'             => 'Visa sidor med ett annat värde för det här filtret',
+	'sd_browsedata_nonefilter'              => 'Visa sidor utan några värden för detta filter',
+	'sd_browsedata_or'                      => 'eller',
+	'sd_browsedata_removefilter'            => 'Ta bort detta filter',
+	'sd_browsedata_removesubcategoryfilter' => 'Ta bort detta underkategorifiltret',
+	'sd_browsedata_resetfilters'            => 'Återställ filter',
+	'sd_browsedata_addanothervalue'         => 'Lägg till nytt värde',
+	'filters'                               => 'Filter',
+	'sd_filters_docu'                       => 'Följande filter finns på {{SITENAME}}:',
+	'createfilter'                          => 'Skapa ett filter',
+	'sd_createfilter_name'                  => 'Namn:',
+	'sd_createfilter_property'              => 'Egenskaper som detta filter döljer:',
+	'sd_createfilter_usepropertyvalues'     => 'Använd alla värden av den här egenskapen för filtret',
+	'sd_createfilter_usecategoryvalues'     => 'Hämta värden för filtret från den här kategorin:',
+	'sd_filter_year'                        => 'År',
+	'sd_filter_month'                       => 'Månad',
 );
 
 /** Silesian (ślůnski)
