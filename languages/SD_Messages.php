@@ -61,6 +61,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author Alnokta
  */
 $messages['ar'] = array(
 	'browsedata'                            => 'تصفح البيانات',
@@ -73,6 +74,7 @@ $messages['ar'] = array(
 	'sd_browsedata_filterbysubcategory'     => 'فلترة بواسطة هذا التصنيف الفرعي',
 	'sd_browsedata_otherfilter'             => 'اعرض الصفحات بقيمة أخرى لهذا الفلتر',
 	'sd_browsedata_nonefilter'              => 'اعرض الصفحات التي هي بدون قيمة لهذا الفلتر',
+	'sd_browsedata_or'                      => 'أو',
 	'sd_browsedata_removefilter'            => 'أزل هذا الفلتر',
 	'sd_browsedata_removesubcategoryfilter' => 'أزل فلتر التصنيف الفرعي هذا',
 	'sd_browsedata_resetfilters'            => 'أعد ضبط الفلاتر',
@@ -494,7 +496,19 @@ $messages['is'] = array(
  * @author Meursault2004
  */
 $messages['jv'] = array(
-	'sd_createfilter_name' => 'Jeneng:',
+	'sd_browsedata_choosecategory' => 'Pilih kategori',
+	'sd_browsedata_viewcategory'   => 'ndeleng kategori',
+	'sd_browsedata_subcategory'    => 'Subkategori',
+	'sd_browsedata_other'          => 'Liyané',
+	'sd_browsedata_or'             => 'utawa',
+	'sd_browsedata_removefilter'   => 'Ilangana filter iki',
+	'createfilter'                 => 'Nggawé filter',
+	'sd_createfilter_name'         => 'Jeneng:',
+	'sd_createfilter_property'     => 'Sifat sing diliput filter iki:',
+	'sd_blank_error'               => 'ora bisa kosong',
+	'sd_filter_year'               => 'Taun',
+	'sd_filter_month'              => 'Sasi',
+	'sd_filter_requiresfilter'     => 'Merlokaké anané filter $1.',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -539,7 +553,13 @@ $messages['lb'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'sd_createfilter_name' => 'പേര്‌:',
+	'sd_browsedata_viewcategory' => 'വിഭാഗം കാണുക',
+	'sd_browsedata_subcategory'  => 'ഉപവിഭാഗം',
+	'sd_browsedata_other'        => 'മറ്റുള്ളവ',
+	'sd_browsedata_none'         => 'ഒന്നുമില്ല',
+	'sd_createfilter_name'       => 'പേര്‌:',
+	'sd_filter_year'             => 'വര്‍ഷം',
+	'sd_filter_month'            => 'മാസം',
 );
 
 /** Marathi (मराठी)
@@ -945,6 +965,8 @@ $messages['sv'] = array(
 	'sd_createfilter_property'              => 'Egenskaper som detta filter döljer:',
 	'sd_createfilter_usepropertyvalues'     => 'Använd alla värden av den här egenskapen för filtret',
 	'sd_createfilter_usecategoryvalues'     => 'Hämta värden för filtret från den här kategorin:',
+	'sd_createfilter_usedatevalues'         => 'Använd datumområden för det här filtret med den här tidsperioden:',
+	'sd_createfilter_entervalues'           => 'Skriv in värden för filtret manuellt (värdena ska separeras med komma - om ett värde innehåller ett komma, ersätt det med "\\,"):',
 	'sd_filter_year'                        => 'År',
 	'sd_filter_month'                       => 'Månad',
 );
