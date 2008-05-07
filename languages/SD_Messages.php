@@ -53,8 +53,10 @@ $messages['en'] = array(
 
 /** Afrikaans (Afrikaans)
  * @author SPQRobin
+ * @author Arnobarnard
  */
 $messages['af'] = array(
+	'sd_browsedata_none'   => 'Geen',
 	'sd_createfilter_name' => 'Naam:',
 	'sd_filter_month'      => 'Maand',
 );
@@ -500,11 +502,14 @@ $messages['jv'] = array(
 	'sd_browsedata_viewcategory'   => 'ndeleng kategori',
 	'sd_browsedata_subcategory'    => 'Subkategori',
 	'sd_browsedata_other'          => 'Liyané',
+	'sd_browsedata_none'           => 'Ora ana',
 	'sd_browsedata_or'             => 'utawa',
 	'sd_browsedata_removefilter'   => 'Ilangana filter iki',
+	'filters'                      => 'Filter-filter',
 	'createfilter'                 => 'Nggawé filter',
 	'sd_createfilter_name'         => 'Jeneng:',
 	'sd_createfilter_property'     => 'Sifat sing diliput filter iki:',
+	'sd_createfilter_label'        => 'Label kanggo filter (opsional):',
 	'sd_blank_error'               => 'ora bisa kosong',
 	'sd_filter_year'               => 'Taun',
 	'sd_filter_month'              => 'Sasi',
@@ -967,8 +972,17 @@ $messages['sv'] = array(
 	'sd_createfilter_usecategoryvalues'     => 'Hämta värden för filtret från den här kategorin:',
 	'sd_createfilter_usedatevalues'         => 'Använd datumområden för det här filtret med den här tidsperioden:',
 	'sd_createfilter_entervalues'           => 'Skriv in värden för filtret manuellt (värdena ska separeras med komma - om ett värde innehåller ett komma, ersätt det med "\\,"):',
+	'sd_createfilter_label'                 => 'Etikett för det här filtret (valfritt):',
+	'sd_createfilter_requirefilter'         => 'Kräv att ett annat filter väljs före detta visas:',
+	'sd_blank_error'                        => 'kan inte vara tom',
+	'sd_filter_coversproperty'              => 'Detaa filter döljer egenskapen $1.',
+	'sd_filter_getsvaluesfromcategory'      => 'Det får sina värden från kategorin $1.',
+	'sd_filter_usestimeperiod'              => 'Det använder $1 som tidsperiod.',
 	'sd_filter_year'                        => 'År',
 	'sd_filter_month'                       => 'Månad',
+	'sd_filter_hasvalues'                   => 'Det har värdena $1.',
+	'sd_filter_requiresfilter'              => 'Det kräver att filtret $1 är på plats.',
+	'sd_filter_haslabel'                    => 'Det har etiketten $1.',
 );
 
 /** Silesian (ślůnski)
