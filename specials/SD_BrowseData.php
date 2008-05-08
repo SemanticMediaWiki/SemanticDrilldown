@@ -724,14 +724,15 @@ END;
 		// so return page_title as title.
 		$sql = "SELECT DISTINCT p.page_title AS title,
 			p.page_title AS value,
-			p.page_namespace AS namespace ";
+			p.page_namespace AS namespace,
+			c.cl_sortkey AS sortkey ";
 		$sql .= $this->getSQLFromClause($this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters);
 		return $sql;
 	}
 
-	function sortDescending() {
-		return false;
-	}
+        function getOrder() {
+                return ' ORDER BY sortkey ';
+        }
 
 	function formatResult($skin, $result) {
 		$title = Title::makeTitle( $result->namespace, $result->value );
@@ -768,7 +769,7 @@ END;
 			for ($i = 0; $i < $num && $row = $dbr->fetchObject( $res ); $i++) {
 				$line = $this->formatResult( $skin, $row );
 				if ($line) {
-					$cur_first_char = $row->value{0};
+					$cur_first_char = $row->sortkey{0};
 					if ($i % $rows_per_column == 0) {
 						$html[] = "<div style=\"float: left; width: $column_width%;\">\n";
 						if ($cur_first_char == $prev_first_char)
