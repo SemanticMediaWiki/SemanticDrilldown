@@ -155,9 +155,12 @@ $messages['bg'] = array(
 	'createfilter'                      => 'Създаване на филтър',
 	'sd_createfilter_name'              => 'Име:',
 	'sd_createfilter_label'             => 'Заглавие за този филтър (незадължително):',
+	'sd_createfilter_requirefilter'     => 'Изисква се да бъде избран друг филтър преди да може този да бъде показан:',
 	'sd_blank_error'                    => 'не може да бъде празно',
 	'sd_filter_year'                    => 'Година',
 	'sd_filter_month'                   => 'Месец',
+	'sd_filter_hasvalues'               => 'Има стойности $1.',
+	'sd_filter_requiresfilter'          => 'Необходимо е наличието на филтър $1.',
 );
 
 /** Danish (Dansk)
