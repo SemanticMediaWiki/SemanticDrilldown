@@ -562,13 +562,20 @@ $messages['lb'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'sd_browsedata_viewcategory' => 'വിഭാഗം കാണുക',
-	'sd_browsedata_subcategory'  => 'ഉപവിഭാഗം',
-	'sd_browsedata_other'        => 'മറ്റുള്ളവ',
-	'sd_browsedata_none'         => 'ഒന്നുമില്ല',
-	'sd_createfilter_name'       => 'പേര്‌:',
-	'sd_filter_year'             => 'വര്‍ഷം',
-	'sd_filter_month'            => 'മാസം',
+	'sd_browsedata_choosecategory'     => 'ഒരു വിഭാഗം തിരഞ്ഞെടുക്കുക',
+	'sd_browsedata_viewcategory'       => 'വിഭാഗം കാണുക',
+	'sd_browsedata_subcategory'        => 'ഉപവിഭാഗം',
+	'sd_browsedata_other'              => 'മറ്റുള്ളവ',
+	'sd_browsedata_none'               => 'ഒന്നുമില്ല',
+	'sd_browsedata_or'                 => 'അല്ലെങ്കില്‍',
+	'sd_browsedata_addanothervalue'    => 'മറ്റൊരു മൂല്യം ചേര്‍ക്കുക',
+	'sd_createfilter_name'             => 'പേര്‌:',
+	'sd_blank_error'                   => 'ശൂന്യമാക്കിയിടുന്നത് അനുവദനീയമല്ല',
+	'sd_filter_getsvaluesfromcategory' => '$1 എന്ന വിഭാഗത്തില്‍ നിന്നാണ്‌ ഇതിനു മൂല്യങ്ങള്‍ കിട്ടുന്നത്.',
+	'sd_filter_usestimeperiod'         => 'ഇതു സമയ പരിധിയായി ഉപയോഗിക്കുന്നത് $1 ആണ്‌.',
+	'sd_filter_year'                   => 'വര്‍ഷം',
+	'sd_filter_month'                  => 'മാസം',
+	'sd_filter_hasvalues'              => 'ഇതിന്റെ മൂല്യങ്ങള്‍ $1 ആണ്‌.',
 );
 
 /** Marathi (मराठी)
