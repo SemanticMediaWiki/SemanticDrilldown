@@ -1024,6 +1024,7 @@ $messages['te'] = array(
 	'sd_browsedata_subcategory'         => 'ఉపవర్గం',
 	'sd_browsedata_other'               => 'ఇతర',
 	'sd_browsedata_none'                => 'ఏమీలేదు',
+	'sd_browsedata_or'                  => 'లేదా',
 	'sd_browsedata_removefilter'        => 'ఈ వడపోతని తొలగించు',
 	'filters'                           => 'వడపోతలు',
 	'sd_createfilter_name'              => 'పేరు:',
