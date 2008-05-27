@@ -63,6 +63,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  * @author Alnokta
  */
 $messages['ar'] = array(
@@ -80,6 +81,7 @@ $messages['ar'] = array(
 	'sd_browsedata_removefilter'            => 'أزل هذا الفلتر',
 	'sd_browsedata_removesubcategoryfilter' => 'أزل فلتر التصنيف الفرعي هذا',
 	'sd_browsedata_resetfilters'            => 'أعد ضبط الفلاتر',
+	'sd_browsedata_addanothervalue'         => 'إضافة قيمة أخرى',
 	'filters'                               => 'فلاتر',
 	'sd_filters_docu'                       => 'الفلاتر التالية موجودة في {{SITENAME}}:',
 	'createfilter'                          => 'إنشاء فلتر',
@@ -151,6 +153,7 @@ $messages['bg'] = array(
 	'sd_browsedata_filterbyvalue'       => 'Филтриране по тази стойност',
 	'sd_browsedata_filterbysubcategory' => 'Филтриране по тази подкатегория',
 	'sd_browsedata_removefilter'        => 'Премахване на филтъра',
+	'sd_browsedata_resetfilters'        => 'Изчистване на филтрите',
 	'filters'                           => 'Филтри',
 	'createfilter'                      => 'Създаване на филтър',
 	'sd_createfilter_name'              => 'Име:',
@@ -534,6 +537,14 @@ $messages['km'] = array(
 	'sd_createfilter_name'         => 'ឈ្មោះ៖',
 	'sd_filter_year'               => 'ឆ្នាំ',
 	'sd_filter_month'              => 'ខែ',
+);
+
+/** Ripoarisch (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'sd_browsedata_other'  => 'Söns wat',
+	'sd_createfilter_name' => 'Name:',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
