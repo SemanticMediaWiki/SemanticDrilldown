@@ -493,6 +493,13 @@ $messages['hu'] = array(
 	'sd_filter_month'    => 'Hónap',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Rex
+ */
+$messages['id'] = array(
+	'sd_browsedata_none' => 'Tidak ada',
+);
+
 /** Icelandic (Íslenska)
  * @author SPQRobin
  */
