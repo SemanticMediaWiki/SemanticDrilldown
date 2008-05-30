@@ -382,7 +382,7 @@ END;
 			} else {
 				$text .= '						<div class="drilldown-category">';
 				$category_url = $this->makeBrowseURL($category);
-				$text .= '<a href="' . $category_url . '" title="Choose category">' . $category_str . '</a>';
+				$text .= "<a href=\"$category_url\" title=\"$choose_category_text\">$category_str</a>";
 			}
 			$text .= "</div>\n";
 		}
