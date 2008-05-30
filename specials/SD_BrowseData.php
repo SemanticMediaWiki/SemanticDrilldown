@@ -629,18 +629,18 @@ END;
 			foreach ($af->values as $j => $fv) {
 				if ($j > 0) {$header .= ' <span class="drilldown-or">' . wfMsg('sd_browsedata_or') . '</span> ';}
 				if ($fv->text == ' other')
-					$filter_value_str = wfMsg('sd_browsedata_other');
+					$filter_text = wfMsg('sd_browsedata_other');
 				elseif ($fv->text == ' none')
-					$filter_value_str = wfMsg('sd_browsedata_none');
+					$filter_text = wfMsg('sd_browsedata_none');
 				elseif ($af->filter->is_boolean)
-					$filter_value = sdfBooleanToString($fv->text);
+					$filter_text = sdfBooleanToString($fv->text);
 				else
-					$filter_value_str = $fv->text;
+					$filter_text = $fv->text;
 				$temp_filters_array = $this->applied_filters;
 				$removed_values = array_splice($temp_filters_array[$i]->values, $j, 1);
 				$remove_filter_url = $this->makeBrowseURL($this->category, $temp_filters_array, $this->subcategory);
 				array_splice($temp_filters_array[$i]->values, $j, 0, $removed_values);
-				$header .= "\n	" . '				<span class="drilldown-header-value">' . $filter_value_str . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removefilter') . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
+				$header .= "\n	" . '				<span class="drilldown-header-value">' . $filter_text . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removefilter') . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
 			}
 		}
 		$header .= "</div>\n";
