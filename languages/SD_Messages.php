@@ -54,8 +54,10 @@ $messages['en'] = array(
 /** Afrikaans (Afrikaans)
  * @author SPQRobin
  * @author Arnobarnard
+ * @author Naudefj
  */
 $messages['af'] = array(
+	'sd_browsedata_other'  => 'Ander',
 	'sd_browsedata_none'   => 'Geen',
 	'sd_createfilter_name' => 'Naam:',
 	'sd_filter_month'      => 'Maand',
@@ -378,6 +380,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'browsedata'                            => 'Datos do navegador',
 	'sd_browsedata_choosecategory'          => 'Elixir unha categoría',
 	'sd_browsedata_viewcategory'            => 'ver categoría',
 	'sd_browsedata_subcategory'             => 'Subcategoría',
@@ -387,6 +390,7 @@ $messages['gl'] = array(
 	'sd_browsedata_filterbysubcategory'     => 'Filtrar por esta subcategoría',
 	'sd_browsedata_otherfilter'             => 'Amosar páxinas con outro valor para este filtro',
 	'sd_browsedata_nonefilter'              => 'Amosar páxinas con ningún valor para este filtro',
+	'sd_browsedata_or'                      => 'ou',
 	'sd_browsedata_removefilter'            => 'Eliminar este filtro',
 	'sd_browsedata_removesubcategoryfilter' => 'Eliminar este filtro de subcategorías',
 	'sd_browsedata_resetfilters'            => 'Eliminar filtros',
@@ -646,6 +650,13 @@ $messages['mr'] = array(
 	'sd_filter_hasvalues'                   => 'त्यामध्ये $1 या किंमती आहेत.',
 	'sd_filter_requiresfilter'              => 'या साठी $1 हा फिल्टर असणे आवश्यक आहे.',
 	'sd_filter_haslabel'                    => 'त्याला $1 हे लेबल आहे.',
+);
+
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'sd_createfilter_name' => 'Naam:',
 );
 
 /** Dutch (Nederlands)
