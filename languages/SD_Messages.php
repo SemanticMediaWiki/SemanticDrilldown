@@ -168,6 +168,13 @@ $messages['bg'] = array(
 	'sd_filter_requiresfilter'          => 'Необходимо е наличието на филтър $1.',
 );
 
+/** Catalan (Català)
+ * @author Jordi Roqué
+ */
+$messages['ca'] = array(
+	'sd_filter_month' => 'Mes',
+);
+
 /** Danish (Dansk)
  * @author Jon Harald Søby
  */
