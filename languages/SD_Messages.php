@@ -820,6 +820,8 @@ $messages['os'] = array(
 
 /** Polish (Polski)
  * @author Maire
+ * @author Sp5uhe
+ * @author Airwolf
  */
 $messages['pl'] = array(
 	'browsedata'                   => 'Przeglądaj dane',
