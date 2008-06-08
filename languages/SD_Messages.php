@@ -826,6 +826,8 @@ $messages['pl'] = array(
 	'sd_browsedata_choosecategory' => 'Wybierz kategorię',
 	'sd_browsedata_viewcategory'   => 'podgląd kategorii',
 	'sd_browsedata_subcategory'    => 'Kategoria podrzędna',
+	'sd_browsedata_or'             => 'lub',
+	'createfilter'                 => 'Utwórz filtr',
 );
 
 /** Pashto (پښتو)
