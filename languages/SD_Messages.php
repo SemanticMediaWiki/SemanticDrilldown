@@ -226,6 +226,13 @@ $messages['de'] = array(
 	'sd_filter_haslabel'                    => 'Er hat die Bezeichnung $1.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Belekvor
+ */
+$messages['diq'] = array(
+	'sd_browsedata_none' => 'çino',
+);
+
 /** Greek (Ελληνικά)
  * @author Consta
  */
@@ -1066,6 +1073,7 @@ $messages['te'] = array(
 	'sd_browsedata_none'                => 'ఏమీలేదు',
 	'sd_browsedata_or'                  => 'లేదా',
 	'sd_browsedata_removefilter'        => 'ఈ వడపోతని తొలగించు',
+	'sd_browsedata_addanothervalue'     => 'మరో విలువని చేర్చండి',
 	'filters'                           => 'వడపోతలు',
 	'sd_createfilter_name'              => 'పేరు:',
 	'sd_createfilter_usecategoryvalues' => 'వడపోతకి విలువలని ఈ వర్గంనుండి తీసుకోవాలి:',
