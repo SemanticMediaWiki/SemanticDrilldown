@@ -512,10 +512,12 @@ $messages['hu'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Irwangatot
  * @author Rex
  */
 $messages['id'] = array(
-	'sd_browsedata_none' => 'Tidak ada',
+	'sd_browsedata_none'   => 'Tidak ada',
+	'sd_createfilter_name' => 'Nama:',
 );
 
 /** Icelandic (Íslenska)
@@ -1118,12 +1120,45 @@ $messages['tg-cyrl'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
- * @author Minh Nguyen
  * @author Vinhtantran
+ * @author Minh Nguyen
  */
 $messages['vi'] = array(
-	'sd_browsedata_none' => 'Không có',
-	'sd_blank_error'     => 'không được để trống',
+	'browsedata'                            => 'Duyệt dữ liệu',
+	'sd_browsedata_choosecategory'          => 'Chọn một thể loại',
+	'sd_browsedata_viewcategory'            => 'xem thể loại',
+	'sd_browsedata_subcategory'             => 'Tiểu thể loại',
+	'sd_browsedata_other'                   => 'Khác',
+	'sd_browsedata_none'                    => 'Không có',
+	'sd_browsedata_filterbyvalue'           => 'Lọc theo giá trị này',
+	'sd_browsedata_filterbysubcategory'     => 'Lọc theo tiểu thể loại này',
+	'sd_browsedata_otherfilter'             => 'Hiển thị trang với giá trị khác cho bộ lọc này',
+	'sd_browsedata_nonefilter'              => 'Hiển thị không có giá trị nào đối với bộ lọc này',
+	'sd_browsedata_or'                      => 'hoặc',
+	'sd_browsedata_removefilter'            => 'Bỏ bộ lọc này',
+	'sd_browsedata_removesubcategoryfilter' => 'Bỏ bộ lọc tiểu thể loại này',
+	'sd_browsedata_resetfilters'            => 'Tái tạo bộ lọc',
+	'sd_browsedata_addanothervalue'         => 'Thêm giá trị khác',
+	'filters'                               => 'Bộ lọc',
+	'sd_filters_docu'                       => 'Bộ lọc sau tồn tại trong {{SITENAME}}:',
+	'createfilter'                          => 'Tạo bộ lọc',
+	'sd_createfilter_name'                  => 'Tên:',
+	'sd_createfilter_property'              => 'Tính chất bộ lọc này bao phủ:',
+	'sd_createfilter_usepropertyvalues'     => 'Sử dụng tất cả các giá trị của thuộc tính này cho bộ lọc',
+	'sd_createfilter_usecategoryvalues'     => 'Lấy giá trị cho bộ lọc từ thể loại này:',
+	'sd_createfilter_usedatevalues'         => 'Sử dụng khoảng ngày cho bộ lọc này với khoảng thời gian này:',
+	'sd_createfilter_entervalues'           => 'Nhập bằng tay giá trị cho bộ lọc (giá trị nên được phân tách bằng dấu phẩy - nếu một giá trị có chứa dấu phẩy, hãy thay nó bằng "\\,"):',
+	'sd_createfilter_label'                 => 'Đánh nhãn cho bộ lọc này (tùy chọn):',
+	'sd_createfilter_requirefilter'         => 'Cần bộ lọc khác được chọn trước khi hiển thị cái này:',
+	'sd_blank_error'                        => 'không được để trống',
+	'sd_filter_coversproperty'              => 'Bộ lọc này bao phủ thuộc tính $1.',
+	'sd_filter_getsvaluesfromcategory'      => 'Nó có giá trị từ thể loại $1.',
+	'sd_filter_usestimeperiod'              => 'Nó sử dụng $1 làm khoảng thời gian.',
+	'sd_filter_year'                        => 'Năm',
+	'sd_filter_month'                       => 'Tháng',
+	'sd_filter_hasvalues'                   => 'Nó có giá trị $1.',
+	'sd_filter_requiresfilter'              => 'Nó yêu cầu sự hiện diện của bộ lọc $1.',
+	'sd_filter_haslabel'                    => 'Nó có nhãn $1.',
 );
 
 /** Volapük (Volapük)
