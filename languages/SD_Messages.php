@@ -433,6 +433,13 @@ $messages['gv'] = array(
 	'sd_filter_month'            => 'Mee',
 );
 
+/** Hawaiian (Hawai`i)
+ * @author Singularity
+ */
+$messages['haw'] = array(
+	'sd_createfilter_name' => 'Inoa:',
+);
+
 /** Hindi (हिन्दी)
  * @author Kaustubh
  */
@@ -1117,6 +1124,13 @@ $messages['tg-cyrl'] = array(
 	'sd_filter_hasvalues'              => 'Миқдорҳои $1-ро дорад.',
 	'sd_filter_requiresfilter'         => 'Ба вуҷуди филтри $1 эҳтиёҷ дорад.',
 	'sd_filter_haslabel'               => 'Ин барчасби $1 дорад.',
+);
+
+/** Turkish (Türkçe)
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'sd_browsedata_none' => 'Hiçbiri',
 );
 
 /** Vietnamese (Tiếng Việt)
