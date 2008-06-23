@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.4.3');
+define('SD_VERSION','0.4.4');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -368,7 +368,8 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $is_relati
 				// make sure it's in the right namespace, if
 				// it's a page
 				if (! $is_relation) {
-					$values[] = $prop_val->getXSDValue();
+					// html_entity_decode() is needed to get around temporary bug in SMWSQLStore2
+					$values[] = html_entity_decode($prop_val->getXSDValue());
 				} elseif ($prop_val->getNamespace() == $object_namespace) {
 					$values[] = $prop_val->getTitle()->getText();
 				}
