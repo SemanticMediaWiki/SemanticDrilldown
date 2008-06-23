@@ -88,6 +88,18 @@ class SDFilter {
 	 * and for getting the set of 'None' values.
 	 */
 	function createTempTable() {
+		global $smwgDefaultStore;
+		if ($smwgDefaultStore == 'SMWSQLStore2') {
+			$this->createTempTable_2();
+		} else {
+			$this->createTempTable_orig();
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+		$sql = "ALTER TABLE semantic_drilldown_filter_values ADD INDEX sdfv_id_index (id)";
+		$dbr->query($sql);
+	}
+
+	function createTempTable_orig() {
 		$dbr = wfGetDB( DB_SLAVE );
 		if ($this->is_relation) {
 			$table_name = $dbr->tableName( 'smw_relations' );
@@ -100,11 +112,36 @@ class SDFilter {
 		}
 		$query_property = str_replace(' ', '_', $this->property);
 		$sql = "CREATE TEMPORARY TABLE semantic_drilldown_filter_values
-			AS SELECT subject_id, $value_field AS value
+			AS SELECT subject_id AS id, $value_field AS value
 			FROM $table_name
 			WHERE $property_field = '$query_property'";
 		$dbr->query($sql);
-		$sql = "ALTER TABLE semantic_drilldown_filter_values ADD INDEX sdfv_subject_id_index (subject_id)";
+	}
+
+	function createTempTable_2() {
+		$dbr = wfGetDB( DB_SLAVE );
+		$smw_ids = $dbr->tableName( 'smw_ids' );
+		if ($this->is_relation) {
+			$table_name = $dbr->tableName( 'smw_rels2' );
+			$property_field = 'p_id';
+			$value_field = 'o_ids.smw_title';
+		} else {
+			$table_name = $dbr->tableName( 'smw_atts2' );
+			$property_field = 'p_id';
+			$value_field = 'value_xsd';
+		}
+		$query_property = str_replace(' ', '_', $this->property);
+		$sql =<<<END
+	CREATE TEMPORARY TABLE semantic_drilldown_filter_values
+	AS SELECT s_id AS id, $value_field AS value
+	FROM $table_name
+	JOIN $smw_ids p_ids ON $table_name.p_id = p_ids.smw_id
+
+END;
+		if ($this->is_relation) {
+			$sql .= "	JOIN $smw_ids o_ids ON $table_name.o_id = o_ids.smw_id\n";
+		}
+		$sql .= "	WHERE p_ids.smw_title = '$query_property'";
 		$dbr->query($sql);
 	}
 
