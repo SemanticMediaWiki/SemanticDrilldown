@@ -82,18 +82,22 @@ class BrowseDataPage extends QueryPage {
 	 * all remaining filters
 	 */
 	function createTempTable($category, $subcategory, $subcategories, $applied_filters) {
+		global $smwgDefaultStore;
+
 		$dbr = wfGetDB( DB_SLAVE );
-		$page = $dbr->tableName( 'page' );
-		$smw_relations = $dbr->tableName( 'smw_relations' );
-		$smw_attributes = $dbr->tableName( 'smw_attributes' );
-		$categorylinks = $dbr->tableName( 'categorylinks' );
-		$sql = "CREATE TEMPORARY TABLE semantic_drilldown_values
-			AS SELECT p.page_id ";
-		$sql .= $this->getSQLFromClause($category, $subcategory, $subcategories, $applied_filters);
+		if ($smwgDefaultStore == 'SMWSQLStore2') {
+			$sql = "CREATE TEMPORARY TABLE semantic_drilldown_values
+	AS SELECT ids.smw_id AS id ";
+			$sql .= $this->getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters);
+		} else {
+			$sql = "CREATE TEMPORARY TABLE semantic_drilldown_values
+	AS SELECT p.page_id AS id ";
+			$sql .= $this->getSQLFromClause_orig($category, $subcategory, $subcategories, $applied_filters);
+		}
 		$dbr->query($sql);
 		// create an index to speed up subsequent queries
 		// (does this help?)
-		$sql2 = "ALTER TABLE semantic_drilldown_values ADD INDEX page_id_index (page_id)";
+		$sql2 = "ALTER TABLE semantic_drilldown_values ADD INDEX id_index (id)";
 		$dbr->query($sql2);
 	}
 
@@ -106,7 +110,7 @@ class BrowseDataPage extends QueryPage {
 	function getSQLFromClauseForField($new_filter) {
 		$sql = "FROM semantic_drilldown_values sdv
 			LEFT OUTER JOIN semantic_drilldown_filter_values sdfv
-			ON sdv.page_id = sdfv.subject_id
+			ON sdv.id = sdfv.id
 			WHERE ";
 		$sql .= $new_filter->checkSQL("sdfv.value");
 		return $sql;
@@ -118,12 +122,21 @@ class BrowseDataPage extends QueryPage {
 	 * subcategory's child subcategories, to ensure completeness.
 	 */
 	function getSQLFromClauseForCategory($subcategory, $child_subcategories) {
+		global $smwgDefaultStore;
+		if ($smwgDefaultStore == 'SMWSQLStore2') {
+			return $this->getSQLFromClauseForCategory_2($subcategory, $child_subcategories);
+		} else {
+			return $this->getSQLFromClauseForCategory_orig($subcategory, $child_subcategories);
+		}
+	}
+
+	function getSQLFromClauseForCategory_orig($subcategory, $child_subcategories) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$categorylinks = $dbr->tableName( 'categorylinks' );
 		$subcategory = str_replace("'", "\'", $subcategory);
 		$sql = "FROM semantic_drilldown_values sdv
 			JOIN $categorylinks c
-			ON sdv.page_id = c.cl_from
+			ON sdv.id = c.cl_from
 			WHERE (c.cl_to = '$subcategory' ";
 		foreach ($child_subcategories as $i => $subcat) {
 			$subcat = str_replace("'", "\'", $subcat);
@@ -133,12 +146,41 @@ class BrowseDataPage extends QueryPage {
 		return $sql;
 	}
 
+	function getSQLFromClauseForCategory_2($subcategory, $child_subcategories) {
+		$dbr = wfGetDB( DB_SLAVE );
+		$smw_insts = $dbr->tableName( 'smw_inst2' );
+		$smw_ids = $dbr->tableName( 'smw_ids' );
+		$ns_cat = NS_CATEGORY;
+		$subcategory = str_replace("'", "\'", $subcategory);
+		$sql = "FROM semantic_drilldown_values sdv
+	JOIN $smw_insts inst
+	ON sdv.id = inst.s_id
+	WHERE inst.o_id IN
+		(SELECT smw_id FROM smw_ids
+		WHERE smw_namespace = $ns_cat AND (smw_title = '$subcategory' ";
+		foreach ($child_subcategories as $i => $subcat) {
+			$subcat = str_replace("'", "\'", $subcat);
+			$sql .= "OR smw_title = '$subcat' ";
+		}
+		$sql .= ")) ";
+		return $sql;
+	}
+
 	/**
 	 * Returns everything from the FROM clause onward for a SQL statement
 	 * to get all pages that match a certain set of criteria for
 	 * category, subcategory and filters
 	 */
 	function getSQLFromClause($category, $subcategory, $subcategories, $applied_filters) {
+		global $smwgDefaultStore;
+		if ($smwgDefaultStore == 'SMWSQLStore2') {
+			return $this->getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters);
+		} else {
+			return $this->getSQLFromClause_orig($category, $subcategory, $subcategories, $applied_filters);
+		}
+	}
+
+	function getSQLFromClause_orig($category, $subcategory, $subcategories, $applied_filters) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$page = $dbr->tableName( 'page' );
 		$smw_relations = $dbr->tableName( 'smw_relations' );
@@ -175,10 +217,10 @@ class BrowseDataPage extends QueryPage {
 				$property_value = str_replace(' ', '_', $af->filter->property);
 				$property_value = str_replace("'", "\'", $property_value);
 				$sql .= "LEFT OUTER JOIN
-			(SELECT subject_id, $value_field
-			FROM $property_table_name
-			WHERE $property_field = '$property_value') $property_table_nickname
-			ON p.page_id = $property_table_nickname.subject_id ";
+	(SELECT subject_id, $value_field
+	FROM $property_table_name
+	WHERE $property_field = '$property_value') $property_table_nickname
+	ON p.page_id = $property_table_nickname.subject_id ";
 			}
 		}
 		foreach ($applied_filters as $i => $af) {
@@ -216,6 +258,87 @@ class BrowseDataPage extends QueryPage {
 		return $sql;
 	}
 
+	function getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters) {
+		$dbr = wfGetDB( DB_SLAVE );
+		$smw_ids = $dbr->tableName( 'smw_ids' );
+		$smw_insts = $dbr->tableName( 'smw_inst2' );
+		$smw_rels = $dbr->tableName( 'smw_rels2' );
+		$smw_atts = $dbr->tableName( 'smw_atts2' );
+		$cat_ns = NS_CATEGORY;
+		$prop_ns = SMW_NS_PROPERTY;
+
+		$sql = "FROM $smw_ids ids
+	JOIN $smw_insts insts
+	ON ids.smw_id = insts.s_id
+	AND ids.smw_namespace != $cat_ns ";
+		foreach ($applied_filters as $i => $af) {
+			// if any of these filter's values are 'none',
+			// include another table to get this information
+			$includes_none = false;
+			foreach ($af->values as $fv) {
+				if ($af->values[0]->text === '_none' || $af->values[0]->text === ' none') {
+					$includes_none = true;
+					break;
+				}
+			}
+			if ($includes_none) {
+				if ($af->filter->is_relation) {
+					$property_table_name = $smw_rels;
+					$property_table_nickname = "nr$i";
+					$property_field = 'p_id';
+					$value_field = "o_ids$i.smw_title";
+				} else {
+					$property_table_name = $smw_atts;
+					$property_table_nickname = "na$i";
+					$property_field = 'p_id';
+					$value_field = 'value_xsd';
+				}
+				$property_value = str_replace(' ', '_', $af->filter->property);
+				$property_value = str_replace("'", "\'", $property_value);
+				$sql .= "LEFT OUTER JOIN
+	(SELECT subject_id, $value_field
+	FROM $property_table_name
+	WHERE $property_field = '$property_value') $property_table_nickname
+	ON id.smw_id = $property_table_nickname.s_id ";
+			}
+		}
+		foreach ($applied_filters as $i => $af) {
+			if ($af->filter->is_relation) {
+				$sql .= "JOIN $smw_rels r$i ON ids.smw_id = r$i.s_id
+	JOIN $smw_ids o_ids$i ON r$i.o_id = o_ids$i.smw_id ";
+			} else {
+				$sql .= "JOIN $smw_atts a$i ON ids.smw_id = a$i.s_id ";
+			}
+		}
+		if ($subcategory)
+			$actual_cat = str_replace(' ', '_', $subcategory);
+		else
+			$actual_cat = str_replace(' ', '_', $category);
+		$actual_cat = str_replace("'", "\'", $actual_cat);
+		$sql .= "WHERE insts.o_id IN
+	(SELECT smw_id FROM $smw_ids cat_ids
+	WHERE smw_namespace = $cat_ns AND (smw_title = '$actual_cat'";
+		foreach ($subcategories as $i => $subcat) {
+			$subcat = str_replace("'", "\'", $subcat);
+			$sql .= " OR smw_title = '{$subcat}'";
+		}
+		$sql .= ")) ";
+		foreach ($applied_filters as $i => $af) {
+			$property_value = str_replace(' ', '_', $af->filter->property);
+			if ($af->filter->is_relation) {
+				$property_field = "r$i.p_id";
+				$sql .= "AND $property_field = (SELECT smw_id FROM smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
+				$value_field = "o_ids$i.smw_title";
+			} else {
+				$property_field = "a$i.p_id";
+				$sql .= "AND $property_field = (SELECT smw_id FROM smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
+				$value_field = "a$i.value_xsd";
+			}
+			$sql .= $af->checkSQL($value_field);
+		}
+		return $sql;
+	}
+
 	/**
 	 * Gets the number of pages matching both the currently-selected
 	 * set of filters and either a new subcategory or a new filter.
@@ -239,22 +362,41 @@ class BrowseDataPage extends QueryPage {
 	 * the number of pages that match that time period.
 	 */
 	function getTimePeriodValues($date_filter) {
+		global $smwgDefaultStore;
+
 		$possible_dates = array();
 		$property_value = str_replace(' ', '_', $date_filter->property);
 		$dbr = wfGetDB( DB_SLAVE );
-		$smw_attributes = $dbr->tableName( 'smw_attributes' );
 		if ($date_filter->time_period == wfMsg('sd_filter_month')) {
 			$fields = "YEAR(value_xsd), MONTH(value_xsd)";
 		} else {
 			$fields = "YEAR(value_xsd)";
 		}
-		$sql = "SELECT $fields, count(*)
-			FROM semantic_drilldown_values sdv 
-			JOIN $smw_attributes a
-			ON sdv.page_id = a.subject_id
-			WHERE a.attribute_title = '$property_value'
-			GROUP BY $fields
-			ORDER BY $fields";
+		if ($smwgDefaultStore == 'SMWSQLStore2') {
+			$smw_attributes = $dbr->tableName( 'smw_atts2' );
+			$smw_ids = $dbr->tableName( 'smw_ids' );
+			$sql =<<<END
+	SELECT $fields, count(*)
+	FROM semantic_drilldown_values sdv 
+	JOIN $smw_attributes a ON sdv.id = a.s_id
+	JOIN $smw_ids p_ids ON a.p_id = p_ids.smw_id
+	WHERE p_ids.smw_title = '$property_value'
+	GROUP BY $fields
+	ORDER BY $fields
+
+END;
+		} else {
+			$smw_attributes = $dbr->tableName( 'smw_attributes' );
+			$sql =<<<END
+	SELECT $fields, count(*)
+	FROM semantic_drilldown_values sdv 
+	JOIN $smw_attributes a ON sdv.id = a.subject_id
+	WHERE a.attribute_title = '$property_value'
+	GROUP BY $fields
+	ORDER BY $fields
+
+END;
+		}
 		$res = $dbr->query($sql);
 		while ($row = $dbr->fetchRow($res)) {
 			if ($date_filter->time_period == wfMsg('sd_filter_month')) {
@@ -276,6 +418,15 @@ class BrowseDataPage extends QueryPage {
 	 * that match that value.
 	 */
 	function getAllValues($filter) {
+		global $smwgDefaultStore;
+		if ($smwgDefaultStore == 'SMWSQLStore2') {
+			return $this->getAllValues_2($filter);
+		} else {
+			return $this->getAllValues_orig($filter);
+		}
+	}
+
+	function getAllValues_orig($filter) {
 		$possible_values = array();
 		$property_value = str_replace(' ', '_', $filter->property);
 		$dbr = wfGetDB( DB_SLAVE );
@@ -293,7 +444,7 @@ class BrowseDataPage extends QueryPage {
 		$sql = "SELECT $value_field, count(*)
 			FROM semantic_drilldown_values sdv 
 			JOIN $property_table_name $property_table_nickname
-			ON sdv.page_id = $property_table_nickname.subject_id
+			ON sdv.id = $property_table_nickname.subject_id
 			WHERE $property_table_nickname.$property_field = '$property_value'
 			AND $value_field != ''
 			GROUP BY $value_field
@@ -307,12 +458,58 @@ class BrowseDataPage extends QueryPage {
 		return $possible_values;
 	}
 
+	function getAllValues_2($filter) {
+		$possible_values = array();
+		$property_value = str_replace(' ', '_', $filter->property);
+		$dbr = wfGetDB( DB_SLAVE );
+		if ($filter->is_relation) {
+			$property_table_name = $dbr->tableName('smw_rels2');
+			$property_table_nickname = "r";
+			$value_field = 'o_ids.smw_title';
+		} else {
+			$property_table_name = $dbr->tableName('smw_atts2');
+			$property_table_nickname = "a";
+			$value_field = 'value_xsd';
+		}
+		$sql =<<<END
+	SELECT $value_field, count(*)
+	FROM semantic_drilldown_values sdv 
+	JOIN $property_table_name $property_table_nickname ON sdv.id = $property_table_nickname.s_id
+
+END;
+		if ($filter->is_relation) {
+			$sql .= "	JOIN $smw_ids o_ids ON r.o_id = o_ids.smw_id";
+		}
+		$sql .=<<<END
+	WHERE $property_table_nickname.p_id = '$property_value'
+	AND $value_field != ''
+	GROUP BY $value_field
+	ORDER BY $value_field
+
+END;
+		$res = $dbr->query($sql);
+		while ($row = $dbr->fetchRow($res)) {
+			$value_string = str_replace('_', ' ', $row[0]);
+			$possible_values[$value_string] = $row[1];
+		}
+		$dbr->freeResult($res);
+		return $possible_values;
+	}
 
 	/**
 	 * Gets an array of all values that the property belonging to the
 	 * passed-in filter has, for pages in the current category.
 	 */
 	function getAllOrValues($applied_filter) {
+		global $smwgDefaultStore;
+		if ($smwgDefaultStore == 'SMWSQLStore2') {
+			return $this->getAllOrValues_2($applied_filter);
+		} else {
+			return $this->getAllOrValues_orig($applied_filter);
+		}
+	}
+
+	function getAllOrValues_orig($applied_filter) {
 		$possible_values = array();
 		$property_value = str_replace(' ', '_', $applied_filter->filter->property);
 		$dbr = wfGetDB( DB_SLAVE );
@@ -343,6 +540,52 @@ class BrowseDataPage extends QueryPage {
 			AND c.cl_to = '{$this->category}'
 			GROUP BY $value_field
 			ORDER BY $value_field";
+		$res = $dbr->query($sql);
+		while ($row = $dbr->fetchRow($res)) {
+			if ($applied_filter->filter->time_period == wfMsg('sd_filter_month'))
+				$value_string = sdfMonthToString($row[1]) . " " . $row[0];
+			else
+				// why is trim() necessary here???
+				$value_string = str_replace('_', ' ', trim($row[0]));
+			$possible_values[] = $value_string;
+		}
+		$dbr->freeResult($res);
+		return $possible_values;
+	}
+
+	function getAllOrValues_2($applied_filter) {
+		$possible_values = array();
+		$property_value = str_replace(' ', '_', $applied_filter->filter->property);
+		$dbr = wfGetDB( DB_SLAVE );
+		if ($applied_filter->filter->is_relation) {
+			$property_table_name = $dbr->tableName('smw_rels2');
+			$property_table_nickname = "r";
+			$value_field = 'o_id';
+		} else {
+			$property_table_name = $dbr->tableName('smw_atts2');
+			$property_table_nickname = "a";
+			$value_field = 'value_xsd';
+		}
+                if ($applied_filter->filter->time_period != NULL) {
+			if ($applied_filter->filter->time_period == wfMsg('sd_filter_month')) {
+				$value_field = "YEAR(value_xsd), MONTH(value_xsd)";
+			} else {
+				$value_field = "YEAR(value_xsd)";
+			}
+		}
+		$smw_insts = $dbr->tableName( 'smw_inst2' );
+		$smw_ids = $dbr->tableName( 'smw_ids' );
+		$cat_ns = NS_CATEGORY;
+		$sql = "SELECT $value_field
+	FROM $property_table_name $property_table_nickname
+	JOIN $smw_ids p_ids ON $property_table_nickname.p_id = p_ids.smw_id
+	JOIN $smw_insts insts ON $property_table_nickname.s_id = insts.s_id
+	JOIN $smw_ids cat_ids ON insts.o_id = cat_ids.smw_id
+	WHERE p_ids.smw_title = '$property_value'
+	AND cat_ids.smw_namespace = $cat_ns
+	AND cat_ids.smw_title = '{$this->category}'
+	GROUP BY $value_field
+	ORDER BY $value_field";
 		$res = $dbr->query($sql);
 		while ($row = $dbr->fetchRow($res)) {
 			if ($applied_filter->filter->time_period == wfMsg('sd_filter_month'))
@@ -718,10 +961,18 @@ END;
 	function getSQL() {
 		// QueryPage uses the value from this SQL in an ORDER clause,
 		// so return page_title as title.
-		$sql = "SELECT DISTINCT p.page_title AS title,
-			p.page_title AS value,
-			p.page_namespace AS namespace,
-			c.cl_sortkey AS sortkey ";
+		global $smwgDefaultStore;
+		if ($smwgDefaultStore == 'SMWSQLStore2') {
+			$sql = "SELECT DISTINCT ids.smw_title AS title,
+	ids.smw_title AS value,
+	ids.smw_namespace AS namespace,
+	ids.smw_title AS sortkey ";
+		} else {
+			$sql = "SELECT DISTINCT p.page_title AS title,
+	p.page_title AS value,
+	p.page_namespace AS namespace,
+	c.cl_sortkey AS sortkey ";
+		}
 		$sql .= $this->getSQLFromClause($this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters);
 		return $sql;
 	}
