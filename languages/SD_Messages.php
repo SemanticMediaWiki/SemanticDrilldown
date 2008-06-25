@@ -408,6 +408,7 @@ $messages['gl'] = array(
 	'sd_browsedata_removefilter'            => 'Eliminar este filtro',
 	'sd_browsedata_removesubcategoryfilter' => 'Eliminar este filtro de subcategorías',
 	'sd_browsedata_resetfilters'            => 'Eliminar filtros',
+	'sd_browsedata_addanothervalue'         => 'Engadir outro valor',
 	'filters'                               => 'Filtros',
 	'sd_filters_docu'                       => 'Os seguintes filtros existen en {{SITENAME}}:',
 	'createfilter'                          => 'Crear un filtro',
@@ -416,10 +417,16 @@ $messages['gl'] = array(
 	'sd_createfilter_usepropertyvalues'     => 'Usar todos os valores da propiedade para o filtro',
 	'sd_createfilter_usecategoryvalues'     => 'Obter os valores para o filtro desta categoría:',
 	'sd_createfilter_entervalues'           => 'Introduza valores para filtrar manualmente (os valores deben separarse por comas - se o valor contén unha coma, substitúaa por "\\,"):',
+	'sd_createfilter_label'                 => 'Lapela para este filtro (opcional):',
 	'sd_blank_error'                        => 'non pode estar en branco',
 	'sd_filter_coversproperty'              => 'O filtro inclúe a propiedade $1.',
+	'sd_filter_getsvaluesfromcategory'      => 'Obtén os seus valores da categoría $1.',
+	'sd_filter_usestimeperiod'              => 'Usa $1 como o seu período de tempo.',
 	'sd_filter_year'                        => 'Ano',
 	'sd_filter_month'                       => 'Mes',
+	'sd_filter_hasvalues'                   => 'Ten os valores $1.',
+	'sd_filter_requiresfilter'              => 'Require a presenza do filtro $1.',
+	'sd_filter_haslabel'                    => 'Ten a lapela $1.',
 );
 
 /** Manx (Gaelg)
@@ -905,6 +912,7 @@ $messages['pt'] = array(
 
 /** Russian (Русский)
  * @author Александр Сигачёв
+ * @author Innv
  */
 $messages['ru'] = array(
 	'browsedata'                            => 'Обзор данных',
@@ -917,6 +925,7 @@ $messages['ru'] = array(
 	'sd_browsedata_filterbysubcategory'     => 'Фильтр по этой подкатегории',
 	'sd_browsedata_otherfilter'             => 'Показать страницы с другими значениями по этому фильтру',
 	'sd_browsedata_nonefilter'              => 'Показать страницы без значений по этому фильтру',
+	'sd_browsedata_or'                      => 'или',
 	'sd_browsedata_removefilter'            => 'Убрать этот фильтр',
 	'sd_browsedata_removesubcategoryfilter' => 'Убрать этот фильтр по подкатегории',
 	'sd_browsedata_resetfilters'            => 'Сбросить фильтры',
