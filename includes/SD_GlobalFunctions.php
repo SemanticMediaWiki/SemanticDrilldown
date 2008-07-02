@@ -47,9 +47,6 @@ $wgAutoloadClasses['SDBrowseData'] = $sdgIP . '/specials/SD_BrowseData.php';
 function sdgSetupExtension() {
 	global $sdgNamespace, $sdgIP, $wgVersion, $wgExtensionCredits;
 
-	if (version_compare($wgVersion, '1.11', '>='))
-		wfLoadExtensionMessages('SemanticDrilldown');
-
 	require_once($sdgIP . '/includes/SD_Filter.php');
 	require_once($sdgIP . '/includes/SD_FilterValue.php');
 	require_once($sdgIP . '/includes/SD_AppliedFilter.php');
