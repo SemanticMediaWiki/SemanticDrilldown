@@ -9,10 +9,21 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-global $IP;
-require_once( "$IP/includes/SpecialPage.php" );
+class SDBrowseData extends SpecialPage {
 
-SpecialPage::addPage( new SpecialPage('BrowseData','',true,'doSpecialBrowseData',false) );
+	/**
+	 * Constructor
+	 */
+	public function SDBrowseData() {
+		SpecialPage::SpecialPage('BrowseData');
+		wfLoadExtensionMessages('SemanticDrilldown');
+	}
+
+	function execute() {
+		$this->setHeaders();
+		doSpecialBrowseData();
+	}
+}
 
 class BrowseDataPage extends QueryPage {
 	var $category = "";
@@ -524,7 +535,7 @@ END;
 			$property_field = 'attribute_title';
 			$value_field = 'value_xsd';
 		}
-                if ($applied_filter->filter->time_period != NULL) {
+		if ($applied_filter->filter->time_period != NULL) {
 			if ($applied_filter->filter->time_period == wfMsg('sd_filter_month')) {
 				$value_field = "YEAR(value_xsd), MONTH(value_xsd)";
 			} else {
@@ -566,7 +577,7 @@ END;
 			$property_table_nickname = "a";
 			$value_field = 'value_xsd';
 		}
-                if ($applied_filter->filter->time_period != NULL) {
+		if ($applied_filter->filter->time_period != NULL) {
 			if ($applied_filter->filter->time_period == wfMsg('sd_filter_month')) {
 				$value_field = "YEAR(value_xsd), MONTH(value_xsd)";
 			} else {
@@ -977,9 +988,9 @@ END;
 		return $sql;
 	}
 
-        function getOrder() {
-                return ' ORDER BY sortkey ';
-        }
+	function getOrder() {
+		return ' ORDER BY sortkey ';
+	}
 
 	function formatResult($skin, $result) {
 		$title = Title::makeTitle( $result->namespace, $result->value );
@@ -1097,7 +1108,7 @@ function unhighlightRemoveDiv(element) {
 }
 
 END;
-	$wgOut->addScript('             <script type="text/javascript">' . "\n" . $javascript_text . '</script>' . "\n");
+	$wgOut->addScript('	     <script type="text/javascript">' . "\n" . $javascript_text . '</script>' . "\n");
 
 	// set default
 	if ($sdgNumResultsPerPage == null)
@@ -1108,11 +1119,11 @@ END;
 	// get information on current category, subcategory and filters that
 	// have already been applied from the query string
 	$category = str_replace('_', ' ', $wgRequest->getVal('_cat'));
-        // if query string did not contain this variables, try the URL
-        if (! $category) {
-                $queryparts = explode('/', $query, 1);
-                $category = isset($queryparts[0]) ? $queryparts[0] : '';
-        }
+	// if query string did not contain this variables, try the URL
+	if (! $category) {
+		$queryparts = explode('/', $query, 1);
+		$category = isset($queryparts[0]) ? $queryparts[0] : '';
+	}
 	if (! $category) {
 		$category_title = wfMsg('browsedata');
 	} else {
