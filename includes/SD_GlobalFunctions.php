@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.4.4');
+define('SD_VERSION','0.4.5');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -29,6 +29,17 @@ if (version_compare($wgVersion, '1.11', '>=' )) {
 	$wgExtensionFunctions[] = 'sdfLoadMessagesManually';
 }
 
+// register all special pages
+$wgSpecialPages['Filters'] = 'SDFilters';
+$wgSpecialPageGroups['Filters'] = 'users';
+$wgAutoloadClasses['SDFilters'] = $sdgIP . '/specials/SD_Filters.php';
+$wgSpecialPages['CreateFilter'] = 'SDCreateFilter';
+$wgSpecialPageGroups['CreateFilter'] = 'users';
+$wgAutoloadClasses['SDCreateFilter'] = $sdgIP . '/specials/SD_CreateFilter.php';
+$wgSpecialPages['BrowseData'] = 'SDBrowseData';
+$wgSpecialPageGroups['BrowseData'] = 'users';
+$wgAutoloadClasses['SDBrowseData'] = $sdgIP . '/specials/SD_BrowseData.php';
+
 /**
  *  Do the actual intialization of the extension. This is just a delayed init that makes sure
  *  MediaWiki is set up properly before we add our stuff.
@@ -44,15 +55,7 @@ function sdgSetupExtension() {
 	require_once($sdgIP . '/includes/SD_AppliedFilter.php');
 
 	/**********************************************/
-	/***** register specials                  *****/
-	/**********************************************/
-
-	require_once($sdgIP . '/specials/SD_BrowseData.php');
-	require_once($sdgIP . '/specials/SD_Filters.php');
-	require_once($sdgIP . '/specials/SD_CreateFilter.php');
-
-	/**********************************************/
-	/***** register hooks                     *****/
+	/***** register hooks		     *****/
 	/**********************************************/
 
 	/**********************************************/
@@ -63,7 +66,7 @@ function sdgSetupExtension() {
 	/***** credits (see "Special:Version")    *****/
 	/**********************************************/
 	$wgExtensionCredits['specialpage'][]= array(
-		'name'        => 'Semantic Drilldown',
+		'name'	=> 'Semantic Drilldown',
 		'version'     => SD_VERSION,
 		'author'      => 'Yaron Koren',
 		'url'         => 'http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
@@ -189,20 +192,20 @@ function sdfLoadMessagesManually() {
  * children of some other category
  */
 function sdfGetTopLevelCategories() {
-        $categories = array();
-        $dbr = wfGetDB( DB_SLAVE );
+	$categories = array();
+	$dbr = wfGetDB( DB_SLAVE );
 	$page = $dbr->tableName('page');
 	$categorylinks = $dbr->tableName('categorylinks');
 	$cat_ns = NS_CATEGORY;
 	$sql = "SELECT page_title FROM $page p LEFT OUTER JOIN $categorylinks cl ON p.page_id = cl.cl_from WHERE p.page_namespace = $cat_ns AND cl.cl_to IS NULL";
 	$res = $dbr->query($sql);
-        if ($dbr->numRows( $res ) > 0) {
-                while ($row = $dbr->fetchRow($res)) {
-                        $categories[] = str_replace('_', ' ', $row[0]);
-                }
-        }
-        $dbr->freeResult($res);
-        return $categories;
+	if ($dbr->numRows( $res ) > 0) {
+		while ($row = $dbr->fetchRow($res)) {
+			$categories[] = str_replace('_', ' ', $row[0]);
+		}
+	}
+	$dbr->freeResult($res);
+	return $categories;
 }
 
 function sdfGetSemanticProperties_0_7() {
