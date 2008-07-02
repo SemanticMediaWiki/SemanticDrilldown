@@ -8,30 +8,20 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-global $IP;
-require_once( "$IP/includes/SpecialPage.php" );
+class SDCreateFilter extends SpecialPage {
 
-global $sdgSpecialPagesSpecialInit;
-if ($sdgSpecialPagesSpecialInit) {
-	global $wgSpecialPages;
-	$wgSpecialPages['CreateFilter'] = 'SDCreateFilter';
-
-	class SDCreateFilter extends SpecialPage {
-
-		/**
-		 * Constructor
-		 */
-		public function __construct() {
-			smwfInitUserMessages();
-			parent::__construct('CreateFilter', '', true);
-		}
-
-		function execute() {
-			doSpecialCreateFilter();
-		}
+	/**
+	 * Constructor
+	 */
+	public function SDCreateFilter() {
+		SpecialPage::SpecialPage('CreateFilter');
+		wfLoadExtensionMessages('SemanticDrilldown');
 	}
-} else {
-	SpecialPage::addPage( new SpecialPage('CreateFilter','',true,'doSpecialCreateFilter',false) );
+
+	function execute() {
+		$this->setHeaders();
+		doSpecialCreateFilter();
+	}
 }
 
 function createFilterText($property_string, $values_source, $category_used, $time_period, $filter_values, $required_filter, $filter_label) {
@@ -42,18 +32,18 @@ function createFilterText($property_string, $values_source, $category_used, $tim
 	$smw_version = SMW_VERSION;
 	$property_tag = "[[" . $sd_props[SD_SP_COVERS_PROPERTY] .
 		"::$namespace:$property_name|$property_name]]";
-	$text = wfMsg('sd_filter_coversproperty', $property_tag);
+	$text = wfMsgForContent('sd_filter_coversproperty', $property_tag);
 	if ($values_source == 'category') {
 		global $wgContLang;
 		$namespace_labels = $wgContLang->getNamespaces();
 		$category_namespace = $namespace_labels[NS_CATEGORY];
 		$category_tag = "[[" . $sd_props[SD_SP_GETS_VALUES_FROM_CATEGORY] . "::$category_namespace:$category_used|$category_used]]";
-		$text .= " " . wfMsg('sd_filter_getsvaluesfromcategory', $category_tag);
+		$text .= " " . wfMsgForContent('sd_filter_getsvaluesfromcategory', $category_tag);
 	} elseif ($values_source == 'property') {
 		// do nothing
 	} elseif ($values_source == 'dates') {
 		$time_period_tag = "[[" . $sd_props[SD_SP_USES_TIME_PERIOD] . ":=$time_period]]";
-		$text .= " " . wfMsg('sd_filter_usestimeperiod', $time_period_tag);
+		$text .= " " . wfMsgForContent('sd_filter_usestimeperiod', $time_period_tag);
 	} elseif ($values_source == 'manual') {
 		// replace the comma substitution character that has no
 		// chance of being included in the values list - namely,
@@ -70,17 +60,17 @@ function createFilterText($property_string, $values_source, $category_used, $tim
 			$filter_value = str_replace("\a", $sdgListSeparator, trim($filter_value));
 			$filter_values_tag .= "[[" . $sd_props[SD_SP_HAS_VALUE] . ":=$filter_value]]";
 		}
-		$text .= " " . wfMsg('sd_filter_hasvalues', $filter_values_tag);
+		$text .= " " . wfMsgForContent('sd_filter_hasvalues', $filter_values_tag);
 	}
 	if ($required_filter != '') {
 		$sd_namespace_labels = $sdgContLang->getNamespaces();
 		$filter_namespace = $sd_namespace_labels[SD_NS_FILTER];
 		$filter_tag = "[[" . $sd_props[SD_SP_REQUIRES_FILTER] . "::$filter_namespace:$required_filter|$required_filter]]";
-		$text .= " " . wfMsg('sd_filter_requiresfilter', $filter_tag);
+		$text .= " " . wfMsgForContent('sd_filter_requiresfilter', $filter_tag);
 	}
 	if ($filter_label != '') {
 		$filter_label_tag = "[[" . $sd_props[SD_SP_HAS_LABEL] . ":=$filter_label]]";
-		$text .= " " . wfMsg('sd_filter_haslabel', $filter_label_tag);
+		$text .= " " . wfMsgForContent('sd_filter_haslabel', $filter_label_tag);
 	}
 	return $text;
 }
@@ -146,8 +136,12 @@ END;
 	$values_from_category_label = wfMsg('sd_createfilter_usecategoryvalues');
 	$date_values_label = wfMsg('sd_createfilter_usedatevalues');
 	$enter_values_label = wfMsg('sd_createfilter_entervalues');
+	// need both label and value, in case user's language is different
+	// from wiki's
 	$year_label = wfMsg('sd_filter_year');
+	$year_value = wfMsgForContent('sd_filter_year');
 	$month_label = wfMsg('sd_filter_month');
+	$month_value = wfMsgForContent('sd_filter_month');
 	$require_filter_label = wfMsg('sd_createfilter_requirefilter');
 	$text .=<<<END
 	</select>
@@ -171,8 +165,8 @@ END;
 	<p><input type="radio" name="values_source" value="dates">
 	$date_values_label
 	<select id="time_period_dropdown" name="time_period">
-	<option>$year_label</option>
-	<option>$month_label</option>
+	<option value="$year_value">$year_label</option>
+	<option value="$month_value">$month_label</option>
 	</select>
 	</p>
 	<p><input type="radio" name="values_source" value="manual">
