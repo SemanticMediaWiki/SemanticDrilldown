@@ -16,7 +16,8 @@ class SDBrowseData extends SpecialPage {
 	 */
 	public function SDBrowseData() {
 		SpecialPage::SpecialPage('BrowseData');
-		wfLoadExtensionMessages('SemanticDrilldown');
+		if (function_exists('wfLoadExtensionMessages'))
+			wfLoadExtensionMessages('SemanticDrilldown');
 	}
 
 	function execute() {

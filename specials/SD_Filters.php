@@ -14,7 +14,8 @@ class SDFilters extends SpecialPage {
 	 */
 	function SDFilters() {
 		SpecialPage::SpecialPage('Filters');
-		wfLoadExtensionMessages('SemanticDrilldown');
+		if (function_exists('wfLoadExtensionMessages'))
+			wfLoadExtensionMessages('SemanticDrilldown');
 	}
 
 	function execute() {

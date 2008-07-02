@@ -15,7 +15,8 @@ class SDCreateFilter extends SpecialPage {
 	 */
 	public function SDCreateFilter() {
 		SpecialPage::SpecialPage('CreateFilter');
-		wfLoadExtensionMessages('SemanticDrilldown');
+		if (function_exists('wfLoadExtensionMessages'))
+			wfLoadExtensionMessages('SemanticDrilldown');
 	}
 
 	function execute() {
