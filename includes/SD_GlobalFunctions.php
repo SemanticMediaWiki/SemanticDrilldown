@@ -19,17 +19,19 @@ define('SD_SP_REQUIRES_FILTER', 6);
 define('SD_SP_HAS_LABEL', 7);
 define('SD_SP_HAS_DRILLDOWN_TITLE', 8);
 
-$wgExtensionFunctions[] = 'sdgSetupExtension';
+$wgExtensionCredits['specialpage'][]= array(
+	'name'	=> 'Semantic Drilldown',
+	'version'     => SD_VERSION,
+	'author'      => 'Yaron Koren',
+	'url'         => 'http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
+	'description' =>  'A drilldown interface for navigating through semantic data',
+);
 
 require_once($sdgIP . '/languages/SD_Language.php');
 
-if (version_compare($wgVersion, '1.11', '>=' )) {
-	$wgExtensionMessagesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Messages.php';
-} else {
-	$wgExtensionFunctions[] = 'sdfLoadMessagesManually';
-}
+$wgExtensionMessagesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Messages.php';
 
-// register all special pages
+// register all special pages and other classes
 $wgSpecialPages['Filters'] = 'SDFilters';
 $wgSpecialPageGroups['Filters'] = 'users';
 $wgAutoloadClasses['SDFilters'] = $sdgIP . '/specials/SD_Filters.php';
@@ -40,38 +42,9 @@ $wgSpecialPages['BrowseData'] = 'SDBrowseData';
 $wgSpecialPageGroups['BrowseData'] = 'users';
 $wgAutoloadClasses['SDBrowseData'] = $sdgIP . '/specials/SD_BrowseData.php';
 
-/**
- *  Do the actual intialization of the extension. This is just a delayed init that makes sure
- *  MediaWiki is set up properly before we add our stuff.
- */
-function sdgSetupExtension() {
-	global $sdgNamespace, $sdgIP, $wgVersion, $wgExtensionCredits;
-
-	require_once($sdgIP . '/includes/SD_Filter.php');
-	require_once($sdgIP . '/includes/SD_FilterValue.php');
-	require_once($sdgIP . '/includes/SD_AppliedFilter.php');
-
-	/**********************************************/
-	/***** register hooks		     *****/
-	/**********************************************/
-
-	/**********************************************/
-	/***** create globals for outside hooks   *****/
-	/**********************************************/
-
-	/**********************************************/
-	/***** credits (see "Special:Version")    *****/
-	/**********************************************/
-	$wgExtensionCredits['specialpage'][]= array(
-		'name'	=> 'Semantic Drilldown',
-		'version'     => SD_VERSION,
-		'author'      => 'Yaron Koren',
-		'url'         => 'http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
-		'description' =>  'A drilldown interface for navigating through semantic data',
-	);
-
-	return true;
-}
+$wgAutoloadClasses['SDFilter'] = $sdgIP . '/includes/SD_Filter.php';
+$wgAutoloadClasses['SDFilterValue'] = $sdgIP . '/includes/SD_FilterValue.php';
+$wgAutoloadClasses['SDAppliedFilter'] = $sdgIP . '/includes/SD_AppliedFilter.php';
 
 /**********************************************/
 /***** namespace settings                 *****/
@@ -191,8 +164,7 @@ function sdfLoadMessagesManually() {
 function sdfGetTopLevelCategories() {
 	$categories = array();
 	$dbr = wfGetDB( DB_SLAVE );
-	$page = $dbr->tableName('page');
-	$categorylinks = $dbr->tableName('categorylinks');
+	extract($dbr->tableNames('page', 'categorylinks'));
 	$cat_ns = NS_CATEGORY;
 	$sql = "SELECT page_title FROM $page p LEFT OUTER JOIN $categorylinks cl ON p.page_id = cl.cl_from WHERE p.page_namespace = $cat_ns AND cl.cl_to IS NULL";
 	$res = $dbr->query($sql);
@@ -417,8 +389,7 @@ function sdfGetCategoryChildren($category_name, $get_categories, $levels) {
 	$pages = array();
 	$subcategories = array();
 	$dbr = wfGetDB( DB_SLAVE );
-	$categorylinks = $dbr->tableName( 'categorylinks' );
-	$page = $dbr->tableName( 'page' );
+	extract($dbr->tableNames('page', 'categorylinks'));
 	$cat_ns = NS_CATEGORY;
 	$query_category = str_replace(' ', '_', $category_name);
 	$query_category = str_replace("'", "\'", $query_category);
