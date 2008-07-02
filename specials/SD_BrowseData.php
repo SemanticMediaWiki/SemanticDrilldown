@@ -16,13 +16,12 @@ class SDBrowseData extends SpecialPage {
 	 */
 	public function SDBrowseData() {
 		SpecialPage::SpecialPage('BrowseData');
-		if (function_exists('wfLoadExtensionMessages'))
-			wfLoadExtensionMessages('SemanticDrilldown');
+		wfLoadExtensionMessages('SemanticDrilldown');
 	}
 
-	function execute() {
+	function execute($query = '') {
 		$this->setHeaders();
-		doSpecialBrowseData();
+		doSpecialBrowseData($query);
 	}
 }
 
@@ -779,7 +778,7 @@ END;
 		}
 		// set font-size values for filter "tag cloud", if the
 		// appropriate global variables are set
-		if (isset($sdgFiltersSmallestFontSize) && isset($sdgFiltersLargestFontSize)) {
+		if ($sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0) {
 			$lowest_num_results = min($filter_values);
 			$highest_num_results = max($filter_values);
 			$num_results_midpoint = ($lowest_num_results + $highest_num_results) / 2;
@@ -801,7 +800,7 @@ END;
 				$filter_text = str_replace('_', ' ', $value_str);
 			$filter_text .= " ($num_results)";
 			$filter_url = $cur_url . urlencode(str_replace(' ', '_', $f->name)) . '=' . urlencode(str_replace(' ', '_', $value_str));
-			if (isset($sdgFiltersSmallestFontSize) && isset($sdgFiltersLargestFontSize)) {
+			if ($sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0) {
 				$font_size = round($font_size_midpoint + (($num_results - $num_results_midpoint) / $num_results_per_font_pixel));
 				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_filterbyvalue') . '" style="font-size: ' . $font_size . 'px">' . $filter_text . '</a>';
 			} else {
@@ -1078,7 +1077,7 @@ END;
 	}
 }
 
-function doSpecialBrowseData($query = '') {
+function doSpecialBrowseData($query) {
 	global $wgRequest, $wgOut, $sdgScriptPath, $sdgContLang, $sdgNumResultsPerPage;
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
 
