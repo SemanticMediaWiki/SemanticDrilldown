@@ -1235,7 +1235,7 @@ $messages['zh-cn'] = array(
 	'sd_filter_haslabel' => '其有着此一$1标签'  ,
 );
 
-/** ‪中文(台灣)‬ (‪中文(台灣)‬)
+/** Taiwan Chinese (‪中文(台灣)‬)
  * @author Roc michael
  */
 $messages['zh-tw'] = array(
