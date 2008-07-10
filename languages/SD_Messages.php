@@ -299,9 +299,11 @@ $messages['fa'] = array(
 	'sd_browsedata_filterbysubcategory'     => 'فیلتر با این زیر رده',
 	'sd_browsedata_otherfilter'             => 'نمایش صفحاتی با مقدار دیگر برای این فیلتر',
 	'sd_browsedata_nonefilter'              => 'نمایش صفحات بدون مقدار برای این فیلتر',
+	'sd_browsedata_or'                      => 'یا',
 	'sd_browsedata_removefilter'            => 'حذف این فیلتر',
 	'sd_browsedata_removesubcategoryfilter' => 'حذف این فیلتر زیر رده',
 	'sd_browsedata_resetfilters'            => 'تنظیم فیلترها از نو',
+	'sd_browsedata_addanothervalue'         => 'مقدار دیگری اضافه کنید',
 	'filters'                               => 'فیلترها',
 	'sd_filters_docu'                       => 'فیلترهای زیر در این ویکی وجود دارد:',
 	'createfilter'                          => 'فیلتر بسازید',
@@ -577,6 +579,7 @@ $messages['km'] = array(
 	'sd_browsedata_subcategory'    => 'ចំណាត់ក្រុមរង',
 	'sd_browsedata_other'          => 'ផ្សេងៗទៀត',
 	'sd_browsedata_none'           => 'ទទេ',
+	'sd_browsedata_or'             => 'ឬ',
 	'sd_createfilter_name'         => 'ឈ្មោះ៖',
 	'sd_filter_year'               => 'ឆ្នាំ',
 	'sd_filter_month'              => 'ខែ',
@@ -1074,7 +1077,7 @@ $messages['sv'] = array(
 	'sd_filter_haslabel'                    => 'Det har etiketten $1.',
 );
 
-/** Silesian (ślůnski)
+/** Silesian (Ślůnski)
  * @author Herr Kriss
  */
 $messages['szl'] = array(
@@ -1196,43 +1199,36 @@ $messages['vo'] = array(
 	'sd_filter_month'      => 'Mul',
 );
 
-/** Mainland Chinese
+/** ‪Mainland Chinese‬ (‪中文(中国大陆)‬)
  * @author Roc Michael
  */
 $messages['zh-cn'] = array(
-	// user messages
-	'browsedata' => '查看资料',
-	'sd_browsedata_choosecategory' => '选取某项分类(category)',
-	'sd_browsedata_viewcategory' => '查看分类页面',
-	'sd_browsedata_subcategory' => '子分类',
-	'sd_browsedata_other' => '其他的',
-	'sd_browsedata_none' => '无',
-	'filters' => '筛选器',
-	'sd_filters_docu' => '此wiki系统内已设有如下的筛选器(filters)',
-	'createfilter' => '建立筛选器',
-	'sd_createfilter_name' => '名称：',
-	'sd_createfilter_property' => '此一筛选器所涵盖的性质：',
+	'browsedata'                        => '查看资料',
+	'sd_browsedata_choosecategory'      => '选取某项分类(category)',
+	'sd_browsedata_viewcategory'        => '查看分类页面',
+	'sd_browsedata_subcategory'         => '子分类',
+	'sd_browsedata_other'               => '其他的',
+	'sd_browsedata_none'                => '无',
+	'filters'                           => '筛选器',
+	'sd_filters_docu'                   => '此wiki系统内已设有如下的筛选器(filters)',
+	'createfilter'                      => '建立筛选器',
+	'sd_createfilter_name'              => '名称：',
+	'sd_createfilter_property'          => '此一筛选器所涵盖的性质：',
 	'sd_createfilter_usepropertyvalues' => '将此一性质的值设给筛选器所用',
 	'sd_createfilter_usecategoryvalues' => '从此分类中为筛选器取得筛选值：',
-	'sd_createfilter_usedatevalues' => '以此一期间为此筛选器设置日期范围值：',
-	'sd_createfilter_entervalues' => '以手工赋予值的方式设置此一筛选器(其值必须以半型逗号分隔「,」，如果您的资料中已含有半型逗号，则须以「\,」符号取代)：',
-	'sd_createfilter_label' => '为此一筛选器设置标签(选择性的)：',
-	'sd_createfilter_requirefilter' => '在此一筛选器展示其作用之前要求须选取其他的筛选器：',
-	'sd_createfilter_entervalues' => '以手工的方式键入筛选器的筛选值(其值必须以半型逗号","分隔，如果您的输入值内包含半型逗号则须则"\,"取代):',
-	'sd_createfilter_label' => '为此一筛选选器设置标签(选择性的)：',
-
-	'sd_blank_error' => '不得为空白',
-
-	// content messages
-	'sd_filter_coversproperty' => '此筛选器涵盖了$1性质。',
-	'sd_filter_getsvaluesfromcategory' => '其从$1分类取得它的值。',
-	'sd_filter_usestimeperiod' => '其使用「$1」做为时间期限值',
-	'sd_filter_year' => '年',
-	'sd_filter_month' => '月',
-	'sd_filter_hasvalues' => '其含有$1值。',
-	'sd_filter_requiresfilter' => '其以$1筛选器为基础。',
-	'sd_filter_hasvalues' => '其有着$1的这些值。',
-	'sd_filter_haslabel' => '其有着此一$1标签'  ,
+	'sd_createfilter_usedatevalues'     => '以此一期间为此筛选器设置日期范围值：',
+	'sd_createfilter_entervalues'       => '以手工的方式键入筛选器的筛选值(其值必须以半型逗号","分隔，如果您的输入值内包含半型逗号则须则"\\,"取代):',
+	'sd_createfilter_label'             => '为此一筛选选器设置标签(选择性的)：',
+	'sd_createfilter_requirefilter'     => '在此一筛选器展示其作用之前要求须选取其他的筛选器：',
+	'sd_blank_error'                    => '不得为空白',
+	'sd_filter_coversproperty'          => '此筛选器涵盖了$1性质。',
+	'sd_filter_getsvaluesfromcategory'  => '其从$1分类取得它的值。',
+	'sd_filter_usestimeperiod'          => '其使用「$1」做为时间期限值',
+	'sd_filter_year'                    => '年',
+	'sd_filter_month'                   => '月',
+	'sd_filter_hasvalues'               => '其有着$1的这些值。',
+	'sd_filter_requiresfilter'          => '其以$1筛选器为基础。',
+	'sd_filter_haslabel'                => '其有着此一$1标签',
 );
 
 /** Taiwan Chinese (‪中文(台灣)‬)
