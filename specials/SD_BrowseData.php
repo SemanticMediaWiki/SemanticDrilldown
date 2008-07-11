@@ -482,6 +482,7 @@ END;
 			$property_table_nickname = "a";
 			$value_field = 'value_xsd';
 		}
+		$smw_ids = $dbr->tableName( 'smw_ids' );
 		$sql =<<<END
 	SELECT $value_field, count(*)
 	FROM semantic_drilldown_values sdv 
