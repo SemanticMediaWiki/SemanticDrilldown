@@ -529,6 +529,13 @@ $messages['hu'] = array(
 	'sd_filter_month'    => 'Hónap',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'sd_browsedata_other' => 'Altere',
+);
+
 /** Indonesian (Bahasa Indonesia)
  * @author Irwangatot
  * @author Rex
@@ -850,6 +857,7 @@ $messages['os'] = array(
  * @author Maire
  * @author Sp5uhe
  * @author Airwolf
+ * @author Maikking
  */
 $messages['pl'] = array(
 	'browsedata'                   => 'Przeglądaj dane',
@@ -858,6 +866,8 @@ $messages['pl'] = array(
 	'sd_browsedata_subcategory'    => 'Kategoria podrzędna',
 	'sd_browsedata_or'             => 'lub',
 	'createfilter'                 => 'Utwórz filtr',
+	'sd_filter_year'               => 'Rok',
+	'sd_filter_month'              => 'Miesiąc',
 );
 
 /** Pashto (پښتو)
