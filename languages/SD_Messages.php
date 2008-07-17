@@ -925,6 +925,26 @@ $messages['pt'] = array(
 	'sd_filter_haslabel'                    => 'Possui a etiqueta $1.',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Enqd
+ */
+$messages['pt-br'] = array(
+	'browsedata'                        => 'Navegar pelo dados',
+	'sd_browsedata_choosecategory'      => 'Escolha uma categoria',
+	'sd_browsedata_viewcategory'        => 'ver categoria',
+	'sd_browsedata_subcategory'         => 'Subcategoria',
+	'sd_browsedata_other'               => 'Outro',
+	'sd_browsedata_none'                => 'Nenhum',
+	'sd_browsedata_filterbyvalue'       => 'Filtrar por este valor',
+	'sd_browsedata_filterbysubcategory' => 'Filtrar por esta subcategoria',
+	'sd_browsedata_otherfilter'         => 'Exibir páginas com outro valor para este filtro',
+	'sd_browsedata_nonefilter'          => 'Exibir páginas sem valores para este filtro',
+	'sd_browsedata_or'                  => 'ou',
+	'sd_browsedata_removefilter'        => 'Remover este filtro',
+	'sd_browsedata_resetfilters'        => 'Zerar filtros',
+	'sd_browsedata_addanothervalue'     => 'Adicionar outro valor',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  * @author Innv
