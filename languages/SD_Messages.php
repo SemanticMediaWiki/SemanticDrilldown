@@ -694,6 +694,13 @@ $messages['mr'] = array(
 	'sd_filter_haslabel'                    => 'त्याला $1 हे लेबल आहे.',
 );
 
+/** Nahuatl (Nahuatl)
+ * @author Fluence
+ */
+$messages['nah'] = array(
+	'sd_createfilter_name' => 'Tōcāitl:',
+);
+
 /** Low German (Plattdüütsch)
  * @author Slomox
  */
