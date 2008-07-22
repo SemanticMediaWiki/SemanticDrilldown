@@ -698,6 +698,7 @@ $messages['mr'] = array(
  * @author Fluence
  */
 $messages['nah'] = array(
+	'sd_browsedata_other'  => 'Occē',
 	'sd_createfilter_name' => 'Tōcāitl:',
 );
 
@@ -950,6 +951,13 @@ $messages['pt-br'] = array(
 	'sd_browsedata_removefilter'        => 'Remover este filtro',
 	'sd_browsedata_resetfilters'        => 'Zerar filtros',
 	'sd_browsedata_addanothervalue'     => 'Adicionar outro valor',
+);
+
+/** Romanian (Română)
+ * @author KlaudiuMihaila
+ */
+$messages['ro'] = array(
+	'sd_createfilter_name' => 'Nume:',
 );
 
 /** Russian (Русский)
