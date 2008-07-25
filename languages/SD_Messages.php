@@ -210,6 +210,7 @@ $messages['de'] = array(
 	'filters'                               => 'Filter',
 	'sd_filters_docu'                       => 'Die folgenden Filter existieren in diesem Wiki:',
 	'createfilter'                          => 'Erstelle einen Filter',
+	'sd_createfilter_name'                  => 'Name:',
 	'sd_createfilter_property'              => 'Attribut dieses Filters:',
 	'sd_createfilter_usepropertyvalues'     => 'Verwende alle Werte dieses Attributs für den Filter.',
 	'sd_createfilter_usecategoryvalues'     => 'Verwende die Werte für den Filter von dieser Kategorie:',
