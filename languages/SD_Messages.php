@@ -702,6 +702,7 @@ $messages['mr'] = array(
  */
 $messages['nah'] = array(
 	'sd_browsedata_other'  => 'Occē',
+	'sd_browsedata_none'   => 'Ahtlein',
 	'sd_createfilter_name' => 'Tōcāitl:',
 );
 
