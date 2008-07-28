@@ -394,6 +394,13 @@ $messages['fr'] = array(
 	'sd_filter_haslabel'                    => 'Étiqueté $1.',
 );
 
+/** Western Frisian (Frysk)
+ * @author Snakesteuben
+ */
+$messages['fy'] = array(
+	'sd_browsedata_none' => 'Gjin',
+);
+
 /** Galician (Galego)
  * @author Alma
  * @author Toliño
