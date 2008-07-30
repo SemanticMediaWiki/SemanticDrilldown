@@ -606,6 +606,7 @@ $messages['km'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
+	'browsedata'           => 'En dä Date bläddere',
 	'sd_browsedata_other'  => 'Söns wat',
 	'sd_createfilter_name' => 'Name:',
 );
