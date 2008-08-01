@@ -42,7 +42,7 @@ function createFilterText($property_string, $values_source, $category_used, $tim
 	} elseif ($values_source == 'property') {
 		// do nothing
 	} elseif ($values_source == 'dates') {
-		$time_period_tag = "[[" . $sd_props[SD_SP_USES_TIME_PERIOD] . ":=$time_period]]";
+		$time_period_tag = "[[" . $sd_props[SD_SP_USES_TIME_PERIOD] . "::$time_period]]";
 		$text .= " " . wfMsgForContent('sd_filter_usestimeperiod', $time_period_tag);
 	} elseif ($values_source == 'manual') {
 		// replace the comma substitution character that has no
@@ -58,7 +58,7 @@ function createFilterText($property_string, $values_source, $category_used, $tim
 			}
 			// replace beep with comma, trim
 			$filter_value = str_replace("\a", $sdgListSeparator, trim($filter_value));
-			$filter_values_tag .= "[[" . $sd_props[SD_SP_HAS_VALUE] . ":=$filter_value]]";
+			$filter_values_tag .= "[[" . $sd_props[SD_SP_HAS_VALUE] . "::$filter_value]]";
 		}
 		$text .= " " . wfMsgForContent('sd_filter_hasvalues', $filter_values_tag);
 	}
@@ -69,7 +69,7 @@ function createFilterText($property_string, $values_source, $category_used, $tim
 		$text .= " " . wfMsgForContent('sd_filter_requiresfilter', $filter_tag);
 	}
 	if ($filter_label != '') {
-		$filter_label_tag = "[[" . $sd_props[SD_SP_HAS_LABEL] . ":=$filter_label]]";
+		$filter_label_tag = "[[" . $sd_props[SD_SP_HAS_LABEL] . "::$filter_label]]";
 		$text .= " " . wfMsgForContent('sd_filter_haslabel', $filter_label_tag);
 	}
 	return $text;
