@@ -167,7 +167,7 @@ class BrowseDataPage extends QueryPage {
 	JOIN $smw_insts inst
 	ON sdv.id = inst.s_id
 	WHERE inst.o_id IN
-		(SELECT smw_id FROM smw_ids
+		(SELECT smw_id FROM $smw_ids
 		WHERE smw_namespace = $ns_cat AND (smw_title = '$subcategory' ";
 		foreach ($child_subcategories as $i => $subcat) {
 			$subcat = str_replace("'", "\'", $subcat);
@@ -338,11 +338,11 @@ class BrowseDataPage extends QueryPage {
 			$property_value = str_replace(' ', '_', $af->filter->property);
 			if ($af->filter->is_relation) {
 				$property_field = "r$i.p_id";
-				$sql .= "AND $property_field = (SELECT smw_id FROM smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
+				$sql .= "AND $property_field = (SELECT smw_id FROM $smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
 				$value_field = "o_ids$i.smw_title";
 			} else {
 				$property_field = "a$i.p_id";
-				$sql .= "AND $property_field = (SELECT smw_id FROM smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
+				$sql .= "AND $property_field = (SELECT smw_id FROM $smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
 				$value_field = "a$i.value_xsd";
 			}
 			$sql .= $af->checkSQL($value_field);
@@ -849,7 +849,7 @@ END;
 		if (! $this->show_single_cat) {
 			$header .= $this->printCategoriesList($categories);
 		}
-		$header .= '				<div class="drilldown-header">';
+		$header .= '				<div class="drilldown-header">' . "\n";
 		if (count ($this->applied_filters) > 0 || $this->subcategory) {
 			$category_url = $this->makeBrowseURL($this->category);
 			$header .= '<a href="' . $category_url . '" title="' . wfMsg('sd_browsedata_resetfilters') . '">' . str_replace('_', ' ', $this->category) . '</a>';
@@ -899,6 +899,8 @@ END;
 			}
 		}
 		$header .= "</div>\n";
+		$drilldown_description = wfMsg('sd_browsedata_docu');
+		$header .= "				<p>$drilldown_description</p>\n";
 		// display the list of subcategories on one line, and below
 		// it every filter, each on its own line; each line will
 		// contain the possible values, and, in parentheses, the
@@ -978,7 +980,7 @@ END;
 			$sql = "SELECT DISTINCT ids.smw_title AS title,
 	ids.smw_title AS value,
 	ids.smw_namespace AS namespace,
-	ids.smw_title AS sortkey ";
+	ids.smw_sortkey AS sortkey ";
 		} else {
 			$sql = "SELECT DISTINCT p.page_title AS title,
 	p.page_title AS value,
