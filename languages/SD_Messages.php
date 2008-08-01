@@ -15,8 +15,7 @@ $messages['en'] = array(
 	'browsedata'                            => 'Browse data',
 	'sd_browsedata_choosecategory'          => 'Choose a category',
 	'sd_browsedata_viewcategory'            => 'view category',
-	'sd_browsedata_docu'                    => 'Click on one or more items b
-elow to narrow your results.',
+	'sd_browsedata_docu'                    => 'Click on one or more items below to narrow your results.',
 	'sd_browsedata_subcategory'             => 'Subcategory',
 	'sd_browsedata_other'                   => 'Other',
 	'sd_browsedata_none'                    => 'None',
