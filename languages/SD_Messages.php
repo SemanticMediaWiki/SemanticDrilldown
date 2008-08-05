@@ -144,6 +144,13 @@ $messages['avk'] = array(
 	'sd_filter_haslabel'                    => 'In tir dem $1 kral.',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'sd_createfilter_name' => 'Назва:',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -784,6 +791,7 @@ $messages['no'] = array(
 	'browsedata'                            => 'Bla gjennom data',
 	'sd_browsedata_choosecategory'          => 'Velg en kategori',
 	'sd_browsedata_viewcategory'            => 'se kategori',
+	'sd_browsedata_docu'                    => 'Klikk på en eller flere enheter nedenfor for å smalne inn søket.',
 	'sd_browsedata_subcategory'             => 'Underkategori',
 	'sd_browsedata_other'                   => 'Annen',
 	'sd_browsedata_none'                    => 'Ingen',
