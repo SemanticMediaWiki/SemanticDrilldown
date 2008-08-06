@@ -297,6 +297,13 @@ $messages['eo'] = array(
 	'sd_filter_haslabel'                    => 'Ĝi havas etikedon $1.',
 );
 
+/** Spanish (Español)
+ * @author Sanbec
+ */
+$messages['es'] = array(
+	'sd_browsedata_other' => 'Otro',
+);
+
 /** Persian (فارسی)
  * @author Tofighi
  */
