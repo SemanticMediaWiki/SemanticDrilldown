@@ -1044,6 +1044,7 @@ $messages['sk'] = array(
 	'browsedata'                            => 'Prehliadať údaje',
 	'sd_browsedata_choosecategory'          => 'Vyberte kategóriu',
 	'sd_browsedata_viewcategory'            => 'zobraziť kategóriu',
+	'sd_browsedata_docu'                    => 'Výsledky môžete zúžiť kliknutím na jednu alebo viac dolu uvedených položiek.',
 	'sd_browsedata_subcategory'             => 'Podkategória',
 	'sd_browsedata_other'                   => 'Iné',
 	'sd_browsedata_none'                    => 'Žiadne',
