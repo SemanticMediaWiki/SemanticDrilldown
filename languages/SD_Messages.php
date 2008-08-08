@@ -148,6 +148,7 @@ $messages['avk'] = array(
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
+	'filters'              => 'Фільтры',
 	'sd_createfilter_name' => 'Назва:',
 );
 
@@ -250,6 +251,8 @@ $messages['diq'] = array(
  */
 $messages['el'] = array(
 	'sd_browsedata_choosecategory' => 'Επιλέξτε μια κατηγορία',
+	'sd_browsedata_subcategory'    => 'Υποκατηγορία',
+	'sd_browsedata_or'             => 'ή',
 	'filters'                      => 'Φίλτρα',
 	'sd_createfilter_name'         => 'Όνομα:',
 	'sd_filter_year'               => 'Χρόνος',
@@ -415,7 +418,8 @@ $messages['fr'] = array(
  * @author Snakesteuben
  */
 $messages['fy'] = array(
-	'sd_browsedata_none' => 'Gjin',
+	'sd_browsedata_other' => 'Oare',
+	'sd_browsedata_none'  => 'Gjin',
 );
 
 /** Galician (Galego)
