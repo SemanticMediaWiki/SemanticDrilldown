@@ -54,6 +54,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Jon Harald Søby
  */
 $messages['qqq'] = array(
 	'sd_browsedata_other' => '{{Identical|Other}}',
