@@ -1002,8 +1002,10 @@ $messages['pt-br'] = array(
 
 /** Romanian (Română)
  * @author KlaudiuMihaila
+ * @author Mihai
  */
 $messages['ro'] = array(
+	'filters' => 'Filtre',
 	'sd_createfilter_name' => 'Nume:',
 );
 
