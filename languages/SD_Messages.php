@@ -1006,6 +1006,7 @@ $messages['pt-br'] = array(
  * @author Mihai
  */
 $messages['ro'] = array(
+	'sd_browsedata_none' => 'Nimic',
 	'filters' => 'Filtre',
 	'sd_createfilter_name' => 'Nume:',
 );
