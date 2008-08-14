@@ -319,6 +319,7 @@ $messages['eo'] = array(
  */
 $messages['es'] = array(
 	'sd_browsedata_other' => 'Otro',
+	'sd_browsedata_none' => 'Ninguno',
 );
 
 /** Persian (فارسی)
