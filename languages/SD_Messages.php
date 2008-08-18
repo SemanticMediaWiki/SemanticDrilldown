@@ -1335,6 +1335,7 @@ $messages['zh-tw'] = array(
 	'browsedata' => '瀏覽資料',
 	'sd_browsedata_choosecategory' => '選取某項分類(category)',
 	'sd_browsedata_viewcategory' => '查看分類頁面',
+	'sd_browsedata_docu' => '選取1項或多項以限制輸出的結果',
 	'sd_browsedata_subcategory' => '子分類',
 	'sd_browsedata_other' => '其他的',
 	'sd_browsedata_none' => '無',
