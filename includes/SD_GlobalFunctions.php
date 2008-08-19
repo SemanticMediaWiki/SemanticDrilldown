@@ -35,12 +35,15 @@ $wgExtensionMessagesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Message
 $wgSpecialPages['Filters'] = 'SDFilters';
 $wgSpecialPageGroups['Filters'] = 'users';
 $wgAutoloadClasses['SDFilters'] = $sdgIP . '/specials/SD_Filters.php';
+$wgSpecialPageGroups['Filters'] = 'sd_group';
 $wgSpecialPages['CreateFilter'] = 'SDCreateFilter';
 $wgSpecialPageGroups['CreateFilter'] = 'users';
 $wgAutoloadClasses['SDCreateFilter'] = $sdgIP . '/specials/SD_CreateFilter.php';
+$wgSpecialPageGroups['CreateFilter'] = 'sd_group';
 $wgSpecialPages['BrowseData'] = 'SDBrowseData';
 $wgSpecialPageGroups['BrowseData'] = 'users';
 $wgAutoloadClasses['SDBrowseData'] = $sdgIP . '/specials/SD_BrowseData.php';
+$wgSpecialPageGroups['BrowseData'] = 'sd_group';
 
 $wgAutoloadClasses['SDFilter'] = $sdgIP . '/includes/SD_Filter.php';
 $wgAutoloadClasses['SDFilterValue'] = $sdgIP . '/includes/SD_FilterValue.php';

@@ -12,6 +12,7 @@ $messages = array();
  */
 $messages['en'] = array(
 	// user messages
+	'specialpages-group-sd_group'           => 'Semantic Drilldown',
 	'browsedata'                            => 'Browse data',
 	'sd_browsedata_choosecategory'          => 'Choose a category',
 	'sd_browsedata_viewcategory'            => 'view category',
