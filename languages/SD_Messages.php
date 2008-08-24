@@ -85,6 +85,7 @@ $messages['af'] = array(
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'specialpages-group-sd_group' => 'سيمانتيك دريل داون',
 	'browsedata' => 'تصفح البيانات',
 	'sd_browsedata_choosecategory' => 'اختر تصنيفا',
 	'sd_browsedata_viewcategory' => 'عرض التصنيف',
