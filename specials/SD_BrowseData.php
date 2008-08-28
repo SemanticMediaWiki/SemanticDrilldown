@@ -483,6 +483,7 @@ END;
 			$value_field = 'value_xsd';
 		}
 		$smw_ids = $dbr->tableName( 'smw_ids' );
+		$prop_ns = SMW_NS_PROPERTY;
 		$sql =<<<END
 	SELECT $value_field, count(*)
 	FROM semantic_drilldown_values sdv 
@@ -493,7 +494,9 @@ END;
 			$sql .= "	JOIN $smw_ids o_ids ON r.o_id = o_ids.smw_id";
 		}
 		$sql .=<<<END
-	WHERE $property_table_nickname.p_id = '$property_value'
+	JOIN $smw_ids p_ids ON $property_table_nickname.p_id = p_ids.smw_id
+	WHERE p_ids.smw_title = '$property_value'
+	AND p_ids.smw_namespace = $prop_ns
 	AND $value_field != ''
 	GROUP BY $value_field
 	ORDER BY $value_field
@@ -777,6 +780,11 @@ END;
 				$filter_values['_none'] = $num_results;
 			}
 		}
+		// escape here if there are no values
+		if (count($filter_values) == 0) {
+			$f->dropTempTable();
+			return "";
+		}
 		// set font-size values for filter "tag cloud", if the
 		// appropriate global variables are set
 		if ($sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0) {
@@ -809,6 +817,7 @@ END;
 			}
 		}
 		$text = "";
+		// TODO - this check might no longer be necessary
 		if ($results_line != "") {
 			$labels_for_filter = sdfGetValuesForProperty($f->name, SD_NS_FILTER, SD_SP_HAS_LABEL, false, NS_MAIN);
 			if (count($labels_for_filter) > 0) {
