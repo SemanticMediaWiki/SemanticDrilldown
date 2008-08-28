@@ -307,10 +307,10 @@ END;
 				$property_value = str_replace(' ', '_', $af->filter->property);
 				$property_value = str_replace("'", "\'", $property_value);
 				$sql .= "LEFT OUTER JOIN
-	(SELECT subject_id, $value_field
+	(SELECT s_id, $value_field
 	FROM $property_table_name
 	WHERE $property_field = '$property_value') $property_table_nickname
-	ON id.smw_id = $property_table_nickname.s_id ";
+	ON ids.smw_id = $property_table_nickname.s_id ";
 			}
 		}
 		foreach ($applied_filters as $i => $af) {
