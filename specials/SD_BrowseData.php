@@ -106,7 +106,7 @@ END;
 			$sql .= " ids.smw_id AS id ";
 			$sql .= $this->getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters);
 		} else {
-			$sql = " p.page_id AS id ";
+			$sql .= " p.page_id AS id ";
 			$sql .= $this->getSQLFromClause_orig($category, $subcategory, $subcategories, $applied_filters);
 		}
 		$dbr->query($sql);
