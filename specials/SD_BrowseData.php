@@ -96,20 +96,20 @@ class BrowseDataPage extends QueryPage {
 		global $smwgDefaultStore;
 
 		$dbr = wfGetDB( DB_SLAVE );
+		$sql =<<<END
+	CREATE TEMPORARY TABLE semantic_drilldown_values (
+		id INT NOT NULL,
+		INDEX id_index (id)
+	) AS SELECT
+END;
 		if ($smwgDefaultStore == 'SMWSQLStore2') {
-			$sql = "CREATE TEMPORARY TABLE semantic_drilldown_values
-	AS SELECT ids.smw_id AS id ";
+			$sql .= " ids.smw_id AS id ";
 			$sql .= $this->getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters);
 		} else {
-			$sql = "CREATE TEMPORARY TABLE semantic_drilldown_values
-	AS SELECT p.page_id AS id ";
+			$sql = " p.page_id AS id ";
 			$sql .= $this->getSQLFromClause_orig($category, $subcategory, $subcategories, $applied_filters);
 		}
 		$dbr->query($sql);
-		// create an index to speed up subsequent queries
-		// (does this help?)
-		$sql2 = "ALTER TABLE semantic_drilldown_values ADD INDEX id_index (id)";
-		$dbr->query($sql2);
 	}
 
 	/**

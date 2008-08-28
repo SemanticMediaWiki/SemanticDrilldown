@@ -94,9 +94,6 @@ class SDFilter {
 		} else {
 			$this->createTempTable_orig();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
-		$sql = "ALTER TABLE semantic_drilldown_filter_values ADD INDEX sdfv_id_index (id)";
-		$dbr->query($sql);
 	}
 
 	function createTempTable_orig() {
@@ -111,10 +108,15 @@ class SDFilter {
 			$value_field = 'value_xsd';
 		}
 		$query_property = str_replace(' ', '_', $this->property);
-		$sql = "CREATE TEMPORARY TABLE semantic_drilldown_filter_values
-			AS SELECT subject_id AS id, $value_field AS value
-			FROM $table_name
-			WHERE $property_field = '$query_property'";
+		$sql =<<<END
+	CREATE TEMPORARY TABLE semantic_drilldown_filter_values (
+		id INT NOT NULL,
+		value VARCHAR(200) NOT NULL,
+		INDEX sdfv_id_index(id)
+	) AS SELECT subject_id AS id, $value_field AS value
+	FROM $table_name
+	WHERE $property_field = '$query_property'
+END;
 		$dbr->query($sql);
 	}
 
