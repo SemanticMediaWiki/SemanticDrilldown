@@ -2,7 +2,9 @@
 /**
  * Internationalization file for the Semantic Drilldown extension
  *
- * @addtogroup Extensions
+ * @ingroup Language
+ * @ingroup I18n
+ * @ingroup SDLanguage
 */
 
 $messages = array();
@@ -41,6 +43,7 @@ $messages['en'] = array(
 	'sd_createfilter_label'                 => 'Label for this filter (optional):',
 	'sd_createfilter_requirefilter'         => 'Require another filter to be selected before this one is displayed:',
 	'sd_blank_error'                        => 'cannot be blank',
+	'filtervalues'				=> 'Filter values',
 
 	// content messages
 	'sd_filter_coversproperty'         => 'This filter covers the property $1.',
@@ -85,7 +88,6 @@ $messages['af'] = array(
  * @author OsamaK
  */
 $messages['ar'] = array(
-	'specialpages-group-sd_group' => 'سيمانتيك دريل داون',
 	'browsedata' => 'تصفح البيانات',
 	'sd_browsedata_choosecategory' => 'اختر تصنيفا',
 	'sd_browsedata_viewcategory' => 'عرض التصنيف',
@@ -393,7 +395,6 @@ $messages['fi'] = array(
  * @author Urhixidur
  */
 $messages['fr'] = array(
-	'specialpages-group-sd_group' => 'Exercice de sémantique',
 	'browsedata' => 'Chercher les données',
 	'sd_browsedata_choosecategory' => 'Choisir une catégorie',
 	'sd_browsedata_viewcategory' => 'Voir la catégorie',
@@ -763,7 +764,6 @@ $messages['nds'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'specialpages-group-sd_group' => 'Semantic Drilldown',
 	'browsedata' => 'Gegevens bekijken',
 	'sd_browsedata_choosecategory' => 'Kies een categorie',
 	'sd_browsedata_viewcategory' => 'categorie bekijken',
@@ -869,7 +869,6 @@ $messages['nso'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'specialpages-group-sd_group' => 'Exercici de semantica',
 	'browsedata' => 'Cercar las donadas',
 	'sd_browsedata_choosecategory' => 'Causir una categoria',
 	'sd_browsedata_viewcategory' => 'Veire la categoria',
@@ -1062,7 +1061,6 @@ $messages['ru'] = array(
  * @author Helix84
  */
 $messages['sk'] = array(
-	'specialpages-group-sd_group' => 'Sémantické operácie',
 	'browsedata' => 'Prehliadať údaje',
 	'sd_browsedata_choosecategory' => 'Vyberte kategóriu',
 	'sd_browsedata_viewcategory' => 'zobraziť kategóriu',
