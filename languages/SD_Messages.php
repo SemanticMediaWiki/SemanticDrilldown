@@ -440,6 +440,7 @@ $messages['fr'] = array(
 $messages['fy'] = array(
 	'sd_browsedata_other' => 'Oare',
 	'sd_browsedata_none' => 'Gjin',
+	'filters' => 'Filters',
 );
 
 /** Galician (Galego)
