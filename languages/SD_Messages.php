@@ -218,11 +218,13 @@ $messages['da'] = array(
 /** German (Deutsch)
  * @author DaSch
  * @author Krabina
+ * @author MichaelFrey
  */
 $messages['de'] = array(
 	'browsedata' => 'Daten ansehen',
 	'sd_browsedata_choosecategory' => 'Kategorie auswählen',
 	'sd_browsedata_viewcategory' => 'Kategorie ansehen',
+	'sd_browsedata_docu' => 'Klick auf einen oder mehrere der Filter um das Ergebnis einzuschränken.',
 	'sd_browsedata_subcategory' => 'Unterkategorie',
 	'sd_browsedata_other' => 'Anderes',
 	'sd_browsedata_none' => 'Keines',
