@@ -575,7 +575,7 @@ END;
 		if ($applied_filter->filter->is_relation) {
 			$property_table_name = $dbr->tableName('smw_rels2');
 			$property_table_nickname = "r";
-			$value_field = 'o_id';
+			$value_field = 'r.o_id';
 		} else {
 			$property_table_name = $dbr->tableName('smw_atts2');
 			$property_table_nickname = "a";
