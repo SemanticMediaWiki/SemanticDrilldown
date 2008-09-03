@@ -152,7 +152,7 @@ END;
 	 */
 	function dropTempTable() {
 		$dbr = wfGetDB( DB_SLAVE );
-		$sql = "DROP TABLE semantic_drilldown_filter_values";
+		$sql = "DROP TEMPORARY TABLE semantic_drilldown_filter_values";
 		$dbr->query($sql);
 	}
 }
