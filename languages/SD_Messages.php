@@ -453,6 +453,7 @@ $messages['gl'] = array(
 	'browsedata' => 'Datos do navegador',
 	'sd_browsedata_choosecategory' => 'Elixir unha categoría',
 	'sd_browsedata_viewcategory' => 'ver categoría',
+	'sd_browsedata_docu' => 'Prema nun ou máis ítems dos de embaixo para estreitar os seus resultados.',
 	'sd_browsedata_subcategory' => 'Subcategoría',
 	'sd_browsedata_other' => 'Outro',
 	'sd_browsedata_none' => 'Ningún',
@@ -604,6 +605,13 @@ $messages['is'] = array(
 	'sd_createfilter_name' => 'Nafn:',
 );
 
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'sd_createfilter_name' => 'Nome:',
+);
+
 /** Javanese (Basa Jawa)
  * @author Meursault2004
  */
@@ -745,6 +753,13 @@ $messages['mr'] = array(
 	'sd_filter_hasvalues' => 'त्यामध्ये $1 या किंमती आहेत.',
 	'sd_filter_requiresfilter' => 'या साठी $1 हा फिल्टर असणे आवश्यक आहे.',
 	'sd_filter_haslabel' => 'त्याला $1 हे लेबल आहे.',
+);
+
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'sd_createfilter_name' => 'Лемезэ:',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -1246,6 +1261,13 @@ $messages['tg-cyrl'] = array(
 	'sd_filter_hasvalues' => 'Миқдорҳои $1-ро дорад.',
 	'sd_filter_requiresfilter' => 'Ба вуҷуди филтри $1 эҳтиёҷ дорад.',
 	'sd_filter_haslabel' => 'Ин барчасби $1 дорад.',
+);
+
+/** Thai (ไทย)
+ * @author Octahedron80
+ */
+$messages['th'] = array(
+	'filters' => 'ตัวกรอง',
 );
 
 /** Turkish (Türkçe)
