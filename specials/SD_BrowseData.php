@@ -204,11 +204,11 @@ END;
 		$cat_ns = NS_CATEGORY;
 		$sql .= "AND p.page_namespace != $cat_ns ";
 		foreach ($applied_filters as $i => $af) {
-			// if any of these filter's values are 'none',
+			// if any of this filter's values is 'none',
 			// include another table to get this information
 			$includes_none = false;
 			foreach ($af->values as $fv) {
-				if ($af->values[0]->text === '_none' || $af->values[0]->text === ' none') {
+				if ($fv->text === '_none' || $fv->text === ' none') {
 					$includes_none = true;
 					break;
 				}
@@ -236,7 +236,7 @@ END;
 		}
 		foreach ($applied_filters as $i => $af) {
 			if ($af->filter->is_relation) {
-				$sql .= "JOIN $smw_relations r$i
+				$sql .= "LEFT OUTER JOIN $smw_relations r$i
 	ON p.page_id = r$i.subject_id ";
 			} else {
 				$sql .= "JOIN $smw_attributes a$i
@@ -283,11 +283,11 @@ END;
 	ON ids.smw_id = insts.s_id
 	AND ids.smw_namespace != $cat_ns ";
 		foreach ($applied_filters as $i => $af) {
-			// if any of these filter's values are 'none',
+			// if any of this filter's values is 'none',
 			// include another table to get this information
 			$includes_none = false;
 			foreach ($af->values as $fv) {
-				if ($af->values[0]->text === '_none' || $af->values[0]->text === ' none') {
+				if ($fv->text === '_none' || $fv->text === ' none') {
 					$includes_none = true;
 					break;
 				}
@@ -297,26 +297,31 @@ END;
 					$property_table_name = $smw_rels;
 					$property_table_nickname = "nr$i";
 					$property_field = 'p_id';
-					$value_field = "o_ids$i.smw_title";
 				} else {
 					$property_table_name = $smw_atts;
 					$property_table_nickname = "na$i";
 					$property_field = 'p_id';
-					$value_field = 'value_xsd';
 				}
 				$property_value = str_replace(' ', '_', $af->filter->property);
 				$property_value = str_replace("'", "\'", $property_value);
 				$sql .= "LEFT OUTER JOIN
-	(SELECT s_id, $value_field
+	(SELECT s_id
 	FROM $property_table_name
-	WHERE $property_field = '$property_value') $property_table_nickname
+	WHERE $property_field = (SELECT smw_id FROM $smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)) $property_table_nickname
 	ON ids.smw_id = $property_table_nickname.s_id ";
 			}
 		}
 		foreach ($applied_filters as $i => $af) {
+			$sql .= "\n	";
 			if ($af->filter->is_relation) {
-				$sql .= "JOIN $smw_rels r$i ON ids.smw_id = r$i.s_id
-	JOIN $smw_ids o_ids$i ON r$i.o_id = o_ids$i.smw_id ";
+				if ($includes_none) {
+					$sql .= "LEFT OUTER ";
+				}
+				$sql .= "JOIN $smw_rels r$i ON ids.smw_id = r$i.s_id\n	";
+				if ($includes_none) {
+					$sql .= "LEFT OUTER ";
+				}
+				$sql .= "JOIN $smw_ids o_ids$i ON r$i.o_id = o_ids$i.smw_id ";
 			} else {
 				$sql .= "JOIN $smw_atts a$i ON ids.smw_id = a$i.s_id ";
 			}
@@ -338,11 +343,15 @@ END;
 			$property_value = str_replace(' ', '_', $af->filter->property);
 			if ($af->filter->is_relation) {
 				$property_field = "r$i.p_id";
-				$sql .= "AND $property_field = (SELECT smw_id FROM $smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
+				$sql .= "\n	AND ($property_field = (SELECT smw_id FROM $smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)";
+				if ($includes_none) {
+					$sql .= " OR $property_field IS NULL";
+				}
+				$sql .= ")\n	AND ";
 				$value_field = "o_ids$i.smw_title";
 			} else {
 				$property_field = "a$i.p_id";
-				$sql .= "AND $property_field = (SELECT smw_id FROM $smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
+				$sql .= "\n	AND $property_field = (SELECT smw_id FROM $smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
 				$value_field = "a$i.value_xsd";
 			}
 			$sql .= $af->checkSQL($value_field);
@@ -989,12 +998,12 @@ END;
 			$sql = "SELECT DISTINCT ids.smw_title AS title,
 	ids.smw_title AS value,
 	ids.smw_namespace AS namespace,
-	ids.smw_sortkey AS sortkey ";
+	ids.smw_sortkey AS sortkey\n";
 		} else {
 			$sql = "SELECT DISTINCT p.page_title AS title,
 	p.page_title AS value,
 	p.page_namespace AS namespace,
-	c.cl_sortkey AS sortkey ";
+	c.cl_sortkey AS sortkey\n";
 		}
 		$sql .= $this->getSQLFromClause($this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters);
 		return $sql;
