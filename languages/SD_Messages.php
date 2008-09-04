@@ -635,6 +635,13 @@ $messages['jv'] = array(
 	'sd_filter_requiresfilter' => 'Merlokaké anané filter $1.',
 );
 
+/** Georgian (ქართული)
+ * @author Malafaya
+ */
+$messages['ka'] = array(
+	'sd_createfilter_name' => 'სახელი:',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author Chhorran
  * @author Lovekhmer
