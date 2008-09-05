@@ -30,6 +30,7 @@ $wgExtensionCredits['specialpage'][]= array(
 require_once($sdgIP . '/languages/SD_Language.php');
 
 $wgExtensionMessagesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Messages.php';
+$wgExtensionAliasesFiles['ReplaceText'] = $sdgIP . '/languages/SD_Aliases.php';
 
 // register all special pages and other classes
 $wgSpecialPages['Filters'] = 'SDFilters';
