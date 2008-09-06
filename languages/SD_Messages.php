@@ -126,6 +126,49 @@ $messages['ar'] = array(
 	'sd_filter_haslabel' => 'يمتلك العلامة $1.',
 );
 
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
+ */
+$messages['arz'] = array(
+	'specialpages-group-sd_group' => 'سيمانتيك دريل داون',
+	'browsedata' => 'تصفح البيانات',
+	'sd_browsedata_choosecategory' => 'اختر تصنيفا',
+	'sd_browsedata_viewcategory' => 'عرض التصنيف',
+	'sd_browsedata_docu' => 'اضغط على واحد أو أكثر من المدخلات بالأسفل لتضييق نتائجك.',
+	'sd_browsedata_subcategory' => 'تصنيف فرعي',
+	'sd_browsedata_other' => 'آخر',
+	'sd_browsedata_none' => 'لا شيء',
+	'sd_browsedata_filterbyvalue' => 'فلترة بواسطة هذه القيمة',
+	'sd_browsedata_filterbysubcategory' => 'فلترة بواسطة هذا التصنيف الفرعي',
+	'sd_browsedata_otherfilter' => 'اعرض الصفحات بقيمة أخرى لهذا الفلتر',
+	'sd_browsedata_nonefilter' => 'اعرض الصفحات التى هى بدون قيمة لهذا الفلتر',
+	'sd_browsedata_or' => 'أو',
+	'sd_browsedata_removefilter' => 'أزل هذا الفلتر',
+	'sd_browsedata_removesubcategoryfilter' => 'أزل فلتر التصنيف الفرعى هذا',
+	'sd_browsedata_resetfilters' => 'أعد ضبط الفلاتر',
+	'sd_browsedata_addanothervalue' => 'إضافة قيمة أخرى',
+	'filters' => 'فلاتر',
+	'sd_filters_docu' => 'الفلاتر التالية موجودة فى {{SITENAME}}:',
+	'createfilter' => 'إنشاء فلتر',
+	'sd_createfilter_name' => 'الاسم:',
+	'sd_createfilter_property' => 'الخاصية التى يغطيها هذا الفلتر:',
+	'sd_createfilter_usepropertyvalues' => 'استخدم كل قيم هذه الخاصية للفلتر',
+	'sd_createfilter_usecategoryvalues' => 'احصل على القيم للفلتر من هذا التصنيف:',
+	'sd_createfilter_usedatevalues' => 'استخدم نطاقات زمنية لهذا الفلتر بهذه الفترة الزمنية:',
+	'sd_createfilter_entervalues' => 'أدخل القيم للفلتر يدويا (القيم ينبغى أن يتم فصلها بواسطة فاصلات - لو أن قيمة ما تحتوى على فاصلة، استبدلها ب "\\,"):',
+	'sd_createfilter_label' => 'علامة لهذا الفلتر (اختياري):',
+	'sd_createfilter_requirefilter' => 'يتطلب اختيار فلتر آخر قبل أن يتم عرض هذا:',
+	'sd_blank_error' => 'لا يمكن أن يكون فارغا',
+	'sd_filter_coversproperty' => 'هذا الفلتر يغطى الخاصية $1.',
+	'sd_filter_getsvaluesfromcategory' => 'يحصل على قيمه من التصنيف $1.',
+	'sd_filter_usestimeperiod' => 'يستخدم $1 كفترته الزمنية.',
+	'sd_filter_year' => 'عام',
+	'sd_filter_month' => 'شهر',
+	'sd_filter_hasvalues' => 'يمتلك القيم $1.',
+	'sd_filter_requiresfilter' => 'يتطلب وجود الفلتر $1.',
+	'sd_filter_haslabel' => 'يمتلك العلامة $1.',
+);
+
 /** Kotava (Kotava)
  * @author Wikimistusik
  */
