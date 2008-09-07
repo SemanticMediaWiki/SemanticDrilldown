@@ -15,14 +15,18 @@ $aliases['en'] = array(
 	'Filters' => array( 'Filters' ),
 );
 
-/** Arabic (العربية) */
+/** Arabic (العربية)
+ * @author Meno25
+ */
 $aliases['ar'] = array(
 	'BrowseData' => array( 'تصفح_بيانات' ),
 	'CreateFilter' => array( 'إنشاء_فلتر' ),
 	'Filters' => array( 'فلاتر' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى) */
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
+ */
 $aliases['arz'] = array(
 	'BrowseData' => array( 'تصفح_بيانات' ),
 	'CreateFilter' => array( 'إنشاء_فلتر' ),
