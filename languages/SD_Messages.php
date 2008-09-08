@@ -688,6 +688,7 @@ $messages['ka'] = array(
 /** Khmer (ភាសាខ្មែរ)
  * @author Chhorran
  * @author Lovekhmer
+ * @author គីមស៊្រុន
  */
 $messages['km'] = array(
 	'browsedata' => 'រាវរកទិន្នន័យ',
@@ -697,6 +698,7 @@ $messages['km'] = array(
 	'sd_browsedata_other' => 'ផ្សេងៗទៀត',
 	'sd_browsedata_none' => 'ទទេ',
 	'sd_browsedata_or' => 'ឬ',
+	'filters' => 'តំរងការពារនានា',
 	'sd_createfilter_name' => 'ឈ្មោះ៖',
 	'sd_filter_year' => 'ឆ្នាំ',
 	'sd_filter_month' => 'ខែ',

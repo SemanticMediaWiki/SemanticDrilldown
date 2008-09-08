@@ -33,6 +33,12 @@ $aliases['arz'] = array(
 	'Filters' => array( 'فلاتر' ),
 );
 
+/** Finnish (Suomi) */
+$aliases['fi'] = array(
+	'CreateFilter' => array( 'Luo suodin' ),
+	'Filters' => array( 'Suotimet' ),
+);
+
 /** Dutch (Nederlands) */
 $aliases['nl'] = array(
 	'BrowseData' => array( 'GegevensBekijken' ),
