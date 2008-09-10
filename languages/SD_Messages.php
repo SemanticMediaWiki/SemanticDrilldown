@@ -493,6 +493,7 @@ $messages['fy'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'specialpages-group-sd_group' => 'Exercicio de semántica',
 	'browsedata' => 'Datos do navegador',
 	'sd_browsedata_choosecategory' => 'Elixir unha categoría',
 	'sd_browsedata_viewcategory' => 'ver categoría',
