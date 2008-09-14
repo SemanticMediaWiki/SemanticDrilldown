@@ -248,6 +248,13 @@ $messages['ca'] = array(
 	'sd_filter_month' => 'Mes',
 );
 
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'filters' => 'Hidlau',
+);
+
 /** Danish (Dansk)
  * @author Jon Harald Søby
  */
