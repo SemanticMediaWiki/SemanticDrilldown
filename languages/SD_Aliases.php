@@ -39,6 +39,12 @@ $aliases['fi'] = array(
 	'Filters' => array( 'Suotimet' ),
 );
 
+/** Luxembourgish (Lëtzebuergesch) */
+$aliases['lb'] = array(
+	'CreateFilter' => array( 'Filter uleeën' ),
+	'Filters' => array( 'Filteren' ),
+);
+
 /** Dutch (Nederlands) */
 $aliases['nl'] = array(
 	'BrowseData' => array( 'GegevensBekijken' ),
