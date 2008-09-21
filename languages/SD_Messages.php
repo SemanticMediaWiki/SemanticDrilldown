@@ -719,6 +719,8 @@ $messages['ksh'] = array(
 	'browsedata' => 'En dä Date bläddere',
 	'sd_browsedata_other' => 'Söns wat',
 	'sd_createfilter_name' => 'Name:',
+	'sd_filter_year' => 'Johr',
+	'sd_filter_month' => 'Mohnd',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

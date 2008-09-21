@@ -45,10 +45,22 @@ $aliases['lb'] = array(
 	'Filters' => array( 'Filteren' ),
 );
 
+/** Nedersaksisch (Nedersaksisch) */
+$aliases['nds-nl'] = array(
+	'BrowseData' => array( 'Gegevens_bekieken' ),
+	'CreateFilter' => array( 'Filter_anmaken' ),
+);
+
 /** Dutch (Nederlands) */
 $aliases['nl'] = array(
 	'BrowseData' => array( 'GegevensBekijken' ),
 	'CreateFilter' => array( 'FilterAanmaken' ),
 	'Filters' => array( 'Filters' ),
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
+$aliases['no'] = array(
+	'CreateFilter' => array( 'Opprett filter' ),
+	'Filters' => array( 'Filtere' ),
 );
 
