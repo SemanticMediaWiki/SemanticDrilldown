@@ -379,6 +379,7 @@ $messages['es'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Huji
  * @author Tofighi
  */
 $messages['fa'] = array(
@@ -391,7 +392,7 @@ $messages['fa'] = array(
 	'sd_browsedata_filterbyvalue' => 'فیلتر با این مقدار',
 	'sd_browsedata_filterbysubcategory' => 'فیلتر با این زیر رده',
 	'sd_browsedata_otherfilter' => 'نمایش صفحاتی با مقدار دیگر برای این فیلتر',
-	'sd_browsedata_nonefilter' => 'نمایش صفحات بدون مقدار برای این فیلتر',
+	'sd_browsedata_nonefilter' => 'نمایش صفحه‌های فاقد مقدار برای این فیلتر',
 	'sd_browsedata_or' => 'یا',
 	'sd_browsedata_removefilter' => 'حذف این فیلتر',
 	'sd_browsedata_removesubcategoryfilter' => 'حذف این فیلتر زیر رده',
