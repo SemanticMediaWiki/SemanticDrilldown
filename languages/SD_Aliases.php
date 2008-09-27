@@ -64,3 +64,8 @@ $aliases['no'] = array(
 	'Filters' => array( 'Filtere' ),
 );
 
+/** Swedish (Svenska) */
+$aliases['sv'] = array(
+	'Filters' => array( 'Filter' ),
+);
+
