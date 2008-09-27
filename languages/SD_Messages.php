@@ -1428,7 +1428,7 @@ $messages['vo'] = array(
 	'sd_filter_month' => 'Mul',
 );
 
-/** ‪中文(中国大陆)‬ (‪中文(中国大陆)‬)
+/** Chinese (China) (‪中文(中国大陆)‬)
  * @author Roc Michael
  */
 $messages['zh-cn'] = array(
@@ -1460,7 +1460,7 @@ $messages['zh-cn'] = array(
 	'sd_filter_haslabel' => '其有着此一$1标签',
 );
 
-/** Taiwan Chinese (‪中文(台灣)‬)
+/** Chinese (Taiwan) (‪中文(台灣)‬)
  * @author Roc michael
  */
 $messages['zh-tw'] = array(
