@@ -228,8 +228,11 @@ $messages['bg'] = array(
 	'sd_browsedata_otherfilter' => 'Показване на страниците с други стойности за този филтър',
 	'sd_browsedata_nonefilter' => 'Показване на страниците без стойности за този филтър',
 	'sd_browsedata_removefilter' => 'Премахване на филтъра',
+	'sd_browsedata_removesubcategoryfilter' => 'Премахване на филтъра за подкатегория',
 	'sd_browsedata_resetfilters' => 'Изчистване на филтрите',
+	'sd_browsedata_addanothervalue' => 'Добавяне на друга стойност',
 	'filters' => 'Филтри',
+	'sd_filters_docu' => 'В {{SITENAME}} съществуват следните филтри:',
 	'createfilter' => 'Създаване на филтър',
 	'sd_createfilter_name' => 'Име:',
 	'sd_createfilter_label' => 'Заглавие за този филтър (незадължително):',
@@ -688,8 +691,11 @@ $messages['id'] = array(
 	'sd_createfilter_name' => 'Nama:',
 );
 
-/** Icelandic (Íslenska) */
+/** Icelandic (Íslenska)
+ * @author S.Örvarr.S
+ */
 $messages['is'] = array(
+	'filters' => 'Síur',
 	'sd_createfilter_name' => 'Nafn:',
 );
 
@@ -858,7 +864,14 @@ $messages['mr'] = array(
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
+	'sd_browsedata_subcategory' => 'Алкс категория',
+	'sd_browsedata_other' => 'Лия',
+	'sd_browsedata_or' => 'эли',
+	'filters' => 'Сувтеметь',
+	'createfilter' => 'Шкамс сувтеме',
 	'sd_createfilter_name' => 'Лемезэ:',
+	'sd_filter_year' => 'Иесь',
+	'sd_filter_month' => 'Ковось',
 );
 
 /** Nahuatl (Nāhuatl)
