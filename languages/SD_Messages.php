@@ -543,6 +543,17 @@ $messages['gl'] = array(
 	'sd_filter_haslabel' => 'Ten a lapela $1.',
 );
 
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Omnipaedista
+ */
+$messages['grc'] = array(
+	'sd_browsedata_none' => 'Οὐδεμία',
+	'sd_browsedata_or' => 'ἢ',
+	'filters' => 'Διηθητήρια',
+	'sd_createfilter_name' => 'Ὄνομα:',
+	'sd_filter_month' => 'Μήν',
+);
+
 /** Manx (Gaelg)
  * @author MacTire02
  */
