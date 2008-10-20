@@ -33,10 +33,22 @@ $aliases['arz'] = array(
 	'Filters' => array( 'فلاتر' ),
 );
 
+/** Persian (فارسی) */
+$aliases['fa'] = array(
+	'BrowseData' => array( 'مرور_داده' ),
+	'CreateFilter' => array( 'ایجاد_پالایه' ),
+	'Filters' => array( 'پالایه‌ها' ),
+);
+
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
 	'CreateFilter' => array( 'Luo suodin' ),
 	'Filters' => array( 'Suotimet' ),
+);
+
+/** Hebrew (עברית) */
+$aliases['he'] = array(
+	'Filters' => array( 'מסננים' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
