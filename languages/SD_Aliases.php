@@ -51,6 +51,11 @@ $aliases['he'] = array(
 	'Filters' => array( 'מסננים' ),
 );
 
+/** Khmer (ភាសាខ្មែរ) */
+$aliases['km'] = array(
+	'BrowseData' => array( 'រាវរកទិន្នន័យ' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'CreateFilter' => array( 'Filter uleeën' ),
