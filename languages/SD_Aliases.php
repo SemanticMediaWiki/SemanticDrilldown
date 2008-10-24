@@ -51,6 +51,11 @@ $aliases['he'] = array(
 	'Filters' => array( 'מסננים' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'Filters' => array( 'Filtry' ),
+);
+
 /** Khmer (ភាសាខ្មែរ) */
 $aliases['km'] = array(
 	'BrowseData' => array( 'រាវរកទិន្នន័យ' ),
