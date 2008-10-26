@@ -766,6 +766,13 @@ $messages['km'] = array(
 	'sd_filter_month' => 'ខែ',
 );
 
+/** Korean (한국어)
+ * @author Albamhandae
+ */
+$messages['ko'] = array(
+	'filters' => '필터',
+);
+
 /** Ripoarisch (Ripoarisch)
  * @author Purodha
  */
