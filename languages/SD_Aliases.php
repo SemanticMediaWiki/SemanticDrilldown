@@ -86,6 +86,11 @@ $aliases['no'] = array(
 	'Filters' => array( 'Filtere' ),
 );
 
+/** Occitan (Occitan) */
+$aliases['oc'] = array(
+	'Filters' => array( 'Filtres' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'Filters' => array( 'Filter' ),
