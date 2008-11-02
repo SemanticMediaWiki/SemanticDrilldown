@@ -33,6 +33,11 @@ $aliases['arz'] = array(
 	'Filters' => array( 'فلاتر' ),
 );
 
+/** Breton (Brezhoneg) */
+$aliases['br'] = array(
+	'Filters' => array( 'Siloù' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'BrowseData' => array( 'مرور_داده' ),
