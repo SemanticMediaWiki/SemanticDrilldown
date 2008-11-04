@@ -244,6 +244,13 @@ $messages['bg'] = array(
 	'sd_filter_requiresfilter' => 'Необходимо е наличието на филтър $1.',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'sd_createfilter_name' => 'Ime:',
+);
+
 /** Catalan (Català)
  * @author Jordi Roqué
  */
