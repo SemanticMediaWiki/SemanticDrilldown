@@ -1087,7 +1087,7 @@ END;
 			? $wgContLang->listToText( $html )
 			: implode( '', $html );
 
-		$out->addHtml( $html );
+		$out->addHTML( $html );
 	}
 
 	function openList( $offset ) {
@@ -1206,9 +1206,9 @@ END;
 		}
 	}
 
-	$wgOut->addHtml("\n			<div class=\"drilldown-results\">\n");
+	$wgOut->addHTML("\n			<div class=\"drilldown-results\">\n");
 	$rep = new BrowseDataPage($category, $subcategory, $applied_filters, $remaining_filters);
 	$num = $rep->doQuery( $offset, $limit );
-	$wgOut->addHtml("\n			</div> <!-- drilldown-results -->\n");
+	$wgOut->addHTML("\n			</div> <!-- drilldown-results -->\n");
 	return $num;
 }
