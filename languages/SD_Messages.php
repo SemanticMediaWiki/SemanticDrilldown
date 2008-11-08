@@ -81,6 +81,13 @@ $messages['af'] = array(
 	'sd_filter_month' => 'Maand',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'filters' => 'Filtros',
+);
+
 /** Arabic (العربية)
  * @author Alnokta
  * @author Meno25
