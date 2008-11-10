@@ -51,6 +51,11 @@ $aliases['fi'] = array(
 	'Filters' => array( 'Suotimet' ),
 );
 
+/** Galician (Galego) */
+$aliases['gl'] = array(
+	'Filters' => array( 'Filtros' ),
+);
+
 /** Hebrew (עברית) */
 $aliases['he'] = array(
 	'Filters' => array( 'מסננים' ),
