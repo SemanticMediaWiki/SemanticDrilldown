@@ -38,6 +38,13 @@ $aliases['br'] = array(
 	'Filters' => array( 'Siloù' ),
 );
 
+/** Bosnian (Bosanski) */
+$aliases['bs'] = array(
+	'BrowseData' => array( 'PregledPodataka' ),
+	'CreateFilter' => array( 'PravljenjeFiltera' ),
+	'Filters' => array( 'Filteri' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'BrowseData' => array( 'مرور_داده' ),

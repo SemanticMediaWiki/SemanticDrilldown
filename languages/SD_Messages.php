@@ -255,6 +255,7 @@ $messages['bg'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'sd_browsedata_other' => 'Ostalo',
 	'filters' => 'Filteri',
 	'sd_createfilter_name' => 'Ime:',
 );
