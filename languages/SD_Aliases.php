@@ -45,6 +45,11 @@ $aliases['bs'] = array(
 	'Filters' => array( 'Filteri' ),
 );
 
+/** German (Deutsch) */
+$aliases['de'] = array(
+	'Filters' => array( 'Filter' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'BrowseData' => array( 'مرور_داده' ),
