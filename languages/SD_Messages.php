@@ -1078,6 +1078,7 @@ $messages['oc'] = array(
  * @author Amikeco
  */
 $messages['os'] = array(
+	'sd_browsedata_none' => 'Нæй',
 	'sd_filter_year' => 'Аз',
 );
 
