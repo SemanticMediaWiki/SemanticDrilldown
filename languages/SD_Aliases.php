@@ -78,6 +78,13 @@ $aliases['hsb'] = array(
 	'Filters' => array( 'Filtry' ),
 );
 
+/** Hungarian (Magyar) */
+$aliases['hu'] = array(
+	'BrowseData' => array( 'Adatok böngészése' ),
+	'CreateFilter' => array( 'Szűrőkészítés' ),
+	'Filters' => array( 'Szűrők' ),
+);
+
 /** Khmer (ភាសាខ្មែរ) */
 $aliases['km'] = array(
 	'BrowseData' => array( 'រាវរកទិន្នន័យ' ),
