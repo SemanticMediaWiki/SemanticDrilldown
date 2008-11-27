@@ -125,3 +125,10 @@ $aliases['sv'] = array(
 	'Filters' => array( 'Filter' ),
 );
 
+/** Swahili (Kiswahili) */
+$aliases['sw'] = array(
+	'BrowseData' => array( 'FunguaData' ),
+	'CreateFilter' => array( 'UndaChujio' ),
+	'Filters' => array( 'Machujio' ),
+);
+
