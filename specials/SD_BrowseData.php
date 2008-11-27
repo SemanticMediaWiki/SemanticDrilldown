@@ -19,9 +19,9 @@ class SDBrowseData extends SpecialPage {
 		wfLoadExtensionMessages('SemanticDrilldown');
 	}
 
-	function execute($query = '') {
+	function execute( $query ) {
 		$this->setHeaders();
-		doSpecialBrowseData($query);
+		doSpecialBrowseData( $query );
 	}
 }
 
