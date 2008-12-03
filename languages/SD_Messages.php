@@ -31,6 +31,8 @@ $messages['en'] = array(
         'sd_browsedata_removesubcategoryfilter' => 'Remove this subcategory filter',
         'sd_browsedata_resetfilters'            => 'Reset filters',
 	'sd_browsedata_addanothervalue'		=> 'Add another value',
+	'sd_browsedata_daterangestart'		=> 'Start:',
+	'sd_browsedata_daterangeend'		=> 'End:',
 	'filters'                               => 'Filters',
 	'sd_filters_docu'                       => 'The following filters exist in {{SITENAME}}:',
 	'createfilter'                          => 'Create a filter',
@@ -40,8 +42,10 @@ $messages['en'] = array(
 	'sd_createfilter_usecategoryvalues'     => 'Get values for filter from this category:',
 	'sd_createfilter_usedatevalues'         => 'Use date ranges for this filter with this time period:',
 	'sd_createfilter_entervalues'           => 'Enter values for filter manually (values should be separated by commas - if a value contains a comma, replace it with "\,"):',
-	'sd_createfilter_label'                 => 'Label for this filter (optional):',
+	'sd_createfilter_inputtype'		=> 'Input type for this filter:',
+	'sd_createfilter_listofvalues'		=> 'list of values (default)',
 	'sd_createfilter_requirefilter'         => 'Require another filter to be selected before this one is displayed:',
+	'sd_createfilter_label'                 => 'Label for this filter (optional):',
 	'sd_blank_error'                        => 'cannot be blank',
 
 	// content messages
@@ -51,6 +55,9 @@ $messages['en'] = array(
 	'sd_filter_year'                   => 'Year',
 	'sd_filter_month'                  => 'Month',
 	'sd_filter_hasvalues'              => 'It has the values $1.',
+	'sd_filter_hasinputtype'           => 'It has the input type $1.',
+	'sd_filter_freetext'               => 'text',
+	'sd_filter_daterange'              => 'date range',
 	'sd_filter_requiresfilter'         => 'It requires the presence of the filter $1.',
 	'sd_filter_haslabel'               => 'It has the label $1.',
 );
