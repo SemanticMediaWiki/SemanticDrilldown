@@ -8,11 +8,25 @@
 
 class SDAppliedFilter {
 	var $filter;
-	var $values;
+	var $values = array();
+	var $search_term;
+	var $lower_date;
+	var $upper_date;
+	var $lower_date_string;
+	var $upper_date_string;
 
-	function create($filter, $values) {
+	function create($filter, $values, $search_term = null, $lower_date = null, $upper_date = null) {
 		$af = new SDAppliedFilter();
 		$af->filter = $filter;
+		$af->search_term = str_replace('_', ' ', $search_term);
+		if ($lower_date != null) {
+			$af->lower_date = $lower_date;
+			$af->lower_date_string = sdfMonthToString($lower_date['month']) . " " . $lower_date['day'] . ", " . $lower_date['year'];
+		}
+		if ($upper_date != null) {
+			$af->upper_date = $upper_date;
+			$af->upper_date_string = sdfMonthToString($upper_date['month']) . " " . $upper_date['day'] . ", " . $upper_date['year'];
+		}
 		if (! is_array($values)) {
 			$values = array($values);
 		}
@@ -30,6 +44,26 @@ class SDAppliedFilter {
 	function checkSQL($value_field) {
 		$sql = "(";
 		$dbr = wfGetDB( DB_SLAVE );
+		if ($this->search_term != null) {
+			if ($this->filter->is_relation) {
+				$search_term = strtolower(str_replace(' ', '_', $this->search_term));
+				$sql .= "LOWER($value_field) LIKE '%{$search_term}%'";
+			} else {
+				$search_term = strtolower($this->search_term);
+				$sql .= "LOWER($value_field) LIKE '%{$search_term}%'";
+			}
+		}
+		if ($this->lower_date != null) {
+			$date_string = $this->lower_date['year'] . "-" . $this->lower_date['month'] . "-" . $this->lower_date['day'];
+			$sql .= "date($value_field) >= date('$date_string') ";
+		}
+		if ($this->upper_date != null) {
+			if ($this->lower_date != null) {
+				$sql .= " AND ";
+			}
+			$date_string = $this->upper_date['year'] . "-" . $this->upper_date['month'] . "-" . $this->upper_date['day'];
+			$sql .= "date($value_field) <= date('$date_string') ";
+		}
 		foreach ($this->values as $i => $fv) {
 			if ($i > 0) {$sql .= " OR ";}
 			if ($fv->is_other) {
