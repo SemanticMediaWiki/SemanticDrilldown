@@ -316,7 +316,7 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $object_na
 		// make sure alias doesn't match actual property name - this
 		// is an issue for English, since the English-language values
 		// are used for aliases
-		if ($alias != $property && $cur_prop == $prop) {
+		if (($alias != $property) && (! $prop instanceof Title) && ($cur_prop == $prop)) {
 			$prop = sdfCreateProperty($alias, SMW_NS_PROPERTY);
 			$prop_vals = $store->getPropertyValues($subject_title, $prop);
 			foreach ($prop_vals as $prop_val) {
