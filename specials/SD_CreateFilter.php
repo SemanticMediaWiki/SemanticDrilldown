@@ -24,12 +24,11 @@ class SDCreateFilter extends SpecialPage {
 	}
 }
 
-function createFilterText($property_string, $values_source, $category_used, $time_period, $filter_values, $required_filter, $filter_label) {
+function createFilterText($property_string, $values_source, $category_used, $time_period, $filter_values, $input_type, $required_filter, $filter_label) {
 	global $sdgContLang;
 
 	list($namespace, $property_name) = explode(",", $property_string, 2);
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
-	$smw_version = SMW_VERSION;
 	$property_tag = "[[" . $sd_props[SD_SP_COVERS_PROPERTY] .
 		"::$namespace:$property_name|$property_name]]";
 	$text = wfMsgForContent('sd_filter_coversproperty', $property_tag);
@@ -62,6 +61,10 @@ function createFilterText($property_string, $values_source, $category_used, $tim
 		}
 		$text .= " " . wfMsgForContent('sd_filter_hasvalues', $filter_values_tag);
 	}
+	if ($input_type != '') {
+		$input_type_tag = "[[" . $sd_props[SD_SP_HAS_INPUT_TYPE] . "::$input_type]]";
+		$text .= " " . wfMsgForContent('sd_filter_hasinputtype', "\"$input_type_tag\"");
+	}
 	if ($required_filter != '') {
 		$sd_namespace_labels = $sdgContLang->getNamespaces();
 		$filter_namespace = $sd_namespace_labels[SD_NS_FILTER];
@@ -85,6 +88,7 @@ function doSpecialCreateFilter() {
 	$category_name = $wgRequest->getVal('category_name');
 	$time_period = $wgRequest->getVal('time_period');
 	$filter_values = $wgRequest->getVal('filter_values');
+	$input_type = $wgRequest->getVal('input_type');
 	$required_filter = $wgRequest->getVal('required_filter');
 	$filter_label = $wgRequest->getVal('filter_label');
 
@@ -101,7 +105,7 @@ function doSpecialCreateFilter() {
 			# redirect to wiki interface
 			$namespace = SD_NS_FILTER;
 			$title = Title::newFromText($filter_name, $namespace);
-			$full_text = createFilterText($property_name, $values_source, $category_name, $time_period, $filter_values, $required_filter, $filter_label);
+			$full_text = createFilterText($property_name, $values_source, $category_name, $time_period, $filter_values, $input_type, $required_filter, $filter_label);
 			// HTML-encode
 			$full_text = str_replace('"', '&quot;', $full_text);
 			$text = sdfPrintRedirectForm($title, $full_text, "", $save_page, $preview_page, false, false, false);
@@ -142,6 +146,13 @@ END;
 	$year_value = wfMsgForContent('sd_filter_year');
 	$month_label = wfMsg('sd_filter_month');
 	$month_value = wfMsgForContent('sd_filter_month');
+	$input_type_label = wfMsg('sd_createfilter_inputtype');
+	$values_list_label = wfMsg('sd_createfilter_listofvalues');
+	// same as for time values
+	$free_text_label = wfMsg('sd_filter_freetext');
+	$free_text_value = wfMsgForContent('sd_filter_freetext');
+	$date_range_label = wfMsg('sd_filter_daterange');
+	$date_range_value = wfMsgForContent('sd_filter_daterange');
 	$require_filter_label = wfMsg('sd_createfilter_requirefilter');
 	$text .=<<<END
 	</select>
@@ -171,6 +182,13 @@ END;
 	</p>
 	<p><input type="radio" name="values_source" value="manual">
 	$enter_values_label <input size="40" name="filter_values" value="">
+	</p>
+	<p>$input_type_label
+	<select id="input_type_dropdown" name="input_type">
+	<option value="">$values_list_label</option>
+	<option value="$free_text_value">$free_text_label</option>
+	<option value="$date_range_value">$date_range_label</option>
+	</select>
 	</p>
 	<p>$require_filter_label
 	<select id="required_filter_dropdown" name="required_filter">
