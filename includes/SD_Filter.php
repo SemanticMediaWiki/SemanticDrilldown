@@ -12,7 +12,8 @@ class SDFilter {
 	var $is_relation;
 	var $is_boolean;
 	var $category;
-	var $time_period = NULL;
+	var $time_period = null;
+	var $input_type = null;
 	var $allowed_values;
 	var $possible_applied_filters = array();
 
@@ -22,44 +23,31 @@ class SDFilter {
 
 		$f = new SDFilter();
 		$f->name = $filter_name;
-		$relations_used = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_COVERS_PROPERTY, true, SMW_NS_RELATION);
-		$smw_version = SMW_VERSION;
-		if ($smw_version{0} == '0') {
-			$attribute_ns = SMW_NS_ATTRIBUTE;
-		} else {
-			$attribute_ns = SMW_NS_PROPERTY;
+		$properties_used = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_COVERS_PROPERTY, SMW_NS_PROPERTY);
+		if (count($properties_used) > 0) {
+			$f->property = $properties_used[0];
 		}
-		$attributes_used = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_COVERS_PROPERTY, true, $attribute_ns);
-		if (count($relations_used) > 0) {
-			$f->property = $relations_used[0];
-			$f->is_relation = true;
-		} elseif (count($attributes_used) > 0) {
-			$f->property = $attributes_used[0];
-			$f->is_relation = false;
-		}
-		// handling of SMW 1.0 is somewhat awkward - the above code
-		// retrieves the property correctly for SMW 1.0, but not the
-		// "is_relation" value; for that, we need to get this
-		// "special value" separately
-                if ($smw_version{0} != '0') {
-			$f->is_relation = false;
-			$proptitle = Title::newFromText($f->property, SMW_NS_PROPERTY);
-			if ($proptitle != NULL) {
-				$store = smwfGetStore();
+		$f->is_relation = false;
+		$proptitle = Title::newFromText($f->property, SMW_NS_PROPERTY);
+		if ($proptitle != NULL) {
+			$store = smwfGetStore();
+			if (class_exists('SMWPropertyValue')) {
+				$types = $store->getPropertyValues($proptitle, SMWPropertyValue::makeUserProperty('Has type'));
+			} else {
 				$types = $store->getSpecialValues($proptitle, SMW_SP_HAS_TYPE);
-				global $smwgContLang;
-				$datatypeLabels =  $smwgContLang->getDatatypeLabels();
-				if (count($types) > 0) {
-					if ($types[0]->getWikiValue() == $datatypeLabels['_wpg']) {
-						$f->is_relation = true;
-					} elseif ($types[0]->getWikiValue() == $datatypeLabels['_boo']) {
-						$f->is_boolean = true;
-					}
+			}
+			global $smwgContLang;
+			$datatypeLabels =  $smwgContLang->getDatatypeLabels();
+			if (count($types) > 0) {
+				if ($types[0]->getWikiValue() == $datatypeLabels['_wpg']) {
+					$f->is_relation = true;
+				} elseif ($types[0]->getWikiValue() == $datatypeLabels['_boo']) {
+					$f->is_boolean = true;
 				}
 			}
 		}
-		$categories = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_GETS_VALUES_FROM_CATEGORY, true, NS_CATEGORY);
-		$time_periods = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_USES_TIME_PERIOD, false, null);
+		$categories = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_GETS_VALUES_FROM_CATEGORY, NS_CATEGORY);
+		$time_periods = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_USES_TIME_PERIOD, null);
 		if (count($categories) > 0) {
 			$f->category = $categories[0];
 			$f->allowed_values = sdfGetCategoryChildren($f->category, false, 5);
@@ -69,8 +57,12 @@ class SDFilter {
 		} elseif ($f->is_boolean) {
 			$f->allowed_values = array('0', '1');
 		} else {
-			$values = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_HAS_VALUE, false, null);
+			$values = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_HAS_VALUE, null);
 			$f->allowed_values = $values;
+		}
+		$input_types = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_HAS_INPUT_TYPE, null);
+		if (count($input_types) > 0) {
+			$f->input_type = $input_types[0];
 		}
 		// set list of possible applied filters if allowed values
 		// array was set
