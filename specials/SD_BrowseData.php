@@ -83,6 +83,10 @@ class BrowseDataPage extends QueryPage {
 					$url .= urlencode(str_replace(' ', '_', $af->filter->name)) . "[$j]=" . urlencode(str_replace(' ', '_', $fv->text));
 				}
 			}
+			if ($af->search_term != null) {
+				$url .= (strpos($url, '?')) ? '&' : '?';
+				$url .= '_search_' . urlencode(str_replace(' ', '_', $af->filter->name)) . "=" . urlencode(str_replace(' ', '_', $af->search_term));
+			}
 		}
 		return $url;
 	}
@@ -661,6 +665,16 @@ END;
 		return $text;
 	}
 
+	function printFilterLabel($filter_name) {
+		$labels_for_filter = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_HAS_LABEL, NS_MAIN);
+		if (count($labels_for_filter) > 0) {
+			$filter_label = $labels_for_filter[0];
+		} else {
+			$filter_label = str_replace('_', ' ', $filter_name);
+		}
+		return $filter_label;
+	}
+
 	/**
 	 * Print the line showing 'OR' values for a filter that already has
 	 * at least one value set
@@ -669,12 +683,7 @@ END;
 		global $sdgScriptPath;
 
 		$results_line = "";
-		$labels_for_filter = sdfGetValuesForProperty($af->filter->name, SD_NS_FILTER, SD_SP_HAS_LABEL, false, NS_MAIN);
-		if (count($labels_for_filter) > 0) {
-			$filter_label = $labels_for_filter[0];
-		} else {
-			$filter_label = str_replace('_', ' ', $af->filter->name);
-		}
+		$filter_label = $this->printFilterLabel($af->filter->name);
 		foreach ($this->applied_filters as $af2) {
 			if ($af->filter->name == $af2->filter->name)
 				$current_filter_values = $af2->values;
@@ -683,6 +692,19 @@ END;
 			$or_values = $af->filter->allowed_values;
 		else
 			$or_values = $this->getAllOrValues($af);
+		if ($af->search_term != null) {
+			// HACK - printFreeTextInput() needs values as the
+			// *keys* of the array
+			$filter_values = array();
+			foreach ($or_values as $or_value) {
+				$filter_values[$or_value] = '';
+			}
+			$results_line = "<div class=\"drilldown-filter-label\">$filter_label:</div> " . $this->printFreeTextInput($af->filter->name, $filter_values, $af->search_term);
+			return $results_line;
+		} elseif ($af->lower_date != null || $af->upper_date != null) {
+			$results_line = "<div class=\"drilldown-filter-label\">$filter_label:</div> " . $this->printDateRangeInput($af->filter->name, $af->lower_date, $af->upper_date);
+			return $results_line;
+		}
 		// add 'Other' and 'None', regardless of whether either has
 		// any results - add 'Other' only if it's not a date field
 		if ($af->filter->time_period == null)
@@ -742,6 +764,152 @@ END;
 		return $text;
 	}
 
+	function printUnappliedFilterValues($cur_url, $f, $filter_values) {
+		$results_line = "";
+		// set font-size values for filter "tag cloud", if the
+		// appropriate global variables are set
+		if ($sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0) {
+			$lowest_num_results = min($filter_values);
+			$highest_num_results = max($filter_values);
+			$num_results_midpoint = ($lowest_num_results + $highest_num_results) / 2;
+			$font_size_midpoint = ($sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize) / 2;
+			$num_results_per_font_pixel = ($highest_num_results + 1 - $lowest_num_results) / ($sdgFiltersLargestFontSize + 1 - $sdgFiltersSmallestFontSize);
+		}
+		// now print the values
+		$num_printed_values = 0;
+		foreach ($filter_values as $value_str => $num_results) {
+			if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
+			// if it's boolean, display something nicer than "0" or "1"
+			if ($value_str === '_other')
+				$filter_text = wfMsg('sd_browsedata_other');
+			elseif ($value_str === '_none')
+				$filter_text = wfMsg('sd_browsedata_none');
+			elseif ($f->is_boolean)
+				$filter_text = sdfBooleanToString($value_str);
+			else
+				$filter_text = str_replace('_', ' ', $value_str);
+			$filter_text .= " ($num_results)";
+			$filter_url = $cur_url . urlencode(str_replace(' ', '_', $f->name)) . '=' . urlencode(str_replace(' ', '_', $value_str));
+			if ($sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0) {
+				$font_size = round($font_size_midpoint + (($num_results - $num_results_midpoint) / $num_results_per_font_pixel));
+				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_filterbyvalue') . '" style="font-size: ' . $font_size . 'px">' . $filter_text . '</a>';
+			} else {
+				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_filterbyvalue') . '">' . $filter_text . '</a>';
+			}
+		}
+		return $results_line;
+	}
+
+	function printFreeTextInput($filter_name, $filter_values, $cur_value = null) {
+		global $wgRequest;
+
+		$input_id = "_search_$filter_name";
+		$text =<<<END
+
+<script>
+Ext.onReady(function(){
+	var {$filter_name}_values = [
+
+END;
+		foreach ($filter_values as $value => $num_instances) {
+			if ($value != '_other' && $value != '_none') {
+				$display_value = str_replace('_', ' ', $value);
+				$display_value = str_replace('\'', '\\\'', $display_value);
+				$text .= "		['$display_value', '$display_value'],\n";
+			}
+		}
+		$text .=<<<END
+	]
+
+	var comboFromArray = new Ext.form.ComboBox({
+		store: {$filter_name}_values,
+		emptyText: '$cur_value',
+		applyTo: '$input_id'
+	});
+});
+</script>
+<form method="get">
+<input type="text" name="$input_id" id="$input_id" value="">
+
+END;
+
+		foreach ($wgRequest->getValues() as $key => $val) {
+			if ($key != $input_id)
+				$text .=<<<END
+<input type="hidden" name="$key" value="$val" />
+
+END;
+		}
+		$search_label = wfMsg('searchresultshead');
+		$text .=<<<END
+<input type="submit" value="$search_label" />
+</form>
+
+END;
+		return $text;
+	}
+
+	function printDateInput($input_name, $cur_value = null) {
+		$month_names = array(
+			wfMsgForContent('january'),
+			wfMsgForContent('february'),
+			wfMsgForContent('march'),
+			wfMsgForContent('april'),
+			wfMsgForContent('may'),
+			wfMsgForContent('june'),
+			wfMsgForContent('july'),
+			wfMsgForContent('august'),
+			wfMsgForContent('september'),
+			wfMsgForContent('october'),
+			wfMsgForContent('november'),
+			wfMsgForContent('december')
+		);
+
+		if (is_array($cur_value) && array_key_exists('month', $cur_value))
+			$selected_month = $cur_value['month'];
+		else
+			$selected_month = null;
+		$text = '   <select name="' . $input_name . "[month]\">\n";
+		foreach ($month_names as $i => $name) {
+			// pad out month to always be two digits
+			$month_value = ($wgAmericanDates == true) ? $name : str_pad($i + 1, 2, "0", STR_PAD_LEFT);
+			$selected_str = ($i + 1 == $selected_month) ? "selected" : "";
+			$text .= "        <option value=\"$month_value\" $selected_str>$name</option>\n";
+		}
+		$text .= "  </select>\n";
+		$text .= '  <input name="' . $input_name . '[day]" type="text" size="2" value="' . $cur_value['day'] . '" />' . "\n";
+		$text .= '  <input name="' . $input_name . '[year]" type="text" size="4" value="' . $cur_value['year'] . '" />' . "\n";
+		return $text;
+	}
+
+	function printDateRangeInput($filter_name, $lower_date = null, $upper_date = null) {
+		global $wgRequest;
+
+		$start_label = wfMsg('sd_browsedata_daterangestart');
+		$end_label = wfMsg('sd_browsedata_daterangeend');
+		$start_month_input = $this->printDateInput("_lower_$filter_name", $lower_date);
+		$end_month_input = $this->printDateInput("_upper_$filter_name", $upper_date);
+		$text =<<<END
+<form method="get">
+<p>$start_label $start_month_input
+$end_label $end_month_input</p>
+
+END;
+		foreach ($wgRequest->getValues() as $key => $val) {
+			$text .=<<<END
+<input type="hidden" name="$key" value="$val" />
+
+END;
+		}
+		$search_label = wfMsg('searchresultshead');
+		$text .=<<<END
+<p><input type="submit" value="$search_label" /></p>
+</form>
+
+END;
+		return $text;
+	}
+
 	/**
 	 * Print the line showing 'AND' values for a filter that has not
 	 * been applied to the drilldown
@@ -750,7 +918,6 @@ END;
 		global $sdgScriptPath;
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
-		$results_line = "";
 		$f->createTempTable();
 		$found_results_for_filter = false;
 		if (count($f->allowed_values) == 0) {
@@ -794,49 +961,36 @@ END;
 			$f->dropTempTable();
 			return "";
 		}
-		// set font-size values for filter "tag cloud", if the
-		// appropriate global variables are set
-		if ($sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0) {
-			$lowest_num_results = min($filter_values);
-			$highest_num_results = max($filter_values);
-			$num_results_midpoint = ($lowest_num_results + $highest_num_results) / 2;
-			$font_size_midpoint = ($sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize) / 2;
-			$num_results_per_font_pixel = ($highest_num_results + 1 - $lowest_num_results) / ($sdgFiltersLargestFontSize + 1 - $sdgFiltersSmallestFontSize);
-		}
-		// now print the values
-		$num_printed_values = 0;
-		foreach ($filter_values as $value_str => $num_results) {
-			if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
-			// if it's boolean, display something nicer than "0" or "1"
-			if ($value_str === '_other')
-				$filter_text = wfMsg('sd_browsedata_other');
-			elseif ($value_str === '_none')
-				$filter_text = wfMsg('sd_browsedata_none');
-			elseif ($f->is_boolean)
-				$filter_text = sdfBooleanToString($value_str);
-			else
-				$filter_text = str_replace('_', ' ', $value_str);
-			$filter_text .= " ($num_results)";
-			$filter_url = $cur_url . urlencode(str_replace(' ', '_', $f->name)) . '=' . urlencode(str_replace(' ', '_', $value_str));
-			if ($sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0) {
-				$font_size = round($font_size_midpoint + (($num_results - $num_results_midpoint) / $num_results_per_font_pixel));
-				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_filterbyvalue') . '" style="font-size: ' . $font_size . 'px">' . $filter_text . '</a>';
-			} else {
-				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_filterbyvalue') . '">' . $filter_text . '</a>';
-			}
-		}
+
+		$filter_name = urlencode(str_replace(' ', '_', $f->name));
+		$normal_filter = true;
+		if ($f->input_type == wfMsgForContent('sd_filter_freetext')) {
+			$results_line = $this->printFreeTextInput($filter_name, $filter_values);
+			$normal_filter = false;
+		} elseif ($f->input_type == wfMsgForContent('sd_filter_daterange')) {
+			$results_line = $this->printDateRangeInput($filter_name);
+			$normal_filter = false;
+		} else
+			$results_line = $this->printUnappliedFilterValues($cur_url, $f, $filter_values);
+
 		$text = "";
 		// TODO - this check might no longer be necessary
 		if ($results_line != "") {
-			$labels_for_filter = sdfGetValuesForProperty($f->name, SD_NS_FILTER, SD_SP_HAS_LABEL, false, NS_MAIN);
-			if (count($labels_for_filter) > 0) {
-				$filter_label = $labels_for_filter[0];
-			} else {
-				$filter_label = str_replace('_', ' ', $f->name);
-			}
+			$filter_label = $this->printFilterLabel($f->name);
 			$results_div_id = strtolower(str_replace(' ', '_', $filter_label)) . "_values";
 			$text .=<<<END
-					<div class="drilldown-filter-label"><a onclick="toggleFilterDiv('$results_div_id', this)" style="cursor: default;"><img src="$sdgScriptPath/skins/down-arrow.png"></a>
+					<div class="drilldown-filter-label">
+
+END;
+			// no point showing "minimize" arrow if it's just a
+			// single text or date input
+			if ($normal_filter) {
+				$text .=<<<END
+					<a onclick="toggleFilterDiv('$results_div_id', this)" style="cursor: default;"><img src="$sdgScriptPath/skins/down-arrow.png"></a>
+
+END;
+			}
+			$text .=<<<END
 					$filter_label:
 					</div>
 					<div class="drilldown-filter-values" id="$results_div_id">$results_line
@@ -882,12 +1036,7 @@ END;
 		}
 		foreach ($this->applied_filters as $i => $af) {
 			$header .= (! $this->subcategory && $i == 0) ? " > " : "\n					<span class=\"drilldown-header-value\">&</span> ";
-			$labels_for_filter = sdfGetValuesForProperty($af->filter->name, SD_NS_FILTER, SD_SP_HAS_LABEL, false, NS_MAIN);
-			if (count($labels_for_filter) > 0) {
-				$filter_label = $labels_for_filter[0];
-			} else {
-				$filter_label = str_replace('_', ' ', $af->filter->name);
-			}
+			$filter_label = $this->printFilterLabel($af->filter->name);
 			// add an "x" to remove this filter, if it has more
 			// than one value
 			if (count($this->applied_filters[$i]->values) > 1) {
@@ -914,6 +1063,16 @@ END;
 				$remove_filter_url = $this->makeBrowseURL($this->category, $temp_filters_array, $this->subcategory);
 				array_splice($temp_filters_array[$i]->values, $j, 0, $removed_values);
 				$header .= "\n	" . '				<span class="drilldown-header-value">' . $filter_text . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removefilter') . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
+			}
+			if ($af->search_term != null) {
+				$temp_filters_array = $this->applied_filters;
+				$removed_search_term = $temp_filters_array[$i]->search_term;
+				$temp_filters_array[$i]->search_term = null;
+				$remove_filter_url = $this->makeBrowseURL($this->category, $temp_filters_array, $this->subcategory);
+				$temp_filters_array[$i]->search_term = $removed_search_term;
+				$header .= "\n  " . '                           <span class="drilldown-header-value">~ \'' . $af->search_term . '\'</span> <a href="' . $remove_filter_url . '" title="' . wfMsg('sd_browsedata_removefilter') . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
+			} elseif ($af->lower_date != null || $af->upper_date != null) {
+				$header .= "\n <span class=\"drilldown-header-value\">" . $af->lower_date_string . " - " . $af->upper_date_string . "</span>";
 			}
 		}
 		$header .= "</div>\n";
@@ -1102,13 +1261,36 @@ function doSpecialBrowseData($query) {
 	global $wgRequest, $wgOut, $sdgScriptPath, $sdgContLang, $sdgNumResultsPerPage;
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
 
-	$mainCssUrl = $sdgScriptPath . '/skins/SD_main.css';
+	$mainCssDir = $sdgScriptPath . '/skins/';
 	$wgOut->addLink( array(
 		'rel' => 'stylesheet',
 		'type' => 'text/css',
 		'media' => "screen, projection",
-		'href' => $mainCssUrl
+		'href' => $mainCssDir . 'SD_main.css'
 	));
+	$wgOut->addLink( array(
+		'rel' => 'stylesheet',
+		'type' => 'text/css',
+		'media' => "screen, projection",
+		'href' => $mainCssDir . 'ext-all.css'
+	));
+	$wgOut->addLink( array(
+		'rel' => 'stylesheet',
+		'type' => 'text/css',
+		'media' => "screen, projection",
+		'href' => $mainCssDir . 'xtheme-gray.css'
+	));
+	$wgOut->addLink( array(
+		'rel' => 'stylesheet',
+		'type' => 'text/css',
+		'media' => "screen, projection",
+		'href' => $mainCssDir . 'combos.css'
+	));
+	// overwrite style from ext-all.css, to set the correct image for
+	// the combobox arrow
+	$wgOut->addScript("<style>.x-form-field-wrap .x-form-trigger{background:transparent url($sdgScriptPath/skins/trigger.gif) no-repeat 0 0;}</style>\n");
+	$wgOut->addScript('<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-base.js"></script>' . "\n");
+	$wgOut->addScript('<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-all.js"></script>' . "\n");
 	$javascript_text =<<<END
 function toggleFilterDiv(element_id, label_element) {
 	element = document.getElementById(element_id);
@@ -1148,7 +1330,7 @@ END;
 	if (! $category) {
 		$category_title = wfMsg('browsedata');
 	} else {
-		$titles_for_category = sdfGetValuesForProperty($category, NS_CATEGORY, SD_SP_HAS_DRILLDOWN_TITLE, false, NS_MAIN);
+		$titles_for_category = sdfGetValuesForProperty($category, NS_CATEGORY, SD_SP_HAS_DRILLDOWN_TITLE, NS_MAIN);
 		if (count($titles_for_category) > 0) {
 			$category_title = str_replace('_', ' ', $titles_for_category[0]);
 		} else {
@@ -1175,18 +1357,28 @@ END;
 	$applied_filters = array();
 	$remaining_filters = array();
 	foreach ($filters as $i => $filter) {
-		if ($vals_array = $wgRequest->getArray(str_replace(' ', '_', $filter->name))) {
+		$filter_name = str_replace(' ', '_', $filter->name);
+		$search_term = $wgRequest->getVal('_search_' . $filter_name);
+		$lower_date = $wgRequest->getArray('_lower_' . $filter_name);
+		$upper_date = $wgRequest->getArray('_upper_' . $filter_name);
+		if ($vals_array = $wgRequest->getArray($filter_name)) {
 			foreach ($vals_array as $j => $val) {
 				$vals_array[$j] = str_replace('_', ' ', $val);
 			}
 			$applied_filters[] = SDAppliedFilter::create($filter, $vals_array);
+			$filter_used[$i] = true;
+		} elseif ($search_term != null) {
+			$applied_filters[] = SDAppliedFilter::create($filter, array(), $search_term);
+			$filter_used[$i] = true;
+		} elseif ($lower_date != null || $upper_date != null) {
+			$applied_filters[] = SDAppliedFilter::create($filter, array(), null, $lower_date, $upper_date);
 			$filter_used[$i] = true;
 		}
 	}
 	// add every unused filter to the $remaining_filters array, unless
 	// it requires some other filter that hasn't been applied
 	foreach ($filters as $i => $filter) {
-		$required_filters = sdfGetValuesForProperty($filter->name, SD_NS_FILTER, SD_SP_REQUIRES_FILTER, true, SD_NS_FILTER);
+		$required_filters = sdfGetValuesForProperty($filter->name, SD_NS_FILTER, SD_SP_REQUIRES_FILTER, SD_NS_FILTER);
 		$matched_all_required_filters = true;
 		foreach ($required_filters as $required_filter) {
 			$found_match = false;
