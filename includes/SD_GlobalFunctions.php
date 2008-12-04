@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.4.8');
+define('SD_VERSION','0.5');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -18,6 +18,7 @@ define('SD_SP_USES_TIME_PERIOD', 5);
 define('SD_SP_REQUIRES_FILTER', 6);
 define('SD_SP_HAS_LABEL', 7);
 define('SD_SP_HAS_DRILLDOWN_TITLE', 8);
+define('SD_SP_HAS_INPUT_TYPE', 9);
 
 $wgExtensionCredits['specialpage'][]= array(
 	'name'	=> 'Semantic Drilldown',
@@ -31,6 +32,8 @@ require_once($sdgIP . '/languages/SD_Language.php');
 
 $wgExtensionMessagesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Messages.php';
 $wgExtensionAliasesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Aliases.php';
+
+$wgHooks['smwInitProperties'][] = 'sdfInitProperties';
 
 // register all special pages and other classes
 $wgSpecialPages['Filters'] = 'SDFilters';
@@ -77,7 +80,7 @@ function sdfInitNamespaces() {
 
 	// Support subpages only for talk pages by default
 	$wgNamespacesWithSubpages = $wgNamespacesWithSubpages + array(
-		      SD_NS_FILTER_TALK => true
+		SD_NS_FILTER_TALK => true
 	);
 
 	// Enable semantic links on filter pages
@@ -160,6 +163,41 @@ function sdfLoadMessagesManually() {
 /***** other global helpers               *****/
 /**********************************************/
 
+function sdfInitProperties() {
+	global $sdgContLang;
+	$sd_props = $sdgContLang->getSpecialPropertiesArray();
+	SMWPropertyValue::registerProperty('_SD_F', '_wpg', $sd_props['SD_SP_HAS_FILTER'], true);
+	SMWPropertyValue::registerProperty('_SD_CP', '_wpp', $sd_props['SD_SP_COVERS_PROPERTY'], true);
+	SMWPropertyValue::registerProperty('_SD_V', '_str', $sd_props['SD_SP_HAS_VALUE'], true);
+	SMWPropertyValue::registerProperty('_SD_VC', '_wpc', $sd_props['SD_SP_GETS_VALUES_FROM_CATEGORY'], true);
+	SMWPropertyValue::registerProperty('_SD_TP', '_str', $sd_props['SD_SP_USES_TIME_PERIOD'], true);
+	SMWPropertyValue::registerProperty('_SD_IT', '_str', $sd_props['SD_SP_HAS_INPUT_TYPE'], true);
+	SMWPropertyValue::registerProperty('_SD_RF', '_wpg', $sd_props['SD_SP_REQUIRES_FILTER'], true);
+	SMWPropertyValue::registerProperty('_SD_L', '_str', $sd_props['SD_SP_HAS_LABEL'], true);
+	SMWPropertyValue::registerProperty('_SD_DT', '_str', $sd_props['SD_SP_HAS_DRILLDOWN_TITLE'], true);
+
+        return true;
+}
+
+/**
+ * Based on Semantic Forms' sffCreateProperty()
+ */
+function sdfCreateProperty($property_name) {
+        if (method_exists('SMWPropertyValue', 'makeProperty'))
+                return SMWPropertyValue::makeProperty($property_name);
+        else
+                return Title::newFromText($property_name, SMW_NS_PROPERTY);
+}
+
+/**
+ * Based on Semantic Forms' sffGetPropertyName()
+ */
+function sdfGetPropertyName($property) {
+	if ($property instanceof Title)
+		return $property->getText();
+	else // $property instanceof SMWPropertyValue
+		return $property->getWikiValue();
+}
 
 /**
  * Gets a list of the names of all categories in the wiki that aren't
@@ -181,33 +219,10 @@ function sdfGetTopLevelCategories() {
 	return $categories;
 }
 
-function sdfGetSemanticProperties_0_7() {
-	global $smwgContLang;
-	$smw_namespace_labels = $smwgContLang->getNamespaceArray();
-	$dbr = wfGetDB( DB_SLAVE );
-	$all_properties = array();
-
-	$res = $dbr->query("SELECT page_title FROM " . $dbr->tableName('page') .
-		" WHERE page_namespace = " . SMW_NS_ATTRIBUTE .
-		" AND page_is_redirect = 0");
-	while ($row = $dbr->fetchRow($res)) {
-		$attribute_name = str_replace('_', ' ', $row[0]);
-		$all_properties[$attribute_name] = $smw_namespace_labels[SMW_NS_ATTRIBUTE];
-	}
-	$dbr->freeResult($res);
-
-	$res = $dbr->query("SELECT page_title FROM " . $dbr->tableName('page') .
-		" WHERE page_namespace = " . SMW_NS_RELATION .
-		" AND page_is_redirect = 0");
-	while ($row = $dbr->fetchRow($res)) {
-		$relation_name = str_replace('_', ' ', $row[0]);
-		$all_properties[$relation_name] = $smw_namespace_labels[SMW_NS_RELATION];
-	}
-	$dbr->freeResult($res);
-	return $all_properties;
-}
-
-function sdfGetSemanticProperties_1_0() {
+/**
+ * Gets a list of the names of all properties in the wiki
+ */
+function sdfGetSemanticProperties() {
 	global $smwgContLang;
 	$smw_namespace_labels = $smwgContLang->getNamespaces();
 	$all_properties = array();
@@ -220,26 +235,13 @@ function sdfGetSemanticProperties_1_0() {
 	$options->limit = 10000;
 	$used_properties = smwfGetStore()->getPropertiesSpecial($options);
 	foreach ($used_properties as $property) {
-		$property_name = $property[0]->getText();
+		$property_name = sdfGetPropertyName($property[0]);
 		$all_properties[$property_name] = $smw_namespace_labels[SMW_NS_PROPERTY];
 	}
 	$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial($options);
 	foreach ($unused_properties as $property) {
-		$property_name = $property->getText();
+		$property_name = sdfGetPropertyName($property);
 		$all_properties[$property_name] = $smw_namespace_labels[SMW_NS_PROPERTY];
-	}
-	return $all_properties;
-}
-
-/**
- * Gets a list of the names of all properties in the wiki
- */
-function sdfGetSemanticProperties() {
-	$smw_version = SMW_VERSION;
-	if ($smw_version{0} == '0') {
-		$all_properties = sdfGetSemanticProperties_0_7();
-	} else {
-		$all_properties = sdfGetSemanticProperties_1_0();
 	}
 	// remove the special properties of Semantic Drilldown from this list...
 	global $sdgContLang;
@@ -286,7 +288,7 @@ function sdfGetFilters() {
  * page points to with a specific property, that also match some other
  * constraints
  */
-function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $is_relation, $object_namespace) {
+function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $object_namespace) {
 	global $sdgContLang;
 
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
@@ -299,71 +301,28 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $is_relati
 	$subject = str_replace(' ', '_', $subject);
 	$subject = str_replace("'", "\'", $subject);
 
-	$smw_version = SMW_VERSION;
-	if ($smw_version{0} == '0') {
-		$property = str_replace(' ', '_', $property);
-		$dbr = wfGetDB( DB_SLAVE );
-		$cat_ns = NS_CATEGORY;
-		if ($is_relation) {
-			$table_name = $dbr->tableName( 'smw_relations' );
-			$property_field = 'relation_title';
-			$value_field = 'object_title';
-		} else {
-			$table_name = $dbr->tableName( 'smw_attributes' );
-			$property_field = 'attribute_title';
-			$value_field = 'value_xsd';
+	$store = smwfGetStore();
+	$subject_title = Title::newFromText($subject, $subject_namespace);
+	if ($property != '') {
+		$prop = sdfCreateProperty($property, SMW_NS_PROPERTY);
+		$prop_vals = $store->getPropertyValues($subject_title, $prop);
+		foreach ($prop_vals as $prop_val) {
+			// html_entity_decode() is needed to get around temporary bug in SMWSQLStore2
+			$values[] = html_entity_decode(str_replace('_', ' ', $prop_val->getXSDValue()));
 		}
-		$sql = "SELECT $value_field
-			FROM $table_name
-			WHERE subject_title = '$subject'
-			AND subject_namespace = $subject_namespace
-			AND ($property_field = '$property' ";
-		// try aliases as well
-		foreach ($sdgContLang->getSpecialPropertyAliases() as $alias => $cur_prop) {
-			if ($cur_prop == $prop) {
-				$sql .= " OR $property_field = '" . str_replace(' ', '_', $alias) . "'";
-			}
-		}
-		$sql .= ')';
-
-		if ($is_relation) {
-			$sql .= "AND object_namespace = $object_namespace";
-		}
-		$res = $dbr->query($sql);
-		while ($row = $dbr->fetchRow($res)) {
-			$values[] = str_replace('_', ' ', htmlspecialchars_decode($row[0]));
-		}
-		$dbr->freeResult($res);
-	} else {
-		$store = smwfGetStore();
-		$subject_title = Title::newFromText($subject, $subject_namespace);
-		if ($property != '') {
-			$property_title = Title::newFromText($property, SMW_NS_PROPERTY);
-			$prop_vals = $store->getPropertyValues($subject_title, $property_title);
+	}
+	// try aliases as well
+	foreach ($sdgContLang->getSpecialPropertyAliases() as $alias => $cur_prop) {
+		// make sure alias doesn't match actual property name - this
+		// is an issue for English, since the English-language values
+		// are used for aliases
+		if ($alias != $property && $cur_prop == $prop) {
+			$prop = sdfCreateProperty($alias, SMW_NS_PROPERTY);
+			$prop_vals = $store->getPropertyValues($subject_title, $prop);
 			foreach ($prop_vals as $prop_val) {
-				// make sure it's in the right namespace, if
-				// it's a page
-				if (! $is_relation) {
-					// html_entity_decode() is needed to get around temporary bug in SMWSQLStore2
-					$values[] = html_entity_decode(str_replace('_', ' ', $prop_val->getXSDValue()));
-				} elseif ($prop_val->getNamespace() == $object_namespace) {
+				// make sure it's in the right namespace
+				if ($prop_val->getNamespace() == $object_namespace) {
 					$values[] = $prop_val->getTitle()->getText();
-				}
-			}
-		}
-		// try aliases as well
-		foreach ($sdgContLang->getSpecialPropertyAliases() as $alias => $cur_prop) {
-			// make sure alias doesn't match actual property
-			// name - this is an issue for English, since the
-			// English-language values are used for aliases
-			if ($alias != $property && $cur_prop == $prop) {
-				$property_title = Title::newFromText($alias, SMW_NS_PROPERTY);
-				$prop_vals = $store->getPropertyValues($subject_title, $property_title);
-				foreach ($prop_vals as $prop_val) {
-					// make sure it's in the right namespace
-					if ($prop_val->getNamespace() == $object_namespace) {
-						$values[] = $prop_val->getTitle()->getText();
-					}
 				}
 			}
 		}
@@ -379,7 +338,7 @@ function sdfLoadFiltersForCategory($category) {
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
 
 	$filters = array();
-	$filter_names = sdfGetValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, SD_SP_HAS_FILTER, true, SD_NS_FILTER);
+	$filter_names = sdfGetValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, SD_SP_HAS_FILTER, SD_NS_FILTER);
 	foreach ($filter_names as $filter_name) {
 		$filters[] = SDFilter::load($filter_name);
 	}
@@ -483,11 +442,7 @@ function sdfBooleanToString($bool_value) {
 	$words_array = explode(',', wfMsgForContent($words_field_name));
 	// go with the value in the array that tends to be "yes" or "no" -
 	// for SMW 0.7 it's the 2nd word, and for SMW 1.0 it's the 3rd
-	$smw_version = SMW_VERSION;
-	if ($smw_version{0} == '0')
-		$index_of_word = 1;
-	else
-		$index_of_word = 2;
+	$index_of_word = 2;
 	// capitalize first letter of word
 	if (count($words_array) > $index_of_word) {
 		$string_value = ucwords($words_array[$index_of_word]);
