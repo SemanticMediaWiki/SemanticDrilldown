@@ -262,9 +262,25 @@ $messages['bg'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'browsedata' => 'Pregledaj podatke',
+	'sd_browsedata_choosecategory' => 'Izaberi kategoriju',
+	'sd_browsedata_viewcategory' => 'pogledaj kategoriju',
+	'sd_browsedata_subcategory' => 'Podkategorija',
 	'sd_browsedata_other' => 'Ostalo',
+	'sd_browsedata_none' => 'Ništa',
+	'sd_browsedata_or' => 'ili',
+	'sd_browsedata_removefilter' => 'Ukloni ovaj filter',
+	'sd_browsedata_removesubcategoryfilter' => 'Ukloni ovaj filter podkategorije',
+	'sd_browsedata_resetfilters' => 'Resetuj filtere',
+	'sd_browsedata_addanothervalue' => 'Dodaj drugu vrijednost',
 	'filters' => 'Filteri',
+	'createfilter' => 'Napravi filter',
 	'sd_createfilter_name' => 'Ime:',
+	'sd_createfilter_label' => 'Naslov za ovaj filter (opcija):',
+	'sd_blank_error' => 'ne može biti prazno',
+	'sd_filter_year' => 'Godina',
+	'sd_filter_month' => 'mjesec',
+	'sd_filter_hasvalues' => 'Ima vrijednosti $1.',
 );
 
 /** Catalan (Català)
@@ -295,8 +311,10 @@ $messages['da'] = array(
  * @author DaSch
  * @author Krabina
  * @author MichaelFrey
+ * @author Umherirrender
  */
 $messages['de'] = array(
+	'specialpages-group-sd_group' => 'Semantisches Drill-Down',
 	'browsedata' => 'Daten ansehen',
 	'sd_browsedata_choosecategory' => 'Kategorie auswählen',
 	'sd_browsedata_viewcategory' => 'Kategorie ansehen',
@@ -322,8 +340,8 @@ $messages['de'] = array(
 	'sd_createfilter_usecategoryvalues' => 'Verwende die Werte für den Filter von dieser Kategorie:',
 	'sd_createfilter_usedatevalues' => 'Verwende folgende Zeitangabe für diesen Filter:',
 	'sd_createfilter_entervalues' => 'Verwende diese Werte für den Filter (Werte durch Komma getrennt eingeben. Wenn ein Wert ein Komma enthält, mit "\\," ersetzen.):',
-	'sd_createfilter_label' => 'Bezeichnung dieses Filters (optional):',
 	'sd_createfilter_requirefilter' => 'Bevor dieser Filter angezeigt wird, muss folgender anderer Filter gesetzt sein:',
+	'sd_createfilter_label' => 'Bezeichnung dieses Filters (optional):',
 	'sd_blank_error' => 'darf nicht leer sein',
 	'sd_filter_coversproperty' => 'Dieser Filter betrifft das Attribut $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Er erhält seine Werte aus der Kategorie $1.',
@@ -953,6 +971,8 @@ $messages['nl'] = array(
 	'sd_browsedata_removesubcategoryfilter' => 'Deze ondercategoriefilter verwijderen',
 	'sd_browsedata_resetfilters' => 'Filters opnieuw instellen',
 	'sd_browsedata_addanothervalue' => 'Waarde toevoegen',
+	'sd_browsedata_daterangestart' => 'Begin:',
+	'sd_browsedata_daterangeend' => 'Einde:',
 	'filters' => 'Filters',
 	'sd_filters_docu' => 'In {{SITENAME}} bestaan de volgende filters:',
 	'createfilter' => 'Filter aanmaken',
@@ -962,8 +982,10 @@ $messages['nl'] = array(
 	'sd_createfilter_usecategoryvalues' => 'Waarden voor deze filter uit de volgende categorie halen:',
 	'sd_createfilter_usedatevalues' => 'Gebruik voor deze filter de volgende datumreeks:',
 	'sd_createfilter_entervalues' => 'Waarden voor de filter handmatig invoeren (waarden moeten gescheiden worden door komma\'s - als de waarde een komma bevast, vervang die dan door "\\,"):',
-	'sd_createfilter_label' => 'Label voor deze filter (optioneel):',
+	'sd_createfilter_inputtype' => 'Invoertype voor deze filter:',
+	'sd_createfilter_listofvalues' => 'lijst met waarden (standaard)',
 	'sd_createfilter_requirefilter' => 'Selectie van een andere filter voor deze filter zichtbaar is vereisen:',
+	'sd_createfilter_label' => 'Label voor deze filter (optioneel):',
 	'sd_blank_error' => 'mag niet leeg zijn',
 	'sd_filter_coversproperty' => 'Deze filter heeft betrekking op de eigenschap $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Het haalt de waarden van de categorie $1.',
@@ -971,6 +993,9 @@ $messages['nl'] = array(
 	'sd_filter_year' => 'Jaar',
 	'sd_filter_month' => 'Maand',
 	'sd_filter_hasvalues' => 'Het heeft de waarden $1.',
+	'sd_filter_hasinputtype' => 'Het heeft het invoertype $1.',
+	'sd_filter_freetext' => 'tekst',
+	'sd_filter_daterange' => 'datumreeks',
 	'sd_filter_requiresfilter' => 'De filter $1 moet aanwezig zijn.',
 	'sd_filter_haslabel' => 'Het heeft het label $1.',
 );
