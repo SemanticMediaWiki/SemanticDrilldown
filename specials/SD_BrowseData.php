@@ -765,6 +765,8 @@ END;
 	}
 
 	function printUnappliedFilterValues($cur_url, $f, $filter_values) {
+		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
+
 		$results_line = "";
 		// set font-size values for filter "tag cloud", if the
 		// appropriate global variables are set
