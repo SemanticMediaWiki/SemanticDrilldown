@@ -23,7 +23,7 @@ class SDFilter {
 
 		$f = new SDFilter();
 		$f->name = $filter_name;
-		$properties_used = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_COVERS_PROPERTY, SMW_NS_PROPERTY);
+		$properties_used = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, '_SD_CP', SD_SP_COVERS_PROPERTY, SMW_NS_PROPERTY);
 		if (count($properties_used) > 0) {
 			$f->property = $properties_used[0];
 		}
@@ -46,8 +46,8 @@ class SDFilter {
 				}
 			}
 		}
-		$categories = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_GETS_VALUES_FROM_CATEGORY, NS_CATEGORY);
-		$time_periods = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_USES_TIME_PERIOD, null);
+		$categories = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, '_SD_VC', SD_SP_GETS_VALUES_FROM_CATEGORY, NS_CATEGORY);
+		$time_periods = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, '_SD_TP', SD_SP_USES_TIME_PERIOD, null);
 		if (count($categories) > 0) {
 			$f->category = $categories[0];
 			$f->allowed_values = sdfGetCategoryChildren($f->category, false, 5);
@@ -57,10 +57,10 @@ class SDFilter {
 		} elseif ($f->is_boolean) {
 			$f->allowed_values = array('0', '1');
 		} else {
-			$values = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_HAS_VALUE, null);
+			$values = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, '_SD_V', SD_SP_HAS_VALUE, null);
 			$f->allowed_values = $values;
 		}
-		$input_types = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_HAS_INPUT_TYPE, null);
+		$input_types = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, '_SD_IT', SD_SP_HAS_INPUT_TYPE, null);
 		if (count($input_types) > 0) {
 			$f->input_type = $input_types[0];
 		}
