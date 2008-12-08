@@ -666,7 +666,7 @@ END;
 	}
 
 	function printFilterLabel($filter_name) {
-		$labels_for_filter = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, SD_SP_HAS_LABEL, NS_MAIN);
+		$labels_for_filter = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, '_SD_L', SD_SP_HAS_LABEL, NS_MAIN);
 		if (count($labels_for_filter) > 0) {
 			$filter_label = $labels_for_filter[0];
 		} else {
@@ -1332,7 +1332,7 @@ END;
 	if (! $category) {
 		$category_title = wfMsg('browsedata');
 	} else {
-		$titles_for_category = sdfGetValuesForProperty($category, NS_CATEGORY, SD_SP_HAS_DRILLDOWN_TITLE, NS_MAIN);
+		$titles_for_category = sdfGetValuesForProperty($category, NS_CATEGORY, '_SD_DT', SD_SP_HAS_DRILLDOWN_TITLE, NS_MAIN);
 		if (count($titles_for_category) > 0) {
 			$category_title = str_replace('_', ' ', $titles_for_category[0]);
 		} else {
@@ -1380,7 +1380,7 @@ END;
 	// add every unused filter to the $remaining_filters array, unless
 	// it requires some other filter that hasn't been applied
 	foreach ($filters as $i => $filter) {
-		$required_filters = sdfGetValuesForProperty($filter->name, SD_NS_FILTER, SD_SP_REQUIRES_FILTER, SD_NS_FILTER);
+		$required_filters = sdfGetValuesForProperty($filter->name, SD_NS_FILTER, '_SD_RF', SD_SP_REQUIRES_FILTER, SD_NS_FILTER);
 		$matched_all_required_filters = true;
 		foreach ($required_filters as $required_filter) {
 			$found_match = false;
