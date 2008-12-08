@@ -14,6 +14,7 @@ $messages = array();
  */
 $messages['en'] = array(
 	// user messages
+	'semanticdrilldown-desc'		=> 'A drilldown interface for navigating through semantic data',
 	'specialpages-group-sd_group'           => 'Semantic Drilldown',
 	'browsedata'                            => 'Browse data',
 	'sd_browsedata_choosecategory'          => 'Choose a category',
