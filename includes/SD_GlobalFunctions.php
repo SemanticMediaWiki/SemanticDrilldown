@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.5');
+define('SD_VERSION','0.5.1');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -26,6 +26,7 @@ $wgExtensionCredits['specialpage'][]= array(
 	'author'      => 'Yaron Koren',
 	'url'         => 'http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
 	'description' =>  'A drilldown interface for navigating through semantic data',
+	'descriptionmsg'  => 'semanticdrilldown-desc',
 );
 
 require_once($sdgIP . '/languages/SD_Language.php');
@@ -166,15 +167,15 @@ function sdfLoadMessagesManually() {
 function sdfInitProperties() {
 	global $sdgContLang;
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
-	SMWPropertyValue::registerProperty('_SD_F', '_wpg', $sd_props['SD_SP_HAS_FILTER'], true);
-	SMWPropertyValue::registerProperty('_SD_CP', '_wpp', $sd_props['SD_SP_COVERS_PROPERTY'], true);
-	SMWPropertyValue::registerProperty('_SD_V', '_str', $sd_props['SD_SP_HAS_VALUE'], true);
-	SMWPropertyValue::registerProperty('_SD_VC', '_wpc', $sd_props['SD_SP_GETS_VALUES_FROM_CATEGORY'], true);
-	SMWPropertyValue::registerProperty('_SD_TP', '_str', $sd_props['SD_SP_USES_TIME_PERIOD'], true);
-	SMWPropertyValue::registerProperty('_SD_IT', '_str', $sd_props['SD_SP_HAS_INPUT_TYPE'], true);
-	SMWPropertyValue::registerProperty('_SD_RF', '_wpg', $sd_props['SD_SP_REQUIRES_FILTER'], true);
-	SMWPropertyValue::registerProperty('_SD_L', '_str', $sd_props['SD_SP_HAS_LABEL'], true);
-	SMWPropertyValue::registerProperty('_SD_DT', '_str', $sd_props['SD_SP_HAS_DRILLDOWN_TITLE'], true);
+	SMWPropertyValue::registerProperty('_SD_F', '_wpg', $sd_props[SD_SP_HAS_FILTER], true);
+	SMWPropertyValue::registerProperty('_SD_CP', '_wpp', $sd_props[SD_SP_COVERS_PROPERTY], true);
+	SMWPropertyValue::registerProperty('_SD_V', '_str', $sd_props[SD_SP_HAS_VALUE], true);
+	SMWPropertyValue::registerProperty('_SD_VC', '_wpc', $sd_props[SD_SP_GETS_VALUES_FROM_CATEGORY], true);
+	SMWPropertyValue::registerProperty('_SD_TP', '_str', $sd_props[SD_SP_USES_TIME_PERIOD], true);
+	SMWPropertyValue::registerProperty('_SD_IT', '_str', $sd_props[SD_SP_HAS_INPUT_TYPE], true);
+	SMWPropertyValue::registerProperty('_SD_RF', '_wpg', $sd_props[SD_SP_REQUIRES_FILTER], true);
+	SMWPropertyValue::registerProperty('_SD_L', '_str', $sd_props[SD_SP_HAS_LABEL], true);
+	SMWPropertyValue::registerProperty('_SD_DT', '_str', $sd_props[SD_SP_HAS_DRILLDOWN_TITLE], true);
 
         return true;
 }
@@ -288,7 +289,23 @@ function sdfGetFilters() {
  * page points to with a specific property, that also match some other
  * constraints
  */
-function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $object_namespace) {
+function sdfGetValuesForProperty($subject, $subject_namespace, $special_prop, $prop, $object_namespace) {
+	$store = smwfGetStore();
+	$subject_title = Title::newFromText($subject, $subject_namespace);
+
+        // we can do this easily if we're using SMW 1.4 or higher
+        if (class_exists('SMWPropertyValue')) {
+                $property = SMWPropertyValue::makeProperty($special_prop);
+                $res = $store->getPropertyValues($subject_title, $property);
+                // there could be multiple alternate forms
+                $values = array();
+                foreach ($res as $prop_val) {
+			$values[] = html_entity_decode(str_replace('_', ' ', $prop_val->getXSDValue()));
+                }
+                return $values;
+        }
+
+	// otherwise, it's a bit more complicated
 	global $sdgContLang;
 
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
@@ -298,11 +315,6 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $prop, $object_na
 	} else {
 		$property = "";
 	}
-	$subject = str_replace(' ', '_', $subject);
-	$subject = str_replace("'", "\'", $subject);
-
-	$store = smwfGetStore();
-	$subject_title = Title::newFromText($subject, $subject_namespace);
 	if ($property != '') {
 		$prop = sdfCreateProperty($property, SMW_NS_PROPERTY);
 		$prop_vals = $store->getPropertyValues($subject_title, $prop);
@@ -338,7 +350,7 @@ function sdfLoadFiltersForCategory($category) {
 	$sd_props = $sdgContLang->getSpecialPropertiesArray();
 
 	$filters = array();
-	$filter_names = sdfGetValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, SD_SP_HAS_FILTER, SD_NS_FILTER);
+	$filter_names = sdfGetValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, '_SD_F', SD_SP_HAS_FILTER, SD_NS_FILTER);
 	foreach ($filter_names as $filter_name) {
 		$filters[] = SDFilter::load($filter_name);
 	}
