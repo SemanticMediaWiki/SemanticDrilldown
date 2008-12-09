@@ -494,6 +494,7 @@ $messages['fi'] = array(
  * @author Urhixidur
  */
 $messages['fr'] = array(
+	'semanticdrilldown-desc' => 'Une interface d’exercice pour la navigation au travers de semantic data',
 	'specialpages-group-sd_group' => 'Exercice de sémantique',
 	'browsedata' => 'Chercher les données',
 	'sd_browsedata_choosecategory' => 'Choisir une catégorie',
@@ -970,6 +971,7 @@ $messages['nds'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'semanticdrilldown-desc' => 'Een drilldowninterface voor het navigeren door semantische gegevens',
 	'specialpages-group-sd_group' => 'Semantic Drilldown',
 	'browsedata' => 'Gegevens bekijken',
 	'sd_browsedata_choosecategory' => 'Kies een categorie',
@@ -1301,6 +1303,8 @@ $messages['sk'] = array(
 	'sd_browsedata_removesubcategoryfilter' => 'Odstrániť tento filter podkategórie',
 	'sd_browsedata_resetfilters' => 'Resetovať filtre',
 	'sd_browsedata_addanothervalue' => 'Pridať ďalšiu hodnotu',
+	'sd_browsedata_daterangestart' => 'Začiatok:',
+	'sd_browsedata_daterangeend' => 'Koniec:',
 	'filters' => 'Filtre',
 	'sd_filters_docu' => 'Na {{GRAMMAR:lokál|{{SITENAME}}}} existujú nasledovné filtre:',
 	'createfilter' => 'Vytvoriť filter',
@@ -1310,8 +1314,10 @@ $messages['sk'] = array(
 	'sd_createfilter_usecategoryvalues' => 'Získať hodnoty filtra z tejto kategórie:',
 	'sd_createfilter_usedatevalues' => 'Použiť rozsahy dátumov pre tento filter z tohoto časového intervalu:',
 	'sd_createfilter_entervalues' => 'Zadajte hodnoty pre tento filter ručne (hodnoty by mali byť oddelené čiarkami - ak hodnota obsahuje čiarku, nahraďte ju „\\,“):',
-	'sd_createfilter_label' => 'Označenie tohto filtra (voliteľné):',
+	'sd_createfilter_inputtype' => 'Typ vstupu pre tento filter:',
+	'sd_createfilter_listofvalues' => 'zoznam hodnôt (štandardné)',
 	'sd_createfilter_requirefilter' => 'Vyžadovať, aby bol vybraný iný filter než sa zobrazí tento:',
+	'sd_createfilter_label' => 'Označenie tohto filtra (voliteľné):',
 	'sd_blank_error' => 'nemôže byť nevyplnené',
 	'sd_filter_coversproperty' => 'Tento filter pokrýva vlastnosť $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Získava hodnoty z kategórie $1.',
@@ -1319,6 +1325,9 @@ $messages['sk'] = array(
 	'sd_filter_year' => 'Rok',
 	'sd_filter_month' => 'Mesiac',
 	'sd_filter_hasvalues' => 'Má hodnoty $1.',
+	'sd_filter_hasinputtype' => 'Má typ vstupu $1.',
+	'sd_filter_freetext' => 'text',
+	'sd_filter_daterange' => 'rozsah dátumov',
 	'sd_filter_requiresfilter' => 'Vyžaduje prítomnosť filtra $1.',
 	'sd_filter_haslabel' => 'Má označenie $1.',
 );
