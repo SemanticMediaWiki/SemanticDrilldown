@@ -808,6 +808,7 @@ $messages['ka'] = array(
 /** Khmer (ភាសាខ្មែរ)
  * @author Chhorran
  * @author Lovekhmer
+ * @author Thearith
  * @author គីមស៊្រុន
  */
 $messages['km'] = array(
@@ -818,7 +819,7 @@ $messages['km'] = array(
 	'sd_browsedata_other' => 'ផ្សេងៗទៀត',
 	'sd_browsedata_none' => 'ទទេ',
 	'sd_browsedata_or' => 'ឬ',
-	'filters' => 'តំរងការពារនានា',
+	'filters' => 'តម្រងការពារនានា',
 	'sd_createfilter_name' => 'ឈ្មោះ៖',
 	'sd_filter_year' => 'ឆ្នាំ',
 	'sd_filter_month' => 'ខែ',
@@ -1286,6 +1287,7 @@ $messages['ru'] = array(
  * @author Helix84
  */
 $messages['sk'] = array(
+	'semanticdrilldown-desc' => 'Rozhranie na navigáciu sémantickými údajmi',
 	'specialpages-group-sd_group' => 'Sémantické operácie',
 	'browsedata' => 'Prehliadať údaje',
 	'sd_browsedata_choosecategory' => 'Vyberte kategóriu',

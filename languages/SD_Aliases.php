@@ -68,6 +68,13 @@ $aliases['gl'] = array(
 	'Filters' => array( 'Filtros' ),
 );
 
+/** Swiss German (Alemannisch) */
+$aliases['gsw'] = array(
+	'BrowseData' => array( 'Date browse' ),
+	'CreateFilter' => array( 'Filter aalege' ),
+	'Filters' => array( 'Filter' ),
+);
+
 /** Hebrew (עברית) */
 $aliases['he'] = array(
 	'Filters' => array( 'מסננים' ),
