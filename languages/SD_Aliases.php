@@ -70,7 +70,7 @@ $aliases['gl'] = array(
 
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
-	'BrowseData' => array( 'Date browse' ),
+	'BrowseData' => array( 'BrowseData' ),
 	'CreateFilter' => array( 'Filter aalege' ),
 	'Filters' => array( 'Filter' ),
 );
