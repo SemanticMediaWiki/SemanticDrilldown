@@ -775,6 +775,13 @@ $messages['it'] = array(
 	'sd_createfilter_name' => 'Nome:',
 );
 
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'sd_browsedata_none' => 'なし',
+);
+
 /** Javanese (Basa Jawa)
  * @author Meursault2004
  */
