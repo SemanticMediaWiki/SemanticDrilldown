@@ -95,6 +95,8 @@ $aliases['hu'] = array(
 /** Khmer (ភាសាខ្មែរ) */
 $aliases['km'] = array(
 	'BrowseData' => array( 'រាវរកទិន្នន័យ' ),
+	'CreateFilter' => array( 'បង្កើត​តម្រង' ),
+	'Filters' => array( 'តម្រង' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
