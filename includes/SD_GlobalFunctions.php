@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.5.1');
+define('SD_VERSION','0.5.2');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -166,7 +166,7 @@ function sdfLoadMessagesManually() {
 
 function sdfInitProperties() {
 	global $sdgContLang;
-	$sd_props = $sdgContLang->getSpecialPropertiesArray();
+	$sd_props = $sdgContLang->getPropertyLabels();
 	SMWPropertyValue::registerProperty('_SD_F', '_wpg', $sd_props[SD_SP_HAS_FILTER], true);
 	SMWPropertyValue::registerProperty('_SD_CP', '_wpp', $sd_props[SD_SP_COVERS_PROPERTY], true);
 	SMWPropertyValue::registerProperty('_SD_V', '_str', $sd_props[SD_SP_HAS_VALUE], true);
@@ -246,8 +246,8 @@ function sdfGetSemanticProperties() {
 	}
 	// remove the special properties of Semantic Drilldown from this list...
 	global $sdgContLang;
-	$sd_props = $sdgContLang->getSpecialPropertiesArray();
-	$sd_prop_aliases = $sdgContLang->getSpecialPropertyAliases();
+	$sd_props = $sdgContLang->getPropertyLabels();
+	$sd_prop_aliases = $sdgContLang->getPropertyAliases();
 	foreach (array_keys($all_properties) as $prop_name) {
 		foreach ($sd_props as $prop => $label) {
 			if ($prop_name == $label) {
@@ -308,7 +308,7 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $special_prop, $p
 	// otherwise, it's a bit more complicated
 	global $sdgContLang;
 
-	$sd_props = $sdgContLang->getSpecialPropertiesArray();
+	$sd_props = $sdgContLang->getPropertyLabels();
 	$values = array();
 	if (array_key_exists($prop, $sd_props)) {
 		$property = $sd_props[$prop];
@@ -324,7 +324,7 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $special_prop, $p
 		}
 	}
 	// try aliases as well
-	foreach ($sdgContLang->getSpecialPropertyAliases() as $alias => $cur_prop) {
+	foreach ($sdgContLang->getPropertyAliases() as $alias => $cur_prop) {
 		// make sure alias doesn't match actual property name - this
 		// is an issue for English, since the English-language values
 		// are used for aliases
@@ -346,9 +346,6 @@ function sdfGetValuesForProperty($subject, $subject_namespace, $special_prop, $p
  * Gets all the filters specified for a category.
  */
 function sdfLoadFiltersForCategory($category) {
-	global $sdgContLang;
-	$sd_props = $sdgContLang->getSpecialPropertiesArray();
-
 	$filters = array();
 	$filter_names = sdfGetValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, '_SD_F', SD_SP_HAS_FILTER, SD_NS_FILTER);
 	foreach ($filter_names as $filter_name) {
