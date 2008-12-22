@@ -380,253 +380,6 @@ END;
 		return $row[0];
 	}
 
-	/**
-	 * Gets an array of the possible time period values (e.g., years,
-	 * years and months) for a given date filter, and, for each one,
-	 * the number of pages that match that time period.
-	 */
-	function getTimePeriodValues($date_filter) {
-		global $smwgDefaultStore;
-
-		$possible_dates = array();
-		$property_value = str_replace(' ', '_', $date_filter->property);
-		$dbr = wfGetDB( DB_SLAVE );
-		if ($date_filter->time_period == wfMsg('sd_filter_month')) {
-			$fields = "YEAR(value_xsd), MONTH(value_xsd)";
-		} else {
-			$fields = "YEAR(value_xsd)";
-		}
-		if ($smwgDefaultStore == 'SMWSQLStore2') {
-			$smw_attributes = $dbr->tableName( 'smw_atts2' );
-			$smw_ids = $dbr->tableName( 'smw_ids' );
-			$sql =<<<END
-	SELECT $fields, count(*)
-	FROM semantic_drilldown_values sdv 
-	JOIN $smw_attributes a ON sdv.id = a.s_id
-	JOIN $smw_ids p_ids ON a.p_id = p_ids.smw_id
-	WHERE p_ids.smw_title = '$property_value'
-	GROUP BY $fields
-	ORDER BY $fields
-
-END;
-		} else {
-			$smw_attributes = $dbr->tableName( 'smw_attributes' );
-			$sql =<<<END
-	SELECT $fields, count(*)
-	FROM semantic_drilldown_values sdv 
-	JOIN $smw_attributes a ON sdv.id = a.subject_id
-	WHERE a.attribute_title = '$property_value'
-	GROUP BY $fields
-	ORDER BY $fields
-
-END;
-		}
-		$res = $dbr->query($sql);
-		while ($row = $dbr->fetchRow($res)) {
-			if ($date_filter->time_period == wfMsg('sd_filter_month')) {
-				global $sdgMonthValues;
-				$date_string = sdfMonthToString($row[1]) . " " . $row[0];
-				$possible_dates[$date_string] = $row[2];
-			} else {
-				$date_string = $row[0];
-				$possible_dates[$date_string] = $row[1];
-			}
-		}
-		$dbr->freeResult($res);
-		return $possible_dates;
-	}
-
-	/**
-	 * Gets an array of all values that the property belonging to the
-	 * passed-in filter has, and, for each one, the number of pages
-	 * that match that value.
-	 */
-	function getAllValues($filter) {
-		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore2') {
-			return $this->getAllValues_2($filter);
-		} else {
-			return $this->getAllValues_orig($filter);
-		}
-	}
-
-	function getAllValues_orig($filter) {
-		$possible_values = array();
-		$property_value = str_replace(' ', '_', $filter->property);
-		$dbr = wfGetDB( DB_SLAVE );
-		if ($filter->is_relation) {
-			$property_table_name = $dbr->tableName('smw_relations');
-			$property_table_nickname = "r";
-			$property_field = 'relation_title';
-			$value_field = 'object_title';
-		} else {
-			$property_table_name = $dbr->tableName('smw_attributes');
-			$property_table_nickname = "a";
-			$property_field = 'attribute_title';
-			$value_field = 'value_xsd';
-		}
-		$sql = "SELECT $value_field, count(*)
-			FROM semantic_drilldown_values sdv 
-			JOIN $property_table_name $property_table_nickname
-			ON sdv.id = $property_table_nickname.subject_id
-			WHERE $property_table_nickname.$property_field = '$property_value'
-			AND $value_field != ''
-			GROUP BY $value_field
-			ORDER BY $value_field";
-		$res = $dbr->query($sql);
-		while ($row = $dbr->fetchRow($res)) {
-			$value_string = str_replace('_', ' ', $row[0]);
-			$possible_values[$value_string] = $row[1];
-		}
-		$dbr->freeResult($res);
-		return $possible_values;
-	}
-
-	function getAllValues_2($filter) {
-		$possible_values = array();
-		$property_value = str_replace(' ', '_', $filter->property);
-		$dbr = wfGetDB( DB_SLAVE );
-		if ($filter->is_relation) {
-			$property_table_name = $dbr->tableName('smw_rels2');
-			$property_table_nickname = "r";
-			$value_field = 'o_ids.smw_title';
-		} else {
-			$property_table_name = $dbr->tableName('smw_atts2');
-			$property_table_nickname = "a";
-			$value_field = 'value_xsd';
-		}
-		$smw_ids = $dbr->tableName( 'smw_ids' );
-		$prop_ns = SMW_NS_PROPERTY;
-		$sql =<<<END
-	SELECT $value_field, count(*)
-	FROM semantic_drilldown_values sdv 
-	JOIN $property_table_name $property_table_nickname ON sdv.id = $property_table_nickname.s_id
-
-END;
-		if ($filter->is_relation) {
-			$sql .= "	JOIN $smw_ids o_ids ON r.o_id = o_ids.smw_id";
-		}
-		$sql .=<<<END
-	JOIN $smw_ids p_ids ON $property_table_nickname.p_id = p_ids.smw_id
-	WHERE p_ids.smw_title = '$property_value'
-	AND p_ids.smw_namespace = $prop_ns
-	AND $value_field != ''
-	GROUP BY $value_field
-	ORDER BY $value_field
-
-END;
-		$res = $dbr->query($sql);
-		while ($row = $dbr->fetchRow($res)) {
-			$value_string = str_replace('_', ' ', $row[0]);
-			$possible_values[$value_string] = $row[1];
-		}
-		$dbr->freeResult($res);
-		return $possible_values;
-	}
-
-	/**
-	 * Gets an array of all values that the property belonging to the
-	 * passed-in filter has, for pages in the current category.
-	 */
-	function getAllOrValues($applied_filter) {
-		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore2') {
-			return $this->getAllOrValues_2($applied_filter);
-		} else {
-			return $this->getAllOrValues_orig($applied_filter);
-		}
-	}
-
-	function getAllOrValues_orig($applied_filter) {
-		$possible_values = array();
-		$property_value = str_replace(' ', '_', $applied_filter->filter->property);
-		$dbr = wfGetDB( DB_SLAVE );
-		if ($applied_filter->filter->is_relation) {
-			$property_table_name = $dbr->tableName('smw_relations');
-			$property_table_nickname = "r";
-			$property_field = 'relation_title';
-			$value_field = 'object_title';
-		} else {
-			$property_table_name = $dbr->tableName('smw_attributes');
-			$property_table_nickname = "a";
-			$property_field = 'attribute_title';
-			$value_field = 'value_xsd';
-		}
-		if ($applied_filter->filter->time_period != NULL) {
-			if ($applied_filter->filter->time_period == wfMsg('sd_filter_month')) {
-				$value_field = "YEAR(value_xsd), MONTH(value_xsd)";
-			} else {
-				$value_field = "YEAR(value_xsd)";
-			}
-		}
-		$categorylinks = $dbr->tableName( 'categorylinks' );
-		$sql = "SELECT $value_field
-			FROM $property_table_name $property_table_nickname
-			JOIN $categorylinks c
-			ON $property_table_nickname.subject_id = c.cl_from
-			WHERE $property_table_nickname.$property_field = '$property_value'
-			AND c.cl_to = '{$this->category}'
-			GROUP BY $value_field
-			ORDER BY $value_field";
-		$res = $dbr->query($sql);
-		while ($row = $dbr->fetchRow($res)) {
-			if ($applied_filter->filter->time_period == wfMsg('sd_filter_month'))
-				$value_string = sdfMonthToString($row[1]) . " " . $row[0];
-			else
-				// why is trim() necessary here???
-				$value_string = str_replace('_', ' ', trim($row[0]));
-			$possible_values[] = $value_string;
-		}
-		$dbr->freeResult($res);
-		return $possible_values;
-	}
-
-	function getAllOrValues_2($applied_filter) {
-		$possible_values = array();
-		$property_value = str_replace(' ', '_', $applied_filter->filter->property);
-		$dbr = wfGetDB( DB_SLAVE );
-		if ($applied_filter->filter->is_relation) {
-			$property_table_name = $dbr->tableName('smw_rels2');
-			$property_table_nickname = "r";
-			$value_field = 'r.o_id';
-		} else {
-			$property_table_name = $dbr->tableName('smw_atts2');
-			$property_table_nickname = "a";
-			$value_field = 'value_xsd';
-		}
-		if ($applied_filter->filter->time_period != NULL) {
-			if ($applied_filter->filter->time_period == wfMsg('sd_filter_month')) {
-				$value_field = "YEAR(value_xsd), MONTH(value_xsd)";
-			} else {
-				$value_field = "YEAR(value_xsd)";
-			}
-		}
-		$smw_insts = $dbr->tableName( 'smw_inst2' );
-		$smw_ids = $dbr->tableName( 'smw_ids' );
-		$cat_ns = NS_CATEGORY;
-		$sql = "SELECT $value_field
-	FROM $property_table_name $property_table_nickname
-	JOIN $smw_ids p_ids ON $property_table_nickname.p_id = p_ids.smw_id
-	JOIN $smw_insts insts ON $property_table_nickname.s_id = insts.s_id
-	JOIN $smw_ids cat_ids ON insts.o_id = cat_ids.smw_id
-	WHERE p_ids.smw_title = '$property_value'
-	AND cat_ids.smw_namespace = $cat_ns
-	AND cat_ids.smw_title = '{$this->category}'
-	GROUP BY $value_field
-	ORDER BY $value_field";
-		$res = $dbr->query($sql);
-		while ($row = $dbr->fetchRow($res)) {
-			if ($applied_filter->filter->time_period == wfMsg('sd_filter_month'))
-				$value_string = sdfMonthToString($row[1]) . " " . $row[0];
-			else
-				// why is trim() necessary here???
-				$value_string = str_replace('_', ' ', trim($row[0]));
-			$possible_values[] = $value_string;
-		}
-		$dbr->freeResult($res);
-		return $possible_values;
-	}
-
 	function getName() {
 		return "BrowseData";
 	}
@@ -691,7 +444,7 @@ END;
 		if ($af->filter->allowed_values != null)
 			$or_values = $af->filter->allowed_values;
 		else
-			$or_values = $this->getAllOrValues($af);
+			$or_values = $af->getAllOrValues($this->category);
 		if ($af->search_term != null) {
 			// HACK - printFreeTextInput() needs values as the
 			// *keys* of the array
@@ -923,11 +676,7 @@ END;
 		$f->createTempTable();
 		$found_results_for_filter = false;
 		if (count($f->allowed_values) == 0) {
-			if ($f->time_period != NULL) {
-				$filter_values = $this->getTimePeriodValues($f);
-			} else {
-				$filter_values = $this->getAllValues($f);
-			}
+			$filter_values = $f->getAllValues();
 			if (count($filter_values) > 0)
 				$found_results_for_filter = true;
 		} else {
@@ -1015,7 +764,6 @@ END;
 		if (count($categories) == 0) {
 			return "";
 		}
-		$sd_props = $sdgContLang->getSpecialPropertiesArray();
 		$subcategory_text = wfMsg('sd_browsedata_subcategory');
 
 		$header = "";
@@ -1261,8 +1009,6 @@ END;
 
 function doSpecialBrowseData($query) {
 	global $wgRequest, $wgOut, $sdgScriptPath, $sdgContLang, $sdgNumResultsPerPage;
-	$sd_props = $sdgContLang->getSpecialPropertiesArray();
-
 	$mainCssDir = $sdgScriptPath . '/skins/';
 	$wgOut->addLink( array(
 		'rel' => 'stylesheet',
