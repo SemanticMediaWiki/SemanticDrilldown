@@ -28,7 +28,7 @@ function createFilterText($property_string, $values_source, $category_used, $tim
 	global $sdgContLang;
 
 	list($namespace, $property_name) = explode(",", $property_string, 2);
-	$sd_props = $sdgContLang->getSpecialPropertiesArray();
+	$sd_props = $sdgContLang->getPropertyLabels();
 	// a simpler call is possible in SMW 1.4 and higher
 	if (class_exists('SMWPropertyValue'))
 		$property_tag = "[[" . $sd_props[SD_SP_COVERS_PROPERTY] . "::$property_name]]";
