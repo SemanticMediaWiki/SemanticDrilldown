@@ -18,9 +18,6 @@ class SDFilter {
 	var $possible_applied_filters = array();
 
 	function load($filter_name) {
-		global $sdgContLang;
-		$sd_props = $sdgContLang->getSpecialPropertiesArray();
-
 		$f = new SDFilter();
 		$f->name = $filter_name;
 		$properties_used = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, '_SD_CP', SD_SP_COVERS_PROPERTY, SMW_NS_PROPERTY);
@@ -71,6 +68,155 @@ class SDFilter {
 		}
 		return $f;
 	}
+
+
+	/**
+	 * Gets an array of the possible time period values (e.g., years,
+	 * years and months) for this filter, and, for each one,
+	 * the number of pages that match that time period.
+	 */
+	function getTimePeriodValues() {
+		global $smwgDefaultStore;
+
+		$possible_dates = array();
+		$property_value = str_replace(' ', '_', $this->property);
+		$dbr = wfGetDB( DB_SLAVE );
+		if ($this->time_period == wfMsg('sd_filter_month')) {
+			$fields = "YEAR(value_xsd), MONTH(value_xsd)";
+		} else {
+			$fields = "YEAR(value_xsd)";
+		}
+		if ($smwgDefaultStore == 'SMWSQLStore2') {
+			$smw_attributes = $dbr->tableName( 'smw_atts2' );
+			$smw_ids = $dbr->tableName( 'smw_ids' );
+			$sql =<<<END
+	SELECT $fields, count(*)
+	FROM semantic_drilldown_values sdv 
+	JOIN $smw_attributes a ON sdv.id = a.s_id
+	JOIN $smw_ids p_ids ON a.p_id = p_ids.smw_id
+	WHERE p_ids.smw_title = '$property_value'
+	GROUP BY $fields
+	ORDER BY $fields
+
+END;
+		} else {
+			$smw_attributes = $dbr->tableName( 'smw_attributes' );
+			$sql =<<<END
+	SELECT $fields, count(*)
+	FROM semantic_drilldown_values sdv 
+	JOIN $smw_attributes a ON sdv.id = a.subject_id
+	WHERE a.attribute_title = '$property_value'
+	GROUP BY $fields
+	ORDER BY $fields
+
+END;
+		}
+		$res = $dbr->query($sql);
+		while ($row = $dbr->fetchRow($res)) {
+			if ($this->time_period == wfMsg('sd_filter_month')) {
+				global $sdgMonthValues;
+				$date_string = sdfMonthToString($row[1]) . " " . $row[0];
+				$possible_dates[$date_string] = $row[2];
+			} else {
+				$date_string = $row[0];
+				$possible_dates[$date_string] = $row[1];
+			}
+		}
+		$dbr->freeResult($res);
+		return $possible_dates;
+	}
+
+	/**
+	 * Gets an array of all values that the property belonging to this
+	 * filter has, and, for each one, the number of pages
+	 * that match that value.
+	 */
+	function getAllValues() {
+		global $smwgDefaultStore;
+		if ($this->time_period != NULL) {
+			return $this->getTimePeriodValues();
+		} elseif ($smwgDefaultStore == 'SMWSQLStore2') {
+			return $this->getAllValues_2();
+		} else {
+			return $this->getAllValues_orig();
+		}
+	}
+
+	function getAllValues_orig() {
+		$possible_values = array();
+		$property_value = str_replace(' ', '_', $this->property);
+		$dbr = wfGetDB( DB_SLAVE );
+		if ($this->is_relation) {
+			$property_table_name = $dbr->tableName('smw_relations');
+			$property_table_nickname = "r";
+			$property_field = 'relation_title';
+			$value_field = 'object_title';
+		} else {
+			$property_table_name = $dbr->tableName('smw_attributes');
+			$property_table_nickname = "a";
+			$property_field = 'attribute_title';
+			$value_field = 'value_xsd';
+		}
+		$sql = "SELECT $value_field, count(*)
+			FROM semantic_drilldown_values sdv 
+			JOIN $property_table_name $property_table_nickname
+			ON sdv.id = $property_table_nickname.subject_id
+			WHERE $property_table_nickname.$property_field = '$property_value'
+			AND $value_field != ''
+			GROUP BY $value_field
+			ORDER BY $value_field";
+		$res = $dbr->query($sql);
+		while ($row = $dbr->fetchRow($res)) {
+			$value_string = str_replace('_', ' ', $row[0]);
+			$possible_values[$value_string] = $row[1];
+		}
+		$dbr->freeResult($res);
+		return $possible_values;
+	}
+
+	function getAllValues_2() {
+		$possible_values = array();
+		$property_value = str_replace(' ', '_', $this->property);
+		$dbr = wfGetDB( DB_SLAVE );
+		if ($this->is_relation) {
+			$property_table_name = $dbr->tableName('smw_rels2');
+			$property_table_nickname = "r";
+			$value_field = 'o_ids.smw_title';
+		} else {
+			$property_table_name = $dbr->tableName('smw_atts2');
+			$property_table_nickname = "a";
+			$value_field = 'value_xsd';
+		}
+		$smw_ids = $dbr->tableName( 'smw_ids' );
+		$prop_ns = SMW_NS_PROPERTY;
+		$sql =<<<END
+	SELECT $value_field, count(*)
+	FROM semantic_drilldown_values sdv 
+	JOIN $property_table_name $property_table_nickname ON sdv.id = $property_table_nickname.s_id
+
+END;
+		if ($this->is_relation) {
+			$sql .= "	JOIN $smw_ids o_ids ON r.o_id = o_ids.smw_id";
+		}
+		$sql .=<<<END
+	JOIN $smw_ids p_ids ON $property_table_nickname.p_id = p_ids.smw_id
+	WHERE p_ids.smw_title = '$property_value'
+	AND p_ids.smw_namespace = $prop_ns
+	AND $value_field != ''
+	GROUP BY $value_field
+	ORDER BY $value_field
+
+END;
+		$res = $dbr->query($sql);
+		while ($row = $dbr->fetchRow($res)) {
+			$value_string = str_replace('_', ' ', $row[0]);
+			$possible_values[$value_string] = $row[1];
+		}
+		$dbr->freeResult($res);
+		return $possible_values;
+	}
+
+
 
 	/**
 	 * Creates a temporary database table, semantic_drilldown_filter_values,
