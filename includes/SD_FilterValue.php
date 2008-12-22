@@ -38,7 +38,9 @@ class SDFilterValue {
 			$originals = array('&lt;', '&gt;');
 			$replacements = array('<', '>');
 			$fv->text = str_replace($originals, $replacements, $fv->text);
-			if ($fv->text{0} == '<') {
+			if ($fv->text == '') {
+				// do nothing
+			} elseif ($fv->text{0} == '<') {
 				$possible_number = str_replace(',', '', trim(substr($fv->text, 1)));
 				if (is_numeric($possible_number)) {
 					$fv->upper_limit = $possible_number;
