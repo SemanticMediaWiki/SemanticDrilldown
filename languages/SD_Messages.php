@@ -1268,6 +1268,7 @@ $messages['ro'] = array(
 	'sd_browsedata_none' => 'Nimic',
 	'filters' => 'Filtre',
 	'sd_createfilter_name' => 'Nume:',
+	'sd_filter_month' => 'Lună',
 );
 
 /** Russian (Русский)

@@ -105,6 +105,12 @@ $aliases['lb'] = array(
 	'Filters' => array( 'Filteren' ),
 );
 
+/** Macedonian (Македонски) */
+$aliases['mk'] = array(
+	'CreateFilter' => array( 'КреирајФилтер' ),
+	'Filters' => array( 'Филтри' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
 $aliases['nds-nl'] = array(
 	'BrowseData' => array( 'Gegevens_bekieken' ),
