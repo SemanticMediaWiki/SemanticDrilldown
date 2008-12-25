@@ -341,7 +341,7 @@ $messages['de'] = array(
 	'sd_createfilter_usepropertyvalues' => 'Verwende alle Werte dieses Attributs für den Filter.',
 	'sd_createfilter_usecategoryvalues' => 'Verwende die Werte für den Filter von dieser Kategorie:',
 	'sd_createfilter_usedatevalues' => 'Verwende folgende Zeitangabe für diesen Filter:',
-	'sd_createfilter_entervalues' => 'Verwende diese Werte für den Filter (Werte durch Komma getrennt eingeben. Wenn ein Wert ein Komma enthält, mit "\\," ersetzen.):',
+	'sd_createfilter_entervalues' => 'Verwende diese Werte für den Filter (Werte durch Komma getrennt eingeben - Wenn ein Wert ein Komma enthält, mit „\\,“ ersetzen):',
 	'sd_createfilter_requirefilter' => 'Bevor dieser Filter angezeigt wird, muss folgender anderer Filter gesetzt sein:',
 	'sd_createfilter_label' => 'Bezeichnung dieses Filters (optional):',
 	'sd_blank_error' => 'darf nicht leer sein',
@@ -1463,12 +1463,15 @@ $messages['te'] = array(
 	'sd_browsedata_or' => 'లేదా',
 	'sd_browsedata_removefilter' => 'ఈ వడపోతని తొలగించు',
 	'sd_browsedata_addanothervalue' => 'మరో విలువని చేర్చండి',
+	'sd_browsedata_daterangestart' => 'మొదలు:',
+	'sd_browsedata_daterangeend' => 'ముగింపు:',
 	'filters' => 'వడపోతలు',
 	'sd_createfilter_name' => 'పేరు:',
 	'sd_createfilter_usecategoryvalues' => 'వడపోతకి విలువలని ఈ వర్గంనుండి తీసుకోవాలి:',
 	'sd_blank_error' => 'ఖాళీగా ఉండకూడదు',
 	'sd_filter_year' => 'సంవత్సరం',
 	'sd_filter_month' => 'నెల',
+	'sd_filter_freetext' => 'పాఠ్యం',
 );
 
 /** Tetum (Tetun)
