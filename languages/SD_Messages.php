@@ -108,6 +108,7 @@ $messages['an'] = array(
  * @author Alnokta
  * @author Meno25
  * @author OsamaK
+ * @author Ouda
  */
 $messages['ar'] = array(
 	'specialpages-group-sd_group' => 'سيمانتيك دريل داون',
@@ -127,6 +128,8 @@ $messages['ar'] = array(
 	'sd_browsedata_removesubcategoryfilter' => 'أزل فلتر التصنيف الفرعي هذا',
 	'sd_browsedata_resetfilters' => 'أعد ضبط الفلاتر',
 	'sd_browsedata_addanothervalue' => 'إضافة قيمة أخرى',
+	'sd_browsedata_daterangestart' => ':البداية',
+	'sd_browsedata_daterangeend' => ':النهاية',
 	'filters' => 'فلاتر',
 	'sd_filters_docu' => 'الفلاتر التالية موجودة في {{SITENAME}}:',
 	'createfilter' => 'إنشاء فلتر',
@@ -145,6 +148,8 @@ $messages['ar'] = array(
 	'sd_filter_year' => 'عام',
 	'sd_filter_month' => 'شهر',
 	'sd_filter_hasvalues' => 'يمتلك القيم $1.',
+	'sd_filter_freetext' => 'نص',
+	'sd_filter_daterange' => 'معدل البيانات',
 	'sd_filter_requiresfilter' => 'يتطلب وجود الفلتر $1.',
 	'sd_filter_haslabel' => 'يمتلك العلامة $1.',
 );
@@ -487,6 +492,7 @@ $messages['fa'] = array(
 
 /** Finnish (Suomi)
  * @author Nike
+ * @author Str4nd
  */
 $messages['fi'] = array(
 	'browsedata' => 'Datan selaus',
@@ -495,8 +501,11 @@ $messages['fi'] = array(
 	'sd_browsedata_subcategory' => 'Alaluokka',
 	'sd_browsedata_other' => 'Muu',
 	'sd_browsedata_none' => 'Ei mikään',
+	'sd_browsedata_or' => 'tai',
 	'sd_browsedata_removefilter' => 'Poista suodin',
 	'sd_browsedata_resetfilters' => 'Nollaa suotimet',
+	'sd_browsedata_daterangestart' => 'Alku',
+	'sd_browsedata_daterangeend' => 'Loppu',
 	'filters' => 'Suotimet',
 	'sd_filters_docu' => 'Tässä wikissä on seuraavat suotimet:',
 	'createfilter' => 'Luo suodin',
