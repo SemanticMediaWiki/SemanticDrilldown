@@ -89,6 +89,13 @@ $messages['af'] = array(
 	'sd_filter_month' => 'Maand',
 );
 
+/** Amharic (አማርኛ)
+ * @author Codex Sinaiticus
+ */
+$messages['am'] = array(
+	'sd_filter_month' => 'ወር',
+);
+
 /** Aragonese (Aragonés)
  * @author Juanpabl
  */
@@ -312,7 +319,9 @@ $messages['da'] = array(
 /** German (Deutsch)
  * @author DaSch
  * @author Krabina
+ * @author Melancholie
  * @author MichaelFrey
+ * @author Revolus
  * @author Umherirrender
  */
 $messages['de'] = array(
@@ -333,6 +342,8 @@ $messages['de'] = array(
 	'sd_browsedata_removesubcategoryfilter' => 'Lösche diesen Subkategorie-Filter',
 	'sd_browsedata_resetfilters' => 'Filter zurücksetzen',
 	'sd_browsedata_addanothervalue' => 'Anderen Wert hinzufügen',
+	'sd_browsedata_daterangestart' => 'Anfang:',
+	'sd_browsedata_daterangeend' => 'Ende:',
 	'filters' => 'Filter',
 	'sd_filters_docu' => 'Die folgenden Filter existieren in diesem Wiki:',
 	'createfilter' => 'Erstelle einen Filter',
@@ -342,6 +353,8 @@ $messages['de'] = array(
 	'sd_createfilter_usecategoryvalues' => 'Verwende die Werte für den Filter von dieser Kategorie:',
 	'sd_createfilter_usedatevalues' => 'Verwende folgende Zeitangabe für diesen Filter:',
 	'sd_createfilter_entervalues' => 'Verwende diese Werte für den Filter (Werte durch Komma getrennt eingeben - Wenn ein Wert ein Komma enthält, mit „\\,“ ersetzen):',
+	'sd_createfilter_inputtype' => 'Eingabetyp dieses Filters:',
+	'sd_createfilter_listofvalues' => 'Liste von Werten (Standard)',
 	'sd_createfilter_requirefilter' => 'Bevor dieser Filter angezeigt wird, muss folgender anderer Filter gesetzt sein:',
 	'sd_createfilter_label' => 'Bezeichnung dieses Filters (optional):',
 	'sd_blank_error' => 'darf nicht leer sein',
@@ -351,6 +364,9 @@ $messages['de'] = array(
 	'sd_filter_year' => 'Jahr',
 	'sd_filter_month' => 'Monat',
 	'sd_filter_hasvalues' => 'Er hat den Wert $1.',
+	'sd_filter_hasinputtype' => 'Es hat den Eingabetypen $1.',
+	'sd_filter_freetext' => 'Text',
+	'sd_filter_daterange' => 'Zeitspanne',
 	'sd_filter_requiresfilter' => 'Er setzt den Filter $1 voraus.',
 	'sd_filter_haslabel' => 'Er hat die Bezeichnung $1.',
 );
@@ -376,6 +392,7 @@ $messages['el'] = array(
 );
 
 /** Esperanto (Esperanto)
+ * @author Melancholie
  * @author Yekrats
  */
 $messages['eo'] = array(
@@ -412,6 +429,8 @@ $messages['eo'] = array(
 	'sd_filter_year' => 'Jaro',
 	'sd_filter_month' => 'Monato',
 	'sd_filter_hasvalues' => 'Ĝi havas valutojn $1.',
+	'sd_filter_freetext' => 'teksto',
+	'sd_filter_daterange' => 'tempospaco',
 	'sd_filter_requiresfilter' => 'Ĝi devigas la eston de la filtrilo $1.',
 	'sd_filter_haslabel' => 'Ĝi havas etikedon $1.',
 );
