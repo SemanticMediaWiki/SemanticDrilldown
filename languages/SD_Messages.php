@@ -322,6 +322,7 @@ $messages['da'] = array(
 );
 
 /** German (Deutsch)
+ * @author ChrisiPK
  * @author DaSch
  * @author Krabina
  * @author Melancholie
@@ -330,6 +331,7 @@ $messages['da'] = array(
  * @author Umherirrender
  */
 $messages['de'] = array(
+	'semanticdrilldown-desc' => 'Eine Drilldown-Benutzerschnittstelle, um durch semantische Daten zu navigieren',
 	'specialpages-group-sd_group' => 'Semantisches Drill-Down',
 	'browsedata' => 'Daten ansehen',
 	'sd_browsedata_choosecategory' => 'Kategorie auswählen',
@@ -441,11 +443,19 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Imre
  * @author Sanbec
  */
 $messages['es'] = array(
+	'sd_browsedata_subcategory' => 'Subcategoría',
 	'sd_browsedata_other' => 'Otro',
 	'sd_browsedata_none' => 'Ninguno',
+	'sd_browsedata_or' => 'o',
+	'sd_browsedata_daterangestart' => 'Inicio:',
+	'sd_createfilter_name' => 'Nombre:',
+	'sd_filter_year' => 'Año',
+	'sd_filter_month' => 'Mes',
+	'sd_filter_freetext' => 'texto',
 );
 
 /** Persian (فارسی)
@@ -818,9 +828,12 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Fryed-peach
+ * @author Hosiryuhosi
  */
 $messages['ja'] = array(
 	'sd_browsedata_none' => 'なし',
+	'sd_filter_year' => '年',
+	'sd_filter_freetext' => 'テキスト',
 );
 
 /** Javanese (Basa Jawa)
@@ -1006,7 +1019,10 @@ $messages['myv'] = array(
 $messages['nah'] = array(
 	'sd_browsedata_other' => 'Occē',
 	'sd_browsedata_none' => 'Ahtlein',
+	'sd_browsedata_or' => 'nozo',
 	'sd_createfilter_name' => 'Tōcāitl:',
+	'sd_filter_year' => 'Xihuitl',
+	'sd_filter_month' => 'Mētztli',
 );
 
 /** Low German (Plattdüütsch)
@@ -1293,10 +1309,15 @@ $messages['pt-br'] = array(
  * @author Mihai
  */
 $messages['ro'] = array(
+	'sd_browsedata_subcategory' => 'Subcategorie',
 	'sd_browsedata_none' => 'Nimic',
 	'filters' => 'Filtre',
 	'sd_createfilter_name' => 'Nume:',
+	'sd_blank_error' => 'nu poate fi gol',
+	'sd_filter_year' => 'An',
 	'sd_filter_month' => 'Lună',
+	'sd_filter_hasvalues' => 'Are valorile $1.',
+	'sd_filter_freetext' => 'text',
 );
 
 /** Russian (Русский)
