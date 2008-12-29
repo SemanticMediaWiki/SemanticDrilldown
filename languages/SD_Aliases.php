@@ -135,6 +135,11 @@ $aliases['oc'] = array(
 	'Filters' => array( 'Filtres' ),
 );
 
+/** Romanian (Română) */
+$aliases['ro'] = array(
+	'Filters' => array( 'Filtre' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'Filters' => array( 'Filter' ),

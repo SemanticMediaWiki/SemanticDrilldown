@@ -159,6 +159,7 @@ $messages['ar'] = array(
 
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
+ * @author Ouda
  */
 $messages['arz'] = array(
 	'specialpages-group-sd_group' => 'سيمانتيك دريل داون',
@@ -178,6 +179,8 @@ $messages['arz'] = array(
 	'sd_browsedata_removesubcategoryfilter' => 'أزل فلتر التصنيف الفرعى هذا',
 	'sd_browsedata_resetfilters' => 'أعد ضبط الفلاتر',
 	'sd_browsedata_addanothervalue' => 'إضافة قيمة أخرى',
+	'sd_browsedata_daterangestart' => ':البداية',
+	'sd_browsedata_daterangeend' => ':النهاية',
 	'filters' => 'فلاتر',
 	'sd_filters_docu' => 'الفلاتر التالية موجودة فى {{SITENAME}}:',
 	'createfilter' => 'إنشاء فلتر',
@@ -196,6 +199,7 @@ $messages['arz'] = array(
 	'sd_filter_year' => 'عام',
 	'sd_filter_month' => 'شهر',
 	'sd_filter_hasvalues' => 'يمتلك القيم $1.',
+	'sd_filter_freetext' => 'نص',
 	'sd_filter_requiresfilter' => 'يتطلب وجود الفلتر $1.',
 	'sd_filter_haslabel' => 'يمتلك العلامة $1.',
 );
@@ -892,11 +896,41 @@ $messages['km'] = array(
 	'sd_browsedata_subcategory' => 'ចំណាត់ក្រុមរង',
 	'sd_browsedata_other' => 'ផ្សេងៗទៀត',
 	'sd_browsedata_none' => 'ទទេ',
+	'sd_browsedata_filterbyvalue' => 'តម្រង​តាមរយៈ​តម្លៃ​នេះ',
+	'sd_browsedata_filterbysubcategory' => 'តម្រង​តាមរយៈ​ចំណាត់ថ្នាក់ក្រុម​នេះ',
+	'sd_browsedata_otherfilter' => 'បង្ហាញ​ទំព័រ​ជាមួយ​តម្លៃ​ផ្សេង​សម្រាប់​តម្រង​នេះ',
+	'sd_browsedata_nonefilter' => 'បង្ហាញ​ទំព័រ​ដោយ​គ្មាន​តម្លៃ​សម្រាប់​តម្រង​នេះ',
 	'sd_browsedata_or' => 'ឬ',
+	'sd_browsedata_removefilter' => 'ដក​តម្រង​នេះចេញ',
+	'sd_browsedata_removesubcategoryfilter' => 'ដក​តម្រង​ចំណាត់ថ្នាក់ក្រុមរង​នេះ​ចេញ',
+	'sd_browsedata_resetfilters' => 'កំណត់​តម្រង​ឡើងវិញ',
+	'sd_browsedata_addanothervalue' => 'បន្ថែម​តម្លៃ​ផ្សេង',
+	'sd_browsedata_daterangestart' => 'ចាប់ផ្ដើម:',
+	'sd_browsedata_daterangeend' => 'បញ្ចប់:',
 	'filters' => 'តម្រងការពារនានា',
+	'sd_filters_docu' => 'តម្រង​ដូចតទៅនេះ​មាន​នៅក្នុង {{SITENAME}}:',
+	'createfilter' => 'បង្កើត​តម្រង',
 	'sd_createfilter_name' => 'ឈ្មោះ៖',
+	'sd_createfilter_property' => 'លក្ខណៈសម្បត្តិ​ដែល​តម្រង​នេះ​គ្រប:',
+	'sd_createfilter_usepropertyvalues' => 'តម្លៃ​ទាំងអស់​នៃលក្ខណៈសម្បត្តិ​នេះ​សម្រាប់​តម្រង',
+	'sd_createfilter_usecategoryvalues' => 'ទទួល​តម្លៃ​សម្រាប់​តម្រង​ពី​ចំណាត់ថ្នាក់ក្រុម​នេះ:',
+	'sd_createfilter_usedatevalues' => 'ប្រើប្រាស់​ជួរ​កាលបរិច្ឆេទ សម្រាប់​តម្រង​នេះ​ជាមួយ​កំលុងពេល​នេះ:',
+	'sd_createfilter_entervalues' => 'បញ្ចូល​តម្លៃ​សម្រាប់​តម្រង​ដោយដៃ (តម្លៃ​គួរតែ​ត្រូវ​បាន​ខណ្ឌចែក​ដោយ​ចុល្លភាគ​នានា (commas)- ប្រសិនបើ​តម្លៃ​មាន​ចុល្លភាគ​មួយ ចូរ​ជំនួស​វា​ដោយ "\\,"):',
+	'sd_createfilter_inputtype' => 'បញ្ចូល​គំរូ​សម្រាប់​តម្រង​នេះ:',
+	'sd_createfilter_listofvalues' => 'បញ្ជី​នៃ​តម្លៃ (លំនាំដើម)',
+	'sd_createfilter_requirefilter' => 'ទាមទារ​តម្រង​ផ្សេងទៀត​ដើម្បី​ធ្វើការ​ជ្រើសរើស មុនពេល​តម្រង​មួយនេះ​ត្រូវ​បាន​បង្ហាញ:',
+	'sd_createfilter_label' => 'ស្លាក​សម្រាប់​តម្រង​នេះ (តាមបំណង):',
+	'sd_blank_error' => 'មិន​អាច​ទទេ​បាន​ឡើយ',
+	'sd_filter_coversproperty' => 'តម្រង​នេះ​គ្របដណ្ដប់​ចំណាត់ថ្នាក់ក្រុម $1 ។',
+	'sd_filter_getsvaluesfromcategory' => 'វា​ទទួល​តម្លៃ​របស់​ខ្លួន​ពី​ចំណាត់ថ្នាក់ក្រុម $1 ។',
+	'sd_filter_usestimeperiod' => 'វា​ប្រើប្រាស់ $1 ជា​កំលុងពេល​របស់​វា​។',
 	'sd_filter_year' => 'ឆ្នាំ',
 	'sd_filter_month' => 'ខែ',
+	'sd_filter_hasvalues' => 'វា​មាន​តម្លៃ $1 ។',
+	'sd_filter_freetext' => 'អក្សរ',
+	'sd_filter_daterange' => 'ជួរ​កាលបរិច្ឆេទ',
+	'sd_filter_requiresfilter' => 'វា​ទាមទារ​ឱ្យ​មាន​វត្តមាន​របស់​តម្រង $1 ។',
+	'sd_filter_haslabel' => 'វា​មាន​ស្លាក $1 ។',
 );
 
 /** Korean (한국어)
