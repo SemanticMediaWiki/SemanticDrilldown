@@ -472,6 +472,7 @@ $messages['es'] = array(
 
 /** Persian (فارسی)
  * @author Huji
+ * @author Ibrahim
  * @author Tofighi
  */
 $messages['fa'] = array(
@@ -490,6 +491,7 @@ $messages['fa'] = array(
 	'sd_browsedata_removesubcategoryfilter' => 'حذف این فیلتر زیر رده',
 	'sd_browsedata_resetfilters' => 'تنظیم فیلترها از نو',
 	'sd_browsedata_addanothervalue' => 'مقدار دیگری اضافه کنید',
+	'sd_browsedata_daterangestart' => ':شروع',
 	'filters' => 'فیلترها',
 	'sd_filters_docu' => 'فیلترهای زیر در این ویکی وجود دارد:',
 	'createfilter' => 'فیلتر بسازید',
@@ -1595,6 +1597,9 @@ $messages['tg-cyrl'] = array(
 	'sd_browsedata_subcategory' => 'Зергурӯҳ',
 	'sd_browsedata_other' => 'Дигар',
 	'sd_browsedata_none' => 'Ҳеҷ',
+	'sd_browsedata_or' => 'ё',
+	'sd_browsedata_daterangestart' => 'Шурӯъ:',
+	'sd_browsedata_daterangeend' => 'Охир:',
 	'sd_createfilter_name' => 'Ном:',
 	'sd_createfilter_entervalues' => 'Миқдорҳоро барои филтр дастӣ ворид кунед (миқдорҳо бояд бо вергулҳо ҷудо шаванд - агар миқдор вергул дошта бошад, онро бо "\\," иваз кунед):',
 	'sd_createfilter_requirefilter' => 'Қабл аз намоиши ин яке, филтри дигар бояд интихоб шавад:',
