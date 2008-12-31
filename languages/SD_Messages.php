@@ -93,6 +93,7 @@ $messages['af'] = array(
  * @author Codex Sinaiticus
  */
 $messages['am'] = array(
+	'sd_createfilter_name' => 'ስም:',
 	'sd_filter_month' => 'ወር',
 );
 
