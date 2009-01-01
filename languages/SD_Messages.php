@@ -112,6 +112,7 @@ $messages['an'] = array(
  * @author Ouda
  */
 $messages['ar'] = array(
+	'semanticdrilldown-desc' => 'واجهة نزول للإبحار خلال بيانات سيمانتيك',
 	'specialpages-group-sd_group' => 'سيمانتيك دريل داون',
 	'browsedata' => 'تصفح البيانات',
 	'sd_browsedata_choosecategory' => 'اختر تصنيفا',
@@ -961,23 +962,42 @@ $messages['ksh'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'semanticdrilldown-desc' => "En ''Drilldown''-Interface, fir duerch semantesch Daten ze navigéieren",
+	'specialpages-group-sd_group' => "Semnateschen ''Drilldown''",
 	'sd_browsedata_choosecategory' => 'Eng Kategorie wielen',
 	'sd_browsedata_viewcategory' => 'Kategorie weisen',
 	'sd_browsedata_subcategory' => 'Ënnerkategorie',
 	'sd_browsedata_other' => 'Aner',
 	'sd_browsedata_none' => 'Keen',
 	'sd_browsedata_filterbyvalue' => 'Filter fir dëse Wert',
+	'sd_browsedata_filterbysubcategory' => 'No dëser Ënnerkategorie filteren',
+	'sd_browsedata_otherfilter' => 'Säite weisen déi matt engem anere Wert fir dëse Filter',
+	'sd_browsedata_nonefilter' => 'Sàite weisen déi kee Wert fir dëse Filter hunn',
 	'sd_browsedata_or' => 'oder',
 	'sd_browsedata_removefilter' => 'Dëse filtr ewechhuelen',
+	'sd_browsedata_removesubcategoryfilter' => 'Dëse Filter vun den Ënnerkategorien ewechhuelen',
 	'sd_browsedata_resetfilters' => 'Filteren zrécksetzen',
 	'sd_browsedata_addanothervalue' => 'Een anere Wert derbäisetzen',
+	'sd_browsedata_daterangestart' => 'Ufank:',
+	'sd_browsedata_daterangeend' => 'Enn:',
 	'filters' => 'Filteren',
+	'sd_filters_docu' => 'Dës Filtere gëtt et op {{SITENAME}}:',
+	'createfilter' => 'E Filter uleeën',
 	'sd_createfilter_name' => 'Numm:',
+	'sd_createfilter_usepropertyvalues' => 'All Werter vun dëser Eegeschaft fir de Filter benotzen',
+	'sd_createfilter_usecategoryvalues' => 'Werter fir dëse Filter vun dëser Kategorie kréien:',
+	'sd_createfilter_listofvalues' => 'Lëscht vun de Werter (stanard)',
+	'sd_createfilter_requirefilter' => 'Verlaangen dat en anere Filter gewielt gëtt ier dësen ugewise gëtt:',
 	'sd_createfilter_label' => 'Etiquette fir dëse Filter (fakultativ):',
 	'sd_blank_error' => 'däerf net eidel sinn',
+	'sd_filter_getsvaluesfromcategory' => 'E kritt seng Werter aus der Kategorie $1.',
 	'sd_filter_year' => 'Joer',
 	'sd_filter_month' => 'Mount',
+	'sd_filter_hasvalues' => 'En huet de Wert $1.',
 	'sd_filter_freetext' => 'Text',
+	'sd_filter_daterange' => 'Datumsberäich',
+	'sd_filter_requiresfilter' => "E verlaangt d'Presenz vum Filter $1.",
+	'sd_filter_haslabel' => "en huet d'Etiquette $1.",
 );
 
 /** Malayalam (മലയാളം)
@@ -1138,16 +1158,59 @@ $messages['nl'] = array(
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
  * @author Jon Harald Søby
  */
 $messages['nn'] = array(
+	'semanticdrilldown-desc' => 'Eit «drilldown»-brukargrensesnitt for navigering gjennom semantiske data',
+	'specialpages-group-sd_group' => 'Semantisk «drilldown»',
+	'browsedata' => 'Bla gjennom data',
+	'sd_browsedata_choosecategory' => 'Vel ein kategori',
+	'sd_browsedata_viewcategory' => 'sjå kategori',
+	'sd_browsedata_docu' => 'Trykk på ein eller fleire einingar nedanfor for å avgrensa resultata.',
+	'sd_browsedata_subcategory' => 'Underkategori',
+	'sd_browsedata_other' => 'Annan',
 	'sd_browsedata_none' => 'Ingen',
+	'sd_browsedata_filterbyvalue' => 'Filtrer etter denne verdien',
+	'sd_browsedata_filterbysubcategory' => 'Filtrer etter denne underkategorien',
+	'sd_browsedata_otherfilter' => 'Syn sider med ein annan verdi for dette filteret',
+	'sd_browsedata_nonefilter' => 'Syn sider med null verdi for dette fileteret',
+	'sd_browsedata_or' => 'eller',
+	'sd_browsedata_removefilter' => 'Fjern dette filteret',
+	'sd_browsedata_removesubcategoryfilter' => 'Fjern dette underkategorifilteret',
+	'sd_browsedata_resetfilters' => 'Nullstill filter',
+	'sd_browsedata_addanothervalue' => 'Legg til ny verdi',
+	'sd_browsedata_daterangestart' => 'Byrjing:',
+	'sd_browsedata_daterangeend' => 'Slutt:',
+	'filters' => 'Filter',
+	'sd_filters_docu' => 'Følgjande filter finst på {{SITENAME}}:',
+	'createfilter' => 'Opprett eit filter',
 	'sd_createfilter_name' => 'Namn:',
+	'sd_createfilter_property' => 'Eigenskap som dette fileteret dekkjer:',
+	'sd_createfilter_usepropertyvalues' => 'Nytt alle verdiar av denne eigenskapen for filteret:',
+	'sd_createfilter_usecategoryvalues' => 'Få verdiar for filteret frå denne kategorien:',
+	'sd_createfilter_usedatevalues' => 'Nytt datoområde for dette filteret med denne tidsperioden:',
+	'sd_createfilter_entervalues' => 'Skriv inn verdiar for filteret manuelt (verdiar burde vera skilde med komma, so om ein verdi inneheld eit komma, erstatt kommaet med «\\,»);',
+	'sd_createfilter_inputtype' => 'Inndatatype for dette filteret:',
+	'sd_createfilter_listofvalues' => 'lista over verdiar (standard)',
+	'sd_createfilter_requirefilter' => 'Krev at eit anna filter blir valt før dette blir vist:',
+	'sd_createfilter_label' => 'Merkelapp for dette filteret (valfritt):',
+	'sd_blank_error' => 'kan ikkje vera tom',
+	'sd_filter_coversproperty' => 'Dette filteret dekkjer eigenskapen $1.',
+	'sd_filter_getsvaluesfromcategory' => 'Det får verdiane sine frå kategorien $1.',
+	'sd_filter_usestimeperiod' => 'Det nyttar $1 som tidsperiode.',
 	'sd_filter_year' => 'År',
 	'sd_filter_month' => 'Månad',
+	'sd_filter_hasvalues' => 'Det har verdiane $1.',
+	'sd_filter_hasinputtype' => 'Det har inndatatypen $1.',
+	'sd_filter_freetext' => 'tekst',
+	'sd_filter_daterange' => 'datoområde',
+	'sd_filter_requiresfilter' => 'Det krev at filteret $1 er til stades.',
+	'sd_filter_haslabel' => 'Det har merkelappen $1.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Harald Khan
  * @author Jon Harald Søby
  */
 $messages['no'] = array(
@@ -1158,7 +1221,7 @@ $messages['no'] = array(
 	'sd_browsedata_subcategory' => 'Underkategori',
 	'sd_browsedata_other' => 'Annen',
 	'sd_browsedata_none' => 'Ingen',
-	'sd_browsedata_filterbyvalue' => 'Foøtrer etter denne verdien',
+	'sd_browsedata_filterbyvalue' => 'Filtrer etter denne verdien',
 	'sd_browsedata_filterbysubcategory' => 'Filtrer etter denne underkategorien',
 	'sd_browsedata_otherfilter' => 'Vis sider med en annen verdi for dette filteret',
 	'sd_browsedata_nonefilter' => 'Vis sider uten noen verdi for dette filteret',
