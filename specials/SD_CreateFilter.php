@@ -117,13 +117,13 @@ function doSpecialCreateFilter() {
 			$full_text = createFilterText($property_name, $values_source, $category_name, $time_period, $filter_values, $input_type, $required_filter, $filter_label);
 			// HTML-encode
 			$full_text = str_replace('"', '&quot;', $full_text);
-			$text = sdfPrintRedirectForm($title, $full_text, "", $save_page, $preview_page, false, false, false);
+			$text = SDUtils::printRedirectForm($title, $full_text, "", $save_page, $preview_page, false, false, false);
 			$wgOut->addHTML($text);
 			return;
 		}
 	}
 
-	$all_properties = sdfGetSemanticProperties();
+	$all_properties = SDUtils::getSemanticProperties();
 
 	// set 'title' as hidden field, in case there's no URL niceness
 	global $wgContLang;
@@ -174,7 +174,7 @@ END;
 	<select id="category_dropdown" name="category_name">
 
 END;
-	$categories = sdfGetTopLevelCategories();
+	$categories = SDUtils::getTopLevelCategories();
 	foreach ($categories as $category) {
 		$category = str_replace('_', ' ', $category);
 		$text .= "	<option>$category</option>\n";
@@ -204,7 +204,7 @@ END;
 	<option />
 
 END;
-	$filters = sdfGetFilters();
+	$filters = SDUtils::getFilters();
 	foreach ($filters as $filter) {
 		$filter = str_replace('_', ' ', $filter);
 		$text .= "	<option>$filter</option>\n";

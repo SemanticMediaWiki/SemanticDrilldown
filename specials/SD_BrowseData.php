@@ -56,8 +56,8 @@ class BrowseDataPage extends QueryPage {
 		// get the two arrays for subcategories - one for only the
 		// immediate subcategories, for display, and the other for
 		// all subcategories, sub-subcategories, etc., for querying
-		$this->next_level_subcategories = sdfGetCategoryChildren($actual_cat, true, 1);
-		$this->all_subcategories = sdfGetCategoryChildren($actual_cat, true, 10);
+		$this->next_level_subcategories = SDUtils::getCategoryChildren($actual_cat, true, 1);
+		$this->all_subcategories = SDUtils::getCategoryChildren($actual_cat, true, 10);
 	}
 
 	function makeBrowseURL($category, $applied_filters = array(), $subcategory = null) {
@@ -398,7 +398,7 @@ END;
 
 END;
 		foreach ($categories as $i => $category) {
-			$category_children = sdfGetCategoryChildren($category, false, 5);
+			$category_children = SDUtils::getCategoryChildren($category, false, 5);
 			$category_str = $category . " (" . count($category_children) . ")";
 			if (str_replace('_', ' ', $this->category) == $category) {
 				$text .= '						<div class="drilldown-category selected-category">';
@@ -419,7 +419,7 @@ END;
 	}
 
 	function printFilterLabel($filter_name) {
-		$labels_for_filter = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, '_SD_L', SD_SP_HAS_LABEL, NS_MAIN);
+		$labels_for_filter = SDUtils::getValuesForProperty($filter_name, SD_NS_FILTER, '_SD_L', SD_SP_HAS_LABEL, NS_MAIN);
 		if (count($labels_for_filter) > 0) {
 			$filter_label = $labels_for_filter[0];
 		} else {
@@ -472,7 +472,7 @@ END;
 			elseif ($value === ' none')
 				$filter_text = wfMsg('sd_browsedata_none');
 			elseif ($af->filter->is_boolean)
-				$filter_text = sdfBooleanToString($value);
+				$filter_text = SDUtils::booleanToString($value);
 			else
 				$filter_text = $value;
 			$applied_filters = $this->applied_filters;
@@ -540,7 +540,7 @@ END;
 			elseif ($value_str === '_none')
 				$filter_text = wfMsg('sd_browsedata_none');
 			elseif ($f->is_boolean)
-				$filter_text = sdfBooleanToString($value_str);
+				$filter_text = SDUtils::booleanToString($value_str);
 			else
 				$filter_text = str_replace('_', ' ', $value_str);
 			$filter_text .= " ($num_results)";
@@ -759,7 +759,7 @@ END;
 
 		$skin = $wgUser->getSkin();
 		$browse_data_title = Title::newFromText('BrowseData', NS_SPECIAL);
-		$categories = sdfGetTopLevelCategories();
+		$categories = SDUtils::getTopLevelCategories();
 		// if there are no categories, escape quickly
 		if (count($categories) == 0) {
 			return "";
@@ -805,7 +805,7 @@ END;
 				elseif ($fv->text == ' none')
 					$filter_text = wfMsg('sd_browsedata_none');
 				elseif ($af->filter->is_boolean)
-					$filter_text = sdfBooleanToString($fv->text);
+					$filter_text = SDUtils::booleanToString($fv->text);
 				else
 					$filter_text = $fv->text;
 				$temp_filters_array = $this->applied_filters;
@@ -840,7 +840,7 @@ END;
 		if (count($this->next_level_subcategories) > 0) {
 			$results_line = "";
 			foreach ($this->next_level_subcategories as $i => $subcat) {
-				$further_subcats = sdfGetCategoryChildren($subcat, true, 10);
+				$further_subcats = SDUtils::getCategoryChildren($subcat, true, 10);
 				$num_results = $this->getNumResults($subcat, $further_subcats);
 				if ($num_results > 0) {
 					if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
@@ -853,7 +853,7 @@ END;
 				$header .= "					<p><strong>$subcategory_text:</strong> $results_line</p>\n";
 			}
 		}
-		$filters = sdfLoadFiltersForCategory($this->category);
+		$filters = SDUtils::loadFiltersForCategory($this->category);
 		foreach ($filters as $f) {
 			foreach ($this->applied_filters as $af) {
 				if ($af->filter->name == $f->name)
@@ -1078,7 +1078,7 @@ END;
 	if (! $category) {
 		$category_title = wfMsg('browsedata');
 	} else {
-		$titles_for_category = sdfGetValuesForProperty($category, NS_CATEGORY, '_SD_DT', SD_SP_HAS_DRILLDOWN_TITLE, NS_MAIN);
+		$titles_for_category = SDUtils::getValuesForProperty($category, NS_CATEGORY, '_SD_DT', SD_SP_HAS_DRILLDOWN_TITLE, NS_MAIN);
 		if (count($titles_for_category) > 0) {
 			$category_title = str_replace('_', ' ', $titles_for_category[0]);
 		} else {
@@ -1088,7 +1088,7 @@ END;
 	// if no category was specified, go with the first
 	// category on the site, alphabetically
 	if (! $category) {
-		$categories = sdfGetTopLevelCategories();
+		$categories = SDUtils::getTopLevelCategories();
 		if (count($categories) > 0) {
 			$category = $categories[0];
 		}
@@ -1097,7 +1097,7 @@ END;
 	$wgOut->setPageTitle($category_title);
 	$subcategory = $wgRequest->getVal('_subcat');
 
-	$filters = sdfLoadFiltersForCategory($category);
+	$filters = SDUtils::loadFiltersForCategory($category);
 
 	$filters_used = array();
 	foreach ($filters as $i => $filter)
@@ -1126,7 +1126,7 @@ END;
 	// add every unused filter to the $remaining_filters array, unless
 	// it requires some other filter that hasn't been applied
 	foreach ($filters as $i => $filter) {
-		$required_filters = sdfGetValuesForProperty($filter->name, SD_NS_FILTER, '_SD_RF', SD_SP_REQUIRES_FILTER, SD_NS_FILTER);
+		$required_filters = SDUtils::getValuesForProperty($filter->name, SD_NS_FILTER, '_SD_RF', SD_SP_REQUIRES_FILTER, SD_NS_FILTER);
 		$matched_all_required_filters = true;
 		foreach ($required_filters as $required_filter) {
 			$found_match = false;
