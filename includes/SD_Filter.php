@@ -20,7 +20,7 @@ class SDFilter {
 	function load($filter_name) {
 		$f = new SDFilter();
 		$f->name = $filter_name;
-		$properties_used = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, '_SD_CP', SD_SP_COVERS_PROPERTY, SMW_NS_PROPERTY);
+		$properties_used = SDUtils::getValuesForProperty($filter_name, SD_NS_FILTER, '_SD_CP', SD_SP_COVERS_PROPERTY, SMW_NS_PROPERTY);
 		if (count($properties_used) > 0) {
 			$f->property = $properties_used[0];
 		}
@@ -43,21 +43,21 @@ class SDFilter {
 				}
 			}
 		}
-		$categories = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, '_SD_VC', SD_SP_GETS_VALUES_FROM_CATEGORY, NS_CATEGORY);
-		$time_periods = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, '_SD_TP', SD_SP_USES_TIME_PERIOD, null);
+		$categories = SDUtils::getValuesForProperty($filter_name, SD_NS_FILTER, '_SD_VC', SD_SP_GETS_VALUES_FROM_CATEGORY, NS_CATEGORY);
+		$time_periods = SDUtils::getValuesForProperty($filter_name, SD_NS_FILTER, '_SD_TP', SD_SP_USES_TIME_PERIOD, null);
 		if (count($categories) > 0) {
 			$f->category = $categories[0];
-			$f->allowed_values = sdfGetCategoryChildren($f->category, false, 5);
+			$f->allowed_values = SDUtils::getCategoryChildren($f->category, false, 5);
 		} elseif (count($time_periods) > 0) {
 			$f->time_period = $time_periods[0];
 			$f->allowed_values = array();
 		} elseif ($f->is_boolean) {
 			$f->allowed_values = array('0', '1');
 		} else {
-			$values = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, '_SD_V', SD_SP_HAS_VALUE, null);
+			$values = SDUtils::getValuesForProperty($filter_name, SD_NS_FILTER, '_SD_V', SD_SP_HAS_VALUE, null);
 			$f->allowed_values = $values;
 		}
-		$input_types = sdfGetValuesForProperty($filter_name, SD_NS_FILTER, '_SD_IT', SD_SP_HAS_INPUT_TYPE, null);
+		$input_types = SDUtils::getValuesForProperty($filter_name, SD_NS_FILTER, '_SD_IT', SD_SP_HAS_INPUT_TYPE, null);
 		if (count($input_types) > 0) {
 			$f->input_type = $input_types[0];
 		}
@@ -115,7 +115,7 @@ END;
 		while ($row = $dbr->fetchRow($res)) {
 			if ($this->time_period == wfMsg('sd_filter_month')) {
 				global $sdgMonthValues;
-				$date_string = sdfMonthToString($row[1]) . " " . $row[0];
+				$date_string = SDUtils::monthToString($row[1]) . " " . $row[0];
 				$possible_dates[$date_string] = $row[2];
 			} else {
 				$date_string = $row[0];

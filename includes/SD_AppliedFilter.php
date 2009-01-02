@@ -21,11 +21,11 @@ class SDAppliedFilter {
 		$af->search_term = str_replace('_', ' ', $search_term);
 		if ($lower_date != null) {
 			$af->lower_date = $lower_date;
-			$af->lower_date_string = sdfMonthToString($lower_date['month']) . " " . $lower_date['day'] . ", " . $lower_date['year'];
+			$af->lower_date_string = SDUtils::monthToString($lower_date['month']) . " " . $lower_date['day'] . ", " . $lower_date['year'];
 		}
 		if ($upper_date != null) {
 			$af->upper_date = $upper_date;
-			$af->upper_date_string = sdfMonthToString($upper_date['month']) . " " . $upper_date['day'] . ", " . $upper_date['year'];
+			$af->upper_date_string = SDUtils::monthToString($upper_date['month']) . " " . $upper_date['day'] . ", " . $upper_date['year'];
 		}
 		if (! is_array($values)) {
 			$values = array($values);
@@ -148,7 +148,7 @@ class SDAppliedFilter {
 		$res = $dbr->query($sql);
 		while ($row = $dbr->fetchRow($res)) {
 			if ($this->filter->time_period == wfMsg('sd_filter_month'))
-				$value_string = sdfMonthToString($row[1]) . " " . $row[0];
+				$value_string = SDUtils::monthToString($row[1]) . " " . $row[0];
 			else
 				// why is trim() necessary here???
 				$value_string = str_replace('_', ' ', trim($row[0]));
@@ -194,7 +194,7 @@ class SDAppliedFilter {
 		$res = $dbr->query($sql);
 		while ($row = $dbr->fetchRow($res)) {
 			if ($this->filter->time_period == wfMsg('sd_filter_month'))
-				$value_string = sdfMonthToString($row[1]) . " " . $row[0];
+				$value_string = SDUtils::monthToString($row[1]) . " " . $row[0];
 			else
 				// why is trim() necessary here???
 				$value_string = str_replace('_', ' ', trim($row[0]));

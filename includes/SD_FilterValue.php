@@ -28,7 +28,7 @@ class SDFilterValue {
 		if ($filter_time_period != null) {
 			if ($filter_time_period == wfMsg('sd_filter_month')) {
 				list($month_str, $year) = explode(' ', $fv->text);
-				$fv->month = sdfStringToMonth($month_str);
+				$fv->month = SDUtils::stringToMonth($month_str);
 				$fv->year = $year;
 			} else {
 				$fv->year = $fv->text;
