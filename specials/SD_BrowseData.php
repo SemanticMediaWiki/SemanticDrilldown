@@ -756,6 +756,7 @@ END;
 	function getPageHeader() {
 		global $wgUser, $wgRequest;
 		global $sdgContLang, $sdgScriptPath;
+		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
 		$skin = $wgUser->getSkin();
 		$browse_data_title = Title::newFromText('BrowseData', NS_SPECIAL);
@@ -839,14 +840,38 @@ END;
 		$num_printed_values = 0;
 		if (count($this->next_level_subcategories) > 0) {
 			$results_line = "";
+			// loop through to create an array of subcategory
+			// names and their number of values, then loop through
+			// the array to print them - we loop through twice,
+			// instead of once, to be able to print a tag-cloud
+			// display if necessary
+			$subcat_values = array();
 			foreach ($this->next_level_subcategories as $i => $subcat) {
 				$further_subcats = SDUtils::getCategoryChildren($subcat, true, 10);
 				$num_results = $this->getNumResults($subcat, $further_subcats);
+				$subcat_values[$subcat] = $num_results;
+			}
+			// get necessary values for creating the tag cloud,
+			// if appropriate
+			if ($sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0) {
+				$lowest_num_results = min($subcat_values);
+				$highest_num_results = max($subcat_values);
+				$num_results_midpoint = ($lowest_num_results + $highest_num_results) / 2;
+				$font_size_midpoint = ($sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize) / 2;
+				$num_results_per_font_pixel = ($highest_num_results + 1 - $lowest_num_results) / 						($sdgFiltersLargestFontSize + 1 - $sdgFiltersSmallestFontSize);
+			}
+
+			foreach ($subcat_values as $subcat => $num_results) {
 				if ($num_results > 0) {
 					if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
 					$filter_text = str_replace('_', ' ', $subcat) . " ($num_results)";
 					$filter_url = $cur_url . '_subcat=' . urlencode($subcat);
-					$results_line .= "\n					" . '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_filterbysubcategory') . '">' . $filter_text . '</a>';
+					if ($sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0) {
+						$font_size = round($font_size_midpoint + (($num_results - $num_results_midpoint) / $num_results_per_font_pixel));
+						$results_line .= "\n					" . '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_filterbysubcategory') . '" style="font-size: ' . $font_size . 'px">' . $filter_text . '</a>';
+					} else {
+						$results_line .= "\n					" . '<a href="' . $filter_url . '" title="' . wfMsg('sd_browsedata_filterbysubcategory') . '">' . $filter_text . '</a>';
+					}
 				}
 			}
 			if ($results_line != "") {
