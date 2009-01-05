@@ -162,6 +162,7 @@ $messages['ar'] = array(
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  * @author Ouda
+ * @author Ramsis II
  */
 $messages['arz'] = array(
 	'specialpages-group-sd_group' => 'سيمانتيك دريل داون',
@@ -205,6 +206,7 @@ $messages['arz'] = array(
 	'sd_filter_hasvalues' => 'يمتلك القيم $1.',
 	'sd_filter_hasinputtype' => 'لها نوع المدخل $1',
 	'sd_filter_freetext' => 'نص',
+	'sd_filter_daterange' => 'مدى البيانات',
 	'sd_filter_requiresfilter' => 'يتطلب وجود الفلتر $1.',
 	'sd_filter_haslabel' => 'يمتلك العلامة $1.',
 );
@@ -470,6 +472,21 @@ $messages['es'] = array(
 	'sd_filter_year' => 'Año',
 	'sd_filter_month' => 'Mes',
 	'sd_filter_freetext' => 'texto',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'sd_browsedata_choosecategory' => 'Kategoria aukeratu',
+	'sd_browsedata_viewcategory' => 'kategoria ikusi',
+	'sd_browsedata_subcategory' => 'Azpikategoria',
+	'sd_browsedata_or' => 'edo',
+	'sd_browsedata_addanothervalue' => 'Beste balio bat gehitu',
+	'sd_createfilter_name' => 'Izena:',
+	'sd_filter_year' => 'Urtea',
+	'sd_filter_month' => 'Hilabetea',
+	'sd_filter_freetext' => 'testua',
 );
 
 /** Persian (فارسی)
@@ -1684,6 +1701,57 @@ $messages['tg-cyrl'] = array(
  */
 $messages['th'] = array(
 	'filters' => 'ตัวกรอง',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'semanticdrilldown-desc' => 'Isang pambutas ("pambarena") na ugnayang-hangganan para sa paglilibot sa kahabaan ng datong semantiko (hinggil sa kahulugan ng salita)',
+	'specialpages-group-sd_group' => 'Semantikong Pababang Pagbubutas ("Pagbabarena")',
+	'browsedata' => 'Tumingin-tingin sa dato',
+	'sd_browsedata_choosecategory' => 'Pumili ng isang kaurian (kategorya)',
+	'sd_browsedata_viewcategory' => 'tingnan ang kaurian',
+	'sd_browsedata_docu' => 'Pindutin ang isa o mahigit pang mga bagay na nasa ibaba upang mapakipot/mapakaunti pa ang mga kinalabasan.',
+	'sd_browsedata_subcategory' => 'Kabahaging kaurian',
+	'sd_browsedata_other' => 'Iba pa',
+	'sd_browsedata_none' => 'Wala',
+	'sd_browsedata_filterbyvalue' => 'Salain sa pamamagitan ng ganitong halaga',
+	'sd_browsedata_filterbysubcategory' => 'Salain sa pamamagitan ng ganitong kabahaging kaurian',
+	'sd_browsedata_otherfilter' => 'Ipakita ang mga pahinang may iba pang halaga para sa ganitong pansala',
+	'sd_browsedata_nonefilter' => 'Ipakita ang mga pahinang walang halaga para sa pansalang ito',
+	'sd_browsedata_or' => 'o',
+	'sd_browsedata_removefilter' => 'Tanggalin ang pansalang ito',
+	'sd_browsedata_removesubcategoryfilter' => 'Tanggalin ang ganitong pansala ng kabahaging kaurian',
+	'sd_browsedata_resetfilters' => 'Muling itakda ang mga pansala',
+	'sd_browsedata_addanothervalue' => 'Magdagdag ng iba pang halaga',
+	'sd_browsedata_daterangestart' => 'Simula:',
+	'sd_browsedata_daterangeend' => 'Wakas:',
+	'filters' => 'Mga pansala',
+	'sd_filters_docu' => 'Umiiral ang sumusunod na mga pansala sa loob ng {{SITENAME}}:',
+	'createfilter' => 'Lumikha ng isang pansala',
+	'sd_createfilter_name' => 'Pangalan:',
+	'sd_createfilter_property' => 'Pag-aaring nasasakop ng pansalang ito:',
+	'sd_createfilter_usepropertyvalues' => 'Gamitin ang lahat ng mga halaga ng pag-aaring ito para sa pansalang ito',
+	'sd_createfilter_usecategoryvalues' => 'Kumuha ng mga halaga para sa pansala mula sa kauriang ito:',
+	'sd_createfilter_usedatevalues' => 'Gamitin ang mga saklaw ng petsa para sa pansalang ito na may ganitong sakop ng kapanahunan:',
+	'sd_createfilter_entervalues' => 'Kinakamay na ipasok ang mga halaga para sa pansala (dapat na pinaghihiwahiwalay ng mga kuwit ang mga halaga - kung naglalaman ng kuwit ang isang halaga, palitan ito ng "\\,"):',
+	'sd_createfilter_inputtype' => 'Uri ng pampasok/pinapasok para sa pansalang ito:',
+	'sd_createfilter_listofvalues' => 'talaan ng mga halaga (likas na nakatakda)',
+	'sd_createfilter_requirefilter' => 'Pilitin ang iba pang pansala na mapili bago ipakita ang isang ito:',
+	'sd_createfilter_label' => 'Tatak para pansalang ito (maaaring wala nito):',
+	'sd_blank_error' => 'hindi maaaring walang laman/patlang',
+	'sd_filter_coversproperty' => 'Nasasakop ng pansalang ito ang ari-ariang $1.',
+	'sd_filter_getsvaluesfromcategory' => 'Kumukuha ito ng sarili niyang mga halaga mula sa kauriang $1.',
+	'sd_filter_usestimeperiod' => 'Ginagamit nito ang $1 bilang saklaw ng kapanahunan.',
+	'sd_filter_year' => 'Taon',
+	'sd_filter_month' => 'Buwan',
+	'sd_filter_hasvalues' => 'Mayroon itong mga halagang $1.',
+	'sd_filter_hasinputtype' => 'Mayroon itong uri ng pagpasok/ipinasok na $1.',
+	'sd_filter_freetext' => 'teksto',
+	'sd_filter_daterange' => 'saklaw ng petsa',
+	'sd_filter_requiresfilter' => 'Kinakailangan nito ang pagkakaroon ng pansalang $1.',
+	'sd_filter_haslabel' => 'Mayroon itong tatak na $1.',
 );
 
 /** Turkish (Türkçe)

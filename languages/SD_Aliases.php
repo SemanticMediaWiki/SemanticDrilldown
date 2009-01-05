@@ -111,6 +111,11 @@ $aliases['mk'] = array(
 	'Filters' => array( 'Филтри' ),
 );
 
+/** Maltese (Malti) */
+$aliases['mt'] = array(
+	'Filters' => array( 'Filtri' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
 $aliases['nds-nl'] = array(
 	'BrowseData' => array( 'Gegevens_bekieken' ),
