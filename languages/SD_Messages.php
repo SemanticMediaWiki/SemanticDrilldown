@@ -1805,12 +1805,23 @@ $messages['vi'] = array(
 
 /** Volapük (Volapük)
  * @author Malafaya
+ * @author Smeira
  */
 $messages['vo'] = array(
+	'browsedata' => 'Padön da nünods',
+	'sd_browsedata_choosecategory' => 'Välön kladi',
+	'sd_browsedata_viewcategory' => 'logön kladi',
+	'sd_browsedata_subcategory' => 'Donaklad',
 	'sd_browsedata_other' => 'Votik',
+	'sd_browsedata_none' => 'Nonik',
+	'sd_browsedata_or' => 'u',
+	'sd_browsedata_addanothervalue' => 'Läükön völadi votik',
+	'sd_browsedata_daterangestart' => 'Prim:',
+	'sd_browsedata_daterangeend' => 'Fin:',
 	'sd_createfilter_name' => 'Nem:',
 	'sd_filter_year' => 'Yel',
 	'sd_filter_month' => 'Mul',
+	'sd_filter_freetext' => 'vödem',
 );
 
 /** Chinese (China) (‪中文(中国大陆)‬)
