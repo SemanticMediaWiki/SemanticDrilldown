@@ -702,6 +702,56 @@ $messages['haw'] = array(
 	'sd_createfilter_name' => 'Inoa:',
 );
 
+/** Hebrew (עברית)
+ * @author Rotemliss
+ * @author YaronSh
+ */
+$messages['he'] = array(
+	'browsedata' => 'עיון בנתונים',
+	'sd_browsedata_choosecategory' => 'בחירת קטגוריה',
+	'sd_browsedata_viewcategory' => 'צפייה בקטגוריה',
+	'sd_browsedata_docu' => 'לחצו על פריט אחד או יותר להלן כדי לצמצם את התוצאות.',
+	'sd_browsedata_subcategory' => 'קטגוריית משנה',
+	'sd_browsedata_other' => 'אחר',
+	'sd_browsedata_none' => 'ללא',
+	'sd_browsedata_filterbyvalue' => 'סינון לפי ערך זה',
+	'sd_browsedata_filterbysubcategory' => 'סינון לפי קטגוריית משנה זו',
+	'sd_browsedata_otherfilter' => 'הצגת דפים עם ערך אחר עבור מסנן זה',
+	'sd_browsedata_nonefilter' => 'הצגת דפים ללא ערך עבור מסנן זה',
+	'sd_browsedata_or' => 'או',
+	'sd_browsedata_removefilter' => 'הסרת מסנן זה',
+	'sd_browsedata_removesubcategoryfilter' => 'הסרת המסנן של קטגוריית משנה זו',
+	'sd_browsedata_resetfilters' => 'איפוס המסננים',
+	'sd_browsedata_addanothervalue' => 'הוספת ערך נוסף',
+	'sd_browsedata_daterangestart' => 'התחלה:',
+	'sd_browsedata_daterangeend' => 'סיום:',
+	'filters' => 'מסננים',
+	'sd_filters_docu' => 'המסננים הבאים קיימים ב{{grammar:תחילית|{{SITENAME}}}}:',
+	'createfilter' => 'יצירת מסנן',
+	'sd_createfilter_name' => 'שם:',
+	'sd_createfilter_property' => 'המאפיין אותו מכסה מסנן זה:',
+	'sd_createfilter_usepropertyvalues' => 'שימוש בכל הערכים של מאפיין זה עבור המסנן',
+	'sd_createfilter_usecategoryvalues' => 'קבלת הערכים עבור המסנן מקטגוריה זו:',
+	'sd_createfilter_usedatevalues' => 'שימוש בטווחי תאריכים עבור מסנן זה, עם משך הזמן הבא:',
+	'sd_createfilter_entervalues' => 'כתבו ערכים ידנית עבור המסנן (הערכים אמורים להיות מופרדים בפסיקים - אם ערך מכיל פסיק, החליפו אותו ב־"\\,"):',
+	'sd_createfilter_inputtype' => 'סוג הקלט עבור מסנן זה:',
+	'sd_createfilter_listofvalues' => 'רשימת הערכים (ברירת מחדל)',
+	'sd_createfilter_requirefilter' => 'הצבת דרישה לבחירת מסנן אחר לפני שזה יוצג:',
+	'sd_createfilter_label' => 'תווית עבור מסנן זה (אופציונלי):',
+	'sd_blank_error' => 'לא ניתן להשאיר ריק',
+	'sd_filter_coversproperty' => 'מסנן זה מכסה את המאפיין $1.',
+	'sd_filter_getsvaluesfromcategory' => 'קבלת הערכים עבורו נעשית מהקטגוריה $1.',
+	'sd_filter_usestimeperiod' => 'נעשה שימוש ב־$1 כמשך הזמן שלו.',
+	'sd_filter_year' => 'שנה',
+	'sd_filter_month' => 'חודש',
+	'sd_filter_hasvalues' => 'הוא מכיל את הערכים $1.',
+	'sd_filter_hasinputtype' => 'הוא מכיל את סוג הקלט $1.',
+	'sd_filter_freetext' => 'טקסט',
+	'sd_filter_daterange' => 'טווח תאריכים',
+	'sd_filter_requiresfilter' => 'נדרשת עבורו נוכחות של המסנן $1.',
+	'sd_filter_haslabel' => 'חלה עליו התווית $1.',
+);
+
 /** Hindi (हिन्दी)
  * @author Kaustubh
  */
