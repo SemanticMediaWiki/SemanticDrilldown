@@ -66,8 +66,13 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Jon Harald Søby
+ * @author Purodha
  */
 $messages['qqq'] = array(
+	'semanticdrilldown-desc' => 'Short desciption of this extension.
+Shown in [[Special:Version]].
+Do not translate link targets,
+or tag names.',
 	'sd_browsedata_other' => '{{Identical|Other}}',
 	'sd_browsedata_none' => '{{Identical|None}}',
 	'filters' => '{{Identical|Filter}}',
@@ -1019,7 +1024,14 @@ $messages['ko'] = array(
  */
 $messages['ksh'] = array(
 	'browsedata' => 'En dä Date bläddere',
+	'sd_browsedata_choosecategory' => 'Donn en Saachjrupp ußwähle',
+	'sd_browsedata_viewcategory' => 'Saachjropp beloore',
+	'sd_browsedata_subcategory' => 'Ungerjrupp',
 	'sd_browsedata_other' => 'Söns wat',
+	'sd_browsedata_or' => 'udder',
+	'sd_browsedata_addanothervalue' => 'Donn ene andere Wäät dobei',
+	'sd_browsedata_daterangestart' => 'Aanfang:',
+	'sd_browsedata_daterangeend' => 'Engk:',
 	'sd_createfilter_name' => 'Name:',
 	'sd_filter_year' => 'Johr',
 	'sd_filter_month' => 'Mohnd',
