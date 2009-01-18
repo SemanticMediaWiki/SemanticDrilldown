@@ -65,6 +65,7 @@ $aliases['fi'] = array(
 
 /** Galician (Galego) */
 $aliases['gl'] = array(
+	'CreateFilter' => array( 'Crear un filtro' ),
 	'Filters' => array( 'Filtros' ),
 );
 
