@@ -1107,7 +1107,7 @@ END;
 		if (count($titles_for_category) > 0) {
 			$category_title = str_replace('_', ' ', $titles_for_category[0]);
 		} else {
-			$category_title = wfMsg( 'browsedata' ) . wfMsg( 'colon-separator' ) . str_replace( '_', ' ', $category );
+			$category_title = wfMsg( 'browsedata' ) . html_entity_decode( wfMsg( 'colon-separator' ) ) . str_replace( '_', ' ', $category );
 		}
 	}
 	// if no category was specified, go with the first
