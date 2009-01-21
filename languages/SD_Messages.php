@@ -346,6 +346,7 @@ $messages['da'] = array(
  * @author Krabina
  * @author Melancholie
  * @author MichaelFrey
+ * @author Purodha
  * @author Revolus
  * @author Umherirrender
  */
@@ -359,7 +360,7 @@ $messages['de'] = array(
 	'sd_browsedata_subcategory' => 'Unterkategorie',
 	'sd_browsedata_other' => 'Anderes',
 	'sd_browsedata_none' => 'Keines',
-	'sd_browsedata_filterbyvalue' => 'Filter für diesen Wert',
+	'sd_browsedata_filterbyvalue' => 'Filtere über diesen Wert',
 	'sd_browsedata_filterbysubcategory' => 'Filter für diese Subkategorie',
 	'sd_browsedata_otherfilter' => 'Zeige Seiten mit einem anderen Wert für diesen Filter',
 	'sd_browsedata_nonefilter' => 'Zeige Seiten mit keinem Wert für diesen Filter',
@@ -1028,13 +1029,26 @@ $messages['ksh'] = array(
 	'sd_browsedata_viewcategory' => 'Saachjropp beloore',
 	'sd_browsedata_subcategory' => 'Ungerjrupp',
 	'sd_browsedata_other' => 'Söns wat',
+	'sd_browsedata_none' => 'Kei',
+	'sd_browsedata_filterbyvalue' => 'Donn övver dä Wäät felltere',
+	'sd_browsedata_filterbysubcategory' => 'Donn övver di Unger-Saachjropp felltere',
+	'sd_browsedata_otherfilter' => 'Donn Sigge zeije met enem andere Wäät för hee dä Felter',
+	'sd_browsedata_nonefilter' => 'Donn Sigge zeije oohne Wäät för hee dä Felter',
 	'sd_browsedata_or' => 'udder',
+	'sd_browsedata_removefilter' => 'Donn dä Felter hee fottschmiiße',
+	'sd_browsedata_removesubcategoryfilter' => 'Donn dä Felter övver en Ungersaachjropp fott schmiiße',
 	'sd_browsedata_addanothervalue' => 'Donn ene andere Wäät dobei',
 	'sd_browsedata_daterangestart' => 'Aanfang:',
 	'sd_browsedata_daterangeend' => 'Engk:',
+	'filters' => 'Feltere',
+	'createfilter' => 'Ene Felter aanlääje',
 	'sd_createfilter_name' => 'Name:',
+	'sd_createfilter_listofvalues' => 'Leß met de Wääte (Shtandat)',
+	'sd_blank_error' => 'kann nit leddesch bliive',
 	'sd_filter_year' => 'Johr',
 	'sd_filter_month' => 'Mohnd',
+	'sd_filter_hasvalues' => 'Dä hät dä Wäät $1.',
+	'sd_filter_freetext' => 'Tex',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
