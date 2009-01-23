@@ -146,6 +146,12 @@ $aliases['ro'] = array(
 	'Filters' => array( 'Filtre' ),
 );
 
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'CreateFilter' => array( 'KrijoFiltrues' ),
+	'Filters' => array( 'Filtruesit' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'Filters' => array( 'Filter' ),
