@@ -93,6 +93,13 @@ $aliases['hu'] = array(
 	'Filters' => array( 'Szűrők' ),
 );
 
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'BrowseData' => array( 'データ閲覧' ),
+	'CreateFilter' => array( 'フィルター作成' ),
+	'Filters' => array( 'フィルター一覧' ),
+);
+
 /** Khmer (ភាសាខ្មែរ) */
 $aliases['km'] = array(
 	'BrowseData' => array( 'រាវរកទិន្នន័យ' ),

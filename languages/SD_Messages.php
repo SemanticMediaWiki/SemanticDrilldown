@@ -930,9 +930,26 @@ $messages['it'] = array(
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
+	'semanticdrilldown-desc' => '意味的データを閲覧するための絞り込みインタフェース',
+	'specialpages-group-sd_group' => 'セマンティック・ドリルダウン',
+	'browsedata' => 'データ閲覧',
+	'sd_browsedata_choosecategory' => 'カテゴリを選びます',
+	'sd_browsedata_viewcategory' => 'カテゴリ表示',
+	'sd_browsedata_docu' => '結果を絞り込むには、以下の項目を1つ以上クリックします。',
+	'sd_browsedata_subcategory' => 'サブカテゴリ',
+	'sd_browsedata_other' => 'その他',
 	'sd_browsedata_none' => 'なし',
+	'sd_browsedata_filterbyvalue' => 'この値で絞り込む',
+	'sd_browsedata_filterbysubcategory' => 'このサブカテゴリで絞り込む',
+	'sd_browsedata_otherfilter' => 'このフィルターの別の値のページを表示',
+	'filters' => 'フィルター一覧',
+	'createfilter' => 'フィルター作成',
+	'sd_createfilter_name' => '名前:',
+	'sd_blank_error' => '空であってはならない',
 	'sd_filter_year' => '年',
+	'sd_filter_month' => '月',
 	'sd_filter_freetext' => 'テキスト',
+	'sd_filter_daterange' => '日付範囲',
 );
 
 /** Javanese (Basa Jawa)
