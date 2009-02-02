@@ -50,6 +50,11 @@ $aliases['de'] = array(
 	'Filters' => array( 'Filter' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Filters' => array( 'Filtry' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'BrowseData' => array( 'مرور_داده' ),
@@ -146,6 +151,12 @@ $aliases['no'] = array(
 /** Occitan (Occitan) */
 $aliases['oc'] = array(
 	'Filters' => array( 'Filtres' ),
+);
+
+/** Pashto (پښتو) */
+$aliases['ps'] = array(
+	'CreateFilter' => array( 'چاڼګر جوړول' ),
+	'Filters' => array( 'چاڼګرونه' ),
 );
 
 /** Romanian (Română) */
