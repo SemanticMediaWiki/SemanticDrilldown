@@ -170,6 +170,7 @@ $messages['ar'] = array(
  * @author Ramsis II
  */
 $messages['arz'] = array(
+	'semanticdrilldown-desc' => 'واجهة نزول للإبحار خلال بيانات سيمانتيك',
 	'specialpages-group-sd_group' => 'سيمانتيك دريل داون',
 	'browsedata' => 'تصفح البيانات',
 	'sd_browsedata_choosecategory' => 'اختر تصنيفا',
