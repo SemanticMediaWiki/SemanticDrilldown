@@ -352,7 +352,7 @@ $messages['da'] = array(
  * @author Umherirrender
  */
 $messages['de'] = array(
-	'semanticdrilldown-desc' => 'Eine Drilldown-Benutzerschnittstelle, um durch semantische Daten zu navigieren',
+	'semanticdrilldown-desc' => 'Eine Benutzerschnittstelle, um über schrittweise Verfeinerugen durch semantische Daten zu navigieren',
 	'specialpages-group-sd_group' => 'Semantisches Drill-Down',
 	'browsedata' => 'Daten ansehen',
 	'sd_browsedata_choosecategory' => 'Kategorie auswählen',
@@ -1120,9 +1120,12 @@ $messages['ko'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
+	'semanticdrilldown-desc' => 'En Schnettshtell för der Metmaacher, öm sesh en einzel Schrette dorsch de semantische Date ze wöhle.',
+	'specialpages-group-sd_group' => 'Semantsch Nohbohre',
 	'browsedata' => 'En dä Date bläddere',
 	'sd_browsedata_choosecategory' => 'Donn en Saachjrupp ußwähle',
 	'sd_browsedata_viewcategory' => 'Saachjropp beloore',
+	'sd_browsedata_docu' => 'Donn op eine, odder och ettlijje, fun dä Felltere unge klecke, öm dat wat erus kütt, jet kleiner ze maache.',
 	'sd_browsedata_subcategory' => 'Ungerjrupp',
 	'sd_browsedata_other' => 'Söns wat',
 	'sd_browsedata_none' => 'Kei',
@@ -1133,18 +1136,33 @@ $messages['ksh'] = array(
 	'sd_browsedata_or' => 'udder',
 	'sd_browsedata_removefilter' => 'Donn dä Felter hee fottschmiiße',
 	'sd_browsedata_removesubcategoryfilter' => 'Donn dä Felter övver en Ungersaachjropp fott schmiiße',
+	'sd_browsedata_resetfilters' => 'Donn de Feltere widder op Shtandat setze',
 	'sd_browsedata_addanothervalue' => 'Donn ene andere Wäät dobei',
 	'sd_browsedata_daterangestart' => 'Aanfang:',
 	'sd_browsedata_daterangeend' => 'Engk:',
 	'filters' => 'Feltere',
+	'sd_filters_docu' => 'Mer han hee di Feltere em Wiki;',
 	'createfilter' => 'Ene Felter aanlääje',
 	'sd_createfilter_name' => 'Name:',
+	'sd_createfilter_property' => 'De Eijeschaff, die hee jefeltert weed:',
+	'sd_createfilter_usepropertyvalues' => 'Donn all de Wääte us hee dä Eijeschaff för dä Felter bruche',
+	'sd_createfilter_usecategoryvalues' => 'De müjjelesche Wääte för no ze felltere kumme us de Saachjrupp:',
+	'sd_createfilter_entervalues' => 'Donn de Wääte för hee dä Felter vun Hand enjävve.
+Donn emmer e Komma zwesche de einzel Wääte maache.
+Wann e Komma en enem Wäät vörkütt, dann donn shtatt dämm Komma 
+en däm Wäät <code>\\,</code> enjävve, domet et keine Dorjeneijn jitt.',
+	'sd_createfilter_inputtype' => 'De Zoot Enjabe för hee dä Felter:',
 	'sd_createfilter_listofvalues' => 'Leß met de Wääte (Shtandat)',
+	'sd_createfilter_requirefilter' => 'Ih dat hee dä Felter aanjezeish weede kann, moß vörher ald ene andere Felter ußjesooht gewääse sin, un zwa dä:',
 	'sd_blank_error' => 'kann nit leddesch bliive',
+	'sd_filter_coversproperty' => 'Dä Felter betref de Eijeschaff $1.',
+	'sd_filter_getsvaluesfromcategory' => 'Hä kritt sing Wääte us de Saachjrupp $1.',
 	'sd_filter_year' => 'Johr',
 	'sd_filter_month' => 'Mohnd',
 	'sd_filter_hasvalues' => 'Dä hät dä Wäät $1.',
+	'sd_filter_hasinputtype' => 'Dä kritt jet vun dä Zoot $1 enjejovve.',
 	'sd_filter_freetext' => 'Tex',
+	'sd_filter_requiresfilter' => 'Dä hät dä Felter $1 eets ens nüdesch.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
