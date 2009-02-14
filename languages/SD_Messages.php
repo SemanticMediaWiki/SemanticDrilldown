@@ -466,15 +466,29 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  * @author Sanbec
  */
 $messages['es'] = array(
+	'browsedata' => 'Datos de navegación',
+	'sd_browsedata_choosecategory' => 'Escoger una categoría',
+	'sd_browsedata_viewcategory' => 'Ver categoría',
 	'sd_browsedata_subcategory' => 'Subcategoría',
 	'sd_browsedata_other' => 'Otro',
 	'sd_browsedata_none' => 'Ninguno',
+	'sd_browsedata_filterbyvalue' => 'Filtrar por este valor',
+	'sd_browsedata_filterbysubcategory' => 'Filtrar por esta subcategoría',
+	'sd_browsedata_otherfilter' => 'Mostrar páginas con otro valor para este filtro',
 	'sd_browsedata_or' => 'o',
+	'sd_browsedata_removefilter' => 'Remover este filtro',
+	'sd_browsedata_removesubcategoryfilter' => 'Remover este filtro de subcategoría',
+	'sd_browsedata_addanothervalue' => 'Agregar otro valor',
 	'sd_browsedata_daterangestart' => 'Inicio:',
+	'sd_browsedata_daterangeend' => 'Fin:',
+	'filters' => 'Filtros',
+	'sd_filters_docu' => 'Los siguientes filtros existen en {{SITENAME}}:',
+	'createfilter' => 'Crear un filtro',
 	'sd_createfilter_name' => 'Nombre:',
 	'sd_filter_year' => 'Año',
 	'sd_filter_month' => 'Mes',
@@ -841,6 +855,13 @@ $messages['hi'] = array(
 	'sd_filter_haslabel' => 'इसको $1 यह लेबल हैं।',
 );
 
+/** Croatian (Hrvatski)
+ * @author Suradnik13
+ */
+$messages['hr'] = array(
+	'filters' => 'Filteri',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -1146,7 +1167,8 @@ $messages['ksh'] = array(
 	'sd_createfilter_name' => 'Name:',
 	'sd_createfilter_property' => 'De Eijeschaff, die hee jefeltert weed:',
 	'sd_createfilter_usepropertyvalues' => 'Donn all de Wääte us hee dä Eijeschaff för dä Felter bruche',
-	'sd_createfilter_usecategoryvalues' => 'De müjjelesche Wääte för no ze felltere kumme us de Saachjrupp:',
+	'sd_createfilter_usecategoryvalues' => 'De müjjelesche Wääte för noh ze feltere kumme us dä Saachjrupp:',
+	'sd_createfilter_usedatevalues' => 'Bruch ene Dattums-Berett för dö Felter mit däm Zick-Berett:',
 	'sd_createfilter_entervalues' => 'Donn de Wääte för hee dä Felter vun Hand enjävve.
 Donn emmer e Komma zwesche de einzel Wääte maache.
 Wann e Komma en enem Wäät vörkütt, dann donn shtatt dämm Komma 
@@ -1154,15 +1176,19 @@ en däm Wäät <code>\\,</code> enjävve, domet et keine Dorjeneijn jitt.',
 	'sd_createfilter_inputtype' => 'De Zoot Enjabe för hee dä Felter:',
 	'sd_createfilter_listofvalues' => 'Leß met de Wääte (Shtandat)',
 	'sd_createfilter_requirefilter' => 'Ih dat hee dä Felter aanjezeish weede kann, moß vörher ald ene andere Felter ußjesooht gewääse sin, un zwa dä:',
+	'sd_createfilter_label' => 'Et Etikättsche för dä Felter (kam_mer fott lohße):',
 	'sd_blank_error' => 'kann nit leddesch bliive',
 	'sd_filter_coversproperty' => 'Dä Felter betref de Eijeschaff $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Hä kritt sing Wääte us de Saachjrupp $1.',
+	'sd_filter_usestimeperiod' => 'Dä bruch $1 als sing Zick.',
 	'sd_filter_year' => 'Johr',
 	'sd_filter_month' => 'Mohnd',
 	'sd_filter_hasvalues' => 'Dä hät dä Wäät $1.',
 	'sd_filter_hasinputtype' => 'Dä kritt jet vun dä Zoot $1 enjejovve.',
 	'sd_filter_freetext' => 'Tex',
+	'sd_filter_daterange' => 'Dattums-Berett',
 	'sd_filter_requiresfilter' => 'Dä hät dä Felter $1 eets ens nüdesch.',
+	'sd_filter_haslabel' => 'Däm sing Etikättsche es „$1“',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
