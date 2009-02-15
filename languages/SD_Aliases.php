@@ -182,3 +182,16 @@ $aliases['sw'] = array(
 	'Filters' => array( 'Machujio' ),
 );
 
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'BrowseData' => array( 'Tumingin-tingin sa dato' ),
+	'CreateFilter' => array( 'Likhain ang pansala' ),
+	'Filters' => array( 'Mga pansala' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'CreateFilter' => array( 'CreaFiltro' ),
+	'Filters' => array( 'Filtri' ),
+);
+
