@@ -98,6 +98,13 @@ $aliases['hu'] = array(
 	'Filters' => array( 'Szűrők' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'BrowseData' => array( 'Percurrer datos' ),
+	'CreateFilter' => array( 'Crear filtro' ),
+	'Filters' => array( 'Filtros' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'BrowseData' => array( 'データ閲覧' ),
