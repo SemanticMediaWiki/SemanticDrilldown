@@ -399,6 +399,13 @@ $messages['de'] = array(
 	'sd_filter_haslabel' => 'Er hat die Bezeichnung $1.',
 );
 
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Dst
+ */
+$messages['de-formal'] = array(
+	'sd_browsedata_docu' => 'Klicken Sie auf einen oder mehrere der Filter um das Ergebnis einzuschränken.',
+);
+
 /** Zazaki (Zazaki)
  * @author Belekvor
  */
