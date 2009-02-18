@@ -772,6 +772,14 @@ END;
 		if (! $this->show_single_cat) {
 			$header .= $this->printCategoriesList($categories);
 		}
+		// if there are no subcategories or filters for this
+		// category, escape now that we've (possibly) printed the
+		// categories list
+		if ((count($this->next_level_subcategories) == 0) &&
+		    (count($this->applied_filters) == 0) &&
+		    (count($this->remaining_filters) == 0)) {
+			return $header;
+		}
 		$header .= '				<div class="drilldown-header">' . "\n";
 		if (count ($this->applied_filters) > 0 || $this->subcategory) {
 			$category_url = $this->makeBrowseURL($this->category);
