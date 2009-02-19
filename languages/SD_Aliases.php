@@ -68,6 +68,12 @@ $aliases['fi'] = array(
 	'Filters' => array( 'Suotimet' ),
 );
 
+/** French (Français) */
+$aliases['fr'] = array(
+	'CreateFilter' => array( 'CréerFiltre', 'Créer filtre' ),
+	'Filters' => array( 'Filtres' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'CreateFilter' => array( 'Crear un filtro' ),
