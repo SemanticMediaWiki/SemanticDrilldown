@@ -1244,8 +1244,8 @@ $messages['lb'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'sd_browsedata_choosecategory' => 'ഒരു വിഭാഗം തിരഞ്ഞെടുക്കുക',
-	'sd_browsedata_viewcategory' => 'വിഭാഗം കാണുക',
+	'sd_browsedata_choosecategory' => 'ഒരു വര്‍ഗ്ഗം തിരഞ്ഞെടുക്കുക',
+	'sd_browsedata_viewcategory' => 'വര്‍ഗ്ഗം കാണുക',
 	'sd_browsedata_subcategory' => 'ഉപവിഭാഗം',
 	'sd_browsedata_other' => 'മറ്റുള്ളവ',
 	'sd_browsedata_none' => 'ഒന്നുമില്ല',
