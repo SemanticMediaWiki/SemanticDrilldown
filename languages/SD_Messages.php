@@ -413,6 +413,57 @@ $messages['diq'] = array(
 	'sd_browsedata_none' => 'çino',
 );
 
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'semanticdrilldown-desc' => 'Interfejs za nawigaciju pśez semantiske daty',
+	'specialpages-group-sd_group' => 'Semantiska nawigacija',
+	'browsedata' => 'Daty se woglědaś',
+	'sd_browsedata_choosecategory' => 'Kategoriju wubraś',
+	'sd_browsedata_viewcategory' => 'kategoriju se woglědaś',
+	'sd_browsedata_docu' => 'Klikni na jaden zapisk abo někotare zapiski, aby zwuscył swóje wuslědki.',
+	'sd_browsedata_subcategory' => 'Pódkategorija',
+	'sd_browsedata_other' => 'Druge',
+	'sd_browsedata_none' => 'Žedne',
+	'sd_browsedata_filterbyvalue' => 'Pó toś tej gódnośe filtrowaś',
+	'sd_browsedata_filterbysubcategory' => 'Pó toś tej pódkategoriji filtrowaś',
+	'sd_browsedata_otherfilter' => 'Boki z drugeju gódnotu za toś ten filter pokazaś',
+	'sd_browsedata_nonefilter' => 'Boki bźez gódnoty za toś ten filter pokazaś',
+	'sd_browsedata_or' => 'abo',
+	'sd_browsedata_removefilter' => 'Toś ten filter wótpóraś',
+	'sd_browsedata_removesubcategoryfilter' => 'Toś ten filter za pódkategorije wótpóraś',
+	'sd_browsedata_resetfilters' => 'Filter slědk stajiś',
+	'sd_browsedata_addanothervalue' => 'Drugu gódnotu pśidaś',
+	'sd_browsedata_daterangestart' => 'Zachopjeńk:',
+	'sd_browsedata_daterangeend' => 'Kóńc:',
+	'filters' => 'Filtry',
+	'sd_filters_docu' => 'Slědujuce filtry eksistěruju w {{GRAMMAR:lokatiw|{{SITENAME}}}}:',
+	'createfilter' => 'Filter napóraś',
+	'sd_createfilter_name' => 'Mě:',
+	'sd_createfilter_property' => 'Kakosć, kótaruž toś ten filter wopśimujo:',
+	'sd_createfilter_usepropertyvalues' => 'Wše gódnoty toś teje kakosći za filter wužywaś',
+	'sd_createfilter_usecategoryvalues' => 'Gódnoty za filter z toś teje kategorije wobstaraś:',
+	'sd_createfilter_usedatevalues' => 'Casowe wótrězki wobłuki za toś ten filter z toś teju casoweju periodu wužywaś:',
+	'sd_createfilter_entervalues' => 'Zapódaj gódnoty za filter manuelnje (gódnoty by měli se pśez komy wótźěliś - jolic gódnota wopśimujo komu, wuměń ju pśez "\\,"):',
+	'sd_createfilter_inputtype' => 'Typ zapódaśa za toś ten filter:',
+	'sd_createfilter_listofvalues' => 'lisćina gódnotow (standardny)',
+	'sd_createfilter_requirefilter' => 'Nježli toś ten filter dajo se zwobrazniś, musyš drugi filter wubraś:',
+	'sd_createfilter_label' => 'Pomjenjenje za toś ten filter (opcionalny):',
+	'sd_blank_error' => 'njesmějo prozny byś',
+	'sd_filter_coversproperty' => 'Toś ten filter wopśimujo kakosć $1.',
+	'sd_filter_getsvaluesfromcategory' => 'Dostawa swóje gódnoty z kategorije $1.',
+	'sd_filter_usestimeperiod' => 'Wužywa $1 ako swój casowy wótrězk.',
+	'sd_filter_year' => 'Lěto',
+	'sd_filter_month' => 'Mjasec',
+	'sd_filter_hasvalues' => 'Ma gódnoty $1.',
+	'sd_filter_hasinputtype' => 'Ma typ zapódaśa $1.',
+	'sd_filter_freetext' => 'tekst',
+	'sd_filter_daterange' => 'casowy wótrězk',
+	'sd_filter_requiresfilter' => 'Filter $1 musy eksistěrowaś.',
+	'sd_filter_haslabel' => 'Ma pomjenjenje $1.',
+);
+
 /** Greek (Ελληνικά)
  * @author Consta
  */
@@ -874,7 +925,7 @@ $messages['hr'] = array(
  */
 $messages['hsb'] = array(
 	'semanticdrilldown-desc' => 'Interfejs Drilldown za nawigaciju znutřka semantiskich datow',
-	'specialpages-group-sd_group' => 'Semantiski Drilldown',
+	'specialpages-group-sd_group' => 'Semantiska nawigacija',
 	'browsedata' => 'Daty přepytać',
 	'sd_browsedata_choosecategory' => 'Wubjer kategoriju',
 	'sd_browsedata_viewcategory' => 'Kategoriju wobhladać',
@@ -2020,6 +2071,8 @@ $messages['tl'] = array(
  */
 $messages['tr'] = array(
 	'sd_browsedata_none' => 'Hiçbiri',
+	'sd_filter_year' => 'Yıl',
+	'sd_filter_month' => 'Ay',
 );
 
 /** Vietnamese (Tiếng Việt)
