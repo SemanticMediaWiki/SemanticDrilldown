@@ -1714,12 +1714,16 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
  * @author Enqd
  */
 $messages['pt-br'] = array(
+	'semanticdrilldown-desc' => 'Uma interface de introspecção para navegar através de dados semânticos',
+	'specialpages-group-sd_group' => 'Introspecção Semântica',
 	'browsedata' => 'Navegar pelo dados',
 	'sd_browsedata_choosecategory' => 'Escolha uma categoria',
 	'sd_browsedata_viewcategory' => 'ver categoria',
+	'sd_browsedata_docu' => 'Clique abaixo em um ou mais itens para restringir os seus resultados.',
 	'sd_browsedata_subcategory' => 'Subcategoria',
 	'sd_browsedata_other' => 'Outro',
 	'sd_browsedata_none' => 'Nenhum',
@@ -1729,8 +1733,36 @@ $messages['pt-br'] = array(
 	'sd_browsedata_nonefilter' => 'Exibir páginas sem valores para este filtro',
 	'sd_browsedata_or' => 'ou',
 	'sd_browsedata_removefilter' => 'Remover este filtro',
+	'sd_browsedata_removesubcategoryfilter' => 'Remover o filtro por esta subcategoria',
 	'sd_browsedata_resetfilters' => 'Zerar filtros',
 	'sd_browsedata_addanothervalue' => 'Adicionar outro valor',
+	'sd_browsedata_daterangestart' => 'Início:',
+	'sd_browsedata_daterangeend' => 'Fim:',
+	'filters' => 'Filtros',
+	'sd_filters_docu' => '{{SITENAME}} possui os seguintes filtros:',
+	'createfilter' => 'Criar um filtro',
+	'sd_createfilter_name' => 'Nome:',
+	'sd_createfilter_property' => 'Propriedades que este filtro abrange:',
+	'sd_createfilter_usepropertyvalues' => 'Usar todos os valores desta propriedade no filtro',
+	'sd_createfilter_usecategoryvalues' => 'Obter valores de filtro a partir desta categoria:',
+	'sd_createfilter_usedatevalues' => 'Usar intervalos de datas para este filtro com este período de tempo:',
+	'sd_createfilter_entervalues' => 'Introduza valores para o filtro manualmente (os valores devem ser separados por vírgulas - se um valor contém uma vírgula, substitua-a por "\\,"):',
+	'sd_createfilter_inputtype' => 'Tipo de entrada para este filtro:',
+	'sd_createfilter_listofvalues' => 'lista de valores (padrão)',
+	'sd_createfilter_requirefilter' => 'Necessita de outro filtro selecionado antes deste ser exibido:',
+	'sd_createfilter_label' => 'Etiqueta para este filtro (opcional):',
+	'sd_blank_error' => 'não pode estar em branco',
+	'sd_filter_coversproperty' => 'Este filtro abrange a propriedade $1.',
+	'sd_filter_getsvaluesfromcategory' => 'Extrai os seus valores da categoria $1.',
+	'sd_filter_usestimeperiod' => 'Utiliza $1 como seu período de tempo.',
+	'sd_filter_year' => 'Ano',
+	'sd_filter_month' => 'Mês',
+	'sd_filter_hasvalues' => 'Possui os valores $1.',
+	'sd_filter_hasinputtype' => 'Tem o tipo de entrada $1.',
+	'sd_filter_freetext' => 'texto',
+	'sd_filter_daterange' => 'intervalo de datas',
+	'sd_filter_requiresfilter' => 'Requer a presença do filtro $1.',
+	'sd_filter_haslabel' => 'Possui a etiqueta $1.',
 );
 
 /** Romanian (Română)
