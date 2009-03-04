@@ -80,6 +80,7 @@ or tag names.',
 	'sd_blank_error' => '{{Identical|Cannot be blank}}',
 	'sd_filter_year' => '{{Identical|Year}}',
 	'sd_filter_month' => '{{Identical|Month}}',
+	'sd_filter_freetext' => '{{Identical|Text}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -255,10 +256,54 @@ $messages['avk'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
+	'semanticdrilldown-desc' => 'Інтэрфэйс для навігацыі па сэмантычным зьвесткам',
+	'specialpages-group-sd_group' => 'Сэмантычная навігацыя',
+	'browsedata' => 'Прагляд зьвестак',
+	'sd_browsedata_choosecategory' => 'Выберыце катэгорыю',
+	'sd_browsedata_viewcategory' => 'паказаць катэгорыю',
+	'sd_browsedata_docu' => 'Пазначце адзін ці больш элемэнтаў для абмежаваньня Вашых вынікаў.',
+	'sd_browsedata_subcategory' => 'Падкатэгорыя',
+	'sd_browsedata_other' => 'Іншыя',
+	'sd_browsedata_none' => 'Не',
+	'sd_browsedata_filterbyvalue' => 'Фільтраваць па гэтаму значэньню',
+	'sd_browsedata_filterbysubcategory' => 'Фільтраваць па гэтай падкатэгорыі',
+	'sd_browsedata_otherfilter' => 'Паказваць старонкі зь іншымі значэньнямі па гэтаму фільтру',
+	'sd_browsedata_nonefilter' => 'Паказваць старонкі без значэньняў па гэтаму фільтру',
+	'sd_browsedata_or' => 'ці',
+	'sd_browsedata_removefilter' => 'Выдаліць гэты фільтар',
+	'sd_browsedata_removesubcategoryfilter' => 'Выдаліць гэты фільтар падкатэгорыі',
+	'sd_browsedata_resetfilters' => 'Ачысьціць фільтры',
+	'sd_browsedata_addanothervalue' => 'Дадаць іншае значэньне',
+	'sd_browsedata_daterangestart' => 'Пачатак:',
+	'sd_browsedata_daterangeend' => 'Канец:',
 	'filters' => 'Фільтры',
+	'sd_filters_docu' => 'У {{GRAMMAR:месны|{{SITENAME}}}} існуюць наступныя фільтры:',
+	'createfilter' => 'Стварыць фільтар',
 	'sd_createfilter_name' => 'Назва:',
+	'sd_createfilter_property' => 'Уласьцівасьць, якую пакрывае гэты фільтар:',
+	'sd_createfilter_usepropertyvalues' => 'Выкарыстоўваць усе значэньні гэтай ўласьцівасьці для фільтру',
+	'sd_createfilter_usecategoryvalues' => 'Атрымаць значэньні для фільтру з гэтай катэгорыі:',
+	'sd_createfilter_usedatevalues' => 'Выкарыстоўваць дыяпазон датаў для гэтага фільтру з гэтым пэрыядам часу:',
+	'sd_createfilter_entervalues' => 'Увядзіце значэньне для фільтру ўручную (значэньні павінны быць падзелены коскамі, калі значэньне ўтрымлівае коску, замяніце яе на «\\,»):',
+	'sd_createfilter_inputtype' => 'Выходны тып для гэтага фільтру:',
+	'sd_createfilter_listofvalues' => 'сьпіс значэньняў (па змоўчваньні)',
+	'sd_createfilter_requirefilter' => 'Патрабуецца выбар іншага фільтру перад тым, як будзе паказаны гэты:',
+	'sd_createfilter_label' => 'Метка для гэтага фільтру (неабавязкова):',
+	'sd_blank_error' => 'ня можа быць незапоўненым',
+	'sd_filter_coversproperty' => 'Гэты фільтар хавае ўласьцівасьць $1.',
+	'sd_filter_getsvaluesfromcategory' => 'Атрымлівае свае значэньні з катэгорыі $1.',
+	'sd_filter_usestimeperiod' => 'Выкарыстоўвае $1 як пэрыяд часу.',
+	'sd_filter_year' => 'Год',
+	'sd_filter_month' => 'Месяц',
+	'sd_filter_hasvalues' => 'Мае значэньне $1.',
+	'sd_filter_hasinputtype' => 'Мае выходны тып $1.',
+	'sd_filter_freetext' => 'тэкст',
+	'sd_filter_daterange' => 'дыяпазон дат',
+	'sd_filter_requiresfilter' => 'Патрабуе наяўнасьць фільтру $1.',
+	'sd_filter_haslabel' => 'Мае метку $1.',
 );
 
 /** Bulgarian (Български)
