@@ -1826,6 +1826,18 @@ $messages['ro'] = array(
 	'sd_filter_freetext' => 'text',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'sd_browsedata_or' => 'o',
+	'sd_browsedata_daterangestart' => 'Accumenze:',
+	'sd_browsedata_daterangeend' => 'Spiccie:',
+	'sd_filter_year' => 'Anne',
+	'sd_filter_month' => 'Mese',
+	'sd_filter_freetext' => 'teste',
+);
+
 /** Russian (Русский)
  * @author Innv
  * @author Александр Сигачёв
