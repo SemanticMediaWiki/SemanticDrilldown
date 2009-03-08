@@ -595,7 +595,10 @@ $messages['es'] = array(
 	'sd_createfilter_name' => 'Nombre:',
 	'sd_filter_year' => 'Año',
 	'sd_filter_month' => 'Mes',
+	'sd_filter_hasvalues' => 'Tiene los valores $1.',
 	'sd_filter_freetext' => 'texto',
+	'sd_filter_requiresfilter' => 'Requiere la presencia del filtro $1.',
+	'sd_filter_haslabel' => 'Tiene la etiqueta $1.',
 );
 
 /** Basque (Euskara)
