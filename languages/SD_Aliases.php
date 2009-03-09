@@ -70,7 +70,7 @@ $aliases['fi'] = array(
 
 /** French (Français) */
 $aliases['fr'] = array(
-	'CreateFilter' => array( 'CréerFiltre', 'Créer filtre' ),
+	'CreateFilter' => array( 'Créer filtre', 'CréerFiltre' ),
 	'Filters' => array( 'Filtres' ),
 );
 
