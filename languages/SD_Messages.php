@@ -511,10 +511,12 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Crazymadlover
  */
 $messages['el'] = array(
 	'sd_browsedata_choosecategory' => 'Επιλέξτε μια κατηγορία',
 	'sd_browsedata_subcategory' => 'Υποκατηγορία',
+	'sd_browsedata_other' => 'Άλλος',
 	'sd_browsedata_or' => 'ή',
 	'filters' => 'Φίλτρα',
 	'sd_createfilter_name' => 'Όνομα:',
