@@ -605,6 +605,8 @@ END;
 	}
 
 	function printDateInput($input_name, $cur_value = null) {
+		global $wgAmericanDates;
+
 		$month_names = array(
 			wfMsgForContent('january'),
 			wfMsgForContent('february'),
