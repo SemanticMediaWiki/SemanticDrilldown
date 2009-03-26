@@ -1342,6 +1342,13 @@ $messages['lb'] = array(
 	'sd_filter_haslabel' => "en huet d'Etiquette $1.",
 );
 
+/** Eastern Mari (Олык Марий)
+ * @author Сай
+ */
+$messages['mhr'] = array(
+	'filters' => 'Фильтр-влак',
+);
+
 /** Malayalam (മലയാളം)
  * @author Shijualex
  */
