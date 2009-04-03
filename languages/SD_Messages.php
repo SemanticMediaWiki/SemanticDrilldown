@@ -806,6 +806,7 @@ $messages['gl'] = array(
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Crazymadlover
  * @author Omnipaedista
  */
 $messages['grc'] = array(
@@ -813,6 +814,7 @@ $messages['grc'] = array(
 	'sd_browsedata_or' => 'ἢ',
 	'filters' => 'Διηθητήρια',
 	'sd_createfilter_name' => 'Ὄνομα:',
+	'sd_filter_year' => 'Ἐτός',
 	'sd_filter_month' => 'Μήν',
 );
 
