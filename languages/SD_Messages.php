@@ -580,15 +580,18 @@ $messages['es'] = array(
 	'browsedata' => 'Datos de navegación',
 	'sd_browsedata_choosecategory' => 'Escoger una categoría',
 	'sd_browsedata_viewcategory' => 'Ver categoría',
+	'sd_browsedata_docu' => 'Haz click en uno o más items de abajo para precisar tus resultados.',
 	'sd_browsedata_subcategory' => 'Subcategoría',
 	'sd_browsedata_other' => 'Otro',
 	'sd_browsedata_none' => 'Ninguno',
 	'sd_browsedata_filterbyvalue' => 'Filtrar por este valor',
 	'sd_browsedata_filterbysubcategory' => 'Filtrar por esta subcategoría',
 	'sd_browsedata_otherfilter' => 'Mostrar páginas con otro valor para este filtro',
+	'sd_browsedata_nonefilter' => 'Mostrar páginas sin valores para este filtro',
 	'sd_browsedata_or' => 'o',
 	'sd_browsedata_removefilter' => 'Remover este filtro',
 	'sd_browsedata_removesubcategoryfilter' => 'Remover este filtro de subcategoría',
+	'sd_browsedata_resetfilters' => 'Reestablecer filtros',
 	'sd_browsedata_addanothervalue' => 'Agregar otro valor',
 	'sd_browsedata_daterangestart' => 'Inicio:',
 	'sd_browsedata_daterangeend' => 'Fin:',
@@ -596,10 +599,23 @@ $messages['es'] = array(
 	'sd_filters_docu' => 'Los siguientes filtros existen en {{SITENAME}}:',
 	'createfilter' => 'Crear un filtro',
 	'sd_createfilter_name' => 'Nombre:',
+	'sd_createfilter_property' => 'Propiedad que este filtro cubre:',
+	'sd_createfilter_usepropertyvalues' => 'Usar todos los valores de esta propiedad para el filtro',
+	'sd_createfilter_usecategoryvalues' => 'Obtenga valores para el filtro desde esta catagoría:',
+	'sd_createfilter_usedatevalues' => 'Usar rangos de fecha para este filtro con este periodo de tiempo:',
+	'sd_createfilter_entervalues' => 'Ingresar valores para el filtro manualmente (valores deberían estar separados por comas - si un valor contiene una coma, reemplacela con "\\,"):',
+	'sd_createfilter_listofvalues' => 'lista de valores (por defecto)',
+	'sd_createfilter_requirefilter' => 'Requiere otro filtro a ser seleccionado antes que este sea mostrado:',
+	'sd_createfilter_label' => 'Etiqueta para este filtro (opcional):',
+	'sd_blank_error' => 'No puede estar en blanco',
+	'sd_filter_coversproperty' => 'Este filtro cubre la propiedad $1.',
+	'sd_filter_getsvaluesfromcategory' => 'Obtiene sus valores de la categoría $1.',
+	'sd_filter_usestimeperiod' => 'Usa $1 como su periodo de tiempo.',
 	'sd_filter_year' => 'Año',
 	'sd_filter_month' => 'Mes',
 	'sd_filter_hasvalues' => 'Tiene los valores $1.',
 	'sd_filter_freetext' => 'texto',
+	'sd_filter_daterange' => 'rango de fechas',
 	'sd_filter_requiresfilter' => 'Requiere la presencia del filtro $1.',
 	'sd_filter_haslabel' => 'Tiene la etiqueta $1.',
 );
@@ -691,6 +707,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author IAlex
  * @author Sherbrooke
@@ -726,7 +743,7 @@ $messages['fr'] = array(
 	'sd_createfilter_usecategoryvalues' => 'Obtenir les valeurs pour ce filtre à partir de cette catégorie :',
 	'sd_createfilter_usedatevalues' => 'Utilise des blocs de date pour ce filtre avec cette période temporelle :',
 	'sd_createfilter_entervalues' => 'Entrez manuellement les valeurs pour ce filtre (les valeurs devront être séparées par des virgules - si une valeur contient une virgule, remplacez-la par « \\, ») :',
-	'sd_createfilter_inputtype' => "Type d'entrée pour ce filtre :",
+	'sd_createfilter_inputtype' => 'Type d’entrée pour ce filtre :',
 	'sd_createfilter_listofvalues' => 'Liste des valeurs (défaut)',
 	'sd_createfilter_requirefilter' => 'Exiger qu’un autre filtre soit sélectionné avant que celui-ci ne soit affiché :',
 	'sd_createfilter_label' => 'Étiquette pour ce filtre (facultatif) :',
@@ -737,7 +754,7 @@ $messages['fr'] = array(
 	'sd_filter_year' => 'Année',
 	'sd_filter_month' => 'Mois',
 	'sd_filter_hasvalues' => 'Il a $1 comme valeur',
-	'sd_filter_hasinputtype' => "Il a le type d'entrée $1.",
+	'sd_filter_hasinputtype' => 'Il a le type d’entrée $1.',
 	'sd_filter_freetext' => 'texte',
 	'sd_filter_daterange' => 'Gamme de date',
 	'sd_filter_requiresfilter' => 'Il nécessite la présence du filtre $1.',
