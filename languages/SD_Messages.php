@@ -2196,6 +2196,18 @@ $messages['tr'] = array(
 	'sd_filter_month' => 'Ay',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'sd_browsedata_daterangestart' => 'Aug:',
+	'sd_browsedata_daterangeend' => 'Lop:',
+	'filters' => "Fil'trad",
+	'sd_filters_docu' => "{{SITENAME}}-wikiš om ningoižed fil'troid:",
+	'sd_filter_year' => "Voz'",
+	'sd_filter_month' => 'Ku',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
