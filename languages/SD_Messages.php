@@ -133,14 +133,13 @@ $messages['ar'] = array(
 	'sd_browsedata_nonefilter' => 'اعرض الصفحات التي هي بدون قيمة لهذا الفلتر',
 	'sd_browsedata_or' => 'أو',
 	'sd_browsedata_removefilter' => 'أزل هذا الفلتر',
-	'sd_browsedata_removesubcategoryfilter' => 'أزل فلتر التصنيف الفرعي هذا',
+	'sd_browsedata_removesubcategoryfilter' => 'أزل مُرشّح التصنيف الفرعي هذا',
 	'sd_browsedata_resetfilters' => 'أعد ضبط الفلاتر',
 	'sd_browsedata_addanothervalue' => 'إضافة قيمة أخرى',
 	'sd_browsedata_daterangestart' => ':البداية',
 	'sd_browsedata_daterangeend' => ':النهاية',
-	'filters' => 'فلاتر',
 	'sd_filters_docu' => 'الفلاتر التالية موجودة في {{SITENAME}}:',
-	'createfilter' => 'إنشاء فلتر',
+	'createfilter' => 'إنشاء مُرشّح',
 	'sd_createfilter_name' => 'الاسم:',
 	'sd_createfilter_property' => 'الخاصية التي يغطيها هذا الفلتر:',
 	'sd_createfilter_usepropertyvalues' => 'استخدم كل قيم هذه الخاصية للفلتر',
@@ -149,7 +148,7 @@ $messages['ar'] = array(
 	'sd_createfilter_entervalues' => 'أدخل القيم للفلتر يدويا (القيم ينبغي أن يتم فصلها بواسطة فاصلات - لو أن قيمة ما تحتوي على فاصلة، استبدلها ب "\\,"):',
 	'sd_createfilter_inputtype' => ': نوع المدخل للفلتر',
 	'sd_createfilter_listofvalues' => 'قائمة القيم (أفتراضي)',
-	'sd_createfilter_requirefilter' => 'يتطلب اختيار فلتر آخر قبل أن يتم عرض هذا:',
+	'sd_createfilter_requirefilter' => 'يتطلب اختيار مُرشّح آخر قبل أن يتم عرض هذا:',
 	'sd_createfilter_label' => 'علامة لهذا الفلتر (اختياري):',
 	'sd_blank_error' => 'لا يمكن أن يكون فارغا',
 	'sd_filter_coversproperty' => 'هذا الفلتر يغطي الخاصية $1.',
@@ -2131,8 +2130,10 @@ $messages['tg-cyrl'] = array(
 
 /** Thai (ไทย)
  * @author Octahedron80
+ * @author Passawuth
  */
 $messages['th'] = array(
+	'sd_browsedata_none' => 'ไม่มี',
 	'filters' => 'ตัวกรอง',
 );
 
