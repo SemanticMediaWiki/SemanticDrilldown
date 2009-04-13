@@ -111,6 +111,13 @@ $aliases['ia'] = array(
 	'Filters' => array( 'Filtros' ),
 );
 
+/** Italian (Italiano) */
+$aliases['it'] = array(
+	'BrowseData' => array( 'EsploraDati' ),
+	'CreateFilter' => array( 'CreaFiltro' ),
+	'Filters' => array( 'Filtri' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'BrowseData' => array( 'データ閲覧' ),
