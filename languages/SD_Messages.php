@@ -34,6 +34,7 @@ $messages['en'] = array(
 	'sd_browsedata_addanothervalue'		=> 'Add another value',
 	'sd_browsedata_daterangestart'		=> 'Start:',
 	'sd_browsedata_daterangeend'		=> 'End:',
+	'sd_browsedata_novalues'		=> 'There are no values for this filter',
 	'filters'                               => 'Filters',
 	'sd_filters_docu'                       => 'The following filters exist in {{SITENAME}}:',
 	'createfilter'                          => 'Create a filter',
@@ -57,6 +58,7 @@ $messages['en'] = array(
 	'sd_filter_month'                  => 'Month',
 	'sd_filter_hasvalues'              => 'It has the values $1.',
 	'sd_filter_hasinputtype'           => 'It has the input type $1.',
+	'sd_filter_combobox'               => 'combo box',
 	'sd_filter_freetext'               => 'text',
 	'sd_filter_daterange'              => 'date range',
 	'sd_filter_requiresfilter'         => 'It requires the presence of the filter $1.',
@@ -80,6 +82,7 @@ or tag names.',
 	'sd_blank_error' => '{{Identical|Cannot be blank}}',
 	'sd_filter_year' => '{{Identical|Year}}',
 	'sd_filter_month' => '{{Identical|Month}}',
+	'sd_filter_combobox' => '{{Identical|Combo box}}',
 	'sd_filter_freetext' => '{{Identical|Text}}',
 );
 
