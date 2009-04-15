@@ -107,10 +107,10 @@ class SDAppliedFilter {
 	 */
 	function getAllOrValues($category) {
 		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore2') {
-			return $this->getAllOrValues_2($category);
-		} else {
+		if ($smwgDefaultStore == 'SMWSQLStore') {
 			return $this->getAllOrValues_orig($category);
+		} else {
+			return $this->getAllOrValues_2($category);
 		}
 	}
 
