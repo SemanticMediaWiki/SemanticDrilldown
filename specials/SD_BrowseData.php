@@ -106,12 +106,12 @@ class BrowseDataPage extends QueryPage {
 		INDEX id_index (id)
 	) AS SELECT
 END;
-		if ($smwgDefaultStore == 'SMWSQLStore2') {
-			$sql .= " ids.smw_id AS id ";
-			$sql .= $this->getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters);
-		} else {
+		if ($smwgDefaultStore == 'SMWSQLStore') {
 			$sql .= " p.page_id AS id ";
 			$sql .= $this->getSQLFromClause_orig($category, $subcategory, $subcategories, $applied_filters);
+		} else {
+			$sql .= " ids.smw_id AS id ";
+			$sql .= $this->getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters);
 		}
 		$dbr->query($sql);
 	}
@@ -138,10 +138,10 @@ END;
 	 */
 	function getSQLFromClauseForCategory($subcategory, $child_subcategories) {
 		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore2') {
-			return $this->getSQLFromClauseForCategory_2($subcategory, $child_subcategories);
-		} else {
+		if ($smwgDefaultStore == 'SMWSQLStore') {
 			return $this->getSQLFromClauseForCategory_orig($subcategory, $child_subcategories);
+		} else {
+			return $this->getSQLFromClauseForCategory_2($subcategory, $child_subcategories);
 		}
 	}
 
@@ -188,10 +188,10 @@ END;
 	 */
 	function getSQLFromClause($category, $subcategory, $subcategories, $applied_filters) {
 		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore2') {
-			return $this->getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters);
-		} else {
+		if ($smwgDefaultStore == 'SMWSQLStore') {
 			return $this->getSQLFromClause_orig($category, $subcategory, $subcategories, $applied_filters);
+		} else {
+			return $this->getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters);
 		}
 	}
 
@@ -446,13 +446,13 @@ END;
 		else
 			$or_values = $af->getAllOrValues($this->category);
 		if ($af->search_term != null) {
-			// HACK - printFreeTextInput() needs values as the
+			// HACK - printComboBoxInput() needs values as the
 			// *keys* of the array
 			$filter_values = array();
 			foreach ($or_values as $or_value) {
 				$filter_values[$or_value] = '';
 			}
-			$results_line = "<div class=\"drilldown-filter-label\">$filter_label:</div> " . $this->printFreeTextInput($af->filter->name, $filter_values, $af->search_term);
+			$results_line = "<div class=\"drilldown-filter-label\">$filter_label:</div> " . $this->printComboBoxInput($af->filter->name, $filter_values, $af->search_term);
 			return $results_line;
 		} elseif ($af->lower_date != null || $af->upper_date != null) {
 			$results_line = "<div class=\"drilldown-filter-label\">$filter_label:</div> " . $this->printDateRangeInput($af->filter->name, $af->lower_date, $af->upper_date);
@@ -555,7 +555,7 @@ END;
 		return $results_line;
 	}
 
-	function printFreeTextInput($filter_name, $filter_values, $cur_value = null) {
+	function printComboBoxInput($filter_name, $filter_values, $cur_value = null) {
 		global $wgRequest;
 
 		$input_id = "_search_$filter_name";
@@ -605,8 +605,6 @@ END;
 	}
 
 	function printDateInput($input_name, $cur_value = null) {
-		global $wgAmericanDates;
-
 		$month_names = array(
 			wfMsgForContent('january'),
 			wfMsgForContent('february'),
@@ -701,24 +699,29 @@ END;
 				$filter_values['_other'] = $num_results;
 			}
 		}
-		// show 'None' only if any other results have been found
+		// show 'None' only if any other results have been found, and
+		// if it's not a numeric filter
 		if (count($f->allowed_values) > 0) {
-			$none_filter = SDAppliedFilter::create($f, ' none');
-			$num_results = $this->getNumResults($this->subcategory, $this->all_subcategories, $none_filter);
-			if ($num_results > 0) {
-				$filter_values['_none'] = $num_results;
+			$fv = SDFilterValue::create($f->allowed_values[0]);
+			if (! $fv->is_numeric) {
+				$none_filter = SDAppliedFilter::create($f, ' none');
+				$num_results = $this->getNumResults($this->subcategory, $this->all_subcategories, $none_filter);
+				if ($num_results > 0) {
+					$filter_values['_none'] = $num_results;
+				}
 			}
-		}
-		// escape here if there are no values
-		if (count($filter_values) == 0) {
-			$f->dropTempTable();
-			return "";
 		}
 
 		$filter_name = urlencode(str_replace(' ', '_', $f->name));
 		$normal_filter = true;
-		if ($f->input_type == wfMsgForContent('sd_filter_freetext')) {
-			$results_line = $this->printFreeTextInput($filter_name, $filter_values);
+		if (count($filter_values) == 0) {
+			$results_line = '(' . wfMsg('sd_browsedata_novalues') . ')';
+		// for backward compatibility, also check against
+		// 'sd_filter_freetext' (i.e. 'text' in English), which was
+		// the old name of the input
+		} elseif ($f->input_type == wfMsgForContent('sd_filter_combobox') ||
+		    $f->input_type == wfMsgForContent('sd_filter_freetext')) {
+			$results_line = $this->printComboBoxInput($filter_name, $filter_values);
 			$normal_filter = false;
 		} elseif ($f->input_type == wfMsgForContent('sd_filter_daterange')) {
 			$results_line = $this->printDateRangeInput($filter_name);
@@ -727,30 +730,27 @@ END;
 			$results_line = $this->printUnappliedFilterValues($cur_url, $f, $filter_values);
 
 		$text = "";
-		// TODO - this check might no longer be necessary
-		if ($results_line != "") {
-			$filter_label = $this->printFilterLabel($f->name);
-			$results_div_id = strtolower(str_replace(' ', '_', $filter_label)) . "_values";
-			$text .=<<<END
+		$filter_label = $this->printFilterLabel($f->name);
+		$results_div_id = strtolower(str_replace(' ', '_', $filter_label)) . "_values";
+		$text .=<<<END
 					<div class="drilldown-filter-label">
 
 END;
-			// no point showing "minimize" arrow if it's just a
-			// single text or date input
-			if ($normal_filter) {
-				$text .=<<<END
+		// no point showing "minimize" arrow if it's just a
+		// single text or date input
+		if ($normal_filter) {
+			$text .=<<<END
 					<a onclick="toggleFilterDiv('$results_div_id', this)" style="cursor: default;"><img src="$sdgScriptPath/skins/down-arrow.png"></a>
 
 END;
-			}
-			$text .=<<<END
+		}
+		$text .=<<<END
 					$filter_label:
 					</div>
 					<div class="drilldown-filter-values" id="$results_div_id">$results_line
 					</div>
 
 END;
-		}
 		$f->dropTempTable();
 		return $text;
 	}
@@ -938,16 +938,16 @@ END;
 		// QueryPage uses the value from this SQL in an ORDER clause,
 		// so return page_title as title.
 		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore2') {
-			$sql = "SELECT DISTINCT ids.smw_title AS title,
-	ids.smw_title AS value,
-	ids.smw_namespace AS namespace,
-	ids.smw_sortkey AS sortkey\n";
-		} else {
+		if ($smwgDefaultStore == 'SMWSQLStore') {
 			$sql = "SELECT DISTINCT p.page_title AS title,
 	p.page_title AS value,
 	p.page_namespace AS namespace,
 	c.cl_sortkey AS sortkey\n";
+		} else {
+			$sql = "SELECT DISTINCT ids.smw_title AS title,
+	ids.smw_title AS value,
+	ids.smw_namespace AS namespace,
+	ids.smw_sortkey AS sortkey\n";
 		}
 		$sql .= $this->getSQLFromClause($this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters);
 		return $sql;
