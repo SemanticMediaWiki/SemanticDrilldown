@@ -158,8 +158,8 @@ END;
 	$input_type_label = wfMsg('sd_createfilter_inputtype');
 	$values_list_label = wfMsg('sd_createfilter_listofvalues');
 	// same as for time values
-	$free_text_label = wfMsg('sd_filter_freetext');
-	$free_text_value = wfMsgForContent('sd_filter_freetext');
+	$combo_box_label = wfMsg('sd_filter_combobox');
+	$combo_box_value = wfMsgForContent('sd_filter_combobox');
 	$date_range_label = wfMsg('sd_filter_daterange');
 	$date_range_value = wfMsgForContent('sd_filter_daterange');
 	$require_filter_label = wfMsg('sd_createfilter_requirefilter');
@@ -195,7 +195,7 @@ END;
 	<p>$input_type_label
 	<select id="input_type_dropdown" name="input_type">
 	<option value="">$values_list_label</option>
-	<option value="$free_text_value">$free_text_label</option>
+	<option value="$combo_box_value">$combo_box_label</option>
 	<option value="$date_range_value">$date_range_label</option>
 	</select>
 	</p>
