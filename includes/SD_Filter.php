@@ -24,7 +24,7 @@ class SDFilter {
 		if (count($properties_used) > 0) {
 			$f->property = $properties_used[0];
 		}
-		$f->is_relation = false;
+		$f->is_relation = true;
 		$proptitle = Title::newFromText($f->property, SMW_NS_PROPERTY);
 		if ($proptitle != NULL) {
 			$store = smwfGetStore();
@@ -36,9 +36,10 @@ class SDFilter {
 			global $smwgContLang;
 			$datatypeLabels =  $smwgContLang->getDatatypeLabels();
 			if (count($types) > 0) {
-				if ($types[0]->getWikiValue() == $datatypeLabels['_wpg']) {
-					$f->is_relation = true;
-				} elseif ($types[0]->getWikiValue() == $datatypeLabels['_boo']) {
+				if ($types[0]->getWikiValue() != $datatypeLabels['_wpg']) {
+					$f->is_relation = false;
+				}
+				if ($types[0]->getWikiValue() == $datatypeLabels['_boo']) {
 					$f->is_boolean = true;
 				}
 			}
@@ -86,7 +87,18 @@ class SDFilter {
 		} else {
 			$fields = "YEAR(value_xsd)";
 		}
-		if ($smwgDefaultStore == 'SMWSQLStore2') {
+		if ($smwgDefaultStore == 'SMWSQLStore') {
+			$smw_attributes = $dbr->tableName( 'smw_attributes' );
+			$sql =<<<END
+	SELECT $fields, count(*)
+	FROM semantic_drilldown_values sdv 
+	JOIN $smw_attributes a ON sdv.id = a.subject_id
+	WHERE a.attribute_title = '$property_value'
+	GROUP BY $fields
+	ORDER BY $fields
+
+END;
+		} else {
 			$smw_attributes = $dbr->tableName( 'smw_atts2' );
 			$smw_ids = $dbr->tableName( 'smw_ids' );
 			$sql =<<<END
@@ -95,17 +107,6 @@ class SDFilter {
 	JOIN $smw_attributes a ON sdv.id = a.s_id
 	JOIN $smw_ids p_ids ON a.p_id = p_ids.smw_id
 	WHERE p_ids.smw_title = '$property_value'
-	GROUP BY $fields
-	ORDER BY $fields
-
-END;
-		} else {
-			$smw_attributes = $dbr->tableName( 'smw_attributes' );
-			$sql =<<<END
-	SELECT $fields, count(*)
-	FROM semantic_drilldown_values sdv 
-	JOIN $smw_attributes a ON sdv.id = a.subject_id
-	WHERE a.attribute_title = '$property_value'
 	GROUP BY $fields
 	ORDER BY $fields
 
@@ -135,10 +136,10 @@ END;
 		global $smwgDefaultStore;
 		if ($this->time_period != NULL) {
 			return $this->getTimePeriodValues();
-		} elseif ($smwgDefaultStore == 'SMWSQLStore2') {
-			return $this->getAllValues_2();
-		} else {
+		} elseif ($smwgDefaultStore == 'SMWSQLStore') {
 			return $this->getAllValues_orig();
+		} else {
+			return $this->getAllValues_2();
 		}
 	}
 
@@ -227,10 +228,10 @@ END;
 	 */
 	function createTempTable() {
 		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore2') {
-			$this->createTempTable_2();
-		} else {
+		if ($smwgDefaultStore == 'SMWSQLStore') {
 			$this->createTempTable_orig();
+		} else {
+			$this->createTempTable_2();
 		}
 	}
 
