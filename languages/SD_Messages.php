@@ -765,6 +765,7 @@ $messages['fr'] = array(
 	'sd_filter_month' => 'Mois',
 	'sd_filter_hasvalues' => 'Il a $1 comme valeur',
 	'sd_filter_hasinputtype' => 'Il a le type d’entrée $1.',
+	'sd_filter_combobox' => 'Boîte combo',
 	'sd_filter_freetext' => 'texte',
 	'sd_filter_daterange' => 'Gamme de date',
 	'sd_filter_requiresfilter' => 'Il nécessite la présence du filtre $1.',
@@ -1679,6 +1680,7 @@ $messages['oc'] = array(
 	'sd_browsedata_addanothervalue' => 'Apondre una autra valor',
 	'sd_browsedata_daterangestart' => 'Començament :',
 	'sd_browsedata_daterangeend' => 'Fin :',
+	'sd_browsedata_novalues' => 'Existís pas de valor per aqueste filtre',
 	'filters' => 'Filtres',
 	'sd_filters_docu' => 'Lo filtre seguent existís sus {{SITENAME}} :',
 	'createfilter' => 'Crear un filtre',
@@ -1700,6 +1702,7 @@ $messages['oc'] = array(
 	'sd_filter_month' => 'Mes',
 	'sd_filter_hasvalues' => 'A $1 coma valor',
 	'sd_filter_hasinputtype' => "A lo tipe d'entrada $1.",
+	'sd_filter_combobox' => 'Boita combo',
 	'sd_filter_freetext' => 'tèxt',
 	'sd_filter_daterange' => 'Gama de data',
 	'sd_filter_requiresfilter' => 'Necessita la preséncia del filtre $1.',
@@ -1839,6 +1842,7 @@ $messages['pt-br'] = array(
 	'sd_browsedata_addanothervalue' => 'Adicionar outro valor',
 	'sd_browsedata_daterangestart' => 'Início:',
 	'sd_browsedata_daterangeend' => 'Fim:',
+	'sd_browsedata_novalues' => 'Não há valores para este filtro',
 	'filters' => 'Filtros',
 	'sd_filters_docu' => '{{SITENAME}} possui os seguintes filtros:',
 	'createfilter' => 'Criar um filtro',
@@ -1860,6 +1864,7 @@ $messages['pt-br'] = array(
 	'sd_filter_month' => 'Mês',
 	'sd_filter_hasvalues' => 'Possui os valores $1.',
 	'sd_filter_hasinputtype' => 'Tem o tipo de entrada $1.',
+	'sd_filter_combobox' => 'caixa de seleção',
 	'sd_filter_freetext' => 'texto',
 	'sd_filter_daterange' => 'intervalo de datas',
 	'sd_filter_requiresfilter' => 'Requer a presença do filtro $1.',
@@ -1990,9 +1995,18 @@ $messages['sk'] = array(
 
 /** Serbian Cyrillic ekavian (ћирилица)
  * @author Sasa Stefanovic
+ * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
+	'sd_browsedata_choosecategory' => 'Изабери категорију',
+	'sd_browsedata_viewcategory' => 'види категорију',
+	'sd_browsedata_subcategory' => 'Подкатегорија',
 	'sd_browsedata_none' => 'Нема',
+	'sd_browsedata_daterangestart' => 'Почетак:',
+	'sd_browsedata_daterangeend' => 'Крај:',
+	'sd_createfilter_name' => 'Име:',
+	'sd_filter_year' => 'Година',
+	'sd_filter_month' => 'Месец',
 );
 
 /** Seeltersk (Seeltersk)
