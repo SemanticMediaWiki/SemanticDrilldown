@@ -74,6 +74,13 @@ $aliases['fr'] = array(
 	'Filters' => array( 'Filtres' ),
 );
 
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'BrowseData' => array( 'Chèrchiér les balyês', 'ChèrchiérLesBalyês' ),
+	'CreateFilter' => array( 'Fâre un filtro', 'FâreUnFiltro' ),
+	'Filters' => array( 'Filtros' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'CreateFilter' => array( 'Crear un filtro' ),
