@@ -52,6 +52,8 @@ $aliases['de'] = array(
 
 /** Lower Sorbian (Dolnoserbski) */
 $aliases['dsb'] = array(
+	'BrowseData' => array( 'Daty pśepytaś' ),
+	'CreateFilter' => array( 'Filter napóraś' ),
 	'Filters' => array( 'Filtry' ),
 );
 
@@ -101,6 +103,8 @@ $aliases['he'] = array(
 
 /** Upper Sorbian (Hornjoserbsce) */
 $aliases['hsb'] = array(
+	'BrowseData' => array( 'Daty přepytać' ),
+	'CreateFilter' => array( 'Filter wutworić' ),
 	'Filters' => array( 'Filtry' ),
 );
 
