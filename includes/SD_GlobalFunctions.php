@@ -21,7 +21,8 @@ define('SD_SP_HAS_DRILLDOWN_TITLE', 8);
 define('SD_SP_HAS_INPUT_TYPE', 9);
 
 $wgExtensionCredits['specialpage'][]= array(
-	'name'	=> 'Semantic Drilldown',
+	'path'        => __FILE__,
+	'name'	      => 'Semantic Drilldown',
 	'version'     => SD_VERSION,
 	'author'      => 'Yaron Koren',
 	'url'         => 'http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
