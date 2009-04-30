@@ -901,6 +901,13 @@ $messages['gsw'] = array(
 	'sd_filter_haslabel' => 'Är het d Bezeichnig $1.',
 );
 
+/** Gujarati (ગુજરાતી)
+ * @author Dsvyas
+ */
+$messages['gu'] = array(
+	'filters' => 'ચાળણી',
+);
+
 /** Manx (Gaelg)
  * @author MacTire02
  */
