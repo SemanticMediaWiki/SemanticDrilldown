@@ -1371,20 +1371,24 @@ $messages['lb'] = array(
 	'sd_browsedata_addanothervalue' => 'Een anere Wert derbäisetzen',
 	'sd_browsedata_daterangestart' => 'Ufank:',
 	'sd_browsedata_daterangeend' => 'Enn:',
+	'sd_browsedata_novalues' => 'Et gëtt keng Werter fir dëse Filter',
 	'filters' => 'Filteren',
 	'sd_filters_docu' => 'Dës Filtere gëtt et op {{SITENAME}}:',
 	'createfilter' => 'E Filter uleeën',
 	'sd_createfilter_name' => 'Numm:',
 	'sd_createfilter_usepropertyvalues' => 'All Werter vun dëser Eegeschaft fir de Filter benotzen',
 	'sd_createfilter_usecategoryvalues' => 'Werter fir dëse Filter vun dëser Kategorie kréien:',
+	'sd_createfilter_inputtype' => 'Gitt den Typ vun dësem Filter un.',
 	'sd_createfilter_listofvalues' => 'Lëscht vun de Werter (stanard)',
 	'sd_createfilter_requirefilter' => 'Verlaangen dat en anere Filter gewielt gëtt ier dësen ugewise gëtt:',
 	'sd_createfilter_label' => 'Etiquette fir dëse Filter (fakultativ):',
 	'sd_blank_error' => 'däerf net eidel sinn',
+	'sd_filter_coversproperty' => "Dëse Filter betrefft d'Eegeschaft $1.",
 	'sd_filter_getsvaluesfromcategory' => 'E kritt seng Werter aus der Kategorie $1.',
 	'sd_filter_year' => 'Joer',
 	'sd_filter_month' => 'Mount',
 	'sd_filter_hasvalues' => 'En huet de Wert $1.',
+	'sd_filter_combobox' => 'Combinéiert Këscht (combo box)',
 	'sd_filter_freetext' => 'Text',
 	'sd_filter_daterange' => 'Datumsberäich',
 	'sd_filter_requiresfilter' => "E verlaangt d'Presenz vum Filter $1.",
@@ -1775,6 +1779,7 @@ $messages['ps'] = array(
  * @author 555
  * @author Lijealso
  * @author Malafaya
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'semanticdrilldown-desc' => 'Uma interface de introspecção para navegar através de dados semânticos',
@@ -1797,6 +1802,7 @@ $messages['pt'] = array(
 	'sd_browsedata_addanothervalue' => 'Adicionar outro valor',
 	'sd_browsedata_daterangestart' => 'Início:',
 	'sd_browsedata_daterangeend' => 'Fim:',
+	'sd_browsedata_novalues' => 'Não há valores para este filtro',
 	'filters' => 'Filtros',
 	'sd_filters_docu' => '{{SITENAME}} possui os seguintes filtros:',
 	'createfilter' => 'Criar um filtro',
