@@ -143,6 +143,13 @@ $aliases['km'] = array(
 	'Filters' => array( 'តម្រង' ),
 );
 
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'BrowseData' => array( 'Bläddere en de' ),
+	'CreateFilter' => array( 'Felter opsäze', 'Söke opsäze' ),
+	'Filters' => array( 'Feltere', 'Fenge' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'CreateFilter' => array( 'Filter uleeën' ),
