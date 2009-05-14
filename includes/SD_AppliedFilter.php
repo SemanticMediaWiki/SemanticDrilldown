@@ -165,7 +165,7 @@ class SDAppliedFilter {
 		if ($this->filter->is_relation) {
 			$property_table_name = $dbr->tableName('smw_rels2');
 			$property_table_nickname = "r";
-			$value_field = 'r.o_id';
+			$value_field = 'o_ids.smw_title';
 		} else {
 			$property_table_name = $dbr->tableName('smw_atts2');
 			$property_table_nickname = "a";
@@ -181,10 +181,13 @@ class SDAppliedFilter {
 		$smw_insts = $dbr->tableName( 'smw_inst2' );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		$cat_ns = NS_CATEGORY;
-		$sql = "SELECT $value_field
+		$sql = "	SELECT $value_field
 	FROM $property_table_name $property_table_nickname
-	JOIN $smw_ids p_ids ON $property_table_nickname.p_id = p_ids.smw_id
-	JOIN $smw_insts insts ON $property_table_nickname.s_id = insts.s_id
+	JOIN $smw_ids p_ids ON $property_table_nickname.p_id = p_ids.smw_id\n";
+		if ($this->filter->is_relation) {
+			$sql .= "       JOIN $smw_ids o_ids ON $property_table_nickname.o_id = o_ids.smw_id\n";
+		}
+		$sql .= "	JOIN $smw_insts insts ON $property_table_nickname.s_id = insts.s_id
 	JOIN $smw_ids cat_ids ON insts.o_id = cat_ids.smw_id
 	WHERE p_ids.smw_title = '$property_value'
 	AND cat_ids.smw_namespace = $cat_ns
