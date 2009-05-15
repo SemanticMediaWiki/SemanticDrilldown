@@ -370,9 +370,23 @@ $messages['bs'] = array(
 
 /** Catalan (Català)
  * @author Jordi Roqué
+ * @author Solde
  */
 $messages['ca'] = array(
+	'sd_browsedata_choosecategory' => 'Esculli una categoria',
+	'sd_browsedata_viewcategory' => 'veure la categoria',
+	'sd_browsedata_other' => 'Un altre',
+	'sd_browsedata_none' => 'Cap',
+	'sd_browsedata_filterbyvalue' => 'Filtra per aquest valor',
+	'sd_browsedata_or' => 'o',
+	'sd_browsedata_daterangestart' => 'Inici:',
+	'sd_browsedata_daterangeend' => 'Fi:',
+	'filters' => 'Filtres',
+	'sd_createfilter_name' => 'Nom:',
+	'sd_filter_year' => 'Any',
 	'sd_filter_month' => 'Mes',
+	'sd_filter_freetext' => 'text',
+	'sd_filter_daterange' => 'rang de dates',
 );
 
 /** Welsh (Cymraeg)
