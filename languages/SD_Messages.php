@@ -82,7 +82,6 @@ or tag names.',
 	'sd_blank_error' => '{{Identical|Cannot be blank}}',
 	'sd_filter_year' => '{{Identical|Year}}',
 	'sd_filter_month' => '{{Identical|Month}}',
-	'sd_filter_combobox' => '{{Identical|Combo box}}',
 	'sd_filter_freetext' => '{{Identical|Text}}',
 );
 
