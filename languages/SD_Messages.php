@@ -1632,8 +1632,11 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Harald Khan
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'semanticdrilldown-desc' => 'Et «drilldown»-grensesnitt for navigering gjennom semantiske data',
+	'specialpages-group-sd_group' => 'Semantisk «drilldown»',
 	'browsedata' => 'Bla gjennom data',
 	'sd_browsedata_choosecategory' => 'Velg en kategori',
 	'sd_browsedata_viewcategory' => 'se kategori',
@@ -1650,6 +1653,9 @@ $messages['no'] = array(
 	'sd_browsedata_removesubcategoryfilter' => 'Fjern dette underkategorifilteret',
 	'sd_browsedata_resetfilters' => 'Resett filtre',
 	'sd_browsedata_addanothervalue' => 'Legg til ny verdi',
+	'sd_browsedata_daterangestart' => 'Start:',
+	'sd_browsedata_daterangeend' => 'Slutt:',
+	'sd_browsedata_novalues' => 'Det er ingen verdier for dette filteret',
 	'filters' => 'Filtre',
 	'sd_filters_docu' => 'Følgende filtre finnes på {{SITENAME}}:',
 	'createfilter' => 'Opprett et filter',
@@ -1659,6 +1665,8 @@ $messages['no'] = array(
 	'sd_createfilter_usecategoryvalues' => 'Få verdier for filteret fra denne kategorien:',
 	'sd_createfilter_usedatevalues' => 'Bruk datoområder for dette filteret med denne tidsperioden:',
 	'sd_createfilter_entervalues' => 'Skriv inn verdier for filteret manuelt (verdier burde adskilles med komma – om en verdi inneholder et komma, erstatt det med «\\,»);',
+	'sd_createfilter_inputtype' => 'Inndatatype for dette filteret:',
+	'sd_createfilter_listofvalues' => 'liste over verdier (standard)',
 	'sd_createfilter_requirefilter' => 'Krev at et annet filter velges før dette vises:',
 	'sd_createfilter_label' => 'Etikett for dette filteret (valgfritt):',
 	'sd_blank_error' => 'kan ikke være blank',
@@ -1668,6 +1676,10 @@ $messages['no'] = array(
 	'sd_filter_year' => 'År',
 	'sd_filter_month' => 'Måned',
 	'sd_filter_hasvalues' => 'Den har verdiene $1.',
+	'sd_filter_hasinputtype' => 'Det har inndatatypen $1.',
+	'sd_filter_combobox' => 'kombinasjonsboks',
+	'sd_filter_freetext' => 'tekst',
+	'sd_filter_daterange' => 'datoområde',
 	'sd_filter_requiresfilter' => 'Det krever at filteret $1 er til stede.',
 	'sd_filter_haslabel' => 'Det har etiketten $1.',
 );
