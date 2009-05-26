@@ -381,6 +381,7 @@ $messages['ca'] = array(
 	'sd_browsedata_daterangestart' => 'Inici:',
 	'sd_browsedata_daterangeend' => 'Fi:',
 	'filters' => 'Filtres',
+	'createfilter' => 'Crea un filtre',
 	'sd_createfilter_name' => 'Nom:',
 	'sd_filter_year' => 'Any',
 	'sd_filter_month' => 'Mes',
