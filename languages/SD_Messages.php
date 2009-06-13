@@ -1942,6 +1942,7 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author Ferrer
  * @author Innv
  * @author Александр Сигачёв
  */
@@ -1960,6 +1961,7 @@ $messages['ru'] = array(
 	'sd_browsedata_removefilter' => 'Убрать этот фильтр',
 	'sd_browsedata_removesubcategoryfilter' => 'Убрать этот фильтр по подкатегории',
 	'sd_browsedata_resetfilters' => 'Сбросить фильтры',
+	'sd_browsedata_addanothervalue' => 'Добавить другое значение',
 	'sd_browsedata_daterangestart' => 'Начало:',
 	'sd_browsedata_daterangeend' => 'Конец:',
 	'filters' => 'Фильтры',
@@ -1971,6 +1973,8 @@ $messages['ru'] = array(
 	'sd_createfilter_usecategoryvalues' => 'Получить значения для фильтра из этой категории:',
 	'sd_createfilter_usedatevalues' => 'Использовать следующий диапазон дат для фильтра:',
 	'sd_createfilter_entervalues' => 'Введите значения для фильтра вручную (значения должны разделяться запятыми, если значение содержит запятую, замените её на «\\,»):',
+	'sd_createfilter_inputtype' => 'Тип ввода для этого фильтра:',
+	'sd_createfilter_listofvalues' => 'список значений (по умолчанию)',
 	'sd_createfilter_requirefilter' => 'Требовать выбора другого фильтра, перед тем, как отображать этот:',
 	'sd_createfilter_label' => 'Пометка для этого фильтра (необязательно):',
 	'sd_blank_error' => 'не может быть пустым',
