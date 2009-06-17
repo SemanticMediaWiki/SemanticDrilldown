@@ -1757,6 +1757,13 @@ $messages['os'] = array(
 	'sd_filter_year' => 'Аз',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'sd_browsedata_none' => 'Ken',
+);
+
 /** Polish (Polski)
  * @author Airwolf
  * @author Maikking
