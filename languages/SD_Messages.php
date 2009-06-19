@@ -352,19 +352,25 @@ $messages['bs'] = array(
 	'sd_browsedata_subcategory' => 'Podkategorija',
 	'sd_browsedata_other' => 'Ostalo',
 	'sd_browsedata_none' => 'Ništa',
+	'sd_browsedata_filterbyvalue' => 'Filter po ovoj vrijednosti',
 	'sd_browsedata_or' => 'ili',
 	'sd_browsedata_removefilter' => 'Ukloni ovaj filter',
 	'sd_browsedata_removesubcategoryfilter' => 'Ukloni ovaj filter podkategorije',
 	'sd_browsedata_resetfilters' => 'Resetuj filtere',
 	'sd_browsedata_addanothervalue' => 'Dodaj drugu vrijednost',
+	'sd_browsedata_daterangestart' => 'Početak:',
+	'sd_browsedata_daterangeend' => 'Kraj:',
 	'filters' => 'Filteri',
 	'createfilter' => 'Napravi filter',
 	'sd_createfilter_name' => 'Ime:',
+	'sd_createfilter_inputtype' => 'Tip unosa za ovaj filter:',
 	'sd_createfilter_label' => 'Naslov za ovaj filter (opcija):',
 	'sd_blank_error' => 'ne može biti prazno',
 	'sd_filter_year' => 'Godina',
 	'sd_filter_month' => 'mjesec',
 	'sd_filter_hasvalues' => 'Ima vrijednosti $1.',
+	'sd_filter_freetext' => 'tekst',
+	'sd_filter_haslabel' => 'Ima oznaku $1.',
 );
 
 /** Catalan (Català)
@@ -1761,7 +1767,9 @@ $messages['os'] = array(
  * @author Xqt
  */
 $messages['pdc'] = array(
+	'sd_browsedata_other' => 'Anneres',
 	'sd_browsedata_none' => 'Ken',
+	'sd_createfilter_name' => 'Naame:',
 );
 
 /** Polish (Polski)
