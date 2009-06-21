@@ -1960,6 +1960,7 @@ $messages['roa-tara'] = array(
 /** Russian (Русский)
  * @author Ferrer
  * @author Innv
+ * @author Lockal
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -2000,6 +2001,7 @@ $messages['ru'] = array(
 	'sd_filter_year' => 'Год',
 	'sd_filter_month' => 'Месяц',
 	'sd_filter_hasvalues' => 'Имеет значения $1.',
+	'sd_filter_combobox' => 'выпадающий список',
 	'sd_filter_freetext' => 'текст',
 	'sd_filter_requiresfilter' => 'Требует наличия фильтра $1.',
 	'sd_filter_haslabel' => 'Имеет пометку $1.',
