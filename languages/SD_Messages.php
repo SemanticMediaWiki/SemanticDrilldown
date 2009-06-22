@@ -1964,9 +1964,12 @@ $messages['roa-tara'] = array(
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'semanticdrilldown-desc' => 'Развёрнутый интерфейс для навигации в семантических данных',
+	'specialpages-group-sd_group' => 'Развёрнутая семантика',
 	'browsedata' => 'Обзор данных',
 	'sd_browsedata_choosecategory' => 'Выберите категорию',
 	'sd_browsedata_viewcategory' => 'просмотр категории',
+	'sd_browsedata_docu' => 'Нажмите на одном или больше элементов для уменьшения ваших результатов.',
 	'sd_browsedata_subcategory' => 'Подкатегория',
 	'sd_browsedata_other' => 'Другие',
 	'sd_browsedata_none' => 'Нет',
@@ -1981,6 +1984,7 @@ $messages['ru'] = array(
 	'sd_browsedata_addanothervalue' => 'Добавить другое значение',
 	'sd_browsedata_daterangestart' => 'Начало:',
 	'sd_browsedata_daterangeend' => 'Конец:',
+	'sd_browsedata_novalues' => 'Нет значений для этого фильтра',
 	'filters' => 'Фильтры',
 	'sd_filters_docu' => '{{SITENAME}} содержит следующие фильтры:',
 	'createfilter' => 'Создать фильтр',
@@ -2001,8 +2005,10 @@ $messages['ru'] = array(
 	'sd_filter_year' => 'Год',
 	'sd_filter_month' => 'Месяц',
 	'sd_filter_hasvalues' => 'Имеет значения $1.',
+	'sd_filter_hasinputtype' => 'Он имеет тип ввода $1.',
 	'sd_filter_combobox' => 'выпадающий список',
 	'sd_filter_freetext' => 'текст',
+	'sd_filter_daterange' => 'диапазон дат',
 	'sd_filter_requiresfilter' => 'Требует наличия фильтра $1.',
 	'sd_filter_haslabel' => 'Имеет пометку $1.',
 );
