@@ -106,59 +106,6 @@ class SDAppliedFilter {
 	 * filter has, for pages in the passed-in category.
 	 */
 	function getAllOrValues($category) {
-		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore') {
-			return $this->getAllOrValues_orig($category);
-		} else {
-			return $this->getAllOrValues_2($category);
-		}
-	}
-
-	function getAllOrValues_orig($category) {
-		$possible_values = array();
-		$property_value = str_replace(' ', '_', $this->filter->property);
-		$dbr = wfGetDB( DB_SLAVE );
-		if ($this->filter->is_relation) {
-			$property_table_name = $dbr->tableName('smw_relations');
-			$property_table_nickname = "r";
-			$property_field = 'relation_title';
-			$value_field = 'object_title';
-		} else {
-			$property_table_name = $dbr->tableName('smw_attributes');
-			$property_table_nickname = "a";
-			$property_field = 'attribute_title';
-			$value_field = 'value_xsd';
-		}
-		if ($this->filter->time_period != NULL) {
-			if ($this->filter->time_period == wfMsg('sd_filter_month')) {
-				$value_field = "YEAR(value_xsd), MONTH(value_xsd)";
-			} else {
-				$value_field = "YEAR(value_xsd)";
-			}
-		}
-		$categorylinks = $dbr->tableName( 'categorylinks' );
-		$sql = "SELECT $value_field
-			FROM $property_table_name $property_table_nickname
-			JOIN $categorylinks c
-			ON $property_table_nickname.subject_id = c.cl_from
-			WHERE $property_table_nickname.$property_field = '$property_value'
-			AND c.cl_to = '$category'
-			GROUP BY $value_field
-			ORDER BY $value_field";
-		$res = $dbr->query($sql);
-		while ($row = $dbr->fetchRow($res)) {
-			if ($this->filter->time_period == wfMsg('sd_filter_month'))
-				$value_string = SDUtils::monthToString($row[1]) . " " . $row[0];
-			else
-				// why is trim() necessary here???
-				$value_string = str_replace('_', ' ', trim($row[0]));
-			$possible_values[] = $value_string;
-		}
-		$dbr->freeResult($res);
-		return $possible_values;
-	}
-
-	function getAllOrValues_2($category) {
 		$possible_values = array();
 		$property_value = str_replace(' ', '_', $this->filter->property);
 		$dbr = wfGetDB( DB_SLAVE );
