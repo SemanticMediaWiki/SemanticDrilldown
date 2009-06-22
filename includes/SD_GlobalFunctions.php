@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.5.7');
+define('SD_VERSION','0.5.8');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -136,13 +136,13 @@ function sdfInitUserLanguage($langcode) {
 		include_once( $sdgIP . '/languages/'. $sdLangClass . '.php' );
 	}
 
-	// fallback if language not supported
-	if ( !class_exists($sdLangClass)) {
-		global $sdgContLang;
-		$sdgLang = $sdgContLang;
-	} else {
-		$sdgLang = new $sdLangClass();
-	}
+        // fallback if language not supported
+        if ( !class_exists($sdLangClass)) {
+                include_once( $sdgIP . '/languages/SD_LanguageEn.php' );
+                $sdLangClass = 'SD_LanguageEn';
+        }
+
+	$sdgLang = new $sdLangClass();
 }
 
 /**
