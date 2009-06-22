@@ -97,22 +97,15 @@ class BrowseDataPage extends QueryPage {
 	 * all remaining filters
 	 */
 	function createTempTable($category, $subcategory, $subcategories, $applied_filters) {
-		global $smwgDefaultStore;
-
 		$dbr = wfGetDB( DB_SLAVE );
 		$sql =<<<END
 	CREATE TEMPORARY TABLE semantic_drilldown_values (
 		id INT NOT NULL,
 		INDEX id_index (id)
-	) AS SELECT
+	) AS SELECT ids.smw_id AS id
+
 END;
-		if ($smwgDefaultStore == 'SMWSQLStore') {
-			$sql .= " p.page_id AS id ";
-			$sql .= $this->getSQLFromClause_orig($category, $subcategory, $subcategories, $applied_filters);
-		} else {
-			$sql .= " ids.smw_id AS id ";
-			$sql .= $this->getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters);
-		}
+		$sql .= $this->getSQLFromClause($category, $subcategory, $subcategories, $applied_filters);
 		$dbr->query($sql);
 	}
 
@@ -137,31 +130,6 @@ END;
 	 * subcategory's child subcategories, to ensure completeness.
 	 */
 	function getSQLFromClauseForCategory($subcategory, $child_subcategories) {
-		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore') {
-			return $this->getSQLFromClauseForCategory_orig($subcategory, $child_subcategories);
-		} else {
-			return $this->getSQLFromClauseForCategory_2($subcategory, $child_subcategories);
-		}
-	}
-
-	function getSQLFromClauseForCategory_orig($subcategory, $child_subcategories) {
-		$dbr = wfGetDB( DB_SLAVE );
-		$categorylinks = $dbr->tableName( 'categorylinks' );
-		$subcategory = str_replace("'", "\'", $subcategory);
-		$sql = "FROM semantic_drilldown_values sdv
-			JOIN $categorylinks c
-			ON sdv.id = c.cl_from
-			WHERE (c.cl_to = '$subcategory' ";
-		foreach ($child_subcategories as $i => $subcat) {
-			$subcat = str_replace("'", "\'", $subcat);
-			$sql .= "OR c.cl_to = '$subcat' ";
-		}
-		$sql .= ") ";
-		return $sql;
-	}
-
-	function getSQLFromClauseForCategory_2($subcategory, $child_subcategories) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$smw_insts = $dbr->tableName( 'smw_inst2' );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
@@ -187,93 +155,6 @@ END;
 	 * category, subcategory and filters
 	 */
 	function getSQLFromClause($category, $subcategory, $subcategories, $applied_filters) {
-		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore') {
-			return $this->getSQLFromClause_orig($category, $subcategory, $subcategories, $applied_filters);
-		} else {
-			return $this->getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters);
-		}
-	}
-
-	function getSQLFromClause_orig($category, $subcategory, $subcategories, $applied_filters) {
-		$dbr = wfGetDB( DB_SLAVE );
-		$page = $dbr->tableName( 'page' );
-		$smw_relations = $dbr->tableName( 'smw_relations' );
-		$smw_attributes = $dbr->tableName( 'smw_attributes' );
-		$categorylinks = $dbr->tableName( 'categorylinks' );
-
-		$sql = "FROM $page p
-			JOIN $categorylinks c
-			ON p.page_id = c.cl_from ";
-		$cat_ns = NS_CATEGORY;
-		$sql .= "AND p.page_namespace != $cat_ns ";
-		foreach ($applied_filters as $i => $af) {
-			// if any of this filter's values is 'none',
-			// include another table to get this information
-			$includes_none = false;
-			foreach ($af->values as $fv) {
-				if ($fv->text === '_none' || $fv->text === ' none') {
-					$includes_none = true;
-					break;
-				}
-			}
-			if ($includes_none) {
-				if ($af->filter->is_relation) {
-					$property_table_name = $smw_relations;
-					$property_table_nickname = "nr$i";
-					$property_field = 'relation_title';
-					$value_field = 'object_title';
-				} else {
-					$property_table_name = $smw_attributes;
-					$property_table_nickname = "na$i";
-					$property_field = 'attribute_title';
-					$value_field = 'value_xsd';
-				}
-				$property_value = str_replace(' ', '_', $af->filter->property);
-				$property_value = str_replace("'", "\'", $property_value);
-				$sql .= "LEFT OUTER JOIN
-	(SELECT subject_id, $value_field
-	FROM $property_table_name
-	WHERE $property_field = '$property_value') $property_table_nickname
-	ON p.page_id = $property_table_nickname.subject_id ";
-			}
-		}
-		foreach ($applied_filters as $i => $af) {
-			if ($af->filter->is_relation) {
-				$sql .= "LEFT OUTER JOIN $smw_relations r$i
-	ON p.page_id = r$i.subject_id ";
-			} else {
-				$sql .= "JOIN $smw_attributes a$i
-	ON p.page_id = a$i.subject_id ";
-			}
-		}
-		if ($subcategory)
-			$actual_cat = str_replace(' ', '_', $subcategory);
-		else
-			$actual_cat = str_replace(' ', '_', $category);
-		$actual_cat = str_replace("'", "\'", $actual_cat);
-		$sql .= "WHERE (c.cl_to = '$actual_cat' ";
-		foreach ($subcategories as $i => $subcat) {
-			$subcat = str_replace("'", "\'", $subcat);
-			$sql .= "OR c.cl_to = '{$subcat}' ";
-		}
-		$sql .= ") ";
-		foreach ($applied_filters as $i => $af) {
-			if ($af->filter->is_relation) {
-				$property_field = "r$i.relation_title";
-				$value_field = "r$i.object_title";
-			} else {
-				$property_field = "a$i.attribute_title";
-				$value_field = "a$i.value_xsd";
-			}
-			$property_value = str_replace(' ', '_', $af->filter->property);
-			$sql .= "AND $property_field = '$property_value' AND ";
-			$sql .= $af->checkSQL($value_field);
-		}
-		return $sql;
-	}
-
-	function getSQLFromClause_2($category, $subcategory, $subcategories, $applied_filters) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		$smw_insts = $dbr->tableName( 'smw_inst2' );
@@ -558,6 +439,7 @@ END;
 	function printComboBoxInput($filter_name, $filter_values, $cur_value = null) {
 		global $wgRequest;
 
+		$filter_name = str_replace(' ', '_', $filter_name);
 		$input_id = "_search_$filter_name";
 		$text =<<<END
 
@@ -937,18 +819,10 @@ END;
 	function getSQL() {
 		// QueryPage uses the value from this SQL in an ORDER clause,
 		// so return page_title as title.
-		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore') {
-			$sql = "SELECT DISTINCT p.page_title AS title,
-	p.page_title AS value,
-	p.page_namespace AS namespace,
-	c.cl_sortkey AS sortkey\n";
-		} else {
-			$sql = "SELECT DISTINCT ids.smw_title AS title,
+		$sql = "SELECT DISTINCT ids.smw_title AS title,
 	ids.smw_title AS value,
 	ids.smw_namespace AS namespace,
 	ids.smw_sortkey AS sortkey\n";
-		}
 		$sql .= $this->getSQLFromClause($this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters);
 		return $sql;
 	}
