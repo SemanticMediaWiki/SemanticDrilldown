@@ -77,8 +77,6 @@ class SDFilter {
 	 * the number of pages that match that time period.
 	 */
 	function getTimePeriodValues() {
-		global $smwgDefaultStore;
-
 		$possible_dates = array();
 		$property_value = str_replace(' ', '_', $this->property);
 		$dbr = wfGetDB( DB_SLAVE );
@@ -87,21 +85,9 @@ class SDFilter {
 		} else {
 			$fields = "YEAR(value_xsd)";
 		}
-		if ($smwgDefaultStore == 'SMWSQLStore') {
-			$smw_attributes = $dbr->tableName( 'smw_attributes' );
-			$sql =<<<END
-	SELECT $fields, count(*)
-	FROM semantic_drilldown_values sdv 
-	JOIN $smw_attributes a ON sdv.id = a.subject_id
-	WHERE a.attribute_title = '$property_value'
-	GROUP BY $fields
-	ORDER BY $fields
-
-END;
-		} else {
-			$smw_attributes = $dbr->tableName( 'smw_atts2' );
-			$smw_ids = $dbr->tableName( 'smw_ids' );
-			$sql =<<<END
+		$smw_attributes = $dbr->tableName( 'smw_atts2' );
+		$smw_ids = $dbr->tableName( 'smw_ids' );
+		$sql =<<<END
 	SELECT $fields, count(*)
 	FROM semantic_drilldown_values sdv 
 	JOIN $smw_attributes a ON sdv.id = a.s_id
@@ -111,7 +97,6 @@ END;
 	ORDER BY $fields
 
 END;
-		}
 		$res = $dbr->query($sql);
 		while ($row = $dbr->fetchRow($res)) {
 			if ($this->time_period == wfMsg('sd_filter_month')) {
@@ -133,49 +118,9 @@ END;
 	 * that match that value.
 	 */
 	function getAllValues() {
-		global $smwgDefaultStore;
-		if ($this->time_period != NULL) {
+		if ($this->time_period != NULL)
 			return $this->getTimePeriodValues();
-		} elseif ($smwgDefaultStore == 'SMWSQLStore') {
-			return $this->getAllValues_orig();
-		} else {
-			return $this->getAllValues_2();
-		}
-	}
 
-	function getAllValues_orig() {
-		$possible_values = array();
-		$property_value = str_replace(' ', '_', $this->property);
-		$dbr = wfGetDB( DB_SLAVE );
-		if ($this->is_relation) {
-			$property_table_name = $dbr->tableName('smw_relations');
-			$property_table_nickname = "r";
-			$property_field = 'relation_title';
-			$value_field = 'object_title';
-		} else {
-			$property_table_name = $dbr->tableName('smw_attributes');
-			$property_table_nickname = "a";
-			$property_field = 'attribute_title';
-			$value_field = 'value_xsd';
-		}
-		$sql = "SELECT $value_field, count(*)
-			FROM semantic_drilldown_values sdv 
-			JOIN $property_table_name $property_table_nickname
-			ON sdv.id = $property_table_nickname.subject_id
-			WHERE $property_table_nickname.$property_field = '$property_value'
-			AND $value_field != ''
-			GROUP BY $value_field
-			ORDER BY $value_field";
-		$res = $dbr->query($sql);
-		while ($row = $dbr->fetchRow($res)) {
-			$value_string = str_replace('_', ' ', $row[0]);
-			$possible_values[$value_string] = $row[1];
-		}
-		$dbr->freeResult($res);
-		return $possible_values;
-	}
-
-	function getAllValues_2() {
 		$possible_values = array();
 		$property_value = str_replace(' ', '_', $this->property);
 		$dbr = wfGetDB( DB_SLAVE );
@@ -217,8 +162,6 @@ END;
 		return $possible_values;
 	}
 
-
-
 	/**
 	 * Creates a temporary database table, semantic_drilldown_filter_values,
 	 * that holds every value held by any page in the wiki that matches
@@ -227,39 +170,6 @@ END;
 	 * and for getting the set of 'None' values.
 	 */
 	function createTempTable() {
-		global $smwgDefaultStore;
-		if ($smwgDefaultStore == 'SMWSQLStore') {
-			$this->createTempTable_orig();
-		} else {
-			$this->createTempTable_2();
-		}
-	}
-
-	function createTempTable_orig() {
-		$dbr = wfGetDB( DB_SLAVE );
-		if ($this->is_relation) {
-			$table_name = $dbr->tableName( 'smw_relations' );
-			$property_field = 'relation_title';
-			$value_field = 'object_title';
-		} else {
-			$table_name = $dbr->tableName( 'smw_attributes' );
-			$property_field = 'attribute_title';
-			$value_field = 'value_xsd';
-		}
-		$query_property = str_replace(' ', '_', $this->property);
-		$sql =<<<END
-	CREATE TEMPORARY TABLE semantic_drilldown_filter_values (
-		id INT NOT NULL,
-		value VARCHAR(200) NOT NULL,
-		INDEX sdfv_id_index(id)
-	) AS SELECT subject_id AS id, $value_field AS value
-	FROM $table_name
-	WHERE $property_field = '$query_property'
-END;
-		$dbr->query($sql);
-	}
-
-	function createTempTable_2() {
 		$dbr = wfGetDB( DB_SLAVE );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		if ($this->is_relation) {
