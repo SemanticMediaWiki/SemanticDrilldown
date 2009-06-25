@@ -188,6 +188,7 @@ $aliases['no'] = array(
 
 /** Occitan (Occitan) */
 $aliases['oc'] = array(
+	'CreateFilter' => array( 'CrearFiltre', 'Crear filtre' ),
 	'Filters' => array( 'Filtres' ),
 );
 

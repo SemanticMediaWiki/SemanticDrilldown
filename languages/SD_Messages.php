@@ -1152,10 +1152,12 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author Irwangatot
  * @author Rex
  */
 $messages['id'] = array(
+	'sd_browsedata_other' => 'Lain-lain',
 	'sd_browsedata_none' => 'Tidak ada',
 	'sd_createfilter_name' => 'Nama:',
 );
