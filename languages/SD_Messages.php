@@ -1160,6 +1160,10 @@ $messages['id'] = array(
 	'sd_browsedata_other' => 'Lain-lain',
 	'sd_browsedata_none' => 'Tidak ada',
 	'sd_createfilter_name' => 'Nama:',
+	'sd_blank_error' => 'tidak boleh kosong',
+	'sd_filter_year' => 'Tahun',
+	'sd_filter_month' => 'Bulan',
+	'sd_filter_freetext' => 'teks',
 );
 
 /** Icelandic (Íslenska)
