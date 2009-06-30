@@ -863,8 +863,10 @@ $messages['gl'] = array(
  * @author Omnipaedista
  */
 $messages['grc'] = array(
+	'sd_browsedata_other' => 'Ἄλλον',
 	'sd_browsedata_none' => 'Οὐδεμία',
 	'sd_browsedata_or' => 'ἢ',
+	'sd_browsedata_daterangeend' => 'Τέλος:',
 	'filters' => 'Διηθητήρια',
 	'sd_createfilter_name' => 'Ὄνομα:',
 	'sd_filter_year' => 'Ἔτος',
