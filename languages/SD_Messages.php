@@ -168,6 +168,18 @@ $messages['ar'] = array(
 	'sd_filter_haslabel' => 'يمتلك العلامة $1.',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'sd_browsedata_other' => 'ܐܚܪܢܐ',
+	'sd_browsedata_none' => 'ܠܐ ܡܕܡ',
+	'sd_browsedata_or' => 'ܐܘ',
+	'sd_createfilter_name' => 'ܫܡܐ:',
+	'sd_filter_year' => 'ܫܢܬܐ',
+	'sd_filter_month' => 'ܝܪܚܐ',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  * @author Ouda
@@ -1779,6 +1791,7 @@ $messages['pdc'] = array(
 	'sd_browsedata_other' => 'Anneres',
 	'sd_browsedata_none' => 'Ken',
 	'sd_createfilter_name' => 'Naame:',
+	'sd_filter_month' => 'Munet',
 );
 
 /** Polish (Polski)
