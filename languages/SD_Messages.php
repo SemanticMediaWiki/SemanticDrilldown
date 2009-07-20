@@ -1173,6 +1173,7 @@ $messages['ia'] = array(
 $messages['id'] = array(
 	'sd_browsedata_other' => 'Lain-lain',
 	'sd_browsedata_none' => 'Tidak ada',
+	'filters' => 'Penyaring',
 	'sd_createfilter_name' => 'Nama:',
 	'sd_blank_error' => 'tidak boleh kosong',
 	'sd_filter_year' => 'Tahun',
