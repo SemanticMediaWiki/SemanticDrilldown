@@ -203,6 +203,13 @@ $aliases['ro'] = array(
 	'Filters' => array( 'Filtre' ),
 );
 
+/** Slovak (Slovenčina) */
+$aliases['sk'] = array(
+	'BrowseData' => array( 'PrehliadaťDáta' ),
+	'CreateFilter' => array( 'VytvoriťFilter' ),
+	'Filters' => array( 'Filtre' ),
+);
+
 /** Albanian (Shqip) */
 $aliases['sq'] = array(
 	'CreateFilter' => array( 'KrijoFiltrues' ),
