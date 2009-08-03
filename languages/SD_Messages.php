@@ -665,15 +665,21 @@ $messages['es'] = array(
 
 /** Basque (Euskara)
  * @author An13sa
+ * @author Kobazulo
  */
 $messages['eu'] = array(
+	'browsedata' => 'Datuak arakatu',
 	'sd_browsedata_choosecategory' => 'Kategoria aukeratu',
 	'sd_browsedata_viewcategory' => 'kategoria ikusi',
 	'sd_browsedata_subcategory' => 'Azpikategoria',
 	'sd_browsedata_or' => 'edo',
+	'sd_browsedata_removefilter' => 'Iragazki hau kendu',
+	'sd_browsedata_resetfilters' => 'Iragazkiak berrezarri',
 	'sd_browsedata_addanothervalue' => 'Beste balio bat gehitu',
 	'sd_browsedata_daterangestart' => 'Hasiera:',
 	'sd_browsedata_daterangeend' => 'Amaiera:',
+	'filters' => 'Iragazkiak',
+	'createfilter' => 'Iragazki bat sortu',
 	'sd_createfilter_name' => 'Izena:',
 	'sd_filter_year' => 'Urtea',
 	'sd_filter_month' => 'Hilabetea',
