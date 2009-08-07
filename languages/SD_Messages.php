@@ -2470,6 +2470,13 @@ $messages['zh-cn'] = array(
 	'sd_filter_haslabel' => '其有着此一$1标签',
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author PhiLiP
+ */
+$messages['zh-hans'] = array(
+	'sd_browsedata_other' => '其他',
+);
+
 /** Chinese (Taiwan) (‪中文(台灣)‬)
  * @author Roc michael
  */
