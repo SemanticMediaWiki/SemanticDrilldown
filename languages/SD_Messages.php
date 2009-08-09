@@ -744,15 +744,18 @@ $messages['fi'] = array(
 	'sd_browsedata_or' => 'tai',
 	'sd_browsedata_removefilter' => 'Poista suodin',
 	'sd_browsedata_resetfilters' => 'Nollaa suotimet',
+	'sd_browsedata_addanothervalue' => 'Lisää uusi arvo',
 	'sd_browsedata_daterangestart' => 'Alku',
 	'sd_browsedata_daterangeend' => 'Loppu',
 	'filters' => 'Suotimet',
 	'sd_filters_docu' => 'Tässä wikissä on seuraavat suotimet:',
 	'createfilter' => 'Luo suodin',
 	'sd_createfilter_name' => 'Nimi',
+	'sd_createfilter_listofvalues' => 'luettelo arvoista (oletus)',
 	'sd_blank_error' => 'ei voi olla tyhjä',
 	'sd_filter_year' => 'Vuosi',
 	'sd_filter_month' => 'Kuukausi',
+	'sd_filter_freetext' => 'teksti',
 );
 
 /** French (Français)
@@ -1337,6 +1340,13 @@ $messages['km'] = array(
 	'sd_filter_haslabel' => 'វា​មាន​ស្លាក $1 ។',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'sd_browsedata_other' => 'ಇತರ',
+);
+
 /** Korean (한국어)
  * @author Albamhandae
  */
@@ -1797,7 +1807,9 @@ $messages['os'] = array(
 $messages['pdc'] = array(
 	'sd_browsedata_other' => 'Anneres',
 	'sd_browsedata_none' => 'Ken',
+	'sd_browsedata_or' => 'odder',
 	'sd_createfilter_name' => 'Naame:',
+	'sd_filter_year' => 'Yaahr',
 	'sd_filter_month' => 'Munet',
 );
 
