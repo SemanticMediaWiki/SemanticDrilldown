@@ -756,6 +756,7 @@ $messages['fi'] = array(
 	'sd_filter_year' => 'Vuosi',
 	'sd_filter_month' => 'Kuukausi',
 	'sd_filter_freetext' => 'teksti',
+	'sd_filter_daterange' => 'päiväväli',
 );
 
 /** French (Français)
@@ -1970,13 +1971,18 @@ $messages['pt-br'] = array(
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  * @author Mihai
  */
 $messages['ro'] = array(
 	'sd_browsedata_subcategory' => 'Subcategorie',
 	'sd_browsedata_none' => 'Nimic',
+	'sd_browsedata_or' => 'sau',
+	'sd_browsedata_daterangestart' => 'Început:',
+	'sd_browsedata_daterangeend' => 'Sfârşit:',
 	'filters' => 'Filtre',
+	'createfilter' => 'Creaţi un filtru',
 	'sd_createfilter_name' => 'Nume:',
 	'sd_blank_error' => 'nu poate fi gol',
 	'sd_filter_year' => 'An',
@@ -2120,6 +2126,21 @@ $messages['sr-ec'] = array(
 	'sd_createfilter_name' => 'Име:',
 	'sd_filter_year' => 'Година',
 	'sd_filter_month' => 'Месец',
+);
+
+/** latinica (latinica)
+ * @author Michaello
+ */
+$messages['sr-el'] = array(
+	'sd_browsedata_choosecategory' => 'Izaberi kategoriju',
+	'sd_browsedata_viewcategory' => 'vidi kategoriju',
+	'sd_browsedata_subcategory' => 'Podkategorija',
+	'sd_browsedata_none' => 'Nema',
+	'sd_browsedata_daterangestart' => 'Početak:',
+	'sd_browsedata_daterangeend' => 'Kraj:',
+	'sd_createfilter_name' => 'Ime:',
+	'sd_filter_year' => 'Godina',
+	'sd_filter_month' => 'Mesec',
 );
 
 /** Seeltersk (Seeltersk)
