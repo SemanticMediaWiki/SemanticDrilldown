@@ -554,17 +554,23 @@ $messages['dsb'] = array(
 /** Greek (Ελληνικά)
  * @author Consta
  * @author Crazymadlover
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'browsedata' => 'Δεδομένα πλοήγησης',
 	'sd_browsedata_choosecategory' => 'Επιλέξτε μια κατηγορία',
 	'sd_browsedata_subcategory' => 'Υποκατηγορία',
 	'sd_browsedata_other' => 'Άλλος',
 	'sd_browsedata_none' => 'Κανένα',
 	'sd_browsedata_or' => 'ή',
+	'sd_browsedata_daterangestart' => 'Έναρξη:',
+	'sd_browsedata_daterangeend' => 'Λήξη:',
 	'filters' => 'Φίλτρα',
+	'createfilter' => 'Δημιουργία ενός φίλτρου',
 	'sd_createfilter_name' => 'Όνομα:',
 	'sd_filter_year' => 'Χρόνος',
 	'sd_filter_month' => 'Μήνας',
+	'sd_filter_freetext' => 'κείμενο',
 );
 
 /** Esperanto (Esperanto)
@@ -1978,10 +1984,17 @@ $messages['pt-br'] = array(
 $messages['ro'] = array(
 	'sd_browsedata_subcategory' => 'Subcategorie',
 	'sd_browsedata_none' => 'Nimic',
+	'sd_browsedata_filterbyvalue' => 'Filtrează după această valoare',
+	'sd_browsedata_filterbysubcategory' => 'Filtrează după această subcategorie',
 	'sd_browsedata_or' => 'sau',
+	'sd_browsedata_removefilter' => 'Elimină acest filtru',
+	'sd_browsedata_removesubcategoryfilter' => 'Elimină acest filtru de subcategorie',
+	'sd_browsedata_addanothervalue' => 'Adaugă altă valoare',
 	'sd_browsedata_daterangestart' => 'Început:',
 	'sd_browsedata_daterangeend' => 'Sfârşit:',
+	'sd_browsedata_novalues' => 'Nu există valori pentru acest filtru',
 	'filters' => 'Filtre',
+	'sd_filters_docu' => 'Următoarele filtre există la {{SITENAME}}:',
 	'createfilter' => 'Creaţi un filtru',
 	'sd_createfilter_name' => 'Nume:',
 	'sd_blank_error' => 'nu poate fi gol',
