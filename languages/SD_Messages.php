@@ -737,6 +737,8 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Cimon Avaro
+ * @author Crt
  * @author Nike
  * @author Str4nd
  */
@@ -744,11 +746,15 @@ $messages['fi'] = array(
 	'browsedata' => 'Datan selaus',
 	'sd_browsedata_choosecategory' => 'Valitse luokka',
 	'sd_browsedata_viewcategory' => 'näytä luokka',
+	'sd_browsedata_docu' => 'Valitse yksi tai useampia kohteita alempaa lisärajataksesi tuloksia.',
 	'sd_browsedata_subcategory' => 'Alaluokka',
 	'sd_browsedata_other' => 'Muu',
 	'sd_browsedata_none' => 'Ei mikään',
+	'sd_browsedata_filterbyvalue' => 'Suodata tällä arvolla',
+	'sd_browsedata_filterbysubcategory' => 'Suodata tämän alaluokan suhteen',
 	'sd_browsedata_or' => 'tai',
 	'sd_browsedata_removefilter' => 'Poista suodin',
+	'sd_browsedata_removesubcategoryfilter' => 'Poista tämä alaluokka-suodatin',
 	'sd_browsedata_resetfilters' => 'Nollaa suotimet',
 	'sd_browsedata_addanothervalue' => 'Lisää uusi arvo',
 	'sd_browsedata_daterangestart' => 'Alku',
@@ -757,12 +763,16 @@ $messages['fi'] = array(
 	'sd_filters_docu' => 'Tässä wikissä on seuraavat suotimet:',
 	'createfilter' => 'Luo suodin',
 	'sd_createfilter_name' => 'Nimi',
+	'sd_createfilter_usedatevalues' => 'Käytä päiväys-rajoituksia tämän suodattimen kanssa käyttäen tätä aikajaksoa:',
 	'sd_createfilter_listofvalues' => 'luettelo arvoista (oletus)',
+	'sd_createfilter_requirefilter' => 'Vaatii toisen suodattimen valinnan ennen kuin tämä näytetään:',
 	'sd_blank_error' => 'ei voi olla tyhjä',
 	'sd_filter_year' => 'Vuosi',
 	'sd_filter_month' => 'Kuukausi',
+	'sd_filter_hasvalues' => 'Sillä on arvot $1.',
 	'sd_filter_freetext' => 'teksti',
 	'sd_filter_daterange' => 'päiväväli',
+	'sd_filter_requiresfilter' => 'Se edellyttää suodattimen $1.',
 );
 
 /** French (Français)
@@ -891,14 +901,20 @@ $messages['gl'] = array(
  * @author Omnipaedista
  */
 $messages['grc'] = array(
+	'browsedata' => 'Δεδομένα πλοηγήσεως',
+	'sd_browsedata_viewcategory' => 'ὁρᾶν κατηγορίαν',
+	'sd_browsedata_subcategory' => 'Ὑποκατηγορία',
 	'sd_browsedata_other' => 'Ἄλλον',
 	'sd_browsedata_none' => 'Οὐδεμία',
 	'sd_browsedata_or' => 'ἢ',
+	'sd_browsedata_daterangestart' => 'Ἐκκινεῖν:',
 	'sd_browsedata_daterangeend' => 'Τέλος:',
 	'filters' => 'Διηθητήρια',
+	'createfilter' => 'Ποιεῖν διηθητήριον',
 	'sd_createfilter_name' => 'Ὄνομα:',
 	'sd_filter_year' => 'Ἔτος',
 	'sd_filter_month' => 'Μήν',
+	'sd_filter_freetext' => 'κείμενον',
 );
 
 /** Swiss German (Alemannisch)
@@ -1793,7 +1809,7 @@ $messages['oc'] = array(
 	'sd_filter_month' => 'Mes',
 	'sd_filter_hasvalues' => 'A $1 coma valor',
 	'sd_filter_hasinputtype' => "A lo tipe d'entrada $1.",
-	'sd_filter_combobox' => 'Boita combo',
+	'sd_filter_combobox' => 'Bóstia combo',
 	'sd_filter_freetext' => 'tèxte',
 	'sd_filter_daterange' => 'Gama de data',
 	'sd_filter_requiresfilter' => 'Necessita la preséncia del filtre $1.',
@@ -2521,6 +2537,20 @@ $messages['zh-cn'] = array(
  */
 $messages['zh-hans'] = array(
 	'sd_browsedata_other' => '其他',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Wrightbus
+ */
+$messages['zh-hant'] = array(
+	'sd_browsedata_other' => '其他',
+	'sd_browsedata_or' => '或',
+	'sd_browsedata_daterangestart' => '開始：',
+	'sd_browsedata_daterangeend' => '結束：',
+	'sd_blank_error' => '不可留空',
+	'sd_filter_year' => '年',
+	'sd_filter_month' => '月',
+	'sd_filter_freetext' => '文字',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)
