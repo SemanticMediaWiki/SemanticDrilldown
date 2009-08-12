@@ -843,6 +843,23 @@ $messages['fr'] = array(
 	'sd_filter_haslabel' => 'Étiqueté $1.',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author Cedric31
+ */
+$messages['frp'] = array(
+	'sd_browsedata_subcategory' => 'Sot-catègorie',
+	'sd_browsedata_other' => 'Ôtro',
+	'sd_browsedata_none' => 'Nion',
+	'sd_browsedata_daterangestart' => 'Comencement :',
+	'sd_browsedata_daterangeend' => 'Fin :',
+	'filters' => 'Filtros',
+	'createfilter' => 'Crèar un filtro',
+	'sd_createfilter_name' => 'Nom :',
+	'sd_filter_year' => 'An',
+	'sd_filter_month' => 'Mês',
+	'sd_filter_freetext' => 'tèxto',
+);
+
 /** Western Frisian (Frysk)
  * @author Snakesteuben
  */
@@ -2334,6 +2351,7 @@ $messages['tg-cyrl'] = array(
 	'sd_browsedata_or' => 'ё',
 	'sd_browsedata_daterangestart' => 'Шурӯъ:',
 	'sd_browsedata_daterangeend' => 'Охир:',
+	'filters' => 'Филтрҳо',
 	'sd_createfilter_name' => 'Ном:',
 	'sd_createfilter_entervalues' => 'Миқдорҳоро барои филтр дастӣ ворид кунед (миқдорҳо бояд бо вергулҳо ҷудо шаванд - агар миқдор вергул дошта бошад, онро бо "\\," иваз кунед):',
 	'sd_createfilter_requirefilter' => 'Қабл аз намоиши ин яке, филтри дигар бояд интихоб шавад:',
