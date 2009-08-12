@@ -559,18 +559,28 @@ $messages['dsb'] = array(
 $messages['el'] = array(
 	'browsedata' => 'Δεδομένα πλοήγησης',
 	'sd_browsedata_choosecategory' => 'Επιλέξτε μια κατηγορία',
+	'sd_browsedata_viewcategory' => 'προβολή κατηγορίας',
 	'sd_browsedata_subcategory' => 'Υποκατηγορία',
 	'sd_browsedata_other' => 'Άλλος',
 	'sd_browsedata_none' => 'Κανένα',
+	'sd_browsedata_filterbyvalue' => 'Φιλτράρισμα βάσει αυτής της αξίας',
+	'sd_browsedata_filterbysubcategory' => 'Φιλτράρισμα βάσει αυτής της υποκατηγορίας',
 	'sd_browsedata_or' => 'ή',
+	'sd_browsedata_removefilter' => 'ΑΦαίρεσυ αυτού του φίλτρου',
+	'sd_browsedata_resetfilters' => 'Επαναφορά φίλτρων',
+	'sd_browsedata_addanothervalue' => 'Προσθήκη κι άλλης αξίας',
 	'sd_browsedata_daterangestart' => 'Έναρξη:',
 	'sd_browsedata_daterangeend' => 'Λήξη:',
 	'filters' => 'Φίλτρα',
 	'createfilter' => 'Δημιουργία ενός φίλτρου',
 	'sd_createfilter_name' => 'Όνομα:',
+	'sd_blank_error' => 'δεν γίνεται να εκκαθαριστεί',
 	'sd_filter_year' => 'Χρόνος',
 	'sd_filter_month' => 'Μήνας',
+	'sd_filter_combobox' => 'συνεχόμενο κουτί',
 	'sd_filter_freetext' => 'κείμενο',
+	'sd_filter_daterange' => 'σειρά ημερομηνιών',
+	'sd_filter_haslabel' => 'Έχει την ετικέτα $1.',
 );
 
 /** Esperanto (Esperanto)
@@ -1514,6 +1524,13 @@ $messages['ml'] = array(
 	'sd_filter_year' => 'വര്‍ഷം',
 	'sd_filter_month' => 'മാസം',
 	'sd_filter_hasvalues' => 'ഇതിന്റെ മൂല്യങ്ങള്‍ $1 ആണ്‌.',
+);
+
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'filters' => 'Шүүлтүүрүүд',
 );
 
 /** Marathi (मराठी)
@@ -2543,7 +2560,9 @@ $messages['zh-hans'] = array(
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'browsedata' => '瀏覽數據',
 	'sd_browsedata_other' => '其他',
+	'sd_browsedata_none' => '無',
 	'sd_browsedata_or' => '或',
 	'sd_browsedata_daterangestart' => '開始：',
 	'sd_browsedata_daterangeend' => '結束：',
