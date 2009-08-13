@@ -554,6 +554,7 @@ $messages['dsb'] = array(
 /** Greek (Ελληνικά)
  * @author Consta
  * @author Crazymadlover
+ * @author Omnipaedista
  * @author ZaDiak
  */
 $messages['el'] = array(
@@ -577,9 +578,12 @@ $messages['el'] = array(
 	'sd_blank_error' => 'δεν γίνεται να εκκαθαριστεί',
 	'sd_filter_year' => 'Χρόνος',
 	'sd_filter_month' => 'Μήνας',
+	'sd_filter_hasvalues' => 'Έχει τις τιμές $1.',
+	'sd_filter_hasinputtype' => 'Έχει τον τύπο εισόδου $1.',
 	'sd_filter_combobox' => 'συνεχόμενο κουτί',
 	'sd_filter_freetext' => 'κείμενο',
 	'sd_filter_daterange' => 'σειρά ημερομηνιών',
+	'sd_filter_requiresfilter' => 'Απαιτεί τη παρουσία του φίλτρου $1.',
 	'sd_filter_haslabel' => 'Έχει την ετικέτα $1.',
 );
 
@@ -1045,6 +1049,7 @@ $messages['he'] = array(
 	'sd_browsedata_addanothervalue' => 'הוספת ערך נוסף',
 	'sd_browsedata_daterangestart' => 'התחלה:',
 	'sd_browsedata_daterangeend' => 'סיום:',
+	'sd_browsedata_novalues' => 'אין ערכים עבור מסנן זה',
 	'filters' => 'מסננים',
 	'sd_filters_docu' => 'המסננים הבאים קיימים ב{{grammar:תחילית|{{SITENAME}}}}:',
 	'createfilter' => 'יצירת מסנן',
@@ -1066,6 +1071,7 @@ $messages['he'] = array(
 	'sd_filter_month' => 'חודש',
 	'sd_filter_hasvalues' => 'הוא מכיל את הערכים $1.',
 	'sd_filter_hasinputtype' => 'הוא מכיל את סוג הקלט $1.',
+	'sd_filter_combobox' => 'תיבה משולבת',
 	'sd_filter_freetext' => 'טקסט',
 	'sd_filter_daterange' => 'טווח תאריכים',
 	'sd_filter_requiresfilter' => 'נדרשת עבורו נוכחות של המסנן $1.',
