@@ -486,9 +486,11 @@ $messages['de'] = array(
 
 /** German (formal address) (Deutsch (Sie-Form))
  * @author Dst
+ * @author Imre
  */
 $messages['de-formal'] = array(
 	'sd_browsedata_docu' => 'Klicken Sie auf einen oder mehrere der Filter um das Ergebnis einzuschränken.',
+	'sd_createfilter_entervalues' => 'Verwenden Sie diese Werte für den Filter (Werte durch Komma getrennt eingeben - Wenn ein Wert ein Komma enthält, mit „\\,“ ersetzen):',
 );
 
 /** Zazaki (Zazaki)
@@ -766,6 +768,8 @@ $messages['fi'] = array(
 	'sd_browsedata_none' => 'Ei mikään',
 	'sd_browsedata_filterbyvalue' => 'Suodata tällä arvolla',
 	'sd_browsedata_filterbysubcategory' => 'Suodata tämän alaluokan suhteen',
+	'sd_browsedata_otherfilter' => 'Näyttää sivut hyödyntäen toista arvoa tämän suodattimen osalta',
+	'sd_browsedata_nonefilter' => 'Näyttää sivut ilman arvoa tämän suodattimen osalta',
 	'sd_browsedata_or' => 'tai',
 	'sd_browsedata_removefilter' => 'Poista suodin',
 	'sd_browsedata_removesubcategoryfilter' => 'Poista tämä alaluokka-suodatin',
@@ -773,6 +777,7 @@ $messages['fi'] = array(
 	'sd_browsedata_addanothervalue' => 'Lisää uusi arvo',
 	'sd_browsedata_daterangestart' => 'Alku',
 	'sd_browsedata_daterangeend' => 'Loppu',
+	'sd_browsedata_novalues' => 'Tälle suodattimelle ei ole arvoja',
 	'filters' => 'Suotimet',
 	'sd_filters_docu' => 'Tässä wikissä on seuraavat suotimet:',
 	'createfilter' => 'Luo suodin',
@@ -849,6 +854,7 @@ $messages['fr'] = array(
 
 /** Franco-Provençal (Arpetan)
  * @author Cedric31
+ * @author ChrisPtDe
  */
 $messages['frp'] = array(
 	'sd_browsedata_subcategory' => 'Sot-catègorie',
@@ -857,7 +863,7 @@ $messages['frp'] = array(
 	'sd_browsedata_daterangestart' => 'Comencement :',
 	'sd_browsedata_daterangeend' => 'Fin :',
 	'filters' => 'Filtros',
-	'createfilter' => 'Crèar un filtro',
+	'createfilter' => 'Fâre un filtro',
 	'sd_createfilter_name' => 'Nom :',
 	'sd_filter_year' => 'An',
 	'sd_filter_month' => 'Mês',
@@ -1553,6 +1559,7 @@ $messages['ml'] = array(
  * @author Chinneeb
  */
 $messages['mn'] = array(
+	'sd_browsedata_other' => 'Бусад',
 	'filters' => 'Шүүлтүүрүүд',
 );
 
