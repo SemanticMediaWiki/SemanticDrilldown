@@ -577,6 +577,7 @@ $messages['el'] = array(
 	'filters' => 'Φίλτρα',
 	'createfilter' => 'Δημιουργία ενός φίλτρου',
 	'sd_createfilter_name' => 'Όνομα:',
+	'sd_createfilter_listofvalues' => 'λίστα αξιών (προεπιλεγμένο)',
 	'sd_blank_error' => 'δεν γίνεται να εκκαθαριστεί',
 	'sd_filter_year' => 'Χρόνος',
 	'sd_filter_month' => 'Μήνας',
