@@ -225,7 +225,7 @@ END;
 	$wgOut->addLink( array(
 		'rel' => 'stylesheet',
 		'type' => 'text/css',
-		'media' => "screen, projection",
+		'media' => "screen",
 		'href' => $sdgScriptPath . "/skins/SD_main.css"
 	));
 	$wgOut->addHTML($text);

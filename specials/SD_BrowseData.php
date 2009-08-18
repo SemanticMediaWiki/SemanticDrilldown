@@ -922,25 +922,25 @@ function doSpecialBrowseData($query) {
 	$wgOut->addLink( array(
 		'rel' => 'stylesheet',
 		'type' => 'text/css',
-		'media' => "screen, projection",
+		'media' => "screen",
 		'href' => $mainCssDir . 'SD_main.css'
 	));
 	$wgOut->addLink( array(
 		'rel' => 'stylesheet',
 		'type' => 'text/css',
-		'media' => "screen, projection",
+		'media' => "screen",
 		'href' => $mainCssDir . 'ext-all.css'
 	));
 	$wgOut->addLink( array(
 		'rel' => 'stylesheet',
 		'type' => 'text/css',
-		'media' => "screen, projection",
+		'media' => "screen",
 		'href' => $mainCssDir . 'xtheme-gray.css'
 	));
 	$wgOut->addLink( array(
 		'rel' => 'stylesheet',
 		'type' => 'text/css',
-		'media' => "screen, projection",
+		'media' => "screen",
 		'href' => $mainCssDir . 'combos.css'
 	));
 	// overwrite style from ext-all.css, to set the correct image for
