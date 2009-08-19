@@ -612,6 +612,7 @@ $messages['eo'] = array(
 	'sd_browsedata_addanothervalue' => 'Aldonu plian valuton',
 	'sd_browsedata_daterangestart' => 'Ekde:',
 	'sd_browsedata_daterangeend' => 'Al:',
+	'sd_browsedata_novalues' => 'Estas neniuj valoroj por ĉi tiu filtrilo',
 	'filters' => 'Filtriloj',
 	'sd_filters_docu' => 'La jenaj filtriloj ekzistas en {{SITENAME}}:',
 	'createfilter' => 'Kreu filtrilon',
@@ -621,6 +622,7 @@ $messages['eo'] = array(
 	'sd_createfilter_usecategoryvalues' => 'Akiru valutojn por filtrilo de ĉi tiu kategorio:',
 	'sd_createfilter_usedatevalues' => 'Uzu dat-intervalojn por ĉi tiu filtrilo kun ĉi tiu tempo-periodo:',
 	'sd_createfilter_entervalues' => 'Enigu valutojn por filtrilo permane (valutoj estu apartigitaj de komoj - se valuto enhavas komon, anstataŭigu ĝin per "\\,"):',
+	'sd_createfilter_listofvalues' => 'listo de valoroj (defaŭltaj)',
 	'sd_createfilter_requirefilter' => 'Devigu alian filtrilon esti selektita antaŭ ĉi tiu estas montrita:',
 	'sd_createfilter_label' => 'Etikedo por ĉi tiu filtrilo (nedeviga):',
 	'sd_blank_error' => 'ne povas esti malplena',
@@ -630,6 +632,7 @@ $messages['eo'] = array(
 	'sd_filter_year' => 'Jaro',
 	'sd_filter_month' => 'Monato',
 	'sd_filter_hasvalues' => 'Ĝi havas valutojn $1.',
+	'sd_filter_combobox' => 'falmenuo',
 	'sd_filter_freetext' => 'teksto',
 	'sd_filter_daterange' => 'tempospaco',
 	'sd_filter_requiresfilter' => 'Ĝi devigas la eston de la filtrilo $1.',
@@ -769,8 +772,8 @@ $messages['fi'] = array(
 	'sd_browsedata_none' => 'Ei mikään',
 	'sd_browsedata_filterbyvalue' => 'Suodata tällä arvolla',
 	'sd_browsedata_filterbysubcategory' => 'Suodata tämän alaluokan suhteen',
-	'sd_browsedata_otherfilter' => 'Näyttää sivut hyödyntäen toista arvoa tämän suodattimen osalta',
-	'sd_browsedata_nonefilter' => 'Näyttää sivut ilman arvoa tämän suodattimen osalta',
+	'sd_browsedata_otherfilter' => 'Näytä sivut toisella arvolla tällä suodattimella',
+	'sd_browsedata_nonefilter' => 'Näytä sivut ilman arvoa tällä suodattimella',
 	'sd_browsedata_or' => 'tai',
 	'sd_browsedata_removefilter' => 'Poista suodin',
 	'sd_browsedata_removesubcategoryfilter' => 'Poista tämä alaluokka-suodatin',
@@ -1408,6 +1411,7 @@ $messages['km'] = array(
  */
 $messages['kn'] = array(
 	'sd_browsedata_other' => 'ಇತರ',
+	'sd_createfilter_name' => 'ಹೆಸರು:',
 );
 
 /** Korean (한국어)
@@ -1889,12 +1893,20 @@ $messages['pdc'] = array(
  * @author Maikking
  * @author Maire
  * @author Sp5uhe
+ * @author ToSter
  */
 $messages['pl'] = array(
 	'browsedata' => 'Przeglądaj dane',
 	'sd_browsedata_choosecategory' => 'Wybierz kategorię',
 	'sd_browsedata_viewcategory' => 'podgląd kategorii',
+	'sd_browsedata_docu' => 'Kliknij na jeden albo więcej poniższych elementów, aby zawęzić wyniki.',
 	'sd_browsedata_subcategory' => 'Kategoria podrzędna',
+	'sd_browsedata_other' => 'Inne',
+	'sd_browsedata_none' => 'Brak',
+	'sd_browsedata_filterbyvalue' => 'Filtruj po tej wartości',
+	'sd_browsedata_filterbysubcategory' => 'Filtruj po tej podkategorii',
+	'sd_browsedata_otherfilter' => 'Pokaż strony z innymi wartościami dla tego filtru',
+	'sd_browsedata_nonefilter' => 'Pokaż strony bez wartości dla tego filtru',
 	'sd_browsedata_or' => 'lub',
 	'sd_browsedata_removefilter' => 'Usuń ten filtr',
 	'sd_browsedata_removesubcategoryfilter' => 'Usuń ten filtr podkategorii',
@@ -1902,11 +1914,33 @@ $messages['pl'] = array(
 	'sd_browsedata_addanothervalue' => 'Dodaj inną wartość',
 	'sd_browsedata_daterangestart' => 'Początek',
 	'sd_browsedata_daterangeend' => 'Koniec',
+	'sd_browsedata_novalues' => 'Nie ma żadnych wartości dla tego filtru',
 	'filters' => 'Filtry',
+	'sd_filters_docu' => 'Poniższe filtry istnieją w tym wiki:',
 	'createfilter' => 'Utwórz filtr',
 	'sd_createfilter_name' => 'Nazwa',
+	'sd_createfilter_property' => 'Własność pokryta tym filtrem:',
+	'sd_createfilter_usepropertyvalues' => 'Użyj wszystkich wartości tej własności dla filtru',
+	'sd_createfilter_usecategoryvalues' => 'Użyj wartości dla filtru z tej kategorii:',
+	'sd_createfilter_usedatevalues' => 'Użyj następującego zakresu czasowego dla tego filtru:',
+	'sd_createfilter_entervalues' => 'Wpisz wartości dla filtru ręcznie (wartości powinny być oddzielone przecinkami - jeśli wartości zawierają przecinki, zamień je na "\\,"):',
+	'sd_createfilter_inputtype' => 'Wpisz typ dla tego filtru:',
+	'sd_createfilter_listofvalues' => 'lista wartości (domyślna)',
+	'sd_createfilter_requirefilter' => 'Wymagaj innego filtru do użycia przed tym:',
+	'sd_createfilter_label' => 'Etykieta dla tego filtru (nieobowiązkowa):',
+	'sd_blank_error' => 'nie może być puste',
+	'sd_filter_coversproperty' => 'Ten filtr pokrywa własność $1.',
+	'sd_filter_getsvaluesfromcategory' => 'Otrzymuje wartości z kategorii $1.',
+	'sd_filter_usestimeperiod' => 'Używa $1 jako swojego zakresu czasowego.',
 	'sd_filter_year' => 'Rok',
 	'sd_filter_month' => 'Miesiąc',
+	'sd_filter_hasvalues' => 'Ma wartości $1.',
+	'sd_filter_hasinputtype' => 'Ma typ wejściowy $1.',
+	'sd_filter_combobox' => 'rozwijana lista',
+	'sd_filter_freetext' => 'tekst',
+	'sd_filter_daterange' => 'zakres dat',
+	'sd_filter_requiresfilter' => 'Wymaga obecności filtru $1.',
+	'sd_filter_haslabel' => 'Ma etykietę $1.',
 );
 
 /** Pashto (پښتو)
