@@ -2424,6 +2424,13 @@ $messages['th'] = array(
 	'filters' => 'ตัวกรอง',
 );
 
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'filters' => 'Filtrler',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
