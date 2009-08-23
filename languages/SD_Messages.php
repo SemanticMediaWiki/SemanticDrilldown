@@ -69,6 +69,7 @@ $messages['en'] = array(
  * @author EugeneZelenko
  * @author Jon Harald Søby
  * @author Purodha
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'semanticdrilldown-desc' => 'Short desciption of this extension.
@@ -82,6 +83,7 @@ or tag names.',
 	'sd_blank_error' => '{{Identical|Cannot be blank}}',
 	'sd_filter_year' => '{{Identical|Year}}',
 	'sd_filter_month' => '{{Identical|Month}}',
+	'sd_filter_combobox' => '',
 	'sd_filter_freetext' => '{{Identical|Text}}',
 );
 
@@ -93,7 +95,9 @@ or tag names.',
 $messages['af'] = array(
 	'sd_browsedata_other' => 'Ander',
 	'sd_browsedata_none' => 'Geen',
+	'filters' => 'Filters',
 	'sd_createfilter_name' => 'Naam:',
+	'sd_blank_error' => 'mag nie leeg wees nie',
 	'sd_filter_month' => 'Maand',
 );
 
@@ -141,6 +145,7 @@ $messages['ar'] = array(
 	'sd_browsedata_daterangestart' => ':البداية',
 	'sd_browsedata_daterangeend' => ':النهاية',
 	'sd_browsedata_novalues' => 'لا توجد قيم لهذا المرشح',
+	'filters' => '',
 	'sd_filters_docu' => 'الفلاتر التالية موجودة في {{SITENAME}}:',
 	'createfilter' => 'إنشاء مُرشّح',
 	'sd_createfilter_name' => 'الاسم:',
@@ -2223,7 +2228,7 @@ $messages['sk'] = array(
 	'sd_filter_haslabel' => 'Má označenie $1.',
 );
 
-/** Serbian Cyrillic ekavian (ћирилица)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
  * @author Михајло Анђелковић
  */
@@ -2239,7 +2244,7 @@ $messages['sr-ec'] = array(
 	'sd_filter_month' => 'Месец',
 );
 
-/** latinica (latinica)
+/** Serbian Latin ekavian (Srpski (latinica))
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -2588,6 +2593,13 @@ $messages['vo'] = array(
 	'sd_filter_freetext' => 'vödem',
 	'sd_filter_requiresfilter' => 'Flagon komi sula: $1.',
 	'sd_filter_haslabel' => 'Labon nemi: $1.',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'sd_filter_freetext' => 'טעקסט',
 );
 
 /** Chinese (China) (‪中文(中国大陆)‬)
