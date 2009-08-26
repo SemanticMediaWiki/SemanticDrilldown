@@ -145,7 +145,7 @@ $messages['ar'] = array(
 	'sd_browsedata_daterangestart' => ':البداية',
 	'sd_browsedata_daterangeend' => ':النهاية',
 	'sd_browsedata_novalues' => 'لا توجد قيم لهذا المرشح',
-	'filters' => 'فلاتر',
+	'filters' => 'مُرشّحات',
 	'sd_filters_docu' => 'الفلاتر التالية موجودة في {{SITENAME}}:',
 	'createfilter' => 'إنشاء مُرشّح',
 	'sd_createfilter_name' => 'الاسم:',
@@ -2599,6 +2599,7 @@ $messages['vo'] = array(
  * @author פוילישער
  */
 $messages['yi'] = array(
+	'sd_browsedata_other' => 'אנדער',
 	'sd_filter_freetext' => 'טעקסט',
 );
 
