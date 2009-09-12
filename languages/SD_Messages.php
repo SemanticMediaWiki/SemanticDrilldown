@@ -2509,12 +2509,19 @@ $messages['tr'] = array(
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
+	'sd_browsedata_viewcategory' => 'nähta kategorii',
+	'sd_browsedata_other' => 'Toižed',
+	'sd_browsedata_none' => 'Ei ole',
+	'sd_browsedata_or' => 'vai',
 	'sd_browsedata_daterangestart' => 'Aug:',
 	'sd_browsedata_daterangeend' => 'Lop:',
 	'filters' => "Fil'trad",
 	'sd_filters_docu' => "{{SITENAME}}-wikiš om ningoižed fil'troid:",
+	'createfilter' => "Säta fil'tr",
+	'sd_createfilter_name' => 'Nimi:',
 	'sd_filter_year' => "Voz'",
 	'sd_filter_month' => 'Ku',
+	'sd_filter_freetext' => 'tekst',
 );
 
 /** Vietnamese (Tiếng Việt)
