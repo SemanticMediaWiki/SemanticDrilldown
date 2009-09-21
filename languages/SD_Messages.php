@@ -1191,11 +1191,23 @@ $messages['hsb'] = array(
 /** Hungarian (Magyar)
  * @author Dani
  * @author Dorgan
+ * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'browsedata' => 'Adatok böngészése',
+	'sd_browsedata_choosecategory' => 'Válassz egy kategóriát',
+	'sd_browsedata_viewcategory' => 'kategória megtekintése',
+	'sd_browsedata_subcategory' => 'Alkategória',
+	'sd_browsedata_other' => 'Egyéb',
 	'sd_browsedata_none' => 'Nincs',
+	'sd_browsedata_or' => 'vagy',
+	'filters' => 'Szűrők',
+	'createfilter' => 'Szűrő létrehozása',
+	'sd_createfilter_name' => 'Név:',
+	'sd_blank_error' => 'nem lehet üres',
 	'sd_filter_year' => 'Év',
 	'sd_filter_month' => 'Hónap',
+	'sd_filter_freetext' => 'szöveg',
 );
 
 /** Interlingua (Interlingua)
