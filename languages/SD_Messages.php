@@ -2628,6 +2628,8 @@ $messages['vo'] = array(
  */
 $messages['yi'] = array(
 	'sd_browsedata_other' => 'אנדער',
+	'sd_browsedata_none' => 'קיין',
+	'sd_createfilter_name' => 'נאָמען:',
 	'sd_filter_freetext' => 'טעקסט',
 );
 
