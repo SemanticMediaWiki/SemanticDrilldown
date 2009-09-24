@@ -396,25 +396,58 @@ $messages['bs'] = array(
 );
 
 /** Catalan (Català)
+ * @author Dvdgmz
  * @author Jordi Roqué
  * @author Solde
  */
 $messages['ca'] = array(
+	'semanticdrilldown-desc' => "Una interfície de ''drilldown'' per navegar a través de la informació semàntica",
+	'specialpages-group-sd_group' => 'Semantic Drilldown',
+	'browsedata' => 'Explorar dades',
 	'sd_browsedata_choosecategory' => 'Esculli una categoria',
 	'sd_browsedata_viewcategory' => 'veure la categoria',
+	'sd_browsedata_docu' => 'Clica un o més ítems aquí sota per acotar els teus resultats.',
+	'sd_browsedata_subcategory' => 'Subcategoria',
 	'sd_browsedata_other' => 'Un altre',
 	'sd_browsedata_none' => 'Cap',
 	'sd_browsedata_filterbyvalue' => 'Filtra per aquest valor',
+	'sd_browsedata_filterbysubcategory' => 'Filtra amb aquesta subcategoria',
+	'sd_browsedata_otherfilter' => 'Mostra pàgines amb un altre valor per aquest filtre',
+	'sd_browsedata_nonefilter' => 'Mostra les pàgines que no tenen cap valor per aquest filtre',
 	'sd_browsedata_or' => 'o',
+	'sd_browsedata_removefilter' => 'Elimina aquest filtre',
+	'sd_browsedata_removesubcategoryfilter' => 'Elimina aquest filtre de subcategoria',
+	'sd_browsedata_resetfilters' => 'Restaura filtres',
+	'sd_browsedata_addanothervalue' => 'Afegir un altre valor',
 	'sd_browsedata_daterangestart' => 'Inici:',
 	'sd_browsedata_daterangeend' => 'Fi:',
+	'sd_browsedata_novalues' => "No s'han trobat valors per aquest filtre",
 	'filters' => 'Filtres',
+	'sd_filters_docu' => 'A {{SITENAME}} hi ha els filtres següents:',
 	'createfilter' => 'Crea un filtre',
 	'sd_createfilter_name' => 'Nom:',
+	'sd_createfilter_property' => 'Propietat que cobreix aquest filtre:',
+	'sd_createfilter_usepropertyvalues' => "Utilitza tots els valors d'aquesta propietat per el filtre",
+	'sd_createfilter_usecategoryvalues' => "Pren els valors pel filtre d'aquesta categoria:",
+	'sd_createfilter_usedatevalues' => 'Per aquest filtre fes servir rangs de data en aquest període de temps:',
+	'sd_createfilter_entervalues' => 'Per filtrar manualment entra valors (els valors s\'han de separar per comes - si el valor conté una como substitueix-la per "\\,"):',
+	'sd_createfilter_inputtype' => "Tipus d'entrada de dades per aquest filtre:",
+	'sd_createfilter_listofvalues' => 'Llista de valors (per defecte)',
+	'sd_createfilter_requirefilter' => 'Cal seleccionar un altre filtre abans de mostrar aquest:',
+	'sd_createfilter_label' => 'Rètol per aquest filtre (opcional):',
+	'sd_blank_error' => 'no es pot deixar buit',
+	'sd_filter_coversproperty' => 'Aquest filtre cobreix la propietat $1',
+	'sd_filter_getsvaluesfromcategory' => 'Pren els seus valors de la categoria $1',
+	'sd_filter_usestimeperiod' => 'Utilitza $1 com a període de temps.',
 	'sd_filter_year' => 'Any',
 	'sd_filter_month' => 'Mes',
+	'sd_filter_hasvalues' => 'Té els valors $1.',
+	'sd_filter_hasinputtype' => "Té $1 com a tipus d'entrada.",
+	'sd_filter_combobox' => "Caix combinada (''combo box'')",
 	'sd_filter_freetext' => 'text',
 	'sd_filter_daterange' => 'rang de dates',
+	'sd_filter_requiresfilter' => 'Es requereix la presencia del filtre $1',
+	'sd_filter_haslabel' => 'Té el ròtul $1.',
 );
 
 /** Welsh (Cymraeg)
@@ -652,10 +685,13 @@ $messages['eo'] = array(
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author Dvdgmz
  * @author Imre
  * @author Sanbec
  */
 $messages['es'] = array(
+	'semanticdrilldown-desc' => "Una interfaz de ''drilldown'' para navegar a través de los datos semánticos.",
+	'specialpages-group-sd_group' => 'Semantic Drilldown',
 	'browsedata' => 'Datos de navegación',
 	'sd_browsedata_choosecategory' => 'Escoger una categoría',
 	'sd_browsedata_viewcategory' => 'Ver categoría',
@@ -684,6 +720,7 @@ $messages['es'] = array(
 	'sd_createfilter_usecategoryvalues' => 'Obtenga valores para el filtro desde esta catagoría:',
 	'sd_createfilter_usedatevalues' => 'Usar rangos de fecha para este filtro con este periodo de tiempo:',
 	'sd_createfilter_entervalues' => 'Ingresar valores para el filtro manualmente (valores deberían estar separados por comas - si un valor contiene una coma, reemplacela con "\\,"):',
+	'sd_createfilter_inputtype' => 'Tipo de entrada de datos para este filtro:',
 	'sd_createfilter_listofvalues' => 'lista de valores (por defecto)',
 	'sd_createfilter_requirefilter' => 'Requiere otro filtro a ser seleccionado antes que este sea mostrado:',
 	'sd_createfilter_label' => 'Etiqueta para este filtro (opcional):',
@@ -694,6 +731,8 @@ $messages['es'] = array(
 	'sd_filter_year' => 'Año',
 	'sd_filter_month' => 'Mes',
 	'sd_filter_hasvalues' => 'Tiene los valores $1.',
+	'sd_filter_hasinputtype' => 'Tiene como tipo de entrada $1.',
+	'sd_filter_combobox' => "Caja combinada (''combo box'')",
 	'sd_filter_freetext' => 'texto',
 	'sd_filter_daterange' => 'rango de fechas',
 	'sd_filter_requiresfilter' => 'Requiere la presencia del filtro $1.',
