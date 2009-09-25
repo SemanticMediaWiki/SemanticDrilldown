@@ -1091,6 +1091,8 @@ $messages['haw'] = array(
  * @author YaronSh
  */
 $messages['he'] = array(
+	'semanticdrilldown-desc' => 'ממשק מעבר מהיר לניווט במידע סמנטי',
+	'specialpages-group-sd_group' => 'מעבר מהיר במידע סמנטי',
 	'browsedata' => 'עיון בנתונים',
 	'sd_browsedata_choosecategory' => 'בחירת קטגוריה',
 	'sd_browsedata_viewcategory' => 'צפייה בקטגוריה',
