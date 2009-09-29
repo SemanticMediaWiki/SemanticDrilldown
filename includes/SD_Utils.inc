@@ -120,54 +120,14 @@ class SDUtils {
 	 * ($special_prop and $prop represent the same value, depending on
 	 * whether we're using SMW 1.4 or an earlier version)
 	 */
-	function getValuesForProperty($subject, $subject_namespace, $special_prop, $prop, $object_namespace) {
+	function getValuesForProperty($subject, $subject_namespace, $special_prop) {
 		$store = smwfGetStore();
 		$subject_title = Title::newFromText($subject, $subject_namespace);
-
-		// we can do this easily if we're using SMW 1.4 or higher
-		if (class_exists('SMWPropertyValue')) {
-			$property = SMWPropertyValue::makeProperty($special_prop);
-			$res = $store->getPropertyValues($subject_title, $property);
-			// there could be multiple alternate forms
-			$values = array();
-				foreach ($res as $prop_val) {
-				$values[] = html_entity_decode(str_replace('_', ' ', $prop_val->getXSDValue()));
-			}
-			return $values;
-		}
-
-		// otherwise, it's a bit more complicated
-		global $sdgContLang;
-
-		$sd_props = $sdgContLang->getPropertyLabels();
+		$property = SMWPropertyValue::makeProperty($special_prop);
+		$res = $store->getPropertyValues($subject_title, $property);
 		$values = array();
-		if (array_key_exists($prop, $sd_props)) {
-			$property = $sd_props[$prop];
-		} else {
-			$property = "";
-		}
-		if ($property != '') {
-			$prop = SDUtils::createProperty($property, SMW_NS_PROPERTY);
-			$prop_vals = $store->getPropertyValues($subject_title, $prop);
-			foreach ($prop_vals as $prop_val) {
-				$values[] = html_entity_decode(str_replace('_', ' ', $prop_val->getXSDValue()));
-			}
-		}
-		// try aliases as well
-		foreach ($sdgContLang->getPropertyAliases() as $alias => $cur_prop) {
-			// make sure alias doesn't match actual property name - this
-			// is an issue for English, since the English-language values
-			// are used for aliases
-			if (($alias != $property) && (! $prop instanceof Title) && ($cur_prop == $prop)) {
-				$prop = SDUtils::createProperty($alias, SMW_NS_PROPERTY);
-				$prop_vals = $store->getPropertyValues($subject_title, $prop);
-				foreach ($prop_vals as $prop_val) {
-					// make sure it's in the right namespace
-					if ($prop_val->getNamespace() == $object_namespace) {
-						$values[] = $prop_val->getTitle()->getText();
-					}
-				}
-			}
+		foreach ($res as $prop_val) {
+			$values[] = html_entity_decode(str_replace('_', ' ', $prop_val->getXSDValue()));
 		}
 		return $values;
 	}
@@ -177,11 +137,24 @@ class SDUtils {
 	 */
 	function loadFiltersForCategory($category) {
 		$filters = array();
-		$filter_names = SDUtils::getValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, '_SD_F', SD_SP_HAS_FILTER, SD_NS_FILTER);
+		$filter_names = SDUtils::getValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, '_SD_F');
 		foreach ($filter_names as $filter_name) {
 			$filters[] = SDFilter::load($filter_name);
 		}
 		return $filters;
+	}
+
+	/**
+	 * Gets all the display parameters defined for a category
+	 */
+	function getDisplayParamsForCategory($category) {
+		$all_display_params = SDUtils::getValuesForProperty(str_replace(' ', '_', $category), NS_CATEGORY, '_SD_DP');
+
+		$return_display_params = array();
+		foreach ($all_display_params as $display_params) {
+			$return_display_params[] = explode(';', $display_params);
+		}
+		return $return_display_params;
 	}
 
 	function getCategoryChildren($category_name, $get_categories, $levels) {
