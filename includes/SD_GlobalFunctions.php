@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.5.8');
+define('SD_VERSION','0.6');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -19,12 +19,13 @@ define('SD_SP_REQUIRES_FILTER', 6);
 define('SD_SP_HAS_LABEL', 7);
 define('SD_SP_HAS_DRILLDOWN_TITLE', 8);
 define('SD_SP_HAS_INPUT_TYPE', 9);
+define('SD_SP_HAS_DISPLAY_PARAMETERS', 10);
 
 $wgExtensionCredits['specialpage'][]= array(
 	'path'        => __FILE__,
 	'name'        => 'Semantic Drilldown',
 	'version'     => SD_VERSION,
-	'author'      => 'Yaron Koren',
+	'author'      => array('Yaron Koren', 'David Loomer'),
 	'url'         => 'http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
 	'description' =>  'A drilldown interface for navigating through semantic data',
 	'descriptionmsg'  => 'semanticdrilldown-desc',
@@ -172,6 +173,7 @@ function sdfInitProperties() {
 	SMWPropertyValue::registerProperty('_SD_RF', '_wpg', $sd_props[SD_SP_REQUIRES_FILTER], true);
 	SMWPropertyValue::registerProperty('_SD_L', '_str', $sd_props[SD_SP_HAS_LABEL], true);
 	SMWPropertyValue::registerProperty('_SD_DT', '_str', $sd_props[SD_SP_HAS_DRILLDOWN_TITLE], true);
+	SMWPropertyValue::registerProperty('_SD_DP', '_str', $sd_props[SD_SP_HAS_DISPLAY_PARAMETERS], true);
 
         return true;
 }
