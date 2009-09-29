@@ -903,12 +903,12 @@ END;
 		// displayed - the Javascript for Ext conflicts with the
 		// Javascript for the maps
 		if ($format != 'openlayers' || strpos($format, 'map') !== false) {
-			global $mainCssDir, $sdgScriptPath;
+			global $sdgScriptPath;
 			$out->addLink( array(
 				'rel' => 'stylesheet',
 				'type' => 'text/css',
 				'media' => "screen",
-				'href' => $mainCssDir . 'ext-all.css'
+				'href' => $sdgScriptPath . '/skins/ext-all.css'
 			));
 			// overwrite style from ext-all.css, to set the correct
 			// image for the combobox arrow
