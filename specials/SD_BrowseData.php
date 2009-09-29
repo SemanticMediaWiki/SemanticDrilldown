@@ -821,7 +821,11 @@ END;
 		// so return page_title as title.
 		$sql = "SELECT DISTINCT ids.smw_title AS title,
 	ids.smw_title AS value,
+	ids.smw_title AS t,
 	ids.smw_namespace AS namespace,
+	ids.smw_namespace AS ns,
+	ids.smw_id AS id,
+	ids.smw_iw AS iw,
 	ids.smw_sortkey AS sortkey\n";
 		$sql .= $this->getSQLFromClause($this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters);
 		return $sql;
@@ -848,55 +852,43 @@ END;
 	 * @param int $offset Paging offset
 	 */
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
-		global $wgContLang, $sdgNumResultsColumns;
-	
-		if( $num > 0 ) {
-			$html = array();
-			if( !$this->listoutput )
-				$html[] = $this->openList( $offset );
-			
-			$prev_first_char = "";
-			// default to 3 columns, like with categories
-			if ($sdgNumResultsColumns == null)
-				$sdgNumResultsColumns = 3;
-			$rows_per_column = ceil($num / $sdgNumResultsColumns);
-			// column width is a percentage
-			$column_width = floor(100 / $sdgNumResultsColumns);
-			// code borrowed heavily from QueryPage.php
-			for ($i = 0; $i < $num && $row = $dbr->fetchObject( $res ); $i++) {
-				$line = $this->formatResult( $skin, $row );
-				if ($line) {
-					$cur_first_char = $row->sortkey{0};
-					if ($i % $rows_per_column == 0) {
-						$html[] = "\n			<div style=\"float: left; width: $column_width%;\">\n";
-						if ($cur_first_char == $prev_first_char)
-							$html[] = "				<h3>$cur_first_char " . wfMsg('listingcontinuesabbrev') . "</h3>\n				<ul>\n";
-					}
-					// if we're at a new first letter, end
-					// the last list and start a new one
-					if ($cur_first_char != $prev_first_char) {
-						if ($i % $rows_per_column > 0)
-							$html[] = "				</ul>\n";
-						$html[] = "				<h3>$cur_first_char</h3>\n				<ul>\n";
-					}
-					$prev_first_char = $cur_first_char;
-					$html[] = "					<li>$line</li>\n";
-				}
-				// end list if we're at the end of the column
-				// or the page
-				if (($i + 1) % $rows_per_column == 0 || ($i + 1) == $num)
-					$html[] = "				</ul>\n			</div> <!-- end column -->";
-			}
-			
-			# Flush the final result
-			if( $this->tryLastResult() ) {
-				$row = null;
-				$line = $this->formatResult( $skin, $row );
-				if( $line ) {
-					$html[] = "				<li>$line</li>\n";
-				}
-			}
+		global $wgContLang;
+
+		$all_display_params = SDUtils::getDisplayParamsForCategory($this->category);
+		$querystring = null;
+		$printouts = $params = array();
+		// only one set of params is handled for now
+		if (count($all_display_params) > 0) {
+			$display_params = $all_display_params[0];
+			SMWQueryProcessor::processFunctionParams($display_params, &$querystring, &$params, &$printouts);
 		}
+		if (array_key_exists('format', $params))
+			$format = $params['format'];
+		else
+			$format = 'category';
+		$r = $this->addSemanticResultWrapper($dbr, $res, $num, $printouts);
+		$printer = SMWQueryProcessor::getResultPrinter($format, SMWQueryProcessor::SPECIAL_PAGE, $r);
+
+		$prresult = $printer->getResult($r, $params, SMW_OUTPUT_HTML);
+		if (is_array($prresult))
+			$prtext = $prresult[0];
+		else
+			$prtext = $prresult;
+
+		// Crappy hack to get the contents of SMWOutputs::$mHeadItems,
+		// which may have been set in the result printer, and dump into
+		// headItems of $out.
+		// How else can we do this?
+		global $wgParser;
+		SMWOutputs::commitToParser($wgParser);
+		foreach ( $wgParser->mOutput->mHeadItems as $key => $item ) {
+			$out->addHeadItem($key, $item);
+ 		}
+		// Force one more parser function, so links appear.
+		$wgParser->replaceLinkHolders( $prtext );
+ 
+		$html = array();
+		$html[] = $prtext;
 
 		if( !$this->listoutput )
 			$html[] = $this->closeList();
@@ -906,6 +898,93 @@ END;
 			: implode( '', $html );
 
 		$out->addHTML( $html );
+
+		// add Ext library, to enable combobox, unless a map is being
+		// displayed - the Javascript for Ext conflicts with the
+		// Javascript for the maps
+		if ($format != 'openlayers' || strpos($format, 'map') !== false) {
+			global $mainCssDir, $sdgScriptPath;
+			$out->addLink( array(
+				'rel' => 'stylesheet',
+				'type' => 'text/css',
+				'media' => "screen",
+				'href' => $mainCssDir . 'ext-all.css'
+			));
+			// overwrite style from ext-all.css, to set the correct
+			// image for the combobox arrow
+			$out->addScript("<style>.x-form-field-wrap .x-form-trigger{background:transparent url($sdgScriptPath/skins/trigger.gif) no-repeat 0 0;}</style>");
+			$out->addScript('<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-base.js"></script>');
+			$out->addScript('<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-all.js"></script>');
+		}
+	}
+
+	// Take non-semantic result set returned by Database->query() method, and
+	// wrap it in a SMWQueryResult container for passing to any of the various
+	// semantic result printers.
+	// Code stolen largely from SMWSQLStore2QueryEngine->getInstanceQueryResult() method.
+	// (does this mean it will only work with certain semantic SQL stores?)
+	function addSemanticResultWrapper($dbr, $res, $num, $printouts) {
+		$qr = array();
+		$count = 0;
+		$store = smwfGetStore();
+		while ( ($count < $num) && ($row = $dbr->fetchObject($res)) ) {
+			$count++;
+			$v = SMWWikiPageValue::makePage($row->t, $row->ns, $row->sortkey);
+			$qr[] = $v;
+			$store->cacheSMWPageID($row->id,$row->t,$row->ns,$row->iw);
+		}
+		if ($dbr->fetchObject($res)) {
+			$count++;
+		}
+		$dbr->freeResult($res);
+
+		$printrequest = new SMWPrintRequest(SMWPrintRequest::PRINT_THIS, '');
+		$main_printout = array();
+		$main_printout[$printrequest->getHash()] = $printrequest;
+		$printouts = array_merge($main_printout, $printouts);
+
+		$query = new SMWQuery();
+		$result = new SMWQueryResult($printouts, $query, ($count > $num) );
+		foreach ($qr as $qt) {
+			$row = array();
+			$cats = false;
+			foreach ($printouts as $pr) {
+				switch ($pr->getMode()) {
+				case SMWPrintRequest::PRINT_THIS:
+					$row[] = new SMWResultArray(array($qt), $pr);
+				break;
+				case SMWPrintRequest::PRINT_CATS:
+					if ($cats === false) {
+						$cats = $store->getPropertyValues($qt,SMWPropertyValue::makeProperty('_INST'));
+					}
+					$row[] = new SMWResultArray($cats, $pr);
+				break;
+				case SMWPrintRequest::PRINT_PROP:
+					$row[] = new SMWResultArray($store->getPropertyValues($qt,$pr->getData(), NULL, $pr->getOutputFormat()), $pr);
+				break;
+				case SMWPrintRequest::PRINT_CCAT:
+					if ($cats === false) {
+						$cats = $store->getPropertyValues($qt,SMWPropertyValue::makeProperty('_INST'));
+					}
+					$found = '0';
+					$prkey = $pr->getData()->getDBkey();
+					foreach ($cats as $cat) {
+						if ($cat->getDBkey() == $prkey) {
+							$found = '1';
+							break;
+						}
+					}
+					$dv = SMWDataValueFactory::newTypeIDValue('_boo');
+					$dv->setOutputFormat($pr->getOutputFormat());
+					$dv->setDBkeys(array($found));
+					$row[] = new SMWResultArray(array($dv), $pr);
+				break;
+				}
+			}
+			$result->addRow($row);
+		}
+		wfProfileOut('SMWSQLStore2Queries::getInstanceQueryResult (SMW)');
+		return $result;
 	}
 
 	function openList( $offset ) {
@@ -929,12 +1008,6 @@ function doSpecialBrowseData($query) {
 		'rel' => 'stylesheet',
 		'type' => 'text/css',
 		'media' => "screen",
-		'href' => $mainCssDir . 'ext-all.css'
-	));
-	$wgOut->addLink( array(
-		'rel' => 'stylesheet',
-		'type' => 'text/css',
-		'media' => "screen",
 		'href' => $mainCssDir . 'xtheme-gray.css'
 	));
 	$wgOut->addLink( array(
@@ -943,11 +1016,6 @@ function doSpecialBrowseData($query) {
 		'media' => "screen",
 		'href' => $mainCssDir . 'combos.css'
 	));
-	// overwrite style from ext-all.css, to set the correct image for
-	// the combobox arrow
-	$wgOut->addScript("<style>.x-form-field-wrap .x-form-trigger{background:transparent url($sdgScriptPath/skins/trigger.gif) no-repeat 0 0;}</style>\n");
-	$wgOut->addScript('<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-base.js"></script>' . "\n");
-	$wgOut->addScript('<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-all.js"></script>' . "\n");
 	$javascript_text =<<<END
 function toggleFilterDiv(element_id, label_element) {
 	element = document.getElementById(element_id);
