@@ -944,6 +944,10 @@ END;
 		$printouts = array_merge($main_printout, $printouts);
 
 		$query = new SMWQuery();
+		// for SMW 1.5+, handling is quite easy
+		if (! class_exists('SMWResultArray')) {
+			return new SMWQueryResult($printouts, $query, $qr, $store, ($count > $num) );
+		}
 		$result = new SMWQueryResult($printouts, $query, ($count > $num) );
 		foreach ($qr as $qt) {
 			$row = array();
