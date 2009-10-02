@@ -860,7 +860,7 @@ END;
 		// only one set of params is handled for now
 		if (count($all_display_params) > 0) {
 			$display_params = $all_display_params[0];
-			SMWQueryProcessor::processFunctionParams($display_params, &$querystring, &$params, &$printouts);
+			SMWQueryProcessor::processFunctionParams($display_params, $querystring, $params, $printouts);
 		}
 		if (array_key_exists('format', $params))
 			$format = $params['format'];
