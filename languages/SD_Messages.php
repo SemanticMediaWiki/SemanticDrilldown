@@ -98,6 +98,7 @@ $messages['af'] = array(
 	'filters' => 'Filters',
 	'sd_createfilter_name' => 'Naam:',
 	'sd_blank_error' => 'mag nie leeg wees nie',
+	'sd_filter_year' => 'Jaar',
 	'sd_filter_month' => 'Maand',
 );
 
