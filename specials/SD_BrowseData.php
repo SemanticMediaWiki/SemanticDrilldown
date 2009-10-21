@@ -866,7 +866,12 @@ END;
 			$format = $params['format'];
 		else
 			$format = 'category';
-		$r = $this->addSemanticResultWrapper($dbr, $res, $num, $printouts);
+		if (array_key_exists('mainlabel', $params)) {
+			$mainlabel = $params['mainlabel'];
+		} else {
+			$mainlabel = '';
+		}
+		$r = $this->addSemanticResultWrapper($dbr, $res, $num, $mainlabel, $printouts);
 		$printer = SMWQueryProcessor::getResultPrinter($format, SMWQueryProcessor::SPECIAL_PAGE, $r);
 
 		$prresult = $printer->getResult($r, $params, SMW_OUTPUT_HTML);
@@ -923,7 +928,7 @@ END;
 	// semantic result printers.
 	// Code stolen largely from SMWSQLStore2QueryEngine->getInstanceQueryResult() method.
 	// (does this mean it will only work with certain semantic SQL stores?)
-	function addSemanticResultWrapper($dbr, $res, $num, $printouts) {
+	function addSemanticResultWrapper($dbr, $res, $num, $mainlabel, $printouts) {
 		$qr = array();
 		$count = 0;
 		$store = smwfGetStore();
@@ -938,7 +943,7 @@ END;
 		}
 		$dbr->freeResult($res);
 
-		$printrequest = new SMWPrintRequest(SMWPrintRequest::PRINT_THIS, '');
+		$printrequest = new SMWPrintRequest(SMWPrintRequest::PRINT_THIS, $mainlabel);
 		$main_printout = array();
 		$main_printout[$printrequest->getHash()] = $printrequest;
 		$printouts = array_merge($main_printout, $printouts);
