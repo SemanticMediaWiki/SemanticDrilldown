@@ -1250,16 +1250,22 @@ $messages['hu'] = array(
 	'sd_browsedata_removesubcategoryfilter' => 'Alkategória szűrő törlése',
 	'sd_browsedata_resetfilters' => 'Szűrő alaphelyzetbe állítása',
 	'sd_browsedata_addanothervalue' => 'Másik érték hozzáadása',
+	'sd_browsedata_daterangestart' => 'Kezdődátum:',
+	'sd_browsedata_daterangeend' => 'Végdátum:',
 	'sd_browsedata_novalues' => 'Nincsenek ehhez a szűrőhöz tartozó értékek',
 	'filters' => 'Szűrők',
 	'sd_filters_docu' => 'A következő szűrők vannak a(z) {{SITENAME}} wikin:',
 	'createfilter' => 'Szűrő létrehozása',
 	'sd_createfilter_name' => 'Név:',
+	'sd_createfilter_inputtype' => 'Bevitel típusa ehhez a szűrőhöz:',
+	'sd_createfilter_listofvalues' => 'értékek listája (alapértelmezett)',
+	'sd_createfilter_label' => 'Szűrő címkéje (nem kötelező):',
 	'sd_blank_error' => 'nem lehet üres',
 	'sd_filter_year' => 'Év',
 	'sd_filter_month' => 'Hónap',
 	'sd_filter_freetext' => 'szöveg',
 	'sd_filter_daterange' => 'dátumtartomány',
+	'sd_filter_requiresfilter' => 'Szükséges a(z) $1 szűrő megléte.',
 	'sd_filter_haslabel' => 'A címkéje $1.',
 );
 
@@ -1351,6 +1357,7 @@ $messages['it'] = array(
  * @author Aotake
  * @author Fryed-peach
  * @author Hosiryuhosi
+ * @author Whym
  */
 $messages['ja'] = array(
 	'semanticdrilldown-desc' => '意味的データを閲覧するための絞り込みインタフェース',
@@ -1386,7 +1393,7 @@ $messages['ja'] = array(
 	'sd_createfilter_inputtype' => 'このフィルターの入力型:',
 	'sd_createfilter_listofvalues' => '値の一覧 (デフォルト)',
 	'sd_createfilter_requirefilter' => 'このフィルターが表示される前に、別のフィルターが選択されなければならないとする:',
-	'sd_createfilter_label' => 'このフィルターのラベル (任意):',
+	'sd_createfilter_label' => 'このフィルターのラベル (省略可能):',
 	'sd_blank_error' => '空であってはならない',
 	'sd_filter_coversproperty' => 'このフィルターはプロパティ $1 を対象とします。',
 	'sd_filter_getsvaluesfromcategory' => '値をカテゴリ $1 から取得します。',
