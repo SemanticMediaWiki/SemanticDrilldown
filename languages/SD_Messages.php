@@ -1236,6 +1236,8 @@ $messages['hsb'] = array(
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'semanticdrilldown-desc' => 'Adatlefúró felület a szemantikus adatokban való navigációhoz',
+	'specialpages-group-sd_group' => 'Szemantikus adatlefúrás',
 	'browsedata' => 'Adatok böngészése',
 	'sd_browsedata_choosecategory' => 'Válassz egy kategóriát',
 	'sd_browsedata_viewcategory' => 'kategória megtekintése',
@@ -1257,10 +1259,12 @@ $messages['hu'] = array(
 	'sd_filters_docu' => 'A következő szűrők vannak a(z) {{SITENAME}} wikin:',
 	'createfilter' => 'Szűrő létrehozása',
 	'sd_createfilter_name' => 'Név:',
+	'sd_createfilter_property' => 'Tulajdonság, amit ez a szűrő lefed:',
 	'sd_createfilter_inputtype' => 'Bevitel típusa ehhez a szűrőhöz:',
 	'sd_createfilter_listofvalues' => 'értékek listája (alapértelmezett)',
 	'sd_createfilter_label' => 'Szűrő címkéje (nem kötelező):',
 	'sd_blank_error' => 'nem lehet üres',
+	'sd_filter_usestimeperiod' => 'A(z) $1 adatot használja időintervallumként.',
 	'sd_filter_year' => 'Év',
 	'sd_filter_month' => 'Hónap',
 	'sd_filter_freetext' => 'szöveg',
