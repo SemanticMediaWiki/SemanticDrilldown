@@ -853,6 +853,7 @@ $messages['fi'] = array(
  * @author Crochet.david
  * @author Grondin
  * @author IAlex
+ * @author Jean-Frédéric
  * @author PieRRoMaN
  * @author Sherbrooke
  * @author Urhixidur
@@ -875,7 +876,7 @@ $messages['fr'] = array(
 	'sd_browsedata_removefilter' => 'Retirer ce filtre',
 	'sd_browsedata_removesubcategoryfilter' => 'Retirer cette sous-catégorie de filtre',
 	'sd_browsedata_resetfilters' => 'Remise à zéro des filtres',
-	'sd_browsedata_addanothervalue' => 'Ajouter une autre valeur',
+	'sd_browsedata_addanothervalue' => 'Cliquez sur la flèche pour ajouter une autre valeur',
 	'sd_browsedata_daterangestart' => 'Début :',
 	'sd_browsedata_daterangeend' => 'Fin :',
 	'sd_browsedata_novalues' => 'Il n’existe pas de valeur pour ce filtre',
@@ -1251,7 +1252,7 @@ $messages['hu'] = array(
 	'sd_browsedata_removefilter' => 'Szűrő eltávolítása',
 	'sd_browsedata_removesubcategoryfilter' => 'Alkategória szűrő törlése',
 	'sd_browsedata_resetfilters' => 'Szűrő alaphelyzetbe állítása',
-	'sd_browsedata_addanothervalue' => 'Másik érték hozzáadása',
+	'sd_browsedata_addanothervalue' => 'Kattints a nyílra másik érték hozzáadásához',
 	'sd_browsedata_daterangestart' => 'Kezdődátum:',
 	'sd_browsedata_daterangeend' => 'Végdátum:',
 	'sd_browsedata_novalues' => 'Nincsenek ehhez a szűrőhöz tartozó értékek',
@@ -1264,6 +1265,7 @@ $messages['hu'] = array(
 	'sd_createfilter_listofvalues' => 'értékek listája (alapértelmezett)',
 	'sd_createfilter_label' => 'Szűrő címkéje (nem kötelező):',
 	'sd_blank_error' => 'nem lehet üres',
+	'sd_filter_coversproperty' => 'Ez a szűrő lefedi a(z) $1 tulajdonságot.',
 	'sd_filter_usestimeperiod' => 'A(z) $1 adatot használja időintervallumként.',
 	'sd_filter_year' => 'Év',
 	'sd_filter_month' => 'Hónap',
