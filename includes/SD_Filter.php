@@ -11,6 +11,7 @@ class SDFilter {
 	var $property;
 	var $is_relation;
 	var $is_boolean;
+	var $is_date;
 	var $category;
 	var $time_period = null;
 	var $input_type = null;
@@ -42,6 +43,9 @@ class SDFilter {
 				if ($types[0]->getWikiValue() == $datatypeLabels['_boo']) {
 					$f->is_boolean = true;
 				}
+				if ($types[0]->getWikiValue() == $datatypeLabels['_dat']) {
+					$f->is_date = true;
+				}
 			}
 		}
 		$categories = SDUtils::getValuesForProperty($filter_name, SD_NS_FILTER, '_SD_VC', SD_SP_GETS_VALUES_FROM_CATEGORY, NS_CATEGORY);
@@ -69,7 +73,6 @@ class SDFilter {
 		}
 		return $f;
 	}
-
 
 	/**
 	 * Gets an array of the possible time period values (e.g., years,
