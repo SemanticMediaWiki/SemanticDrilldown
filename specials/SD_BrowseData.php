@@ -310,6 +310,25 @@ END;
 	}
 
 	/**
+	 * Print a "nice" version of the value for a filter, if it's some
+	 * special case like 'other', 'none', a boolean, etc.
+	 */
+	function printFilterValue($filter, $value) {
+		$value = str_replace('_', ' ', $value);
+		// if it's boolean, display something nicer than "0" or "1"
+		if ($value === ' other')
+			return wfMsg('sd_browsedata_other');
+		elseif ($value === ' none')
+			return wfMsg('sd_browsedata_none');
+		elseif ($filter->is_boolean)
+			return SDUtils::booleanToString($value);
+		elseif ($filter->is_date && strpos($value, '//T'))
+			return str_replace('//T', '', $value);
+		else
+			return $value;
+	}
+
+	/**
 	 * Print the line showing 'OR' values for a filter that already has
 	 * at least one value set
 	 */
@@ -346,16 +365,7 @@ END;
 		$or_values[] = '_none';
 		foreach ($or_values as $i => $value) {
 			if ($i > 0) { $results_line .= " &middot; "; }
-			$value = str_replace('_', ' ', $value);
-			// if it's boolean, display something nicer than "0" or "1"
-			if ($value === ' other')
-				$filter_text = wfMsg('sd_browsedata_other');
-			elseif ($value === ' none')
-				$filter_text = wfMsg('sd_browsedata_none');
-			elseif ($af->filter->is_boolean)
-				$filter_text = SDUtils::booleanToString($value);
-			else
-				$filter_text = $value;
+			$filter_text = $this->printFilterValue($af->filter, $value);
 			$applied_filters = $this->applied_filters;
 			foreach ($applied_filters as $af2) {
 				if ($af->filter->name == $af2->filter->name) {
@@ -415,15 +425,7 @@ END;
 		$num_printed_values = 0;
 		foreach ($filter_values as $value_str => $num_results) {
 			if ($num_printed_values++ > 0) { $results_line .= " &middot; "; }
-			// if it's boolean, display something nicer than "0" or "1"
-			if ($value_str === '_other')
-				$filter_text = wfMsg('sd_browsedata_other');
-			elseif ($value_str === '_none')
-				$filter_text = wfMsg('sd_browsedata_none');
-			elseif ($f->is_boolean)
-				$filter_text = SDUtils::booleanToString($value_str);
-			else
-				$filter_text = str_replace('_', ' ', $value_str);
+			$filter_text = $this->printFilterValue($f, $value_str);
 			$filter_text .= " ($num_results)";
 			$filter_url = $cur_url . urlencode(str_replace(' ', '_', $f->name)) . '=' . urlencode(str_replace(' ', '_', $value_str));
 			if ($sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0) {
@@ -693,14 +695,7 @@ END;
 			}
 			foreach ($af->values as $j => $fv) {
 				if ($j > 0) {$header .= ' <span class="drilldown-or">' . wfMsg('sd_browsedata_or') . '</span> ';}
-				if ($fv->text == ' other')
-					$filter_text = wfMsg('sd_browsedata_other');
-				elseif ($fv->text == ' none')
-					$filter_text = wfMsg('sd_browsedata_none');
-				elseif ($af->filter->is_boolean)
-					$filter_text = SDUtils::booleanToString($fv->text);
-				else
-					$filter_text = $fv->text;
+				$filter_text = $this->printFilterValue($af->filter, $fv->text);
 				$temp_filters_array = $this->applied_filters;
 				$removed_values = array_splice($temp_filters_array[$i]->values, $j, 1);
 				$remove_filter_url = $this->makeBrowseURL($this->category, $temp_filters_array, $this->subcategory);
@@ -859,7 +854,7 @@ END;
 		$printouts = $params = array();
 		// only one set of params is handled for now
 		if (count($all_display_params) > 0) {
-			$display_params = $all_display_params[0];
+			$display_params = array_map('trim', $all_display_params[0]);
 			SMWQueryProcessor::processFunctionParams($display_params, $querystring, $params, $printouts);
 		}
 		if (array_key_exists('format', $params))
