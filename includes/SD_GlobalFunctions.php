@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.6.1');
+define('SD_VERSION','0.6.2');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -162,19 +162,33 @@ function sdfLoadMessagesManually() {
 }
 
 function sdfInitProperties() {
-	global $sdgContLang;
-	$sd_props = $sdgContLang->getPropertyLabels();
-	SMWPropertyValue::registerProperty('_SD_F', '_wpg', $sd_props[SD_SP_HAS_FILTER], true);
-	SMWPropertyValue::registerProperty('_SD_CP', '_wpp', $sd_props[SD_SP_COVERS_PROPERTY], true);
-	SMWPropertyValue::registerProperty('_SD_V', '_str', $sd_props[SD_SP_HAS_VALUE], true);
-	SMWPropertyValue::registerProperty('_SD_VC', '_wpc', $sd_props[SD_SP_GETS_VALUES_FROM_CATEGORY], true);
-	SMWPropertyValue::registerProperty('_SD_TP', '_str', $sd_props[SD_SP_USES_TIME_PERIOD], true);
-	SMWPropertyValue::registerProperty('_SD_IT', '_str', $sd_props[SD_SP_HAS_INPUT_TYPE], true);
-	SMWPropertyValue::registerProperty('_SD_RF', '_wpg', $sd_props[SD_SP_REQUIRES_FILTER], true);
-	SMWPropertyValue::registerProperty('_SD_L', '_str', $sd_props[SD_SP_HAS_LABEL], true);
-	SMWPropertyValue::registerProperty('_SD_DT', '_str', $sd_props[SD_SP_HAS_DRILLDOWN_TITLE], true);
-	SMWPropertyValue::registerProperty('_SD_DP', '_str', $sd_props[SD_SP_HAS_DISPLAY_PARAMETERS], true);
-
+	global $sdgContLang, $wgLanguageCode;
+	$sd_property_vals = array(
+		SD_SP_HAS_FILTER => array('_SD_F', '_wpg'),
+		SD_SP_COVERS_PROPERTY => array('_SD_CP', '_wpp'),
+		SD_SP_HAS_VALUE => array('_SD_V', '_str'),
+		SD_SP_GETS_VALUES_FROM_CATEGORY => array('_SD_VC', '_wpc'),
+		SD_SP_USES_TIME_PERIOD => array('_SD_TP', '_str'),
+		SD_SP_HAS_INPUT_TYPE => array('_SD_IT', '_str'),
+		SD_SP_REQUIRES_FILTER => array('_SD_RF', '_wpg'),
+		SD_SP_HAS_LABEL => array('_SD_L', '_str'),
+		SD_SP_HAS_DRILLDOWN_TITLE => array('_SD_DT', '_str'),
+		SD_SP_HAS_DISPLAY_PARAMETERS => array('_SD_DP', '_str'),
+	);
+	// register main property labels
+	$sd_prop_labels = $sdgContLang->getPropertyLabels();
+	foreach ($sd_prop_labels as $prop_id => $prop_alias) {
+		$prop_vals = $sd_property_vals[$prop_id];
+		SMWPropertyValue::registerProperty($prop_vals[0], $prop_vals[1], $prop_alias, true);
+	}
+	// if it's not English, add the English-language aliases as well
+	if ($wgLanguageCode != 'en') {
+		$sd_prop_aliases = $sdgContLang->getPropertyAliases();
+		foreach ($sd_prop_aliases as $prop_alias => $prop_id) {
+			$prop_vals = $sd_property_vals[$prop_id];
+			SMWPropertyValue::registerProperty($prop_vals[0], $prop_vals[1], $prop_alias, true);
+		}
+	}
         return true;
 }
 
