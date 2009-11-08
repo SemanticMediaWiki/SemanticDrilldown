@@ -382,6 +382,7 @@ $messages['bg'] = array(
 
 /** Breton (Brezhoneg)
  * @author Fohanno
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -399,7 +400,7 @@ $messages['br'] = array(
 	'createfilter' => 'Krouiñ ur sil',
 	'sd_createfilter_name' => 'Anv :',
 	'sd_blank_error' => "ne c'hall ket bezañ goullo",
-	'sd_filter_year' => 'Bloavezh',
+	'sd_filter_year' => 'Bloaz',
 	'sd_filter_month' => 'Miz',
 	'sd_filter_freetext' => 'testenn',
 );
@@ -682,6 +683,7 @@ $messages['el'] = array(
 
 /** Esperanto (Esperanto)
  * @author Melancholie
+ * @author Michawiki
  * @author Yekrats
  */
 $messages['eo'] = array(
@@ -691,15 +693,15 @@ $messages['eo'] = array(
 	'sd_browsedata_subcategory' => 'Subkategorio',
 	'sd_browsedata_other' => 'Alia',
 	'sd_browsedata_none' => 'Neniu',
-	'sd_browsedata_filterbyvalue' => 'Filtru laŭ ĉi tiu valuto',
+	'sd_browsedata_filterbyvalue' => 'Filtru laŭ ĉi tiu valoro',
 	'sd_browsedata_filterbysubcategory' => 'Filtru laŭ ĉi tiu subkategorio',
-	'sd_browsedata_otherfilter' => 'Montru paĝojn kun alia valuto por ĉi tiu filtrilo',
-	'sd_browsedata_nonefilter' => 'Montru paĝojn kun neniu valuto por ĉi tiu filtrilo',
+	'sd_browsedata_otherfilter' => 'Montru paĝojn kun alia valoro por ĉi tiu filtrilo',
+	'sd_browsedata_nonefilter' => 'Montru paĝojn kun neniu valoro por ĉi tiu filtrilo',
 	'sd_browsedata_or' => 'aŭ',
 	'sd_browsedata_removefilter' => 'Forigu filtrilon',
 	'sd_browsedata_removesubcategoryfilter' => 'Forigu ĉi tiun subkategorian filtrilon',
 	'sd_browsedata_resetfilters' => 'Restarigu filtrilojn',
-	'sd_browsedata_addanothervalue' => 'Aldonu plian valuton',
+	'sd_browsedata_addanothervalue' => 'Alklaku sagon por aldoni plian valoron',
 	'sd_browsedata_daterangestart' => 'Ekde:',
 	'sd_browsedata_daterangeend' => 'Al:',
 	'sd_browsedata_novalues' => 'Estas neniuj valoroj por ĉi tiu filtrilo',
@@ -708,20 +710,20 @@ $messages['eo'] = array(
 	'createfilter' => 'Kreu filtrilon',
 	'sd_createfilter_name' => 'Nomo:',
 	'sd_createfilter_property' => 'Eco kovrita de ĉi tiu filtrilo:',
-	'sd_createfilter_usepropertyvalues' => 'Uzu ĉiujn valutojn de ĉi tiu eco por la filtrilo',
-	'sd_createfilter_usecategoryvalues' => 'Akiru valutojn por filtrilo de ĉi tiu kategorio:',
+	'sd_createfilter_usepropertyvalues' => 'Uzu ĉiujn valorojn de ĉi tiu atributo por la filtrilo',
+	'sd_createfilter_usecategoryvalues' => 'Akiru valorojn por filtrilo de ĉi tiu kategorio:',
 	'sd_createfilter_usedatevalues' => 'Uzu dat-intervalojn por ĉi tiu filtrilo kun ĉi tiu tempo-periodo:',
-	'sd_createfilter_entervalues' => 'Enigu valutojn por filtrilo permane (valutoj estu apartigitaj de komoj - se valuto enhavas komon, anstataŭigu ĝin per "\\,"):',
+	'sd_createfilter_entervalues' => 'Enigu valorojn por filtrilo permane (valoroj estu apartigitaj de komoj - se valoro enhavas komon, anstataŭigu ĝin per "\\,"):',
 	'sd_createfilter_listofvalues' => 'listo de valoroj (defaŭltaj)',
 	'sd_createfilter_requirefilter' => 'Devigu alian filtrilon esti selektita antaŭ ĉi tiu estas montrita:',
 	'sd_createfilter_label' => 'Etikedo por ĉi tiu filtrilo (nedeviga):',
 	'sd_blank_error' => 'ne povas esti malplena',
 	'sd_filter_coversproperty' => 'Ĉi tiu filtrilo kovras la econ $1.',
-	'sd_filter_getsvaluesfromcategory' => 'Ĝi akiras ties valutojn de la kategorio $1.',
+	'sd_filter_getsvaluesfromcategory' => 'Ĝi akiras ties valorojn de la kategorio $1.',
 	'sd_filter_usestimeperiod' => 'Ĝi uzas $1 kiel ies tempdaŭron.',
 	'sd_filter_year' => 'Jaro',
 	'sd_filter_month' => 'Monato',
-	'sd_filter_hasvalues' => 'Ĝi havas valutojn $1.',
+	'sd_filter_hasvalues' => 'Ĝi havas valorojn $1.',
 	'sd_filter_combobox' => 'falmenuo',
 	'sd_filter_freetext' => 'teksto',
 	'sd_filter_daterange' => 'tempospaco',
@@ -1627,7 +1629,7 @@ $messages['ksh'] = array(
 	'sd_browsedata_removefilter' => 'Donn dä Felter hee fottschmiiße',
 	'sd_browsedata_removesubcategoryfilter' => 'Donn dä Felter övver en Ungersaachjropp fott schmiiße',
 	'sd_browsedata_resetfilters' => 'Donn de Feltere widder op Shtandat setze',
-	'sd_browsedata_addanothervalue' => 'Donn ene andere Wäät dobei',
+	'sd_browsedata_addanothervalue' => 'Donn op dä Piel klecke, öm noch ene Wäät dobei ze zälle',
 	'sd_browsedata_daterangestart' => 'Aanfang:',
 	'sd_browsedata_daterangeend' => 'Engk:',
 	'sd_browsedata_novalues' => 'Et sin kein Wääte för dä Felter do',
@@ -2155,6 +2157,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author 555
+ * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
  * @author Waldir
@@ -2171,8 +2174,8 @@ $messages['pt'] = array(
 	'sd_browsedata_none' => 'Nenhum',
 	'sd_browsedata_filterbyvalue' => 'Filtrar por este valor',
 	'sd_browsedata_filterbysubcategory' => 'Filtrar por esta subcategoria',
-	'sd_browsedata_otherfilter' => 'Exibir páginas com outro valor para este filtro',
-	'sd_browsedata_nonefilter' => 'Exibir páginas sem valores para este filtro',
+	'sd_browsedata_otherfilter' => 'Apresentar páginas com outro valor para este filtro',
+	'sd_browsedata_nonefilter' => 'Apresentar páginas sem valores para este filtro',
 	'sd_browsedata_or' => 'ou',
 	'sd_browsedata_removefilter' => 'Remover este filtro',
 	'sd_browsedata_removesubcategoryfilter' => 'Remover esta subcategoria da função de filtro',
@@ -2192,7 +2195,7 @@ $messages['pt'] = array(
 	'sd_createfilter_entervalues' => 'Introduza valores para o filtro manualmente (os valores devem ser separados por vírgulas - se um valor contém uma vírgula, substitua-a por "\\,"):',
 	'sd_createfilter_inputtype' => 'Tipo de entrada para este filtro:',
 	'sd_createfilter_listofvalues' => 'lista de valores (padrão)',
-	'sd_createfilter_requirefilter' => 'Necessita de outro filtro seleccionado antes deste ser exibido:',
+	'sd_createfilter_requirefilter' => 'Exigir que outro filtro seja seleccionado antes de apresentar este:',
 	'sd_createfilter_label' => 'Etiqueta para este filtro (opcional):',
 	'sd_blank_error' => 'não pode estar em branco',
 	'sd_filter_coversproperty' => 'Este filtro abrange a propriedade $1.',
