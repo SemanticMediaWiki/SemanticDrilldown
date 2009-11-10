@@ -2567,6 +2567,7 @@ $messages['te'] = array(
 	'sd_filter_year' => 'సంవత్సరం',
 	'sd_filter_month' => 'నెల',
 	'sd_filter_freetext' => 'పాఠ్యం',
+	'sd_filter_daterange' => 'కాల వ్యవధి',
 );
 
 /** Tetum (Tetun)
