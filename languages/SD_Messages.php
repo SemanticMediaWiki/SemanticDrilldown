@@ -377,6 +377,7 @@ $messages['bg'] = array(
 	'sd_filter_year' => 'Година',
 	'sd_filter_month' => 'Месец',
 	'sd_filter_hasvalues' => 'Има стойности $1.',
+	'sd_filter_freetext' => 'текст',
 	'sd_filter_requiresfilter' => 'Необходимо е наличието на филтър $1.',
 );
 
