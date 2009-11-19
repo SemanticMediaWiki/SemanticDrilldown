@@ -393,6 +393,7 @@ $messages['br'] = array(
 	'sd_browsedata_subcategory' => 'Isrummad',
 	'sd_browsedata_other' => 'Unan all',
 	'sd_browsedata_none' => 'Hini ebet',
+	'sd_browsedata_filterbyvalue' => 'Silañ war-bouez an talvoud-mañ',
 	'sd_browsedata_or' => 'pe',
 	'sd_browsedata_removefilter' => 'Lemel ar sil-mañ',
 	'sd_browsedata_resetfilters' => 'Adderaouekaat ar siloù',
