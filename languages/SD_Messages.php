@@ -2567,6 +2567,7 @@ $messages['te'] = array(
 	'sd_browsedata_daterangestart' => 'మొదలు:',
 	'sd_browsedata_daterangeend' => 'ముగింపు:',
 	'filters' => 'వడపోతలు',
+	'sd_filters_docu' => '{{SITENAME}}లో ఈ క్రింది వడపోతలు ఉన్నాయి:',
 	'sd_createfilter_name' => 'పేరు:',
 	'sd_createfilter_usecategoryvalues' => 'వడపోతకి విలువలని ఈ వర్గంనుండి తీసుకోవాలి:',
 	'sd_blank_error' => 'ఖాళీగా ఉండకూడదు',
