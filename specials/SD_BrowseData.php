@@ -945,7 +945,7 @@ END;
 
 		$query = new SMWQuery();
 		// for SMW 1.5+, handling is quite easy
-		if (! class_exists('SMWResultArray')) {
+		if (! class_exists('SMWTemplateResultPrinter')) {
 			return new SMWQueryResult($printouts, $query, $qr, $store, ($count > $num) );
 		}
 		$result = new SMWQueryResult($printouts, $query, ($count > $num) );
