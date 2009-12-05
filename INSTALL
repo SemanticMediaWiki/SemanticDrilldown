@@ -31,7 +31,7 @@ installation requirements.
       include_once('extensions/SemanticDrilldown/includes/SD_Settings.php');
 
 '''Remark:'''  Semantic Drilldown creates an additional custom namespace,
-"Filter" (see http://meta.wikimedia.org/wiki/Help:Custom_namespaces). If
+"Filter" (see http://www.mediawiki.org/wiki/Manual:Using_custom_namespaces). If
 you have your own custom namespaces, you have to set the parameter
 $sdgNamespaceIndex before including SD_Settings.php. See SD_Settings.php
 for more details.
