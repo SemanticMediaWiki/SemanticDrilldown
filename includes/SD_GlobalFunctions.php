@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('SD_VERSION','0.6.2');
+define('SD_VERSION','0.7');
 
 // constants for special properties
 define('SD_SP_HAS_FILTER', 1);
@@ -36,9 +36,6 @@ require_once($sdgIP . '/languages/SD_Language.php');
 $wgExtensionMessagesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Messages.php';
 $wgExtensionAliasesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Aliases.php';
 
-$wgHooks['smwInitProperties'][] = 'sdfInitProperties';
-$wgHooks['AdminLinks'][] = 'sdfAddToAdminLinks';
-
 // register all special pages and other classes
 $wgSpecialPages['Filters'] = 'SDFilters';
 $wgAutoloadClasses['SDFilters'] = $sdgIP . '/specials/SD_Filters.php';
@@ -54,6 +51,12 @@ $wgAutoloadClasses['SDUtils'] = $sdgIP . '/includes/SD_Utils.inc';
 $wgAutoloadClasses['SDFilter'] = $sdgIP . '/includes/SD_Filter.php';
 $wgAutoloadClasses['SDFilterValue'] = $sdgIP . '/includes/SD_FilterValue.php';
 $wgAutoloadClasses['SDAppliedFilter'] = $sdgIP . '/includes/SD_AppliedFilter.php';
+
+$wgHooks['smwInitProperties'][] = 'sdfInitProperties';
+$wgHooks['AdminLinks'][] = 'sdfAddToAdminLinks';
+$wgHooks['MagicWordwgVariableIDs'][] = 'SDUtils::addMagicWordVariableIDs';
+$wgHooks['LanguageGetMagic'][] = 'SDUtils::addMagicWordLanguage';
+$wgHooks['ParserBeforeTidy'][] = 'SDUtils::handleShowAndHide';
 
 /**********************************************/
 /***** namespace settings                 *****/
@@ -186,7 +189,7 @@ function sdfInitProperties() {
 		$sd_prop_aliases = $sdgContLang->getPropertyAliases();
 		foreach ($sd_prop_aliases as $prop_alias => $prop_id) {
 			$prop_vals = $sd_property_vals[$prop_id];
-			SMWPropertyValue::registerProperty($prop_vals[0], $prop_vals[1], $prop_alias, true);
+			SMWPropertyValue::registerPropertyAlias($prop_vals[0], $prop_alias);
 		}
 	}
         return true;
