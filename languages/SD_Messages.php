@@ -1751,6 +1751,7 @@ $messages['lb'] = array(
 	'sd_blank_error' => 'däerf net eidel sinn',
 	'sd_filter_coversproperty' => "Dëse Filter betrefft d'Eegeschaft $1.",
 	'sd_filter_getsvaluesfromcategory' => 'E kritt seng Werter aus der Kategorie $1.',
+	'sd_filter_usestimeperiod' => 'E benotzt $1 als Zäitraum',
 	'sd_filter_year' => 'Joer',
 	'sd_filter_month' => 'Mount',
 	'sd_filter_hasvalues' => 'En huet de Wert $1.',
