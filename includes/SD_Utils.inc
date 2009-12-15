@@ -31,12 +31,14 @@ class SDUtils {
 
 	/**
 	 * Gets a list of the names of all categories in the wiki that aren't
-	 * children of some other category
+	 * children of some other category - this list additionally includes,
+	 * and excludes, categories that are manually set with
+	 * 'SHOWINDRILLDOWN' and 'HIDEFROMDRILLDOWN', respectively.
 	 */
 	function getTopLevelCategories() {
 		$categories = array();
 		$dbr = wfGetDB( DB_SLAVE );
-		extract($dbr->tableNames('page', 'categorylinks'));
+		extract($dbr->tableNames('page', 'categorylinks', 'page_props'));
 		$cat_ns = NS_CATEGORY;
 		$sql = "SELECT page_title FROM $page p LEFT OUTER JOIN $categorylinks cl ON p.page_id = cl.cl_from WHERE p.page_namespace = $cat_ns AND cl.cl_to IS NULL";
 		$res = $dbr->query($sql);
@@ -46,6 +48,29 @@ class SDUtils {
 			}
 		}
 		$dbr->freeResult($res);
+
+		// get 'hide' and 'show' categories
+		$hidden_cats = $shown_cats = array();
+		$sql2 = "SELECT p.page_title, pp.pp_propname FROM $page p JOIN $page_props pp ON p.page_id = pp.pp_page WHERE p.page_namespace = $cat_ns AND (pp.pp_propname = 'hidefromdrilldown' OR pp.pp_propname = 'showindrilldown') AND pp.pp_value = 'y'";
+		$res2 = $dbr->query($sql2);
+		if ($dbr->numRows( $res2 ) > 0) {
+			while ($row = $dbr->fetchRow($res2)) {
+				if ($row[1] == 'hidefromdrilldown')
+					$hidden_cats[] = str_replace('_', ' ', $row[0]);
+				else
+					$shown_cats[] = str_replace('_', ' ', $row[0]);
+			}
+		}
+		$dbr->freeResult($res2);
+		$categories = array_merge($categories, $shown_cats);
+		foreach ($hidden_cats as $hidden_cat) {
+			foreach ($categories as $i => $cat) {
+				if ($cat == $hidden_cat) {
+					unset($categories[$i]);
+				}
+			}
+		}
+		sort($categories);
 		return $categories;
 	}
 
@@ -312,6 +337,44 @@ END;
 
 END;
 		return $text;
+	}
+
+	/**
+	 * Register magic-word variable IDs
+	 */
+	function addMagicWordVariableIDs(&$magicWordVariableIDs) {
+		$magicWordVariableIDs[] = 'MAG_HIDEFROMDRILLDOWN';
+		$magicWordVariableIDs[] = 'MAG_SHOWINDRILLDOWN';
+		return true;
+	}
+ 
+	/**
+	 * Set the actual value of the magic words
+	 */
+	function addMagicWordLanguage(&$magicWords, $langCode) {
+		switch($langCode) {
+		default:
+			$magicWords['MAG_HIDEFROMDRILLDOWN'] = array(0, '__HIDEFROMDRILLDOWN__');
+			$magicWords['MAG_SHOWINDRILLDOWN'] = array(0, '__SHOWINDRILLDOWN__');
+		}
+		return true;
+	}
+
+	/**
+	 * Set values in the page_props table based on the presence of the
+	 * 'HIDEFROMDRILLDOWN' and 'SHOWINDRILLDOWN' magic words in a page
+	 */
+	function handleShowAndHide(&$parser, &$text) {
+		global $wgOut, $wgAction;
+		$mw_hide = MagicWord::get('MAG_HIDEFROMDRILLDOWN');
+		if ($mw_hide->matchAndRemove($text)) {
+			$parser->mOutput->setProperty( 'hidefromdrilldown', 'y' );
+		}
+		$mw_show = MagicWord::get('MAG_SHOWINDRILLDOWN');
+		if ($mw_show->matchAndRemove($text)) {
+			$parser->mOutput->setProperty( 'showindrilldown', 'y' );
+		}
+		return true;
 	}
 
 }
