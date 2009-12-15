@@ -18,7 +18,7 @@ class SDAppliedFilter {
 	function create($filter, $values, $search_term = null, $lower_date = null, $upper_date = null) {
 		$af = new SDAppliedFilter();
 		$af->filter = $filter;
-		$af->search_term = str_replace('_', ' ', $search_term);
+		$af->search_term = htmlspecialchars(str_replace('_', ' ', $search_term));
 		if ($lower_date != null) {
 			$af->lower_date = $lower_date;
 			$af->lower_date_string = SDUtils::monthToString($lower_date['month']) . " " . $lower_date['day'] . ", " . $lower_date['year'];
