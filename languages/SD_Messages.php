@@ -398,6 +398,7 @@ $messages['br'] = array(
 	'sd_browsedata_or' => 'pe',
 	'sd_browsedata_removefilter' => 'Lemel ar sil-mañ',
 	'sd_browsedata_resetfilters' => 'Adderaouekaat ar siloù',
+	'sd_browsedata_addanothervalue' => 'Klikit war ar bir da ouzhpennañ un talvoud all',
 	'sd_browsedata_daterangestart' => 'Penn kentañ :',
 	'sd_browsedata_daterangeend' => 'Dibenn :',
 	'sd_browsedata_novalues' => "N'eus talvoud ebet evit ar sil-mañ",
