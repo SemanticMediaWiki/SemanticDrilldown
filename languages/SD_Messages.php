@@ -162,7 +162,7 @@ $messages['ar'] = array(
 	'sd_browsedata_removefilter' => 'أزل هذا الفلتر',
 	'sd_browsedata_removesubcategoryfilter' => 'أزل مُرشّح التصنيف الفرعي هذا',
 	'sd_browsedata_resetfilters' => 'أعد ضبط الفلاتر',
-	'sd_browsedata_addanothervalue' => 'إضافة قيمة أخرى',
+	'sd_browsedata_addanothervalue' => 'اضغط على السهم لإضافة قيمة أخرى',
 	'sd_browsedata_daterangestart' => ':البداية',
 	'sd_browsedata_daterangeend' => ':النهاية',
 	'sd_browsedata_novalues' => 'لا توجد قيم لهذا المرشح',
@@ -1771,6 +1771,59 @@ $messages['mhr'] = array(
 	'filters' => 'Фильтр-влак',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'semanticdrilldown-desc' => 'Интерфејс за истенчена навигација по семантички податоци',
+	'specialpages-group-sd_group' => 'Семантичко истенчување',
+	'browsedata' => 'Прелистај податоци',
+	'sd_browsedata_choosecategory' => 'Одберете категорија',
+	'sd_browsedata_viewcategory' => 'види категорија',
+	'sd_browsedata_docu' => 'Кликнете на еден или повеќе елементи подолу за да ги истенчите резултатите.',
+	'sd_browsedata_subcategory' => 'Поткатегорија',
+	'sd_browsedata_other' => 'Други',
+	'sd_browsedata_none' => 'Нема',
+	'sd_browsedata_filterbyvalue' => 'Филтрирај по оваа вредност',
+	'sd_browsedata_filterbysubcategory' => 'Филтрирај по оваа категорија',
+	'sd_browsedata_otherfilter' => 'Прикажи страници со друга вредност за овој филтер',
+	'sd_browsedata_nonefilter' => 'Прикажи страници без вредности за овој филтер',
+	'sd_browsedata_or' => 'или',
+	'sd_browsedata_removefilter' => 'Отстрани го филтерот',
+	'sd_browsedata_removesubcategoryfilter' => 'Отстрани го овој филтер за поткатегорија',
+	'sd_browsedata_resetfilters' => 'Врати ги филтрите по основно',
+	'sd_browsedata_addanothervalue' => 'Кликнете на стрелката за да додадете друга вредност',
+	'sd_browsedata_daterangestart' => 'Почеток:',
+	'sd_browsedata_daterangeend' => 'Крај:',
+	'sd_browsedata_novalues' => 'Нема зададено вредности за овој филтер',
+	'filters' => 'Филтри',
+	'sd_filters_docu' => '{{SITENAME}} ги има следниве филтри:',
+	'createfilter' => 'Создај филтер',
+	'sd_createfilter_name' => 'Име:',
+	'sd_createfilter_property' => 'Својство кое го покрива овој филтер:',
+	'sd_createfilter_usepropertyvalues' => 'Користи ги сите вредности на ова својство за филтерот',
+	'sd_createfilter_usecategoryvalues' => 'Преземи вредности за филтер од оваа категорија:',
+	'sd_createfilter_usedatevalues' => 'Користи датумски опсези за овој филтер со овој временски период:',
+	'sd_createfilter_entervalues' => 'Рачно внесете вредности за филтерот (вредностите треба да бидат одвоени со запирки - ако самата вредност содржи запирка, тогаш заменете ја со „\\,“):',
+	'sd_createfilter_inputtype' => 'Тип на внос за овој филтер:',
+	'sd_createfilter_listofvalues' => 'листа на вредности (по основно)',
+	'sd_createfilter_requirefilter' => 'Побарувај да биде избран друг филтер пред да се прикаже овој:',
+	'sd_createfilter_label' => 'Наслов за овој филтер (незадолжително)',
+	'sd_blank_error' => 'не може да стои празно',
+	'sd_filter_coversproperty' => 'Овој филтер го покрива својството $1.',
+	'sd_filter_getsvaluesfromcategory' => 'Ги добива своите вредности од категоријата $1.',
+	'sd_filter_usestimeperiod' => 'Користи $1 како временски период.',
+	'sd_filter_year' => 'Година',
+	'sd_filter_month' => 'Месец',
+	'sd_filter_hasvalues' => 'Ги има вредностите $1.',
+	'sd_filter_hasinputtype' => 'Има тип на внос $1.',
+	'sd_filter_combobox' => 'расклопно мени',
+	'sd_filter_freetext' => 'текст',
+	'sd_filter_daterange' => 'датумски опсег',
+	'sd_filter_requiresfilter' => 'Бара присуство на филтер $1.',
+	'sd_filter_haslabel' => 'Има наслов $1.',
+);
+
 /** Malayalam (മലയാളം)
  * @author Shijualex
  */
@@ -2187,6 +2240,59 @@ $messages['pl'] = array(
 	'sd_filter_haslabel' => 'Ma etykietę $1.',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'semanticdrilldown-desc' => "N'antërfacia a cascada për esploré dat semàntich",
+	'specialpages-group-sd_group' => 'Cascada Semàntica',
+	'browsedata' => 'Scanucia ij dat',
+	'sd_browsedata_choosecategory' => 'Sern na categorìa',
+	'sd_browsedata_viewcategory' => 'varda categorìa',
+	'sd_browsedata_docu' => "Sgnaca su un o pi element sota për strenze j'arzultà",
+	'sd_browsedata_subcategory' => 'Sotcategorìa',
+	'sd_browsedata_other' => 'Àutr',
+	'sd_browsedata_none' => 'Gnun',
+	'sd_browsedata_filterbyvalue' => 'Filtra për sto valor-sì',
+	'sd_browsedata_filterbysubcategory' => 'Filtra për sta sotcategorìa-sì',
+	'sd_browsedata_otherfilter' => 'Mosta pàgine con àutr valor për sto filtr-sì',
+	'sd_browsedata_nonefilter' => 'Mosta pàgine con gnun valor për sto filtr-sì',
+	'sd_browsedata_or' => 'o',
+	'sd_browsedata_removefilter' => 'Gava sto filtr-sì',
+	'sd_browsedata_removesubcategoryfilter' => 'Gava sto filtr ëd sotcategorìa',
+	'sd_browsedata_resetfilters' => 'Spian-a filtr',
+	'sd_browsedata_addanothervalue' => "Sgnaca la flecia për gionté n'àutr valor",
+	'sd_browsedata_daterangestart' => 'Prinsipi:',
+	'sd_browsedata_daterangeend' => 'Fin:',
+	'sd_browsedata_novalues' => 'A-i é pa gnun valor për sto filtr-sì',
+	'filters' => 'Filtr',
+	'sd_filters_docu' => 'I filtr sota a esisto an {{SITENAME}}:',
+	'createfilter' => 'Crea un filtr',
+	'sd_createfilter_name' => 'Nòm:',
+	'sd_createfilter_property' => "Proprietà ch'a coato sto filtr-sì:",
+	'sd_createfilter_usepropertyvalues' => 'Dòvra tùit ij valor dë sta proprietà-sì për ël filtr',
+	'sd_createfilter_usecategoryvalues' => 'Pija ij valor për filtr da sta categorìa-sì:',
+	'sd_createfilter_usedatevalues' => "Dòvra l'antërval ëd date për sto filtr-sì con sto antërval ëd temp-sì:",
+	'sd_createfilter_entervalues' => 'Ansëriss ij valor për filtr a man (ij valor a dovrìo esse separà da vìrgole - se un valor a conten na vìrgola, rimpiassla con "\\,"):',
+	'sd_createfilter_inputtype' => 'Ansëriss la sòrt dë sto filtr-sì:',
+	'sd_createfilter_listofvalues' => 'lista ëd valor (default)',
+	'sd_createfilter_requirefilter' => "Ciama ëd selessioné n'àutr filtr prima che sto-sì a sia visualisà:",
+	'sd_createfilter_label' => 'Etichëtta për sto filtr-sì (opsinal):',
+	'sd_blank_error' => 'a peul pa esse veuid',
+	'sd_filter_coversproperty' => 'Sto filtr-sì a coata la proprietà $1.',
+	'sd_filter_getsvaluesfromcategory' => 'A pija ij sò valor da la categorìa $1.',
+	'sd_filter_usestimeperiod' => 'A dòvra $1 com ël sò antërval ëd temp.',
+	'sd_filter_year' => 'Ann',
+	'sd_filter_month' => 'Meis',
+	'sd_filter_hasvalues' => "A l'ha ël valor $1.",
+	'sd_filter_hasinputtype' => "A l'ha la sòrt d'input $1.",
+	'sd_filter_combobox' => 'combo box',
+	'sd_filter_freetext' => 'test',
+	'sd_filter_daterange' => 'antërval ëd date',
+	'sd_filter_requiresfilter' => 'A veul la presensa dël filtr $1.',
+	'sd_filter_haslabel' => "A l'ha l'etichëtta $1.",
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -2326,13 +2432,18 @@ $messages['pt-br'] = array(
  * @author Mihai
  */
 $messages['ro'] = array(
+	'browsedata' => 'Răsfoiţi data',
+	'sd_browsedata_choosecategory' => 'Alegeţi o categorie',
+	'sd_browsedata_viewcategory' => 'vedeţi categoria',
 	'sd_browsedata_subcategory' => 'Subcategorie',
+	'sd_browsedata_other' => 'Altul',
 	'sd_browsedata_none' => 'Nimic',
 	'sd_browsedata_filterbyvalue' => 'Filtrează după această valoare',
 	'sd_browsedata_filterbysubcategory' => 'Filtrează după această subcategorie',
 	'sd_browsedata_or' => 'sau',
 	'sd_browsedata_removefilter' => 'Elimină acest filtru',
 	'sd_browsedata_removesubcategoryfilter' => 'Elimină acest filtru de subcategorie',
+	'sd_browsedata_resetfilters' => 'Resetaţi filtrele',
 	'sd_browsedata_addanothervalue' => 'Adaugă altă valoare',
 	'sd_browsedata_daterangestart' => 'Început:',
 	'sd_browsedata_daterangeend' => 'Sfârşit:',
