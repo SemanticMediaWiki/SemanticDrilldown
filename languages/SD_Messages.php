@@ -3012,10 +3012,20 @@ $messages['zh-cn'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Liangent
  * @author PhiLiP
  */
 $messages['zh-hans'] = array(
+	'browsedata' => '浏览数据',
 	'sd_browsedata_other' => '其他',
+	'sd_browsedata_none' => '无',
+	'sd_browsedata_or' => '或',
+	'sd_browsedata_daterangestart' => '开始：',
+	'sd_browsedata_daterangeend' => '结束：',
+	'sd_blank_error' => '不可留空',
+	'sd_filter_year' => '年',
+	'sd_filter_month' => '月',
+	'sd_filter_freetext' => '文字',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
