@@ -2783,6 +2783,35 @@ $messages['tg-cyrl'] = array(
 	'sd_filter_haslabel' => 'Ин барчасби $1 дорад.',
 );
 
+/** Tajik (Latin) (Тоҷикӣ (Latin))
+ * @author Liangent
+ */
+$messages['tg-latn'] = array(
+	'browsedata' => 'Mururi doda',
+	'sd_browsedata_choosecategory' => 'Gurūhero intixob kuned',
+	'sd_browsedata_viewcategory' => 'nigaristan gurūh',
+	'sd_browsedata_subcategory' => 'Zergurūh',
+	'sd_browsedata_other' => 'Digar',
+	'sd_browsedata_none' => 'Heç',
+	'sd_browsedata_or' => 'jo',
+	'sd_browsedata_daterangestart' => "Şurū':",
+	'sd_browsedata_daterangeend' => 'Oxir:',
+	'filters' => 'Filtrho',
+	'sd_createfilter_name' => 'Nom:',
+	'sd_createfilter_entervalues' => 'Miqdorhoro baroi filtr dastī vorid kuned (miqdorho bojad bo vergulho çudo şavand - agar miqdor vergul doşta boşad, onro bo "\\," ivaz kuned):',
+	'sd_createfilter_requirefilter' => 'Qabl az namoişi in jake, filtri digar bojad intixob şavad:',
+	'sd_createfilter_label' => 'Barcasb baroi in filtr (ixtijorī):',
+	'sd_blank_error' => 'nametavonad xolī boşad',
+	'sd_filter_coversproperty' => 'In filtr viƶagiji $1-ro şomil meşavad.',
+	'sd_filter_getsvaluesfromcategory' => 'Miqdorhojaşro az gurūhi $1 megirad.',
+	'sd_filter_usestimeperiod' => '$1-ro ba unvoni davrai vaqti xud ba kor mebarad.',
+	'sd_filter_year' => 'Sol',
+	'sd_filter_month' => 'Moh',
+	'sd_filter_hasvalues' => 'Miqdorhoi $1-ro dorad.',
+	'sd_filter_requiresfilter' => 'Ba vuçudi filtri $1 ehtijoç dorad.',
+	'sd_filter_haslabel' => 'In barcasbi $1 dorad.',
+);
+
 /** Thai (ไทย)
  * @author Octahedron80
  * @author Passawuth
