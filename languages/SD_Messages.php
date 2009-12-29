@@ -426,6 +426,8 @@ $messages['bs'] = array(
 	'sd_browsedata_none' => 'Ništa',
 	'sd_browsedata_filterbyvalue' => 'Filter po ovoj vrijednosti',
 	'sd_browsedata_filterbysubcategory' => 'Filter po ovoj podkategoriji',
+	'sd_browsedata_otherfilter' => 'Prikaži stranice sa drugom vrijednošću za ovaj filter',
+	'sd_browsedata_nonefilter' => 'Pokaži stranice bez vrijednosti za ovaj filter',
 	'sd_browsedata_or' => 'ili',
 	'sd_browsedata_removefilter' => 'Ukloni ovaj filter',
 	'sd_browsedata_removesubcategoryfilter' => 'Ukloni ovaj filter podkategorije',
@@ -439,13 +441,19 @@ $messages['bs'] = array(
 	'sd_createfilter_name' => 'Ime:',
 	'sd_createfilter_property' => 'Svojstvo koje ovaj filter pokriva:',
 	'sd_createfilter_usepropertyvalues' => 'Koristi sve vrijednosti ovog svojstva za filter',
+	'sd_createfilter_usecategoryvalues' => 'Preuzmi vrijednosti za filter iz ove kategorije:',
 	'sd_createfilter_inputtype' => 'Tip unosa za ovaj filter:',
+	'sd_createfilter_listofvalues' => 'spisak vrijednosti (pretpostavljeno)',
 	'sd_createfilter_label' => 'Naslov za ovaj filter (opcija):',
 	'sd_blank_error' => 'ne može biti prazno',
+	'sd_filter_usestimeperiod' => 'Koristi $1 kao svoj vremenski period.',
 	'sd_filter_year' => 'Godina',
 	'sd_filter_month' => 'mjesec',
 	'sd_filter_hasvalues' => 'Ima vrijednosti $1.',
+	'sd_filter_hasinputtype' => 'Ima vrstu ulaza $1.',
 	'sd_filter_freetext' => 'tekst',
+	'sd_filter_daterange' => 'vremenski raspon',
+	'sd_filter_requiresfilter' => 'Zahtjeva prisustvo filtera $1.',
 	'sd_filter_haslabel' => 'Ima oznaku $1.',
 );
 
@@ -2208,7 +2216,7 @@ $messages['pl'] = array(
 	'sd_browsedata_removefilter' => 'Usuń ten filtr',
 	'sd_browsedata_removesubcategoryfilter' => 'Usuń ten filtr podkategorii',
 	'sd_browsedata_resetfilters' => 'Wyzeruj filtry',
-	'sd_browsedata_addanothervalue' => 'Dodaj inną wartość',
+	'sd_browsedata_addanothervalue' => 'Kliknij strzałkę aby dodać inną wartość',
 	'sd_browsedata_daterangestart' => 'Początek',
 	'sd_browsedata_daterangeend' => 'Koniec',
 	'sd_browsedata_novalues' => 'Nie ma żadnych wartości dla tego filtru',
@@ -2826,6 +2834,8 @@ $messages['th'] = array(
  */
 $messages['tk'] = array(
 	'filters' => 'Filtrler',
+	'sd_createfilter_name' => 'At:',
+	'sd_filter_freetext' => 'tekst',
 );
 
 /** Tagalog (Tagalog)
