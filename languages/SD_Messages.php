@@ -599,6 +599,7 @@ $messages['de'] = array(
  */
 $messages['de-formal'] = array(
 	'sd_browsedata_docu' => 'Klicken Sie auf einen oder mehrere der Filter um das Ergebnis einzuschränken.',
+	'sd_browsedata_addanothervalue' => 'Klicken Sie auf den Pfeil, um einen weiteren Wert hinzuzufügen',
 	'sd_createfilter_entervalues' => 'Verwenden Sie diese Werte für den Filter (Werte durch Komma getrennt eingeben - Wenn ein Wert ein Komma enthält, mit „\\,“ ersetzen):',
 );
 
@@ -878,6 +879,7 @@ $messages['fa'] = array(
  * @author Crt
  * @author Nike
  * @author Str4nd
+ * @author ZeiP
  */
 $messages['fi'] = array(
 	'browsedata' => 'Datan selaus',
@@ -895,7 +897,7 @@ $messages['fi'] = array(
 	'sd_browsedata_removefilter' => 'Poista suodin',
 	'sd_browsedata_removesubcategoryfilter' => 'Poista tämä alaluokka-suodatin',
 	'sd_browsedata_resetfilters' => 'Nollaa suotimet',
-	'sd_browsedata_addanothervalue' => 'Lisää uusi arvo',
+	'sd_browsedata_addanothervalue' => 'Napsauta nuolta lisääksesi uuden arvon',
 	'sd_browsedata_daterangestart' => 'Alku',
 	'sd_browsedata_daterangeend' => 'Loppu',
 	'sd_browsedata_novalues' => 'Tälle suodattimelle ei ole arvoja',
@@ -2894,11 +2896,31 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Vito Genovese
  */
 $messages['tr'] = array(
+	'browsedata' => 'Verilere gözat',
+	'sd_browsedata_choosecategory' => 'Bir kategori seç',
+	'sd_browsedata_viewcategory' => 'kategoriyi gör',
+	'sd_browsedata_subcategory' => 'Alt kategori',
+	'sd_browsedata_other' => 'Diğer',
 	'sd_browsedata_none' => 'Hiçbiri',
+	'sd_browsedata_removesubcategoryfilter' => 'Bu alt kategori filtresini kaldır',
+	'sd_browsedata_resetfilters' => 'Filtreleri sıfırla',
+	'sd_browsedata_daterangestart' => 'Başlangıç:',
+	'sd_browsedata_daterangeend' => 'Bitiş:',
+	'sd_browsedata_novalues' => 'Bu filtre için değer yok',
+	'filters' => 'Filtreler',
+	'createfilter' => 'Bir filtre oluştur',
+	'sd_createfilter_name' => 'İsim:',
+	'sd_createfilter_property' => 'Bu filtrenin kapsadığı özellik:',
+	'sd_createfilter_inputtype' => 'Bu filtre için girdi türü:',
+	'sd_createfilter_label' => 'Bu filtre için etiket (opsiyonel):',
 	'sd_filter_year' => 'Yıl',
 	'sd_filter_month' => 'Ay',
+	'sd_filter_combobox' => 'kombo kutu',
+	'sd_filter_freetext' => 'metin',
+	'sd_filter_daterange' => 'tarih aralığı',
 );
 
 /** Veps (Vepsan kel')
