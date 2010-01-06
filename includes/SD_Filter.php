@@ -27,7 +27,7 @@ class SDFilter {
 		}
 		$f->is_relation = true;
 		$proptitle = Title::newFromText($f->property, SMW_NS_PROPERTY);
-		if ($proptitle != NULL) {
+		if ($proptitle != null) {
 			$store = smwfGetStore();
 			if (class_exists('SMWPropertyValue')) {
 				$types = $store->getPropertyValues($proptitle, SMWPropertyValue::makeUserProperty('Has type'));
@@ -121,7 +121,7 @@ END;
 	 * that match that value.
 	 */
 	function getAllValues() {
-		if ($this->time_period != NULL)
+		if ($this->time_period != null)
 			return $this->getTimePeriodValues();
 
 		$possible_values = array();

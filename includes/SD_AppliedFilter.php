@@ -82,7 +82,7 @@ class SDAppliedFilter {
 					$sql .= "$value_field > {$fv->lower_limit} ";
 				elseif ($fv->upper_limit)
 					$sql .= "$value_field < {$fv->upper_limit} ";
-			} elseif ($this->filter->time_period != NULL) {
+			} elseif ($this->filter->time_period != null) {
 				if ($this->filter->time_period == wfMsg('sd_filter_month')) {
 					$sql .= "YEAR($value_field) = {$fv->year} AND MONTH($value_field) = {$fv->month} ";
 				} else {
@@ -118,7 +118,7 @@ class SDAppliedFilter {
 			$property_table_nickname = "a";
 			$value_field = 'value_xsd';
 		}
-		if ($this->filter->time_period != NULL) {
+		if ($this->filter->time_period != null) {
 			if ($this->filter->time_period == wfMsg('sd_filter_month')) {
 				$value_field = "YEAR(value_xsd), MONTH(value_xsd)";
 			} else {

@@ -786,7 +786,7 @@ END;
 	function linkParameters() {
 		$params = array();
 		if ($this->show_single_cat)
-			$params['_single'] = NULL;
+			$params['_single'] = null;
 		$params['_cat'] = $this->category;
 		if ($this->subcategory)
 			$params['_subcat'] = $this->subcategory;
@@ -964,7 +964,7 @@ END;
 					$row[] = new SMWResultArray($cats, $pr);
 				break;
 				case SMWPrintRequest::PRINT_PROP:
-					$row[] = new SMWResultArray($store->getPropertyValues($qt,$pr->getData(), NULL, $pr->getOutputFormat()), $pr);
+					$row[] = new SMWResultArray($store->getPropertyValues($qt,$pr->getData(), null, $pr->getOutputFormat()), $pr);
 				break;
 				case SMWPrintRequest::PRINT_CCAT:
 					if ($cats === false) {
