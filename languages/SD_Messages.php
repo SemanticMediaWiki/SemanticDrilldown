@@ -2737,6 +2737,7 @@ $messages['sv'] = array(
 	'sd_filter_hasvalues' => 'Det har värdena $1.',
 	'sd_filter_hasinputtype' => 'Den har indatatypen $1.',
 	'sd_filter_freetext' => 'text',
+	'sd_filter_daterange' => 'datumintervall',
 	'sd_filter_requiresfilter' => 'Det kräver att filtret $1 är på plats.',
 	'sd_filter_haslabel' => 'Det har etiketten $1.',
 );
