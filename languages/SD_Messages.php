@@ -387,6 +387,7 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'specialpages-group-sd_group' => 'Poelladenn semantek',
 	'browsedata' => 'Furchal ar roadennoù',
 	'sd_browsedata_choosecategory' => 'Dibab ur rummad',
 	'sd_browsedata_viewcategory' => 'gwelet ar rummad',
