@@ -556,12 +556,13 @@ $messages['da'] = array(
  * @author Lyzzy
  * @author Melancholie
  * @author MichaelFrey
+ * @author MovGP0
  * @author Purodha
  * @author Revolus
  * @author Umherirrender
  */
 $messages['de'] = array(
-	'semanticdrilldown-desc' => 'Eine Benutzerschnittstelle, um über schrittweise Verfeinerugen durch semantische Daten zu navigieren',
+	'semanticdrilldown-desc' => 'Eine Benutzerschnittstelle, um über schrittweise Verfeinerungen durch semantische Daten zu navigieren',
 	'specialpages-group-sd_group' => 'Semantisches Drill-Down',
 	'browsedata' => 'Daten ansehen',
 	'sd_browsedata_choosecategory' => 'Kategorie auswählen',
@@ -606,7 +607,7 @@ $messages['de'] = array(
 	'sd_filter_combobox' => 'Auswahlbox',
 	'sd_filter_freetext' => 'Text',
 	'sd_filter_daterange' => 'Zeitspanne',
-	'sd_filter_requiresfilter' => 'Er setzt den Filter $1 voraus.',
+	'sd_filter_requiresfilter' => 'Setzt den Filter $1 voraus.',
 	'sd_filter_haslabel' => 'Er hat die Bezeichnung $1.',
 );
 
