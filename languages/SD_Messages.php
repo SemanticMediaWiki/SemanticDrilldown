@@ -1481,6 +1481,18 @@ $messages['id'] = array(
 	'sd_filter_haslabel' => 'Ia memiliki label $1.',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'sd_browsedata_other' => 'Nke ozor',
+	'sd_browsedata_or' => 'ma',
+	'sd_createfilter_name' => 'Áhà:',
+	'sd_filter_year' => 'Afọ',
+	'sd_filter_month' => 'Önwa',
+	'sd_filter_freetext' => 'mpkurụ edemede',
+);
+
 /** Icelandic (Íslenska)
  * @author S.Örvarr.S
  */
