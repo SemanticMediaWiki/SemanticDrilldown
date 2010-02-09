@@ -1768,6 +1768,7 @@ $messages['lb'] = array(
 	'specialpages-group-sd_group' => "Semnateschen ''Drilldown''",
 	'sd_browsedata_choosecategory' => 'Eng Kategorie wielen',
 	'sd_browsedata_viewcategory' => 'Kategorie weisen',
+	'sd_browsedata_docu' => 'Klickt op eent oder méi Elementer hei ënnendrënner fir Är Resultater anzegrenzen.',
 	'sd_browsedata_subcategory' => 'Ënnerkategorie',
 	'sd_browsedata_other' => 'Aner',
 	'sd_browsedata_none' => 'Keen',
