@@ -27,7 +27,6 @@ $wgExtensionCredits['specialpage'][]= array(
 	'version'     => SD_VERSION,
 	'author'      => array('Yaron Koren', 'David Loomer'),
 	'url'         => 'http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
-	'description' =>  'A drilldown interface for navigating through semantic data',
 	'descriptionmsg'  => 'semanticdrilldown-desc',
 );
 
