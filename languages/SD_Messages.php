@@ -418,6 +418,7 @@ $messages['br'] = array(
 	'sd_createfilter_listofvalues' => 'roll talvoudoù (dre ziouer)',
 	'sd_createfilter_label' => 'Tiketenn evit ar sil-mañ (diret) :',
 	'sd_blank_error' => "ne c'hall ket bezañ goullo",
+	'sd_filter_coversproperty' => "Ar sil-mañ a ra war-dro ar perc'henniezh $1.",
 	'sd_filter_getsvaluesfromcategory' => 'E dalvoudoù en deus eus ar rummad $1.',
 	'sd_filter_usestimeperiod' => 'Implijout a ra $1 evel padelezh ar prantad',
 	'sd_filter_year' => 'Bloaz',
