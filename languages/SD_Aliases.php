@@ -145,7 +145,7 @@ $aliases['km'] = array(
 	'Filters' => array( 'តម្រង' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
+/** Colognian (Ripoarisch) */
 $aliases['ksh'] = array(
 	'BrowseData' => array( 'Bläddere en de' ),
 	'CreateFilter' => array( 'Felter opsäze', 'Söke opsäze' ),
