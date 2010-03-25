@@ -85,7 +85,7 @@ class SDUtils {
 		// set limit on results - a temporary fix until SMW's getProperties()
 		// functions stop requiring a limit
 		global $smwgIP;
-		include_once($smwgIP . '/includes/storage/SMW_Store.php');
+		include_once($smwgIP . 'includes/storage/SMW_Store.php');
 		$options = new SMWRequestOptions();
 		$options->limit = 10000;
 		$used_properties = smwfGetStore()->getPropertiesSpecial($options);
