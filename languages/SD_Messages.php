@@ -1696,6 +1696,7 @@ $messages['km'] = array(
 $messages['kn'] = array(
 	'sd_browsedata_other' => 'ಇತರ',
 	'sd_createfilter_name' => 'ಹೆಸರು:',
+	'sd_filter_freetext' => 'ಪಠ್ಯ',
 );
 
 /** Korean (한국어)
