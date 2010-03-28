@@ -1696,6 +1696,8 @@ $messages['km'] = array(
 $messages['kn'] = array(
 	'sd_browsedata_other' => 'ಇತರ',
 	'sd_createfilter_name' => 'ಹೆಸರು:',
+	'sd_filter_year' => 'ವರ್ಷ',
+	'sd_filter_month' => 'ತಿಂಗಳು',
 	'sd_filter_freetext' => 'ಪಠ್ಯ',
 );
 
