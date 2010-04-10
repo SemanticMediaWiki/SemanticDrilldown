@@ -481,6 +481,7 @@ $messages['bs'] = array(
 /** Catalan (Català)
  * @author Dvdgmz
  * @author Jordi Roqué
+ * @author Paucabot
  * @author Solde
  */
 $messages['ca'] = array(
@@ -501,7 +502,7 @@ $messages['ca'] = array(
 	'sd_browsedata_removefilter' => 'Elimina aquest filtre',
 	'sd_browsedata_removesubcategoryfilter' => 'Elimina aquest filtre de subcategoria',
 	'sd_browsedata_resetfilters' => 'Restaura filtres',
-	'sd_browsedata_addanothervalue' => 'Afegir un altre valor',
+	'sd_browsedata_addanothervalue' => 'Feu clic sobre la fletxa per afegir un altre valor',
 	'sd_browsedata_daterangestart' => 'Inici:',
 	'sd_browsedata_daterangeend' => 'Fi:',
 	'sd_browsedata_novalues' => "No s'han trobat valors per aquest filtre",
