@@ -10,26 +10,6 @@ if (!defined('MEDIAWIKI')) die();
 class SDUtils {
 
 	/**
-	 * Based on Semantic Forms' SFUtils::createProperty()
-	 */
-	function createProperty($property_name) {
-		if (method_exists('SMWPropertyValue', 'makeProperty'))
-			return SMWPropertyValue::makeProperty($property_name);
-		else
-			return Title::newFromText($property_name, SMW_NS_PROPERTY);
-	}
-
-	/**
-	 * Based on Semantic Forms' SFUtils::getPropertyName()
-	 */
-	function getPropertyName($property) {
-		if ($property instanceof Title)
-			return $property->getText();
-		else // $property instanceof SMWPropertyValue
-			return $property->getWikiValue();
-	}
-
-	/**
 	 * Gets a list of the names of all categories in the wiki that aren't
 	 * children of some other category - this list additionally includes,
 	 * and excludes, categories that are manually set with
@@ -82,41 +62,34 @@ class SDUtils {
 		$smw_namespace_labels = $smwgContLang->getNamespaces();
 		$all_properties = array();
 
-		// set limit on results - a temporary fix until SMW's getProperties()
-		// functions stop requiring a limit
-		global $smwgIP;
-		include_once($smwgIP . 'includes/storage/SMW_Store.php');
-		$options = new SMWRequestOptions();
-		$options->limit = 10000;
-		$used_properties = smwfGetStore()->getPropertiesSpecial($options);
+		//$options = new SMWRequestOptions();
+		//$options->limit = 10000;
+		//$used_properties = smwfGetStore()->getPropertiesSpecial($options);
+		$used_properties = smwfGetStore()->getPropertiesSpecial();
 		foreach ($used_properties as $property) {
-			$property_name = SDUtils::getPropertyName($property[0]);
-			$all_properties[$property_name] = $smw_namespace_labels[SMW_NS_PROPERTY];
+			$all_properties[] = $property[0]->getWikiValue();
 		}
 		$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial($options);
 		foreach ($unused_properties as $property) {
-			$property_name = SDUtils::getPropertyName($property);
-			$all_properties[$property_name] = $smw_namespace_labels[SMW_NS_PROPERTY];
+			$all_properties[] = $property->getWikiValue();
 		}
 		// remove the special properties of Semantic Drilldown from this list...
 		global $sdgContLang;
 		$sd_props = $sdgContLang->getPropertyLabels();
 		$sd_prop_aliases = $sdgContLang->getPropertyAliases();
-		foreach (array_keys($all_properties) as $prop_name) {
+		foreach ($all_properties as $i => $prop_name) {
 			foreach ($sd_props as $prop => $label) {
 				if ($prop_name == $label) {
-					unset($all_properties[$prop_name]);
+					unset($all_properties[$i]);
 				}
 			}
 			foreach ($sd_prop_aliases as $alias => $cur_prop) {
 				if ($prop_name == $alias) {
-					unset($all_properties[$prop_name]);
+					unset($all_properties[$i]);
 				}
 			}
 		}
-
-		// sort properties array by the key, which is the property name
-		ksort($all_properties);
+		sort($all_properties);
 		return $all_properties;
 	}
 
@@ -125,13 +98,9 @@ class SDUtils {
 	 * namespace
 	 */
 	function getFilters() {
-		$filters = array();
-		$filter_ns = SD_NS_FILTER;
 		$dbr = wfGetDB( DB_SLAVE );
-		$page = $dbr->tableName( 'page' );
-		$sql = "SELECT page_title FROM $page
-			WHERE page_namespace = $filter_ns";
-		$res = $dbr->query($sql);
+		$res = $dbr->select('page', 'page_title', array('page_namespace' => SD_NS_FILTER));
+		$filters = array();
 		while ($row = $dbr->fetchRow($res)) {
 			$filters[] = $row[0];
 		}
