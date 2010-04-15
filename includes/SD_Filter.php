@@ -139,7 +139,7 @@ END;
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		$prop_ns = SMW_NS_PROPERTY;
 		$sql =<<<END
-	SELECT $value_field, count(*)
+	SELECT $value_field, count(DISTINCT sdv.id)
 	FROM semantic_drilldown_values sdv 
 	JOIN $property_table_name $property_table_nickname ON sdv.id = $property_table_nickname.s_id
 
