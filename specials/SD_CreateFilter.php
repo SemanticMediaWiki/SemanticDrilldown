@@ -24,10 +24,9 @@ class SDCreateFilter extends SpecialPage {
 	}
 }
 
-function createFilterText($property_string, $values_source, $category_used, $time_period, $filter_values, $input_type, $required_filter, $filter_label) {
+function createFilterText($property_name, $values_source, $category_used, $time_period, $filter_values, $input_type, $required_filter, $filter_label) {
 	global $sdgContLang;
 
-	list($namespace, $property_name) = explode(",", $property_string, 2);
 	$sd_props = $sdgContLang->getPropertyLabels();
 	$property_tag = "[[" . $sd_props[SD_SP_COVERS_PROPERTY] . "::$property_name]]";
 	$text = wfMsgForContent('sd_filter_coversproperty', $property_tag);
@@ -110,8 +109,6 @@ function doSpecialCreateFilter() {
 		}
 	}
 
-	$all_properties = SDUtils::getSemanticProperties();
-
 	// set 'title' as hidden field, in case there's no URL niceness
 	global $wgContLang;
 	$mw_namespace_labels = $wgContLang->getNamespaces();
@@ -120,7 +117,7 @@ function doSpecialCreateFilter() {
 	$property_label = wfMsg('sd_createfilter_property');
 	$label_label = wfMsg('sd_createfilter_label');
 	$text =<<<END
-	<form action="" method="get">
+	<form action="" method="post">
 	<input type="hidden" name="title" value="$special_namespace:CreateFilter">
 	<p>$name_label <input size="25" name="filter_name" value="">
 	<span style="color: red;">$filter_name_error_str</span></p>
@@ -128,8 +125,9 @@ function doSpecialCreateFilter() {
 	<select id="property_dropdown" name="property_name">
 
 END;
-	foreach ($all_properties as $property => $namespace) {
-		$text .= "	<option value=\"$namespace,$property\">$property</option>\n";
+	$all_properties = SDUtils::getSemanticProperties();
+	foreach ($all_properties as $property_name) {
+		$text .= "	<option>$property_name</option>\n";
 	}
 
 	$values_from_property_label = wfMsg('sd_createfilter_usepropertyvalues');
