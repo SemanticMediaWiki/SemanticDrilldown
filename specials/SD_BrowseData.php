@@ -9,41 +9,176 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-class SDBrowseData extends SpecialPage {
+class SDBrowseData extends IncludableSpecialPage {
 
 	/**
 	 * Constructor
 	 */
-	public function SDBrowseData() {
-		SpecialPage::SpecialPage('BrowseData');
+	public function __construct() {
+		parent::__construct('BrowseData');
 		wfLoadExtensionMessages('SemanticDrilldown');
 	}
 
 	function execute( $query ) {
+		global $wgRequest, $wgOut, $wgTitle;
+		global $sdgScriptPath, $sdgContLang, $sdgNumResultsPerPage;
+
+		if ($wgTitle->getNamespace() != NS_SPECIAL) {
+			global $wgParser;
+			$wgParser->disableCache();
+		}
 		$this->setHeaders();
-		doSpecialBrowseData( $query );
+		$mainCssDir = $sdgScriptPath . '/skins/';
+		$wgOut->addLink( array(
+			'rel' => 'stylesheet',
+			'type' => 'text/css',
+			'media' => "screen",
+			'href' => $mainCssDir . 'SD_main.css'
+		));
+		$wgOut->addLink( array(
+			'rel' => 'stylesheet',
+			'type' => 'text/css',
+			'media' => "screen",
+			'href' => $mainCssDir . 'xtheme-gray.css'
+		));
+		$wgOut->addLink( array(
+			'rel' => 'stylesheet',
+			'type' => 'text/css',
+			'media' => "screen",
+			'href' => $mainCssDir . 'combos.css'
+		));
+		$javascript_text =<<<END
+function toggleFilterDiv(element_id, label_element) {
+	element = document.getElementById(element_id);
+	if (element.style.display == "none") {
+		element.style.display = "block";
+		label_element.innerHTML = "<img src=\"$sdgScriptPath/skins/down-arrow.png\">";
+	} else {
+		element.style.display = "none";
+		label_element.innerHTML = "<img src=\"$sdgScriptPath/skins/right-arrow.png\">";
 	}
 }
 
-class BrowseDataPage extends QueryPage {
+function highlightRemoveDiv(element) {
+	element.innerHTML = "<img src=\"$sdgScriptPath/skins/filter-x-active.png\">";
+}
+function unhighlightRemoveDiv(element) {
+	element.innerHTML = "<img src=\"$sdgScriptPath/skins/filter-x.png\">";
+}
+
+END;
+		$wgOut->addScript('	     <script type="text/javascript">' . "\n" . $javascript_text . '</script>' . "\n");
+
+		// set default
+		if ($sdgNumResultsPerPage == null)
+			$sdgNumResultsPerPage = 250;
+		list( $limit, $offset ) = wfCheckLimits($sdgNumResultsPerPage, 'sdlimit');
+		$filters = array();
+
+		// get information on current category, subcategory and filters
+		// that have already been applied from the query string
+		$category = str_replace('_', ' ', $wgRequest->getVal('_cat'));
+		// if query string did not contain this variables, try the URL
+		if (! $category) {
+			$queryparts = explode('/', $query, 1);
+			$category = isset($queryparts[0]) ? $queryparts[0] : '';
+		}
+		if (! $category) {
+			$category_title = wfMsg('browsedata');
+		} else {
+			$titles_for_category = SDUtils::getValuesForProperty($category, NS_CATEGORY, '_SD_DT', SD_SP_HAS_DRILLDOWN_TITLE, NS_MAIN);
+			if (count($titles_for_category) > 0) {
+				$category_title = str_replace('_', ' ', $titles_for_category[0]);
+			} else {
+				$category_title = wfMsg( 'browsedata' ) . html_entity_decode( wfMsg( 'colon-separator' ) ) . str_replace( '_', ' ', $category );
+			}
+		}
+		// if no category was specified, go with the first
+		// category on the site, alphabetically
+		if (! $category) {
+			$categories = SDUtils::getTopLevelCategories();
+			if (count($categories) > 0) {
+				$category = $categories[0];
+			}
+		}
+
+		$wgOut->setPageTitle($category_title);
+		$subcategory = $wgRequest->getVal('_subcat');
+
+		$filters = SDUtils::loadFiltersForCategory($category);
+
+		$filters_used = array();
+		foreach ($filters as $i => $filter)
+			$filter_used[] = false;
+		$applied_filters = array();
+		$remaining_filters = array();
+		foreach ($filters as $i => $filter) {
+			$filter_name = str_replace(' ', '_', $filter->name);
+			$search_term = $wgRequest->getVal('_search_' . $filter_name);
+			$lower_date = $wgRequest->getArray('_lower_' . $filter_name);
+			$upper_date = $wgRequest->getArray('_upper_' . $filter_name);
+			if ($vals_array = $wgRequest->getArray($filter_name)) {
+				foreach ($vals_array as $j => $val) {
+					$vals_array[$j] = str_replace('_', ' ', $val);
+				}
+				$applied_filters[] = SDAppliedFilter::create($filter, $vals_array);
+				$filter_used[$i] = true;
+			} elseif ($search_term != null) {
+				$applied_filters[] = SDAppliedFilter::create($filter, array(), $search_term);
+				$filter_used[$i] = true;
+			} elseif ($lower_date != null || $upper_date != null) {
+				$applied_filters[] = SDAppliedFilter::create($filter, array(), null, $lower_date, $upper_date);
+				$filter_used[$i] = true;
+			}
+		}
+		// add every unused filter to the $remaining_filters array,
+		// unless it requires some other filter that hasn't been applied
+		foreach ($filters as $i => $filter) {
+			$required_filters = SDUtils::getValuesForProperty($filter->name, SD_NS_FILTER, '_SD_RF', SD_SP_REQUIRES_FILTER, SD_NS_FILTER);
+			$matched_all_required_filters = true;
+			foreach ($required_filters as $required_filter) {
+				$found_match = false;
+				foreach ($applied_filters as $af) {
+					if ($af->filter->name == $required_filter) {
+						$found_match = true;
+					}
+				}
+				if (! $found_match) {
+					$matched_all_required_filters = false;
+					continue;
+				}
+			}
+			if ($matched_all_required_filters) {
+				if (! $filter_used[$i])
+					$remaining_filters[] = $filter;
+			}
+		}
+
+		$wgOut->addHTML("\n			<div class=\"drilldown-results\">\n");
+		$rep = new SDBrowseDataPage($category, $subcategory, $applied_filters, $remaining_filters);
+		$num = $rep->doQuery( $offset, $limit );
+		$wgOut->addHTML("\n			</div> <!-- drilldown-results -->\n");
+		return $num;
+	}
+}
+
+class SDBrowseDataPage extends QueryPage {
 	var $category = "";
 	var $subcategory = "";
 	var $next_level_subcategories = array();
 	var $all_subcategories = array();
 	var $applied_filters = array();
 	var $remaining_filters = array();
-	var $browse_data_title;
 	var $show_single_cat = false;
 
 	/**
 	 * Initialize the variables of this page
 	 */
-	function BrowseDataPage($category, $subcategory, $applied_filters, $remaining_filters) {
+	function __construct($category, $subcategory, $applied_filters, $remaining_filters) {
 		$this->category = $category;
 		$this->subcategory = $subcategory;
 		$this->applied_filters = $applied_filters;
 		$this->remaining_filters = $remaining_filters;
-		$this->browse_data_title = Title::newFromText('BrowseData', NS_SPECIAL);
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$categorylinks = $dbr->tableName( 'categorylinks' );
@@ -61,7 +196,8 @@ class BrowseDataPage extends QueryPage {
 	}
 
 	function makeBrowseURL($category, $applied_filters = array(), $subcategory = null) {
-		$url = $this->browse_data_title->getFullURL() . '/' . $category;
+		global $wgTitle;
+		$url = $wgTitle->getFullURL() . '/' . $category;
 		if ($this->show_single_cat) {
 			$url .= (strpos($url, '?')) ? '&' : '?';
 			$url .= "_single";
@@ -117,9 +253,9 @@ END;
 	 */
 	function getSQLFromClauseForField($new_filter) {
 		$sql = "FROM semantic_drilldown_values sdv
-			LEFT OUTER JOIN semantic_drilldown_filter_values sdfv
-			ON sdv.id = sdfv.id
-			WHERE ";
+	LEFT OUTER JOIN semantic_drilldown_filter_values sdfv
+	ON sdv.id = sdfv.id
+	WHERE ";
 		$sql .= $new_filter->checkSQL("sdfv.value");
 		return $sql;
 	}
@@ -250,7 +386,7 @@ END;
 	 */
 	function getNumResults($subcategory, $subcategories, $new_filter = null) {
 		$dbr = wfGetDB( DB_SLAVE );
-		$sql = "SELECT COUNT(*) ";
+		$sql = "SELECT COUNT(DISTINCT sdv.id) ";
 		if ($new_filter)
 			$sql .= $this->getSQLFromClauseForField($new_filter);
 		else
@@ -270,30 +406,40 @@ END;
 	function isSyndicated() { return false; }
 
 	function printCategoriesList($categories) {
+		global $sdgShowCategoriesAsTabs;
+
 		$choose_category_text = wfMsg('sd_browsedata_choosecategory');
+		if ($sdgShowCategoriesAsTabs) {
+			$cats_wrapper_class = "drilldown-categories-tabs-wrapper";
+			$cats_list_class = "drilldown-categories-tabs";
+		} else {
+			$cats_wrapper_class = "drilldown-categories-wrapper";
+			$cats_list_class = "drilldown-categories";
+		}
 		$text =<<<END
 
-				<div class="drilldown-categories-wrapper">
-					<div class="drilldown-categories">
-						<div class="drilldown-categories-header">$choose_category_text:</div>
+				<div id="$cats_wrapper_class">
+					<p id="categories-header">$choose_category_text:</p>
+					<ul id="$cats_list_class">
 
 END;
 		foreach ($categories as $i => $category) {
 			$category_children = SDUtils::getCategoryChildren($category, false, 5);
-			$category_str = $category . " (" . count($category_children) . ")";
+			$category_str = $category . " (" . count(array_unique($category_children)) . ")";
 			if (str_replace('_', ' ', $this->category) == $category) {
-				$text .= '						<div class="drilldown-category selected-category">';
+				$text .= '						<li class="category selected">';
 				$text .= $category_str;
 			} else {
-				$text .= '						<div class="drilldown-category">';
+				$text .= '						<li class="category">';
 				$category_url = $this->makeBrowseURL($category);
 				$text .= "<a href=\"$category_url\" title=\"$choose_category_text\">$category_str</a>";
 			}
-			$text .= "</div>\n";
+			$text .= "</li>\n";
 		}
 		$text .=<<<END
-					</div>
-				</div>
+					</li>
+				</ul>
+			</div>
 
 END;
 		return $text;
@@ -645,7 +791,6 @@ END;
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
 		$skin = $wgUser->getSkin();
-		$browse_data_title = Title::newFromText('BrowseData', NS_SPECIAL);
 		$categories = SDUtils::getTopLevelCategories();
 		// if there are no categories, escape quickly
 		if (count($categories) == 0) {
@@ -666,7 +811,7 @@ END;
 		    (count($this->remaining_filters) == 0)) {
 			return $header;
 		}
-		$header .= '				<div class="drilldown-header">' . "\n";
+		$header .= '				<div id="drilldown-header">' . "\n";
 		if (count ($this->applied_filters) > 0 || $this->subcategory) {
 			$category_url = $this->makeBrowseURL($this->category);
 			$header .= '<a href="' . $category_url . '" title="' . wfMsg('sd_browsedata_resetfilters') . '">' . str_replace('_', ' ', $this->category) . '</a>';
@@ -857,6 +1002,7 @@ END;
 			$display_params = array_map('trim', $all_display_params[0]);
 			SMWQueryProcessor::processFunctionParams($display_params, $querystring, $params, $printouts);
 		}
+		$query = SMWQueryProcessor::createQuery($querystring, $params);
 		if (array_key_exists('format', $params))
 			$format = $params['format'];
 		else
@@ -866,7 +1012,7 @@ END;
 		} else {
 			$mainlabel = '';
 		}
-		$r = $this->addSemanticResultWrapper($dbr, $res, $num, $mainlabel, $printouts);
+		$r = $this->addSemanticResultWrapper($dbr, $res, $num, $query, $mainlabel, $printouts);
 		$printer = SMWQueryProcessor::getResultPrinter($format, SMWQueryProcessor::SPECIAL_PAGE, $r);
 
 		$prresult = $printer->getResult($r, $params, SMW_OUTPUT_HTML);
@@ -923,7 +1069,7 @@ END;
 	// semantic result printers.
 	// Code stolen largely from SMWSQLStore2QueryEngine->getInstanceQueryResult() method.
 	// (does this mean it will only work with certain semantic SQL stores?)
-	function addSemanticResultWrapper($dbr, $res, $num, $mainlabel, $printouts) {
+	function addSemanticResultWrapper($dbr, $res, $num, $query, $mainlabel, $printouts) {
 		$qr = array();
 		$count = 0;
 		$store = smwfGetStore();
@@ -943,7 +1089,6 @@ END;
 		$main_printout[$printrequest->getHash()] = $printrequest;
 		$printouts = array_merge($main_printout, $printouts);
 
-		$query = new SMWQuery();
 		// for SMW 1.5+, handling is quite easy
 		if (! class_exists('SMWTemplateResultPrinter')) {
 			return new SMWQueryResult($printouts, $query, $qr, $store, ($count > $num) );
@@ -997,139 +1142,4 @@ END;
 	function closeList() {
 		return "\n			<br style=\"clear: both\" />\n";
 	}
-}
-
-function doSpecialBrowseData($query) {
-	global $wgRequest, $wgOut, $sdgScriptPath, $sdgContLang, $sdgNumResultsPerPage;
-	$mainCssDir = $sdgScriptPath . '/skins/';
-	$wgOut->addLink( array(
-		'rel' => 'stylesheet',
-		'type' => 'text/css',
-		'media' => "screen",
-		'href' => $mainCssDir . 'SD_main.css'
-	));
-	$wgOut->addLink( array(
-		'rel' => 'stylesheet',
-		'type' => 'text/css',
-		'media' => "screen",
-		'href' => $mainCssDir . 'xtheme-gray.css'
-	));
-	$wgOut->addLink( array(
-		'rel' => 'stylesheet',
-		'type' => 'text/css',
-		'media' => "screen",
-		'href' => $mainCssDir . 'combos.css'
-	));
-	$javascript_text =<<<END
-function toggleFilterDiv(element_id, label_element) {
-	element = document.getElementById(element_id);
-	if (element.style.display == "none") {
-		element.style.display = "block";
-		label_element.innerHTML = "<img src=\"$sdgScriptPath/skins/down-arrow.png\">";
-	} else {
-		element.style.display = "none";
-		label_element.innerHTML = "<img src=\"$sdgScriptPath/skins/right-arrow.png\">";
-	}
-}
-
-function highlightRemoveDiv(element) {
-	element.innerHTML = "<img src=\"$sdgScriptPath/skins/filter-x-active.png\">";
-}
-function unhighlightRemoveDiv(element) {
-	element.innerHTML = "<img src=\"$sdgScriptPath/skins/filter-x.png\">";
-}
-
-END;
-	$wgOut->addScript('	     <script type="text/javascript">' . "\n" . $javascript_text . '</script>' . "\n");
-
-	// set default
-	if ($sdgNumResultsPerPage == null)
-		$sdgNumResultsPerPage = 250;
-	list( $limit, $offset ) = wfCheckLimits($sdgNumResultsPerPage, 'sdlimit');
-	$filters = array();
-
-	// get information on current category, subcategory and filters that
-	// have already been applied from the query string
-	$category = str_replace('_', ' ', $wgRequest->getVal('_cat'));
-	// if query string did not contain this variables, try the URL
-	if (! $category) {
-		$queryparts = explode('/', $query, 1);
-		$category = isset($queryparts[0]) ? $queryparts[0] : '';
-	}
-	if (! $category) {
-		$category_title = wfMsg('browsedata');
-	} else {
-		$titles_for_category = SDUtils::getValuesForProperty($category, NS_CATEGORY, '_SD_DT', SD_SP_HAS_DRILLDOWN_TITLE, NS_MAIN);
-		if (count($titles_for_category) > 0) {
-			$category_title = str_replace('_', ' ', $titles_for_category[0]);
-		} else {
-			$category_title = wfMsg( 'browsedata' ) . html_entity_decode( wfMsg( 'colon-separator' ) ) . str_replace( '_', ' ', $category );
-		}
-	}
-	// if no category was specified, go with the first
-	// category on the site, alphabetically
-	if (! $category) {
-		$categories = SDUtils::getTopLevelCategories();
-		if (count($categories) > 0) {
-			$category = $categories[0];
-		}
-	}
-
-	$wgOut->setPageTitle($category_title);
-	$subcategory = $wgRequest->getVal('_subcat');
-
-	$filters = SDUtils::loadFiltersForCategory($category);
-
-	$filters_used = array();
-	foreach ($filters as $i => $filter)
-		$filter_used[] = false;
-	$applied_filters = array();
-	$remaining_filters = array();
-	foreach ($filters as $i => $filter) {
-		$filter_name = str_replace(' ', '_', $filter->name);
-		$search_term = $wgRequest->getVal('_search_' . $filter_name);
-		$lower_date = $wgRequest->getArray('_lower_' . $filter_name);
-		$upper_date = $wgRequest->getArray('_upper_' . $filter_name);
-		if ($vals_array = $wgRequest->getArray($filter_name)) {
-			foreach ($vals_array as $j => $val) {
-				$vals_array[$j] = str_replace('_', ' ', $val);
-			}
-			$applied_filters[] = SDAppliedFilter::create($filter, $vals_array);
-			$filter_used[$i] = true;
-		} elseif ($search_term != null) {
-			$applied_filters[] = SDAppliedFilter::create($filter, array(), $search_term);
-			$filter_used[$i] = true;
-		} elseif ($lower_date != null || $upper_date != null) {
-			$applied_filters[] = SDAppliedFilter::create($filter, array(), null, $lower_date, $upper_date);
-			$filter_used[$i] = true;
-		}
-	}
-	// add every unused filter to the $remaining_filters array, unless
-	// it requires some other filter that hasn't been applied
-	foreach ($filters as $i => $filter) {
-		$required_filters = SDUtils::getValuesForProperty($filter->name, SD_NS_FILTER, '_SD_RF', SD_SP_REQUIRES_FILTER, SD_NS_FILTER);
-		$matched_all_required_filters = true;
-		foreach ($required_filters as $required_filter) {
-			$found_match = false;
-			foreach ($applied_filters as $af) {
-				if ($af->filter->name == $required_filter) {
-					$found_match = true;
-				}
-			}
-			if (! $found_match) {
-				$matched_all_required_filters = false;
-				continue;
-			}
-		}
-		if ($matched_all_required_filters) {
-			if (! $filter_used[$i])
-				$remaining_filters[] = $filter;
-		}
-	}
-
-	$wgOut->addHTML("\n			<div class=\"drilldown-results\">\n");
-	$rep = new BrowseDataPage($category, $subcategory, $applied_filters, $remaining_filters);
-	$num = $rep->doQuery( $offset, $limit );
-	$wgOut->addHTML("\n			</div> <!-- drilldown-results -->\n");
-	return $num;
 }
