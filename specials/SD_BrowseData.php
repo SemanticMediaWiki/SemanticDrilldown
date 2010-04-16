@@ -422,13 +422,13 @@ END;
 
 END;
 		if ( $sdgShowCategoriesAsTabs ) {
-		$text = <<<END
+		$text .= <<<END
 					<p id="categories-header">$choose_category_text</p>
 					<ul id="$cats_list_class">
 
 END;
 		} else {
-			$text = <<<END
+			$text .= <<<END
 					<ul id="$cats_list_class">
 					<li id="categories-header">$choose_category_text</li>
 
