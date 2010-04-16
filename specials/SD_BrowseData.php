@@ -1002,7 +1002,11 @@ END;
 			$display_params = array_map( 'trim', $all_display_params[0] );
 			SMWQueryProcessor::processFunctionParams( $display_params, $querystring, $params, $printouts );
 		}
-		$query = SMWQueryProcessor::createQuery( $querystring, $params );
+		if ( ! empty( $querystring ) ) {
+			$query = SMWQueryProcessor::createQuery( $querystring, $params );
+		} else {
+			$query = new SMWQuery();
+		}
 		if ( array_key_exists( 'format', $params ) )
 			$format = $params['format'];
 		else
