@@ -5,7 +5,7 @@
  * @author Yaron Koren
  */
 
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 class SDFilters extends SpecialPage {
 
@@ -13,8 +13,8 @@ class SDFilters extends SpecialPage {
 	 * Constructor
 	 */
 	function SDFilters() {
-		SpecialPage::SpecialPage('Filters');
-		wfLoadExtensionMessages('SemanticDrilldown');
+		SpecialPage::SpecialPage( 'Filters' );
+		wfLoadExtensionMessages( 'SemanticDrilldown' );
 	}
 
 	function execute( $par ) {
@@ -35,7 +35,7 @@ class FiltersPage extends QueryPage {
 	function isSyndicated() { return false; }
 
 	function getPageHeader() {
-		$header = '<p>' . wfMsg('sd_filters_docu') . "</p><br />\n";
+		$header = '<p>' . wfMsg( 'sd_filters_docu' ) . "</p><br />\n";
 		return $header;
 	}
 
@@ -59,7 +59,7 @@ class FiltersPage extends QueryPage {
 		return false;
 	}
 
-	function formatResult($skin, $result) {
+	function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( SD_NS_FILTER, $result->value );
 		$text = $skin->makeLinkObj( $title, $title->getText() );
 		return $text;
