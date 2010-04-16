@@ -2,10 +2,6 @@
  * The main CSS file for the Semantic Drilldown extension.
  */
 
-p#categories-header {
-	font-weight: bold;
-}
- 
 /* Normal (sidebar) display of categories list */
 
 div#drilldown-categories-wrapper {
@@ -16,7 +12,6 @@ div#drilldown-categories-wrapper {
 
 ul#drilldown-categories {
 	border: 2px #888888 solid;
-	border-top: 1px #888888 solid;
 	list-style: none;
 }
 
@@ -58,8 +53,9 @@ ul#drilldown-categories-tabs a:hover {
 	background: #f5f5f5;
 }
 
-p#categories-header {
+li#categories-header {
 	font-weight: bold;
+	background: #c9c9c9;
 }
 
 ul#drilldown-categories-tabs li.category {

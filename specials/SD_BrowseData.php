@@ -408,7 +408,7 @@ END;
 	function printCategoriesList( $categories ) {
 		global $sdgShowCategoriesAsTabs;
 
-		$choose_category_text = wfMsg( 'sd_browsedata_choosecategory' );
+		$choose_category_text = wfMsg( 'sd_browsedata_choosecategory' ) . wfMsg( 'colon-separator' );
 		if ( $sdgShowCategoriesAsTabs ) {
 			$cats_wrapper_class = "drilldown-categories-tabs-wrapper";
 			$cats_list_class = "drilldown-categories-tabs";
@@ -419,10 +419,21 @@ END;
 		$text = <<<END
 
 				<div id="$cats_wrapper_class">
-					<p id="categories-header">$choose_category_text:</p>
+
+END;
+		if ( $sdgShowCategoriesAsTabs ) {
+		$text = <<<END
+					<p id="categories-header">$choose_category_text</p>
 					<ul id="$cats_list_class">
 
 END;
+		} else {
+			$text = <<<END
+					<ul id="$cats_list_class">
+					<li id="categories-header">$choose_category_text</li>
+
+END;
+		}
 		foreach ( $categories as $i => $category ) {
 			$category_children = SDUtils::getCategoryChildren( $category, false, 5 );
 			$category_str = $category . " (" . count( array_unique( $category_children ) ) . ")";
