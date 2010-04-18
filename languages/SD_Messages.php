@@ -1504,11 +1504,13 @@ $messages['is'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Civvì
  * @author Darth Kule
  * @author Gianfranco
  */
 $messages['it'] = array(
 	'semanticdrilldown-desc' => "Un'interfaccia drilldown per navigare attraverso dati semantici",
+	'specialpages-group-sd_group' => 'Drilldown semantico',
 	'browsedata' => 'Esplora i dati',
 	'sd_browsedata_choosecategory' => 'Scegli una categoria',
 	'sd_browsedata_viewcategory' => 'vedi categoria',
@@ -1549,6 +1551,7 @@ $messages['it'] = array(
 	'sd_filter_month' => 'Mese',
 	'sd_filter_hasvalues' => 'Ha i valori $1.',
 	'sd_filter_hasinputtype' => 'Ha il tipo di input $1.',
+	'sd_filter_combobox' => 'combo box',
 	'sd_filter_freetext' => 'testo',
 	'sd_filter_daterange' => 'intervallo date',
 	'sd_filter_requiresfilter' => 'Richiede la presenza del filtro $1.',
