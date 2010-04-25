@@ -134,6 +134,7 @@ $messages['am'] = array(
  * @author Juanpabl
  */
 $messages['an'] = array(
+	'sd_browsedata_other' => 'Un atro',
 	'filters' => 'Filtros',
 	'sd_createfilter_name' => 'Nombre:',
 );
@@ -2376,8 +2377,8 @@ $messages['ps'] = array(
  * @author Waldir
  */
 $messages['pt'] = array(
-	'semanticdrilldown-desc' => 'Uma interface de introspecção para navegar através de dados semânticos',
-	'specialpages-group-sd_group' => 'Introspecção Semântica',
+	'semanticdrilldown-desc' => 'Uma interface de prospecção para navegar através de dados semânticos',
+	'specialpages-group-sd_group' => 'Prospecção Semântica',
 	'browsedata' => 'Navegar pelos dados',
 	'sd_browsedata_choosecategory' => 'Escolha uma categoria',
 	'sd_browsedata_viewcategory' => 'ver categoria',
