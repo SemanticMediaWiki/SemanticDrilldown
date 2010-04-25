@@ -1713,7 +1713,7 @@ $messages['ko'] = array(
 	'filters' => '필터',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
