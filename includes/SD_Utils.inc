@@ -121,7 +121,13 @@ class SDUtils {
 		$res = $store->getPropertyValues( $subject_title, $property );
 		$values = array();
 		foreach ( $res as $prop_val ) {
-			$values[] = html_entity_decode( str_replace( '_', ' ', $prop_val->getValueKey() ) );
+			// depends on version of SMW
+			if ( method_exists( $prop_val, 'getValueKey' ) ) {
+				$actual_val = $prop_val->getValueKey();
+			} else {
+				$actual_val = $prop_val->getXSDValue();
+			}
+			$values[] = html_entity_decode( str_replace( '_', ' ', $actual_val ) );
 		}
 		return $values;
 	}
