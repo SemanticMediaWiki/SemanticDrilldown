@@ -204,7 +204,9 @@ END;
 	 */
 	function dropTempTable() {
 		$dbr = wfGetDB( DB_SLAVE );
-		$sql = "DROP TEMPORARY TABLE semantic_drilldown_filter_values";
+		// DROP TEMPORARY TABLE would be marginally safer, but it's
+		// not supported on all RDBMS's.
+		$sql = "DROP TABLE semantic_drilldown_filter_values";
 		$dbr->query( $sql );
 	}
 }

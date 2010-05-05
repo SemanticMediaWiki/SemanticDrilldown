@@ -234,15 +234,13 @@ class SDBrowseDataPage extends QueryPage {
 	 */
 	function createTempTable( $category, $subcategory, $subcategories, $applied_filters ) {
 		$dbr = wfGetDB( DB_SLAVE );
-		$sql = <<<END
-	CREATE TEMPORARY TABLE semantic_drilldown_values (
-		id INT NOT NULL,
-		INDEX id_index (id)
-	) AS SELECT ids.smw_id AS id
-
-END;
-		$sql .= $this->getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters );
-		$dbr->query( $sql );
+		$sql1 = "CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL )";
+		$dbr->query( $sql1 );
+		$sql2 = "CREATE INDEX id_index ON semantic_drilldown_values ( id )";
+		$dbr->query( $sql2 );
+		$sql3 = "INSERT INTO semantic_drilldown_values SELECT ids.smw_id AS id\n";
+		$sql3 .= $this->getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters );
+		$dbr->query( $sql3 );
 	}
 
 	/**
