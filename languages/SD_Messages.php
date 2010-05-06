@@ -2792,6 +2792,7 @@ $messages['te'] = array(
 	'sd_filters_docu' => '{{SITENAME}}లో ఈ క్రింది వడపోతలు ఉన్నాయి:',
 	'sd_createfilter_name' => 'పేరు:',
 	'sd_createfilter_usecategoryvalues' => 'వడపోతకి విలువలని ఈ వర్గంనుండి తీసుకోవాలి:',
+	'sd_createfilter_listofvalues' => 'విలువల జాబితా (అప్రమేయం)',
 	'sd_blank_error' => 'ఖాళీగా ఉండకూడదు',
 	'sd_filter_year' => 'సంవత్సరం',
 	'sd_filter_month' => 'నెల',
