@@ -7,7 +7,7 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-define( 'SD_VERSION', '0.7.1' );
+define( 'SD_VERSION', '0.7.2' );
 
 // constants for special properties
 define( 'SD_SP_HAS_FILTER', 1 );
@@ -46,7 +46,7 @@ $wgSpecialPages['BrowseData'] = 'SDBrowseData';
 $wgAutoloadClasses['SDBrowseData'] = $sdgIP . '/specials/SD_BrowseData.php';
 $wgSpecialPageGroups['BrowseData'] = 'sd_group';
 
-$wgAutoloadClasses['SDUtils'] = $sdgIP . '/includes/SD_Utils.inc';
+$wgAutoloadClasses['SDUtils'] = $sdgIP . '/includes/SD_Utils.php';
 $wgAutoloadClasses['SDFilter'] = $sdgIP . '/includes/SD_Filter.php';
 $wgAutoloadClasses['SDFilterValue'] = $sdgIP . '/includes/SD_FilterValue.php';
 $wgAutoloadClasses['SDAppliedFilter'] = $sdgIP . '/includes/SD_AppliedFilter.php';
