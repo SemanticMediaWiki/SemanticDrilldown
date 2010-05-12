@@ -1826,6 +1826,7 @@ $messages['mhr'] = array(
 
 /** Macedonian (Македонски)
  * @author Bjankuloski06
+ * @author Brest
  */
 $messages['mk'] = array(
 	'semanticdrilldown-desc' => 'Интерфејс за истенчена навигација по семантички податоци',
@@ -1834,7 +1835,7 @@ $messages['mk'] = array(
 	'sd_browsedata_choosecategory' => 'Одберете категорија',
 	'sd_browsedata_viewcategory' => 'види категорија',
 	'sd_browsedata_docu' => 'Кликнете на еден или повеќе елементи подолу за да ги истенчите резултатите.',
-	'sd_browsedata_subcategory' => 'Поткатегорија',
+	'sd_browsedata_subcategory' => 'Подкатегорија',
 	'sd_browsedata_other' => 'Други',
 	'sd_browsedata_none' => 'Нема',
 	'sd_browsedata_filterbyvalue' => 'Филтрирај по оваа вредност',
@@ -1843,7 +1844,7 @@ $messages['mk'] = array(
 	'sd_browsedata_nonefilter' => 'Прикажи страници без вредности за овој филтер',
 	'sd_browsedata_or' => 'или',
 	'sd_browsedata_removefilter' => 'Отстрани го филтерот',
-	'sd_browsedata_removesubcategoryfilter' => 'Отстрани го овој филтер за поткатегорија',
+	'sd_browsedata_removesubcategoryfilter' => 'Отстрани го овој филтер за подкатегорија',
 	'sd_browsedata_resetfilters' => 'Врати ги филтрите по основно',
 	'sd_browsedata_addanothervalue' => 'Кликнете на стрелката за да додадете друга вредност',
 	'sd_browsedata_daterangestart' => 'Почеток:',
