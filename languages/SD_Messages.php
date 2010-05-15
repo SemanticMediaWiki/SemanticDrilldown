@@ -1770,6 +1770,7 @@ en däm Wäät <code>\\,</code> enjävve, domet et keine Dorjeneijn jitt.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
@@ -1792,15 +1793,15 @@ $messages['lb'] = array(
 	'sd_browsedata_addanothervalue' => 'Klickt op de Feil fir een anere Wert derbäisetzen',
 	'sd_browsedata_daterangestart' => 'Ufank:',
 	'sd_browsedata_daterangeend' => 'Enn:',
-	'sd_browsedata_novalues' => 'Et gëtt keng Werter fir dëse Filter',
+	'sd_browsedata_novalues' => 'Et gëtt keng Wäerter fir dëse Filter',
 	'filters' => 'Filteren',
 	'sd_filters_docu' => 'Dës Filtere gëtt et op {{SITENAME}}:',
 	'createfilter' => 'E Filter uleeën',
 	'sd_createfilter_name' => 'Numm:',
-	'sd_createfilter_usepropertyvalues' => 'All Werter vun dëser Eegeschaft fir de Filter benotzen',
+	'sd_createfilter_usepropertyvalues' => 'All Wäerter vun dëser Eegeschaft fir de Filter benotzen',
 	'sd_createfilter_usecategoryvalues' => 'Werter fir dëse Filter vun dëser Kategorie kréien:',
 	'sd_createfilter_inputtype' => 'Gitt den Typ vun dësem Filter un.',
-	'sd_createfilter_listofvalues' => 'Lëscht vun de Werter (stanard)',
+	'sd_createfilter_listofvalues' => 'Lëscht vun de Wäerter (Standard)',
 	'sd_createfilter_requirefilter' => 'Verlaangen dat en anere Filter gewielt gëtt ier dësen ugewise gëtt:',
 	'sd_createfilter_label' => 'Etiquette fir dëse Filter (fakultativ):',
 	'sd_blank_error' => 'däerf net eidel sinn',
