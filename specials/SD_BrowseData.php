@@ -1088,9 +1088,10 @@ END;
 		$store = smwfGetStore();
 		while ( ( $count < $num ) && ( $row = $dbr->fetchObject( $res ) ) ) {
 			$count++;
-			$v = SMWWikiPageValue::makePage( $row->t, $row->ns, $row->sortkey );
-			$qr[] = $v;
-			$store->cacheSMWPageID( $row->id, $row->t, $row->ns, $row->iw );
+			$qr[] = SMWWikiPageValue::makePage( $row->t, $row->ns, $row->sortkey );
+			if ( method_exists( $store, 'cacheSMWPageID' ) ) {
+				$store->cacheSMWPageID( $row->id, $row->t, $row->ns, $row->iw );
+			}
 		}
 		if ( $dbr->fetchObject( $res ) ) {
 			$count++;
