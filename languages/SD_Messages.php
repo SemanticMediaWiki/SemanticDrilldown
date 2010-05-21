@@ -2790,6 +2790,7 @@ $messages['te'] = array(
 	'sd_browsedata_addanothervalue' => 'మరో విలువని చేర్చండి',
 	'sd_browsedata_daterangestart' => 'మొదలు:',
 	'sd_browsedata_daterangeend' => 'ముగింపు:',
+	'sd_browsedata_novalues' => 'ఈ వడపోతకి విలువలు ఏమీ లేవు',
 	'filters' => 'వడపోతలు',
 	'sd_filters_docu' => '{{SITENAME}}లో ఈ క్రింది వడపోతలు ఉన్నాయి:',
 	'sd_createfilter_name' => 'పేరు:',
