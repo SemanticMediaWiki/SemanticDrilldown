@@ -1049,15 +1049,20 @@ END;
 		$html = array();
 		$html[] = $prtext;
 
-		if ( !$this->listoutput )
+		if ( !$this->listoutput ) {
 			$html[] = $this->closeList();
+		}
 
 		$html = $this->listoutput
 			? $wgContLang->listToText( $html )
 			: implode( '', $html );
 
 		$out->addHTML( $html );
-
+		
+		// TODO: this issue has probably been fixed in Maps 0.6. 
+		// If it's not - all mapping service identifiers can be obtained by getting the array keys
+		// of $egMapsServices, and the aliases element (which is an array) of each item.
+		
 		// add Ext library, to enable combobox, unless a map is being
 		// displayed - the Javascript for Ext conflicts with the
 		// Javascript for the maps
