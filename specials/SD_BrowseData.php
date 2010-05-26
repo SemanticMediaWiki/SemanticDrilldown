@@ -16,7 +16,6 @@ class SDBrowseData extends IncludableSpecialPage {
 	 */
 	public function __construct() {
 		parent::__construct( 'BrowseData' );
-		wfLoadExtensionMessages( 'SemanticDrilldown' );
 	}
 
 	function execute( $query ) {
