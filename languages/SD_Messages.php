@@ -388,6 +388,7 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'semanticdrilldown-desc' => 'Un etrefas poelladennoù evit merdeiñ dre roadennoù ereadurel',
 	'specialpages-group-sd_group' => 'Poelladenn semantek',
 	'browsedata' => 'Furchal ar roadennoù',
 	'sd_browsedata_choosecategory' => 'Dibab ur rummad',
@@ -415,8 +416,11 @@ $messages['br'] = array(
 	'sd_createfilter_property' => "Perc'henniezh a vo goloet gant ar sil-mañ :",
 	'sd_createfilter_usepropertyvalues' => "Implijout holl talvoudoù ar berc'henniezh evit ar sil-mañ",
 	'sd_createfilter_usecategoryvalues' => 'Kaout an talvoudoù evit ar sil adalek ar rummad-mañ :',
+	'sd_createfilter_usedatevalues' => "Implijout a ra bloc'hadoù deiziad evit ar sil-mañ gant an amzervezh-mañ :",
+	'sd_createfilter_entervalues' => "Lakait c'hwi hoc'h-unan talvoudoù evit ar sil-mañ (gant skejoù e tle an talvoudoù bezañ dispartiet - ma vez ur skej en un talvoud, lakait ur \"\\,\" en e lec'h):",
 	'sd_createfilter_inputtype' => 'Ar seurt moned e-barzh evit ar sil-mañ :',
 	'sd_createfilter_listofvalues' => 'roll talvoudoù (dre ziouer)',
+	'sd_createfilter_requirefilter' => 'Goulenn ma vo diuzet ur sil all a-raok na zeufe hemañ war wel :',
 	'sd_createfilter_label' => 'Tiketenn evit ar sil-mañ (diret) :',
 	'sd_blank_error' => "ne c'hall ket bezañ goullo",
 	'sd_filter_coversproperty' => "Ar sil-mañ a ra war-dro ar perc'henniezh $1.",
@@ -1831,7 +1835,7 @@ $messages['mhr'] = array(
  * @author Brest
  */
 $messages['mk'] = array(
-	'semanticdrilldown-desc' => 'Интерфејс за истенчена навигација по семантички податоци',
+	'semanticdrilldown-desc' => 'Посредник за истенчена навигација по семантички податоци',
 	'specialpages-group-sd_group' => 'Семантичко истенчување',
 	'browsedata' => 'Прелистај податоци',
 	'sd_browsedata_choosecategory' => 'Одберете категорија',
