@@ -135,6 +135,7 @@ $messages['am'] = array(
  */
 $messages['an'] = array(
 	'sd_browsedata_other' => 'Un atro',
+	'sd_browsedata_none' => 'Garra',
 	'filters' => 'Filtros',
 	'sd_createfilter_name' => 'Nombre:',
 );
