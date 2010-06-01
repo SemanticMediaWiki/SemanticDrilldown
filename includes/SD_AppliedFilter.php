@@ -15,7 +15,7 @@ class SDAppliedFilter {
 	var $lower_date_string;
 	var $upper_date_string;
 
-	function create( $filter, $values, $search_term = null, $lower_date = null, $upper_date = null ) {
+	static function create( $filter, $values, $search_term = null, $lower_date = null, $upper_date = null ) {
 		$af = new SDAppliedFilter();
 		$af->filter = $filter;
 		$af->search_term = htmlspecialchars( str_replace( '_', ' ', $search_term ) );

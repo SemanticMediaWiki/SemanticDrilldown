@@ -18,7 +18,7 @@ class SDFilter {
 	var $allowed_values;
 	var $possible_applied_filters = array();
 
-	function load( $filter_name ) {
+	static function load( $filter_name ) {
 		$f = new SDFilter();
 		$f->name = $filter_name;
 		$properties_used = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_CP', SD_SP_COVERS_PROPERTY, SMW_NS_PROPERTY );

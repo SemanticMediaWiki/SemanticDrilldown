@@ -16,7 +16,7 @@ class SDFilterValue {
 	var $year = null;
 	var $month = null;
 
-	function create( $actual_val, $filter_time_period = null ) {
+	static function create( $actual_val, $filter_time_period = null ) {
 		$fv = new SDFilterValue();
 		$fv->text = htmlspecialchars( $actual_val );
 
