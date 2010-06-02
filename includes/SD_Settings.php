@@ -4,7 +4,7 @@
 # This is the path to your installation of Semantic Drilldown as
 # seen from the web. Change it if required ($wgScriptPath is the
 # path to the base directory of your wiki). No final slash.
-# #
+# # TODO: fix hardcoded path
 $sdgScriptPath = $wgScriptPath . '/extensions/SemanticDrilldown';
 # #
 
@@ -13,12 +13,8 @@ $sdgScriptPath = $wgScriptPath . '/extensions/SemanticDrilldown';
 # seen on your local filesystem. Used against some PHP file path
 # issues.
 # #
-$sdgIP = $IP . '/extensions/SemanticDrilldown';
+$sdgIP = dirname( __FILE__ ) . '/..';
 # #
-
-
-// PHP fails to find relative includes at some level of inclusion:
-// $pathfix = $IP . $sdgScriptPath;
 
 // load global functions
 require_once( 'SD_GlobalFunctions.php' );
