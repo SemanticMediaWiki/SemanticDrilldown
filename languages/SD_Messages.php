@@ -2439,6 +2439,7 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
  * @author Enqd
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'semanticdrilldown-desc' => 'Uma interface de introspecção para navegar através de dados semânticos',
@@ -2458,7 +2459,7 @@ $messages['pt-br'] = array(
 	'sd_browsedata_removefilter' => 'Remover este filtro',
 	'sd_browsedata_removesubcategoryfilter' => 'Remover o filtro por esta subcategoria',
 	'sd_browsedata_resetfilters' => 'Zerar filtros',
-	'sd_browsedata_addanothervalue' => 'Adicionar outro valor',
+	'sd_browsedata_addanothervalue' => 'Clique na seta para adicionar outro valor',
 	'sd_browsedata_daterangestart' => 'Início:',
 	'sd_browsedata_daterangeend' => 'Fim:',
 	'sd_browsedata_novalues' => 'Não há valores para este filtro',
