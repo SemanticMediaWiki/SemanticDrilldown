@@ -2592,6 +2592,15 @@ $messages['ru'] = array(
 	'sd_filter_haslabel' => 'Имеет пометку $1.',
 );
 
+/** Rusyn (русиньскый язык)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'sd_filter_year' => 'Рік',
+	'sd_filter_month' => 'Місяць',
+	'sd_filter_freetext' => 'текст',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
