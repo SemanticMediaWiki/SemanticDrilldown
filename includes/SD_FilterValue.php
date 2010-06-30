@@ -18,7 +18,7 @@ class SDFilterValue {
 
 	static function create( $actual_val, $filter_time_period = null ) {
 		$fv = new SDFilterValue();
-		$fv->text = htmlspecialchars( $actual_val );
+		$fv->text = $actual_val;
 
 		if ( $fv->text == ' none' )
 			$fv->is_none = true;
@@ -34,10 +34,6 @@ class SDFilterValue {
 				$fv->year = $fv->text;
 			}
 		} else {
-			// SMW 1.0 HTML-encodes the value; un-encode it here
-			$originals = array( '&lt;', '&gt;' );
-			$replacements = array( '<', '>' );
-			$fv->text = str_replace( $originals, $replacements, $fv->text );
 			if ( $fv->text == '' ) {
 				// do nothing
 			} elseif ( $fv->text { 0 } == '<' ) {

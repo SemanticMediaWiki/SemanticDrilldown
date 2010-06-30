@@ -46,8 +46,13 @@ class SDAppliedFilter {
 		$dbr = wfGetDB( DB_SLAVE );
 		if ( $this->search_term != null ) {
 			if ( $this->filter->is_relation ) {
-				$search_term = strtolower( str_replace( ' ', '_', $this->search_term ) );
-				$sql .= "LOWER($value_field) LIKE '%{$search_term}%'";
+				// FIXME: 'LIKE' is supposed to be
+				// case-insensitive, but it's not acting
+				// that way here.
+				//$search_term = strtolower( str_replace( ' ', '_', $this->search_term ) );
+				//$search_term = strtolower( $this->search_term );
+				$search_term = str_replace( ' ', '\_', $this->search_term );
+				$sql .= "$value_field LIKE '%{$search_term}%'";
 			} else {
 				$search_term = strtolower( $this->search_term );
 				$sql .= "LOWER($value_field) LIKE '%{$search_term}%'";
@@ -107,7 +112,7 @@ class SDAppliedFilter {
 	 */
 	function getAllOrValues( $category ) {
 		$possible_values = array();
-		$property_value = str_replace( ' ', '_', $this->filter->property );
+		$property_value = $this->filter->escaped_property;
 		$dbr = wfGetDB( DB_SLAVE );
 		if ( $this->filter->is_relation ) {
 			$property_table_name = $dbr->tableName( 'smw_rels2' );

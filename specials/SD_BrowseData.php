@@ -113,7 +113,7 @@ END;
 		$applied_filters = array();
 		$remaining_filters = array();
 		foreach ( $filters as $i => $filter ) {
-			$filter_name = str_replace( ' ', '_', $filter->name );
+			$filter_name = str_replace( array( ' ', "'" ) , array( '_', "\'" ), $filter->name );
 			$search_term = $wgRequest->getVal( '_search_' . $filter_name );
 			$lower_date = $wgRequest->getArray( '_lower_' . $filter_name );
 			$upper_date = $wgRequest->getArray( '_upper_' . $filter_name );
@@ -359,7 +359,7 @@ class SDBrowseDataPage extends QueryPage {
 		}
 		$sql .= ")) ";
 		foreach ( $applied_filters as $i => $af ) {
-			$property_value = str_replace( ' ', '_', $af->filter->property );
+			$property_value = $af->filter->escaped_property;
 			if ( $af->filter->is_relation ) {
 				$property_field = "r$i.p_id";
 				$sql .= "\n	AND ($property_field = (SELECT smw_id FROM $smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)";

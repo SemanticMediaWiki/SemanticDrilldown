@@ -9,6 +9,7 @@
 class SDFilter {
 	var $name;
 	var $property;
+	var $escaped_property;
 	var $is_relation;
 	var $is_boolean;
 	var $is_date;
@@ -24,6 +25,7 @@ class SDFilter {
 		$properties_used = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_CP', SD_SP_COVERS_PROPERTY, SMW_NS_PROPERTY );
 		if ( count( $properties_used ) > 0 ) {
 			$f->property = $properties_used[0];
+			$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', "\'" ), $f->property );
 		}
 		$f->is_relation = true;
 		$proptitle = Title::newFromText( $f->property, SMW_NS_PROPERTY );
@@ -81,7 +83,7 @@ class SDFilter {
 	 */
 	function getTimePeriodValues() {
 		$possible_dates = array();
-		$property_value = str_replace( ' ', '_', $this->property );
+		$property_value = $this->escaped_property;
 		$dbr = wfGetDB( DB_SLAVE );
 		if ( $this->time_period == wfMsg( 'sd_filter_month' ) ) {
 			$fields = "YEAR(value_xsd), MONTH(value_xsd)";
@@ -125,7 +127,7 @@ END;
 			return $this->getTimePeriodValues();
 
 		$possible_values = array();
-		$property_value = str_replace( ' ', '_', $this->property );
+		$property_value = $this->escaped_property;
 		$dbr = wfGetDB( DB_SLAVE );
 		if ( $this->is_relation ) {
 			$property_table_name = $dbr->tableName( 'smw_rels2' );
@@ -184,7 +186,7 @@ END;
 			$property_field = 'p_id';
 			$value_field = 'value_xsd';
 		}
-		$query_property = str_replace( ' ', '_', $this->property );
+		$query_property = $this->escaped_property;
 		$sql = <<<END
 	CREATE TEMPORARY TABLE semantic_drilldown_filter_values
 	AS SELECT s_id AS id, $value_field AS value
