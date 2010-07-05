@@ -779,6 +779,7 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Bola
  * @author Crazymadlover
  * @author Dvdgmz
  * @author Imre
@@ -812,7 +813,7 @@ $messages['es'] = array(
 	'sd_createfilter_name' => 'Nombre:',
 	'sd_createfilter_property' => 'Propiedad que este filtro cubre:',
 	'sd_createfilter_usepropertyvalues' => 'Usar todos los valores de esta propiedad para el filtro',
-	'sd_createfilter_usecategoryvalues' => 'Obtenga valores para el filtro desde esta catagoría:',
+	'sd_createfilter_usecategoryvalues' => 'Obtenga valores para el filtro desde esta categoría:',
 	'sd_createfilter_usedatevalues' => 'Usar rangos de fecha para este filtro con este periodo de tiempo:',
 	'sd_createfilter_entervalues' => 'Ingresar valores para el filtro manualmente (valores deberían estar separados por comas - si un valor contiene una coma, reemplacela con "\\,"):',
 	'sd_createfilter_inputtype' => 'Tipo de entrada de datos para este filtro:',
