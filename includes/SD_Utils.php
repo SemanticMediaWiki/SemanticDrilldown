@@ -62,10 +62,9 @@ class SDUtils {
 		$smw_namespace_labels = $smwgContLang->getNamespaces();
 		$all_properties = array();
 
-		// $options = new SMWRequestOptions();
-		// $options->limit = 10000;
-		// $used_properties = smwfGetStore()->getPropertiesSpecial($options);
-		$used_properties = smwfGetStore()->getPropertiesSpecial();
+		$options = new SMWRequestOptions();
+		$options->limit = 10000;
+		$used_properties = smwfGetStore()->getPropertiesSpecial( $options );
 		foreach ( $used_properties as $property ) {
 			$all_properties[] = $property[0]->getWikiValue();
 		}
