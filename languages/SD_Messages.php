@@ -2597,6 +2597,11 @@ $messages['ru'] = array(
  * @author Gazeb
  */
 $messages['rue'] = array(
+	'sd_browsedata_choosecategory' => 'Выбрати катеґорію',
+	'sd_browsedata_viewcategory' => 'видїти катеґорію',
+	'sd_browsedata_subcategory' => 'Підкатегорія',
+	'sd_browsedata_other' => 'Інше',
+	'sd_browsedata_none' => 'Жадне',
 	'sd_filter_year' => 'Рік',
 	'sd_filter_month' => 'Місяць',
 	'sd_filter_freetext' => 'текст',
