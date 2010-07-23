@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Default settings for Semantic Drilldown.
+ * 
+ * Note: 
+ * Do not use this file as entry point,
+ * use SemanticDrilldown.php in this extensions root instead.
+ */
+if ( !defined( 'MEDIAWIKI' ) ) die();
+
 # ##
 # This is the path to your installation of Semantic Drilldown as
 # seen from the web. Change it if required ($wgScriptPath is the
