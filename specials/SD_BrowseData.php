@@ -1059,27 +1059,18 @@ END;
 
 		$out->addHTML( $html );
 		
-		// TODO: this issue has probably been fixed in Maps 0.6. 
-		// If it's not - all mapping service identifiers can be obtained by getting the array keys
-		// of $egMapsServices, and the aliases element (which is an array) of each item.
-		
-		// add Ext library, to enable combobox, unless a map is being
-		// displayed - the Javascript for Ext conflicts with the
-		// Javascript for the maps
-		if ( $format != 'openlayers' || strpos( $format, 'map' ) !== false ) {
-			global $sdgScriptPath;
-			$out->addLink( array(
-				'rel' => 'stylesheet',
-				'type' => 'text/css',
-				'media' => "screen",
-				'href' => $sdgScriptPath . '/skins/ext-all.css'
-			) );
-			// overwrite style from ext-all.css, to set the correct
-			// image for the combobox arrow
-			$out->addScript( "<style>.x-form-field-wrap .x-form-trigger{background:transparent url($sdgScriptPath/skins/trigger.gif) no-repeat 0 0;}</style>" );
-			$out->addScript( '<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-base.js"></script>' );
-			$out->addScript( '<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-all.js"></script>' );
-		}
+		global $sdgScriptPath;
+		$out->addLink( array(
+			'rel' => 'stylesheet',
+			'type' => 'text/css',
+			'media' => "screen",
+			'href' => $sdgScriptPath . '/skins/ext-all.css'
+		) );
+		// overwrite style from ext-all.css, to set the correct
+		// image for the combobox arrow
+		$out->addScript( "<style>.x-form-field-wrap .x-form-trigger{background:transparent url($sdgScriptPath/skins/trigger.gif) no-repeat 0 0;}</style>" );
+		$out->addScript( '<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-base.js"></script>' );
+		$out->addScript( '<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-all.js"></script>' );
 	}
 
 	// Take non-semantic result set returned by Database->query() method, and
