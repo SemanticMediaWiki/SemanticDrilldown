@@ -21,7 +21,7 @@ define( 'SD_SP_HAS_DRILLDOWN_TITLE', 8 );
 define( 'SD_SP_HAS_INPUT_TYPE', 9 );
 define( 'SD_SP_HAS_DISPLAY_PARAMETERS', 10 );
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'specialpage'][] = array(
 	'path'        => __FILE__,
 	'name'        => 'Semantic Drilldown',
 	'version'     => SD_VERSION,
