@@ -56,3 +56,6 @@ $sdgFiltersSmallestFontSize = - 1;
 $sdgFiltersLargestFontSize = - 1;
 // print categories list as tabs
 $sdgShowCategoriesAsTabs = false;
+
+$wgPageProps['hidefromdrilldown'] = 'Whether or not the page is set as HIDEFROMDRILLDOWN';
+$wgPageProps['showindrilldown'] = 'Whether or not the page is set as SHOWINDRILLDOWN';
