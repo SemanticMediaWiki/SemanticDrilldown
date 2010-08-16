@@ -859,6 +859,7 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author Huji
  * @author Ibrahim
  * @author Tofighi
@@ -878,7 +879,7 @@ $messages['fa'] = array(
 	'sd_browsedata_removefilter' => 'حذف این فیلتر',
 	'sd_browsedata_removesubcategoryfilter' => 'حذف این فیلتر زیر رده',
 	'sd_browsedata_resetfilters' => 'تنظیم فیلترها از نو',
-	'sd_browsedata_addanothervalue' => 'مقدار دیگری اضافه کنید',
+	'sd_browsedata_addanothervalue' => 'برای اضافه‌کردن مقداری دیگر بر روی پیکان کلیک کنید.',
 	'sd_browsedata_daterangestart' => ':شروع',
 	'filters' => 'پالایه‌ها',
 	'sd_filters_docu' => 'فیلترهای زیر در این ویکی وجود دارد:',
