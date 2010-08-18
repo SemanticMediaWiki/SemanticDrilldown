@@ -5,6 +5,7 @@
  * previously been created.
  *
  * @author Yaron Koren
+ * @author Sanyam Goyal
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
@@ -28,25 +29,13 @@ class SDBrowseData extends IncludableSpecialPage {
 			$wgParser->disableCache();
 		}
 		$this->setHeaders();
-		$mainCssDir = $sdgScriptPath . '/skins/';
 		$wgOut->addLink( array(
 			'rel' => 'stylesheet',
 			'type' => 'text/css',
 			'media' => "screen",
-			'href' => $mainCssDir . 'SD_main.css'
+			'href' => $sdgScriptPath . '/skins/SD_main.css'
 		) );
-		$wgOut->addLink( array(
-			'rel' => 'stylesheet',
-			'type' => 'text/css',
-			'media' => "screen",
-			'href' => $mainCssDir . 'xtheme-gray.css'
-		) );
-		$wgOut->addLink( array(
-			'rel' => 'stylesheet',
-			'type' => 'text/css',
-			'media' => "screen",
-			'href' => $mainCssDir . 'combos.css'
-		) );
+		
 		$javascript_text = <<<END
 function toggleFilterDiv(element_id, label_element) {
 	element = document.getElementById(element_id);
@@ -67,7 +56,7 @@ function unhighlightRemoveDiv(element) {
 }
 
 END;
-		$wgOut->addScript( '	     <script type="text/javascript">' . "\n" . $javascript_text . '</script>' . "\n" );
+		$wgOut->addScript( '<script type="text/javascript">' . "\n" . $javascript_text . '</script>' );
 
 		// set default
 		if ( $sdgNumResultsPerPage == null )
@@ -594,49 +583,90 @@ END;
 	}
 
 	function printComboBoxInput( $filter_name, $filter_values, $cur_value = null ) {
-		global $wgRequest;
+		global $wgRequest, $smwgJQueryIncluded, $smwgJQueryUIIncluded,
+		       $sdgJQueryIncluded, $sdgScriptPath, $wgOut;
 
 		$filter_name = str_replace( ' ', '_', $filter_name );
 		$input_id = "_search_$filter_name";
-		$text = <<<END
+		$combobox_id = "c_search_$filter_name";
+		if ( !$sdgJQueryIncluded ) {
+			$wgOut->addLink(
+				array(
+					'rel' => 'stylesheet',
+					'type' => 'text/css',
+					'media' => "screen",
+					'href' => $sdgScriptPath . "/skins/jquery-ui/base/jquery.ui.all.css"
+				)
+			);
+		}
 
-<script>
-Ext.onReady(function(){
-	var {$filter_name}_values = [
+		$scripts = array();
+		if ( !$smwgJQueryIncluded ) {
+			$scripts[] = "$sdgScriptPath/libs/jquery-1.4.2.min.js";
+			$smwgJQueryIncluded = true;
+		};
+
+		if ( !$smwgJQueryUIIncluded ) {
+			$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.core.min.js";
+			$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.widget.min.js";
+		}
+		if ( !$sdgJQueryIncluded ) {
+			$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.button.min.js";
+		}
+		if ( !$smwgJQueryUIIncluded ) {
+			$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.position.min.js";
+			$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.autocomplete.min.js";
+			$smwgJQueryUIIncluded = true;
+		}
+		if ( !$sdgJQueryIncluded ) {
+			$scripts[] = "$sdgScriptPath/libs/SemanticDrilldown.js";
+			$sdgJQueryIncluded = true;
+		}
+
+		foreach ( $scripts as $script ) {
+			$wgOut->addScript( '<script type="text/javascript" src="' . $script . '"></script> ');
+		}
+
+		$combobox_js =<<<END
+<script type="text/javascript">               
+	jQuery(document).ready(function(){
+		jQuery("#$combobox_id").combobox();
+	});
+</script>
+END;
+		$wgOut->addScript( $combobox_js );
+
+		$text =<<< END
+<form method="get">
+        <div class="ui-widget">
+		<select id="$combobox_id" name="$cur_value">
+			<option value="$input_id"></option>;
 
 END;
 		foreach ( $filter_values as $value => $num_instances ) {
 			if ( $value != '_other' && $value != '_none' ) {
 				$display_value = str_replace( '_', ' ', $value );
 				$display_value = str_replace( '\'', '\\\'', $display_value );
-				$text .= "		['$display_value', '$display_value'],\n";
+				$text .= '			<option value="'.$display_value.'">'.$display_value.'</option>';			
 			}
 		}
-		$text .= <<<END
-	]
 
-	var comboFromArray = new Ext.form.ComboBox({
-		store: {$filter_name}_values,
-		emptyText: '$cur_value',
-		applyTo: '$input_id'
-	});
-});
-</script>
-<form method="get">
-<input type="text" name="$input_id" id="$input_id" value="">
+		$text .=<<<END
+		</select>
+	</div>
 
 END;
 
 		foreach ( $wgRequest->getValues() as $key => $val ) {
 			if ( $key != $input_id )
 				$text .= <<<END
-<input type="hidden" name="$key" value="$val" />
+	<input type="hidden" name="$key" value="$val" />
 
 END;
 		}
 		$search_label = wfMsg( 'searchresultshead' );
 		$text .= <<<END
-<input type="submit" value="$search_label" />
+	<input type="submit" value="$search_label" />
 </form>
 
 END;
@@ -831,7 +861,7 @@ END;
 			$header .= "$subcategory_text: ";
 			$subcat_string = str_replace( '_', ' ', $this->subcategory );
 			$remove_filter_url = $this->makeBrowseURL( $this->category, $this->applied_filters );
-			$header .= "\n" . '				<span class="drilldown-header-value">' . $subcat_string . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg( 'sd_browsedata_removesubcategoryfilter' ) . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
+			$header .= "\n" . '				<span class="drilldown-header-value">' . $subcat_string . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg( 'sd_browsedata_removesubcategoryfilter' ) . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a> ';
 		}
 		foreach ( $this->applied_filters as $i => $af ) {
 			$header .= ( ! $this->subcategory && $i == 0 ) ? " > " : "\n					<span class=\"drilldown-header-value\">&</span> ";
@@ -862,7 +892,7 @@ END;
 				$temp_filters_array[$i]->search_term = null;
 				$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
 				$temp_filters_array[$i]->search_term = $removed_search_term;
-				$header .= "\n  " . '                           <span class="drilldown-header-value">~ \'' . $af->search_term . '\'</span> <a href="' . $remove_filter_url . '" title="' . wfMsg( 'sd_browsedata_removefilter' ) . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
+				$header .= "\n  " . '                           <span class="drilldown-header-value">~ \'' . $af->search_term . '\'</span> <a href="' . $remove_filter_url . '" title="' . wfMsg( 'sd_browsedata_removefilter' ) . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /> </a>';
 			} elseif ( $af->lower_date != null || $af->upper_date != null ) {
 				$header .= "\n <span class=\"drilldown-header-value\">" . $af->lower_date_string . " - " . $af->upper_date_string . "</span>";
 			}
@@ -1058,19 +1088,6 @@ END;
 			: implode( '', $html );
 
 		$out->addHTML( $html );
-		
-		global $sdgScriptPath;
-		$out->addLink( array(
-			'rel' => 'stylesheet',
-			'type' => 'text/css',
-			'media' => "screen",
-			'href' => $sdgScriptPath . '/skins/ext-all.css'
-		) );
-		// overwrite style from ext-all.css, to set the correct
-		// image for the combobox arrow
-		$out->addScript( "<style>.x-form-field-wrap .x-form-trigger{background:transparent url($sdgScriptPath/skins/trigger.gif) no-repeat 0 0;}</style>" );
-		$out->addScript( '<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-base.js"></script>' );
-		$out->addScript( '<script type="text/javascript" src="' . $sdgScriptPath . '/libs/ext-all.js"></script>' );
 	}
 
 	// Take non-semantic result set returned by Database->query() method, and
