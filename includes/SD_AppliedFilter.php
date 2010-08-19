@@ -45,17 +45,17 @@ class SDAppliedFilter {
 		$sql = "(";
 		$dbr = wfGetDB( DB_SLAVE );
 		if ( $this->search_term != null ) {
+			$search_term = str_replace( "'", "\'", $this->search_term );
 			if ( $this->filter->is_relation ) {
 				// FIXME: 'LIKE' is supposed to be
 				// case-insensitive, but it's not acting
 				// that way here.
-				//$search_term = strtolower( str_replace( ' ', '_', $this->search_term ) );
-				//$search_term = strtolower( $this->search_term );
-				$search_term = str_replace( ' ', '\_', $this->search_term );
+				//$search_term = strtolower( $search_term );
+				$search_term = str_replace( ' ', '\_', $search_term );
 				$sql .= "$value_field LIKE '%{$search_term}%'";
 			} else {
-				$search_term = strtolower( $this->search_term );
-				$sql .= "LOWER($value_field) LIKE '%{$search_term}%'";
+				//$search_term = strtolower( $search_term );
+				$sql .= "$value_field LIKE '%{$search_term}%'";
 			}
 		}
 		if ( $this->lower_date != null ) {
