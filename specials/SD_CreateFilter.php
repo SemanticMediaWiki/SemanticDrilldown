@@ -207,11 +207,6 @@ END;
 
 	$text .= "	</form>\n";
 
-	$wgOut->addLink( array(
-		'rel' => 'stylesheet',
-		'type' => 'text/css',
-		'media' => "screen",
-		'href' => $sdgScriptPath . "/skins/SD_main.css"
-	) );
+	$wgOut->addExtensionStyle( "$sdgScriptPath/skins/SD_main.css" );
 	$wgOut->addHTML( $text );
 }
