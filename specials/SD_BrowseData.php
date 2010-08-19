@@ -29,14 +29,10 @@ class SDBrowseData extends IncludableSpecialPage {
 			$wgParser->disableCache();
 		}
 		$this->setHeaders();
-		$wgOut->addLink( array(
-			'rel' => 'stylesheet',
-			'type' => 'text/css',
-			'media' => "screen",
-			'href' => $sdgScriptPath . '/skins/SD_main.css'
-		) );
-		
+		$wgOut->addExtensionStyle( "$sdgScriptPath/skins/SD_main.css" );
+
 		$javascript_text = <<<END
+<script type="text/javascript">
 function toggleFilterDiv(element_id, label_element) {
 	element = document.getElementById(element_id);
 	if (element.style.display == "none") {
@@ -54,9 +50,9 @@ function highlightRemoveDiv(element) {
 function unhighlightRemoveDiv(element) {
 	element.innerHTML = "<img src=\"$sdgScriptPath/skins/filter-x.png\">";
 }
-
+</script>
 END;
-		$wgOut->addScript( '<script type="text/javascript">' . "\n" . $javascript_text . '</script>' );
+		$wgOut->addScript( $javascript_text );
 
 		// set default
 		if ( $sdgNumResultsPerPage == null )
@@ -590,14 +586,7 @@ END;
 		$input_id = "_search_$filter_name";
 		$combobox_id = "c_search_$filter_name";
 		if ( !$sdgJQueryIncluded ) {
-			$wgOut->addLink(
-				array(
-					'rel' => 'stylesheet',
-					'type' => 'text/css',
-					'media' => "screen",
-					'href' => $sdgScriptPath . "/skins/jquery-ui/base/jquery.ui.all.css"
-				)
-			);
+			$wgOut->addExtensionStyle( "$sdgScriptPath/skins/jquery-ui/base/jquery.ui.all.css" );
 		}
 
 		$scripts = array();
@@ -624,7 +613,7 @@ END;
 		}
 
 		foreach ( $scripts as $script ) {
-			$wgOut->addScript( '<script type="text/javascript" src="' . $script . '"></script> ');
+			$wgOut->addScriptFile( $script );
 		}
 
 		$combobox_js =<<<END
@@ -646,7 +635,6 @@ END;
 		foreach ( $filter_values as $value => $num_instances ) {
 			if ( $value != '_other' && $value != '_none' ) {
 				$display_value = str_replace( '_', ' ', $value );
-				$display_value = str_replace( '\'', '\\\'', $display_value );
 				$text .= '			<option value="'.$display_value.'">'.$display_value.'</option>';			
 			}
 		}
