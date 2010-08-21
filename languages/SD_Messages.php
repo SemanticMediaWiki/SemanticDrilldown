@@ -69,13 +69,11 @@ $messages['en'] = array(
  * @author EugeneZelenko
  * @author Jon Harald Søby
  * @author Purodha
+ * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'semanticdrilldown-desc' => 'Short desciption of this extension.
-Shown in [[Special:Version]].
-Do not translate link targets,
-or tag names.',
+	'semanticdrilldown-desc' => '{{desc}}',
 	'sd_browsedata_other' => '{{Identical|Other}}',
 	'sd_browsedata_none' => '{{Identical|None}}',
 	'filters' => '{{Identical|Filter}}',
