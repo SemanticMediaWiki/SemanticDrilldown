@@ -16,8 +16,9 @@ ul#drilldown-categories {
 }
 
 ul#drilldown-categories li {
-        padding: 3px 8px 3px 8px;
-        margin: 0px;
+	padding: 3px 8px 3px 8px;
+	margin: 0px;
+	list-style-image: none;
 }
 
 p#categories-header {
@@ -25,12 +26,12 @@ p#categories-header {
 }
 
 ul#drilldown-categories li.category {
-        border-top: 1px #aaaaaa solid;
-        background: #e9e9e9;
+	border-top: 1px #aaaaaa solid;
+	background: #e9e9e9;
 }
 
 ul#drilldown-categories li.selected {
-        background: white;
+	background: white;
 }
 
 /* Tab-based display of categories list
@@ -110,4 +111,13 @@ span.drilldown-filter-notes {
 }
 
 div.drilldown-filter-values {
+}
+
+.ui-button { margin-left: -1px; }
+.ui-button-icon-only .ui-button-text { padding: 0.35em; }
+button.ui-button-icon-only {
+	width: 1.7em;
+	height: 1.5em;
+	vertical-align: bottom;
+	margin-top: 0.2em;
 }

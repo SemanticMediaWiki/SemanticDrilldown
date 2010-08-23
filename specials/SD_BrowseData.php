@@ -30,6 +30,7 @@ class SDBrowseData extends IncludableSpecialPage {
 		}
 		$this->setHeaders();
 		$wgOut->addExtensionStyle( "$sdgScriptPath/skins/SD_main.css" );
+		$wgOut->addScript( '<!--[if IE]><link rel="stylesheet" href="' . $sdgScriptPath . '/skins/SD_IEfixes.css" media="screen" /><![endif]-->' );
 
 		$javascript_text = <<<END
 <script type="text/javascript">
