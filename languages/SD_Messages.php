@@ -2659,6 +2659,13 @@ $messages['sk'] = array(
 	'sd_filter_haslabel' => 'Má označenie $1.',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'sd_filter_year' => 'Leto',
+);
+
 /** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Sasa Stefanovic
  * @author Михајло Анђелковић
