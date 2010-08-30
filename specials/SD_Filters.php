@@ -12,7 +12,7 @@ class SDFilters extends SpecialPage {
 	/**
 	 * Constructor
 	 */
-	function SDFilters() {
+	function __construct() {
 		SpecialPage::SpecialPage( 'Filters' );
 		wfLoadExtensionMessages( 'SemanticDrilldown' );
 	}
