@@ -13,7 +13,7 @@ class SDFilters extends SpecialPage {
 	 * Constructor
 	 */
 	function __construct() {
-		SpecialPage::SpecialPage( 'Filters' );
+		parent::__construct( 'Filters' );
 		wfLoadExtensionMessages( 'SemanticDrilldown' );
 	}
 

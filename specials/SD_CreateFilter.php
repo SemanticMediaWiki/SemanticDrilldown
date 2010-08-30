@@ -14,7 +14,7 @@ class SDCreateFilter extends SpecialPage {
 	 * Constructor
 	 */
 	public function SDCreateFilter() {
-		SpecialPage::SpecialPage( 'CreateFilter' );
+		parent::__construct( 'CreateFilter' );
 		wfLoadExtensionMessages( 'SemanticDrilldown' );
 	}
 
