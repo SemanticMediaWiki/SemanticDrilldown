@@ -1008,9 +1008,18 @@ $messages['fr'] = array(
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'specialpages-group-sd_group' => 'Ègzèrcice de sèmantica',
+	'browsedata' => 'Navegar les balyês',
+	'sd_browsedata_choosecategory' => 'Chouèsir una catègorie',
+	'sd_browsedata_viewcategory' => 'vêre la catègorie',
 	'sd_browsedata_subcategory' => 'Sot-catègorie',
 	'sd_browsedata_other' => 'Ôtro',
 	'sd_browsedata_none' => 'Nion',
+	'sd_browsedata_filterbyvalue' => 'Filtrar per ceta valor',
+	'sd_browsedata_filterbysubcategory' => 'Filtrar per ceta sot-catègorie',
+	'sd_browsedata_or' => 'ou ben',
+	'sd_browsedata_removefilter' => 'Enlevar ceti filtro',
+	'sd_browsedata_removesubcategoryfilter' => 'Enlevar ceti filtro de sot-catègorie',
 	'sd_browsedata_daterangestart' => 'Comencement :',
 	'sd_browsedata_daterangeend' => 'Fin :',
 	'filters' => 'Filtros',
