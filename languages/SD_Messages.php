@@ -440,6 +440,8 @@ $messages['br'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'semanticdrilldown-desc' => 'Interfejs za postupnu navigaciju kroz semantičke podatke',
+	'specialpages-group-sd_group' => 'Semantičko istančavanje',
 	'browsedata' => 'Pregledaj podatke',
 	'sd_browsedata_choosecategory' => 'Izaberi kategoriju',
 	'sd_browsedata_viewcategory' => 'pogledaj kategoriju',
@@ -466,8 +468,11 @@ $messages['bs'] = array(
 	'sd_createfilter_property' => 'Svojstvo koje ovaj filter pokriva:',
 	'sd_createfilter_usepropertyvalues' => 'Koristi sve vrijednosti ovog svojstva za filter',
 	'sd_createfilter_usecategoryvalues' => 'Preuzmi vrijednosti za filter iz ove kategorije:',
+	'sd_createfilter_usedatevalues' => 'Koristite datumski period za ovaj filter za ovim vremenskim periodom:',
+	'sd_createfilter_entervalues' => 'Unesite ručno vrijednosti za filter (vrijednosti se trebaju razdvojiti zarezima - ako vrijednost sadrži zarez, zamijenite ga sa "\\,"):',
 	'sd_createfilter_inputtype' => 'Tip unosa za ovaj filter:',
 	'sd_createfilter_listofvalues' => 'spisak vrijednosti (pretpostavljeno)',
+	'sd_createfilter_requirefilter' => 'Zahtijeva drugi filter da bude odabran prije nego se ovaj prikaže:',
 	'sd_createfilter_label' => 'Naslov za ovaj filter (opcija):',
 	'sd_blank_error' => 'ne može biti prazno',
 	'sd_filter_coversproperty' => 'Ovaj filter pokriva svojstvo $1.',
@@ -477,6 +482,7 @@ $messages['bs'] = array(
 	'sd_filter_month' => 'mjesec',
 	'sd_filter_hasvalues' => 'Ima vrijednosti $1.',
 	'sd_filter_hasinputtype' => 'Ima vrstu ulaza $1.',
+	'sd_filter_combobox' => 'rasklopna kutija',
 	'sd_filter_freetext' => 'tekst',
 	'sd_filter_daterange' => 'vremenski raspon',
 	'sd_filter_requiresfilter' => 'Zahtjeva prisustvo filtera $1.',
@@ -543,7 +549,13 @@ $messages['ca'] = array(
  * @author Juan de Vojníkov
  */
 $messages['cs'] = array(
+	'sd_browsedata_subcategory' => 'Podkategorie',
+	'sd_browsedata_other' => 'Jiné',
+	'sd_browsedata_none' => 'Nic',
+	'sd_browsedata_daterangeend' => 'Konec:',
+	'sd_createfilter_name' => 'Jméno:',
 	'sd_filter_year' => 'Rok',
+	'sd_filter_month' => 'Měsíc',
 );
 
 /** Welsh (Cymraeg)
@@ -3200,6 +3212,8 @@ $messages['zh-hans'] = array(
 	'sd_browsedata_or' => '或',
 	'sd_browsedata_daterangestart' => '开始：',
 	'sd_browsedata_daterangeend' => '结束：',
+	'filters' => '过滤器',
+	'sd_createfilter_name' => '名称：',
 	'sd_blank_error' => '不可留空',
 	'sd_filter_year' => '年',
 	'sd_filter_month' => '月',
