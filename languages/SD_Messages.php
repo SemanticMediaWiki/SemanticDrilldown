@@ -2635,7 +2635,7 @@ $messages['ru'] = array(
 	'sd_filter_haslabel' => 'Имеет пометку $1.',
 );
 
-/** Rusyn (русиньскый язык)
+/** Rusyn (Русиньскый)
  * @author Gazeb
  */
 $messages['rue'] = array(
