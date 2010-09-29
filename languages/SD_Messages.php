@@ -1060,7 +1060,7 @@ $messages['frp'] = array(
 	'sd_filter_hasinputtype' => 'Il at lo tipo d’entrâ $1.',
 	'sd_filter_combobox' => 'Bouèta combô',
 	'sd_filter_freetext' => 'tèxto',
-	'sd_filter_daterange' => 'portâ de la dâta',
+	'sd_filter_daterange' => 'plage de dâtes',
 	'sd_filter_haslabel' => 'Il at l’ètiquèta $1.',
 );
 
