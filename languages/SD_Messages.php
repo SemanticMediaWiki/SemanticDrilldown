@@ -2538,6 +2538,7 @@ $messages['pt-br'] = array(
  * @author Firilacroco
  * @author KlaudiuMihaila
  * @author Mihai
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
 	'browsedata' => 'Răsfoiți data',
@@ -2548,6 +2549,8 @@ $messages['ro'] = array(
 	'sd_browsedata_none' => 'Nimic',
 	'sd_browsedata_filterbyvalue' => 'Filtrează după această valoare',
 	'sd_browsedata_filterbysubcategory' => 'Filtrează după această subcategorie',
+	'sd_browsedata_otherfilter' => 'Arată paginile cu o altă valoare pentru acest filtru',
+	'sd_browsedata_nonefilter' => 'Arată paginile cu nicio valoare pentru acest filtru',
 	'sd_browsedata_or' => 'sau',
 	'sd_browsedata_removefilter' => 'Elimină acest filtru',
 	'sd_browsedata_removesubcategoryfilter' => 'Elimină acest filtru de subcategorie',
