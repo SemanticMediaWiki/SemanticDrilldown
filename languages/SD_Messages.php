@@ -3052,6 +3052,27 @@ $messages['tr'] = array(
 	'sd_filter_daterange' => 'tarih aralığı',
 );
 
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'sd_browsedata_choosecategory' => 'Виберіть категорію',
+	'sd_browsedata_viewcategory' => 'перегляд категорії',
+	'sd_browsedata_subcategory' => 'Підкатегорія',
+	'sd_browsedata_other' => 'Інші',
+	'sd_browsedata_or' => 'або',
+	'sd_browsedata_addanothervalue' => 'Натисніть на стрілку, щоб додати інше значення',
+	'sd_browsedata_daterangestart' => 'Початок:',
+	'sd_browsedata_daterangeend' => 'Кінець:',
+	'filters' => 'Фільтри',
+	'createfilter' => 'Створити фільтр',
+	'sd_createfilter_name' => 'Назва:',
+	'sd_blank_error' => 'не може бути порожнім',
+	'sd_filter_year' => 'Рік',
+	'sd_filter_month' => 'Місяць',
+	'sd_filter_freetext' => 'текст',
+);
+
 /** Veps (Vepsan kel')
  * @author Игорь Бродский
  */
