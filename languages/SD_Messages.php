@@ -295,6 +295,14 @@ $messages['avk'] = array(
 	'sd_filter_haslabel' => 'In tir dem $1 kral.',
 );
 
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'filters' => 'Фільтры',
+	'sd_filter_freetext' => 'тэкст',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
