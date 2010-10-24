@@ -198,12 +198,20 @@ $messages['ar'] = array(
  * @author Basharh
  */
 $messages['arc'] = array(
+	'sd_browsedata_choosecategory' => 'ܓܒܝ ܣܕܪܐ',
+	'sd_browsedata_viewcategory' => 'ܚܘܝ ܣܕܪܐ',
+	'sd_browsedata_subcategory' => 'ܣܕܪ̈ܐ ܦܪ̈ܥܝܐ',
 	'sd_browsedata_other' => 'ܐܚܪܢܐ',
 	'sd_browsedata_none' => 'ܠܐ ܡܕܡ',
 	'sd_browsedata_or' => 'ܐܘ',
+	'sd_browsedata_daterangestart' => 'ܫܘܪܝܐ:',
+	'sd_browsedata_daterangeend' => 'ܫܘܠܡܐ:',
+	'createfilter' => 'ܒܪܝ ܡܨܦܝܢܝܬܐ',
 	'sd_createfilter_name' => 'ܫܡܐ:',
+	'sd_blank_error' => 'ܠܐ ܡܨܐ ܕܢܗܘܐ ܣܦܝܩܐ',
 	'sd_filter_year' => 'ܫܢܬܐ',
 	'sd_filter_month' => 'ܝܪܚܐ',
+	'sd_filter_freetext' => 'ܟܬܒܬܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -2890,7 +2898,7 @@ $messages['te'] = array(
 	'sd_filter_year' => 'సంవత్సరం',
 	'sd_filter_month' => 'నెల',
 	'sd_filter_freetext' => 'పాఠ్యం',
-	'sd_filter_daterange' => 'కాల వ్యవధి',
+	'sd_filter_daterange' => 'తేదీ అవధి',
 );
 
 /** Tetum (Tetun)
