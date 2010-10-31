@@ -56,8 +56,8 @@ $specialPageAliases['dsb'] = array(
 
 /** Spanish (Español) */
 $specialPageAliases['es'] = array(
-	'BrowseData' => array( 'Buscar datos' ),
-	'CreateFilter' => array( 'Crear filtro' ),
+	'BrowseData' => array( 'Buscar_datos' ),
+	'CreateFilter' => array( 'Crear_filtro' ),
 	'Filters' => array( 'Filtros' ),
 );
 
@@ -70,7 +70,7 @@ $specialPageAliases['fa'] = array(
 
 /** Finnish (Suomi) */
 $specialPageAliases['fi'] = array(
-	'CreateFilter' => array( 'Luo suodin' ),
+	'CreateFilter' => array( 'Luo_suodin' ),
 	'Filters' => array( 'Suotimet' ),
 );
 
@@ -120,8 +120,8 @@ $specialPageAliases['hu'] = array(
 
 /** Interlingua (Interlingua) */
 $specialPageAliases['ia'] = array(
-	'BrowseData' => array( 'Percurrer datos' ),
-	'CreateFilter' => array( 'Crear filtro' ),
+	'BrowseData' => array( 'Percurrer_datos' ),
+	'CreateFilter' => array( 'Crear_filtro' ),
 	'Filters' => array( 'Filtros' ),
 );
 
