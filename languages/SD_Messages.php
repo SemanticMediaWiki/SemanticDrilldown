@@ -76,6 +76,7 @@ $messages['qqq'] = array(
 	'semanticdrilldown-desc' => '{{desc}}',
 	'sd_browsedata_other' => '{{Identical|Other}}',
 	'sd_browsedata_none' => '{{Identical|None}}',
+	'sd_browsedata_or' => '{{Identical|Or}}',
 	'filters' => '{{Identical|Filter}}',
 	'sd_createfilter_name' => '{{Identical|Name}}',
 	'sd_blank_error' => '{{Identical|Cannot be blank}}',
