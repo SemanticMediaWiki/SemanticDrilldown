@@ -595,6 +595,7 @@ $messages['da'] = array(
 /** German (Deutsch)
  * @author ChrisiPK
  * @author DaSch
+ * @author Kghbln
  * @author Krabina
  * @author Lyzzy
  * @author Melancholie
@@ -605,7 +606,7 @@ $messages['da'] = array(
  * @author Umherirrender
  */
 $messages['de'] = array(
-	'semanticdrilldown-desc' => 'Eine Benutzerschnittstelle, um über schrittweise Verfeinerungen durch semantische Daten zu navigieren',
+	'semanticdrilldown-desc' => 'Stellt eine Benutzerschnittstelle zur Verfügung, die eine gestufte Navigation durch semantische Daten ermöglicht',
 	'specialpages-group-sd_group' => 'Semantisches Drill-Down',
 	'browsedata' => 'Daten ansehen',
 	'sd_browsedata_choosecategory' => 'Kategorie auswählen',
