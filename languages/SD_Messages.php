@@ -2305,6 +2305,13 @@ $messages['pdc'] = array(
 	'sd_filter_month' => 'Munet',
 );
 
+/** Pfälzisch (Pfälzisch)
+ * @author Xqt
+ */
+$messages['pfl'] = array(
+	'sd_browsedata_none' => 'Kääns',
+);
+
 /** Polish (Polski)
  * @author Airwolf
  * @author Maikking
