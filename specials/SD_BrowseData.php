@@ -683,6 +683,7 @@ END;
 		else
 			$selected_month = null;
 		$text = '   <select name="' . $input_name . "[month]\">\n";
+		global $wgAmericanDates;
 		foreach ( $month_names as $i => $name ) {
 			// pad out month to always be two digits
 			$month_value = ( $wgAmericanDates == true ) ? $name : str_pad( $i + 1, 2, "0", STR_PAD_LEFT );
