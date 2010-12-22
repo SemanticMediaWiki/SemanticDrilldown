@@ -55,6 +55,14 @@ class FiltersPage extends QueryPage {
 			WHERE page_namespace = $filter_ns";
 	}
 
+	function getQueryInfo() {
+		return array(
+			'tables' => array( 'page' ),
+			'fields' => array( 'page_title AS title', 'page_title AS value' ),
+			'conds' => array( 'page_namespace' => SD_NS_FILTER )
+		);
+	}
+
 	function sortDescending() {
 		return false;
 	}

@@ -1003,6 +1003,10 @@ END;
 	function getOrder() {
 		return ' ORDER BY sortkey ';
 	}
+	
+	function getOrderFields() {
+		return array( 'sortkey' );
+	}
 
 	function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( $result->namespace, $result->value );
