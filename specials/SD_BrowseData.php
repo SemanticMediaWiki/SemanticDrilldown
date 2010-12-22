@@ -142,7 +142,11 @@ END;
 
 		$wgOut->addHTML( "\n			<div class=\"drilldown-results\">\n" );
 		$rep = new SDBrowseDataPage( $category, $subcategory, $applied_filters, $remaining_filters );
-		$num = $rep->doQuery( $offset, $limit );
+		if ( method_exists( $rep, 'execute' ) ) {
+			$num = $rep->execute( $query );
+		} else {
+			$num = $rep->doQuery( $offset, $limit );
+		}
 		$wgOut->addHTML( "\n			</div> <!-- drilldown-results -->\n" );
 		return $num;
 	}
@@ -161,6 +165,9 @@ class SDBrowseDataPage extends QueryPage {
 	 * Initialize the variables of this page
 	 */
 	function __construct( $category, $subcategory, $applied_filters, $remaining_filters ) {
+		if ( $this instanceof SpecialPage ) {
+			parent::__construct( 'BrowseData' );
+		}
 		$this->category = $category;
 		$this->subcategory = $subcategory;
 		$this->applied_filters = $applied_filters;

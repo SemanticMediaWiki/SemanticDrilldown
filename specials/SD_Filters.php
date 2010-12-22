@@ -21,16 +21,24 @@ class SDFilters extends SpecialPage {
 		$this->setHeaders();
 		list( $limit, $offset ) = wfCheckLimits();
 		$rep = new FiltersPage();
-		return $rep->doQuery( $offset, $limit );
+		if ( method_exists( $rep, 'execute' ) ) {
+			return $rep->execute( $par );
+		} else {
+			return $rep->doQuery( $offset, $limit );
+		}
 	}
 }
 
 class FiltersPage extends QueryPage {
+	function __construct( $name = 'Filters' ) {
+		if ( $this instanceof SpecialPage ) {
+			parent::__construct( $name );
+		}
+	}
+	
 	function getName() {
 		return "Filters";
 	}
-
-	function isExpensive() { return false; }
 
 	function isSyndicated() { return false; }
 
