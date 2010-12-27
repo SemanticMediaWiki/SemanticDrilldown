@@ -17,7 +17,10 @@ class SDBrowseData extends IncludableSpecialPage {
 	 */
 	public function __construct() {
 		parent::__construct( 'BrowseData' );
-		wfLoadExtensionMessages( 'SemanticDrilldown' );
+		// Backwards compatibility for MediaWiki < 1.16
+		if ( function_exists( 'wfLoadExtensionMessages' ) ) {
+			wfLoadExtensionMessages( 'SemanticDrilldown' );
+		}
 	}
 
 	function execute( $query ) {
@@ -142,6 +145,7 @@ END;
 
 		$wgOut->addHTML( "\n			<div class=\"drilldown-results\">\n" );
 		$rep = new SDBrowseDataPage( $category, $subcategory, $applied_filters, $remaining_filters );
+		// Handling changed in MW version 1.18.
 		if ( method_exists( $rep, 'execute' ) ) {
 			$num = $rep->execute( $query );
 		} else {
@@ -165,6 +169,7 @@ class SDBrowseDataPage extends QueryPage {
 	 * Initialize the variables of this page
 	 */
 	function __construct( $category, $subcategory, $applied_filters, $remaining_filters ) {
+		// Backwards compatibility for pre-version 1.18
 		if ( $this instanceof SpecialPage ) {
 			parent::__construct( 'BrowseData' );
 		}

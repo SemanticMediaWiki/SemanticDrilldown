@@ -15,7 +15,10 @@ class SDCreateFilter extends SpecialPage {
 	 */
 	public function SDCreateFilter() {
 		parent::__construct( 'CreateFilter' );
-		wfLoadExtensionMessages( 'SemanticDrilldown' );
+		// Backwards compatibility for MediaWiki < 1.16
+		if ( function_exists( 'wfLoadExtensionMessages' ) ) {
+			wfLoadExtensionMessages( 'SemanticDrilldown' );
+		}
 	}
 
 	function execute( $par ) {

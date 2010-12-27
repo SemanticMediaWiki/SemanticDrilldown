@@ -14,13 +14,17 @@ class SDFilters extends SpecialPage {
 	 */
 	function __construct() {
 		parent::__construct( 'Filters' );
-		wfLoadExtensionMessages( 'SemanticDrilldown' );
+		// Backwards compatibility for MediaWiki < 1.16
+		if ( function_exists( 'wfLoadExtensionMessages' ) ) {
+			wfLoadExtensionMessages( 'SemanticDrilldown' );
+		}
 	}
 
 	function execute( $par ) {
 		$this->setHeaders();
 		list( $limit, $offset ) = wfCheckLimits();
 		$rep = new FiltersPage();
+		// Handling changed in MW version 1.18.
 		if ( method_exists( $rep, 'execute' ) ) {
 			return $rep->execute( $par );
 		} else {
@@ -31,6 +35,7 @@ class SDFilters extends SpecialPage {
 
 class FiltersPage extends QueryPage {
 	function __construct( $name = 'Filters' ) {
+		// Backwards compatibility for pre-version 1.18.
 		if ( $this instanceof SpecialPage ) {
 			parent::__construct( $name );
 		}
