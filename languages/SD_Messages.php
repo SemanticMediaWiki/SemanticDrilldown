@@ -562,6 +562,13 @@ $messages['ca'] = array(
 	'sd_filter_haslabel' => 'Té el ròtul $1.',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'sd_filter_year' => 'Шо',
+);
+
 /** Czech (Česky)
  * @author Juan de Vojníkov
  */
