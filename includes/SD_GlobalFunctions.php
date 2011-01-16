@@ -148,21 +148,6 @@ function sdfInitUserLanguage( $langcode ) {
 	$sdgLang = new $sdLangClass();
 }
 
-/**
- * Setting of message cache for versions of MediaWiki that do not support
- * wgExtensionMessagesFiles - based on ceContributionScores() in
- * ContributionScores extension
- */
-function sdfLoadMessagesManually() {
-	global $sdgIP, $wgMessageCache;
-
-	# add messages
-	require( $sdgIP . '/languages/SD_Messages.php' );
-	foreach ( $messages as $key => $value ) {
-		$wgMessageCache->addMessages( $messages[$key], $key );
-	}
-}
-
 function sdfInitProperties() {
 	global $sdgContLang, $wgLanguageCode;
 	$sd_property_vals = array(
