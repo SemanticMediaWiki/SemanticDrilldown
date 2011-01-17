@@ -3277,19 +3277,26 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'browsedata' => '瀏覽數據',
+	'sd_browsedata_choosecategory' => '選擇一個分類',
+	'sd_browsedata_viewcategory' => '檢視分類',
+	'sd_browsedata_docu' => '點擊下面的一個或多個項目來縮小您的結果。',
 	'sd_browsedata_other' => '其他',
 	'sd_browsedata_none' => '無',
 	'sd_browsedata_or' => '或',
 	'sd_browsedata_daterangestart' => '開始：',
 	'sd_browsedata_daterangeend' => '結束：',
+	'filters' => '過濾器',
+	'sd_createfilter_name' => '名稱：',
 	'sd_blank_error' => '不可留空',
 	'sd_filter_year' => '年',
 	'sd_filter_month' => '月',
 	'sd_filter_freetext' => '文字',
+	'sd_filter_daterange' => '日期範圍',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)
