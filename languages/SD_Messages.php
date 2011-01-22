@@ -312,7 +312,7 @@ $messages['be'] = array(
 	'sd_filter_freetext' => 'тэкст',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -662,7 +662,7 @@ $messages['de'] = array(
 	'sd_filter_haslabel' => 'Er hat die Bezeichnung $1.',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Dst
  * @author Imre
  */
@@ -2312,7 +2312,7 @@ $messages['pdc'] = array(
 	'sd_filter_month' => 'Munet',
 );
 
-/** Pfälzisch (Pfälzisch)
+/** Pälzisch (Pälzisch)
  * @author Xqt
  */
 $messages['pfl'] = array(
@@ -2744,7 +2744,7 @@ $messages['sl'] = array(
 	'sd_filter_year' => 'Leto',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Sasa Stefanovic
  * @author Михајло Анђелковић
  */
@@ -2763,7 +2763,7 @@ $messages['sr-ec'] = array(
 	'sd_filter_month' => 'Месец',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian Latin ekavian (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
