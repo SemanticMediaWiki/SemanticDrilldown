@@ -2745,13 +2745,14 @@ $messages['sl'] = array(
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Sasa Stefanovic
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'sd_browsedata_choosecategory' => 'Изабери категорију',
 	'sd_browsedata_viewcategory' => 'види категорију',
-	'sd_browsedata_subcategory' => 'Подкатегорија',
+	'sd_browsedata_subcategory' => 'Поткатегорија',
 	'sd_browsedata_other' => 'Друго',
 	'sd_browsedata_none' => 'Нема',
 	'sd_browsedata_or' => 'или',
