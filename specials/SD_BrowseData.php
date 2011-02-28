@@ -1020,6 +1020,10 @@ END;
 		return array( 'sortkey' );
 	}
 
+	function sortDescending() {
+		return false;
+	}
+
 	function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( $result->namespace, $result->value );
 		return $skin->makeLinkObj( $title, $title->getText() );
