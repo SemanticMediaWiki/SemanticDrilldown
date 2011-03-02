@@ -202,7 +202,8 @@ class SDUtils {
 		} elseif ( $month == 4 ) {
 			return wfMsg( 'april' );
 		} elseif ( $month == 5 ) {
-			return wfMsg( 'may' );
+			// Needed to avoid using 3-letter abbreviation
+			return wfMsg( 'may_long' );
 		} elseif ( $month == 6 ) {
 			return wfMsg( 'june' );
 		} elseif ( $month == 7 ) {
@@ -229,7 +230,7 @@ class SDUtils {
 			return 3;
 		} elseif ( $str == wfMsg( 'april' ) ) {
 			return 4;
-		} elseif ( $str == wfMsg( 'may' ) ) {
+		} elseif ( $str == wfMsg( 'may_long' ) ) {
 			return 5;
 		} elseif ( $str == wfMsg( 'june' ) ) {
 			return 6;
