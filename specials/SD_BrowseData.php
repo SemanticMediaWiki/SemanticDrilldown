@@ -1101,9 +1101,9 @@ END;
 		$out->addHTML( $html );
 	}
 
-	// Take non-semantic result set returned by Database->query() method, and
-	// wrap it in a SMWQueryResult container for passing to any of the various
-	// semantic result printers.
+	// Take non-semantic result set returned by Database->query() method,
+	// and wrap it in a SMWQueryResult container for passing to any of the
+	// various semantic result printers.
 	// Code stolen largely from SMWSQLStore2QueryEngine->getInstanceQueryResult() method.
 	// (does this mean it will only work with certain semantic SQL stores?)
 	function addSemanticResultWrapper( $dbr, $res, $num, $query, $mainlabel, $printouts ) {
@@ -1112,7 +1112,11 @@ END;
 		$store = smwfGetStore();
 		while ( ( $count < $num ) && ( $row = $dbr->fetchObject( $res ) ) ) {
 			$count++;
-			$qr[] = SMWWikiPageValue::makePage( $row->t, $row->ns, $row->sortkey );
+			if ( class_exists( 'SMWDIWikiPage' ) ) {
+				$qr[] = new SMWDIWikiPage( $row->t, $row->ns, null );
+			} else {
+				$qr[] = SMWWikiPageValue::makePage( $row->t, $row->ns, $row->sortkey );
+			}
 			if ( method_exists( $store, 'cacheSMWPageID' ) ) {
 				$store->cacheSMWPageID( $row->id, $row->t, $row->ns, $row->iw );
 			}
