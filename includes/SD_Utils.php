@@ -10,6 +10,23 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 class SDUtils {
 
 	/**
+	 * Helper function to handle getPropertyValues() in both SMW 1.6
+	 * and earlier versions.
+	 */
+	public static function getSMWPropertyValues( $store, $pageName, $pageNamespace, $propID, $requestOptions = null ) {
+		// SMWDIProperty was added in SMW 1.6
+		if ( class_exists( 'SMWDIProperty' ) ) {
+			$page = new SMWDIWikiPage( $pageName, $pageNamespace, null );
+			$property = new SMWDIProperty( $propID );
+			return $store->getPropertyValues( $page, $property, $requestOptions );
+		} else {
+			$title = Title::makeTitleSafe( $pageNamespace, $pageName );
+			$property = SMWPropertyValue::makeProperty( $propID );
+			return $store->getPropertyValues( $title, $property, $requestOptions );
+		}
+	}
+
+	/**
 	 * Gets a list of the names of all categories in the wiki that aren't
 	 * children of some other category - this list additionally includes,
 	 * and excludes, categories that are manually set with
@@ -115,9 +132,7 @@ class SDUtils {
 	 */
 	static function getValuesForProperty( $subject, $subject_namespace, $special_prop ) {
 		$store = smwfGetStore();
-		$subject_title = Title::newFromText( $subject, $subject_namespace );
-		$property = SMWPropertyValue::makeProperty( $special_prop );
-		$res = $store->getPropertyValues( $subject_title, $property );
+		$res = self::getSMWPropertyValues( $store, $subject, $subject_namespace, $special_prop );
 		$values = array();
 		foreach ( $res as $prop_val ) {
 			// depends on version of SMW
