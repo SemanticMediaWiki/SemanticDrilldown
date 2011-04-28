@@ -2033,6 +2033,13 @@ $messages['mr'] = array(
 	'sd_filter_haslabel' => 'त्याला $1 हे लेबल आहे.',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'sd_browsedata_none' => 'Tiada',
+);
+
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
  */
