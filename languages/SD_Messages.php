@@ -398,6 +398,34 @@ $messages['bg'] = array(
 	'sd_filter_requiresfilter' => 'Необходимо е наличието на филтър $1.',
 );
 
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'browsedata' => 'উপাত্ত পরিদর্শন',
+	'sd_browsedata_choosecategory' => 'একটি বিষয়শ্রেণী পছন্দ করুন',
+	'sd_browsedata_viewcategory' => 'বিষয়শ্রেণী প্রদর্শন করো',
+	'sd_browsedata_subcategory' => 'উপবিষয়শ্রেণী',
+	'sd_browsedata_other' => 'অন্যান্য',
+	'sd_browsedata_none' => 'কোনটিই নয়',
+	'sd_browsedata_filterbyvalue' => 'এই মান অনুসারে ফিল্টার করো',
+	'sd_browsedata_filterbysubcategory' => 'এই উপবিষয়শ্রেণী অনুসারে ফিল্টার করো',
+	'sd_browsedata_or' => 'অথবা',
+	'sd_browsedata_removefilter' => 'এই ফিল্টারটি অপসারণ করো',
+	'sd_browsedata_addanothervalue' => 'আরেকটি মান প্রবেশ করাতে তীর চিহ্নে ক্লিক করুন',
+	'sd_browsedata_daterangestart' => 'শুরু:',
+	'sd_browsedata_daterangeend' => 'শেষ:',
+	'sd_browsedata_novalues' => 'এই ফিল্টারের জন্য কোনো মান নেই',
+	'filters' => 'ফিল্টার',
+	'sd_filters_docu' => '{{SITENAME}} সাইটে নিচের ফিল্টারগুলো রয়েছে:',
+	'createfilter' => 'নতুন ফিল্টার তৈরি করুন',
+	'sd_createfilter_name' => 'নাম:',
+	'sd_filter_year' => 'বছর',
+	'sd_filter_month' => 'মাস',
+	'sd_filter_freetext' => 'লেখা',
+	'sd_filter_daterange' => 'তারিখের পরিসীমা',
+);
+
 /** Breton (Brezhoneg)
  * @author Fohanno
  * @author Fulup
