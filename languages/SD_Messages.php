@@ -304,6 +304,18 @@ $messages['avk'] = array(
 	'sd_filter_haslabel' => 'In tir dem $1 kral.',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'sd_browsedata_daterangestart' => 'Başla:',
+	'sd_browsedata_daterangeend' => 'Son:',
+	'sd_createfilter_name' => 'Ad:',
+	'sd_filter_year' => 'İl',
+	'sd_filter_month' => 'Ay',
+	'sd_filter_freetext' => 'mətn',
+);
+
 /** Belarusian (Беларуская)
  * @author Тест
  */
