@@ -82,7 +82,7 @@ class FiltersPage extends QueryPage {
 
 	function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( SD_NS_FILTER, $result->value );
-		$text = $skin->makeLinkObj( $title, $title->getText() );
+		$text = $skin->makeLinkObj( $title, htmlspecialchars( $title->getText() ) );
 		return $text;
 	}
 }

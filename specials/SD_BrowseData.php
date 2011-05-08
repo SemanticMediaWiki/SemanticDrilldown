@@ -1027,7 +1027,7 @@ END;
 
 	function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( $result->namespace, $result->value );
-		return $skin->makeLinkObj( $title, $title->getText() );
+		return $skin->makeLinkObj( $title, htmlspecialchars( $title->getText() ) );
 	}
 
 	/**
