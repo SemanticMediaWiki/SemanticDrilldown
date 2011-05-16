@@ -16,6 +16,7 @@ class SDUtils {
 	public static function getSMWPropertyValues( $store, $pageName, $pageNamespace, $propID, $requestOptions = null ) {
 		// SMWDIProperty was added in SMW 1.6
 		if ( class_exists( 'SMWDIProperty' ) ) {
+			$pageName = str_replace( ' ', '_', $pageName );
 			$page = new SMWDIWikiPage( $pageName, $pageNamespace, null );
 			$property = new SMWDIProperty( $propID );
 			return $store->getPropertyValues( $page, $property, $requestOptions );
@@ -127,8 +128,6 @@ class SDUtils {
 	/**
 	 * Generic static function - gets all the values that a specific page
 	 * points to with a specific property
-	 * ($special_prop and $prop represent the same value, depending on
-	 * whether we're using SMW 1.4 or an earlier version)
 	 */
 	static function getValuesForProperty( $subject, $subject_namespace, $special_prop ) {
 		$store = smwfGetStore();
@@ -136,7 +135,11 @@ class SDUtils {
 		$values = array();
 		foreach ( $res as $prop_val ) {
 			// depends on version of SMW
-			if ( method_exists( $prop_val, 'getValueKey' ) ) {
+			if ( $prop_val instanceof SMWDIWikiPage ) {
+				$actual_val = $prop_val->getDBkey();
+			} elseif ( $prop_val instanceof SMWDIString ) {
+				$actual_val = $prop_val->getString();
+			} elseif ( method_exists( $prop_val, 'getValueKey' ) ) {
 				$actual_val = $prop_val->getValueKey();
 			} else {
 				$actual_val = $prop_val->getXSDValue();

@@ -72,8 +72,8 @@ function sdfInitNamespaces() {
 		$sdgNamespaceIndex = 170;
 	}
 
-	define( 'SD_NS_FILTER',       $sdgNamespaceIndex );
-	define( 'SD_NS_FILTER_TALK',  $sdgNamespaceIndex + 1 );
+	define( 'SD_NS_FILTER', $sdgNamespaceIndex );
+	define( 'SD_NS_FILTER_TALK', $sdgNamespaceIndex + 1 );
 
 	sdfInitContentLanguage( $wgLanguageCode );
 
@@ -139,11 +139,11 @@ function sdfInitUserLanguage( $langcode ) {
 		include_once( $sdgIP . '/languages/' . $sdLangClass . '.php' );
 	}
 
-        // fallback if language not supported
-        if ( !class_exists( $sdLangClass ) ) {
-                include_once( $sdgIP . '/languages/SD_LanguageEn.php' );
-                $sdLangClass = 'SD_LanguageEn';
-        }
+	// fallback if language not supported
+	if ( !class_exists( $sdLangClass ) ) {
+		include_once( $sdgIP . '/languages/SD_LanguageEn.php' );
+		$sdLangClass = 'SD_LanguageEn';
+	}
 
 	$sdgLang = new $sdLangClass();
 }
@@ -166,30 +166,38 @@ function sdfInitProperties() {
 	$sd_prop_labels = $sdgContLang->getPropertyLabels();
 	foreach ( $sd_prop_labels as $prop_id => $prop_alias ) {
 		$prop_vals = $sd_property_vals[$prop_id];
-		SMWPropertyValue::registerProperty( $prop_vals[0], $prop_vals[1], $prop_alias, true );
+		if ( class_exists( 'SMWDIProperty' ) ) {
+			SMWDIProperty::registerProperty( $prop_vals[0], $prop_vals[1], $prop_alias, true );
+		} else {
+			SMWPropertyValue::registerProperty( $prop_vals[0], $prop_vals[1], $prop_alias, true );
+		}
 	}
 	// if it's not English, add the English-language aliases as well
 	if ( $wgLanguageCode != 'en' ) {
 		$sd_prop_aliases = $sdgContLang->getPropertyAliases();
 		foreach ( $sd_prop_aliases as $prop_alias => $prop_id ) {
 			$prop_vals = $sd_property_vals[$prop_id];
-			SMWPropertyValue::registerPropertyAlias( $prop_vals[0], $prop_alias );
+			if ( class_exists( 'SMWDIProperty' ) ) {
+				SMWDIProperty::registerPropertyAlias( $prop_vals[0], $prop_alias );
+			} else {
+				SMWPropertyValue::registerPropertyAlias( $prop_vals[0], $prop_alias );
+			}
 		}
 	}
-        return true;
+	return true;
 }
 
 function sdfAddToAdminLinks( &$admin_links_tree ) {
-        $browse_search_section = $admin_links_tree->getSection( wfMsg( 'adminlinks_browsesearch' ) );
-        $sd_row = new ALRow( 'sd' );
-        $sd_row->addItem( ALItem::newFromSpecialPage( 'BrowseData' ) );
-        $sd_row->addItem( ALItem::newFromSpecialPage( 'Filters' ) );
-        $sd_row->addItem( ALItem::newFromSpecialPage( 'CreateFilter' ) );
-        $sd_name = wfMsg( 'specialpages-group-sd_group' );
-        $sd_docu_label = wfMsg( 'adminlinks_documentation', $sd_name );
-        $sd_row->addItem( AlItem::newFromExternalLink( "http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label ) );
+	$browse_search_section = $admin_links_tree->getSection( wfMsg( 'adminlinks_browsesearch' ) );
+	$sd_row = new ALRow( 'sd' );
+	$sd_row->addItem( ALItem::newFromSpecialPage( 'BrowseData' ) );
+	$sd_row->addItem( ALItem::newFromSpecialPage( 'Filters' ) );
+	$sd_row->addItem( ALItem::newFromSpecialPage( 'CreateFilter' ) );
+	$sd_name = wfMsg( 'specialpages-group-sd_group' );
+	$sd_docu_label = wfMsg( 'adminlinks_documentation', $sd_name );
+	$sd_row->addItem( AlItem::newFromExternalLink( "http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label ) );
 
-        $browse_search_section->addRow( $sd_row );
+	$browse_search_section->addRow( $sd_row );
 
-        return true;
+	return true;
 }

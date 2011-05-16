@@ -31,7 +31,11 @@ class SDFilter {
 		$proptitle = Title::newFromText( $f->property, SMW_NS_PROPERTY );
 		if ( $proptitle != null ) {
 			$store = smwfGetStore();
-			if ( class_exists( 'SMWPropertyValue' ) ) {
+			if ( class_exists( 'SMWDIProperty' ) ) {
+				// SMW 1.6
+				$propPage = new SMWDIWikiPage( $f->escaped_property, SMW_NS_PROPERTY, null );
+				$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
+			} elseif ( class_exists( 'SMWPropertyValue' ) ) {
 				$types = $store->getPropertyValues( $proptitle, SMWPropertyValue::makeUserProperty( 'Has type' ) );
 			} else {
 				$types = $store->getSpecialValues( $proptitle, SMW_SP_HAS_TYPE );
@@ -39,13 +43,19 @@ class SDFilter {
 			global $smwgContLang;
 			$datatypeLabels =  $smwgContLang->getDatatypeLabels();
 			if ( count( $types ) > 0 ) {
-				if ( $types[0]->getWikiValue() != $datatypeLabels['_wpg'] ) {
+				if ( $types[0] instanceof SMWDIWikiPage ) {
+					// SMW 1.6
+					$typeValue = $types[0]->getDBkey();
+				} else {
+					$typeValue = $types[0]->getWikiValue();
+				}
+				if ( $typeValue != $datatypeLabels['_wpg'] ) {
 					$f->is_relation = false;
 				}
-				if ( $types[0]->getWikiValue() == $datatypeLabels['_boo'] ) {
+				if ( $typeValue == $datatypeLabels['_boo'] ) {
 					$f->is_boolean = true;
 				}
-				if ( $types[0]->getWikiValue() == $datatypeLabels['_dat'] ) {
+				if ( $typeValue == $datatypeLabels['_dat'] ) {
 					$f->is_date = true;
 				}
 			}
