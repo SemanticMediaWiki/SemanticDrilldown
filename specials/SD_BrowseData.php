@@ -343,10 +343,11 @@ class SDBrowseDataPage extends QueryPage {
 				$sql .= "JOIN $smw_atts a$i ON ids.smw_id = a$i.s_id ";
 			}
 		}
-		if ( $subcategory )
+		if ( $subcategory ) {
 			$actual_cat = str_replace( ' ', '_', $subcategory );
-		else
+		} else {
 			$actual_cat = str_replace( ' ', '_', $category );
+		}
 		$actual_cat = str_replace( "'", "\'", $actual_cat );
 		$sql .= "WHERE insts.o_id IN
 	(SELECT smw_id FROM $smw_ids cat_ids
@@ -749,8 +750,9 @@ END;
 		$found_results_for_filter = false;
 		if ( count( $f->allowed_values ) == 0 ) {
 			$filter_values = $f->getAllValues();
-			if ( count( $filter_values ) > 0 )
+			if ( count( $filter_values ) > 0 ) {
 				$found_results_for_filter = true;
+			}
 		} else {
 			$filter_values = array();
 			foreach ( $f->allowed_values as $value ) {
@@ -798,8 +800,9 @@ END;
 		} elseif ( $f->input_type == wfMsgForContent( 'sd_filter_daterange' ) ) {
 			$results_line = $this->printDateRangeInput( $filter_name );
 			$normal_filter = false;
-		} else
+		} else {
 			$results_line = $this->printUnappliedFilterValues( $cur_url, $f, $filter_values );
+		}
 
 		$text = "";
 		$filter_label = $this->printFilterLabel( $f->name );
