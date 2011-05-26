@@ -194,8 +194,8 @@ class SDBrowseDataPage extends QueryPage {
 	}
 
 	function makeBrowseURL( $category, $applied_filters = array(), $subcategory = null ) {
-		global $wgTitle;
-		$url = $wgTitle->getFullURL() . '/' . $category;
+		$bd = SpecialPage::getTitleFor( 'BrowseData' );
+		$url = $bd->getFullURL() . '/' . $category;
 		if ( $this->show_single_cat ) {
 			$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
 			$url .= "_single";
@@ -1060,10 +1060,11 @@ END;
 		} else {
 			$query = new SMWQuery();
 		}
-		if ( array_key_exists( 'format', $params ) )
+		if ( array_key_exists( 'format', $params ) ) {
 			$format = $params['format'];
-		else
+		} else {
 			$format = 'category';
+		}
 		if ( array_key_exists( 'mainlabel', $params ) ) {
 			$mainlabel = $params['mainlabel'];
 		} else {
