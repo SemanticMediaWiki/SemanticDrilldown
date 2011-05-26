@@ -43,11 +43,14 @@ class SDFilter {
 			global $smwgContLang;
 			$datatypeLabels =  $smwgContLang->getDatatypeLabels();
 			if ( count( $types ) > 0 ) {
-				// SMW 1.6
 				if ( $types[0] instanceof SMWDIWikiPage ) {
+					// SMW 1.6
 					$typeValue = $types[0]->getDBkey();
 				} elseif ( $types[0] instanceof SMWDIURI ) {
-					$typeValue = $types[0]->getURI();
+					// A bit inefficient, but it's the
+					// simplest approach.
+					$typeID = $types[0]->getFragment();
+					$typeValue = $datatypeLabels[$typeID];
 				} else {
 					$typeValue = $types[0]->getWikiValue();
 				}
