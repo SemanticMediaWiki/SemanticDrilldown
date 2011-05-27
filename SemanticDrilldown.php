@@ -1,13 +1,28 @@
 <?php
 /**
- * Global functions and constants for Semantic Drilldown.
+ * Semantic Drilldown extension
  *
+ * Defines a drill-down interface for data stored with the Semantic MediaWiki
+ * extension, via the page Special:BrowseData.
+ *
+ * @file
+ * @defgroup SD Semantic Drilldown
+ * @ingroup SD
  * @author Yaron Koren
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
 define( 'SD_VERSION', '0.8.1' );
+
+$wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'specialpage'][] = array(
+	'path'        => __FILE__,
+	'name'        => 'Semantic Drilldown',
+	'version'     => SD_VERSION,
+	'author'      => array( 'Yaron Koren', 'David Loomer' ),
+	'url'         => 'http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
+	'descriptionmsg'  => 'semanticdrilldown-desc',
+);
 
 // constants for special properties
 define( 'SD_SP_HAS_FILTER', 1 );
@@ -21,14 +36,7 @@ define( 'SD_SP_HAS_DRILLDOWN_TITLE', 8 );
 define( 'SD_SP_HAS_INPUT_TYPE', 9 );
 define( 'SD_SP_HAS_DISPLAY_PARAMETERS', 10 );
 
-$wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'specialpage'][] = array(
-	'path'        => __FILE__,
-	'name'        => 'Semantic Drilldown',
-	'version'     => SD_VERSION,
-	'author'      => array( 'Yaron Koren', 'David Loomer' ),
-	'url'         => 'http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
-	'descriptionmsg'  => 'semanticdrilldown-desc',
-);
+$sdgIP = dirname( __FILE__ );
 
 require_once( $sdgIP . '/languages/SD_Language.php' );
 
@@ -57,8 +65,50 @@ $wgHooks['MagicWordwgVariableIDs'][] = 'SDUtils::addMagicWordVariableIDs';
 $wgHooks['LanguageGetMagic'][] = 'SDUtils::addMagicWordLanguage';
 $wgHooks['ParserBeforeTidy'][] = 'SDUtils::handleShowAndHide';
 
+$wgPageProps['hidefromdrilldown'] = 'Whether or not the page is set as HIDEFROMDRILLDOWN';
+$wgPageProps['showindrilldown'] = 'Whether or not the page is set as SHOWINDRILLDOWN';
+
+
+# ##
+# This is the path to your installation of Semantic Drilldown as
+# seen from the web. Change it if required ($wgScriptPath is the
+# path to the base directory of your wiki). No final slash.
+# # TODO: fix hardcoded path
+$sdgScriptPath = $wgScriptPath . '/extensions/SemanticDrilldown';
+# #
+
+# ##
+# If you already have custom namespaces on your site, insert
+# $sdgNamespaceIndex = ???;
+# into your LocalSettings.php *before* including this file.
+# The number ??? must be the smallest even namespace number
+# that is not in use yet. However, it should not be smaller
+# than 170.
+# #
+if ( !isset( $sdgNamespaceIndex ) ) {
+        sdfInitNamespaces( 170 );
+} else {
+        sdfInitNamespaces();
+}
+
+# ##
+# # List separator character
+# ##
+$sdgListSeparator = ",";
+
+# ##
+# # Variables for display
+# ##
+$sdgNumResultsPerPage = 250;
+// set these to a positive value to trigger the "tag cloud" display
+$sdgFiltersSmallestFontSize = - 1;
+$sdgFiltersLargestFontSize = - 1;
+// print categories list as tabs
+$sdgShowCategoriesAsTabs = false;
+
+
 /**********************************************/
-/***** namespace settings                 *****/
+/***** Global functions                   *****/
 /**********************************************/
 
 /**
