@@ -8,8 +8,6 @@
  * @author Sanyam Goyal
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
 class SDBrowseData extends IncludableSpecialPage {
 
 	/**
@@ -1079,6 +1077,8 @@ END;
 		else
 			$prtext = $prresult;
 
+		SMWOutputs::commitToOutputPage( $out );
+		
 		// Crappy hack to get the contents of SMWOutputs::$mHeadItems,
 		// which may have been set in the result printer, and dump into
 		// headItems of $out.
