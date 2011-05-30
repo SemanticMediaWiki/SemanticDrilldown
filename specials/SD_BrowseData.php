@@ -594,7 +594,7 @@ END;
 
 	function printComboBoxInput( $filter_name, $filter_values, $cur_value = null ) {
 		global $wgRequest, $smwgJQueryIncluded, $smwgJQueryUIIncluded,
-		       $sdgJQueryIncluded, $sdgScriptPath, $wgOut;
+			$sdgJQueryIncluded, $sdgScriptPath, $wgOut;
 
 		$filter_name = str_replace( ' ', '_', $filter_name );
 		$input_id = "_search_$filter_name";
@@ -631,7 +631,7 @@ END;
 		}
 
 		$combobox_js =<<<END
-<script type="text/javascript">               
+<script type="text/javascript">
 	jQuery(document).ready(function(){
 		jQuery("#$combobox_id").combobox();
 	});
@@ -641,7 +641,7 @@ END;
 
 		$text =<<< END
 <form method="get">
-        <div class="ui-widget">
+	<div class="ui-widget">
 		<select id="$combobox_id" name="$cur_value">
 			<option value="$input_id"></option>;
 
@@ -696,17 +696,17 @@ END;
 			$selected_month = $cur_value['month'];
 		else
 			$selected_month = null;
-		$text = '   <select name="' . $input_name . "[month]\">\n";
+		$text = ' <select name="' . $input_name . "[month]\">\n";
 		global $wgAmericanDates;
 		foreach ( $month_names as $i => $name ) {
 			// pad out month to always be two digits
 			$month_value = ( $wgAmericanDates == true ) ? $name : str_pad( $i + 1, 2, "0", STR_PAD_LEFT );
 			$selected_str = ( $i + 1 == $selected_month ) ? "selected" : "";
-			$text .= "        <option value=\"$month_value\" $selected_str>$name</option>\n";
+			$text .= "\t<option value=\"$month_value\" $selected_str>$name</option>\n";
 		}
-		$text .= "  </select>\n";
-		$text .= '  <input name="' . $input_name . '[day]" type="text" size="2" value="' . $cur_value['day'] . '" />' . "\n";
-		$text .= '  <input name="' . $input_name . '[year]" type="text" size="4" value="' . $cur_value['year'] . '" />' . "\n";
+		$text .= "\t</select>\n";
+		$text .= '<input name="' . $input_name . '[day]" type="text" size="2" value="' . $cur_value['day'] . '" />' . "\n";
+		$text .= '<input name="' . $input_name . '[year]" type="text" size="4" value="' . $cur_value['year'] . '" />' . "\n";
 		return $text;
 	}
 
@@ -794,7 +794,7 @@ END;
 		// 'sd_filter_freetext' (i.e. 'text' in English), which was
 		// the old name of the input
 		} elseif ( $f->input_type == wfMsgForContent( 'sd_filter_combobox' ) ||
-		    $f->input_type == wfMsgForContent( 'sd_filter_freetext' ) ) {
+			$f->input_type == wfMsgForContent( 'sd_filter_freetext' ) ) {
 			$results_line = $this->printComboBoxInput( $filter_name, $filter_values );
 			$normal_filter = false;
 		} elseif ( $f->input_type == wfMsgForContent( 'sd_filter_daterange' ) ) {
@@ -852,8 +852,8 @@ END;
 		// category, escape now that we've (possibly) printed the
 		// categories list
 		if ( ( count( $this->next_level_subcategories ) == 0 ) &&
-		    ( count( $this->applied_filters ) == 0 ) &&
-		    ( count( $this->remaining_filters ) == 0 ) ) {
+			( count( $this->applied_filters ) == 0 ) &&
+			( count( $this->remaining_filters ) == 0 ) ) {
 			return $header;
 		}
 		$header .= '				<div id="drilldown-header">' . "\n";
@@ -898,9 +898,9 @@ END;
 				$temp_filters_array[$i]->search_term = null;
 				$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
 				$temp_filters_array[$i]->search_term = $removed_search_term;
-				$header .= "\n  " . '                           <span class="drilldown-header-value">~ \'' . $af->search_term . '\'</span> <a href="' . $remove_filter_url . '" title="' . wfMsg( 'sd_browsedata_removefilter' ) . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /> </a>';
+				$header .= "\n\t" . '<span class="drilldown-header-value">~ \'' . $af->search_term . '\'</span> <a href="' . $remove_filter_url . '" title="' . wfMsg( 'sd_browsedata_removefilter' ) . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /> </a>';
 			} elseif ( $af->lower_date != null || $af->upper_date != null ) {
-				$header .= "\n <span class=\"drilldown-header-value\">" . $af->lower_date_string . " - " . $af->upper_date_string . "</span>";
+				$header .= "\n\t<span class=\"drilldown-header-value\">" . $af->lower_date_string . " - " . $af->upper_date_string . "</span>";
 			}
 		}
 		$header .= "</div>\n";
@@ -971,7 +971,7 @@ END;
 	}
 
 	/*
-	 * Used to set URL for additional pages of results
+	 * Used to set URL for additional pages of results.
 	 */
 	function linkParameters() {
 		$params = array();
@@ -1085,11 +1085,19 @@ END;
 		// How else can we do this?
 		global $wgParser;
 		SMWOutputs::commitToParser( $wgParser );
-		foreach ( $wgParser->mOutput->mHeadItems as $key => $item ) {
-			$out->addHeadItem( $key, $item );
+		if ( ! is_null( $wgParser->mOutput ) ) {
+			// getHeadItems() was added in MW 1.16
+			if ( method_exists( $wgParser->getOutput(), 'getHeadItems' ) ) {
+				$headItems = $wgParser->getOutput()->getHeadItems();
+			} else {
+				$headItems = $wgParser->getOutput()->mHeadItems;
+			}
+			foreach ( $headItems as $key => $item ) {
+				$out->addHeadItem( $key, $item );
+			}
+			// Force one more parser function, so links appear.
+			$wgParser->replaceLinkHolders( $prtext );
  		}
-		// Force one more parser function, so links appear.
-		$wgParser->replaceLinkHolders( $prtext );
  
 		$html = array();
 		$html[] = $prtext;
