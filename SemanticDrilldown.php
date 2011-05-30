@@ -60,7 +60,7 @@ $wgAutoloadClasses['SDFilterValue'] = $sdgIP . '/includes/SD_FilterValue.php';
 $wgAutoloadClasses['SDAppliedFilter'] = $sdgIP . '/includes/SD_AppliedFilter.php';
 
 $wgHooks['smwInitProperties'][] = 'sdfInitProperties';
-$wgHooks['AdminLinks'][] = 'sdfAddToAdminLinks';
+$wgHooks['AdminLinks'][] = 'SDUtils::addToAdminLinks';
 $wgHooks['MagicWordwgVariableIDs'][] = 'SDUtils::addMagicWordVariableIDs';
 $wgHooks['LanguageGetMagic'][] = 'SDUtils::addMagicWordLanguage';
 $wgHooks['ParserBeforeTidy'][] = 'SDUtils::handleShowAndHide';
@@ -234,20 +234,5 @@ function sdfInitProperties() {
 			}
 		}
 	}
-	return true;
-}
-
-function sdfAddToAdminLinks( &$admin_links_tree ) {
-	$browse_search_section = $admin_links_tree->getSection( wfMsg( 'adminlinks_browsesearch' ) );
-	$sd_row = new ALRow( 'sd' );
-	$sd_row->addItem( ALItem::newFromSpecialPage( 'BrowseData' ) );
-	$sd_row->addItem( ALItem::newFromSpecialPage( 'Filters' ) );
-	$sd_row->addItem( ALItem::newFromSpecialPage( 'CreateFilter' ) );
-	$sd_name = wfMsg( 'specialpages-group-sd_group' );
-	$sd_docu_label = wfMsg( 'adminlinks_documentation', $sd_name );
-	$sd_row->addItem( AlItem::newFromExternalLink( "http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label ) );
-
-	$browse_search_section->addRow( $sd_row );
-
 	return true;
 }
