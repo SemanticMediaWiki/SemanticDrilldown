@@ -84,11 +84,24 @@ class SDUtils {
 		$options->limit = 10000;
 		$used_properties = smwfGetStore()->getPropertiesSpecial( $options );
 		foreach ( $used_properties as $property ) {
-			$all_properties[] = $property[0]->getWikiValue();
+			if ( $property[0] instanceof SMWDIProperty ) {
+				// SMW 1.6+
+				$propName = $property[0]->getKey();
+				if ( $propName{0} != '_' ) {
+					$all_properties[] = str_replace( '_', ' ', $propName );
+				}
+			} else {
+				$all_properties[] = $property[0]->getWikiValue();
+			}
 		}
 		$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial( $options );
 		foreach ( $unused_properties as $property ) {
-			$all_properties[] = $property->getWikiValue();
+			if ( $property instanceof SMWDIProperty ) {
+				// SMW 1.6+
+				$all_properties[] = str_replace( '_', ' ', $property->getKey() );
+			} else {
+				$all_properties[] = $property->getWikiValue();
+			}
 		}
 		// remove the special properties of Semantic Drilldown from this list...
 		global $sdgContLang;
