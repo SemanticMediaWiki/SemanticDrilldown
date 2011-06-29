@@ -2078,6 +2078,8 @@ $messages['mr'] = array(
  */
 $messages['ms'] = array(
 	'sd_browsedata_none' => 'Tiada',
+	'sd_browsedata_or' => 'atau',
+	'sd_createfilter_name' => 'Nama:',
 );
 
 /** Erzya (Эрзянь)
