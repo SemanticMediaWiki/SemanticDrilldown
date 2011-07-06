@@ -2533,7 +2533,7 @@ $messages['pt'] = array(
 	'sd_browsedata_daterangeend' => 'Fim:',
 	'sd_browsedata_novalues' => 'Não há valores para este filtro',
 	'filters' => 'Filtros',
-	'sd_filters_docu' => 'A {{SITENAME}} possui os seguintes filtros:',
+	'sd_filters_docu' => 'Na {{SITENAME}} existem os seguintes filtros:',
 	'createfilter' => 'Criar um filtro',
 	'sd_createfilter_name' => 'Nome:',
 	'sd_createfilter_property' => 'Propriedades que este filtro abrange:',
@@ -2551,13 +2551,13 @@ $messages['pt'] = array(
 	'sd_filter_usestimeperiod' => 'Utiliza $1 como seu período de tempo.',
 	'sd_filter_year' => 'Ano',
 	'sd_filter_month' => 'Mês',
-	'sd_filter_hasvalues' => 'Possui os valores $1.',
+	'sd_filter_hasvalues' => 'Tem os valores $1.',
 	'sd_filter_hasinputtype' => 'Tem o tipo de entrada $1.',
 	'sd_filter_combobox' => 'caixa de selecção',
 	'sd_filter_freetext' => 'texto',
 	'sd_filter_daterange' => 'intervalo de datas',
 	'sd_filter_requiresfilter' => 'Requer a presença do filtro $1.',
-	'sd_filter_haslabel' => 'Possui a etiqueta $1.',
+	'sd_filter_haslabel' => 'Tem a etiqueta $1.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
