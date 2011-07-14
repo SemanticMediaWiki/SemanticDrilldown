@@ -865,6 +865,7 @@ $messages['eo'] = array(
  * @author Crazymadlover
  * @author Dvdgmz
  * @author Imre
+ * @author Mor
  * @author Sanbec
  */
 $messages['es'] = array(
@@ -882,8 +883,8 @@ $messages['es'] = array(
 	'sd_browsedata_otherfilter' => 'Mostrar páginas con otro valor para este filtro',
 	'sd_browsedata_nonefilter' => 'Mostrar páginas sin valores para este filtro',
 	'sd_browsedata_or' => 'o',
-	'sd_browsedata_removefilter' => 'Remover este filtro',
-	'sd_browsedata_removesubcategoryfilter' => 'Remover este filtro de subcategoría',
+	'sd_browsedata_removefilter' => 'Quitar este filtro',
+	'sd_browsedata_removesubcategoryfilter' => 'Quitar este filtro de subcategoría',
 	'sd_browsedata_resetfilters' => 'Reestablecer filtros',
 	'sd_browsedata_addanothervalue' => 'Haga click en la flecha para agregar otro valor',
 	'sd_browsedata_daterangestart' => 'Inicio:',
