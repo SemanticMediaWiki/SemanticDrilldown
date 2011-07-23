@@ -10,6 +10,59 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 class SDUtils {
 
 	/**
+* Function to return the Property based on the xml passed from the PageSchema extension 
+*/
+	public static function createPageSchemasObject( $objectName, $xmlForField, &$object ) {
+		$sdarray = array();
+		if ( $objectName == "Filter" ) {
+			foreach ( $xmlForField->children() as $tag => $child ) {
+				if ( $tag == $objectName ) {
+					foreach ( $child->children() as $prop => $value) {
+						if( $prop == "Values" ){
+							$l_values = array();
+							foreach ( $value->children() as $val_i => $val ) {
+								$l_values[] = (string)$val;
+							}
+							$sdarray['Values'] = $l_values;
+						} else {
+							$sdarray[$prop] = (string)$value;
+						}
+					}
+				}
+			}
+			//Setting value specific to SF in 'sf' index. 
+			$object['sd'] = $sdarray;		
+		}
+	return true;
+}
+
+/**
+ *Thi Function parses the Field elements in the xml of the pages. Hooks for PageSchemas extension
+*/
+	public static function parseFieldElements( $field_xml, &$text_object ) {
+		foreach ( $field_xml->children() as $tag => $child ) {
+			if ( $tag == "Filter" ) {
+				$text = "";
+				$text = PageSchemas::tableMessageRowHTML( "paramAttr", "SemanticDrillDown", (string)$tag );
+				foreach ( $child->children() as $prop => $value) {
+					if( $prop == "Values" ){
+						$l_values = "";
+						foreach ( $value->children() as $val_i => $val ) {
+							$l_values .= $val.", ";
+						}
+						$text .= PageSchemas::tableMessageRowHTML("paramAttrMsg", $prop, $l_values );
+					} else {
+						$text .= PageSchemas::tableMessageRowHTML("paramAttrMsg", $prop, $value );
+					}
+				}
+				$text_object['sd']=$text;
+			}
+		}
+		return true;
+	}
+
+
+	/**
 	 * Helper function to handle getPropertyValues() in both SMW 1.6
 	 * and earlier versions.
 	 */
@@ -167,9 +220,18 @@ class SDUtils {
 	 */
 	static function loadFiltersForCategory( $category ) {
 		$filters = array();
+		$filters_ps = array();
 		$filter_names = SDUtils::getValuesForProperty( str_replace( ' ', '_', $category ), NS_CATEGORY, '_SD_F' );
 		foreach ( $filter_names as $filter_name ) {
 			$filters[] = SDFilter::load( $filter_name );
+		}
+		//Code to read from the pageSchema and return filters				
+		$pageSchemaObj = new PSSchema( $category );
+		if($pageSchemaObj->isPSDefined()){
+			//Assuming one Category has a single filter.
+			$filters_ps[] = SDFilter::loadAllFromPageSchema( $pageSchemaObj );						
+			$result_filters = array_merge($filters, $filters_ps);			
+			return $result_filters;
 		}
 		return $filters;
 	}
@@ -177,7 +239,7 @@ class SDUtils {
 	/**
 	 * Gets all the display parameters defined for a category
 	 */
-	static function getDisplayParamsForCategory( $category ) {
+	static function getDisplayParamsForCategory( $category ) {		
 		$all_display_params = SDUtils::getValuesForProperty( str_replace( ' ', '_', $category ), NS_CATEGORY, '_SD_DP' );
 
 		$return_display_params = array();
