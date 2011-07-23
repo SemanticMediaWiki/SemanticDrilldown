@@ -18,7 +18,41 @@ class SDFilter {
 	var $input_type = null;
 	var $allowed_values;
 	var $possible_applied_filters = array();
-
+	
+    static function loadAllFromPageSchema( $psSchemaObj ){
+		$filters_ps = array();		
+		$template_all = $psSchemaObj->getTemplates();						
+		foreach ( $template_all as $template ) {
+			$field_all = $template->getFields();
+			foreach( $field_all as $fieldObj ) { //for each Field, retrieve smw properties and fill $prop_name , $prop_type 																	
+				$f = new SDFilter();
+				$object_values = $fieldObj->getObject('Filter');//this returns an array with property values filled
+				$sd_array = $object_values['sd'];			
+				$smw_array = $fieldObj->getObject('Property');   //this returns an array with property values filled
+				$prop_array = $smw_array['smw'];
+				$f->name = $sd_array['Label'];
+				$f->property = $prop_array['name'];
+				$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', "\'" ), $f->property );
+				$f->is_relation = true;				
+				$f->input_type = $sd_array['InputType'];				
+				if ( $sd_array['ValuesFromCategory'] != null ) {
+					$f->category = $sd_array['ValuesFromCategory'];
+					$f->allowed_values = SDUtils::getCategoryChildren( $f->category, false, 5 );
+				} elseif ( $sd_array['TimePeriod'] != null ) {
+					$f->time_period = $sd_array['TimePeriod'];
+					$f->allowed_values = array();
+				} elseif ( $f->is_boolean ) {
+					$f->allowed_values = array( '0', '1' );
+				} else {
+					$values = $sd_array['Values'];
+					$f->allowed_values = $values;
+				}				
+				$filters_ps[] = $f ;
+			}
+		}				
+		return $filters_ps;
+	}
+	
 	static function load( $filter_name ) {
 		$f = new SDFilter();
 		$f->name = $filter_name;
