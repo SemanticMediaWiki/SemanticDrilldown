@@ -67,7 +67,8 @@ $wgHooks['ParserBeforeTidy'][] = 'SDUtils::handleShowAndHide';
 
 $wgPageProps['hidefromdrilldown'] = 'Whether or not the page is set as HIDEFROMDRILLDOWN';
 $wgPageProps['showindrilldown'] = 'Whether or not the page is set as SHOWINDRILLDOWN';
-
+$wgHooks['PSParseFieldElements'][] = 'SDUtils::parseFieldElements' ; //Hook for  creating Pages
+$wgHooks['PageSchemasGetObject'][] = 'SDUtils::createPageSchemasObject' ; //Hook for  returning PageSchema(extension)  object from a given xml 
 
 # ##
 # This is the path to your installation of Semantic Drilldown as
