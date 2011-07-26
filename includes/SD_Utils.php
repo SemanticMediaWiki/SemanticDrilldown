@@ -229,7 +229,7 @@ class SDUtils {
 		$pageSchemaObj = new PSSchema( $category );
 		if($pageSchemaObj->isPSDefined()){
 			//Assuming one Category has a single filter.
-			$filters_ps[] = SDFilter::loadAllFromPageSchema( $pageSchemaObj );						
+			$filters_ps = SDFilter::loadAllFromPageSchema( $pageSchemaObj );						
 			$result_filters = array_merge($filters, $filters_ps);			
 			return $result_filters;
 		}
