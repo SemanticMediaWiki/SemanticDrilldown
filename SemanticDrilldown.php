@@ -69,6 +69,7 @@ $wgPageProps['hidefromdrilldown'] = 'Whether or not the page is set as HIDEFROMD
 $wgPageProps['showindrilldown'] = 'Whether or not the page is set as SHOWINDRILLDOWN';
 $wgHooks['PSParseFieldElements'][] = 'SDUtils::parseFieldElements' ; //Hook for  creating Pages
 $wgHooks['PageSchemasGetObject'][] = 'SDUtils::createPageSchemasObject' ; //Hook for  returning PageSchema(extension)  object from a given xml 
+$wgHooks['getHtmlTextForFieldInputs'][] = 'SDUtils::getHtmlTextForPS' ; //Hook for  retuning html text to PS schema
 
 # ##
 # This is the path to your installation of Semantic Drilldown as
