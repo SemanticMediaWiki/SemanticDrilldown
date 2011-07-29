@@ -35,7 +35,80 @@ class SDUtils {
 		}
 	return true;
 }
+	
+	public static function getHtmlTextForPS( &$js_extensions ,&$text_extensions ) {	
+		global $wgContLang;
+		
+		$text = "";
+		$text .= '<p><legend>semanticDrillDown:Filter</legend> </p>';
+		$name_label = wfMsg( 'sd_createfilter_name' );
+		$property_label = wfMsg( 'sd_createfilter_property' );
+		$label_label = wfMsg( 'sd_createfilter_label' );
+		$text .= <<<END
+		<p>$name_label <input size="25" name="sd_filter_name_starter" value=""></p>	
+END;
 
+		$values_from_property_label = wfMsg( 'sd_createfilter_usepropertyvalues' );
+		$values_from_category_label = wfMsg( 'sd_createfilter_usecategoryvalues' );
+		$date_values_label = wfMsg( 'sd_createfilter_usedatevalues' );
+		$enter_values_label = wfMsg( 'sd_createfilter_entervalues' );
+		// need both label and value, in case user's language is different
+		// from wiki's
+		$year_label = wfMsg( 'sd_filter_year' );
+		$year_value = wfMsgForContent( 'sd_filter_year' );
+		$month_label = wfMsg( 'sd_filter_month' );
+		$month_value = wfMsgForContent( 'sd_filter_month' );
+		$input_type_label = wfMsg( 'sd_createfilter_inputtype' );
+		$values_list_label = wfMsg( 'sd_createfilter_listofvalues' );
+		// same as for time values
+		$combo_box_label = wfMsg( 'sd_filter_combobox' );
+		$combo_box_value = wfMsgForContent( 'sd_filter_combobox' );
+		$date_range_label = wfMsg( 'sd_filter_daterange' );
+		$date_range_value = wfMsgForContent( 'sd_filter_daterange' );
+		$require_filter_label = wfMsg( 'sd_createfilter_requirefilter' );
+		$text .= <<<END
+		
+		<p><input type="radio" name="sd_values_source_starter" checked value="property">
+		$values_from_property_label
+		</p>
+		<p><input type="radio" name="sd_values_source_starter" value="category">
+		$values_from_category_label
+		<select id="category_dropdown" name="sd_category_name_starter">
+
+END;
+			
+		$categories = SDUtils::getTopLevelCategories();
+		foreach ( $categories as $category ) {
+			$category = str_replace( '_', ' ', $category );
+			$text .= "	<option>$category</option>\n";
+		}
+		$text .= <<<END
+		</select>
+		</p>
+		<p><input type="radio" name="sd_values_source_starter" value="dates">
+		$date_values_label
+		<select id="time_period_dropdown" name="sd_time_period_starter">
+		<option value="$year_value">$year_label</option>
+		<option value="$month_value">$month_label</option>
+		</select>
+		</p>
+		<p><input type="radio" name="sd_values_source_starter" value="manual">
+		$enter_values_label <input size="40" name="sd_filter_values_starter" value="">
+		</p>
+		<p>$input_type_label
+		<select id="input_type_dropdown" name="sd_input_type_starter">
+		<option value="">$values_list_label</option>
+		<option value="$combo_box_value">$combo_box_label</option>
+		<option value="$date_range_value">$date_range_label</option>
+		</select>
+		</p>
+		
+
+END;
+		
+		$text_extensions['sd'] = $text;
+		return true;
+	}
 /**
  *Thi Function parses the Field elements in the xml of the pages. Hooks for PageSchemas extension
 */
