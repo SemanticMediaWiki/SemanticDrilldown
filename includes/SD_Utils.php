@@ -35,7 +35,42 @@ class SDUtils {
 		}
 	return true;
 }
-	
+	public static function getXMLTextForPS( $wgRequest, &$text_extensions ){	
+		$Xmltext = "";
+		$templateNum = -1;
+		$Xmltext .= '<Filter>';
+		foreach ( $wgRequest->getValues() as $var => $val ) {
+			if(substr($var,0,15) == 'sd_filter_name_'){
+				$templateNum = substr($var,15,1);			
+				$Xmltext .= '<Label>'.$val.'</Label>';
+			}else if(substr($var,0,17) == 'sd_values_source_'){
+				if ( $val == 'category' ) {
+					$Xmltext .= '<ValuesFromCategory>'.$wgRequest->getText('sd_category_name_'.$templateNum).'</ValuesFromCategory>';
+				}else if ( $val == 'dates' ) {
+					 $Xmltext .= '<TimePeriod>'.$wgRequest->getText('sd_time_period_'.$templateNum).'</TimePeriod>';
+				}else if ( $val == 'manual' ) {
+					$filter_mannual_values_str = $wgRequest->getText('sd_filter_values_'.$templateNum);
+					// replace the comma substitution character that has no chance of
+					// being included in the values list - namely, the ASCII beep
+					$listSeparator = ',';
+					$filter_mannual_values_str = str_replace( "\\$listSeparator", "\a", $filter_mannual_values_str );
+					$filter_mannual_values_array = explode( $listSeparator, $filter_mannual_values_str );
+					$Xmltext .= '<Values>';
+					foreach ( $filter_mannual_values_array as $i => $value ) {
+						// replace beep back with comma, trim
+						$value = str_replace( "\a", $listSeparator, trim( $value ) );
+						$Xmltext .= '<Value>'.$value.'</Value>';						
+					}
+					$Xmltext .= '</Values>';
+				}
+			}else if( substr($var,0,14) == 'sd_input_type_'){
+				$Xmltext .= '<InputType>'.$val.'</InputType>';
+			}
+		}
+		$Xmltext .= '</Filter>';
+		$text_extensions['sd'] = $Xmltext;
+		return true;
+	}
 	public static function getHtmlTextForPS( &$js_extensions ,&$text_extensions ) {	
 		global $wgContLang;
 		
