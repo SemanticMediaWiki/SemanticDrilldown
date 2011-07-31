@@ -38,9 +38,10 @@ class SDUtils {
 	public static function getXMLTextForPS( $wgRequest, &$text_extensions ){	
 		$Xmltext = "";
 		$templateNum = -1;
-		$Xmltext .= '<Filter>';
+		$xml_text_array = array();		
 		foreach ( $wgRequest->getValues() as $var => $val ) {
 			if(substr($var,0,15) == 'sd_filter_name_'){
+				$Xmltext .= '<Filter>';
 				$templateNum = substr($var,15,1);			
 				$Xmltext .= '<Label>'.$val.'</Label>';
 			}else if(substr($var,0,17) == 'sd_values_source_'){
@@ -65,10 +66,13 @@ class SDUtils {
 				}
 			}else if( substr($var,0,14) == 'sd_input_type_'){
 				$Xmltext .= '<InputType>'.$val.'</InputType>';
+				$Xmltext .= '</Filter>';
+				$xml_text_array[] = $Xmltext;
+				$Xmltext = '';
 			}
 		}
-		$Xmltext .= '</Filter>';
-		$text_extensions['sd'] = $Xmltext;
+		
+		$text_extensions['sd'] = $xml_text_array;
 		return true;
 	}
 	public static function getHtmlTextForPS( &$js_extensions ,&$text_extensions ) {	
