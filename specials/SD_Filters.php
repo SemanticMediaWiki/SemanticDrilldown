@@ -5,8 +5,6 @@
  * @author Yaron Koren
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
 class SDFilters extends SpecialPage {
 
 	/**
@@ -15,7 +13,7 @@ class SDFilters extends SpecialPage {
 	function __construct() {
 		parent::__construct( 'Filters' );
 		// Backwards compatibility for MediaWiki < 1.16
-		if ( function_exists( 'wfLoadExtensionMessages' ) ) {
+		if ( version_compare( $GLOBALS['wgVersion'], '1.16', '<' ) ) {
 			wfLoadExtensionMessages( 'SemanticDrilldown' );
 		}
 	}

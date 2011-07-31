@@ -16,7 +16,7 @@ class SDBrowseData extends IncludableSpecialPage {
 	public function __construct() {
 		parent::__construct( 'BrowseData' );
 		// Backwards compatibility for MediaWiki < 1.16
-		if ( function_exists( 'wfLoadExtensionMessages' ) ) {
+		if ( version_compare( $GLOBALS['wgVersion'], '1.16', '<' ) ) {
 			wfLoadExtensionMessages( 'SemanticDrilldown' );
 		}
 	}
