@@ -171,7 +171,7 @@ END;
 		$xml_text_array = array();		
 		foreach ( $wgRequest->getValues() as $var => $val ) {
 			if(substr($var,0,15) == 'sd_filter_name_'){
-				$Xmltext .= '<Filter>';
+				$Xmltext .= '<semanticdrilldown:Filter>';
 				$templateNum = substr($var,15,1);			
 				$Xmltext .= '<Label>'.$val.'</Label>';
 			}else if(substr($var,0,17) == 'sd_values_source_'){
@@ -196,7 +196,7 @@ END;
 				}
 			}else if( substr($var,0,14) == 'sd_input_type_'){
 				$Xmltext .= '<InputType>'.$val.'</InputType>';
-				$Xmltext .= '</Filter>';
+				$Xmltext .= '</semanticdrilldown:Filter>';
 				$xml_text_array[] = $Xmltext;
 				$Xmltext = '';
 			}
