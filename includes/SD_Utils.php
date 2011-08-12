@@ -71,96 +71,102 @@ class SDUtils {
 				$field_count++;	
 				$sd_array = $field->getObject('Filter');//this returns an array with property values filled
 				$filter_array = $sd_array['sd'];
-				$html_text .= <<<END
-		<p>$name_label <input size="25" name="sd_filter_name_starter" value="$filter_array[Label]" ></p>	
-END;
-				$html_text .= <<<END
-		
-		<p><input type="radio" name="sd_values_source_starter" checked value="property">
-		$values_from_property_label
-		</p>
-END;
-		//wfDebugLog( 'myextension', 'Something is not right: ' . print_r( $html_text, true ) );
+				$html_text .= '<p>$name_label <input size="25" name="sd_filter_name_starter" value="'.$filter_array['Label'].'" ></p>';
+				$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="property">'.
+		$values_from_property_label.'
+		</p>';
 		$categories = SDUtils::getTopLevelCategories();
 		$option_html_text = "";
-		foreach ( $categories as $category ) {
-			$category = str_replace( '_', ' ', $category );
-			$option_html_text .= "	<option>$category</option>\n";
-		}
-		if( $filter_array['ValuesFromCategory'] != null){
-			$html_text .= '
-			<p><input type="radio" name="sd_values_source_starter" checked value="category">'.
-		$values_from_category_label.'
-		<select id="category_dropdown" name="sd_category_name_starter">';
-			$option_html_text = "";
 			foreach ( $categories as $category ) {
 				$category = str_replace( '_', ' ', $category );
-				if( $category == $filter_array["ValuesFromCategory"]) {
-					$option_html_text .= '	<option selected>'.$category.'</option>\n';
-				}else{
-					$option_html_text .= '	<option>'.$category.'</option>\n';
-				}
+				$option_html_text .= "	<option>$category</option>\n";
 			}
-		}else{
-			$html_text .= '<p><input type="radio" name="sd_values_source_starter"  value="category">'.
-		$values_from_category_label.'
-		<select id="category_dropdown" name="sd_category_name_starter">';
-		}
-		$html_text .= $option_html_text;
-		$html_text .= '</select></p>';
-		
-	if( $filter_array["TimePeriod"] != null ){
-		$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="dates">'.
-		$date_values_label.'
-		<select id="time_period_dropdown" name="sd_time_period_starter">';
+			if( $filter_array['ValuesFromCategory'] != null){
+				$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="category">'.
+			$values_from_category_label.'
+			<select id="category_dropdown" name="sd_category_name_starter">';
+				$option_html_text = "";
+				foreach ( $categories as $category ) {
+					$category = str_replace( '_', ' ', $category );
+					if( $category == $filter_array["ValuesFromCategory"]) {
+						$option_html_text .= '	<option selected>'.$category.'</option>\n';
+					}else{
+						$option_html_text .= '	<option>'.$category.'</option>\n';
+					}
+				}
+			}else{
+				$html_text .= '<p><input type="radio" name="sd_values_source_starter"  value="category">'.
+			$values_from_category_label.'
+			<select id="category_dropdown" name="sd_category_name_starter">';
+			}
+			$html_text .= $option_html_text;
+			$html_text .= '</select></p>';
+			
+		if( $filter_array["TimePeriod"] != null ){
+			$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="dates">'.
+			$date_values_label.'
+			<select id="time_period_dropdown" name="sd_time_period_starter">';
 
-		if($filter_array['TimePeriod'] == $year_value ){
-			$html_text .= '<option selected value="'.$year_value.'">'.$year_label.'</option>
-		<option value="'.$month_value.'">'.$month_label.'</option>';
-		}else{
-			$html_text .= '<option  value="'.$year_value.'">'.$year_label.'</option>
-		<option selected value="'.$month_value.'">'.$month_label.'</option>';
-		}
+			if($filter_array['TimePeriod'] == $year_value ){
+				$html_text .= '<option selected value="'.$year_value.'">'.$year_label.'</option>
+			<option value="'.$month_value.'">'.$month_label.'</option>';
+			}else{
+				$html_text .= '<option  value="'.$year_value.'">'.$year_label.'</option>
+			<option selected value="'.$month_value.'">'.$month_label.'</option>';
+			}
+			
+			$html_text .= '</select>
+			</p>';
 		
-		$html_text .= '</select>
-		</p>';
-	
-	}else{
-		$html_text .= '<p><input type="radio" name="sd_values_source_starter"  value="dates">'.
-		$date_values_label.'
-		<select id="time_period_dropdown" name="sd_time_period_starter">
-		<option value="'.$year_value.'">'.$year_label.'</option>
-		<option value="'.$month_value.'">'.$month_label.'</option>
-		</select>
-		</p>';
-	}
-	if( $filter_array['Values'] != null){
-		$values_array = $filter_array['Values'];
-		$values_str = "";
-		foreach($values_array as $value)
-		{
-			$values_str .= $value.', ';
+		}else{
+			$html_text .= '<p><input type="radio" name="sd_values_source_starter"  value="dates">'.
+			$date_values_label.'
+			<select id="time_period_dropdown" name="sd_time_period_starter">
+			<option value="'.$year_value.'">'.$year_label.'</option>
+			<option value="'.$month_value.'">'.$month_label.'</option>
+			</select>
+			</p>';
 		}
-		$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="manual">'.
-		$enter_values_label.' <input size="40" name="sd_filter_values_starter" value=".'.$values_str.'" >
-		</p>';
-	}else{
-		$html_text .= '<p><input type="radio" name="sd_values_source_starter" value="manual">'.
-		$enter_values_label.' <input size="40" name="sd_filter_values_starter" value="">
-		</p>';
-	}
-	
-		$html_text .= '<p>'.$input_type_label.'
-		<select id="input_type_dropdown" name="sd_input_type_starter">
-		<option value="">'.$values_list_label.'</option>
-		<option value="'.$combo_box_value.'">'.$combo_box_label.'</option>
-		<option value="'.$date_range_value.'">'.$date_range_label.'</option>
-		</select>
-		</p>';
-					
+		if( $filter_array['Values'] != null){
+			$values_array = $filter_array['Values'];
+			$values_str = "";
+			foreach($values_array as $value)
+			{
+				$values_str .= $value.', ';
+			}
+			$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="manual">'.
+			$enter_values_label.' <input size="40" name="sd_filter_values_starter" value=".'.$values_str.'" >
+			</p>';
+		}else{
+			$html_text .= '<p><input type="radio" name="sd_values_source_starter" value="manual">'.
+			$enter_values_label.' <input size="40" name="sd_filter_values_starter" value="">
+			</p>';
+		}
+		if( $filter_array['InputType'] != null){
+			$input_type_val = $filter_array['InputType'];
+			$html_text .= '<p>'.$input_type_label.'
+			<select id="input_type_dropdown" name="sd_input_type_starter">
+			<option selected value="">'.$values_list_label.'</option>';
+			if( $input_type_val == $combo_box_value){
+			$html_text .= '<option selected value="'.$combo_box_value.'">'.$combo_box_label.'</option>
+			<option value="'.$date_range_value.'">'.$date_range_label.'</option>
+			</select>
+			</p>';		
+			}else if( $input_type_val == $date_range_value ){
+			$html_text .= '<option value="'.$combo_box_value.'">'.$combo_box_label.'</option>
+			<option selected value="'.$date_range_value.'">'.$date_range_label.'</option>
+			</select>
+			</p>';		
+			}else{
+			$html_text .= '<option value="'.$combo_box_value.'">'.$combo_box_label.'</option>
+			<option value="'.$date_range_value.'">'.$date_range_label.'</option>
+			</select>
+			</p>';			
+			}
+		}								
 		$html_text_array[] = $html_text;
 		$html_text = "";
-			}
+		}
 		}
 		$text_extensions['sd'] = $html_text_array;
 		return true;
