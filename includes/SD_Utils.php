@@ -67,11 +67,11 @@ class SDUtils {
 			$field_all = $template->getFields();			
 			$field_count = 0; //counts the number of fields			
 			foreach( $field_all as $field ) {
-				$html_text .= '<p><legend>semanticDrillDown:Filter</legend> </p>';
+				$html_text .= '<fieldset style="background: #800080;"><p><legend>Filter</legend> </p>';
 				$field_count++;	
 				$sd_array = $field->getObject('Filter');//this returns an array with property values filled
 				$filter_array = $sd_array['sd'];
-				$html_text .= '<p>$name_label <input size="25" name="sd_filter_name_starter" value="'.$filter_array['Label'].'" ></p>';
+				$html_text .= '<p>'.$name_label.' <input size="25" name="sd_filter_name_starter" value="'.$filter_array['Label'].'" ></p>';
 				$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="property">'.
 		$values_from_property_label.'
 		</p>';
@@ -161,7 +161,7 @@ class SDUtils {
 			$html_text .= '<option value="'.$combo_box_value.'">'.$combo_box_label.'</option>
 			<option value="'.$date_range_value.'">'.$date_range_label.'</option>
 			</select>
-			</p>';			
+			</p></fieldset>';			
 			}
 		}								
 		$html_text_array[] = $html_text;
@@ -215,13 +215,12 @@ class SDUtils {
 		global $wgContLang;
 		
 		$text = "";
-		$text .= '<p><legend>semanticDrillDown:Filter</legend> </p>';
+		$text .= '<fieldset style="background: #800080;"><p><legend>Filter</legend> </p>';
 		$name_label = wfMsg( 'sd_createfilter_name' );
 		$property_label = wfMsg( 'sd_createfilter_property' );
 		$label_label = wfMsg( 'sd_createfilter_label' );
-		$text .= <<<END
-		<p>$name_label <input size="25" name="sd_filter_name_starter" value=""></p>	
-END;
+		$text .= '
+		<p>'.$name_label.' <input size="25" name="sd_filter_name_starter" value=""></p>	';
 
 		$values_from_property_label = wfMsg( 'sd_createfilter_usepropertyvalues' );
 		$values_from_category_label = wfMsg( 'sd_createfilter_usecategoryvalues' );
@@ -277,7 +276,7 @@ END;
 		<option value="$date_range_value">$date_range_label</option>
 		</select>
 		</p>
-		
+		</fieldset>
 
 END;
 		
