@@ -2342,7 +2342,7 @@ $messages['oc'] = array(
 	'sd_filter_haslabel' => 'Dispausa del labèl $1.',
 );
 
-/** Ossetic (Иронау)
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
