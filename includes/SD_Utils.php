@@ -67,7 +67,7 @@ class SDUtils {
 			$field_all = $template->getFields();			
 			$field_count = 0; //counts the number of fields			
 			foreach( $field_all as $field ) {
-				$html_text .= '<fieldset style="background: #FF0080;"><legend>Filter</legend>';
+				$html_text .= '<fieldset style="background: #FDD;"><legend>Filter</legend>';
 				$field_count++;	
 				$sd_array = $field->getObject('Filter');//this returns an array with property values filled
 				$filter_array = $sd_array['sd'];
