@@ -151,12 +151,12 @@ class SDUtils {
 			$html_text .= '<option selected value="'.$combo_box_value.'">'.$combo_box_label.'</option>
 			<option value="'.$date_range_value.'">'.$date_range_label.'</option>
 			</select>
-			</p>';		
+			</p></fieldset>';		
 			}else if( $input_type_val == $date_range_value ){
 			$html_text .= '<option value="'.$combo_box_value.'">'.$combo_box_label.'</option>
 			<option selected value="'.$date_range_value.'">'.$date_range_label.'</option>
 			</select>
-			</p>';		
+			</p></fieldset>';		
 			}else{
 			$html_text .= '<option value="'.$combo_box_value.'">'.$combo_box_label.'</option>
 			<option value="'.$date_range_value.'">'.$date_range_label.'</option>
