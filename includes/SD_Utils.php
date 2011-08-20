@@ -142,7 +142,8 @@ class SDUtils {
 			$enter_values_label.' <input size="40" name="sd_filter_values_starter" value="">
 			</p>';
 		}
-		if( $filter_array['InputType'] != null){
+		
+		if( $filter_array['InputType'] != null){		
 			$input_type_val = $filter_array['InputType'];
 			$html_text .= '<p>'.$input_type_label.'
 			<select id="input_type_dropdown" name="sd_input_type_starter">
@@ -151,19 +152,29 @@ class SDUtils {
 			$html_text .= '<option selected value="'.$combo_box_value.'">'.$combo_box_label.'</option>
 			<option value="'.$date_range_value.'">'.$date_range_label.'</option>
 			</select>
-			</p></fieldset>';		
+			</p>';		
 			}else if( $input_type_val == $date_range_value ){
 			$html_text .= '<option value="'.$combo_box_value.'">'.$combo_box_label.'</option>
 			<option selected value="'.$date_range_value.'">'.$date_range_label.'</option>
 			</select>
-			</p></fieldset>';		
+			</p>';		
 			}else{
 			$html_text .= '<option value="'.$combo_box_value.'">'.$combo_box_label.'</option>
 			<option value="'.$date_range_value.'">'.$date_range_label.'</option>
 			</select>
-			</p></fieldset>';			
+			</p>';			
 			}
-		}								
+		}else{		
+			$html_text .= '<p>'.$input_type_label.'
+			<select id="input_type_dropdown" name="sd_input_type_starter">
+			<option selected value="">'.$values_list_label.'</option>';	
+			$html_text .= '<option value="'.$combo_box_value.'">'.$combo_box_label.'</option>
+			<option value="'.$date_range_value.'">'.$date_range_label.'</option>
+			</select>
+			</p>';						
+		}
+		
+		$html_text .= '</fieldset>';	
 		$html_text_array[] = $html_text;
 		$html_text = "";
 		}
@@ -215,7 +226,7 @@ class SDUtils {
 		global $wgContLang;
 		
 		$text = "";
-		$text .= '<fieldset style="background: #FF0080;"><legend>Filter</legend>';
+		$text .= '<fieldset style="background: #FDD;"><legend>Filter</legend>';
 		$name_label = wfMsg( 'sd_createfilter_name' );
 		$property_label = wfMsg( 'sd_createfilter_property' );
 		$label_label = wfMsg( 'sd_createfilter_label' );
