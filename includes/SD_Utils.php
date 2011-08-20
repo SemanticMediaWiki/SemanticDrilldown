@@ -142,7 +142,6 @@ class SDUtils {
 			$enter_values_label.' <input size="40" name="sd_filter_values_starter" value="">
 			</p>';
 		}
-		
 		if( $filter_array['InputType'] != null){		
 			$input_type_val = $filter_array['InputType'];
 			$html_text .= '<p>'.$input_type_label.'
