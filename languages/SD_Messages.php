@@ -2033,6 +2033,7 @@ $messages['mn'] = array(
 );
 
 /** Marathi (मराठी)
+ * @author Htt
  * @author Kaustubh
  * @author Mahitgar
  */
@@ -2068,7 +2069,7 @@ $messages['mr'] = array(
 	'sd_filter_getsvaluesfromcategory' => 'तो $1 या वर्गातून किंमती घेतो.',
 	'sd_filter_usestimeperiod' => 'तो $1 कालावधी वापरतो.',
 	'sd_filter_year' => 'वर्ष',
-	'sd_filter_month' => 'महीना',
+	'sd_filter_month' => 'महिना',
 	'sd_filter_hasvalues' => 'त्यामध्ये $1 या किंमती आहेत.',
 	'sd_filter_requiresfilter' => 'या साठी $1 हा फिल्टर असणे आवश्यक आहे.',
 	'sd_filter_haslabel' => 'त्याला $1 हे लेबल आहे.',
@@ -2156,7 +2157,7 @@ $messages['nl'] = array(
 	'sd_createfilter_listofvalues' => 'lijst met waarden (standaard)',
 	'sd_createfilter_requirefilter' => 'Selectie van een andere filter voor deze filter zichtbaar is vereisen:',
 	'sd_createfilter_label' => 'Label voor deze filter (optioneel):',
-	'sd_blank_error' => 'mag niet leeg zijn',
+	'sd_blank_error' => 'mag niet leeg blijven',
 	'sd_filter_coversproperty' => 'Deze filter heeft betrekking op de eigenschap $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Het haalt de waarden van de categorie $1.',
 	'sd_filter_usestimeperiod' => 'Het gebruikt $1 als de tijdsduur.',
