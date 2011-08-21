@@ -14,7 +14,7 @@ class SDUtils {
 */
 	public static function createPageSchemasObject( $objectName, $xmlForField, &$object ) {
 		$sdarray = array();
-		if ( $objectName == "Filter" ) {
+		if ( $objectName == "semanticdrilldown_Filter" ) {
 			foreach ( $xmlForField->children() as $tag => $child ) {
 				if ( $tag == $objectName ) {
 					foreach ( $child->children() as $prop => $value) {
@@ -69,7 +69,7 @@ class SDUtils {
 			foreach( $field_all as $field ) {
 				$html_text .= '<fieldset style="background: #FDD;"><legend>Filter</legend>';
 				$field_count++;	
-				$sd_array = $field->getObject('Filter');//this returns an array with property values filled
+				$sd_array = $field->getObject('semanticdrilldown_Filter');//this returns an array with property values filled
 				$filter_array = $sd_array['sd'];
 				$html_text .= '<p>'.$name_label.' <input size="25" name="sd_filter_name_starter" value="'.$filter_array['Label'].'" ></p>';
 				$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="property">'.
@@ -187,7 +187,7 @@ class SDUtils {
 		$xml_text_array = array();		
 		foreach ( $wgRequest->getValues() as $var => $val ) {
 			if(substr($var,0,15) == 'sd_filter_name_'){
-				$Xmltext .= '<semanticdrilldown:Filter>';
+				$Xmltext .= '<semanticdrilldown_Filter>';
 				$templateNum = substr($var,15,1);			
 				$Xmltext .= '<Label>'.$val.'</Label>';
 			}else if(substr($var,0,17) == 'sd_values_source_'){
@@ -212,7 +212,7 @@ class SDUtils {
 				}
 			}else if( substr($var,0,14) == 'sd_input_type_'){
 				$Xmltext .= '<InputType>'.$val.'</InputType>';
-				$Xmltext .= '</semanticdrilldown:Filter>';
+				$Xmltext .= '</semanticdrilldown_Filter>';
 				$xml_text_array[] = $Xmltext;
 				$Xmltext = '';
 			}
@@ -298,7 +298,7 @@ END;
 */
 	public static function parseFieldElements( $field_xml, &$text_object ) {
 		foreach ( $field_xml->children() as $tag => $child ) {
-			if ( $tag == "Filter" ) {
+			if ( $tag == "semanticdrilldown_Filter" ) {
 				$text = "";
 				$text = PageSchemas::tableMessageRowHTML( "paramAttr", "SemanticDrillDown", (string)$tag );
 				foreach ( $child->children() as $prop => $value) {
