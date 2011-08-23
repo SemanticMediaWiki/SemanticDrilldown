@@ -30,22 +30,30 @@ class SDFilter {
 				$sd_array = $object_values['sd'];			
 				$smw_array = $fieldObj->getObject('semanticmediawiki_Property');   //this returns an array with property values filled
 				$prop_array = $smw_array['smw'];
-				$f->name = $sd_array['Label'];
+				if ( array_key_exists( 'Label', $sd_array ) ) {
+					$f->name = $sd_array['Label'];
+				} else {
+					$f->name = $prop_array['name'];
+				}
 				$f->property = $prop_array['name'];
 				$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', "\'" ), $f->property );
 				$f->is_relation = true;				
+				if ( array_key_exists( 'Type', $prop_array ) && $prop_array['Type'] != 'Page' ) {
+					$f->is_relation = false;
+				}
 				$f->input_type = $sd_array['InputType'];				
-				if ( $sd_array['ValuesFromCategory'] != null ) {
+				if ( array_key_exists( 'ValuesFromCategory', $sd_array ) ) {
 					$f->category = $sd_array['ValuesFromCategory'];
 					$f->allowed_values = SDUtils::getCategoryChildren( $f->category, false, 5 );
-				} elseif ( $sd_array['TimePeriod'] != null ) {
+				} elseif ( array_key_exists( 'TimePeriod', $sd_array ) ) {
 					$f->time_period = $sd_array['TimePeriod'];
 					$f->allowed_values = array();
 				} elseif ( $f->is_boolean ) {
 					$f->allowed_values = array( '0', '1' );
+				} elseif ( array_key_exists( 'Values', $sd_array ) ) {
+					$f->allowed_values = $sd_array['Values'];
 				} else {
-					$values = $sd_array['Values'];
-					$f->allowed_values = $values;
+					$f->allowed_values = array();
 				}				
 				$filters_ps[] = $f ;
 			}
