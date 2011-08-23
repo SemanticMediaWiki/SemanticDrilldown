@@ -26,9 +26,9 @@ class SDFilter {
 			$field_all = $template->getFields();
 			foreach( $field_all as $fieldObj ) { //for each Field, retrieve smw properties and fill $prop_name , $prop_type 																	
 				$f = new SDFilter();
-				$object_values = $fieldObj->getObject('Filter');//this returns an array with property values filled
+				$object_values = $fieldObj->getObject('semanticdrilldown_Filter');//this returns an array with property values filled
 				$sd_array = $object_values['sd'];			
-				$smw_array = $fieldObj->getObject('Property');   //this returns an array with property values filled
+				$smw_array = $fieldObj->getObject('semanticmediawiki_Property');   //this returns an array with property values filled
 				$prop_array = $smw_array['smw'];
 				$f->name = $sd_array['Label'];
 				$f->property = $prop_array['name'];
