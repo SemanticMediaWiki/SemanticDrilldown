@@ -70,7 +70,7 @@ $wgPageProps['showindrilldown'] = 'Whether or not the page is set as SHOWINDRILL
 $wgHooks['PSParseFieldElements'][] = 'SDUtils::parseFieldElements' ; //Hook for  creating Pages
 $wgHooks['PageSchemasGetObject'][] = 'SDUtils::createPageSchemasObject' ; //Hook for  returning PageSchema(extension)  object from a given xml 
 $wgHooks['getHtmlTextForFieldInputs'][] = 'SDUtils::getHtmlTextForPS' ; //Hook for  retuning html text to PS schema
-$wgHooks['getXmlTextForFieldInputs'][] = 'SDUtils::getXMLTextForPS' ; //Hook for  retuning html text to PS schema
+$wgHooks['PageSchemasGetFieldXML'][] = 'SDUtils::getFieldXMLForPS' ; //Hook for  retuning html text to PS schema
 $wgHooks['getFilledHtmlTextForFieldInputs'][] = 'SDUtils::getFilledHtmlTextForPS' ; //Hook for  retuning html text to PS schema
 
 

@@ -10,8 +10,8 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 class SDUtils {
 
 	/**
-* Function to return the Property based on the xml passed from the PageSchema extension 
-*/
+	* Function to return the Property based on the xml passed from the PageSchema extension
+	*/
 	public static function createPageSchemasObject( $objectName, $xmlForField, &$object ) {
 		$sdarray = array();
 		if ( $objectName == "semanticdrilldown_Filter" ) {
@@ -30,13 +30,13 @@ class SDUtils {
 					}
 				}
 			}
-			//Setting value specific to SF in 'sf' index. 
-			$object['sd'] = $sdarray;		
+			$object['sd'] = $sdarray;
 		}
-	return true;
-}
-    public static function getFilledHtmlTextForPS( $pageSchemaObj, &$text_extensions ){
-			$text = "";		
+		return true;
+	}
+
+	public static function getFilledHtmlTextForPS( $pageSchemaObj, &$text_extensions ){
+		$text = "";
 		$name_label = wfMsg( 'sd_createfilter_name' );
 		$property_label = wfMsg( 'sd_createfilter_property' );
 		$label_label = wfMsg( 'sd_createfilter_label' );
@@ -58,172 +58,158 @@ class SDUtils {
 		$date_range_label = wfMsg( 'sd_filter_daterange' );
 		$date_range_value = wfMsgForContent( 'sd_filter_daterange' );
 		$require_filter_label = wfMsg( 'sd_createfilter_requirefilter' );
-		
+
 		$template_fields = array();
-		$html_text = "";	
+		$html_text = "";
 		$template_all = $pageSchemaObj->getTemplates();
 		$html_text_array = array();
 		foreach ( $template_all as $template ) {
-			$field_all = $template->getFields();			
-			$field_count = 0; //counts the number of fields			
+			$field_all = $template->getFields();
+			$field_count = 0; //counts the number of fields
 			foreach( $field_all as $field ) {
 				$html_text .= '<fieldset style="background: #FDD;"><legend>Filter</legend>';
-				$field_count++;	
+				$field_count++;
 				$sd_array = $field->getObject('semanticdrilldown_Filter');//this returns an array with property values filled
 				$filter_array = $sd_array['sd'];
 				$html_text .= '<p>'.$name_label.' <input size="25" name="sd_filter_name_starter" value="'.$filter_array['Label'].'" ></p>';
 				$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="property">'.
-		$values_from_property_label.'
-		</p>';
-		$categories = SDUtils::getTopLevelCategories();
-		$option_html_text = "";
-			foreach ( $categories as $category ) {
-				$category = str_replace( '_', ' ', $category );
-				$option_html_text .= "	<option>$category</option>\n";
-			}
-			if( $filter_array['ValuesFromCategory'] != null){
-				$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="category">'.
-			$values_from_category_label.'
-			<select id="category_dropdown" name="sd_category_name_starter">';
+				$values_from_property_label.'
+				</p>';
+				$categories = SDUtils::getTopLevelCategories();
 				$option_html_text = "";
 				foreach ( $categories as $category ) {
 					$category = str_replace( '_', ' ', $category );
-					if( $category == $filter_array["ValuesFromCategory"]) {
-						$option_html_text .= '	<option selected>'.$category.'</option>\n';
-					}else{
-						$option_html_text .= '	<option>'.$category.'</option>\n';
-					}
+					$option_html_text .= "	<option>$category</option>\n";
 				}
-			}else{
-				$html_text .= '<p><input type="radio" name="sd_values_source_starter"  value="category">'.
-			$values_from_category_label.'
+				if( $filter_array['ValuesFromCategory'] != null){
+					$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="category">'.
+					$values_from_category_label.'
 			<select id="category_dropdown" name="sd_category_name_starter">';
-			}
-			$html_text .= $option_html_text;
-			$html_text .= '</select></p>';
-			
-		if( $filter_array["TimePeriod"] != null ){
-			$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="dates">'.
-			$date_values_label.'
+					$option_html_text = "";
+					foreach ( $categories as $category ) {
+						$category = str_replace( '_', ' ', $category );
+						if( $category == $filter_array["ValuesFromCategory"]) {
+							$option_html_text .= '	<option selected>'.$category.'</option>\n';
+						}else{
+							$option_html_text .= '	<option>'.$category.'</option>\n';
+						}
+					}
+				} else {
+					$html_text .= '<p><input type="radio" name="sd_values_source_starter" value="category">'.
+					$values_from_category_label.'
+			<select id="category_dropdown" name="sd_category_name_starter">';
+				}
+				$html_text .= $option_html_text;
+				$html_text .= '</select></p>';
+
+				if ( $filter_array["TimePeriod"] != null ){
+					$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="dates">'.
+					$date_values_label.'
 			<select id="time_period_dropdown" name="sd_time_period_starter">';
 
-			if($filter_array['TimePeriod'] == $year_value ){
-				$html_text .= '<option selected value="'.$year_value.'">'.$year_label.'</option>
+					if($filter_array['TimePeriod'] == $year_value ){
+						$html_text .= '<option selected value="'.$year_value.'">'.$year_label.'</option>
 			<option value="'.$month_value.'">'.$month_label.'</option>';
-			}else{
-				$html_text .= '<option  value="'.$year_value.'">'.$year_label.'</option>
+					}else{
+						$html_text .= '<option value="'.$year_value.'">'.$year_label.'</option>
 			<option selected value="'.$month_value.'">'.$month_label.'</option>';
-			}
-			
-			$html_text .= '</select>
-			</p>';
-		
-		}else{
-			$html_text .= '<p><input type="radio" name="sd_values_source_starter"  value="dates">'.
-			$date_values_label.'
+					}
+
+
+				} else {
+					$html_text .= '<p><input type="radio" name="sd_values_source_starter" value="dates">'.
+					$date_values_label.'
 			<select id="time_period_dropdown" name="sd_time_period_starter">
 			<option value="'.$year_value.'">'.$year_label.'</option>
-			<option value="'.$month_value.'">'.$month_label.'</option>
-			</select>
+			<option value="'.$month_value.'">'.$month_label.'</option>';
+				}
+				$html_text .= '</select>
 			</p>';
-		}
-		if( $filter_array['Values'] != null){
-			$values_array = $filter_array['Values'];
-			$values_str = "";
-			foreach($values_array as $value)
-			{
-				$values_str .= $value.', ';
-			}
-			$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="manual">'.
-			$enter_values_label.' <input size="40" name="sd_filter_values_starter" value=".'.$values_str.'" >
+				if( $filter_array['Values'] != null){
+					$values_array = $filter_array['Values'];
+					$values_str = "";
+					foreach($values_array as $value) {
+						$values_str .= $value.', ';
+					}
+					$html_text .= '<p><input type="radio" name="sd_values_source_starter" checked value="manual">'.
+					$enter_values_label.' <input size="40" name="sd_filter_values_starter" value=".'.$values_str.'" >
 			</p>';
-		}else{
-			$html_text .= '<p><input type="radio" name="sd_values_source_starter" value="manual">'.
-			$enter_values_label.' <input size="40" name="sd_filter_values_starter" value="">
+				}else{
+					$html_text .= '<p><input type="radio" name="sd_values_source_starter" value="manual">'.
+					$enter_values_label.' <input size="40" name="sd_filter_values_starter" value="">
 			</p>';
-		}
-		if( $filter_array['InputType'] != null){		
-			$input_type_val = $filter_array['InputType'];
-			$html_text .= '<p>'.$input_type_label.'
+				}
+				$input_type_val = $filter_array['InputType'];
+				$html_text .= '<p>'.$input_type_label.'
 			<select id="input_type_dropdown" name="sd_input_type_starter">
 			<option selected value="">'.$values_list_label.'</option>';
-			if( $input_type_val == $combo_box_value){
-			$html_text .= '<option selected value="'.$combo_box_value.'">'.$combo_box_label.'</option>
-			<option value="'.$date_range_value.'">'.$date_range_label.'</option>
+				if ( $input_type_val == $combo_box_value ) {
+					$html_text .= '<option selected value="'.$combo_box_value.'">'.$combo_box_label.'</option>
+			<option value="'.$date_range_value.'">'.$date_range_label.'</option>';
+				} elseif ( $input_type_val == $date_range_value ) {
+					$html_text .= '<option value="'.$combo_box_value.'">'.$combo_box_label.'</option>
+			<option selected value="'.$date_range_value.'">'.$date_range_label.'</option>';
+				} else {
+					$html_text .= '<option value="'.$combo_box_value.'">'.$combo_box_label.'</option>
+				<option value="'.$date_range_value.'">'.$date_range_label.'</option>';
+				}
+				$html_text .= <<<END
 			</select>
-			</p>';		
-			}else if( $input_type_val == $date_range_value ){
-			$html_text .= '<option value="'.$combo_box_value.'">'.$combo_box_label.'</option>
-			<option selected value="'.$date_range_value.'">'.$date_range_label.'</option>
-			</select>
-			</p>';		
-			}else{
-			$html_text .= '<option value="'.$combo_box_value.'">'.$combo_box_label.'</option>
-			<option value="'.$date_range_value.'">'.$date_range_label.'</option>
-			</select>
-			</p>';			
+			</p>
+			</fieldset>
+
+END;
+
+				$html_text_array[] = $html_text;
+				$html_text = "";
 			}
-		}else{		
-			$html_text .= '<p>'.$input_type_label.'
-			<select id="input_type_dropdown" name="sd_input_type_starter">
-			<option selected value="">'.$values_list_label.'</option>';	
-			$html_text .= '<option value="'.$combo_box_value.'">'.$combo_box_label.'</option>
-			<option value="'.$date_range_value.'">'.$date_range_label.'</option>
-			</select>
-			</p>';						
-		}
-		
-		$html_text .= '</fieldset>';	
-		$html_text_array[] = $html_text;
-		$html_text = "";
-		}
 		}
 		$text_extensions['sd'] = $html_text_array;
 		return true;
 	}
-	public static function getXMLTextForPS( $wgRequest, &$text_extensions ){	
-		$Xmltext = "";
+
+	public static function getFieldXMLForPS( $request, &$xmlArray ) {
 		$templateNum = -1;
-		$xml_text_array = array();		
-		foreach ( $wgRequest->getValues() as $var => $val ) {
-			if(substr($var,0,15) == 'sd_filter_name_'){
-				$Xmltext .= '<semanticdrilldown_Filter>';
-				$templateNum = substr($var,15,1);			
-				$Xmltext .= '<Label>'.$val.'</Label>';
-			}else if(substr($var,0,17) == 'sd_values_source_'){
+		$xmlPerField = array();
+		foreach ( $request->getValues() as $var => $val ) {
+			if ( substr( $var, 0, 15 ) == 'sd_filter_name_' ) {
+				$xml = '<semanticdrilldown_Filter>';
+				$templateNum = substr($var,15,1);
+				$xml .= '<Label>'.$val.'</Label>';
+			} elseif ( substr( $var, 0, 17 ) == 'sd_values_source_') {
 				if ( $val == 'category' ) {
-					$Xmltext .= '<ValuesFromCategory>'.$wgRequest->getText('sd_category_name_'.$templateNum).'</ValuesFromCategory>';
-				}else if ( $val == 'dates' ) {
-					 $Xmltext .= '<TimePeriod>'.$wgRequest->getText('sd_time_period_'.$templateNum).'</TimePeriod>';
-				}else if ( $val == 'manual' ) {
+					$xml .= '<ValuesFromCategory>'.$wgRequest->getText('sd_category_name_'.$templateNum).'</ValuesFromCategory>';
+				} elseif ( $val == 'dates' ) {
+					 $xml .= '<TimePeriod>'.$wgRequest->getText('sd_time_period_'.$templateNum).'</TimePeriod>';
+				} elseif ( $val == 'manual' ) {
 					$filter_mannual_values_str = $wgRequest->getText('sd_filter_values_'.$templateNum);
 					// replace the comma substitution character that has no chance of
 					// being included in the values list - namely, the ASCII beep
 					$listSeparator = ',';
 					$filter_mannual_values_str = str_replace( "\\$listSeparator", "\a", $filter_mannual_values_str );
 					$filter_mannual_values_array = explode( $listSeparator, $filter_mannual_values_str );
-					$Xmltext .= '<Values>';
+					$xml .= '<Values>';
 					foreach ( $filter_mannual_values_array as $i => $value ) {
 						// replace beep back with comma, trim
 						$value = str_replace( "\a", $listSeparator, trim( $value ) );
-						$Xmltext .= '<Value>'.$value.'</Value>';						
+						$xml .= '<Value>'.$value.'</Value>';
 					}
-					$Xmltext .= '</Values>';
+					$xml .= '</Values>';
 				}
-			}else if( substr($var,0,14) == 'sd_input_type_'){
-				$Xmltext .= '<InputType>'.$val.'</InputType>';
-				$Xmltext .= '</semanticdrilldown_Filter>';
-				$xml_text_array[] = $Xmltext;
-				$Xmltext = '';
+			} elseif ( substr($var,0,14) == 'sd_input_type_') {
+				$xml .= '<InputType>'.$val.'</InputType>';
+				$xml .= '</semanticdrilldown_Filter>';
+				$xmlPerField[] = $xml;
 			}
 		}
-		
-		$text_extensions['sd'] = $xml_text_array;
+
+		$xmlArray['sd'] = $xmlPerField;
 		return true;
 	}
-	public static function getHtmlTextForPS( &$js_extensions ,&$text_extensions ) {	
+
+	public static function getHtmlTextForPS( &$js_extensions ,&$text_extensions ) {
 		global $wgContLang;
-		
+
 		$text = "";
 		$text .= '<fieldset style="background: #FDD;"><legend>Filter</legend>';
 		$name_label = wfMsg( 'sd_createfilter_name' );
@@ -251,7 +237,7 @@ class SDUtils {
 		$date_range_value = wfMsgForContent( 'sd_filter_daterange' );
 		$require_filter_label = wfMsg( 'sd_createfilter_requirefilter' );
 		$text .= <<<END
-		
+
 		<p><input type="radio" name="sd_values_source_starter" checked value="property">
 		$values_from_property_label
 		</p>
@@ -260,7 +246,7 @@ class SDUtils {
 		<select id="category_dropdown" name="sd_category_name_starter">
 
 END;
-			
+
 		$categories = SDUtils::getTopLevelCategories();
 		foreach ( $categories as $category ) {
 			$category = str_replace( '_', ' ', $category );
@@ -289,13 +275,13 @@ END;
 		</fieldset>
 
 END;
-		
+
 		$text_extensions['sd'] = $text;
 		return true;
 	}
-/**
- *Thi Function parses the Field elements in the xml of the pages. Hooks for PageSchemas extension
-*/
+	/**
+	 * This function parses the Field elements in the xml of the pages. Hooks for Page Schemas extension
+	 */
 	public static function parseFieldElements( $field_xml, &$text_object ) {
 		foreach ( $field_xml->children() as $tag => $child ) {
 			if ( $tag == "semanticdrilldown_Filter" ) {
@@ -486,8 +472,8 @@ END;
 		if ( class_exists( 'PSSchema' ) ) {
 			$pageSchemaObj = new PSSchema( $category );
 			if($pageSchemaObj->isPSDefined()){
-				$filters_ps = SDFilter::loadAllFromPageSchema( $pageSchemaObj );						
-				$result_filters = array_merge($filters, $filters_ps);			
+				$filters_ps = SDFilter::loadAllFromPageSchema( $pageSchemaObj );
+				$result_filters = array_merge($filters, $filters_ps);
 				return $result_filters;
 			}
 		}
@@ -497,7 +483,7 @@ END;
 	/**
 	 * Gets all the display parameters defined for a category
 	 */
-	static function getDisplayParamsForCategory( $category ) {		
+	static function getDisplayParamsForCategory( $category ) {
 		$all_display_params = SDUtils::getValuesForProperty( str_replace( ' ', '_', $category ), NS_CATEGORY, '_SD_DP' );
 
 		$return_display_params = array();
@@ -675,7 +661,7 @@ END;
 		$magicWordVariableIDs[] = 'MAG_SHOWINDRILLDOWN';
 		return true;
 	}
- 
+
 	/**
 	 * Set the actual value of the magic words
 	 */
