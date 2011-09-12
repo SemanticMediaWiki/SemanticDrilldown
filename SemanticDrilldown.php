@@ -67,11 +67,11 @@ $wgHooks['ParserBeforeTidy'][] = 'SDUtils::handleShowAndHide';
 
 $wgPageProps['hidefromdrilldown'] = 'Whether or not the page is set as HIDEFROMDRILLDOWN';
 $wgPageProps['showindrilldown'] = 'Whether or not the page is set as SHOWINDRILLDOWN';
-$wgHooks['PSParseFieldElements'][] = 'SDUtils::parseFieldElements' ; //Hook for  creating Pages
-$wgHooks['PageSchemasGetObject'][] = 'SDUtils::createPageSchemasObject' ; //Hook for  returning PageSchema(extension)  object from a given xml 
-$wgHooks['getHtmlTextForFieldInputs'][] = 'SDUtils::getHtmlTextForPS' ; //Hook for  retuning html text to PS schema
-$wgHooks['PageSchemasGetFieldXML'][] = 'SDUtils::getFieldXMLForPS' ; //Hook for  retuning html text to PS schema
-$wgHooks['getFilledHtmlTextForFieldInputs'][] = 'SDUtils::getFilledHtmlTextForPS' ; //Hook for  retuning html text to PS schema
+$wgHooks['PSParseFieldElements'][] = 'SDUtils::parseFieldElements';
+$wgHooks['PageSchemasGetObject'][] = 'SDUtils::createPageSchemasObject';
+$wgHooks['PageSchemasGetFieldHTML'][] = 'SDUtils::getFieldHTMLForPS';
+$wgHooks['PageSchemasGetStarterFieldHTML'][] = 'SDUtils::getStarterFieldHTMLForPS';
+$wgHooks['PageSchemasGetFieldXML'][] = 'SDUtils::getFieldXMLForPS';
 
 
 # ##
