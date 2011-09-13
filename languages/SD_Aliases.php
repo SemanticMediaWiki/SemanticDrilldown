@@ -49,6 +49,8 @@ $specialPageAliases['bs'] = array(
 
 /** German (Deutsch) */
 $specialPageAliases['de'] = array(
+	'BrowseData' => array( 'Daten_browsen' ),
+	'CreateFilter' => array( 'Filter_erstellen' ),
 	'Filters' => array( 'Filter' ),
 );
 
@@ -93,8 +95,8 @@ $specialPageAliases['fr'] = array(
 
 /** Franco-Provençal (Arpetan) */
 $specialPageAliases['frp'] = array(
-	'BrowseData' => array( 'Chèrchiér les balyês', 'ChèrchiérLesBalyês' ),
-	'CreateFilter' => array( 'Fâre un filtro', 'FâreUnFiltro' ),
+	'BrowseData' => array( 'Chèrchiér_les_balyês', 'ChèrchiérLesBalyês' ),
+	'CreateFilter' => array( 'Fâre_un_filtro', 'FâreUnFiltro' ),
 	'Filters' => array( 'Filtros' ),
 );
 
@@ -313,6 +315,11 @@ $specialPageAliases['vi'] = array(
 	'BrowseData' => array( 'Duyệt_dữ_liệu' ),
 	'CreateFilter' => array( 'Tạo_bộ_lọc' ),
 	'Filters' => array( 'Bộ_lọc' ),
+);
+
+/** Yiddish (ייִדיש) */
+$specialPageAliases['yi'] = array(
+	'Filters' => array( 'פֿילטערס' ),
 );
 
 /**
