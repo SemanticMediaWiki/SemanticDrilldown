@@ -28,9 +28,10 @@ class SDUtils {
 							$sdarray[$prop] = (string)$value;
 						}
 					}
+					$object['sd'] = $sdarray;
+					return true;
 				}
 			}
-			$object['sd'] = $sdarray;
 		}
 		return true;
 	}
@@ -47,11 +48,15 @@ class SDUtils {
 		// from wiki's
 		//$require_filter_label = wfMsg( 'sd_createfilter_requirefilter' );
 
+		$filter_array = array();
 		if ( !is_null( $field ) ) {
 			$sd_array = $field->getObject('semanticdrilldown_Filter');
-			$filter_array = $sd_array['sd'];
-		} else {
-			$filter_array = array();
+			if ( array_key_exists( 'sd', $sd_array ) ) {
+				$filter_array = $sd_array['sd'];
+				$hasExistingValues = true;
+			} else {
+				$hasExistingValues = false;
+			}
 		}
 
 		if ( array_key_exists( 'Label', $filter_array ) ) {
@@ -159,26 +164,26 @@ class SDUtils {
 		$html_text .= Html::rawElement( 'select', array( 'name' => 'sd_input_type_num', 'id' => 'input_type_dropdown' ), $inputTypeOptionsHTML ) . "\n";
 		$html_text .= "</p>\n";
 
-		$text_extensions['sd'] = array( 'Filter', '#FDD', $html_text );
+		$text_extensions['sd'] = array( 'Filter', '#FDD', $html_text, $hasExistingValues );
 
 		return true;
 	}
 
 	public static function getFieldXMLForPS( $request, &$xmlArray ) {
-		$templateNum = -1;
+		$fieldNum = -1;
 		$xmlPerField = array();
 		foreach ( $request->getValues() as $var => $val ) {
 			if ( substr( $var, 0, 15 ) == 'sd_filter_name_' ) {
 				$xml = '<semanticdrilldown_Filter>';
-				$templateNum = substr( $var, 15 );
+				$fieldNum = substr( $var, 15 );
 				$xml .= '<Label>'.$val.'</Label>';
 			} elseif ( substr( $var, 0, 17 ) == 'sd_values_source_') {
 				if ( $val == 'category' ) {
-					$xml .= '<ValuesFromCategory>' . $request->getText('sd_category_name_' . $templateNum) . '</ValuesFromCategory>';
+					$xml .= '<ValuesFromCategory>' . $request->getText('sd_category_name_' . $fieldNum) . '</ValuesFromCategory>';
 				} elseif ( $val == 'dates' ) {
-					 $xml .= '<TimePeriod>' . $request->getText('sd_time_period_' . $templateNum) . '</TimePeriod>';
+					 $xml .= '<TimePeriod>' . $request->getText('sd_time_period_' . $fieldNum) . '</TimePeriod>';
 				} elseif ( $val == 'manual' ) {
-					$filter_manual_values_str = $request->getText('sd_filter_values_'.$templateNum);
+					$filter_manual_values_str = $request->getText('sd_filter_values_' . $fieldNum);
 					// replace the comma substitution character that has no chance of
 					// being included in the values list - namely, the ASCII beep
 					$listSeparator = ',';
@@ -197,7 +202,7 @@ class SDUtils {
 					$xml .= '<InputType>' . $val . '</InputType>';
 				}
 				$xml .= '</semanticdrilldown_Filter>';
-				$xmlPerField[] = $xml;
+				$xmlPerField[$fieldNum] = $xml;
 			}
 		}
 
@@ -224,7 +229,7 @@ class SDUtils {
 						$text .= PageSchemas::tableMessageRowHTML("paramAttrMsg", $prop, $value );
 					}
 				}
-				$text_object['sd']=$text;
+				$text_object['sd'] = $text;
 			}
 		}
 		return true;
