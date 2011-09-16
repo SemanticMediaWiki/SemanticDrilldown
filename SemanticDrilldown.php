@@ -58,21 +58,20 @@ $wgAutoloadClasses['SDUtils'] = $sdgIP . '/includes/SD_Utils.php';
 $wgAutoloadClasses['SDFilter'] = $sdgIP . '/includes/SD_Filter.php';
 $wgAutoloadClasses['SDFilterValue'] = $sdgIP . '/includes/SD_FilterValue.php';
 $wgAutoloadClasses['SDAppliedFilter'] = $sdgIP . '/includes/SD_AppliedFilter.php';
+$wgAutoloadClasses['SDPageSchemas'] = $sdgIP . '/includes/SD_PageSchemas.php';
 
 $wgHooks['smwInitProperties'][] = 'sdfInitProperties';
 $wgHooks['AdminLinks'][] = 'SDUtils::addToAdminLinks';
 $wgHooks['MagicWordwgVariableIDs'][] = 'SDUtils::addMagicWordVariableIDs';
 $wgHooks['LanguageGetMagic'][] = 'SDUtils::addMagicWordLanguage';
 $wgHooks['ParserBeforeTidy'][] = 'SDUtils::handleShowAndHide';
+$wgHooks['PSParseFieldElements'][] = 'SDPageSchemas::parseFieldElements';
+$wgHooks['PageSchemasGetObject'][] = 'SDPageSchemas::createPageSchemasObject';
+$wgHooks['PageSchemasGetFieldHTML'][] = 'SDPageSchemas::getFieldHTML';
+$wgHooks['PageSchemasGetFieldXML'][] = 'SDPageSchemas::getFieldXML';
 
 $wgPageProps['hidefromdrilldown'] = 'Whether or not the page is set as HIDEFROMDRILLDOWN';
 $wgPageProps['showindrilldown'] = 'Whether or not the page is set as SHOWINDRILLDOWN';
-$wgHooks['PSParseFieldElements'][] = 'SDUtils::parseFieldElements';
-$wgHooks['PageSchemasGetObject'][] = 'SDUtils::createPageSchemasObject';
-$wgHooks['PageSchemasGetFieldHTML'][] = 'SDUtils::getFieldHTMLForPS';
-$wgHooks['PageSchemasGetStarterFieldHTML'][] = 'SDUtils::getStarterFieldHTMLForPS';
-$wgHooks['PageSchemasGetFieldXML'][] = 'SDUtils::getFieldXMLForPS';
-
 
 # ##
 # This is the path to your installation of Semantic Drilldown as
