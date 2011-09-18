@@ -7,6 +7,8 @@
  * @author Ankit Garg
  */
 
+if ( !defined( 'MEDIAWIKI' ) ) die();
+
 class SDPageSchemas {
 
 	/**
@@ -50,13 +52,12 @@ class SDPageSchemas {
 		//$require_filter_label = wfMsg( 'sd_createfilter_requirefilter' );
 
 		$filter_array = array();
+		$hasExistingValues = false;
 		if ( !is_null( $field ) ) {
 			$sd_array = $field->getObject('semanticdrilldown_Filter');
 			if ( array_key_exists( 'sd', $sd_array ) ) {
 				$filter_array = $sd_array['sd'];
 				$hasExistingValues = true;
-			} else {
-				$hasExistingValues = false;
 			}
 		}
 
@@ -73,12 +74,11 @@ class SDPageSchemas {
 			$selectedCategory = '';
 		}
 		$dateRangesAttrs = array();
+		$year_value = wfMsgForContent( 'sd_filter_year' );
 		$yearOptionAttrs = array( 'value' => $year_value );
+		$month_value = wfMsgForContent( 'sd_filter_month' );
 		$monthOptionAttrs = array( 'value' => $month_value );
 		if ( array_key_exists( 'TimePeriod', $filter_array ) ) {
-			$year_value = wfMsgForContent( 'sd_filter_year' );
-			// This value may eventually get checked against.
-			//$month_value = wfMsgForContent( 'sd_filter_month' );
 			$filterTimePeriod = $filter_array['TimePeriod'];
 			$dateRangesAttrs['checked'] = true;
 			if ( $filterTimePeriod == $year_value ) {
@@ -126,8 +126,9 @@ class SDPageSchemas {
 			$valuesListAttrs['selected'] = true;
 		}
 
-		$html_text = '<p>' . wfMsg( 'sd_createfilter_name' ) . ' ';
+		$html_text = '<p>' . wfMsg( 'ps-optional-name' ) . ' ';
 		$html_text .= Html::input( 'sd_filter_name_num', $filterLabel, 'text', array( 'size' => 25 ) ) . "</p>\n";
+		$html_text .= '<fieldset><legend>Values</legend>' . "\n";
 		$html_text .= '<p>' . Html::input( 'sd_values_source_num', 'property', 'radio', $usePropertyValuesAttr ) . ' ';
 		$html_text .= wfMsg( 'sd_createfilter_usepropertyvalues' ) . "</p>\n";
 		$html_text .= "\t<p>\n";
@@ -157,6 +158,7 @@ class SDPageSchemas {
 		$html_text .= "\t" . wfMsg( 'sd_createfilter_entervalues' ) . "\n";
 		$html_text .= "\t" . Html::input( 'sd_filter_values_num', $filterValuesStr, 'text', $filterValuesAttrs ) . "\n";
 		$html_text .= "\t</p>\n";
+		$html_text .= "</fieldset>\n";
 
 		$html_text .= '<p>' . wfMsg( 'sd_createfilter_inputtype' ) . "\n";
 		$inputTypeOptionsHTML = "\t" . Html::element( 'option', $valuesListAttrs, wfMsg( 'sd_createfilter_listofvalues' ) ) . "\n";
