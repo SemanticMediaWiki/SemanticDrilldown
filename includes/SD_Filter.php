@@ -30,8 +30,8 @@ class SDFilter {
 				$sd_array = $object_values['sd'];			
 				$smw_array = $fieldObj->getObject('semanticmediawiki_Property');   //this returns an array with property values filled
 				$prop_array = $smw_array['smw'];
-				if ( array_key_exists( 'Label', $sd_array ) ) {
-					$f->name = $sd_array['Label'];
+				if ( array_key_exists( 'Name', $sd_array ) ) {
+					$f->name = $sd_array['Name'];
 				} else {
 					$f->name = $prop_array['name'];
 				}

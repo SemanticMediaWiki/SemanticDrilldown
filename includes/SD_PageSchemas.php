@@ -7,33 +7,33 @@
  * @author Ankit Garg
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
 class SDPageSchemas {
 
 	/**
-	 * Return an object containing information on a filter, based on XML
-	 * from the Page Schemas extensions
+	 * Returns an object containing information on a filter, based on XML
+	 * from the Page Schemas extension.
 	*/
 	public static function createPageSchemasObject( $objectName, $xmlForField, &$object ) {
 		$sdarray = array();
-		if ( $objectName == "semanticdrilldown_Filter" ) {
-			foreach ( $xmlForField->children() as $tag => $child ) {
-				if ( $tag == $objectName ) {
-					foreach ( $child->children() as $prop => $value) {
-						if( $prop == "Values" ){
-							$l_values = array();
-							foreach ( $value->children() as $val_i => $val ) {
-								$l_values[] = (string)$val;
-							}
-							$sdarray['Values'] = $l_values;
-						} else {
-							$sdarray[$prop] = (string)$value;
+		if ( $objectName != "semanticdrilldown_Filter" ) {
+			return true;
+		}
+
+		foreach ( $xmlForField->children() as $tag => $child ) {
+			if ( $tag == $objectName ) {
+				foreach ( $child->children() as $prop => $value) {
+					if( $prop == "Values" ){
+						$l_values = array();
+						foreach ( $value->children() as $val ) {
+							$l_values[] = (string)$val;
 						}
+						$sdarray['Values'] = $l_values;
+					} else {
+						$sdarray[$prop] = (string)$value;
 					}
-					$object['sd'] = $sdarray;
-					return true;
 				}
+				$object['sd'] = $sdarray;
+				return true;
 			}
 		}
 		return true;
@@ -44,11 +44,6 @@ class SDPageSchemas {
 	 * Semantic Drilldown section in Page Schemas' "edit schema" page
 	 */
 	public static function getFieldHTML( $field, &$text_extensions ){
-		// TODO - add these options to the XML and HTML
-		//$property_label = wfMsg( 'sd_createfilter_property' );
-		//$label_label = wfMsg( 'sd_createfilter_label' );
-		// need both label and value, in case user's language is different
-		// from wiki's
 		//$require_filter_label = wfMsg( 'sd_createfilter_requirefilter' );
 
 		$filter_array = array();
@@ -61,10 +56,10 @@ class SDPageSchemas {
 			}
 		}
 
-		if ( array_key_exists( 'Label', $filter_array ) ) {
-			$filterLabel =  $filter_array['Label'];
+		if ( array_key_exists( 'Name', $filter_array ) ) {
+			$filterName =  $filter_array['Name'];
 		} else {
-			$filterLabel = '';
+			$filterName = '';
 		}
 		$fromCategoryAttrs = array();
 		if ( array_key_exists( 'ValuesFromCategory', $filter_array ) ) {
@@ -107,7 +102,7 @@ class SDPageSchemas {
 			$usePropertyValuesAttr['checked'] = true;
 		}
 
-		// The "input type" field
+		// The "input type" field.
 		$combo_box_value = wfMsgForContent( 'sd_filter_combobox' );
 		$date_range_value = wfMsgForContent( 'sd_filter_daterange' );
 		$valuesListAttrs = array( 'value' => '' );
@@ -127,8 +122,8 @@ class SDPageSchemas {
 		}
 
 		$html_text = '<p>' . wfMsg( 'ps-optional-name' ) . ' ';
-		$html_text .= Html::input( 'sd_filter_name_num', $filterLabel, 'text', array( 'size' => 25 ) ) . "</p>\n";
-		$html_text .= '<fieldset><legend>Values</legend>' . "\n";
+		$html_text .= Html::input( 'sd_filter_name_num', $filterName, 'text', array( 'size' => 25 ) ) . "</p>\n";
+		$html_text .= '<fieldset><legend>' . wfMsg( 'sd-pageschemas-values' ) . '</legend>' . "\n";
 		$html_text .= '<p>' . Html::input( 'sd_values_source_num', 'property', 'radio', $usePropertyValuesAttr ) . ' ';
 		$html_text .= wfMsg( 'sd_createfilter_usepropertyvalues' ) . "</p>\n";
 		$html_text .= "\t<p>\n";
@@ -179,7 +174,7 @@ class SDPageSchemas {
 			if ( substr( $var, 0, 15 ) == 'sd_filter_name_' ) {
 				$xml = '<semanticdrilldown_Filter>';
 				$fieldNum = substr( $var, 15 );
-				$xml .= '<Label>'.$val.'</Label>';
+				$xml .= '<Name>'.$val.'</Name>';
 			} elseif ( substr( $var, 0, 17 ) == 'sd_values_source_') {
 				if ( $val == 'category' ) {
 					$xml .= '<ValuesFromCategory>' . $request->getText('sd_category_name_' . $fieldNum) . '</ValuesFromCategory>';
@@ -220,15 +215,15 @@ class SDPageSchemas {
 	public static function parseFieldElements( $field_xml, &$text_object ) {
 		foreach ( $field_xml->children() as $tag => $child ) {
 			if ( $tag == "semanticdrilldown_Filter" ) {
-				$text = "";
-				$text = PageSchemas::tableMessageRowHTML( "paramAttr", "SemanticDrillDown", (string)$tag );
+				$text = PageSchemas::tableMessageRowHTML( "paramAttr", wfMsg( 'specialpages-group-sd_group' ), "Filter" );
 				foreach ( $child->children() as $prop => $value) {
-					if( $prop == "Values" ){
-						$l_values = "";
-						foreach ( $value->children() as $val_i => $val ) {
-							$l_values .= $val.", ";
+					if ( $prop == "Values" ) {
+						$filterValues = array();
+						foreach ( $value->children() as $valTag ) {
+							$filterValues[] = (string)$valTag;
 						}
-						$text .= PageSchemas::tableMessageRowHTML("paramAttrMsg", $prop, $l_values );
+						$valuesStr = implode( ', ', $filterValues );
+						$text .= PageSchemas::tableMessageRowHTML("paramAttrMsg", wfMsg( 'sd-pageschemas-values' ), $valuesStr );
 					} else {
 						$text .= PageSchemas::tableMessageRowHTML("paramAttrMsg", $prop, $value );
 					}
