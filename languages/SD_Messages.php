@@ -49,6 +49,7 @@ $messages['en'] = array(
 	'sd_createfilter_requirefilter'         => 'Require another filter to be selected before this one is displayed:',
 	'sd_createfilter_label'                 => 'Label for this filter (optional):',
 	'sd_blank_error'                        => 'cannot be blank',
+	'sd-pageschemas-values'			=> 'Values',
 
 	// content messages
 	'sd_filter_coversproperty'         => 'This filter covers the property $1.',
