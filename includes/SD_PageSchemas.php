@@ -14,7 +14,7 @@ class SDPageSchemas {
 	 * from the Page Schemas extension.
 	*/
 	public static function createPageSchemasObject( $objectName, $xmlForField, &$object ) {
-		$sdarray = array();
+		$sd_array = array();
 		if ( $objectName != "semanticdrilldown_Filter" ) {
 			return true;
 		}
@@ -27,12 +27,12 @@ class SDPageSchemas {
 						foreach ( $value->children() as $val ) {
 							$l_values[] = (string)$val;
 						}
-						$sdarray['Values'] = $l_values;
+						$sd_array['Values'] = $l_values;
 					} else {
-						$sdarray[$prop] = (string)$value;
+						$sd_array[$prop] = (string)$value;
 					}
 				}
-				$object['sd'] = $sdarray;
+				$object['sd'] = $sd_array;
 				return true;
 			}
 		}
@@ -57,7 +57,7 @@ class SDPageSchemas {
 		}
 
 		if ( array_key_exists( 'Name', $filter_array ) ) {
-			$filterName =  $filter_array['Name'];
+			$filterName = $filter_array['Name'];
 		} else {
 			$filterName = '';
 		}
@@ -174,7 +174,9 @@ class SDPageSchemas {
 			if ( substr( $var, 0, 15 ) == 'sd_filter_name_' ) {
 				$xml = '<semanticdrilldown_Filter>';
 				$fieldNum = substr( $var, 15 );
-				$xml .= '<Name>'.$val.'</Name>';
+				if ( !empty( $val ) ) {
+					$xml .= '<Name>' . $val . '</Name>';
+				}
 			} elseif ( substr( $var, 0, 17 ) == 'sd_values_source_') {
 				if ( $val == 'category' ) {
 					$xml .= '<ValuesFromCategory>' . $request->getText('sd_category_name_' . $fieldNum) . '</ValuesFromCategory>';
