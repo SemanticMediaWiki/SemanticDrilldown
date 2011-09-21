@@ -1058,24 +1058,30 @@ END;
 		} else {
 			$query = new SMWQuery();
 		}
-		if ( array_key_exists( 'format', $params ) ) {
-			$format = $params['format'];
-		} else {
-			$format = 'category';
+		if ( !array_key_exists( 'format', $params ) ) {
+			$params['format'] = 'category';
 		}
+		
 		if ( array_key_exists( 'mainlabel', $params ) ) {
 			$mainlabel = $params['mainlabel'];
 		} else {
 			$mainlabel = '';
 		}
+		
 		$r = $this->addSemanticResultWrapper( $dbr, $res, $num, $query, $mainlabel, $printouts );
-		$printer = SMWQueryProcessor::getResultPrinter( $format, SMWQueryProcessor::SPECIAL_PAGE, $r );
+		$printer = SMWQueryProcessor::getResultPrinter( $params['format'], SMWQueryProcessor::SPECIAL_PAGE, $r );
 
-		$prresult = $printer->getResult( $r, $params, SMW_OUTPUT_HTML );
-		if ( is_array( $prresult ) )
-			$prtext = $prresult[0];
-		else
-			$prtext = $prresult;
+		if ( version_compare( SMW_VERSION, '1.6.1', '>' ) ) {
+			$params = SMWQueryProcessor::getProcessedParams( $params );
+		}
+		
+		$prresult = $printer->getResult(
+			$r,
+			$params,
+			SMW_OUTPUT_HTML
+		);
+		
+		$prtext = is_array( $prresult ) ? $prresult[0] : $prresult;  
 
 		SMWOutputs::commitToOutputPage( $out );
 		
