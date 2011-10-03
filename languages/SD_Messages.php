@@ -1036,6 +1036,7 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Crochet.david
+ * @author Gomoko
  * @author Grondin
  * @author IAlex
  * @author Jean-Frédéric
@@ -1079,6 +1080,7 @@ $messages['fr'] = array(
 	'sd_createfilter_requirefilter' => 'Exiger qu’un autre filtre soit sélectionné avant que celui-ci ne soit affiché :',
 	'sd_createfilter_label' => 'Étiquette pour ce filtre (facultatif) :',
 	'sd_blank_error' => 'ne peut être laissé en blanc',
+	'sd-pageschemas-values' => 'Valeurs',
 	'sd_filter_coversproperty' => 'Ce filtre couvre la propriété $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Il obtient ses valeurs à partir de la catégorie $1.',
 	'sd_filter_usestimeperiod' => 'Il utilise $1 comme durée de sa période',
