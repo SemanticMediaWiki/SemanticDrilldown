@@ -1072,7 +1072,8 @@ END;
 		$printer = SMWQueryProcessor::getResultPrinter( $params['format'], SMWQueryProcessor::SPECIAL_PAGE, $r );
 
 		if ( version_compare( SMW_VERSION, '1.6.1', '>' ) ) {
-			$params = SMWQueryProcessor::getProcessedParams( $params );
+			SMWQueryProcessor::addThisPrintout( $printouts, $params );
+			$params = SMWQueryProcessor::getProcessedParams( $params, $printouts );
 		}
 		
 		$prresult = $printer->getResult(
