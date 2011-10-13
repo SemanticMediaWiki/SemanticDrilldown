@@ -19,21 +19,27 @@ class SDFilter {
 	var $allowed_values;
 	var $possible_applied_filters = array();
 	
-    static function loadAllFromPageSchema( $psSchemaObj ){
+	static function loadAllFromPageSchema( $psSchemaObj ){
 		$filters_ps = array();		
 		$template_all = $psSchemaObj->getTemplates();						
 		foreach ( $template_all as $template ) {
 			$field_all = $template->getFields();
 			foreach( $field_all as $fieldObj ) { //for each Field, retrieve smw properties and fill $prop_name , $prop_type 																	
 				$f = new SDFilter();
-				$object_values = $fieldObj->getObject('semanticdrilldown_Filter');//this returns an array with property values filled
-				$sd_array = $object_values['sd'];			
-				$smw_array = $fieldObj->getObject('semanticmediawiki_Property');   //this returns an array with property values filled
+				$object_values = $fieldObj->getObject('semanticdrilldown_Filter');
+				 if ( !array_key_exists( 'sd', $object_values ) ) {
+					 continue;
+				 }
+				$sd_array = $object_values['sd'];
+				$smw_array = $fieldObj->getObject('semanticmediawiki_Property');
+				if ( !array_key_exists( 'smw', $smw_array ) ) {
+					continue;
+				}
 				$prop_array = $smw_array['smw'];
 				if ( array_key_exists( 'Name', $sd_array ) ) {
 					$f->name = $sd_array['Name'];
 				} else {
-					$f->name = $prop_array['name'];
+					$f->name = $fieldObj->getName();
 				}
 				$f->property = $prop_array['name'];
 				$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', "\'" ), $f->property );
@@ -41,7 +47,9 @@ class SDFilter {
 				if ( array_key_exists( 'Type', $prop_array ) && $prop_array['Type'] != 'Page' ) {
 					$f->is_relation = false;
 				}
-				$f->input_type = $sd_array['InputType'];				
+				if ( array_key_exists( 'InputType', $sd_array ) ) {
+					$f->input_type = $sd_array['InputType'];
+				}
 				if ( array_key_exists( 'ValuesFromCategory', $sd_array ) ) {
 					$f->category = $sd_array['ValuesFromCategory'];
 					$f->allowed_values = SDUtils::getCategoryChildren( $f->category, false, 5 );
