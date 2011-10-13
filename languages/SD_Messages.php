@@ -554,6 +554,7 @@ $messages['bs'] = array(
  * @author Dvdgmz
  * @author Jordi Roqué
  * @author Paucabot
+ * @author SMP
  * @author Solde
  */
 $messages['ca'] = array(
@@ -592,6 +593,7 @@ $messages['ca'] = array(
 	'sd_createfilter_requirefilter' => 'Cal seleccionar un altre filtre abans de mostrar aquest:',
 	'sd_createfilter_label' => 'Rètol per aquest filtre (opcional):',
 	'sd_blank_error' => 'no es pot deixar buit',
+	'sd-pageschemas-values' => 'Valors',
 	'sd_filter_coversproperty' => 'Aquest filtre cobreix la propietat $1',
 	'sd_filter_getsvaluesfromcategory' => 'Pren els seus valors de la categoria $1',
 	'sd_filter_usestimeperiod' => 'Utilitza $1 com a període de temps.',
