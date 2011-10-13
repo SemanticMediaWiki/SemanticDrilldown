@@ -170,12 +170,13 @@ class SDUtils {
 		foreach ( $filter_names as $filter_name ) {
 			$filters[] = SDFilter::load( $filter_name );
 		}
-		//Code to read from the pageSchema and return filters
+		// Read from the Page Schemas schema for this category, if
+		// it exists, and add any filters defined there.
 		if ( class_exists( 'PSSchema' ) ) {
 			$pageSchemaObj = new PSSchema( $category );
-			if($pageSchemaObj->isPSDefined()){
+			if ( $pageSchemaObj->isPSDefined() ) {
 				$filters_ps = SDFilter::loadAllFromPageSchema( $pageSchemaObj );
-				$result_filters = array_merge($filters, $filters_ps);
+				$result_filters = array_merge( $filters, $filters_ps );
 				return $result_filters;
 			}
 		}
