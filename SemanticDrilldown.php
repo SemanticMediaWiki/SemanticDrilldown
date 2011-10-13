@@ -13,7 +13,7 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-define( 'SD_VERSION', '0.8.4 alpha' );
+define( 'SD_VERSION', '0.8.3' );
 
 $wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'specialpage'][] = array(
 	'path'        => __FILE__,
@@ -65,7 +65,7 @@ $wgHooks['AdminLinks'][] = 'SDUtils::addToAdminLinks';
 $wgHooks['MagicWordwgVariableIDs'][] = 'SDUtils::addMagicWordVariableIDs';
 $wgHooks['LanguageGetMagic'][] = 'SDUtils::addMagicWordLanguage';
 $wgHooks['ParserBeforeTidy'][] = 'SDUtils::handleShowAndHide';
-$wgHooks['PSParseFieldElements'][] = 'SDPageSchemas::parseFieldElements';
+$wgHooks['PageSchemasGetFieldDisplayInfo'][] = 'SDPageSchemas::getFilterDisplayInfo';
 $wgHooks['PageSchemasGetObject'][] = 'SDPageSchemas::createPageSchemasObject';
 $wgHooks['PageSchemasGetFieldHTML'][] = 'SDPageSchemas::getFieldHTML';
 $wgHooks['PageSchemasGetFieldXML'][] = 'SDPageSchemas::getFieldXML';

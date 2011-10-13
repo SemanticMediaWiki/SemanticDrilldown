@@ -211,13 +211,14 @@ class SDPageSchemas {
 	}
 
 	/**
-	 * Displays the information about filters contained in the
-	 * Page Schemas XML.
+	 * Displays the information about the filter (if any exists)
+	 * for one field in the Page Schemas XML.
 	 */
-	public static function parseFieldElements( $field_xml, &$text_object ) {
+	public static function getFilterDisplayInfo( $field_xml, &$text_object ) {
 		foreach ( $field_xml->children() as $tag => $child ) {
 			if ( $tag == "semanticdrilldown_Filter" ) {
-				$text = PageSchemas::tableMessageRowHTML( "paramAttr", wfMsg( 'specialpages-group-sd_group' ), "Filter" );
+				$filterName = $child->attributes()->name;
+				$values = array();
 				foreach ( $child->children() as $prop => $value) {
 					if ( $prop == "Values" ) {
 						$filterValues = array();
@@ -225,12 +226,12 @@ class SDPageSchemas {
 							$filterValues[] = (string)$valTag;
 						}
 						$valuesStr = implode( ', ', $filterValues );
-						$text .= PageSchemas::tableMessageRowHTML("paramAttrMsg", wfMsg( 'sd-pageschemas-values' ), $valuesStr );
+						$values[wfMsg( 'sd-pageschemas-values' )] = $valuesStr;
 					} else {
-						$text .= PageSchemas::tableMessageRowHTML("paramAttrMsg", $prop, $value );
+						$values[$prop] = $value;
 					}
 				}
-				$text_object['sd'] = $text;
+				$text_object['sd'] = array( 'Filter', $filterName, '#FEE', $values );
 			}
 		}
 		return true;
