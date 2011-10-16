@@ -1226,6 +1226,7 @@ $messages['grc'] = array(
 );
 
 /** Swiss German (Alemannisch)
+ * @author Als-Chlämens
  * @author Als-Holder
  */
 $messages['gsw'] = array(
@@ -1264,6 +1265,7 @@ $messages['gsw'] = array(
 	'sd_createfilter_requirefilter' => 'Voreb dää Filter aazeigt wird, muess dää ander Filter gsetzt syy:',
 	'sd_createfilter_label' => 'Bezeichnig vu däm Filter (optional):',
 	'sd_blank_error' => 'derf nit läär syy',
+	'sd-pageschemas-values' => 'Wärt',
 	'sd_filter_coversproperty' => 'Dää Filter betrifft d Eigenschaft $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Är chunnt syni Wärt us dr Kategorii $1 iber.',
 	'sd_filter_usestimeperiod' => 'Är bruucht $1 as Zytaagab.',
