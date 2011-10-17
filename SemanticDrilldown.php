@@ -65,10 +65,11 @@ $wgHooks['AdminLinks'][] = 'SDUtils::addToAdminLinks';
 $wgHooks['MagicWordwgVariableIDs'][] = 'SDUtils::addMagicWordVariableIDs';
 $wgHooks['LanguageGetMagic'][] = 'SDUtils::addMagicWordLanguage';
 $wgHooks['ParserBeforeTidy'][] = 'SDUtils::handleShowAndHide';
-$wgHooks['PageSchemasGetFieldDisplayInfo'][] = 'SDPageSchemas::getFilterDisplayInfo';
-$wgHooks['PageSchemasGetObject'][] = 'SDPageSchemas::createPageSchemasObject';
-$wgHooks['PageSchemasGetFieldHTML'][] = 'SDPageSchemas::getFieldHTML';
-$wgHooks['PageSchemasGetFieldXML'][] = 'SDPageSchemas::getFieldXML';
+
+// Register class with the Page Schemas extension
+if ( isset( $wgPageSchemasHandlerClasses ) ) {
+	$wgPageSchemasHandlerClasses[] = 'SDPageSchemas';
+}
 
 $wgPageProps['hidefromdrilldown'] = 'Whether or not the page is set as HIDEFROMDRILLDOWN';
 $wgPageProps['showindrilldown'] = 'Whether or not the page is set as SHOWINDRILLDOWN';

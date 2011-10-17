@@ -24,42 +24,37 @@ class SDFilter {
 		$template_all = $psSchemaObj->getTemplates();						
 		foreach ( $template_all as $template ) {
 			$field_all = $template->getFields();
-			foreach( $field_all as $fieldObj ) { //for each Field, retrieve smw properties and fill $prop_name , $prop_type 																	
+			foreach( $field_all as $fieldObj ) {
 				$f = new SDFilter();
-				$object_values = $fieldObj->getObject('semanticdrilldown_Filter');
-				 if ( !array_key_exists( 'sd', $object_values ) ) {
-					 continue;
-				 }
-				$sd_array = $object_values['sd'];
-				$smw_array = $fieldObj->getObject('semanticmediawiki_Property');
-				if ( !array_key_exists( 'smw', $smw_array ) ) {
+				$filter_array = $fieldObj->getObject( 'semanticdrilldown_Filter' );
+				if ( is_null( $filter_array ) ) {
 					continue;
 				}
-				$prop_array = $smw_array['smw'];
-				if ( array_key_exists( 'Name', $sd_array ) ) {
-					$f->name = $sd_array['Name'];
+				if ( array_key_exists( 'Name', $filter_array ) ) {
+					$f->name = $filter_array['Name'];
 				} else {
 					$f->name = $fieldObj->getName();
 				}
+				$prop_array = $fieldObj->getObject('semanticmediawiki_Property');
 				$f->property = $prop_array['name'];
 				$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', "\'" ), $f->property );
 				$f->is_relation = true;				
 				if ( array_key_exists( 'Type', $prop_array ) && $prop_array['Type'] != 'Page' ) {
 					$f->is_relation = false;
 				}
-				if ( array_key_exists( 'InputType', $sd_array ) ) {
-					$f->input_type = $sd_array['InputType'];
+				if ( array_key_exists( 'InputType', $filter_array ) ) {
+					$f->input_type = $filter_array['InputType'];
 				}
-				if ( array_key_exists( 'ValuesFromCategory', $sd_array ) ) {
-					$f->category = $sd_array['ValuesFromCategory'];
+				if ( array_key_exists( 'ValuesFromCategory', $filter_array ) ) {
+					$f->category = $filter_array['ValuesFromCategory'];
 					$f->allowed_values = SDUtils::getCategoryChildren( $f->category, false, 5 );
-				} elseif ( array_key_exists( 'TimePeriod', $sd_array ) ) {
-					$f->time_period = $sd_array['TimePeriod'];
+				} elseif ( array_key_exists( 'TimePeriod', $filter_array ) ) {
+					$f->time_period = $filter_array['TimePeriod'];
 					$f->allowed_values = array();
 				} elseif ( $f->is_boolean ) {
 					$f->allowed_values = array( '0', '1' );
-				} elseif ( array_key_exists( 'Values', $sd_array ) ) {
-					$f->allowed_values = $sd_array['Values'];
+				} elseif ( array_key_exists( 'Values', $filter_array ) ) {
+					$f->allowed_values = $filter_array['Values'];
 				} else {
 					$f->allowed_values = array();
 				}				

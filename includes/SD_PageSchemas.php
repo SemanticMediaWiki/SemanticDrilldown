@@ -7,20 +7,20 @@
  * @author Ankit Garg
  */
 
-class SDPageSchemas {
+class SDPageSchemas extends PSExtensionHandler {
 
 	/**
 	 * Returns an object containing information on a filter, based on XML
 	 * from the Page Schemas extension.
 	*/
-	public static function createPageSchemasObject( $objectName, $xmlForField, &$object ) {
+	public static function createPageSchemasObject( $tagName, $xml ) {
 		$sd_array = array();
-		if ( $objectName != "semanticdrilldown_Filter" ) {
-			return true;
+		if ( $tagName != "semanticdrilldown_Filter" ) {
+			return null;
 		}
 
-		foreach ( $xmlForField->children() as $tag => $child ) {
-			if ( $tag == $objectName ) {
+		foreach ( $xml->children() as $tag => $child ) {
+			if ( $tag == $tagName ) {
 				foreach ( $child->children() as $prop => $value) {
 					if( $prop == "Values" ){
 						$l_values = array();
@@ -32,63 +32,61 @@ class SDPageSchemas {
 						$sd_array[$prop] = (string)$value;
 					}
 				}
-				$object['sd'] = $sd_array;
-				return true;
+				return $sd_array;
 			}
 		}
-		return true;
+		return null;
+	}
+
+	public static function getDisplayColor() {
+		return '#FDD';
+	}
+
+	public static function getFieldDisplayString() {
+		return 'Filter';
 	}
 
 	/**
 	 * Returns the HTML for setting the filter options, for the
 	 * Semantic Drilldown section in Page Schemas' "edit schema" page
 	 */
-	public static function getFieldHTML( $field, &$text_extensions ){
+	public static function getFieldEditingHTML( $field ){
 		//$require_filter_label = wfMsg( 'sd_createfilter_requirefilter' );
 
 		$filter_array = array();
 		$hasExistingValues = false;
 		if ( !is_null( $field ) ) {
-			$sd_array = $field->getObject('semanticdrilldown_Filter');
-			if ( array_key_exists( 'sd', $sd_array ) ) {
-				$filter_array = $sd_array['sd'];
+			$filter_array = $field->getObject( 'semanticdrilldown_Filter' );
+			if ( !is_null( $filter_array ) ) {
 				$hasExistingValues = true;
 			}
 		}
 
-		if ( array_key_exists( 'Name', $filter_array ) ) {
-			$filterName = $filter_array['Name'];
-		} else {
-			$filterName = '';
-		}
+		$filterName = PageSchemas::getValueFromObject( $filter_array, 'Name' );
+		$selectedCategory = PageSchemas::getValueFromObject( $filter_array, 'ValuesFromCategory' );
 		$fromCategoryAttrs = array();
-		if ( array_key_exists( 'ValuesFromCategory', $filter_array ) ) {
-			$selectedCategory = $filter_array['ValuesFromCategory'];
+		if ( !is_null( $selectedCategory ) ) {
 			$fromCategoryAttrs['checked'] = true;
-		} else {
-			$selectedCategory = '';
 		}
 		$dateRangesAttrs = array();
 		$year_value = wfMsgForContent( 'sd_filter_year' );
 		$yearOptionAttrs = array( 'value' => $year_value );
 		$month_value = wfMsgForContent( 'sd_filter_month' );
 		$monthOptionAttrs = array( 'value' => $month_value );
-		if ( array_key_exists( 'TimePeriod', $filter_array ) ) {
-			$filterTimePeriod = $filter_array['TimePeriod'];
+		$filterTimePeriod = PageSchemas::getValueFromObject( $filter_array, 'TimePeriod' );
+		if ( !is_null( $filterTimePeriod ) ) {
 			$dateRangesAttrs['checked'] = true;
 			if ( $filterTimePeriod == $year_value ) {
 				$yearOptionAttrs['selected'] = true;
 			} else {
 				$monthOptionAttrs['selected'] = true;
 			}
-		} else {
-			$filterTimePeriod = '';
 		}
 		$manualSourceAttrs = array();
 		$filterValuesAttrs = array( 'size' => 40 );
-		if ( array_key_exists( 'Values', $filter_array ) ) {
+		$values_array = PageSchemas::getValueFromObject( $filter_array, 'Values' );
+		if ( !is_null( $values_array ) ) {
 			$manualSourceAttrs['checked'] = true;
-			$values_array = $filter_array['Values'];
 			$filterValuesStr = implode( ', ', $values_array );
 		} else {
 			$filterValuesStr = '';
@@ -108,11 +106,7 @@ class SDPageSchemas {
 		$valuesListAttrs = array( 'value' => '' );
 		$comboBoxAttrs = array( 'value' => $combo_box_value );
 		$dateRangeAttrs = array( 'value' => $date_range_value );
-		if ( array_key_exists( 'InputType', $filter_array ) ) {
-			$input_type_val = $filter_array['InputType'];
-		} else {
-			$input_type_val = '';
-		}
+		$input_type_val = PageSchemas::getValueFromObject( $filter_array, 'InputType' );
 		if ( $input_type_val == $combo_box_value ) {
 			$comboBoxAttrs['selected'] = true;
 		} elseif ( $input_type_val == $date_range_value ) {
@@ -162,15 +156,15 @@ class SDPageSchemas {
 		$html_text .= Html::rawElement( 'select', array( 'name' => 'sd_input_type_num', 'id' => 'input_type_dropdown' ), $inputTypeOptionsHTML ) . "\n";
 		$html_text .= "</p>\n";
 
-		$text_extensions['sd'] = array( 'Filter', '#FDD', $html_text, $hasExistingValues );
-
-		return true;
+		return array( $html_text, $hasExistingValues );
 	}
 
-	public static function getFieldXML( $request, &$xmlArray ) {
+	public static function createFieldXMLFromForm() {
+		global $wgRequest;
+
 		$fieldNum = -1;
 		$xmlPerField = array();
-		foreach ( $request->getValues() as $var => $val ) {
+		foreach ( $wgRequest->getValues() as $var => $val ) {
 			if ( substr( $var, 0, 15 ) == 'sd_filter_name_' ) {
 				$xml = '<semanticdrilldown_Filter>';
 				$fieldNum = substr( $var, 15 );
@@ -179,11 +173,11 @@ class SDPageSchemas {
 				}
 			} elseif ( substr( $var, 0, 17 ) == 'sd_values_source_') {
 				if ( $val == 'category' ) {
-					$xml .= '<ValuesFromCategory>' . $request->getText('sd_category_name_' . $fieldNum) . '</ValuesFromCategory>';
+					$xml .= '<ValuesFromCategory>' . $wgRequest->getText('sd_category_name_' . $fieldNum) . '</ValuesFromCategory>';
 				} elseif ( $val == 'dates' ) {
-					 $xml .= '<TimePeriod>' . $request->getText('sd_time_period_' . $fieldNum) . '</TimePeriod>';
+					 $xml .= '<TimePeriod>' . $wgRequest->getText('sd_time_period_' . $fieldNum) . '</TimePeriod>';
 				} elseif ( $val == 'manual' ) {
-					$filter_manual_values_str = $request->getText('sd_filter_values_' . $fieldNum);
+					$filter_manual_values_str = $wgRequest->getText('sd_filter_values_' . $fieldNum);
 					// replace the comma substitution character that has no chance of
 					// being included in the values list - namely, the ASCII beep
 					$listSeparator = ',';
@@ -206,15 +200,14 @@ class SDPageSchemas {
 			}
 		}
 
-		$xmlArray['sd'] = $xmlPerField;
-		return true;
+		return $xmlPerField;
 	}
 
 	/**
 	 * Displays the information about the filter (if any exists)
 	 * for one field in the Page Schemas XML.
 	 */
-	public static function getFilterDisplayInfo( $field_xml, &$text_object ) {
+	public static function getFieldDisplayValues( $field_xml ) {
 		foreach ( $field_xml->children() as $tag => $child ) {
 			if ( $tag == "semanticdrilldown_Filter" ) {
 				$filterName = $child->attributes()->name;
@@ -231,9 +224,9 @@ class SDPageSchemas {
 						$values[$prop] = $value;
 					}
 				}
-				$text_object['sd'] = array( 'Filter', $filterName, '#FEE', $values );
+				return array( $filterName, $values );
 			}
 		}
-		return true;
+		return null;
 	}
 }
