@@ -8,6 +8,11 @@
  */
 
 class SDPageSchemas extends PSExtensionHandler {
+	public static function registerClass() {
+		global $wgPageSchemasHandlerClasses;
+		$wgPageSchemasHandlerClasses[] = 'SDPageSchemas';
+		return true;
+	}
 
 	/**
 	 * Returns an object containing information on a filter, based on XML
