@@ -49,6 +49,7 @@ $messages['en'] = array(
 	'sd_createfilter_requirefilter'         => 'Require another filter to be selected before this one is displayed:',
 	'sd_createfilter_label'                 => 'Label for this filter (optional):',
 	'sd_blank_error'                        => 'cannot be blank',
+	'sd-pageschemas-filter'			=> 'Filter',
 	'sd-pageschemas-values'			=> 'Values',
 
 	// content messages
@@ -79,12 +80,15 @@ $messages['qqq'] = array(
 	'sd_browsedata_none' => '{{Identical|None}}',
 	'sd_browsedata_or' => '{{Identical|Or}}',
 	'filters' => '{{Identical|Filter}}',
-	'sd_createfilter_name' => '{{Identical|Name}}',
+	'sd_createfilter_name' => 'The name that will be given to a filter',
 	'sd_blank_error' => '{{Identical|Cannot be blank}}',
+	'sd-pageschemas-filter' => 'A single filter',
+	'sd-pageschemas-values' => 'The set of values for a filter',
 	'sd_filter_year' => '{{Identical|Year}}',
 	'sd_filter_month' => '{{Identical|Month}}',
-	'sd_filter_combobox' => '',
-	'sd_filter_freetext' => '{{Identical|Text}}',
+	'sd_filter_combobox' => 'A specific type of interface input',
+	'sd_filter_freetext' => 'A specific type of interface input',
+	'sd_filter_daterange' => 'A specific type of interface input',
 );
 
 /** Afrikaans (Afrikaans)
