@@ -25,6 +25,10 @@ class SDPageSchemas extends PSExtensionHandler {
 		}
 
 		foreach ( $xml->children() as $tag => $child ) {
+			$filterName = $child->attributes()->name;
+			if ( !is_null( $filterName ) ) {
+				$sd_array['name'] = (string)$filterName;
+			}
 			if ( $tag == $tagName ) {
 				foreach ( $child->children() as $prop => $value) {
 					if( $prop == "Values" ){
@@ -48,26 +52,26 @@ class SDPageSchemas extends PSExtensionHandler {
 	}
 
 	public static function getFieldDisplayString() {
-		return 'Filter';
+		return wfMsg( 'sd-pageschemas-filter' );
 	}
 
 	/**
 	 * Returns the HTML for setting the filter options, for the
 	 * Semantic Drilldown section in Page Schemas' "edit schema" page
 	 */
-	public static function getFieldEditingHTML( $field ){
+	public static function getFieldEditingHTML( $psField ){
 		//$require_filter_label = wfMsg( 'sd_createfilter_requirefilter' );
 
 		$filter_array = array();
 		$hasExistingValues = false;
-		if ( !is_null( $field ) ) {
-			$filter_array = $field->getObject( 'semanticdrilldown_Filter' );
+		if ( !is_null( $psField ) ) {
+			$filter_array = $psField->getObject( 'semanticdrilldown_Filter' );
 			if ( !is_null( $filter_array ) ) {
 				$hasExistingValues = true;
 			}
 		}
 
-		$filterName = PageSchemas::getValueFromObject( $filter_array, 'Name' );
+		$filterName = PageSchemas::getValueFromObject( $filter_array, 'name' );
 		$selectedCategory = PageSchemas::getValueFromObject( $filter_array, 'ValuesFromCategory' );
 		$fromCategoryAttrs = array();
 		if ( !is_null( $selectedCategory ) ) {
@@ -171,11 +175,12 @@ class SDPageSchemas extends PSExtensionHandler {
 		$xmlPerField = array();
 		foreach ( $wgRequest->getValues() as $var => $val ) {
 			if ( substr( $var, 0, 15 ) == 'sd_filter_name_' ) {
-				$xml = '<semanticdrilldown_Filter>';
+				$xml = '<semanticdrilldown_Filter';
 				$fieldNum = substr( $var, 15 );
 				if ( !empty( $val ) ) {
-					$xml .= '<Name>' . $val . '</Name>';
+					$xml .= ' name="' . $val . '"';
 				}
+				$xml .= '>';
 			} elseif ( substr( $var, 0, 17 ) == 'sd_values_source_') {
 				if ( $val == 'category' ) {
 					$xml .= '<ValuesFromCategory>' . $wgRequest->getText('sd_category_name_' . $fieldNum) . '</ValuesFromCategory>';

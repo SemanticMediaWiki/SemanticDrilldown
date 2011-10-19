@@ -30,8 +30,8 @@ class SDFilter {
 				if ( is_null( $filter_array ) ) {
 					continue;
 				}
-				if ( array_key_exists( 'Name', $filter_array ) ) {
-					$f->name = $filter_array['Name'];
+				if ( array_key_exists( 'name', $filter_array ) ) {
+					$f->name = $filter_array['name'];
 				} else {
 					$f->name = $fieldObj->getName();
 				}
