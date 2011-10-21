@@ -25,24 +25,25 @@ class SDPageSchemas extends PSExtensionHandler {
 		}
 
 		foreach ( $xml->children() as $tag => $child ) {
+			if ( $tag != $tagName ) {
+				continue;
+			}
 			$filterName = $child->attributes()->name;
 			if ( !is_null( $filterName ) ) {
 				$sd_array['name'] = (string)$filterName;
 			}
-			if ( $tag == $tagName ) {
-				foreach ( $child->children() as $prop => $value) {
-					if( $prop == "Values" ){
-						$l_values = array();
-						foreach ( $value->children() as $val ) {
-							$l_values[] = (string)$val;
-						}
-						$sd_array['Values'] = $l_values;
-					} else {
-						$sd_array[$prop] = (string)$value;
+			foreach ( $child->children() as $prop => $value) {
+				if( $prop == "Values" ){
+					$l_values = array();
+					foreach ( $value->children() as $val ) {
+						$l_values[] = (string)$val;
 					}
+					$sd_array['Values'] = $l_values;
+				} else {
+					$sd_array[$prop] = (string)$value;
 				}
-				return $sd_array;
 			}
+			return $sd_array;
 		}
 		return null;
 	}
