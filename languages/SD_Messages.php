@@ -1272,6 +1272,7 @@ $messages['gsw'] = array(
 	'sd_createfilter_requirefilter' => 'Voreb dää Filter aazeigt wird, muess dää ander Filter gsetzt syy:',
 	'sd_createfilter_label' => 'Bezeichnig vu däm Filter (optional):',
 	'sd_blank_error' => 'derf nit läär syy',
+	'sd-pageschemas-filter' => 'Filter',
 	'sd-pageschemas-values' => 'Wärt',
 	'sd_filter_coversproperty' => 'Dää Filter betrifft d Eigenschaft $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Är chunnt syni Wärt us dr Kategorii $1 iber.',
@@ -2252,6 +2253,7 @@ $messages['nn'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Event
  * @author Harald Khan
  * @author Jon Harald Søby
  * @author Nghtwlkr
@@ -2292,6 +2294,8 @@ $messages['no'] = array(
 	'sd_createfilter_requirefilter' => 'Krev at et annet filter velges før dette vises:',
 	'sd_createfilter_label' => 'Etikett for dette filteret (valgfritt):',
 	'sd_blank_error' => 'kan ikke være blank',
+	'sd-pageschemas-filter' => 'Filter',
+	'sd-pageschemas-values' => 'Verdier',
 	'sd_filter_coversproperty' => 'Dette filteret dekker egenskapen $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Det får verdiene sine fra kategorien $1.',
 	'sd_filter_usestimeperiod' => 'Det bruker $1 som tidsperiode.',
