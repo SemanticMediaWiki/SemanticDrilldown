@@ -486,6 +486,7 @@ $messages['br'] = array(
 	'sd_createfilter_requirefilter' => 'Goulenn ma vo diuzet ur sil all a-raok na zeufe hemañ war wel :',
 	'sd_createfilter_label' => 'Tiketenn evit ar sil-mañ (diret) :',
 	'sd_blank_error' => "ne c'hall ket bezañ goullo",
+	'sd-pageschemas-filter' => 'Sil',
 	'sd-pageschemas-values' => 'Talvoudoù',
 	'sd_filter_coversproperty' => "Ar sil-mañ a ra war-dro ar perc'henniezh $1.",
 	'sd_filter_getsvaluesfromcategory' => 'E dalvoudoù en deus eus ar rummad $1.',
