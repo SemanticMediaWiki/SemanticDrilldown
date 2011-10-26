@@ -647,7 +647,7 @@ END;
 		foreach ( $filter_values as $value => $num_instances ) {
 			if ( $value != '_other' && $value != '_none' ) {
 				$display_value = str_replace( '_', ' ', $value );
-				$text .= '			<option value="'.$display_value.'">'.$display_value.'</option>';			
+				$text .= '			<option value="'.$display_value.'">'.$display_value.'</option>';
 			}
 		}
 
@@ -679,7 +679,7 @@ END;
 			wfMsgForContent( 'february' ),
 			wfMsgForContent( 'march' ),
 			wfMsgForContent( 'april' ),
-			// Needed to avoid using 3-letter abbreviation 
+			// Needed to avoid using 3-letter abbreviation
 			wfMsgForContent( 'may_long' ),
 			wfMsgForContent( 'june' ),
 			wfMsgForContent( 'july' ),
@@ -968,7 +968,7 @@ END;
 		return $header;
 	}
 
-	/*
+	/**
 	 * Used to set URL for additional pages of results.
 	 */
 	function linkParameters() {
@@ -1017,7 +1017,7 @@ END;
 	function getOrder() {
 		return ' ORDER BY sortkey ';
 	}
-	
+
 	function getOrderFields() {
 		return array( 'sortkey' );
 	}
@@ -1061,13 +1061,13 @@ END;
 		if ( !array_key_exists( 'format', $params ) ) {
 			$params['format'] = 'category';
 		}
-		
+
 		if ( array_key_exists( 'mainlabel', $params ) ) {
 			$mainlabel = $params['mainlabel'];
 		} else {
 			$mainlabel = '';
 		}
-		
+
 		$r = $this->addSemanticResultWrapper( $dbr, $res, $num, $query, $mainlabel, $printouts );
 		$printer = SMWQueryProcessor::getResultPrinter( $params['format'], SMWQueryProcessor::SPECIAL_PAGE, $r );
 
@@ -1075,17 +1075,17 @@ END;
 			SMWQueryProcessor::addThisPrintout( $printouts, $params );
 			$params = SMWQueryProcessor::getProcessedParams( $params, $printouts );
 		}
-		
+
 		$prresult = $printer->getResult(
 			$r,
 			$params,
 			SMW_OUTPUT_HTML
 		);
-		
-		$prtext = is_array( $prresult ) ? $prresult[0] : $prresult;  
+
+		$prtext = is_array( $prresult ) ? $prresult[0] : $prresult;
 
 		SMWOutputs::commitToOutputPage( $out );
-		
+
 		// Crappy hack to get the contents of SMWOutputs::$mHeadItems,
 		// which may have been set in the result printer, and dump into
 		// headItems of $out.
@@ -1105,7 +1105,7 @@ END;
 			// Force one more parser function, so links appear.
 			$wgParser->replaceLinkHolders( $prtext );
  		}
- 
+
 		$html = array();
 		$html[] = $prtext;
 
