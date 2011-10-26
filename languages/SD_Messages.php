@@ -1134,6 +1134,7 @@ $messages['frp'] = array(
 	'sd_createfilter_listofvalues' => 'Lista de les valors (per dèfôt)',
 	'sd_createfilter_label' => 'Ètiquèta por ceti filtro (u chouèx) :',
 	'sd_blank_error' => 'pôt pas étre vouedo',
+	'sd-pageschemas-filter' => 'Filtro',
 	'sd-pageschemas-values' => 'Valors',
 	'sd_filter_coversproperty' => 'Ceti filtro côvre la propriètât $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Il at ses valors dês la catègorie $1.',
