@@ -561,6 +561,7 @@ $messages['bs'] = array(
  * @author Paucabot
  * @author SMP
  * @author Solde
+ * @author Toniher
  */
 $messages['ca'] = array(
 	'semanticdrilldown-desc' => "Una interfície de ''drilldown'' per navegar a través de la informació semàntica",
@@ -598,6 +599,7 @@ $messages['ca'] = array(
 	'sd_createfilter_requirefilter' => 'Cal seleccionar un altre filtre abans de mostrar aquest:',
 	'sd_createfilter_label' => 'Rètol per aquest filtre (opcional):',
 	'sd_blank_error' => 'no es pot deixar buit',
+	'sd-pageschemas-filter' => 'Filtre',
 	'sd-pageschemas-values' => 'Valors',
 	'sd_filter_coversproperty' => 'Aquest filtre cobreix la propietat $1',
 	'sd_filter_getsvaluesfromcategory' => 'Pren els seus valors de la categoria $1',
