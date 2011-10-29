@@ -2025,6 +2025,7 @@ $messages['mk'] = array(
 );
 
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
@@ -2040,9 +2041,9 @@ $messages['ml'] = array(
 	'sd_browsedata_or' => 'അല്ലെങ്കിൽ',
 	'sd_browsedata_removefilter' => 'ഈ ഫിൽറ്റർ ഒഴിവാക്കുക',
 	'sd_browsedata_removesubcategoryfilter' => 'ഈ ഉപവർഗ്ഗ ഫിൽറ്റർ ഒഴിവാക്കുക',
-	'sd_browsedata_resetfilters' => 'ഫിൽറ്ററുകൾ പുനഃക്രമീകരിക്കുക',
+	'sd_browsedata_resetfilters' => 'അരിപ്പകൾ പുനഃക്രമീകരിക്കുക',
 	'sd_browsedata_addanothervalue' => 'മറ്റൊരു മൂല്യം ചേർക്കുക',
-	'filters' => 'ഫിൽറ്ററുകൾ',
+	'filters' => 'അരിപ്പകൾ',
 	'sd_filters_docu' => '{{SITENAME}} സം‌രംഭത്തിൽ താഴെ പ്രദർശിപ്പിച്ചിരിക്കുന്ന ഫിൽറ്ററുകൾ നിലവിലുണ്ട്:',
 	'createfilter' => 'ഒരു ഫിൽറ്റർ സൃഷ്ടിക്കുക',
 	'sd_createfilter_name' => 'പേര്‌:',
