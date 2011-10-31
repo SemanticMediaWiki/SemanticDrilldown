@@ -273,6 +273,61 @@ $messages['arz'] = array(
 	'sd_filter_haslabel' => 'يمتلك العلامة $1.',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'semanticdrilldown-desc' => "Interfaz de ''drilldown'' pa navegar pelos datos semánticos.",
+	'specialpages-group-sd_group' => 'Semantic Drilldown',
+	'browsedata' => 'Navegar pelos datos',
+	'sd_browsedata_choosecategory' => 'Escoyer una categoría',
+	'sd_browsedata_viewcategory' => 'ver categoría',
+	'sd_browsedata_docu' => "Calca nún o más elementos d'abaxo p'acotar los resultaos.",
+	'sd_browsedata_subcategory' => 'Subcategoría',
+	'sd_browsedata_other' => 'Otru',
+	'sd_browsedata_none' => 'Dengún',
+	'sd_browsedata_filterbyvalue' => 'Peñerar por esti valor',
+	'sd_browsedata_filterbysubcategory' => 'Peñerar por esta subcategoría',
+	'sd_browsedata_otherfilter' => 'Amosar páxines con otru valor pa esta peñera',
+	'sd_browsedata_nonefilter' => 'Amosar páxines con dengún valor pa esta peñera',
+	'sd_browsedata_or' => 'o',
+	'sd_browsedata_removefilter' => 'Desaniciar esta peñera',
+	'sd_browsedata_removesubcategoryfilter' => 'Desaniciar esta peñera de subcategoría',
+	'sd_browsedata_resetfilters' => 'Reestablecer peñeres',
+	'sd_browsedata_addanothervalue' => "Calca na flecha p'amestar otru valor",
+	'sd_browsedata_daterangestart' => 'Aniciu:',
+	'sd_browsedata_daterangeend' => 'Fin:',
+	'sd_browsedata_novalues' => 'Nun hai valores pa esta peñera',
+	'filters' => 'Peñeres',
+	'sd_filters_docu' => 'En {{SITENAME}} esisten les siguientes peñeres:',
+	'createfilter' => 'Crear una peñera',
+	'sd_createfilter_name' => 'Nome:',
+	'sd_createfilter_property' => 'Propiedá que cubre esta peñera:',
+	'sd_createfilter_usepropertyvalues' => "Usar tolos valores d'esta propiedá pa la peñera",
+	'sd_createfilter_usecategoryvalues' => "Sacar los valores pa la peñera d'esta categoría:",
+	'sd_createfilter_usedatevalues' => 'Usar los rangos de data pa esta peñera con esti periodu de tiempu:',
+	'sd_createfilter_entervalues' => 'Escribi manualmente los valores pa la peñera (los valores se tienen de separar con comes - si un valor contién una coma sustituyila por "\\,"):',
+	'sd_createfilter_inputtype' => "Triba d'entrada pa esta peñera:",
+	'sd_createfilter_listofvalues' => 'llista de valores (predeterminada)',
+	'sd_createfilter_requirefilter' => "Otra peñera que se tien de seleicionar enantes d'amosar esta:",
+	'sd_createfilter_label' => 'Etiqueta pa esta peñera (opcional):',
+	'sd_blank_error' => 'nun pue tar balero',
+	'sd-pageschemas-filter' => 'Peñera',
+	'sd-pageschemas-values' => 'Valores',
+	'sd_filter_coversproperty' => 'Esta peñera cubre la propiedá $1.',
+	'sd_filter_getsvaluesfromcategory' => 'Saca los valores de la categoría $1.',
+	'sd_filter_usestimeperiod' => 'Usa $1 como periodu de tiempu.',
+	'sd_filter_year' => 'Añu',
+	'sd_filter_month' => 'Mes',
+	'sd_filter_hasvalues' => 'Tien los valores $1.',
+	'sd_filter_hasinputtype' => "Tien como tipu d'entrada $1.",
+	'sd_filter_combobox' => "caxa combinada (''combo box'')",
+	'sd_filter_freetext' => 'testu',
+	'sd_filter_daterange' => 'rangu de dates',
+	'sd_filter_requiresfilter' => 'Se requier la presencia de la peñera $1.',
+	'sd_filter_haslabel' => 'Tien la etiqueta $1.',
+);
+
 /** Kotava (Kotava)
  * @author Wikimistusik
  */
