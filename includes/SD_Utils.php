@@ -10,8 +10,16 @@ class SDUtils {
 	/**
 	 * Helper function to handle getPropertyValues() in both SMW 1.6
 	 * and earlier versions.
+	 * 
+	 * @param SMWStore $store
+	 * @param string $pageName
+	 * @param integer $pageNamespace
+	 * @param string $propID
+	 * @param null|SMWRequestOptions $requestOptions
+	 * 
+	 * @return array of SMWDataItem
 	 */
-	public static function getSMWPropertyValues( $store, $pageName, $pageNamespace, $propID, $requestOptions = null ) {
+	public static function getSMWPropertyValues( SMWStore $store, $pageName, $pageNamespace, $propID, $requestOptions = null ) {
 		// SMWDIProperty was added in SMW 1.6
 		if ( class_exists( 'SMWDIProperty' ) ) {
 			$pageName = str_replace( ' ', '_', $pageName );
