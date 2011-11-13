@@ -237,3 +237,26 @@ function sdfInitProperties() {
 	}
 	return true;
 }
+
+// register client-side modules
+if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
+	$sfgResourceTemplate = array(
+		'localBasePath' => $sdgIP,
+		'remoteExtPath' => 'SemanticDrilldown'
+	);
+	$wgResourceModules += array(
+		'ext.semanticdrilldown.combobox' => $sfgResourceTemplate + array(
+			'scripts' => array(
+				'libs/SemanticDrilldown.js',
+			),
+			'styles' => array(
+				'skins/SD_jquery_ui_overrides.css',
+			),
+			'dependencies' => array(
+				'jquery.ui.autocomplete',
+				'jquery.ui.button',
+			),
+		),
+	);
+}
+

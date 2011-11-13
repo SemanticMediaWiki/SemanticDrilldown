@@ -590,16 +590,19 @@ END;
 		return $results_line;
 	}
 
-	function printComboBoxInput( $filter_name, $filter_values, $cur_value = null ) {
-		global $wgRequest, $smwgJQueryIncluded, $smwgJQueryUIIncluded,
-			$sdgJQueryIncluded, $sdgScriptPath, $wgOut;
+	/**
+	 * Uses the ResourceLoader (available with MediaWiki 1.17 and higher)
+	 * to load all the necessary JS and CSS files for the combobox.
+	 */
+	 public static function loadJavascriptAndCSS() {
+		global $wgOut;
+		$wgOut->addModules( 'ext.semanticdrilldown.combobox' );
+	 }
 
-		$filter_name = str_replace( ' ', '_', $filter_name );
-		$input_id = "_search_$filter_name";
-		$combobox_id = "c_search_$filter_name";
-		if ( !$sdgJQueryIncluded ) {
-			$wgOut->addExtensionStyle( "$sdgScriptPath/skins/jquery-ui/base/jquery.ui.all.css" );
-		}
+	function addJavascriptAndCSS() {
+		global $smwgJQueryIncluded, $smwgJQueryUIIncluded, $sdgScriptPath, $wgOut;
+
+		$wgOut->addExtensionStyle( "$sdgScriptPath/skins/jquery-ui/base/jquery.ui.all.css" );
 
 		$scripts = array();
 		if ( !$smwgJQueryIncluded ) {
@@ -611,22 +614,34 @@ END;
 			$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.core.min.js";
 			$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.widget.min.js";
 		}
-		if ( !$sdgJQueryIncluded ) {
-			$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.button.min.js";
-		}
+		$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.button.min.js";
 		if ( !$smwgJQueryUIIncluded ) {
 			$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.position.min.js";
 			$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.autocomplete.min.js";
 			$smwgJQueryUIIncluded = true;
 		}
-		if ( !$sdgJQueryIncluded ) {
-			$scripts[] = "$sdgScriptPath/libs/SemanticDrilldown.js";
-			$sdgJQueryIncluded = true;
-		}
+		$scripts[] = "$sdgScriptPath/libs/SemanticDrilldown.js";
 
 		foreach ( $scripts as $script ) {
 			$wgOut->addScriptFile( $script );
 		}
+	}
+
+	function printComboBoxInput( $filter_name, $filter_values, $cur_value = null ) {
+		global $wgRequest, $smwgJQueryIncluded, $smwgJQueryUIIncluded;
+		global $wgOut;
+
+		// MW 1.17 +
+		if ( class_exists( 'ResourceLoader' ) ) {
+			self::loadJavascriptAndCSS();
+		} elseif ( !$sdgJQueryIncluded ) {
+			$sdgJQueryIncluded = true;
+			self::addJavascriptAndCSS();
+		}
+
+		$filter_name = str_replace( ' ', '_', $filter_name );
+		$input_id = "_search_$filter_name";
+		$combobox_id = "c_search_$filter_name";
 
 		$combobox_js =<<<END
 <script type="text/javascript">
@@ -679,7 +694,7 @@ END;
 			wfMsgForContent( 'february' ),
 			wfMsgForContent( 'march' ),
 			wfMsgForContent( 'april' ),
-			// Needed to avoid using 3-letter abbreviation
+			// Needed to avoid using 3-letter abbreviation 
 			wfMsgForContent( 'may_long' ),
 			wfMsgForContent( 'june' ),
 			wfMsgForContent( 'july' ),
@@ -1082,7 +1097,7 @@ END;
 			SMW_OUTPUT_HTML
 		);
 
-		$prtext = is_array( $prresult ) ? $prresult[0] : $prresult;
+		$prtext = is_array( $prresult ) ? $prresult[0] : $prresult;  
 
 		SMWOutputs::commitToOutputPage( $out );
 
@@ -1105,7 +1120,7 @@ END;
 			// Force one more parser function, so links appear.
 			$wgParser->replaceLinkHolders( $prtext );
  		}
-
+ 
 		$html = array();
 		$html[] = $prtext;
 
