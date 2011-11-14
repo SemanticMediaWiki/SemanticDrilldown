@@ -592,13 +592,18 @@ END;
 
 	/**
 	 * Uses the ResourceLoader (available with MediaWiki 1.17 and higher)
-	 * to load all the necessary JS and CSS files for the combobox.
+	 * to load all the necessary JS and CSS files for comboboxes.
 	 */
 	 public static function loadJavascriptAndCSS() {
 		global $wgOut;
 		$wgOut->addModules( 'ext.semanticdrilldown.combobox' );
 	 }
 
+	/**
+	 * Adds Javascript and CSS to the page for comboboxes, the long way.
+	 * This method exists for backward compatibiity for MediaWiki 1.16
+	 * and earlier.
+	 */
 	function addJavascriptAndCSS() {
 		global $smwgJQueryIncluded, $smwgJQueryUIIncluded, $sdgScriptPath, $wgOut;
 
@@ -628,8 +633,7 @@ END;
 	}
 
 	function printComboBoxInput( $filter_name, $filter_values, $cur_value = null ) {
-		global $wgRequest, $smwgJQueryIncluded, $smwgJQueryUIIncluded;
-		global $wgOut;
+		global $wgRequest, $sdgJQueryIncluded, $wgOut;
 
 		// MW 1.17 +
 		if ( class_exists( 'ResourceLoader' ) ) {
@@ -640,6 +644,9 @@ END;
 		}
 
 		$filter_name = str_replace( ' ', '_', $filter_name );
+		// URL-decode the filter name - necessary if it contains
+		// any non-Latin characters.
+		$filter_name = urldecode( $filter_name );
 		$input_id = "_search_$filter_name";
 		$combobox_id = "c_search_$filter_name";
 
