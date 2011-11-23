@@ -2911,7 +2911,7 @@ $messages['sr-ec'] = array(
 	'sd_filter_month' => 'Месец',
 );
 
-/** Serbian Latin ekavian (‪Srpski (latinica)‬)
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -3074,7 +3074,7 @@ $messages['tet'] = array(
 	'sd_filter_year' => 'Tinan',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -3103,7 +3103,7 @@ $messages['tg-cyrl'] = array(
 	'sd_filter_haslabel' => 'Ин барчасби $1 дорад.',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
