@@ -1178,51 +1178,7 @@ END;
 		$main_printout[$printrequest->getHash()] = $printrequest;
 		$printouts = array_merge( $main_printout, $printouts );
 
-		// for SMW 1.5+, handling is quite easy
-		if ( ! class_exists( 'SMWTemplateResultPrinter' ) ) {
-			return new SMWQueryResult( $printouts, $query, $qr, $store, ( $count > $num ) );
-		}
-		$result = new SMWQueryResult( $printouts, $query, ( $count > $num ) );
-		foreach ( $qr as $qt ) {
-			$row = array();
-			$cats = false;
-			foreach ( $printouts as $pr ) {
-				switch ( $pr->getMode() ) {
-				case SMWPrintRequest::PRINT_THIS:
-					$row[] = new SMWResultArray( array( $qt ), $pr );
-				break;
-				case SMWPrintRequest::PRINT_CATS:
-					if ( $cats === false ) {
-						$cats = $store->getPropertyValues( $qt, SMWPropertyValue::makeProperty( '_INST' ) );
-					}
-					$row[] = new SMWResultArray( $cats, $pr );
-				break;
-				case SMWPrintRequest::PRINT_PROP:
-					$row[] = new SMWResultArray( $store->getPropertyValues( $qt, $pr->getData(), null, $pr->getOutputFormat() ), $pr );
-				break;
-				case SMWPrintRequest::PRINT_CCAT:
-					if ( $cats === false ) {
-						$cats = $store->getPropertyValues( $qt, SMWPropertyValue::makeProperty( '_INST' ) );
-					}
-					$found = '0';
-					$prkey = $pr->getData()->getDBkey();
-					foreach ( $cats as $cat ) {
-						if ( $cat->getDBkey() == $prkey ) {
-							$found = '1';
-							break;
-						}
-					}
-					$dv = SMWDataValueFactory::newTypeIDValue( '_boo' );
-					$dv->setOutputFormat( $pr->getOutputFormat() );
-					$dv->setDBkeys( array( $found ) );
-					$row[] = new SMWResultArray( array( $dv ), $pr );
-				break;
-				}
-			}
-			$result->addRow( $row );
-		}
-		wfProfileOut( 'SMWSQLStore2Queries::getInstanceQueryResult (SMW)' );
-		return $result;
+		return new SMWQueryResult( $printouts, $query, $qr, $store, ( $count > $num ) );
 	}
 
 	function openList( $offset ) {
