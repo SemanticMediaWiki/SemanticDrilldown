@@ -79,6 +79,41 @@ class SDUtils {
 	}
 
 	/**
+	 * Gets the list of names of only those categories in the wiki
+	 * that have a __SHOWINDRILLDOWN__ declaration on their page.
+	 */
+	static function getOnlyExplicitlyShownCategories() {
+		$shown_cats = array();
+		$dbr = wfGetDB( DB_SLAVE );
+		extract( $dbr->tableNames( 'page', 'page_props' ) );
+		$cat_ns = NS_CATEGORY;
+		$sql = "SELECT p.page_title FROM $page p JOIN $page_props pp ON p.page_id = pp.pp_page WHERE p.page_namespace = $cat_ns AND pp.pp_propname = 'showindrilldown' AND pp.pp_value = 'y'";
+		$res = $dbr->query( $sql );
+
+		while ( $row = $dbr->fetchRow( $res ) ) {
+			$shown_cats[] = str_replace( '_', ' ', $row[0] );
+		}
+		$dbr->freeResult( $res );
+
+		sort( $shown_cats );
+		return $shown_cats;
+	}
+
+	/**
+	 * Returns the list of categories that will show up in the
+	 * header/sidebar of the 'BrowseData' special page.
+	 */
+	public static function getCategoriesForBrowsing() {
+		global $sdgHideCategoriesByDefault;
+
+		if ( $sdgHideCategoriesByDefault ) {
+			return self::getOnlyExplicitlyShownCategories();
+		} else {
+			return self::getTopLevelCategories();
+		}
+	}
+
+	/**
 	 * Gets a list of the names of all properties in the wiki
 	 */
 	static function getSemanticProperties() {

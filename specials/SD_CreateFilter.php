@@ -162,7 +162,7 @@ END;
 	<select id="category_dropdown" name="category_name">
 
 END;
-	$categories = SDUtils::getTopLevelCategories();
+	$categories = SDUtils::getCategoriesForBrowsing();
 	foreach ( $categories as $category ) {
 		$category = str_replace( '_', ' ', $category );
 		$text .= "	<option>$category</option>\n";

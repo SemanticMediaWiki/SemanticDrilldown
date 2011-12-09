@@ -83,7 +83,7 @@ END;
 		// if no category was specified, go with the first
 		// category on the site, alphabetically
 		if ( ! $category ) {
-			$categories = SDUtils::getTopLevelCategories();
+			$categories = SDUtils::getCategoriesForBrowsing();
 			if ( count( $categories ) > 0 ) {
 				$category = $categories[0];
 			}
@@ -856,7 +856,7 @@ END;
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
 		$skin = $wgUser->getSkin();
-		$categories = SDUtils::getTopLevelCategories();
+		$categories = SDUtils::getCategoriesForBrowsing();
 		// if there are no categories, escape quickly
 		if ( count( $categories ) == 0 ) {
 			return "";

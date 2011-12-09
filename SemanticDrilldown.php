@@ -100,6 +100,9 @@ $sdgListSeparator = ",";
 # ##
 # # Variables for display
 # ##
+// Set to true to have Special:BrowseData show only categories that have
+// __SHOWINDRILLDOWN__ set.
+$sdgHideCategoriesByDefault = false;
 $sdgNumResultsPerPage = 250;
 // set these to a positive value to trigger the "tag cloud" display
 $sdgFiltersSmallestFontSize = - 1;
