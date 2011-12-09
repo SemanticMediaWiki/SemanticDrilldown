@@ -84,18 +84,26 @@ class SDUtils {
 	 */
 	static function getOnlyExplicitlyShownCategories() {
 		$shown_cats = array();
+
 		$dbr = wfGetDB( DB_SLAVE );
-		extract( $dbr->tableNames( 'page', 'page_props' ) );
-		$cat_ns = NS_CATEGORY;
-		$sql = "SELECT p.page_title FROM $page p JOIN $page_props pp ON p.page_id = pp.pp_page WHERE p.page_namespace = $cat_ns AND pp.pp_propname = 'showindrilldown' AND pp.pp_value = 'y'";
-		$res = $dbr->query( $sql );
+		$res = $dbr->select(
+			array( 'p' => 'page', 'pp' => 'page_props' ),
+			'p.page_title',
+			array(
+				'p.page_namespace' => NS_CATEGORY,
+				'pp.pp_propname' => 'showindrilldown',
+				'pp.pp_value' => 'y'
+			),
+			'SDUtils::getOnlyExplicitlyShownCategories',
+			array( 'ORDER BY' => 'p.page_title' ),
+			array( 'pp' => array( 'JOIN', 'p.page_id = pp.pp_page' ) )
+		);
 
 		while ( $row = $dbr->fetchRow( $res ) ) {
 			$shown_cats[] = str_replace( '_', ' ', $row[0] );
 		}
 		$dbr->freeResult( $res );
 
-		sort( $shown_cats );
 		return $shown_cats;
 	}
 
