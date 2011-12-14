@@ -851,11 +851,10 @@ END;
 	}
 
 	function getPageHeader() {
-		global $wgUser, $wgRequest;
+		global $wgRequest;
 		global $sdgContLang, $sdgScriptPath;
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
-		$skin = $wgUser->getSkin();
 		$categories = SDUtils::getCategoriesForBrowsing();
 		// if there are no categories, escape quickly
 		if ( count( $categories ) == 0 ) {
