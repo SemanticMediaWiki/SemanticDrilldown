@@ -3411,6 +3411,9 @@ $messages['zh-cn'] = array(
  */
 $messages['zh-hans'] = array(
 	'browsedata' => '浏览数据',
+	'sd_browsedata_choosecategory' => '选择一个分类',
+	'sd_browsedata_viewcategory' => '检视分类',
+	'sd_browsedata_docu' => '点击下面的一个或多个项目来缩小您的结果。',
 	'sd_browsedata_other' => '其他',
 	'sd_browsedata_none' => '无',
 	'sd_browsedata_or' => '或',
@@ -3422,6 +3425,7 @@ $messages['zh-hans'] = array(
 	'sd_filter_year' => '年',
 	'sd_filter_month' => '月',
 	'sd_filter_freetext' => '文字',
+	'sd_filter_daterange' => '日期范围',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
