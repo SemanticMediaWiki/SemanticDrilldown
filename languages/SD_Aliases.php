@@ -236,7 +236,7 @@ $specialPageAliases['nl'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$specialPageAliases['no'] = array(
+$specialPageAliases['nb'] = array(
 	'BrowseData' => array( 'Naviger_data' ),
 	'CreateFilter' => array( 'Opprett_filter' ),
 	'Filters' => array( 'Filtere' ),
