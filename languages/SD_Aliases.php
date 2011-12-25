@@ -223,6 +223,13 @@ $specialPageAliases['myv'] = array(
 	'Filters' => array( 'Сувтеметь' ),
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'BrowseData' => array( 'Naviger_data' ),
+	'CreateFilter' => array( 'Opprett_filter' ),
+	'Filters' => array( 'Filtere' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
 $specialPageAliases['nds-nl'] = array(
 	'BrowseData' => array( 'Gegevens_bekieken' ),
@@ -233,13 +240,6 @@ $specialPageAliases['nds-nl'] = array(
 $specialPageAliases['nl'] = array(
 	'BrowseData' => array( 'GegevensBekijken' ),
 	'CreateFilter' => array( 'FilterAanmaken' ),
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$specialPageAliases['nb'] = array(
-	'BrowseData' => array( 'Naviger_data' ),
-	'CreateFilter' => array( 'Opprett_filter' ),
-	'Filters' => array( 'Filtere' ),
 );
 
 /** Occitan (Occitan) */
@@ -321,8 +321,3 @@ $specialPageAliases['vi'] = array(
 $specialPageAliases['yi'] = array(
 	'Filters' => array( 'פֿילטערס' ),
 );
-
-/**
- * For backwards compatibility with MediaWiki 1.15 and earlier.
- */
-$aliases =& $specialPageAliases;
