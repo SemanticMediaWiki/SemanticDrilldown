@@ -2199,6 +2199,64 @@ $messages['nah'] = array(
 	'sd_filter_month' => 'Mētztli',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Event
+ * @author Harald Khan
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'semanticdrilldown-desc' => 'Et «drilldown»-grensesnitt for navigering gjennom semantiske data',
+	'specialpages-group-sd_group' => 'Semantisk «drilldown»',
+	'browsedata' => 'Bla gjennom data',
+	'sd_browsedata_choosecategory' => 'Velg en kategori',
+	'sd_browsedata_viewcategory' => 'se kategori',
+	'sd_browsedata_docu' => 'Klikk på en eller flere enheter nedenfor for å smalne inn søket.',
+	'sd_browsedata_subcategory' => 'Underkategori',
+	'sd_browsedata_other' => 'Annen',
+	'sd_browsedata_none' => 'Ingen',
+	'sd_browsedata_filterbyvalue' => 'Filtrer etter denne verdien',
+	'sd_browsedata_filterbysubcategory' => 'Filtrer etter denne underkategorien',
+	'sd_browsedata_otherfilter' => 'Vis sider med en annen verdi for dette filteret',
+	'sd_browsedata_nonefilter' => 'Vis sider uten noen verdi for dette filteret',
+	'sd_browsedata_or' => 'eller',
+	'sd_browsedata_removefilter' => 'Fjern dette filteret',
+	'sd_browsedata_removesubcategoryfilter' => 'Fjern dette underkategorifilteret',
+	'sd_browsedata_resetfilters' => 'Resett filtre',
+	'sd_browsedata_addanothervalue' => 'Klikk på pilen for å legge til enda en verdi',
+	'sd_browsedata_daterangestart' => 'Start:',
+	'sd_browsedata_daterangeend' => 'Slutt:',
+	'sd_browsedata_novalues' => 'Det er ingen verdier for dette filteret',
+	'filters' => 'Filtre',
+	'sd_filters_docu' => 'Følgende filtre finnes på {{SITENAME}}:',
+	'createfilter' => 'Opprett et filter',
+	'sd_createfilter_name' => 'Navn:',
+	'sd_createfilter_property' => 'Egenskap dette filteret dekker:',
+	'sd_createfilter_usepropertyvalues' => 'Bruk alle verdier av denne egenskapen for filteret',
+	'sd_createfilter_usecategoryvalues' => 'Få verdier for filteret fra denne kategorien:',
+	'sd_createfilter_usedatevalues' => 'Bruk datoområder for dette filteret med denne tidsperioden:',
+	'sd_createfilter_entervalues' => 'Skriv inn verdier for filteret manuelt (verdier burde adskilles med komma – om en verdi inneholder et komma, erstatt det med «\\,»);',
+	'sd_createfilter_inputtype' => 'Inndatatype for dette filteret:',
+	'sd_createfilter_listofvalues' => 'liste over verdier (standard)',
+	'sd_createfilter_requirefilter' => 'Krev at et annet filter velges før dette vises:',
+	'sd_createfilter_label' => 'Etikett for dette filteret (valgfritt):',
+	'sd_blank_error' => 'kan ikke være blank',
+	'sd-pageschemas-filter' => 'Filter',
+	'sd-pageschemas-values' => 'Verdier',
+	'sd_filter_coversproperty' => 'Dette filteret dekker egenskapen $1.',
+	'sd_filter_getsvaluesfromcategory' => 'Det får verdiene sine fra kategorien $1.',
+	'sd_filter_usestimeperiod' => 'Det bruker $1 som tidsperiode.',
+	'sd_filter_year' => 'År',
+	'sd_filter_month' => 'Måned',
+	'sd_filter_hasvalues' => 'Den har verdiene $1.',
+	'sd_filter_hasinputtype' => 'Det har inndatatypen $1.',
+	'sd_filter_combobox' => 'kombinasjonsboks',
+	'sd_filter_freetext' => 'tekst',
+	'sd_filter_daterange' => 'datoområde',
+	'sd_filter_requiresfilter' => 'Det krever at filteret $1 er til stede.',
+	'sd_filter_haslabel' => 'Det har etiketten $1.',
+);
+
 /** Low German (Plattdüütsch)
  * @author Slomox
  */
@@ -2313,64 +2371,6 @@ $messages['nn'] = array(
 	'sd_filter_daterange' => 'datoområde',
 	'sd_filter_requiresfilter' => 'Det krev at filteret $1 er til stades.',
 	'sd_filter_haslabel' => 'Det har merkelappen $1.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Event
- * @author Harald Khan
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'semanticdrilldown-desc' => 'Et «drilldown»-grensesnitt for navigering gjennom semantiske data',
-	'specialpages-group-sd_group' => 'Semantisk «drilldown»',
-	'browsedata' => 'Bla gjennom data',
-	'sd_browsedata_choosecategory' => 'Velg en kategori',
-	'sd_browsedata_viewcategory' => 'se kategori',
-	'sd_browsedata_docu' => 'Klikk på en eller flere enheter nedenfor for å smalne inn søket.',
-	'sd_browsedata_subcategory' => 'Underkategori',
-	'sd_browsedata_other' => 'Annen',
-	'sd_browsedata_none' => 'Ingen',
-	'sd_browsedata_filterbyvalue' => 'Filtrer etter denne verdien',
-	'sd_browsedata_filterbysubcategory' => 'Filtrer etter denne underkategorien',
-	'sd_browsedata_otherfilter' => 'Vis sider med en annen verdi for dette filteret',
-	'sd_browsedata_nonefilter' => 'Vis sider uten noen verdi for dette filteret',
-	'sd_browsedata_or' => 'eller',
-	'sd_browsedata_removefilter' => 'Fjern dette filteret',
-	'sd_browsedata_removesubcategoryfilter' => 'Fjern dette underkategorifilteret',
-	'sd_browsedata_resetfilters' => 'Resett filtre',
-	'sd_browsedata_addanothervalue' => 'Klikk på pilen for å legge til enda en verdi',
-	'sd_browsedata_daterangestart' => 'Start:',
-	'sd_browsedata_daterangeend' => 'Slutt:',
-	'sd_browsedata_novalues' => 'Det er ingen verdier for dette filteret',
-	'filters' => 'Filtre',
-	'sd_filters_docu' => 'Følgende filtre finnes på {{SITENAME}}:',
-	'createfilter' => 'Opprett et filter',
-	'sd_createfilter_name' => 'Navn:',
-	'sd_createfilter_property' => 'Egenskap dette filteret dekker:',
-	'sd_createfilter_usepropertyvalues' => 'Bruk alle verdier av denne egenskapen for filteret',
-	'sd_createfilter_usecategoryvalues' => 'Få verdier for filteret fra denne kategorien:',
-	'sd_createfilter_usedatevalues' => 'Bruk datoområder for dette filteret med denne tidsperioden:',
-	'sd_createfilter_entervalues' => 'Skriv inn verdier for filteret manuelt (verdier burde adskilles med komma – om en verdi inneholder et komma, erstatt det med «\\,»);',
-	'sd_createfilter_inputtype' => 'Inndatatype for dette filteret:',
-	'sd_createfilter_listofvalues' => 'liste over verdier (standard)',
-	'sd_createfilter_requirefilter' => 'Krev at et annet filter velges før dette vises:',
-	'sd_createfilter_label' => 'Etikett for dette filteret (valgfritt):',
-	'sd_blank_error' => 'kan ikke være blank',
-	'sd-pageschemas-filter' => 'Filter',
-	'sd-pageschemas-values' => 'Verdier',
-	'sd_filter_coversproperty' => 'Dette filteret dekker egenskapen $1.',
-	'sd_filter_getsvaluesfromcategory' => 'Det får verdiene sine fra kategorien $1.',
-	'sd_filter_usestimeperiod' => 'Det bruker $1 som tidsperiode.',
-	'sd_filter_year' => 'År',
-	'sd_filter_month' => 'Måned',
-	'sd_filter_hasvalues' => 'Den har verdiene $1.',
-	'sd_filter_hasinputtype' => 'Det har inndatatypen $1.',
-	'sd_filter_combobox' => 'kombinasjonsboks',
-	'sd_filter_freetext' => 'tekst',
-	'sd_filter_daterange' => 'datoområde',
-	'sd_filter_requiresfilter' => 'Det krever at filteret $1 er til stede.',
-	'sd_filter_haslabel' => 'Det har etiketten $1.',
 );
 
 /** Northern Sotho (Sesotho sa Leboa)
@@ -2913,11 +2913,12 @@ $messages['sr-ec'] = array(
 
 /** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Rancher
  */
 $messages['sr-el'] = array(
 	'sd_browsedata_choosecategory' => 'Izaberi kategoriju',
-	'sd_browsedata_viewcategory' => 'vidi kategoriju',
-	'sd_browsedata_subcategory' => 'Podkategorija',
+	'sd_browsedata_viewcategory' => 'pogledaj kategoriju',
+	'sd_browsedata_subcategory' => 'Potkategorija',
 	'sd_browsedata_other' => 'Drugo',
 	'sd_browsedata_none' => 'Nema',
 	'sd_browsedata_or' => 'ili',
