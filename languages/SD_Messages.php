@@ -2561,6 +2561,7 @@ $messages['pms'] = array(
 	'sd_createfilter_requirefilter' => "Ciama ëd selessioné n'àutr filtr prima che sto-sì a sia visualisà:",
 	'sd_createfilter_label' => 'Tichëtta për sto filtr-sì (opsional):',
 	'sd_blank_error' => 'a peul pa esse veuid',
+	'sd-pageschemas-filter' => 'Filtr',
 	'sd-pageschemas-values' => 'Valor',
 	'sd_filter_coversproperty' => 'Sto filtr-sì a coata la proprietà $1.',
 	'sd_filter_getsvaluesfromcategory' => 'A pija ij sò valor da la categorìa $1.',
