@@ -2019,6 +2019,43 @@ $messages['lb'] = array(
 	'sd_filter_haslabel' => "en huet d'Etiquette $1.",
 );
 
+/** Latvian (Latviešu)
+ * @author Ilmarmors
+ */
+$messages['lv'] = array(
+	'browsedata' => 'Pārlūkot datus',
+	'sd_browsedata_choosecategory' => 'Izvēlieties kategoriju',
+	'sd_browsedata_viewcategory' => 'skatīt kategoriju',
+	'sd_browsedata_subcategory' => 'Apakškategorija',
+	'sd_browsedata_other' => 'Cita',
+	'sd_browsedata_none' => 'Neviena',
+	'sd_browsedata_filterbyvalue' => 'Filtrēt pēc šīs vērtības',
+	'sd_browsedata_filterbysubcategory' => 'Filtrēt pēc šīs apakškategorijas',
+	'sd_browsedata_otherfilter' => 'Parādīt lapas ar citu šī filtra vērtību',
+	'sd_browsedata_nonefilter' => 'Rādīt lapas bez šī filtra vērtības',
+	'sd_browsedata_or' => 'vai',
+	'sd_browsedata_removefilter' => 'Noņemt šo filtru',
+	'sd_browsedata_removesubcategoryfilter' => 'Noņemt šo apakškategorijas filtru',
+	'sd_browsedata_resetfilters' => 'Atiestatīt filtrus',
+	'sd_browsedata_addanothervalue' => 'Noklikšķiniet uz bultiņas, lai pievienotu citu vērtību',
+	'sd_browsedata_daterangestart' => 'Sākums:',
+	'sd_browsedata_daterangeend' => 'Beigas:',
+	'filters' => 'Filtri',
+	'createfilter' => 'Izveidot filtru',
+	'sd_createfilter_name' => 'Nosaukums:',
+	'sd_createfilter_inputtype' => 'Šī filtra ievades tips:',
+	'sd_createfilter_listofvalues' => 'vērtību saraksts (pēc noklusējuma)',
+	'sd_createfilter_label' => 'Filtra etiķete (nav obligāta):',
+	'sd_blank_error' => 'nevar būt tukšs',
+	'sd-pageschemas-filter' => 'Filtrs',
+	'sd-pageschemas-values' => 'Vērtības',
+	'sd_filter_year' => 'Gads',
+	'sd_filter_month' => 'Mēnesis',
+	'sd_filter_combobox' => 'kombinētais lodziņš',
+	'sd_filter_freetext' => 'teksts',
+	'sd_filter_daterange' => 'datumu diapazons',
+);
+
 /** Eastern Mari (Олык Марий)
  * @author Сай
  */
