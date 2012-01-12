@@ -12,10 +12,6 @@ class SDFilters extends SpecialPage {
 	 */
 	function __construct() {
 		parent::__construct( 'Filters' );
-		// Backwards compatibility for MediaWiki < 1.16
-		if ( version_compare( $GLOBALS['wgVersion'], '1.16', '<' ) ) {
-			wfLoadExtensionMessages( 'SemanticDrilldown' );
-		}
 	}
 
 	function execute( $par ) {
