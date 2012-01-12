@@ -15,10 +15,6 @@ class SDBrowseData extends IncludableSpecialPage {
 	 */
 	public function __construct() {
 		parent::__construct( 'BrowseData' );
-		// Backwards compatibility for MediaWiki < 1.16
-		if ( version_compare( $GLOBALS['wgVersion'], '1.16', '<' ) ) {
-			wfLoadExtensionMessages( 'SemanticDrilldown' );
-		}
 	}
 
 	function execute( $query ) {
@@ -601,8 +597,7 @@ END;
 
 	/**
 	 * Adds Javascript and CSS to the page for comboboxes, the long way.
-	 * This method exists for backward compatibiity for MediaWiki 1.16
-	 * and earlier.
+	 * This method exists for backward compatibiity for MediaWiki 1.16.
 	 */
 	function addJavascriptAndCSS() {
 		global $smwgJQueryIncluded, $smwgJQueryUIIncluded, $sdgScriptPath, $wgOut;
@@ -669,7 +664,7 @@ END;
 		foreach ( $filter_values as $value => $num_instances ) {
 			if ( $value != '_other' && $value != '_none' ) {
 				$display_value = str_replace( '_', ' ', $value );
-				$text .= '			<option value="'.$display_value.'">'.$display_value.'</option>';
+				$text .= "\t\t" . Html::element( 'option', array( 'value' => $display_value ), $display_value ) . "\n";
 			}
 		}
 
@@ -680,18 +675,12 @@ END;
 END;
 
 		foreach ( $wgRequest->getValues() as $key => $val ) {
-			if ( $key != $input_id )
-				$text .= <<<END
-	<input type="hidden" name="$key" value="$val" />
-
-END;
+			if ( $key != $input_id ) {
+				$text .= Html::hidden( $key, $val ) . "\n";
+			}
 		}
-		$search_label = wfMsg( 'searchresultshead' );
-		$text .= <<<END
-	<input type="submit" value="$search_label" />
-</form>
-
-END;
+		$text .= Html::input( null, wfMsg( 'searchresultshead' ), 'submit' ) . "\n";
+		$text .= "</form>\n";
 		return $text;
 	}
 
@@ -744,17 +733,11 @@ $end_label $end_month_input</p>
 
 END;
 		foreach ( $wgRequest->getValues() as $key => $val ) {
-			$text .= <<<END
-<input type="hidden" name="$key" value="$val" />
-
-END;
+			$text .= Html::hidden( $key, $val ) . "\n";
 		}
-		$search_label = wfMsg( 'searchresultshead' );
-		$text .= <<<END
-<p><input type="submit" value="$search_label" /></p>
-</form>
-
-END;
+		$submitButton = Html::input( null, wfMsg( 'searchresultshead' ), 'submit' );
+		$text .= Html::rawElement( 'p', null, $submitButton ) . "\n";
+		$text .= "</form>\n";
 		return $text;
 	}
 
@@ -1114,12 +1097,7 @@ END;
 		global $wgParser;
 		SMWOutputs::commitToParser( $wgParser );
 		if ( ! is_null( $wgParser->mOutput ) ) {
-			// getHeadItems() was added in MW 1.16
-			if ( method_exists( $wgParser->getOutput(), 'getHeadItems' ) ) {
-				$headItems = $wgParser->getOutput()->getHeadItems();
-			} else {
-				$headItems = $wgParser->getOutput()->mHeadItems;
-			}
+			$headItems = $wgParser->getOutput()->getHeadItems();
 			foreach ( $headItems as $key => $item ) {
 				$out->addHeadItem( $key, $item );
 			}
