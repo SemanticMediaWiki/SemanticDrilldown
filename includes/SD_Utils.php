@@ -6,7 +6,6 @@
  */
 
 class SDUtils {
-
 	/**
 	 * Helper function to handle getPropertyValues() in both SMW 1.6
 	 * and earlier versions.
@@ -413,18 +412,6 @@ END;
 	static function addMagicWordVariableIDs( &$magicWordVariableIDs ) {
 		$magicWordVariableIDs[] = 'MAG_HIDEFROMDRILLDOWN';
 		$magicWordVariableIDs[] = 'MAG_SHOWINDRILLDOWN';
-		return true;
-	}
-
-	/**
-	 * Set the actual value of the magic words
-	 */
-	static function addMagicWordLanguage( &$magicWords, $langCode ) {
-		switch( $langCode ) {
-		default:
-			$magicWords['MAG_HIDEFROMDRILLDOWN'] = array( 0, '__HIDEFROMDRILLDOWN__' );
-			$magicWords['MAG_SHOWINDRILLDOWN'] = array( 0, '__SHOWINDRILLDOWN__' );
-		}
 		return true;
 	}
 
