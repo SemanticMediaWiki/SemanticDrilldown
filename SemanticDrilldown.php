@@ -42,6 +42,7 @@ require_once( $sdgIP . '/languages/SD_Language.php' );
 
 $wgExtensionMessagesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Messages.php';
 $wgExtensionMessagesFiles['SemanticDrilldownAlias'] = $sdgIP . '/languages/SD_Aliases.php';
+$wgExtensionMessagesFiles['SemanticDrilldownMagic'] = $sdgIP . '/languages/SemanticDrilldown.i18n.magic.php';
 
 // register all special pages and other classes
 $wgSpecialPages['Filters'] = 'SDFilters';
@@ -242,12 +243,12 @@ function sdfInitProperties() {
 
 // register client-side modules
 if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-	$sfgResourceTemplate = array(
+	$sdgResourceTemplate = array(
 		'localBasePath' => $sdgIP,
 		'remoteExtPath' => 'SemanticDrilldown'
 	);
 	$wgResourceModules += array(
-		'ext.semanticdrilldown.combobox' => $sfgResourceTemplate + array(
+		'ext.semanticdrilldown.combobox' => $sdgResourceTemplate + array(
 			'scripts' => array(
 				'libs/SemanticDrilldown.js',
 			),
