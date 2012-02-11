@@ -3469,6 +3469,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Mark85296341
+ * @author Oapbtommy
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
@@ -3478,7 +3479,7 @@ $messages['zh-hant'] = array(
 	'sd_browsedata_docu' => '點擊下面的一個或多個項目來縮小您的結果。',
 	'sd_browsedata_other' => '其他',
 	'sd_browsedata_none' => '無',
-	'sd_browsedata_or' => '或',
+	'sd_browsedata_or' => '或者',
 	'sd_browsedata_daterangestart' => '開始：',
 	'sd_browsedata_daterangeend' => '結束：',
 	'filters' => '過濾器',
