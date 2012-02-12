@@ -85,7 +85,6 @@ END;
 			}
 		}
 
-		$wgOut->setPageTitle( $category_title );
 		$subcategory = $wgRequest->getVal( '_subcat' );
 
 		$filters = SDUtils::loadFiltersForCategory( $category );
@@ -146,6 +145,11 @@ END;
 			$num = $rep->doQuery( $offset, $limit );
 		}
 		$wgOut->addHTML( "\n			</div> <!-- drilldown-results -->\n" );
+
+		// This has to be set last, because otherwise the QueryPage
+		// code will overwrite it.
+		$wgOut->setPageTitle( $category_title );
+
 		return $num;
 	}
 }
