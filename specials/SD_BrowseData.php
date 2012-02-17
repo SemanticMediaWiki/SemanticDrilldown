@@ -193,7 +193,7 @@ class SDBrowseDataPage extends QueryPage {
 
 	function makeBrowseURL( $category, $applied_filters = array(), $subcategory = null ) {
 		$bd = SpecialPage::getTitleFor( 'BrowseData' );
-		$url = $bd->getFullURL() . '/' . $category;
+		$url = $bd->getLocalURL() . '/' . $category;
 		if ( $this->show_single_cat ) {
 			$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
 			$url .= "_single";
