@@ -1373,6 +1373,7 @@ $messages['haw'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
@@ -1412,6 +1413,8 @@ $messages['he'] = array(
 	'sd_createfilter_requirefilter' => 'הצבת דרישה לבחירת מסנן אחר לפני שזה יוצג:',
 	'sd_createfilter_label' => 'תווית עבור מסנן זה (אופציונלי):',
 	'sd_blank_error' => 'לא ניתן להשאיר ריק',
+	'sd-pageschemas-filter' => 'מסנן',
+	'sd-pageschemas-values' => 'ערכים',
 	'sd_filter_coversproperty' => 'מסנן זה מכסה את המאפיין $1.',
 	'sd_filter_getsvaluesfromcategory' => 'קבלת הערכים עבורו נעשית מהקטגוריה $1.',
 	'sd_filter_usestimeperiod' => 'נעשה שימוש ב־$1 כמשך הזמן שלו.',
