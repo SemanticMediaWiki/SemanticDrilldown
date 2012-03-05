@@ -931,6 +931,7 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Bola
  * @author Crazymadlover
  * @author Dvdgmz
@@ -974,6 +975,8 @@ $messages['es'] = array(
 	'sd_createfilter_requirefilter' => 'Requiere otro filtro a ser seleccionado antes que este sea mostrado:',
 	'sd_createfilter_label' => 'Etiqueta para este filtro (opcional):',
 	'sd_blank_error' => 'No puede estar en blanco',
+	'sd-pageschemas-filter' => 'Filtro',
+	'sd-pageschemas-values' => 'Valores',
 	'sd_filter_coversproperty' => 'Este filtro cubre la propiedad $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Obtiene sus valores de la categoría $1.',
 	'sd_filter_usestimeperiod' => 'Usa $1 como su periodo de tiempo.',
