@@ -137,7 +137,7 @@ END;
 		}
 
 		$wgOut->addHTML( "\n			<div class=\"drilldown-results\">\n" );
-		$rep = new SDBrowseDataPage( $category, $subcategory, $applied_filters, $remaining_filters );
+		$rep = new SDBrowseDataPage( $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit );
 		// Handling changed in MW version 1.18.
 		if ( method_exists( $rep, 'execute' ) ) {
 			$num = $rep->execute( $query );
@@ -166,7 +166,7 @@ class SDBrowseDataPage extends QueryPage {
 	/**
 	 * Initialize the variables of this page
 	 */
-	function __construct( $category, $subcategory, $applied_filters, $remaining_filters ) {
+	function __construct( $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit ) {
 		// Backwards compatibility for pre-version 1.18
 		if ( $this instanceof SpecialPage ) {
 			parent::__construct( 'BrowseData' );
@@ -175,6 +175,8 @@ class SDBrowseDataPage extends QueryPage {
 		$this->subcategory = $subcategory;
 		$this->applied_filters = $applied_filters;
 		$this->remaining_filters = $remaining_filters;
+		$this->offset = $offset;
+		$this->limit = $limit;
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$categorylinks = $dbr->tableName( 'categorylinks' );
@@ -941,7 +943,8 @@ END;
 				$highest_num_results = max( $subcat_values );
 				$num_results_midpoint = ( $lowest_num_results + $highest_num_results ) / 2;
 				$font_size_midpoint = ( $sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize ) / 2;
-				$num_results_per_font_pixel = ( $highest_num_results + 1 - $lowest_num_results ) / 						( $sdgFiltersLargestFontSize + 1 - $sdgFiltersSmallestFontSize );
+				$num_results_per_font_pixel = ( $highest_num_results + 1 - $lowest_num_results ) /
+					( $sdgFiltersLargestFontSize + 1 - $sdgFiltersSmallestFontSize );
 			}
 
 			foreach ( $subcat_values as $subcat => $num_results ) {
@@ -1090,7 +1093,7 @@ END;
 			SMW_OUTPUT_HTML
 		);
 
-		$prtext = is_array( $prresult ) ? $prresult[0] : $prresult;  
+		$prtext = is_array( $prresult ) ? $prresult[0] : $prresult;
 
 		SMWOutputs::commitToOutputPage( $out );
 
@@ -1107,7 +1110,7 @@ END;
 			}
 			// Force one more parser function, so links appear.
 			$wgParser->replaceLinkHolders( $prtext );
- 		}
+		}
  
 		$html = array();
 		$html[] = $prtext;
