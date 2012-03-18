@@ -2877,6 +2877,7 @@ $messages['rue'] = array(
 
 /** Slovak (Slovenčina)
  * @author Helix84
+ * @author Teslaton
  */
 $messages['sk'] = array(
 	'semanticdrilldown-desc' => 'Rozhranie na navigáciu sémantickými údajmi',
@@ -2914,6 +2915,8 @@ $messages['sk'] = array(
 	'sd_createfilter_requirefilter' => 'Vyžadovať, aby bol vybraný iný filter než sa zobrazí tento:',
 	'sd_createfilter_label' => 'Označenie tohto filtra (voliteľné):',
 	'sd_blank_error' => 'nemôže byť nevyplnené',
+	'sd-pageschemas-filter' => 'Filter',
+	'sd-pageschemas-values' => 'Hodnoty',
 	'sd_filter_coversproperty' => 'Tento filter pokrýva vlastnosť $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Získava hodnoty z kategórie $1.',
 	'sd_filter_usestimeperiod' => 'Používa ako časový interval $1.',
