@@ -2509,6 +2509,7 @@ $messages['pfl'] = array(
 
 /** Polish (Polski)
  * @author Airwolf
+ * @author BeginaFelicysym
  * @author Maikking
  * @author Maire
  * @author Sp5uhe
@@ -2550,6 +2551,8 @@ $messages['pl'] = array(
 	'sd_createfilter_requirefilter' => 'Wymagaj użycia innego filtru przed tym',
 	'sd_createfilter_label' => 'Etykieta filtru (nieobowiązkowa)',
 	'sd_blank_error' => 'nie może być puste',
+	'sd-pageschemas-filter' => 'Filtr',
+	'sd-pageschemas-values' => 'Wartości',
 	'sd_filter_coversproperty' => 'Ten filtr przesłania własność $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Otrzymuje wartości z kategorii $1.',
 	'sd_filter_usestimeperiod' => 'Używa $1 jako swojego przedziału czasu.',
