@@ -1710,6 +1710,7 @@ $messages['is'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Beta16
  * @author Civvì
  * @author Darth Kule
  * @author Gianfranco
@@ -1750,6 +1751,8 @@ $messages['it'] = array(
 	'sd_createfilter_requirefilter' => 'Richiedi la selezione di un altro filtro prima che questo sia visualizzato:',
 	'sd_createfilter_label' => 'Etichetta per questo filtro (facoltativa):',
 	'sd_blank_error' => 'non può essere vuoto',
+	'sd-pageschemas-filter' => 'Filtro',
+	'sd-pageschemas-values' => 'Valori',
 	'sd_filter_coversproperty' => 'Questo filtro riguarda la proprietà $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Prende i suoi valori dalla categoria $1.',
 	'sd_filter_usestimeperiod' => 'Usa $1 come suo intervallo di tempo.',
