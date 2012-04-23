@@ -1771,6 +1771,7 @@ $messages['it'] = array(
  * @author Aotake
  * @author Fryed-peach
  * @author Hosiryuhosi
+ * @author Shirayuki
  * @author Whym
  */
 $messages['ja'] = array(
@@ -1805,10 +1806,11 @@ $messages['ja'] = array(
 	'sd_createfilter_usedatevalues' => 'フィルターにこの単位の日付範囲を用いる:',
 	'sd_createfilter_entervalues' => 'フィルターの値を手で入力する (各値はコンマで区切ります。値がコンマを含む場合は「\\,」で置換します):',
 	'sd_createfilter_inputtype' => 'このフィルターの入力型:',
-	'sd_createfilter_listofvalues' => '値の一覧 (デフォルト)',
-	'sd_createfilter_requirefilter' => 'このフィルターが表示される前に、別のフィルターが選択されなければならないとする:',
+	'sd_createfilter_listofvalues' => '値の一覧（既定）',
+	'sd_createfilter_requirefilter' => 'このフィルターが表示される前に、別のフィルターを選択するのを必須にする：',
 	'sd_createfilter_label' => 'このフィルターのラベル (省略可能):',
 	'sd_blank_error' => '空であってはならない',
+	'sd-pageschemas-values' => '値',
 	'sd_filter_coversproperty' => 'このフィルターはプロパティ $1 を対象とします。',
 	'sd_filter_getsvaluesfromcategory' => '値をカテゴリ $1 から取得します。',
 	'sd_filter_usestimeperiod' => '日付範囲の単位として$1を用いています。',
