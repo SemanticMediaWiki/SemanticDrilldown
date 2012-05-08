@@ -784,9 +784,11 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Belekvor
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'sd_browsedata_none' => 'çino',
+	'sd_createfilter_name' => 'Name:',
 );
 
 /** Lower Sorbian (Dolnoserbski)
