@@ -2376,6 +2376,7 @@ $messages['nl'] = array(
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Harald Khan
  * @author Jon Harald Søby
+ * @author Njardarlogar
  */
 $messages['nn'] = array(
 	'semanticdrilldown-desc' => 'Eit «drilldown»-brukargrensesnitt for navigering gjennom semantiske data',
@@ -2510,10 +2511,13 @@ $messages['pdc'] = array(
 );
 
 /** Pälzisch (Pälzisch)
+ * @author Manuae
  * @author Xqt
  */
 $messages['pfl'] = array(
 	'sd_browsedata_none' => 'Kääns',
+	'sd_browsedata_or' => 'oda',
+	'sd_filter_freetext' => 'Tegschd',
 );
 
 /** Polish (Polski)
@@ -3163,7 +3167,7 @@ $messages['tg-cyrl'] = array(
 	'sd_filter_haslabel' => 'Ин барчасби $1 дорад.',
 );
 
-/** Tajik (Latin script) (tojikī)
+/** Tajik (Latin script) (Tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -3265,6 +3269,7 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Suelnur
  * @author Vito Genovese
  */
 $messages['tr'] = array(
@@ -3274,6 +3279,7 @@ $messages['tr'] = array(
 	'sd_browsedata_subcategory' => 'Alt kategori',
 	'sd_browsedata_other' => 'Diğer',
 	'sd_browsedata_none' => 'Hiçbiri',
+	'sd_browsedata_removefilter' => 'Bu süzgeci kaldır',
 	'sd_browsedata_removesubcategoryfilter' => 'Bu alt kategori filtresini kaldır',
 	'sd_browsedata_resetfilters' => 'Filtreleri sıfırla',
 	'sd_browsedata_daterangestart' => 'Başlangıç:',
@@ -3285,6 +3291,7 @@ $messages['tr'] = array(
 	'sd_createfilter_property' => 'Bu filtrenin kapsadığı özellik:',
 	'sd_createfilter_inputtype' => 'Bu filtre için girdi türü:',
 	'sd_createfilter_label' => 'Bu filtre için etiket (opsiyonel):',
+	'sd-pageschemas-filter' => 'Süzgeç',
 	'sd_filter_year' => 'Yıl',
 	'sd_filter_month' => 'Ay',
 	'sd_filter_combobox' => 'kombo kutu',
@@ -3313,7 +3320,7 @@ $messages['uk'] = array(
 	'sd_filter_freetext' => 'текст',
 );
 
-/** Veps (Vepsan kel')
+/** Veps (Vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
