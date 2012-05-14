@@ -6,6 +6,7 @@
  */
 
 class SDUtils {
+
 	/**
 	 * Helper function to handle getPropertyValues() in both SMW 1.6
 	 * and earlier versions.
@@ -389,10 +390,12 @@ class SDUtils {
 	<input type="hidden" name="$action" />
 
 END;
-		if ( $is_minor_edit )
-			$text .= '    <input type="hidden" name="wpMinoredit">' . "\n";
-		if ( $watch_this )
-			$text .= '    <input type="hidden" name="wpWatchthis">' . "\n";
+		if ( $is_minor_edit ) {
+			$text .= '	<input type="hidden" name="wpMinoredit">' . "\n";
+		}
+		if ( $watch_this ) {
+			$text .= '	<input type="hidden" name="wpWatchthis">' . "\n";
+		}
 		$text .= <<<END
 	</form>
 	<script type="text/javascript">
@@ -413,6 +416,18 @@ END;
 	}
 
 	/**
+	 * Set the actual value of the magic words
+	 */
+	static function addMagicWordLanguage( &$magicWords, $langCode ) {
+		switch( $langCode ) {
+		default:
+			$magicWords['MAG_HIDEFROMDRILLDOWN'] = array( 0, '__HIDEFROMDRILLDOWN__' );
+			$magicWords['MAG_SHOWINDRILLDOWN'] = array( 0, '__SHOWINDRILLDOWN__' );
+		}
+		return true;
+	}
+
+	/**
 	 * Set values in the page_props table based on the presence of the
 	 * 'HIDEFROMDRILLDOWN' and 'SHOWINDRILLDOWN' magic words in a page
 	 */
@@ -427,6 +442,22 @@ END;
 			$parser->mOutput->setProperty( 'showindrilldown', 'y' );
 		}
 		return true;
+	}
+
+	/**
+	 * Compatibility helper function.
+	 * Since 1.18 SpecialPageFactory::getPage should be used.
+	 * SpecialPage::getPage is deprecated in 1.18.
+	 *
+	 * @since 2.3.3
+	 *
+	 * @param string $pageName
+	 *
+	 * @return SpecialPage|null
+	 */
+	public static function getSpecialPage( $pageName ) {
+		$hasFactory = class_exists( 'SpecialPageFactory' ) && method_exists( 'SpecialPageFactory', 'getPage' );
+		return $hasFactory ? SpecialPageFactory::getPage( $pageName ) : SpecialPage::getPage( $pageName );
 	}
 
 	public static function addToAdminLinks( &$admin_links_tree ) {
