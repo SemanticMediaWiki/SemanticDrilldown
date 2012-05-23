@@ -34,6 +34,13 @@ $specialPageAliases['arz'] = array(
 	'Filters' => array( 'فلاتر' ),
 );
 
+/** Banjar (Bahasa Banjar) */
+$specialPageAliases['bjn'] = array(
+	'BrowseData' => array( 'Ambahi_data' ),
+	'CreateFilter' => array( 'Ulah_filter' ),
+	'Filters' => array( 'Filter' ),
+);
+
 /** Breton (Brezhoneg) */
 $specialPageAliases['br'] = array(
 	'CreateFilter' => array( 'KrouiñSil' ),
@@ -49,7 +56,7 @@ $specialPageAliases['bs'] = array(
 
 /** German (Deutsch) */
 $specialPageAliases['de'] = array(
-	'BrowseData' => array( 'Daten_browsen' ),
+	'BrowseData' => array( 'Daten_durchsuchen', 'Daten_browsen' ),
 	'CreateFilter' => array( 'Filter_erstellen' ),
 	'Filters' => array( 'Filter' ),
 );
@@ -108,7 +115,8 @@ $specialPageAliases['gl'] = array(
 
 /** Swiss German (Alemannisch) */
 $specialPageAliases['gsw'] = array(
-	'CreateFilter' => array( 'Filter aalege' ),
+	'BrowseData' => array( 'Date_duresueche' ),
+	'CreateFilter' => array( 'Filter_aalege' ),
 	'Filters' => array( 'Filter' ),
 );
 
@@ -256,7 +264,7 @@ $specialPageAliases['ps'] = array(
 
 /** Brazilian Portuguese (Português do Brasil) */
 $specialPageAliases['pt-br'] = array(
-	'CreateFilter' => array( 'Criar filtro' ),
+	'CreateFilter' => array( 'Criar_filtro' ),
 	'Filters' => array( 'Filtros' ),
 );
 
@@ -320,4 +328,11 @@ $specialPageAliases['vi'] = array(
 /** Yiddish (ייִדיש) */
 $specialPageAliases['yi'] = array(
 	'Filters' => array( 'פֿילטערס' ),
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$specialPageAliases['zh-hans'] = array(
+	'BrowseData' => array( '浏览数据' ),
+	'CreateFilter' => array( '创建过滤器' ),
+	'Filters' => array( '过滤器' ),
 );
