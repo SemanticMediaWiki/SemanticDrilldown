@@ -13,7 +13,7 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-define( 'SD_VERSION', '1.1' );
+define( 'SD_VERSION', '1.2' );
 
 $wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'specialpage'][] = array(
 	'path'        => __FILE__,
@@ -243,24 +243,23 @@ function sdfInitProperties() {
 	return true;
 }
 
-// register client-side modules
-if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-	$sdgResourceTemplate = array(
-		'localBasePath' => $sdgIP,
-		'remoteExtPath' => 'SemanticDrilldown'
-	);
-	$wgResourceModules += array(
-		'ext.semanticdrilldown.combobox' => $sdgResourceTemplate + array(
-			'scripts' => array(
-				'libs/SemanticDrilldown.js',
-			),
-			'styles' => array(
-				'skins/SD_jquery_ui_overrides.css',
-			),
-			'dependencies' => array(
-				'jquery.ui.autocomplete',
-				'jquery.ui.button',
-			),
+$sdgResourceTemplate = array(
+	'localBasePath' => $sdgIP,
+	'remoteExtPath' => 'SemanticDrilldown'
+);
+
+$wgResourceModules += array(
+	'ext.semanticdrilldown.combobox' => $sdgResourceTemplate + array(
+		'scripts' => array(
+			'libs/SemanticDrilldown.js',
 		),
-	);
-}
+		'styles' => array(
+			'skins/SD_jquery_ui_overrides.css',
+		),
+		'dependencies' => array(
+			'jquery.ui.autocomplete',
+			'jquery.ui.button',
+		),
+	),
+);
+

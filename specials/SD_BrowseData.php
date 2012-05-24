@@ -592,57 +592,11 @@ END;
 		return $results_line;
 	}
 
-	/**
-	 * Uses the ResourceLoader (available with MediaWiki 1.17 and higher)
-	 * to load all the necessary JS and CSS files for comboboxes.
-	 */
-	 public static function loadJavascriptAndCSS() {
-		global $wgOut;
-		$wgOut->addModules( 'ext.semanticdrilldown.combobox' );
-	 }
-
-	/**
-	 * Adds Javascript and CSS to the page for comboboxes, the long way.
-	 * This method exists for backward compatibiity for MediaWiki 1.16.
-	 */
-	function addJavascriptAndCSS() {
-		global $smwgJQueryIncluded, $smwgJQueryUIIncluded, $sdgScriptPath, $wgOut;
-
-		$wgOut->addExtensionStyle( "$sdgScriptPath/skins/jquery-ui/base/jquery.ui.all.css" );
-
-		$scripts = array();
-		if ( !$smwgJQueryIncluded ) {
-			$scripts[] = "$sdgScriptPath/libs/jquery-1.4.2.min.js";
-			$smwgJQueryIncluded = true;
-		};
-
-		if ( !$smwgJQueryUIIncluded ) {
-			$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.core.min.js";
-			$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.widget.min.js";
-		}
-		$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.button.min.js";
-		if ( !$smwgJQueryUIIncluded ) {
-			$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.position.min.js";
-			$scripts[] = "$sdgScriptPath/libs/jquery-ui/jquery.ui.autocomplete.min.js";
-			$smwgJQueryUIIncluded = true;
-		}
-		$scripts[] = "$sdgScriptPath/libs/SemanticDrilldown.js";
-
-		foreach ( $scripts as $script ) {
-			$wgOut->addScriptFile( $script );
-		}
-	}
-
 	function printComboBoxInput( $filter_name, $filter_values, $cur_value = null ) {
 		global $wgRequest, $sdgJQueryIncluded, $wgOut;
 
-		// MW 1.17 +
-		if ( class_exists( 'ResourceLoader' ) ) {
-			self::loadJavascriptAndCSS();
-		} elseif ( !$sdgJQueryIncluded ) {
-			$sdgJQueryIncluded = true;
-			self::addJavascriptAndCSS();
-		}
+		// Load all the necessary JS and CSS.
+		$wgOut->addModules( 'ext.semanticdrilldown.combobox' );
 
 		$filter_name = str_replace( ' ', '_', $filter_name );
 		// URL-decode the filter name - necessary if it contains
