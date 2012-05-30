@@ -1821,12 +1821,12 @@ $messages['ja'] = array(
 	'sd_filter_year' => '年',
 	'sd_filter_month' => '月',
 	'sd_filter_hasvalues' => '値 $1 をとります。',
-	'sd_filter_hasinputtype' => '入力型 $1 をもちます。',
+	'sd_filter_hasinputtype' => '入力型 $1 を持ちます。',
 	'sd_filter_combobox' => 'コンボボックス',
 	'sd_filter_freetext' => '文字列',
 	'sd_filter_daterange' => '日付範囲',
 	'sd_filter_requiresfilter' => 'フィルター $1 の存在を要求します。',
-	'sd_filter_haslabel' => 'ラベル $1 をもちます。',
+	'sd_filter_haslabel' => 'ラベル $1 を持ちます。',
 );
 
 /** Javanese (Basa Jawa)
@@ -2721,6 +2721,7 @@ $messages['pt'] = array(
  * @author Eduardo.mps
  * @author Enqd
  * @author Giro720
+ * @author Jaideraf
  */
 $messages['pt-br'] = array(
 	'semanticdrilldown-desc' => 'Uma interface de introspecção para navegar através de dados semânticos',
@@ -2758,6 +2759,8 @@ $messages['pt-br'] = array(
 	'sd_createfilter_requirefilter' => 'Necessita de outro filtro selecionado antes deste ser exibido:',
 	'sd_createfilter_label' => 'Etiqueta para este filtro (opcional):',
 	'sd_blank_error' => 'não pode estar em branco',
+	'sd-pageschemas-filter' => 'Filtro',
+	'sd-pageschemas-values' => 'Valores',
 	'sd_filter_coversproperty' => 'Este filtro abrange a propriedade $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Extrai os seus valores da categoria $1.',
 	'sd_filter_usestimeperiod' => 'Utiliza $1 como seu período de tempo.',
