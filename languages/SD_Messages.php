@@ -2720,7 +2720,7 @@ $messages['pt'] = array(
 	'sd_filter_haslabel' => 'Tem a etiqueta $1.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Eduardo.mps
  * @author Enqd
  * @author Giro720
