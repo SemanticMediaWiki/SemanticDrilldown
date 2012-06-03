@@ -1779,7 +1779,7 @@ $messages['it'] = array(
  * @author Whym
  */
 $messages['ja'] = array(
-	'semanticdrilldown-desc' => '意味的データを閲覧するための絞り込みインタフェース',
+	'semanticdrilldown-desc' => '意味的データを閲覧するための絞り込みインターフェイス',
 	'specialpages-group-sd_group' => 'セマンティック・ドリルダウン',
 	'browsedata' => 'データ閲覧',
 	'sd_browsedata_choosecategory' => 'カテゴリを選びます',
@@ -1814,6 +1814,7 @@ $messages['ja'] = array(
 	'sd_createfilter_requirefilter' => 'このフィルターが表示される前に、別のフィルターを選択するのを必須にする：',
 	'sd_createfilter_label' => 'このフィルターのラベル (省略可能):',
 	'sd_blank_error' => '空であってはならない',
+	'sd-pageschemas-filter' => 'フィルター',
 	'sd-pageschemas-values' => '値',
 	'sd_filter_coversproperty' => 'このフィルターはプロパティ $1 を対象とします。',
 	'sd_filter_getsvaluesfromcategory' => '値をカテゴリ $1 から取得します。',
@@ -2021,6 +2022,8 @@ $messages['lb'] = array(
 	'sd_createfilter_requirefilter' => 'Verlaangen dat en anere Filter gewielt gëtt ier dësen ugewise gëtt:',
 	'sd_createfilter_label' => 'Etiquette fir dëse Filter (fakultativ):',
 	'sd_blank_error' => 'däerf net eidel sinn',
+	'sd-pageschemas-filter' => 'Filter',
+	'sd-pageschemas-values' => 'Wäerter',
 	'sd_filter_coversproperty' => "Dëse Filter betrefft d'Eegeschaft $1.",
 	'sd_filter_getsvaluesfromcategory' => 'E kritt seng Werter aus der Kategorie $1.',
 	'sd_filter_usestimeperiod' => 'E benotzt $1 als Zäitraum',
