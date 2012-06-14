@@ -273,7 +273,7 @@ $messages['arz'] = array(
 	'sd_filter_haslabel' => 'يمتلك العلامة $1.',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
@@ -364,7 +364,7 @@ $messages['avk'] = array(
 	'sd_filter_haslabel' => 'In tir dem $1 kral.',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -378,7 +378,7 @@ $messages['az'] = array(
 	'sd_filter_freetext' => 'mətn',
 );
 
-/** Belarusian (Беларуская)
+/** Belarusian (беларуская)
  * @author Тест
  */
 $messages['be'] = array(
@@ -440,7 +440,7 @@ $messages['be-tarask'] = array(
 	'sd_filter_haslabel' => 'Мае метку $1.',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -500,7 +500,7 @@ $messages['bn'] = array(
 	'sd_filter_daterange' => 'তারিখের পরিসীমা',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fohanno
  * @author Fulup
  * @author Y-M D
@@ -557,7 +557,7 @@ $messages['br'] = array(
 	'sd_filter_haslabel' => 'An tikedenn $1 en deus.',
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
@@ -610,7 +610,7 @@ $messages['bs'] = array(
 	'sd_filter_haslabel' => 'Ima oznaku $1.',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Dvdgmz
  * @author Jordi Roqué
  * @author Paucabot
@@ -677,7 +677,7 @@ $messages['ce'] = array(
 	'sd_filter_year' => 'Шо',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Juan de Vojníkov
  */
 $messages['cs'] = array(
@@ -697,7 +697,7 @@ $messages['cy'] = array(
 	'filters' => 'Hidlau',
 );
 
-/** Danish (Dansk)
+/** Danish (dansk)
  * @author Jon Harald Søby
  */
 $messages['da'] = array(
@@ -935,7 +935,7 @@ $messages['eo'] = array(
 	'sd_filter_haslabel' => 'Ĝi havas etikedon $1.',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Bola
  * @author Crazymadlover
@@ -996,7 +996,7 @@ $messages['es'] = array(
 	'sd_filter_haslabel' => 'Tiene la etiqueta $1.',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  * @author Kobazulo
  */
@@ -1064,7 +1064,7 @@ $messages['fa'] = array(
 	'sd_filter_haslabel' => 'برچسب $1 دارد.',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Cimon Avaro
  * @author Crt
  * @author Nike
@@ -1107,7 +1107,7 @@ $messages['fi'] = array(
 	'sd_filter_requiresfilter' => 'Se edellyttää suodattimen $1.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author Gomoko
  * @author Grondin
@@ -1169,7 +1169,7 @@ $messages['fr'] = array(
 	'sd_filter_haslabel' => 'Étiqueté $1.',
 );
 
-/** Franco-Provençal (Arpetan)
+/** Franco-Provençal (arpetan)
  * @author Cedric31
  * @author ChrisPtDe
  */
@@ -1466,7 +1466,7 @@ $messages['hi'] = array(
 	'sd_filter_haslabel' => 'इसको $1 यह लेबल हैं।',
 );
 
-/** Croatian (Hrvatski)
+/** Croatian (hrvatski)
  * @author Ex13
  */
 $messages['hr'] = array(
@@ -1528,7 +1528,7 @@ $messages['hsb'] = array(
 	'sd_filter_haslabel' => 'Ma mjeno $1.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Dorgan
  * @author Glanthor Reviol
@@ -1583,7 +1583,7 @@ $messages['hu'] = array(
 	'sd_filter_haslabel' => 'A címkéje $1.',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -1706,7 +1706,7 @@ $messages['ig'] = array(
 	'sd_filter_freetext' => 'mpkurụ edemede',
 );
 
-/** Icelandic (Íslenska)
+/** Icelandic (íslenska)
  * @author S.Örvarr.S
  */
 $messages['is'] = array(
@@ -1714,7 +1714,7 @@ $messages['is'] = array(
 	'sd_createfilter_name' => 'Nafn:',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Beta16
  * @author Civvì
  * @author Darth Kule
@@ -2038,7 +2038,7 @@ $messages['lb'] = array(
 	'sd_filter_haslabel' => "en huet d'Etiquette $1.",
 );
 
-/** Latvian (Latviešu)
+/** Latvian (latviešu)
  * @author Ilmarmors
  */
 $messages['lv'] = array(
@@ -2082,7 +2082,7 @@ $messages['mhr'] = array(
 	'filters' => 'Фильтр-влак',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  * @author Brest
  */
@@ -2169,7 +2169,7 @@ $messages['ml'] = array(
 	'sd_filter_hasvalues' => 'ഇതിന്റെ മൂല്യങ്ങൾ $1 ആണ്‌.',
 );
 
-/** Mongolian (Монгол)
+/** Mongolian (монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
@@ -2377,7 +2377,7 @@ $messages['nl'] = array(
 	'sd_filter_haslabel' => 'Het heeft het label $1.',
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
  * @author Harald Khan
  * @author Jon Harald Søby
  * @author Njardarlogar
@@ -2441,7 +2441,7 @@ $messages['nso'] = array(
 	'sd_filter_month' => 'Kgwedi',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -2524,7 +2524,7 @@ $messages['pfl'] = array(
 	'sd_filter_freetext' => 'Tegschd',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Airwolf
  * @author BeginaFelicysym
  * @author Maikking
@@ -2664,7 +2664,7 @@ $messages['ps'] = array(
 	'sd_filter_freetext' => 'متن',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author 555
  * @author Hamilton Abreu
  * @author Lijealso
@@ -2779,7 +2779,7 @@ $messages['pt-br'] = array(
 	'sd_filter_haslabel' => 'Possui a etiqueta $1.',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Firilacroco
  * @author KlaudiuMihaila
  * @author Mihai
@@ -2815,7 +2815,7 @@ $messages['ro'] = array(
 	'sd_filter_freetext' => 'text',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
@@ -2827,7 +2827,7 @@ $messages['roa-tara'] = array(
 	'sd_filter_freetext' => 'teste',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Ferrer
  * @author Innv
  * @author Lockal
@@ -2898,7 +2898,7 @@ $messages['rue'] = array(
 	'sd_filter_freetext' => 'текст',
 );
 
-/** Slovak (Slovenčina)
+/** Slovak (slovenčina)
  * @author Helix84
  * @author Teslaton
  */
@@ -2954,14 +2954,14 @@ $messages['sk'] = array(
 	'sd_filter_haslabel' => 'Má označenie $1.',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
 	'sd_filter_year' => 'Leto',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Sasa Stefanovic
  * @author Михајло Анђелковић
@@ -2981,7 +2981,7 @@ $messages['sr-ec'] = array(
 	'sd_filter_month' => 'Месец',
 );
 
-/** Serbian (Latin script) (‪Srpski (latinica)‬)
+/** Serbian (Latin script) (‪srpski (latinica)‬)
  * @author Michaello
  * @author Rancher
  */
@@ -3051,7 +3051,7 @@ $messages['stq'] = array(
 	'sd_filter_haslabel' => 'Häd ju Beteekenge $1.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author M.M.S.
  * @author Per
  */
@@ -3136,7 +3136,7 @@ $messages['te'] = array(
 	'sd_filter_daterange' => 'తేదీ అవధి',
 );
 
-/** Tetum (Tetun)
+/** Tetum (tetun)
  * @author MF-Warburg
  */
 $messages['tet'] = array(
@@ -3145,7 +3145,7 @@ $messages['tet'] = array(
 	'sd_filter_year' => 'Tinan',
 );
 
-/** Tajik (Cyrillic script) (Тоҷикӣ)
+/** Tajik (Cyrillic script) (тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -3174,7 +3174,7 @@ $messages['tg-cyrl'] = array(
 	'sd_filter_haslabel' => 'Ин барчасби $1 дорад.',
 );
 
-/** Tajik (Latin script) (Tojikī)
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -3306,7 +3306,7 @@ $messages['tr'] = array(
 	'sd_filter_daterange' => 'tarih aralığı',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -3479,7 +3479,7 @@ $messages['zh-cn'] = array(
 	'sd_filter_haslabel' => '其有着此一$1标签',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Liangent
  * @author Linforest
  * @author PhiLiP
@@ -3536,7 +3536,7 @@ $messages['zh-hans'] = array(
 	'sd_filter_haslabel' => '它具有标签$1。',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Mark85296341
  * @author Oapbtommy
  * @author Wrightbus
