@@ -34,6 +34,13 @@ $specialPageAliases['arz'] = array(
 	'Filters' => array( 'فلاتر' ),
 );
 
+/** Assamese (অসমীয়া) */
+$specialPageAliases['as'] = array(
+	'BrowseData' => array( 'তথ্য_বিচাৰক' ),
+	'CreateFilter' => array( 'চেকনী_সৃষ্ঠি_কৰক' ),
+	'Filters' => array( 'চেকনীসমূহ' ),
+);
+
 /** Banjar (Bahasa Banjar) */
 $specialPageAliases['bjn'] = array(
 	'BrowseData' => array( 'Ambahi_data' ),
@@ -68,7 +75,7 @@ $specialPageAliases['diq'] = array(
 	'Filters' => array( 'Filtrey' ),
 );
 
-/** Lower Sorbian (Dolnoserbski) */
+/** Lower Sorbian (dolnoserbski) */
 $specialPageAliases['dsb'] = array(
 	'BrowseData' => array( 'Daty pśepytaś' ),
 	'CreateFilter' => array( 'Filter napóraś' ),
@@ -114,7 +121,7 @@ $specialPageAliases['frp'] = array(
 	'Filters' => array( 'Filtros' ),
 );
 
-/** Galician (Galego) */
+/** Galician (galego) */
 $specialPageAliases['gl'] = array(
 	'CreateFilter' => array( 'Crear_un_filtro' ),
 	'Filters' => array( 'Filtros' ),
@@ -132,7 +139,7 @@ $specialPageAliases['he'] = array(
 	'Filters' => array( 'מסננים' ),
 );
 
-/** Upper Sorbian (Hornjoserbsce) */
+/** Upper Sorbian (hornjoserbsce) */
 $specialPageAliases['hsb'] = array(
 	'BrowseData' => array( 'Daty přepytać' ),
 	'CreateFilter' => array( 'Filter wutworić' ),
