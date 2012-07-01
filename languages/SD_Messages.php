@@ -134,7 +134,7 @@ $messages['am'] = array(
 	'sd_filter_month' => 'ወር',
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -386,7 +386,7 @@ $messages['be'] = array(
 	'sd_filter_freetext' => 'тэкст',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -792,7 +792,7 @@ $messages['diq'] = array(
 	'sd_createfilter_name' => 'Name:',
 );
 
-/** Lower Sorbian (Dolnoserbski)
+/** Lower Sorbian (dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -1222,7 +1222,7 @@ $messages['fy'] = array(
 	'filters' => 'Filters',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Alma
  * @author Toliño
  */
@@ -1473,7 +1473,7 @@ $messages['hr'] = array(
 	'filters' => 'Filteri',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
@@ -2884,7 +2884,7 @@ $messages['ru'] = array(
 	'sd_filter_haslabel' => 'Имеет пометку $1.',
 );
 
-/** Rusyn (Русиньскый)
+/** Rusyn (русиньскый)
  * @author Gazeb
  */
 $messages['rue'] = array(
@@ -3101,7 +3101,7 @@ $messages['sv'] = array(
 	'sd_filter_haslabel' => 'Det har etiketten $1.',
 );
 
-/** Silesian (Ślůnski)
+/** Silesian (ślůnski)
  * @author Herr Kriss
  */
 $messages['szl'] = array(
