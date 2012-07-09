@@ -249,6 +249,11 @@ $sdgResourceTemplate = array(
 );
 
 $wgResourceModules += array(
+	'ext.semanticdrilldown.main' => $sdgResourceTemplate + array(
+		'styles' => array(
+			'skins/SD_main.css',
+		),
+	),
 	'ext.semanticdrilldown.combobox' => $sdgResourceTemplate + array(
 		'scripts' => array(
 			'libs/SemanticDrilldown.js',
