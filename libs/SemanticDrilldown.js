@@ -70,8 +70,9 @@
 			.addClass("ui-corner-right ui-button-icon")
 			// Need to do some hardcoded CSS here, to override
 			// pesky jQuery UI settings!
-			.css("width", "2.4em")
-			.css("margin", "0")
+			// Unfortunately, calling .css() won't work, because
+			// it ignores "!important".
+			.attr("style", "width: 2.4em; margin: 0 !important; border-radius: 0")
 			.click(function() {
 				// close if already visible
 				if (input.autocomplete("widget").is(":visible")) {
