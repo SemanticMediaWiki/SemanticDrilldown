@@ -602,23 +602,13 @@ END;
 		// URL-decode the filter name - necessary if it contains
 		// any non-Latin characters.
 		$filter_name = urldecode( $filter_name );
-		$input_id = "_search_$filter_name";
-		$combobox_id = "c_search_$filter_name";
-
-		$combobox_js =<<<END
-<script type="text/javascript">
-	jQuery(document).ready(function(){
-		jQuery("#$combobox_id").combobox();
-	});
-</script>
-END;
-		$wgOut->addScript( $combobox_js );
+		$inputName = "_search_$filter_name";
 
 		$text =<<< END
 <form method="get">
 	<div class="ui-widget">
-		<select id="$combobox_id" name="$cur_value">
-			<option value="$input_id"></option>;
+		<select class="semanticDrilldownCombobox" name="$cur_value">
+			<option value="$inputName"></option>;
 
 END;
 		foreach ( $filter_values as $value => $num_instances ) {
@@ -635,7 +625,7 @@ END;
 END;
 
 		foreach ( $wgRequest->getValues() as $key => $val ) {
-			if ( $key != $input_id ) {
+			if ( $key != $inputName ) {
 				$text .= Html::hidden( $key, $val ) . "\n";
 			}
 		}

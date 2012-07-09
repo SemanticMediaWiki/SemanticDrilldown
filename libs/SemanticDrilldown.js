@@ -82,3 +82,5 @@
 	});
 
 })(jQuery);
+
+jQuery(".semanticDrilldownCombobox").combobox();
