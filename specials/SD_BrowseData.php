@@ -629,7 +629,7 @@ END;
 				$text .= Html::hidden( $key, $val ) . "\n";
 			}
 		}
-		$text .= Html::input( null, wfMsg( 'searchresultshead' ), 'submit' ) . "\n";
+		$text .= Html::input( null, wfMsg( 'searchresultshead' ), 'submit', array( 'style' => 'margin: 4px 0 8px 0;' ) ) . "\n";
 		$text .= "</form>\n";
 		return $text;
 	}

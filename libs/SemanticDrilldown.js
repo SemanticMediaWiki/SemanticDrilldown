@@ -68,6 +68,10 @@
 				text: false
 			}).removeClass("ui-corner-all")
 			.addClass("ui-corner-right ui-button-icon")
+			// Need to do some hardcoded CSS here, to override
+			// pesky jQuery UI settings!
+			.css("width", "2.4em")
+			.css("margin", "0")
 			.click(function() {
 				// close if already visible
 				if (input.autocomplete("widget").is(":visible")) {
