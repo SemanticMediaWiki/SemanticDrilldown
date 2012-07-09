@@ -1532,6 +1532,7 @@ $messages['hsb'] = array(
  * @author Dani
  * @author Dorgan
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'semanticdrilldown-desc' => 'Adatlefúró felület a szemantikus adatokban való navigációhoz',
@@ -1569,6 +1570,8 @@ $messages['hu'] = array(
 	'sd_createfilter_requirefilter' => 'Egy másik szűrő legyen kiválasztva, mielőtt ez megjelenik:',
 	'sd_createfilter_label' => 'Szűrő címkéje (nem kötelező):',
 	'sd_blank_error' => 'nem lehet üres',
+	'sd-pageschemas-filter' => 'Szűrő',
+	'sd-pageschemas-values' => 'Értékek',
 	'sd_filter_coversproperty' => 'Ez a szűrő lefedi a(z) $1 tulajdonságot.',
 	'sd_filter_getsvaluesfromcategory' => 'Értékeit a következő kategóriából kapja: $1.',
 	'sd_filter_usestimeperiod' => 'A(z) $1 adatot használja időintervallumként.',

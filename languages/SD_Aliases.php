@@ -321,9 +321,9 @@ $specialPageAliases['sw'] = array(
 
 /** Tagalog (Tagalog) */
 $specialPageAliases['tl'] = array(
-	'BrowseData' => array( 'Tumingin-tingin sa dato' ),
-	'CreateFilter' => array( 'Likhain ang pansala' ),
-	'Filters' => array( 'Mga pansala' ),
+	'BrowseData' => array( 'Tumingin-tingin_sa_dato' ),
+	'CreateFilter' => array( 'Likhain_ang_pansala' ),
+	'Filters' => array( 'Mga_pansala' ),
 );
 
 /** Turkish (Türkçe) */
