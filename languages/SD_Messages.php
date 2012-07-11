@@ -670,7 +670,7 @@ $messages['ca'] = array(
 	'sd_filter_haslabel' => 'Té el ròtul $1.',
 );
 
-/** Chechen (Нохчийн)
+/** Chechen (нохчийн)
  * @author Sasan700
  */
 $messages['ce'] = array(
@@ -2078,7 +2078,7 @@ $messages['lv'] = array(
 	'sd_filter_daterange' => 'datumu diapazons',
 );
 
-/** Eastern Mari (Олык Марий)
+/** Eastern Mari (олык марий)
  * @author Сай
  */
 $messages['mhr'] = array(
@@ -2232,7 +2232,7 @@ $messages['ms'] = array(
 	'sd_createfilter_name' => 'Nama:',
 );
 
-/** Erzya (Эрзянь)
+/** Erzya (эрзянь)
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
@@ -2258,11 +2258,11 @@ $messages['nah'] = array(
 	'sd_filter_month' => 'Mētztli',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Event
  * @author Harald Khan
- * @author Jon Harald Søby
  * @author Nghtwlkr
+ * @author Njardarlogar
  */
 $messages['nb'] = array(
 	'semanticdrilldown-desc' => 'Et «drilldown»-grensesnitt for navigering gjennom semantiske data',
@@ -3332,7 +3332,7 @@ $messages['uk'] = array(
 	'sd_filter_freetext' => 'текст',
 );
 
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(

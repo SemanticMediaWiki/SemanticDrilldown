@@ -247,7 +247,7 @@ $specialPageAliases['mt'] = array(
 	'Filters' => array( 'Filtri' ),
 );
 
-/** Erzya (Эрзянь) */
+/** Erzya (эрзянь) */
 $specialPageAliases['myv'] = array(
 	'Filters' => array( 'Сувтеметь' ),
 );
