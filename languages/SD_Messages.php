@@ -780,7 +780,6 @@ $messages['de'] = array(
 $messages['de-formal'] = array(
 	'sd_browsedata_docu' => 'Klicken Sie auf einen oder mehrere der Filter, um das Ergebnis einzuschränken.',
 	'sd_browsedata_addanothervalue' => 'Klicken Sie auf den Pfeil, um einen weiteren Wert hinzuzufügen.',
-	'sd_createfilter_entervalues' => 'Verwenden Sie diese Werte für den Filter (Werte durch Komma getrennt eingeben - Wenn ein Wert ein Komma enthält, mit „\\,“ ersetzen):',
 );
 
 /** Zazaki (Zazaki)
