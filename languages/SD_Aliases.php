@@ -205,7 +205,7 @@ $specialPageAliases['km'] = array(
 $specialPageAliases['ko'] = array(
 	'BrowseData' => array( '데이터찾아보기' ),
 	'CreateFilter' => array( '필터만들기' ),
-	'Filters' => array( '필터' ),
+	'Filters' => array( '필터목록' ),
 );
 
 /** Colognian (Ripoarisch) */
