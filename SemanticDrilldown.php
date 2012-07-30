@@ -61,6 +61,7 @@ $wgAutoloadClasses['SDFilterValue'] = $sdgIP . '/includes/SD_FilterValue.php';
 $wgAutoloadClasses['SDAppliedFilter'] = $sdgIP . '/includes/SD_AppliedFilter.php';
 $wgAutoloadClasses['SDPageSchemas'] = $sdgIP . '/includes/SD_PageSchemas.php';
 $wgAutoloadClasses['SDParserFunctions'] = $sdgIP . '/includes/SD_ParserFunctions.php';
+$wgAutoloadClasses['SDHelperFormAction'] = $sdgIP . '/includes/SD_HelperFormAction.php';
 
 $wgHooks['smwInitProperties'][] = 'sdfInitProperties';
 $wgHooks['AdminLinks'][] = 'SDUtils::addToAdminLinks';
@@ -68,6 +69,16 @@ $wgHooks['MagicWordwgVariableIDs'][] = 'SDUtils::addMagicWordVariableIDs';
 $wgHooks['ParserBeforeTidy'][] = 'SDUtils::handleShowAndHide';
 $wgHooks['PageSchemasRegisterHandlers'][] = 'SDPageSchemas::registerClass';
 $wgHooks['ParserFirstCallInit'][] = 'SDParserFunctions::registerFunctions';
+$wgHooks['SkinTemplateTabs'][] = 'SDHelperFormAction::displayTab';
+$wgHooks['SkinTemplateNavigation'][] = 'SDHelperFormAction::displayTab2';
+
+// Using UnknownAction is deprecated from MW 1.18 onwards.
+if ( version_compare( $wgVersion, '1.18', '<' ) ) {
+	$wgHooks['UnknownAction'][] = 'SDHelperFormAction::displayForm';
+} else {
+	$wgActions['formcreate'] = 'SDHelperFormAction';
+}
+
 
 $wgPageProps['hidefromdrilldown'] = 'Whether or not the page is set as HIDEFROMDRILLDOWN';
 $wgPageProps['showindrilldown'] = 'Whether or not the page is set as SHOWINDRILLDOWN';

@@ -72,7 +72,13 @@ class SDCreateFilter extends SpecialPage {
 
 		// Cycle through the query values, setting the appropriate
 		// local variables
-		$filter_name = $wgRequest->getVal( 'filter_name' );
+		$presetFilterName = str_replace( '_', ' ', $query );
+		if ( $presetFilterName !== '' ) {
+			$wgOut->setPageTitle( wfMsg( 'sd-createfilter-with-name', $presetFilterName) );
+			$filter_name = $presetFilterName;
+		} else {
+			$filter_name = $wgRequest->getVal( 'filter_name' );
+		}
 		$values_source = $wgRequest->getVal( 'values_source' );
 		$property_name = $wgRequest->getVal( 'property_name' );
 		$category_name = $wgRequest->getVal( 'category_name' );
@@ -113,9 +119,17 @@ class SDCreateFilter extends SpecialPage {
 		$label_label = wfMsg( 'sd_createfilter_label' );
 		$text = <<<END
 	<form action="" method="post">
+
+END;
+		if ( $presetFilterName === '' ) {
+			$text .= <<<END
 	<input type="hidden" name="title" value="$special_namespace:CreateFilter">
 	<p>$name_label <input size="25" name="filter_name" value="">
 	<span style="color: red;">$filter_name_error_str</span></p>
+
+END;
+		}
+		$text .= <<<END
 	<p>$property_label
 	<select id="property_dropdown" name="property_name">
 
