@@ -76,7 +76,7 @@ $wgHooks['SkinTemplateNavigation'][] = 'SDHelperFormAction::displayTab2';
 if ( version_compare( $wgVersion, '1.18', '<' ) ) {
 	$wgHooks['UnknownAction'][] = 'SDHelperFormAction::displayForm';
 } else {
-	$wgActions['formcreate'] = 'SDHelperFormAction';
+	$wgActions['createfilter'] = 'SDHelperFormAction';
 }
 
 

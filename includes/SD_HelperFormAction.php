@@ -1,6 +1,9 @@
 <?php
 /**
- * Handles the formcreate action - used for the helper form to create filters.
+ * Handles the createfilter action - used for the helper form to create filters.
+ * (Because of the nature of $wgActions, this action name had to be different
+ * from the one used by Semantic Forms to do its own helper form display,
+ * 'formcreate'.)
  * 
  * @author Yaron Koren
  * @file
@@ -19,7 +22,7 @@ class SDHelperFormAction extends Action
 	 * @return String lowercase
 	 */
 	public function getName(){
-		return 'formcreate';
+		return 'createfilter';
 	}
 	
 	/**
@@ -68,11 +71,11 @@ class SDHelperFormAction extends Action
 		} else {
 			$form_create_tab_text = wfMsg( 'sf_viewform' );
 		}
-		$class_name = ( $wgRequest->getVal( 'action' ) == 'formcreate' ) ? 'selected' : '';
+		$class_name = ( $wgRequest->getVal( 'action' ) == 'createfilter' ) ? 'selected' : '';
 		$form_create_tab = array(
 			'class' => $class_name,
 			'text' => $form_create_tab_text,
-			'href' => $title->getLocalURL( 'action=formcreate' )
+			'href' => $title->getLocalURL( 'action=createfilter' )
 		);
 
 		// Find the location of the 'create' tab, and add 'create
@@ -131,12 +134,16 @@ class SDHelperFormAction extends Action
 	static function displayForm( $action, $article ) {
 		// TODO: This function will be called as a hook handler and $action will
 		//  be a string before MW 1.18. From 1.18 onwards this function will#
-		//  only be called for formcreate actions, i.e. the if statement can be
+		//  only be called for createfilter actions, i.e. the if statement can be
 		//  removed then.
 
 		// return "true" if the call failed (meaning, pass on handling
 		// of the hook to others), and "false" otherwise
-		if ( is_string( $action ) && $action !== 'formcreate' ) {
+		if ( is_string( $action ) && $action !== 'createfilter' ) {
+			return true;
+		}
+
+		if ( $article->getTitle()->getNamespace() != SD_NS_FILTER ) {
 			return true;
 		}
 
