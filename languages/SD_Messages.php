@@ -1134,6 +1134,7 @@ $messages['fi'] = array(
  * @author Jean-Frédéric
  * @author PieRRoMaN
  * @author Sherbrooke
+ * @author Tititou36
  * @author Urhixidur
  */
 $messages['fr'] = array(
@@ -1163,6 +1164,7 @@ $messages['fr'] = array(
 	'sd_formcreate' => 'Créer avec un formulaire',
 	'sd_viewform' => 'Voir le formulaire',
 	'createfilter' => 'Créer un filtre',
+	'sd-createfilter-with-name' => 'Créer le filtre : $1',
 	'sd_createfilter_name' => 'Nom :',
 	'sd_createfilter_property' => 'Propriété que ce filtre couvrira :',
 	'sd_createfilter_usepropertyvalues' => 'Utiliser, pour ce filtre, toutes les valeurs de cette propriété',
@@ -1276,6 +1278,7 @@ $messages['gl'] = array(
 	'sd_formcreate' => 'Crear cun formulario',
 	'sd_viewform' => 'Ver o formulario',
 	'createfilter' => 'Crear un filtro',
+	'sd-createfilter-with-name' => 'Crear o filtro: $1',
 	'sd_createfilter_name' => 'Nome:',
 	'sd_createfilter_property' => 'Propiedade que o filtro inclúe:',
 	'sd_createfilter_usepropertyvalues' => 'Usar todos os valores da propiedade para o filtro',
@@ -1533,6 +1536,7 @@ $messages['hsb'] = array(
 	'sd_formcreate' => 'Z formularom wutworić',
 	'sd_viewform' => 'Formular wobhladać',
 	'createfilter' => 'Wutwor filter',
+	'sd-createfilter-with-name' => 'Filter wutworić: $1',
 	'sd_createfilter_name' => 'Mjeno:',
 	'sd_createfilter_property' => 'Kajkosć tutho filtra:',
 	'sd_createfilter_usepropertyvalues' => 'Wužij wšě hódnoty tuteje kajkosće za filter',
@@ -1788,6 +1792,7 @@ $messages['it'] = array(
 	'sd_formcreate' => 'Crea con un modulo',
 	'sd_viewform' => 'Visualizza modulo',
 	'createfilter' => 'Crea un filtro',
+	'sd-createfilter-with-name' => 'Crea filtro: $1',
 	'sd_createfilter_name' => 'Nome:',
 	'sd_createfilter_property' => 'Proprietà interessate da questo filtro:',
 	'sd_createfilter_usepropertyvalues' => 'Usa tutti i valori di questa proprietà per il filtro',
@@ -2167,6 +2172,7 @@ $messages['mk'] = array(
 	'sd_formcreate' => 'Создај со образец',
 	'sd_viewform' => 'Види го образецот',
 	'createfilter' => 'Создај филтер',
+	'sd-createfilter-with-name' => 'Создај филтер: $1',
 	'sd_createfilter_name' => 'Име:',
 	'sd_createfilter_property' => 'Својство кое го покрива овој филтер:',
 	'sd_createfilter_usepropertyvalues' => 'Користи ги сите вредности на ова својство за филтерот',
@@ -2858,6 +2864,7 @@ $messages['pt-br'] = array(
  * @author Firilacroco
  * @author KlaudiuMihaila
  * @author Mihai
+ * @author Minisarm
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -2881,8 +2888,8 @@ $messages['ro'] = array(
 	'sd_browsedata_novalues' => 'Nu există valori pentru acest filtru',
 	'filters' => 'Filtre',
 	'sd_filters_docu' => 'Următoarele filtre există la {{SITENAME}}:',
-	'sd_formcreate' => 'Creați un formular',
-	'sd_viewform' => 'Vedeți formular',
+	'sd_formcreate' => 'Creare cu formular',
+	'sd_viewform' => 'Vizualizare formular',
 	'createfilter' => 'Creați un filtru',
 	'sd_createfilter_name' => 'Nume:',
 	'sd_blank_error' => 'nu poate fi gol',
@@ -3329,7 +3336,7 @@ $messages['tl'] = array(
 	'sd_browsedata_novalues' => 'Walang mga halaga para sa pansalang ito',
 	'filters' => 'Mga pansala',
 	'sd_filters_docu' => 'Umiiral ang sumusunod na mga pansala sa loob ng {{SITENAME}}:',
-	'sd_formcreate' => 'Likhaing may pormularyo',
+	'sd_formcreate' => 'Likhain na mayroong pormularyo',
 	'sd_viewform' => 'Tingnan ang pormularyo',
 	'createfilter' => 'Lumikha ng isang pansala',
 	'sd-createfilter-with-name' => 'Likhain ang pansala na: $1',
