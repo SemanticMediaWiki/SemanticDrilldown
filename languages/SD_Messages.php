@@ -797,11 +797,15 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Belekvor
+ * @author Erdemaslancan
  * @author Mirzali
  */
 $messages['diq'] = array(
 	'sd_browsedata_none' => 'çino',
+	'filters' => 'Avrêci',
 	'sd_createfilter_name' => 'Name:',
+	'sd-pageschemas-filter' => 'Avrêc',
+	'sd-pageschemas-values' => 'Erci',
 );
 
 /** Lower Sorbian (dolnoserbski)
