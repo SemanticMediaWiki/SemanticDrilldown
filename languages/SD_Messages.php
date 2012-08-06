@@ -2423,6 +2423,7 @@ $messages['nl'] = array(
 	'sd_formcreate' => 'Via formulier aanmaken',
 	'sd_viewform' => 'Formulier bekijken',
 	'createfilter' => 'Filter aanmaken',
+	'sd-createfilter-with-name' => 'Filter aanmaken: $1',
 	'sd_createfilter_name' => 'Naam:',
 	'sd_createfilter_property' => 'Eigenschap voor deze filter:',
 	'sd_createfilter_usepropertyvalues' => 'Alle waarden voor deze eigenschap voor deze filter gebruiken',
