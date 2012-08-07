@@ -802,10 +802,12 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'sd_browsedata_none' => 'çino',
+	'sd_browsedata_or' => 'ya na',
 	'filters' => 'Avrêci',
 	'sd_createfilter_name' => 'Name:',
 	'sd-pageschemas-filter' => 'Avrêc',
 	'sd-pageschemas-values' => 'Erci',
+	'sd_filter_month' => 'Aşme',
 );
 
 /** Lower Sorbian (dolnoserbski)
