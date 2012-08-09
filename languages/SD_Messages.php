@@ -2754,6 +2754,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
+ * @author SandroHc
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -2794,6 +2795,8 @@ $messages['pt'] = array(
 	'sd_createfilter_requirefilter' => 'Exigir que outro filtro seja seleccionado antes de apresentar este:',
 	'sd_createfilter_label' => 'Etiqueta para este filtro (opcional):',
 	'sd_blank_error' => 'não pode estar em branco',
+	'sd-pageschemas-filter' => 'Filtro',
+	'sd-pageschemas-values' => 'Valores',
 	'sd_filter_coversproperty' => 'Este filtro abrange a propriedade $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Extrai os seus valores da categoria $1.',
 	'sd_filter_usestimeperiod' => 'Utiliza $1 como seu período de tempo.',
