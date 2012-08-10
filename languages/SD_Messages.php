@@ -1048,6 +1048,7 @@ $messages['eu'] = array(
  * @author Ebraminio
  * @author Huji
  * @author Ibrahim
+ * @author Mjbmr
  * @author Tofighi
  */
 $messages['fa'] = array(
@@ -1085,6 +1086,8 @@ $messages['fa'] = array(
 	'sd_filter_year' => 'سال',
 	'sd_filter_month' => 'ماه',
 	'sd_filter_hasvalues' => 'مقادیر $1 را دارد.',
+	'sd_filter_freetext' => 'متن',
+	'sd_filter_daterange' => 'بازهٔ تاریخ',
 	'sd_filter_requiresfilter' => 'به وجود فیلتر $1 احتیاج دارد.',
 	'sd_filter_haslabel' => 'برچسب $1 دارد.',
 );
