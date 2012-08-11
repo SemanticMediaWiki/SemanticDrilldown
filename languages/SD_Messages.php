@@ -1915,10 +1915,26 @@ $messages['jv'] = array(
 );
 
 /** Georgian (ქართული)
+ * @author David1010
  * @author Malafaya
  */
 $messages['ka'] = array(
+	'sd_browsedata_choosecategory' => 'კატეგორიის არჩევა',
+	'sd_browsedata_viewcategory' => 'კატეგორიის ხილვა',
+	'sd_browsedata_subcategory' => 'ქვეკატეგორია',
+	'sd_browsedata_other' => 'სხვა',
+	'sd_browsedata_none' => 'არა',
+	'sd_browsedata_or' => 'ან',
+	'sd_browsedata_removefilter' => 'ამ ფილტრის მოშორება',
+	'sd_browsedata_daterangestart' => 'დასაწყისი:',
+	'sd_browsedata_daterangeend' => 'დასასრული:',
+	'filters' => 'ფილტრები',
 	'sd_createfilter_name' => 'სახელი:',
+	'sd-pageschemas-filter' => 'ფილტრი',
+	'sd-pageschemas-values' => 'მნიშვნელობები',
+	'sd_filter_year' => 'წელი',
+	'sd_filter_month' => 'თვე',
+	'sd_filter_freetext' => 'ტექსტი',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -2747,6 +2763,7 @@ $messages['ps'] = array(
 	'createfilter' => 'يو چاڼګر جوړول',
 	'sd_createfilter_name' => 'نوم:',
 	'sd_blank_error' => 'بايد تش نه وي',
+	'sd-pageschemas-filter' => 'چاڼګر',
 	'sd_filter_year' => 'کال',
 	'sd_filter_month' => 'مياشت',
 	'sd_filter_freetext' => 'متن',
@@ -3234,6 +3251,7 @@ $messages['te'] = array(
 	'sd_createfilter_usecategoryvalues' => 'వడపోతకి విలువలని ఈ వర్గంనుండి తీసుకోవాలి:',
 	'sd_createfilter_listofvalues' => 'విలువల జాబితా (అప్రమేయం)',
 	'sd_blank_error' => 'ఖాళీగా ఉండకూడదు',
+	'sd-pageschemas-values' => 'విలువలు',
 	'sd_filter_year' => 'సంవత్సరం',
 	'sd_filter_month' => 'నెల',
 	'sd_filter_freetext' => 'పాఠ్యం',
