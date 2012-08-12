@@ -1453,6 +1453,7 @@ $messages['he'] = array(
 	'sd_formcreate' => 'יצירה עם טופס',
 	'sd_viewform' => 'הצגת הטופס',
 	'createfilter' => 'יצירת מסנן',
+	'sd-createfilter-with-name' => 'יצירת מסנן: $1',
 	'sd_createfilter_name' => 'שם:',
 	'sd_createfilter_property' => 'המאפיין אותו מכסה מסנן זה:',
 	'sd_createfilter_usepropertyvalues' => 'שימוש בכל הערכים של מאפיין זה עבור המסנן',
@@ -1929,12 +1930,17 @@ $messages['ka'] = array(
 	'sd_browsedata_daterangestart' => 'დასაწყისი:',
 	'sd_browsedata_daterangeend' => 'დასასრული:',
 	'filters' => 'ფილტრები',
+	'sd_formcreate' => 'ფორმით შექმნა',
+	'sd_viewform' => 'ფორმის ხილვა',
+	'createfilter' => 'ფილტრის შექმნა',
+	'sd-createfilter-with-name' => 'ფილტრის შექმნა: $1',
 	'sd_createfilter_name' => 'სახელი:',
 	'sd-pageschemas-filter' => 'ფილტრი',
 	'sd-pageschemas-values' => 'მნიშვნელობები',
 	'sd_filter_year' => 'წელი',
 	'sd_filter_month' => 'თვე',
 	'sd_filter_freetext' => 'ტექსტი',
+	'sd_filter_daterange' => 'თარიღის დიაპაზონი',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -3227,6 +3233,36 @@ $messages['sv'] = array(
  */
 $messages['szl'] = array(
 	'sd_createfilter_name' => 'Mjano:',
+);
+
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ * @author Shanmugamp7
+ */
+$messages['ta'] = array(
+	'sd_browsedata_choosecategory' => 'ஒரு பகுப்பைத் தேர்ந்தெடுக்கவும்',
+	'sd_browsedata_viewcategory' => 'பகுப்பைக் காண்',
+	'sd_browsedata_docu' => 'உங்கள் முடிவுகளை குறுக்க கீழே ஒன்று அல்லது அதற்கு மேற்பட்ட உருப்படிகளை சொடுக்கவும்',
+	'sd_browsedata_subcategory' => 'துணைப் பகுப்பு',
+	'sd_browsedata_other' => 'மற்றவை',
+	'sd_browsedata_none' => 'எதுவுமில்லை',
+	'sd_browsedata_filterbyvalue' => 'இந்த மதிப்பைப் பொறுத்து வடிகட்டு',
+	'sd_browsedata_filterbysubcategory' => 'இந்த துணைப் பகுப்பைப் பொறுத்து வடிகட்டு',
+	'sd_browsedata_otherfilter' => 'இந்த வடிகட்டியின் மற்றொரு மதிப்புடன் கூடிய பக்கங்களைக் காண்பி',
+	'sd_browsedata_nonefilter' => 'இந்த் வடிகட்டிக்கு மதிப்பு இல்லாத பக்கங்களைக் காண்பி',
+	'sd_browsedata_or' => 'அல்லது',
+	'sd_browsedata_removefilter' => 'இந்த வடிகட்டியை நீக்கு',
+	'sd_browsedata_removesubcategoryfilter' => 'இந்த துணைப்பகுப்பு வடிகட்டியை நீக்கு',
+	'sd_browsedata_resetfilters' => 'வடிகட்டிகளை மீட்டமை',
+	'sd_browsedata_daterangestart' => 'தொடக்கம்:',
+	'sd_browsedata_daterangeend' => 'இறுதி:',
+	'sd_browsedata_novalues' => 'இந்த வடிகட்டிக்கு மதிப்பு எதுவுமில்லை',
+	'filters' => 'வடிகட்டிகள்',
+	'sd_createfilter_name' => 'பெயர்:',
+	'sd-pageschemas-filter' => 'வடிகட்டி',
+	'sd-pageschemas-values' => 'மதிப்புகள்',
+	'sd_filter_year' => 'ஆண்டு',
+	'sd_filter_month' => 'மாதம்',
 );
 
 /** Telugu (తెలుగు)
