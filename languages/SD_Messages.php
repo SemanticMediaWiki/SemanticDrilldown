@@ -1021,6 +1021,24 @@ $messages['es'] = array(
 	'sd_filter_haslabel' => 'Tiene la etiqueta $1.',
 );
 
+/** Estonian (eesti)
+ * @author Avjoska
+ * @author Pikne
+ */
+$messages['et'] = array(
+	'sd_browsedata_choosecategory' => 'Vali kategooria',
+	'sd_browsedata_viewcategory' => 'vaata kategooriat',
+	'sd_browsedata_or' => 'või',
+	'sd_browsedata_daterangestart' => 'Algus:',
+	'sd_browsedata_daterangeend' => 'Lõpp:',
+	'sd_createfilter_name' => 'Nimi:',
+	'sd_filter_usestimeperiod' => 'See filter kasutab ajaperioodi $1.',
+	'sd_filter_year' => 'Aasta',
+	'sd_filter_month' => 'Kuu',
+	'sd_filter_freetext' => 'tekst',
+	'sd_filter_daterange' => 'kuupäevavahemik',
+);
+
 /** Basque (euskara)
  * @author An13sa
  * @author Kobazulo
@@ -3228,6 +3246,21 @@ $messages['sv'] = array(
 	'sd_filter_haslabel' => 'Det har etiketten $1.',
 );
 
+/** Swahili (Kiswahili)
+ * @author Stephenwanjau
+ */
+$messages['sw'] = array(
+	'browsedata' => 'Vinjari takwimu',
+	'sd_browsedata_choosecategory' => 'Chagua jamii',
+	'sd_browsedata_viewcategory' => 'tazama jamii',
+	'sd_browsedata_or' => 'au',
+	'sd_browsedata_daterangestart' => 'Anza:',
+	'sd_viewform' => 'Tazama fomu',
+	'sd_createfilter_name' => 'Jina:',
+	'sd_filter_year' => 'Mwaka',
+	'sd_filter_month' => 'Mwezi',
+);
+
 /** Silesian (ślůnski)
  * @author Herr Kriss
  */
@@ -3263,6 +3296,7 @@ $messages['ta'] = array(
 	'sd-pageschemas-values' => 'மதிப்புகள்',
 	'sd_filter_year' => 'ஆண்டு',
 	'sd_filter_month' => 'மாதம்',
+	'sd_filter_freetext' => 'உரை',
 );
 
 /** Telugu (తెలుగు)
