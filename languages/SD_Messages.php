@@ -1042,12 +1042,15 @@ $messages['et'] = array(
 /** Basque (euskara)
  * @author An13sa
  * @author Kobazulo
+ * @author පසිඳු කාවින්ද
  */
 $messages['eu'] = array(
 	'browsedata' => 'Datuak arakatu',
 	'sd_browsedata_choosecategory' => 'Kategoria aukeratu',
 	'sd_browsedata_viewcategory' => 'kategoria ikusi',
 	'sd_browsedata_subcategory' => 'Azpikategoria',
+	'sd_browsedata_other' => 'Bestelakoa',
+	'sd_browsedata_none' => 'Bat ere ez',
 	'sd_browsedata_or' => 'edo',
 	'sd_browsedata_removefilter' => 'Iragazki hau kendu',
 	'sd_browsedata_resetfilters' => 'Iragazkiak berrezarri',
@@ -1057,6 +1060,7 @@ $messages['eu'] = array(
 	'filters' => 'Iragazkiak',
 	'createfilter' => 'Iragazki bat sortu',
 	'sd_createfilter_name' => 'Izena:',
+	'sd-pageschemas-filter' => 'Iragazkia',
 	'sd_filter_year' => 'Urtea',
 	'sd_filter_month' => 'Hilabetea',
 	'sd_filter_freetext' => 'testua',
@@ -1274,6 +1278,16 @@ $messages['fy'] = array(
 	'sd_browsedata_other' => 'Oare',
 	'sd_browsedata_none' => 'Gjin',
 	'filters' => 'Filters',
+);
+
+/** Irish (Gaeilge)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['ga'] = array(
+	'sd_browsedata_other' => 'Eile',
+	'sd_browsedata_none' => 'Tada',
+	'sd_createfilter_name' => 'Ainm:',
+	'sd_filter_month' => 'Mí',
 );
 
 /** Galician (galego)
@@ -3549,6 +3563,7 @@ $messages['vep'] = array(
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
+ * @author පසිඳු කාවින්ද
  */
 $messages['vi'] = array(
 	'browsedata' => 'Duyệt dữ liệu',
@@ -3583,6 +3598,7 @@ $messages['vi'] = array(
 	'sd_createfilter_requirefilter' => 'Cần bộ lọc khác được chọn trước khi hiển thị cái này:',
 	'sd_createfilter_label' => 'Đánh nhãn cho bộ lọc này (tùy chọn):',
 	'sd_blank_error' => 'không được để trống',
+	'sd-pageschemas-values' => 'Các giá trị',
 	'sd_filter_coversproperty' => 'Bộ lọc này bao phủ thuộc tính $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Nó có giá trị từ thể loại $1.',
 	'sd_filter_usestimeperiod' => 'Nó sử dụng $1 làm khoảng thời gian.',
@@ -3642,11 +3658,14 @@ $messages['vo'] = array(
 
 /** Yiddish (ייִדיש)
  * @author פוילישער
+ * @author පසිඳු කාවින්ද
  */
 $messages['yi'] = array(
 	'sd_browsedata_other' => 'אנדער',
 	'sd_browsedata_none' => 'קיין',
 	'sd_createfilter_name' => 'נאָמען:',
+	'sd_filter_year' => 'יאר',
+	'sd_filter_month' => 'מאנאַט',
 	'sd_filter_freetext' => 'טעקסט',
 );
 
