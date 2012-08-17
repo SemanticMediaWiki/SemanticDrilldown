@@ -305,7 +305,10 @@ $messages['ast'] = array(
 	'sd_browsedata_novalues' => 'Nun hai valores pa esta peñera',
 	'filters' => 'Peñeres',
 	'sd_filters_docu' => 'En {{SITENAME}} esisten les siguientes peñeres:',
+	'sd_formcreate' => 'Crear con formulariu',
+	'sd_viewform' => 'Ver formulariu',
 	'createfilter' => 'Crear una peñera',
+	'sd-createfilter-with-name' => 'Crear peñera: $1',
 	'sd_createfilter_name' => 'Nome:',
 	'sd_createfilter_property' => 'Propiedá que cubre esta peñera:',
 	'sd_createfilter_usepropertyvalues' => "Usar tolos valores d'esta propiedá pa la peñera",
@@ -837,7 +840,10 @@ $messages['dsb'] = array(
 	'sd_browsedata_novalues' => 'Za tós ten filter gódnoty njejsu',
 	'filters' => 'Filtry',
 	'sd_filters_docu' => 'Slědujuce filtry eksistěruju w {{GRAMMAR:lokatiw|{{SITENAME}}}}:',
+	'sd_formcreate' => 'Z formularom napóraś',
+	'sd_viewform' => 'Formular se woglědaś',
 	'createfilter' => 'Filter napóraś',
+	'sd-createfilter-with-name' => 'Filter napóraś: $1',
 	'sd_createfilter_name' => 'Mě:',
 	'sd_createfilter_property' => 'Kakosć, kótaruž toś ten filter wopśimujo:',
 	'sd_createfilter_usepropertyvalues' => 'Wše gódnoty toś teje kakosći za filter wužywaś',
@@ -1115,6 +1121,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Beluga
  * @author Cimon Avaro
  * @author Crt
  * @author Nike
@@ -1150,6 +1157,8 @@ $messages['fi'] = array(
 	'sd_createfilter_listofvalues' => 'luettelo arvoista (oletus)',
 	'sd_createfilter_requirefilter' => 'Vaatii toisen suodattimen valinnan ennen kuin tämä näytetään:',
 	'sd_blank_error' => 'ei voi olla tyhjä',
+	'sd-pageschemas-filter' => 'Suodatin',
+	'sd-pageschemas-values' => 'Arvot',
 	'sd_filter_year' => 'Vuosi',
 	'sd_filter_month' => 'Kuukausi',
 	'sd_filter_hasvalues' => 'Sillä on arvot $1.',
@@ -3539,6 +3548,32 @@ $messages['uk'] = array(
 	'sd_filter_year' => 'Рік',
 	'sd_filter_month' => 'Місяць',
 	'sd_filter_freetext' => 'текст',
+);
+
+/** Urdu (اردو)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['ur'] = array(
+	'sd_browsedata_choosecategory' => 'زمرہ انتخاب کریں',
+	'sd_browsedata_viewcategory' => 'قول زمرہ',
+	'sd_browsedata_other' => 'دیگر',
+	'sd_browsedata_none' => 'کوئی بھی نہیں',
+	'sd_browsedata_or' => 'یا',
+	'sd_browsedata_removefilter' => 'اس فلٹر حذف کریں',
+	'sd_browsedata_resetfilters' => 'فلٹر کو دوبارہ مرتب کریں',
+	'sd_browsedata_daterangestart' => 'شروع:',
+	'sd_browsedata_daterangeend' => 'ديكھيں:',
+	'sd_browsedata_novalues' => 'وہاں کوئی اقدار اس فلٹر کریں',
+	'filters' => 'فلٹر',
+	'sd_viewform' => 'قول فارم',
+	'createfilter' => 'ایک فلٹر تخلیق کریں',
+	'sd_createfilter_name' => 'نام:',
+	'sd-pageschemas-filter' => 'فلٹر کریں',
+	'sd-pageschemas-values' => 'اقدار',
+	'sd_filter_year' => 'سال',
+	'sd_filter_month' => 'ماہ',
+	'sd_filter_freetext' => 'ٹیکسٹ',
+	'sd_filter_daterange' => 'تاریخ کی حد',
 );
 
 /** Veps (vepsän kel’)
