@@ -36,8 +36,5 @@ Bug reports should be submitted at the MediaWiki Bugzilla site:
 
 == Credits to other projects ==
 
-* The Semantic Drilldown extension includes CSS and Javascript files
-from the jQuery and jQuery UI Javascript libraries (http://jquery.org,
-http://jqueryui.com). Both libraries are distributed under both the GPL
-and MIT licenses, both of which are compatible with the GPL license under
-which Semantic Drilldown is distributed.
+* The Semantic Drilldown extension makes use of the jQuery and jQuery UI
+Javascript libraries, embedded within MediaWiki.
