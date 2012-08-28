@@ -1173,6 +1173,7 @@ $messages['fi'] = array(
  * @author Grondin
  * @author IAlex
  * @author Jean-Frédéric
+ * @author Nicolas NALLET
  * @author PieRRoMaN
  * @author Sherbrooke
  * @author Tititou36
@@ -1184,7 +1185,7 @@ $messages['fr'] = array(
 	'browsedata' => 'Chercher les données',
 	'sd_browsedata_choosecategory' => 'Choisir une catégorie',
 	'sd_browsedata_viewcategory' => 'Voir la catégorie',
-	'sd_browsedata_docu' => 'Cliquer sur un ou plusieurs éléments pour resserrer vos résultats.',
+	'sd_browsedata_docu' => 'Cliquez sur un ou plusieurs éléments pour filtrer vos résultats.',
 	'sd_browsedata_subcategory' => 'Sous-catégorie',
 	'sd_browsedata_other' => 'Autre',
 	'sd_browsedata_none' => 'Néant',
@@ -1194,7 +1195,7 @@ $messages['fr'] = array(
 	'sd_browsedata_nonefilter' => 'Voir les pages avec aucune valeur pour ce filtre',
 	'sd_browsedata_or' => 'ou',
 	'sd_browsedata_removefilter' => 'Retirer ce filtre',
-	'sd_browsedata_removesubcategoryfilter' => 'Retirer cette sous-catégorie de filtre',
+	'sd_browsedata_removesubcategoryfilter' => 'Retirer cette sous-catégorie du filtre',
 	'sd_browsedata_resetfilters' => 'Remise à zéro des filtres',
 	'sd_browsedata_addanothervalue' => 'Cliquez sur la flèche pour ajouter une autre valeur',
 	'sd_browsedata_daterangestart' => 'Début :',
@@ -2766,6 +2767,7 @@ $messages['pms'] = array(
 	'sd_formcreate' => 'Creé con un formolari',
 	'sd_viewform' => 'Visualisé ël formolari',
 	'createfilter' => 'Crea un filtr',
+	'sd-createfilter-with-name' => 'Creé filtr: $1',
 	'sd_createfilter_name' => 'Nòm:',
 	'sd_createfilter_property' => 'Proprietà che sto filtr-sì a coata:',
 	'sd_createfilter_usepropertyvalues' => 'Dovré tùit ij valor dë sta proprietà-sì për ël filtr',
