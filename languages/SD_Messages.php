@@ -1180,7 +1180,7 @@ $messages['fi'] = array(
  * @author Urhixidur
  */
 $messages['fr'] = array(
-	'semanticdrilldown-desc' => 'Une interface d’exercice pour la navigation au travers de semantic data',
+	'semanticdrilldown-desc' => 'Une interface de recherche multicritères au sein des données sémantiques',
 	'specialpages-group-sd_group' => 'Exercice de sémantique',
 	'browsedata' => 'Chercher les données',
 	'sd_browsedata_choosecategory' => 'Choisir une catégorie',
