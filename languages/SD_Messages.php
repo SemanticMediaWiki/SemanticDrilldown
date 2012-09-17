@@ -2088,6 +2088,7 @@ $messages['ksh'] = array(
 	'sd_formcreate' => 'Övver e Fommulaa aanlääje',
 	'sd_viewform' => 'Dat Fommullaa aanzeije',
 	'createfilter' => 'Ene Felter aanlääje',
+	'sd-createfilter-with-name' => 'Don ene Felter aanlääje: $1',
 	'sd_createfilter_name' => 'Name:',
 	'sd_createfilter_property' => 'De Eijeschaff, die hee jefeltert weed:',
 	'sd_createfilter_usepropertyvalues' => 'Donn all de Wääte us hee dä Eijeschaff för dä Felter bruche',
