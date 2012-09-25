@@ -252,7 +252,7 @@ $specialPageAliases['myv'] = array(
 	'Filters' => array( 'Сувтеметь' ),
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬) */
+/** Norwegian Bokmål (norsk (bokmål)‎) */
 $specialPageAliases['nb'] = array(
 	'BrowseData' => array( 'Naviger_data' ),
 	'CreateFilter' => array( 'Opprett_filter' ),
@@ -351,7 +351,7 @@ $specialPageAliases['yi'] = array(
 	'Filters' => array( 'פֿילטערס' ),
 );
 
-/** Simplified Chinese (‪中文（简体）‬) */
+/** Simplified Chinese (中文（简体）‎) */
 $specialPageAliases['zh-hans'] = array(
 	'BrowseData' => array( '浏览数据' ),
 	'CreateFilter' => array( '创建过滤器' ),
