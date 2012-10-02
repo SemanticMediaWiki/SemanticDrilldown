@@ -394,7 +394,7 @@ $messages['be'] = array(
 	'sd_filter_freetext' => 'тэкст',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -691,6 +691,7 @@ $messages['ce'] = array(
 
 /** Czech (česky)
  * @author Juan de Vojníkov
+ * @author Juandev
  */
 $messages['cs'] = array(
 	'sd_browsedata_subcategory' => 'Podkategorie',
@@ -788,7 +789,7 @@ $messages['de'] = array(
 	'sd_filter_haslabel' => 'Er hat die Bezeichnung $1.',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Dst
  * @author Imre
  * @author Kghbln
@@ -2397,7 +2398,7 @@ $messages['nah'] = array(
 	'sd_filter_month' => 'Mētztli',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Event
  * @author Harald Khan
  * @author Nghtwlkr
@@ -2524,7 +2525,7 @@ $messages['nl'] = array(
 	'sd_filter_haslabel' => 'Het heeft het label $1.',
 );
 
-/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
  * @author Harald Khan
  * @author Jon Harald Søby
  * @author Njardarlogar
@@ -3132,7 +3133,7 @@ $messages['sl'] = array(
 	'sd_filter_year' => 'Leto',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Sasa Stefanovic
  * @author Михајло Анђелковић
@@ -3152,7 +3153,7 @@ $messages['sr-ec'] = array(
 	'sd_filter_month' => 'Месец',
 );
 
-/** Serbian (Latin script) (‪srpski (latinica)‬)
+/** Serbian (Latin script) (srpski (latinica)‎)
  * @author Michaello
  * @author Rancher
  */
@@ -3739,7 +3740,7 @@ $messages['zh-cn'] = array(
 	'sd_filter_haslabel' => '其有着此一$1标签',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Liangent
  * @author Linforest
  * @author PhiLiP
