@@ -3225,12 +3225,16 @@ $messages['stq'] = array(
 
 /** Swedish (svenska)
  * @author M.M.S.
+ * @author Martinwiss
  * @author Per
  */
 $messages['sv'] = array(
+	'semanticdrilldown-desc' => 'Ett gränssnitt för att navigera sig igenom semantiska data',
+	'specialpages-group-sd_group' => 'Semantic Drilldown',
 	'browsedata' => 'Bläddra genom data',
 	'sd_browsedata_choosecategory' => 'Välj en kategori',
 	'sd_browsedata_viewcategory' => 'visa kategori',
+	'sd_browsedata_docu' => 'Klocka på minst ett av flera val här nedanför för att avgränsa ditt sökresultat',
 	'sd_browsedata_subcategory' => 'Subkategori',
 	'sd_browsedata_other' => 'Andra',
 	'sd_browsedata_none' => 'Ingen',
@@ -3251,6 +3255,7 @@ $messages['sv'] = array(
 	'sd_formcreate' => 'Skapa med formulär',
 	'sd_viewform' => 'Visa formulär',
 	'createfilter' => 'Skapa ett filter',
+	'sd-createfilter-with-name' => 'Skapa filter: $1',
 	'sd_createfilter_name' => 'Namn:',
 	'sd_createfilter_property' => 'Egenskaper som detta filter döljer:',
 	'sd_createfilter_usepropertyvalues' => 'Använd alla värden av den här egenskapen för filtret',
@@ -3262,6 +3267,8 @@ $messages['sv'] = array(
 	'sd_createfilter_requirefilter' => 'Kräv att ett annat filter väljs före detta visas:',
 	'sd_createfilter_label' => 'Etikett för det här filtret (valfritt):',
 	'sd_blank_error' => 'kan inte vara tom',
+	'sd-pageschemas-filter' => 'Filter',
+	'sd-pageschemas-values' => 'Värden',
 	'sd_filter_coversproperty' => 'Detaa filter döljer egenskapen $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Det får sina värden från kategorin $1.',
 	'sd_filter_usestimeperiod' => 'Det använder $1 som tidsperiod.',
@@ -3269,6 +3276,7 @@ $messages['sv'] = array(
 	'sd_filter_month' => 'Månad',
 	'sd_filter_hasvalues' => 'Det har värdena $1.',
 	'sd_filter_hasinputtype' => 'Den har indatatypen $1.',
+	'sd_filter_combobox' => 'rullgardinsmeny',
 	'sd_filter_freetext' => 'text',
 	'sd_filter_daterange' => 'datumintervall',
 	'sd_filter_requiresfilter' => 'Det kräver att filtret $1 är på plats.',

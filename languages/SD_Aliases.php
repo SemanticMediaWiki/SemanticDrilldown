@@ -24,6 +24,8 @@ $specialPageAliases['ar'] = array(
 
 /** Aramaic (ܐܪܡܝܐ) */
 $specialPageAliases['arc'] = array(
+	'BrowseData' => array( 'ܦܐܬ_ܝܕ̈ܥܬܐ' ),
+	'CreateFilter' => array( 'ܒܪܝ_ܡܨܦܝܢܝܬܐ' ),
 	'Filters' => array( 'ܡܨܦܝܢܝܬ̈ܐ' ),
 );
 
