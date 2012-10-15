@@ -2917,6 +2917,7 @@ $messages['pt-br'] = array(
 	'sd_formcreate' => 'Criar com formulário',
 	'sd_viewform' => 'Ver formulário',
 	'createfilter' => 'Criar um filtro',
+	'sd-createfilter-with-name' => 'Criar filtro: $1',
 	'sd_createfilter_name' => 'Nome:',
 	'sd_createfilter_property' => 'Propriedades que este filtro abrange:',
 	'sd_createfilter_usepropertyvalues' => 'Usar todos os valores desta propriedade no filtro',
