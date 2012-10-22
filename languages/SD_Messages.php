@@ -83,14 +83,14 @@ $messages['qqq'] = array(
 	'sd_browsedata_none' => '{{Identical|None}}',
 	'sd_browsedata_or' => '{{Identical|Or}}',
 	'filters' => '{{Identical|Filter}}',
-	'sd_createfilter_name' => 'The name that will be given to a filter',
+	'sd_createfilter_name' => 'The name that will be given to a filter', # Fuzzy
 	'sd_blank_error' => '{{Identical|Cannot be blank}}',
 	'sd-pageschemas-filter' => 'A single filter',
 	'sd-pageschemas-values' => 'The set of values for a filter',
 	'sd_filter_year' => '{{Identical|Year}}',
 	'sd_filter_month' => '{{Identical|Month}}',
 	'sd_filter_combobox' => 'A specific type of interface input',
-	'sd_filter_freetext' => 'A specific type of interface input',
+	'sd_filter_freetext' => 'A specific type of interface input', # Fuzzy
 	'sd_filter_daterange' => 'A specific type of interface input',
 );
 
@@ -465,7 +465,7 @@ $messages['bg'] = array(
 	'sd_browsedata_removefilter' => 'Премахване на филтъра',
 	'sd_browsedata_removesubcategoryfilter' => 'Премахване на филтъра за подкатегория',
 	'sd_browsedata_resetfilters' => 'Изчистване на филтрите',
-	'sd_browsedata_addanothervalue' => 'Добавяне на друга стойност',
+	'sd_browsedata_addanothervalue' => 'Добавяне на друга стойност', # Fuzzy
 	'filters' => 'Филтри',
 	'sd_filters_docu' => 'В {{SITENAME}} съществуват следните филтри:',
 	'createfilter' => 'Създаване на филтър',
@@ -1948,7 +1948,7 @@ $messages['jv'] = array(
 	'sd_browsedata_none' => 'Ora ana',
 	'sd_browsedata_or' => 'utawa',
 	'sd_browsedata_removefilter' => 'Ilangana filter iki',
-	'sd_browsedata_addanothervalue' => 'Tambahna biji liya',
+	'sd_browsedata_addanothervalue' => 'Tambahna biji liya', # Fuzzy
 	'filters' => 'Filter-filter',
 	'createfilter' => 'Nggawé filter',
 	'sd_createfilter_name' => 'Jeneng:',
@@ -2296,7 +2296,7 @@ $messages['ml'] = array(
 	'sd_browsedata_removefilter' => 'ഈ ഫിൽറ്റർ ഒഴിവാക്കുക',
 	'sd_browsedata_removesubcategoryfilter' => 'ഈ ഉപവർഗ്ഗ ഫിൽറ്റർ ഒഴിവാക്കുക',
 	'sd_browsedata_resetfilters' => 'അരിപ്പകൾ പുനഃക്രമീകരിക്കുക',
-	'sd_browsedata_addanothervalue' => 'മറ്റൊരു മൂല്യം ചേർക്കുക',
+	'sd_browsedata_addanothervalue' => 'മറ്റൊരു മൂല്യം ചേർക്കുക', # Fuzzy
 	'filters' => 'അരിപ്പകൾ',
 	'sd_filters_docu' => '{{SITENAME}} സം‌രംഭത്തിൽ താഴെ പ്രദർശിപ്പിച്ചിരിക്കുന്ന ഫിൽറ്ററുകൾ നിലവിലുണ്ട്:',
 	'sd_viewform' => 'ഫോം കാണുക',
@@ -2338,7 +2338,7 @@ $messages['mr'] = array(
 	'sd_browsedata_removefilter' => 'हा फिल्टर काढा',
 	'sd_browsedata_removesubcategoryfilter' => 'हा उपवर्ग फिल्टर काढा',
 	'sd_browsedata_resetfilters' => 'फिल्टर पूर्ववत करा',
-	'sd_browsedata_addanothervalue' => 'दुसरी किंमत वाढवा',
+	'sd_browsedata_addanothervalue' => 'दुसरी किंमत वाढवा', # Fuzzy
 	'filters' => 'फिल्टर्स',
 	'sd_filters_docu' => '{{SITENAME}} वर खालील फिल्टर्स उपलब्ध आहेत:',
 	'createfilter' => 'नवीन फिल्टर बनवा',
@@ -2548,7 +2548,7 @@ $messages['nn'] = array(
 	'sd_browsedata_removefilter' => 'Fjern dette filteret',
 	'sd_browsedata_removesubcategoryfilter' => 'Fjern dette underkategorifilteret',
 	'sd_browsedata_resetfilters' => 'Nullstill filter',
-	'sd_browsedata_addanothervalue' => 'Legg til ny verdi',
+	'sd_browsedata_addanothervalue' => 'Legg til ny verdi', # Fuzzy
 	'sd_browsedata_daterangestart' => 'Byrjing:',
 	'sd_browsedata_daterangeend' => 'Slutt:',
 	'filters' => 'Filter',
@@ -2823,12 +2823,12 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
- * @author 555
  * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
  * @author SandroHc
  * @author Waldir
+ * @author 555
  */
 $messages['pt'] = array(
 	'semanticdrilldown-desc' => 'Uma interface de prospecção para navegar através de dados semânticos',
@@ -2967,7 +2967,7 @@ $messages['ro'] = array(
 	'sd_browsedata_removefilter' => 'Elimină acest filtru',
 	'sd_browsedata_removesubcategoryfilter' => 'Elimină acest filtru de subcategorie',
 	'sd_browsedata_resetfilters' => 'Resetați filtrele',
-	'sd_browsedata_addanothervalue' => 'Adaugă altă valoare',
+	'sd_browsedata_addanothervalue' => 'Adaugă altă valoare', # Fuzzy
 	'sd_browsedata_daterangestart' => 'Început:',
 	'sd_browsedata_daterangeend' => 'Sfârșit:',
 	'sd_browsedata_novalues' => 'Nu există valori pentru acest filtru',
@@ -3194,7 +3194,7 @@ $messages['stq'] = array(
 	'sd_browsedata_removefilter' => 'Läskje disse Sieuwe',
 	'sd_browsedata_removesubcategoryfilter' => 'Läskje disse Subkategorie-Sieuwe',
 	'sd_browsedata_resetfilters' => 'Sieuwen touräächsätte',
-	'sd_browsedata_addanothervalue' => 'Uur Wäid bietouföigje',
+	'sd_browsedata_addanothervalue' => 'Uur Wäid bietouföigje', # Fuzzy
 	'sd_browsedata_daterangestart' => 'Ounfang:',
 	'sd_browsedata_daterangeend' => 'Eende:',
 	'filters' => 'Filter',
@@ -3349,7 +3349,7 @@ $messages['te'] = array(
 	'sd_browsedata_none' => 'ఏమీలేదు',
 	'sd_browsedata_or' => 'లేదా',
 	'sd_browsedata_removefilter' => 'ఈ వడపోతని తొలగించు',
-	'sd_browsedata_addanothervalue' => 'మరో విలువని చేర్చండి',
+	'sd_browsedata_addanothervalue' => 'మరో విలువని చేర్చండి', # Fuzzy
 	'sd_browsedata_daterangestart' => 'మొదలు:',
 	'sd_browsedata_daterangeend' => 'ముగింపు:',
 	'sd_browsedata_novalues' => 'ఈ వడపోతకి విలువలు ఏమీ లేవు',
@@ -3677,7 +3677,7 @@ $messages['vo'] = array(
 	'sd_browsedata_removefilter' => 'Moükön suli at',
 	'sd_browsedata_removesubcategoryfilter' => 'Moükön donakladasuli at',
 	'sd_browsedata_resetfilters' => 'Geükön sulis ad stad kösömik',
-	'sd_browsedata_addanothervalue' => 'Läükön völadi votik',
+	'sd_browsedata_addanothervalue' => 'Läükön völadi votik', # Fuzzy
 	'sd_browsedata_daterangestart' => 'Prim:',
 	'sd_browsedata_daterangeend' => 'Fin:',
 	'filters' => 'Suls',
@@ -3917,4 +3917,3 @@ $messages['zh-tw'] = array(
 	'sd_filter_requiresfilter' => '其以$1篩選器為基礎。',
 	'sd_filter_haslabel' => '其有著此一$1標籤',
 );
-
