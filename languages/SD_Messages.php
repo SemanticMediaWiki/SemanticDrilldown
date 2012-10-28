@@ -806,7 +806,7 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'sd_browsedata_none' => 'çino',
-	'sd_browsedata_or' => 'ya na',
+	'sd_browsedata_or' => 'ya zi',
 	'filters' => 'Avrêci',
 	'sd_createfilter_name' => 'Name:',
 	'sd-pageschemas-filter' => 'Avrêc',
