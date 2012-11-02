@@ -3753,6 +3753,7 @@ $messages['zh-cn'] = array(
  * @author Liangent
  * @author Linforest
  * @author PhiLiP
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'semanticdrilldown-desc' => '用于在语义数据之中导航的钻取界面',
@@ -3781,6 +3782,7 @@ $messages['zh-hans'] = array(
 	'sd_formcreate' => '用表单创建',
 	'sd_viewform' => '检视表格',
 	'createfilter' => '创建筛选器',
+	'sd-createfilter-with-name' => '创建过滤器：$1',
 	'sd_createfilter_name' => '名称：',
 	'sd_createfilter_property' => '此筛选器所涵盖的属性：',
 	'sd_createfilter_usepropertyvalues' => '对该筛选器使用此属性的所有取值',
