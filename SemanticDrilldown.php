@@ -66,6 +66,7 @@ $wgAutoloadClasses['SDHelperFormAction'] = $sdgIP . '/includes/SD_HelperFormActi
 $wgHooks['smwInitProperties'][] = 'sdfInitProperties';
 $wgHooks['AdminLinks'][] = 'SDUtils::addToAdminLinks';
 $wgHooks['MagicWordwgVariableIDs'][] = 'SDUtils::addMagicWordVariableIDs';
+$wgHooks['MakeGlobalVariablesScript'][] = 'SDUtils::setGlobalJSVariables';
 $wgHooks['ParserBeforeTidy'][] = 'SDUtils::handleShowAndHide';
 $wgHooks['PageSchemasRegisterHandlers'][] = 'SDPageSchemas::registerClass';
 $wgHooks['ParserFirstCallInit'][] = 'SDParserFunctions::registerFunctions';
@@ -263,14 +264,10 @@ $wgResourceModules += array(
 	'ext.semanticdrilldown.main' => $sdgResourceTemplate + array(
 		'styles' => array(
 			'skins/SD_main.css',
+			'skins/SD_jquery_ui_overrides.css',
 		),
-	),
-	'ext.semanticdrilldown.combobox' => $sdgResourceTemplate + array(
 		'scripts' => array(
 			'libs/SemanticDrilldown.js',
-		),
-		'styles' => array(
-			'skins/SD_jquery_ui_overrides.css',
 		),
 		'dependencies' => array(
 			'jquery.ui.autocomplete',

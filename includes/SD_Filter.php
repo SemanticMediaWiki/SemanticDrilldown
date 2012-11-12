@@ -10,14 +10,15 @@ class SDFilter {
 	var $name;
 	var $property;
 	var $escaped_property;
-	var $is_relation;
-	var $is_boolean;
-	var $is_date;
+	var $property_type;
 	var $category;
 	var $time_period = null;
 	var $input_type = null;
 	var $allowed_values;
 	var $possible_applied_filters = array();
+	var $db_table_name;
+	var $db_value_field;
+	var $db_date_field;
 	
 	static function loadAllFromPageSchema( $psSchemaObj ){
 		$filters_ps = array();		
@@ -38,9 +39,10 @@ class SDFilter {
 				$prop_array = $fieldObj->getObject('semanticmediawiki_Property');
 				$f->property = $prop_array['name'];
 				$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', "\'" ), $f->property );
-				$f->is_relation = true;				
-				if ( array_key_exists( 'Type', $prop_array ) && $prop_array['Type'] != 'Page' ) {
-					$f->is_relation = false;
+				if ( array_key_exists( 'Type', $prop_array ) ) {
+					if ( $prop_array['Type'] == 'Page' ) {
+						$f->property_type = 'page';
+					}
 				}
 				if ( array_key_exists( 'InputType', $filter_array ) ) {
 					$f->input_type = $filter_array['InputType'];
@@ -51,13 +53,15 @@ class SDFilter {
 				} elseif ( array_key_exists( 'TimePeriod', $filter_array ) ) {
 					$f->time_period = $filter_array['TimePeriod'];
 					$f->allowed_values = array();
-				} elseif ( $f->is_boolean ) {
+				} elseif ( $f->property_type === 'boolean' ) {
 					$f->allowed_values = array( '0', '1' );
 				} elseif ( array_key_exists( 'Values', $filter_array ) ) {
 					$f->allowed_values = $filter_array['Values'];
 				} else {
 					$f->allowed_values = array();
 				}				
+				$f->loadDBStructureInformation();
+
 				$filters_ps[] = $f ;
 			}
 		}				
@@ -71,8 +75,9 @@ class SDFilter {
 		if ( count( $properties_used ) > 0 ) {
 			$f->property = $properties_used[0];
 			$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', "\'" ), $f->property );
+			// This may not be necessary, or useful.
+			$f->property_type = 'page';
 		}
-		$f->is_relation = true;
 		$proptitle = Title::newFromText( $f->property, SMW_NS_PROPERTY );
 		if ( $proptitle != null ) {
 			$store = smwfGetStore();
@@ -99,14 +104,19 @@ class SDFilter {
 				} else {
 					$typeValue = $types[0]->getWikiValue();
 				}
-				if ( $typeValue != $datatypeLabels['_wpg'] ) {
-					$f->is_relation = false;
-				}
-				if ( $typeValue == $datatypeLabels['_boo'] ) {
-					$f->is_boolean = true;
-				}
-				if ( $typeValue == $datatypeLabels['_dat'] ) {
-					$f->is_date = true;
+				if ( $typeValue == $datatypeLabels['_wpg'] ) {
+					$f->property_type = 'page';
+				} elseif ( $typeValue == $datatypeLabels['_str'] ) {
+					$f->property_type = 'string';
+				} elseif ( $typeValue == $datatypeLabels['_num'] ) {
+					$f->property_type = 'number';
+				} elseif ( $typeValue == $datatypeLabels['_boo'] ) {
+					$f->property_type = 'boolean';
+				} elseif ( $typeValue == $datatypeLabels['_dat'] ) {
+					$f->property_type = 'date';
+				} else {
+					// This should hopefully never get called.
+					print "Error! Unsupported property type ($typeValue) for filter {$f->name}.";
 				}
 			}
 		}
@@ -118,7 +128,7 @@ class SDFilter {
 		} elseif ( count( $time_periods ) > 0 ) {
 			$f->time_period = $time_periods[0];
 			$f->allowed_values = array();
-		} elseif ( $f->is_boolean ) {
+		} elseif ( $f->property_type === 'boolean' ) {
 			$f->allowed_values = array( '0', '1' );
 		} else {
 			$values = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_V', SD_SP_HAS_VALUE, null );
@@ -128,12 +138,72 @@ class SDFilter {
 		if ( count( $input_types ) > 0 ) {
 			$f->input_type = $input_types[0];
 		}
-		// set list of possible applied filters if allowed values
-		// array was set
+
+		// Set list of possible applied filters if allowed values
+		// array was set.
 		foreach ( $f->allowed_values as $allowed_value ) {
 			$f->possible_applied_filters[] = SDAppliedFilter::create( $f, $allowed_value );
 		}
+
+		$f->loadDBStructureInformation();
+
 		return $f;
+	}
+
+	/**
+	 * This function is a little confusingly named - it's not
+	 * loading any information from the database, but rather
+	 * loading information *about* the structure of the Semantic
+	 * MediaWiki tables in the database, based on the SQL store
+	 * being used.
+	 */
+	public function loadDBStructureInformation() {
+		global $smwgDefaultStore;
+
+		if ( $smwgDefaultStore === 'SMWSQLStore3' ) {
+			if ( $this->property_type === 'boolean' ) {
+				$this->db_table_name = 'smw_di_bool';
+				$this->db_value_field = 'o_value';
+			} elseif ( $this->property_type === 'date' ) {
+				$this->db_table_name = 'smw_di_time';
+				$this->db_value_field = 'o_serialized';
+				$this->db_date_field = 'SUBSTR(o_serialized, 3, 100)';
+			} elseif ( $this->property_type === 'page' ) {
+				$this->db_table_name = 'smw_di_wikipage';
+				$this->db_value_field = 'o_ids.smw_title';
+			} elseif ( $this->property_type === 'number' ) {
+				$this->db_table_name = 'smw_di_number';
+				$this->db_value_field = 'o_serialized';
+			} else {
+				$this->db_table_name = 'smw_di_blob';
+				$this->db_value_field = 'o_hash';
+			}
+		} else {
+			// Things used to be so simple...
+			if ( $this->property_type === 'page' ) {
+				$this->db_table_name = 'smw_rels2';
+				$this->db_value_field = 'o_ids.smw_title';
+			} else {
+				$this->db_table_name = 'smw_atts2';
+				$this->db_date_field = 'value_xsd';
+				$this->db_value_field = 'value_xsd';
+			}
+		}
+	}
+
+	public function getTableName() {
+		return $this->db_table_name;
+	}
+
+	public function getValueField() {
+		return $this->db_value_field;
+	}
+
+	/**
+	 * Used for getting year and month from the date field.
+	 */
+	public function getDateField() {
+		return $this->db_date_field;
 	}
 
 	/**
@@ -144,19 +214,20 @@ class SDFilter {
 	function getTimePeriodValues() {
 		$possible_dates = array();
 		$property_value = $this->escaped_property;
+		$date_field = $this->getDateField();
 		$dbr = wfGetDB( DB_SLAVE );
 		if ( $this->time_period == wfMsg( 'sd_filter_month' ) ) {
-			$fields = "YEAR(value_xsd), MONTH(value_xsd)";
+			$fields = "YEAR($date_field), MONTH($date_field)";
 		} else {
-			$fields = "YEAR(value_xsd)";
+			$fields = "YEAR($date_field)";
 		}
-		$smw_attributes = $dbr->tableName( 'smw_atts2' );
-		$smw_ids = $dbr->tableName( 'smw_ids' );
+		$datesTable = $dbr->tableName( $this->getTableName() );
+		$idsTable = $dbr->tableName( SDUtils::getIDsTableName() );
 		$sql = <<<END
 	SELECT $fields, count(*)
 	FROM semantic_drilldown_values sdv 
-	JOIN $smw_attributes a ON sdv.id = a.s_id
-	JOIN $smw_ids p_ids ON a.p_id = p_ids.smw_id
+	JOIN $datesTable a ON sdv.id = a.s_id
+	JOIN $idsTable p_ids ON a.p_id = p_ids.smw_id
 	WHERE p_ids.smw_title = '$property_value'
 	GROUP BY $fields
 	ORDER BY $fields
@@ -183,34 +254,31 @@ END;
 	 * that match that value.
 	 */
 	function getAllValues() {
-		if ( $this->time_period != null )
+		if ( $this->time_period != null ) {
+			if ( $this->property_type == 'page' ) {
+				return "Invalid input type for this filter!";
+			}
 			return $this->getTimePeriodValues();
+		}
 
 		$possible_values = array();
 		$property_value = $this->escaped_property;
 		$dbr = wfGetDB( DB_SLAVE );
-		if ( $this->is_relation ) {
-			$property_table_name = $dbr->tableName( 'smw_rels2' );
-			$property_table_nickname = "r";
-			$value_field = 'o_ids.smw_title';
-		} else {
-			$property_table_name = $dbr->tableName( 'smw_atts2' );
-			$property_table_nickname = "a";
-			$value_field = 'value_xsd';
-		}
-		$smw_ids = $dbr->tableName( 'smw_ids' );
+		$property_table_name = $dbr->tableName( $this->getTableName() );
+		$value_field = $this->getValueField();
+		$smw_ids = $dbr->tableName( SDUtils::getIDsTableName() );
 		$prop_ns = SMW_NS_PROPERTY;
 		$sql = <<<END
 	SELECT $value_field, count(DISTINCT sdv.id)
 	FROM semantic_drilldown_values sdv 
-	JOIN $property_table_name $property_table_nickname ON sdv.id = $property_table_nickname.s_id
+	JOIN $property_table_name p ON sdv.id = p.s_id
 
 END;
-		if ( $this->is_relation ) {
-			$sql .= "	JOIN $smw_ids o_ids ON r.o_id = o_ids.smw_id";
+		if ( $this->property_type === 'page' ) {
+			$sql .= "	JOIN $smw_ids o_ids ON p.o_id = o_ids.smw_id";
 		}
 		$sql .= <<<END
-	JOIN $smw_ids p_ids ON $property_table_nickname.p_id = p_ids.smw_id
+	JOIN $smw_ids p_ids ON p.p_id = p_ids.smw_id
 	WHERE p_ids.smw_title = '$property_value'
 	AND p_ids.smw_namespace = $prop_ns
 	AND $value_field != ''
@@ -236,26 +304,21 @@ END;
 	 */
 	function createTempTable() {
 		$dbr = wfGetDB( DB_SLAVE );
-		$smw_ids = $dbr->tableName( 'smw_ids' );
-		if ( $this->is_relation ) {
-			$table_name = $dbr->tableName( 'smw_rels2' );
-			$property_field = 'p_id';
-			$value_field = 'o_ids.smw_title';
-		} else {
-			$table_name = $dbr->tableName( 'smw_atts2' );
-			$property_field = 'p_id';
-			$value_field = 'value_xsd';
-		}
+		$smw_ids = $dbr->tableName( SDUtils::getIDsTableName() );
+		$valuesTable = $dbr->tableName( $this->getTableName() );
+		$value_field = $this->getValueField();
+		$property_field = 'p_id';
 		$query_property = $this->escaped_property;
+
 		$sql = <<<END
 	CREATE TEMPORARY TABLE semantic_drilldown_filter_values
 	AS SELECT s_id AS id, $value_field AS value
-	FROM $table_name
-	JOIN $smw_ids p_ids ON $table_name.p_id = p_ids.smw_id
+	FROM $valuesTable
+	JOIN $smw_ids p_ids ON $valuesTable.p_id = p_ids.smw_id
 
 END;
-		if ( $this->is_relation ) {
-			$sql .= "	JOIN $smw_ids o_ids ON $table_name.o_id = o_ids.smw_id\n";
+		if ( $this->property_type === 'page' ) {
+			$sql .= "	JOIN $smw_ids o_ids ON $valuesTable.o_id = o_ids.smw_id\n";
 		}
 		$sql .= "	WHERE p_ids.smw_title = '$query_property'";
 		$dbr->query( $sql );

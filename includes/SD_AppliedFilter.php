@@ -46,7 +46,7 @@ class SDAppliedFilter {
 		$dbr = wfGetDB( DB_SLAVE );
 		if ( $this->search_term != null ) {
 			$search_term = str_replace( "'", "\'", $this->search_term );
-			if ( $this->filter->is_relation ) {
+			if ( $this->filter->property_type === 'page' ) {
 				// FIXME: 'LIKE' is supposed to be
 				// case-insensitive, but it's not acting
 				// that way here.
@@ -88,14 +88,15 @@ class SDAppliedFilter {
 				elseif ( $fv->upper_limit )
 					$sql .= "$value_field < {$fv->upper_limit} ";
 			} elseif ( $this->filter->time_period != null ) {
+				$date_field = $this->filter->getDateField();
 				if ( $this->filter->time_period == wfMsg( 'sd_filter_month' ) ) {
-					$sql .= "YEAR($value_field) = {$fv->year} AND MONTH($value_field) = {$fv->month} ";
+					$sql .= "YEAR($date_field) = {$fv->year} AND MONTH($date_field) = {$fv->month} ";
 				} else {
-					$sql .= "YEAR($value_field) = {$fv->year} ";
+					$sql .= "YEAR($date_field) = {$fv->year} ";
 				}
 			} else {
 				$value = $fv->text;
-				if ( $this->filter->is_relation ) {
+				if ( $this->filter->property_type === 'page' ) {
 					$value = str_replace( ' ', '_', $value );
 				}
 				$sql .= "$value_field = '{$dbr->strencode($value)}'";
@@ -114,33 +115,28 @@ class SDAppliedFilter {
 		$possible_values = array();
 		$property_value = $this->filter->escaped_property;
 		$dbr = wfGetDB( DB_SLAVE );
-		if ( $this->filter->is_relation ) {
-			$property_table_name = $dbr->tableName( 'smw_rels2' );
-			$property_table_nickname = "r";
-			$value_field = 'o_ids.smw_title';
+		$property_table_name = $dbr->tableName( $this->filter->getTableName() );
+		if ( is_null( $this->filter->time_period ) ) {
+			$value_field = $this->filter->getValueField();
 		} else {
-			$property_table_name = $dbr->tableName( 'smw_atts2' );
-			$property_table_nickname = "a";
-			$value_field = 'value_xsd';
-		}
-		if ( $this->filter->time_period != null ) {
+			$date_field = $this->filter->getDateField();
 			if ( $this->filter->time_period == wfMsg( 'sd_filter_month' ) ) {
-				$value_field = "YEAR(value_xsd), MONTH(value_xsd)";
+				$value_field = "YEAR($date_field), MONTH($date_field)";
 			} else {
-				$value_field = "YEAR(value_xsd)";
+				$value_field = "YEAR($date_field)";
 			}
 		}
-		$smw_insts = $dbr->tableName( 'smw_inst2' );
-		$smw_ids = $dbr->tableName( 'smw_ids' );
+		$smwIDs = $dbr->tableName( SDUtils::getIDsTableName() );
+		$smwCategoryInstances = $dbr->tableName( SDUtils::getCategoryInstancesTableName() );
 		$cat_ns = NS_CATEGORY;
 		$sql = "	SELECT $value_field
-	FROM $property_table_name $property_table_nickname
-	JOIN $smw_ids p_ids ON $property_table_nickname.p_id = p_ids.smw_id\n";
-		if ( $this->filter->is_relation ) {
-			$sql .= "       JOIN $smw_ids o_ids ON $property_table_nickname.o_id = o_ids.smw_id\n";
+	FROM $property_table_name p
+	JOIN $smwIDs p_ids ON p.p_id = p_ids.smw_id\n";
+		if ( $this->filter->property_type === 'page' ) {
+			$sql .= "       JOIN $smwIDs o_ids ON p.o_id = o_ids.smw_id\n";
 		}
-		$sql .= "	JOIN $smw_insts insts ON $property_table_nickname.s_id = insts.s_id
-	JOIN $smw_ids cat_ids ON insts.o_id = cat_ids.smw_id
+		$sql .= "	JOIN $smwCategoryInstances insts ON p.s_id = insts.s_id
+	JOIN $smwIDs cat_ids ON insts.o_id = cat_ids.smw_id
 	WHERE p_ids.smw_title = '$property_value'
 	AND cat_ids.smw_namespace = $cat_ns
 	AND cat_ids.smw_title = '$category'

@@ -29,29 +29,6 @@ class SDBrowseData extends IncludableSpecialPage {
 		$wgOut->addModules( 'ext.semanticdrilldown.main' );
 		$wgOut->addScript( '<!--[if IE]><link rel="stylesheet" href="' . $sdgScriptPath . '/skins/SD_IEfixes.css" media="screen" /><![endif]-->' );
 
-		$javascript_text = <<<END
-<script type="text/javascript">
-function toggleFilterDiv(element_id, label_element) {
-	element = document.getElementById(element_id);
-	if (element.style.display == "none") {
-		element.style.display = "block";
-		label_element.innerHTML = "<img src=\"$sdgScriptPath/skins/down-arrow.png\">";
-	} else {
-		element.style.display = "none";
-		label_element.innerHTML = "<img src=\"$sdgScriptPath/skins/right-arrow.png\">";
-	}
-}
-
-function highlightRemoveDiv(element) {
-	element.innerHTML = "<img src=\"$sdgScriptPath/skins/filter-x-active.png\">";
-}
-function unhighlightRemoveDiv(element) {
-	element.innerHTML = "<img src=\"$sdgScriptPath/skins/filter-x.png\">";
-}
-</script>
-END;
-		$wgOut->addScript( $javascript_text );
-
 		// set default
 		if ( $sdgNumResultsPerPage == null )
 			$sdgNumResultsPerPage = 250;
@@ -90,8 +67,9 @@ END;
 		$filters = SDUtils::loadFiltersForCategory( $category );
 
 		$filters_used = array();
-		foreach ( $filters as $i => $filter )
+		foreach ( $filters as $i => $filter ) {
 			$filter_used[] = false;
+		}
 		$applied_filters = array();
 		$remaining_filters = array();
 		foreach ( $filters as $i => $filter ) {
@@ -182,13 +160,14 @@ class SDBrowseDataPage extends QueryPage {
 		$categorylinks = $dbr->tableName( 'categorylinks' );
 		$page = $dbr->tableName( 'page' );
 		$cat_ns = NS_CATEGORY;
-		if ( $this->subcategory )
+		if ( $this->subcategory ) {
 			$actual_cat = str_replace( ' ', '_', $this->subcategory );
-		else
+		} else {
 			$actual_cat = str_replace( ' ', '_', $this->category );
-		// get the two arrays for subcategories - one for only the
+		}
+		// Get the two arrays for subcategories - one for only the
 		// immediate subcategories, for display, and the other for
-		// all subcategories, sub-subcategories, etc., for querying
+		// all subcategories, sub-subcategories etc., for querying.
 		$this->next_level_subcategories = SDUtils::getCategoryChildren( $actual_cat, true, 1 );
 		$this->all_subcategories = SDUtils::getCategoryChildren( $actual_cat, true, 10 );
 	}
@@ -262,16 +241,18 @@ class SDBrowseDataPage extends QueryPage {
 	 * subcategory's child subcategories, to ensure completeness.
 	 */
 	function getSQLFromClauseForCategory( $subcategory, $child_subcategories ) {
+		global $smwgDefaultStore;
+
 		$dbr = wfGetDB( DB_SLAVE );
-		$smw_insts = $dbr->tableName( 'smw_inst2' );
-		$smw_ids = $dbr->tableName( 'smw_ids' );
+		$smwIDs = $dbr->tableName( SDUtils::getIDsTableName() );
+		$smwCategoryInstances = $dbr->tableName( SDUtils::getCategoryInstancesTableName() );
 		$ns_cat = NS_CATEGORY;
 		$subcategory = str_replace( "'", "\'", $subcategory );
 		$sql = "FROM semantic_drilldown_values sdv
-	JOIN $smw_insts inst
+	JOIN $smwCategoryInstances inst
 	ON sdv.id = inst.s_id
 	WHERE inst.o_id IN
-		(SELECT smw_id FROM $smw_ids
+		(SELECT smw_id FROM $smwIDs
 		WHERE smw_namespace = $ns_cat AND (smw_title = '$subcategory' ";
 		foreach ( $child_subcategories as $i => $subcat ) {
 			$subcat = str_replace( "'", "\'", $subcat );
@@ -287,16 +268,16 @@ class SDBrowseDataPage extends QueryPage {
 	 * category, subcategory and filters
 	 */
 	function getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters ) {
+		global $smwgDefaultStore;
+
 		$dbr = wfGetDB( DB_SLAVE );
-		$smw_ids = $dbr->tableName( 'smw_ids' );
-		$smw_insts = $dbr->tableName( 'smw_inst2' );
-		$smw_rels = $dbr->tableName( 'smw_rels2' );
-		$smw_atts = $dbr->tableName( 'smw_atts2' );
+		$smwIDs = $dbr->tableName( SDUtils::getIDsTableName() );
+		$smwCategoryInstances = $dbr->tableName( SDUtils::getCategoryInstancesTableName() );
 		$cat_ns = NS_CATEGORY;
 		$prop_ns = SMW_NS_PROPERTY;
 
-		$sql = "FROM $smw_ids ids
-	JOIN $smw_insts insts
+		$sql = "FROM $smwIDs ids
+	JOIN $smwCategoryInstances insts
 	ON ids.smw_id = insts.s_id
 	AND ids.smw_namespace != $cat_ns ";
 		foreach ( $applied_filters as $i => $af ) {
@@ -310,12 +291,11 @@ class SDBrowseDataPage extends QueryPage {
 				}
 			}
 			if ( $includes_none ) {
-				if ( $af->filter->is_relation ) {
-					$property_table_name = $smw_rels;
+				$property_table_name = $af->filter->getTableName();
+				if ( $af->filter->property_type === 'page' ) {
 					$property_table_nickname = "nr$i";
 					$property_field = 'p_id';
 				} else {
-					$property_table_name = $smw_atts;
 					$property_table_nickname = "na$i";
 					$property_field = 'p_id';
 				}
@@ -324,23 +304,24 @@ class SDBrowseDataPage extends QueryPage {
 				$sql .= "LEFT OUTER JOIN
 	(SELECT s_id
 	FROM $property_table_name
-	WHERE $property_field = (SELECT smw_id FROM $smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)) $property_table_nickname
+	WHERE $property_field = (SELECT smw_id FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)) $property_table_nickname
 	ON ids.smw_id = $property_table_nickname.s_id ";
 			}
 		}
 		foreach ( $applied_filters as $i => $af ) {
 			$sql .= "\n	";
-			if ( $af->filter->is_relation ) {
+			$property_table_name = $dbr->tableName( $af->filter->getTableName() );
+			if ( $af->filter->property_type === 'page' ) {
 				if ( $includes_none ) {
 					$sql .= "LEFT OUTER ";
 				}
-				$sql .= "JOIN $smw_rels r$i ON ids.smw_id = r$i.s_id\n	";
+				$sql .= "JOIN $property_table_name r$i ON ids.smw_id = r$i.s_id\n	";
 				if ( $includes_none ) {
 					$sql .= "LEFT OUTER ";
 				}
-				$sql .= "JOIN $smw_ids o_ids$i ON r$i.o_id = o_ids$i.smw_id ";
+				$sql .= "JOIN $smwIDs o_ids$i ON r$i.o_id = o_ids$i.smw_id ";
 			} else {
-				$sql .= "JOIN $smw_atts a$i ON ids.smw_id = a$i.s_id ";
+				$sql .= "JOIN $property_table_name a$i ON ids.smw_id = a$i.s_id ";
 			}
 		}
 		if ( $subcategory ) {
@@ -350,7 +331,7 @@ class SDBrowseDataPage extends QueryPage {
 		}
 		$actual_cat = str_replace( "'", "\'", $actual_cat );
 		$sql .= "WHERE insts.o_id IN
-	(SELECT smw_id FROM $smw_ids cat_ids
+	(SELECT smw_id FROM $smwIDs cat_ids
 	WHERE smw_namespace = $cat_ns AND (smw_title = '$actual_cat'";
 		foreach ( $subcategories as $i => $subcat ) {
 			$subcat = str_replace( "'", "\'", $subcat );
@@ -359,9 +340,10 @@ class SDBrowseDataPage extends QueryPage {
 		$sql .= ")) ";
 		foreach ( $applied_filters as $i => $af ) {
 			$property_value = $af->filter->escaped_property;
-			if ( $af->filter->is_relation ) {
+			$value_field = $af->filter->getValueField();
+			if ( $af->filter->property_type === 'page' ) {
 				$property_field = "r$i.p_id";
-				$sql .= "\n	AND ($property_field = (SELECT smw_id FROM $smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)";
+				$sql .= "\n	AND ($property_field = (SELECT smw_id FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)";
 				if ( $includes_none ) {
 					$sql .= " OR $property_field IS NULL";
 				}
@@ -369,8 +351,8 @@ class SDBrowseDataPage extends QueryPage {
 				$value_field = "o_ids$i.smw_title";
 			} else {
 				$property_field = "a$i.p_id";
-				$sql .= "\n	AND $property_field = (SELECT smw_id FROM $smw_ids WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
-				$value_field = "a$i.value_xsd";
+				$sql .= "\n	AND $property_field = (SELECT smw_id FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
+				$value_field = "a$i.$value_field";
 			}
 			$sql .= $af->checkSQL( $value_field );
 		}
@@ -464,6 +446,49 @@ END;
 	}
 
 	/**
+	 * Create the full display of the filter line, once the text for
+	 * the "results" (values) for this filter has been created.
+	 */
+	function printFilterLine( $filterName, $isApplied, $isNormalFilter, $resultsLine ) {
+		global $sdgScriptPath;
+
+		$filterLabel = $this->printFilterLabel( $filterName );
+		$text = <<<END
+				<div class="drilldown-filter">
+					<div class="drilldown-filter-label">
+
+END;
+		// No point showing arrow if it's just a
+		// single text or date input.
+		if ( $isNormalFilter ) {
+			if ( $isApplied ) {
+				$arrowImage = "$sdgScriptPath/skins/right-arrow.png";
+			} else {
+				$arrowImage = "$sdgScriptPath/skins/down-arrow.png";
+			}
+			$text .= <<<END
+					<a class="drilldown-values-toggle" style="cursor: default;"><img src="$arrowImage" /></a>
+
+END;
+		}
+		$text .= "\t\t\t\t\t$filterLabel:";
+		if ( $isApplied ) {
+			$add_another_str = wfMsg( 'sd_browsedata_addanothervalue' );
+			$text .= " <span class=\"drilldown-filter-notes\">($add_another_str)</span>";
+		}
+		$displayText = ( $isApplied ) ? 'style="display: none;"' : '';
+		$text .= <<<END
+
+					</div>
+					<div class="drilldown-filter-values" $displayText>$resultsLine
+					</div>
+				</div>
+
+END;
+		return $text;
+	}
+
+	/**
 	 * Print a "nice" version of the value for a filter, if it's some
 	 * special case like 'other', 'none', a boolean, etc.
 	 */
@@ -474,9 +499,9 @@ END;
 			return wfMsg( 'sd_browsedata_other' );
 		elseif ( $value === ' none' )
 			return wfMsg( 'sd_browsedata_none' );
-		elseif ( $filter->is_boolean )
+		elseif ( $filter->property_type === 'boolean' )
 			return SDUtils::booleanToString( $value );
-		elseif ( $filter->is_date && strpos( $value, '//T' ) )
+		elseif ( $filter->property_type === 'date' && strpos( $value, '//T' ) )
 			return str_replace( '//T', '', $value );
 		else
 			return $value;
@@ -490,15 +515,15 @@ END;
 		global $sdgScriptPath;
 
 		$results_line = "";
-		$filter_label = $this->printFilterLabel( $af->filter->name );
 		foreach ( $this->applied_filters as $af2 ) {
 			if ( $af->filter->name == $af2->filter->name )
 				$current_filter_values = $af2->values;
 		}
-		if ( $af->filter->allowed_values != null )
+		if ( $af->filter->allowed_values != null ) {
 			$or_values = $af->filter->allowed_values;
-		else
+		} else {
 			$or_values = $af->getAllOrValues( $this->category );
+		}
 		if ( $af->search_term != null ) {
 			// HACK - printComboBoxInput() needs values as the
 			// *keys* of the array
@@ -506,11 +531,11 @@ END;
 			foreach ( $or_values as $or_value ) {
 				$filter_values[$or_value] = '';
 			}
-			$results_line = "<div class=\"drilldown-filter-label\">$filter_label:</div> " . $this->printComboBoxInput( $af->filter->name, $filter_values, $af->search_term );
-			return $results_line;
+			$results_line = $this->printComboBoxInput( $af->filter->name, $filter_values, $af->search_term );
+			return $this->printFilterLine( $af->filter->name, true, false, $results_line );
 		} elseif ( $af->lower_date != null || $af->upper_date != null ) {
-			$results_line = "<div class=\"drilldown-filter-label\">$filter_label:</div> " . $this->printDateRangeInput( $af->filter->name, $af->lower_date, $af->upper_date );
-			return $results_line;
+			$results_line = $this->printDateRangeInput( $af->filter->name, $af->lower_date, $af->upper_date );
+			return $this->printFilterLine( $af->filter->name, true, false, $results_line );
 		}
 		// add 'Other' and 'None', regardless of whether either has
 		// any results - add 'Other' only if it's not a date field
@@ -548,18 +573,7 @@ END;
 				}
 			}
 		}
-		$add_another_str = wfMsg( 'sd_browsedata_addanothervalue' );
-		$results_div_id = strtolower( str_replace( ' ', '_', $filter_label ) ) . "_values";
-		$text = <<<END
-					<div class="drilldown-filter-label">
-						<a onclick="toggleFilterDiv('$results_div_id', this)" style="cursor: default;"><img src="$sdgScriptPath/skins/right-arrow.png"></a>
-						$filter_label: <span class="drilldown-filter-notes">($add_another_str)</span>
-					</div>
-					<div class="drilldown-filter-values" id="$results_div_id" style="display: none;">$results_line
-					</div>
-
-END;
-		return $text;
+		return $this->printFilterLine( $af->filter->name, true, true, $results_line );
 	}
 
 	function printUnappliedFilterValues( $cur_url, $f, $filter_values ) {
@@ -595,9 +609,6 @@ END;
 	function printComboBoxInput( $filter_name, $filter_values, $cur_value = null ) {
 		global $wgRequest, $sdgJQueryIncluded, $wgOut;
 
-		// Load all the necessary JS and CSS.
-		$wgOut->addModules( 'ext.semanticdrilldown.combobox' );
-
 		$filter_name = str_replace( ' ', '_', $filter_name );
 		// URL-decode the filter name - necessary if it contains
 		// any non-Latin characters.
@@ -626,7 +637,14 @@ END;
 
 		foreach ( $wgRequest->getValues() as $key => $val ) {
 			if ( $key != $inputName ) {
-				$text .= Html::hidden( $key, $val ) . "\n";
+				if ( is_array( $val ) ) {
+					foreach ( $val as $i => $realVal ) {
+						$keyString = $key . '[' . $i . ']';
+						$text .= Html::hidden( $keyString, $realVal ) . "\n";
+					}
+				} else {
+					$text .= Html::hidden( $key, $val ) . "\n";
+				}
 			}
 		}
 		$text .= Html::input( null, wfMsg( 'searchresultshead' ), 'submit', array( 'style' => 'margin: 4px 0 8px 0;' ) ) . "\n";
@@ -703,6 +721,10 @@ END;
 		$found_results_for_filter = false;
 		if ( count( $f->allowed_values ) == 0 ) {
 			$filter_values = $f->getAllValues();
+			if ( !is_array( $filter_values ) ) {
+				$f->dropTempTable();
+				return $this->printFilterLine( $f->name, false, false, $filter_values );
+			}
 			if ( count( $filter_values ) > 0 ) {
 				$found_results_for_filter = true;
 			}
@@ -757,28 +779,7 @@ END;
 			$results_line = $this->printUnappliedFilterValues( $cur_url, $f, $filter_values );
 		}
 
-		$text = "";
-		$filter_label = $this->printFilterLabel( $f->name );
-		$results_div_id = strtolower( str_replace( ' ', '_', $filter_label ) ) . "_values";
-		$text .= <<<END
-					<div class="drilldown-filter-label">
-
-END;
-		// no point showing "minimize" arrow if it's just a
-		// single text or date input
-		if ( $normal_filter ) {
-			$text .= <<<END
-					<a onclick="toggleFilterDiv('$results_div_id', this)" style="cursor: default;"><img src="$sdgScriptPath/skins/down-arrow.png"></a>
-
-END;
-		}
-		$text .= <<<END
-					$filter_label:
-					</div>
-					<div class="drilldown-filter-values" id="$results_div_id">$results_line
-					</div>
-
-END;
+		$text = $this->printFilterLine( $f->name, false, $normal_filter, $results_line );
 		$f->dropTempTable();
 		return $text;
 	}
@@ -911,12 +912,14 @@ END;
 		$filters = SDUtils::loadFiltersForCategory( $this->category );
 		foreach ( $filters as $f ) {
 			foreach ( $this->applied_filters as $af ) {
-				if ( $af->filter->name == $f->name )
+				if ( $af->filter->name == $f->name ) {
 					$header .= $this->printAppliedFilterLine( $af );
+				}
 			}
 			foreach ( $this->remaining_filters as $rf ) {
-				if ( $rf->name == $f->name )
+				if ( $rf->name == $f->name ) {
 					$header .= $this->printUnappliedFilterLine( $rf, $cur_url );
+				}
 			}
 		}
 		$header .= "				</div> <!-- drilldown-filters -->\n";

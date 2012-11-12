@@ -7,6 +7,14 @@
 
 class SDUtils {
 
+	static function setGlobalJSVariables( &$vars ) {
+		global $sdgScriptPath;
+
+		$vars['sdgDownArrowImage'] = "$sdgScriptPath/skins/down-arrow.png";
+		$vars['sdgRightArrowImage'] = "$sdgScriptPath/skins/right-arrow.png";
+		return true;
+	}
+
 	/**
 	 * Helper function to handle getPropertyValues() in both SMW 1.6
 	 * and earlier versions.
@@ -191,15 +199,17 @@ class SDUtils {
 	 * Generic static function - gets all the values that a specific page
 	 * points to with a specific property
 	 */
-	static function getValuesForProperty( $subject, $subject_namespace, $special_prop ) {
+	static function getValuesForProperty( $subject, $subjectNamespace, $specialPropID ) {
 		$store = smwfGetStore();
-		$res = self::getSMWPropertyValues( $store, $subject, $subject_namespace, $special_prop );
+		$res = self::getSMWPropertyValues( $store, $subject, $subjectNamespace, $specialPropID );
 		$values = array();
 		foreach ( $res as $prop_val ) {
 			// depends on version of SMW
 			if ( $prop_val instanceof SMWDIWikiPage ) {
 				$actual_val = $prop_val->getDBkey();
 			} elseif ( $prop_val instanceof SMWDIString ) {
+				$actual_val = $prop_val->getString();
+			} elseif ( $prop_val instanceof SMWDIBlob ) {
 				$actual_val = $prop_val->getString();
 			} elseif ( method_exists( $prop_val, 'getValueKey' ) ) {
 				$actual_val = $prop_val->getValueKey();
@@ -458,6 +468,26 @@ END;
 	public static function getSpecialPage( $pageName ) {
 		$hasFactory = class_exists( 'SpecialPageFactory' ) && method_exists( 'SpecialPageFactory', 'getPage' );
 		return $hasFactory ? SpecialPageFactory::getPage( $pageName ) : SpecialPage::getPage( $pageName );
+	}
+
+	public static function getIDsTableName() {
+		global $smwgDefaultStore;
+
+		if ( $smwgDefaultStore === 'SMWSQLStore3' ) {
+			return 'smw_object_ids';
+		} else {
+			return 'smw_ids';
+		}
+	}
+
+	public static function getCategoryInstancesTableName() {
+		global $smwgDefaultStore;
+
+		if ( $smwgDefaultStore === 'SMWSQLStore3' ) {
+			return 'smw_fpt_inst';
+		} else {
+			return 'smw_inst2';
+		}
 	}
 
 	public static function addToAdminLinks( &$admin_links_tree ) {

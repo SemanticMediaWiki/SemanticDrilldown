@@ -18,18 +18,24 @@ class SDFilterValue {
 
 	static function create( $actual_val, $filter_time_period = null ) {
 		$fv = new SDFilterValue();
-		$fv->text = $actual_val;
+		$fv->text = str_replace( '_', ' ', $actual_val );
 
-		if ( $fv->text == ' none' )
+		if ( $fv->text == ' none' ) {
 			$fv->is_none = true;
-		if ( $fv->text == ' other' )
+		} elseif ( $fv->text == ' other' ) {
 			$fv->is_other = true;
+		}
 		// set other fields, if it's a date or number range
 		if ( $filter_time_period != null ) {
 			if ( $filter_time_period == wfMsg( 'sd_filter_month' ) ) {
-				list( $month_str, $year ) = explode( ' ', $fv->text );
-				$fv->month = SDUtils::stringToMonth( $month_str );
-				$fv->year = $year;
+				$date_parts = explode( ' ', $fv->text );
+				if ( count( $date_parts ) == 2 ) {
+					list( $month_str, $year ) = explode( ' ', $fv->text );
+					$fv->month = SDUtils::stringToMonth( $month_str );
+					$fv->year = $year;
+				} else {
+					$fv->month = $fv->year = '';
+				}
 			} else {
 				$fv->year = $fv->text;
 			}

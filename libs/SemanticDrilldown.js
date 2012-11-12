@@ -88,4 +88,21 @@
 
 })(jQuery);
 
-jQuery(".semanticDrilldownCombobox").combobox();
+jQuery.fn.toggleValuesDisplay = function() {
+	$valuesDiv = jQuery(this).closest(".drilldown-filter")
+		.find(".drilldown-filter-values");
+	if ($valuesDiv.css("display") == "none") {
+		$valuesDiv.css("display", "block");
+		var downArrowImage = mw.config.get( 'sdgDownArrowImage' );
+		this.find("img").attr( "src", downArrowImage );
+        } else {
+		$valuesDiv.css("display", "none");
+		var rightArrowImage = mw.config.get( 'sdgRightArrowImage' );
+		this.find("img").attr( "src", rightArrowImage );
+        }
+};
+
+jQuery(document).ready(function() {
+	jQuery(".semanticDrilldownCombobox").combobox();
+        jQuery(".drilldown-values-toggle").click( function() {jQuery(this).toggleValuesDisplay();} );
+});
