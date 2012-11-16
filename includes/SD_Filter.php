@@ -37,12 +37,20 @@ class SDFilter {
 					$f->name = $fieldObj->getName();
 				}
 				$prop_array = $fieldObj->getObject('semanticmediawiki_Property');
-				$f->property = $prop_array['name'];
+				if ( $prop_array['name'] != '' ) {
+					$f->property = $prop_array['name'];
+				} else {
+					$f->property = $f->name;
+				}
 				$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', "\'" ), $f->property );
 				if ( array_key_exists( 'Type', $prop_array ) ) {
-					if ( $prop_array['Type'] == 'Page' ) {
-						$f->property_type = 'page';
-					}
+					// Thankfully, the property type names
+					// assigned by SMW/Page Schemas, and the
+					// internal ones used by SD, are the
+					// same (for all the relevant types)
+					// except for an uppercased first
+					// letter.
+					$f->property_type = strtolower( $prop_array['Type'] );
 				}
 				if ( array_key_exists( 'InputType', $filter_array ) ) {
 					$f->input_type = $filter_array['InputType'];
@@ -161,20 +169,20 @@ class SDFilter {
 		global $smwgDefaultStore;
 
 		if ( $smwgDefaultStore === 'SMWSQLStore3' ) {
-			if ( $this->property_type === 'boolean' ) {
+			if ( $this->property_type === 'page' ) {
+				$this->db_table_name = 'smw_di_wikipage';
+				$this->db_value_field = 'o_ids.smw_title';
+			} elseif ( $this->property_type === 'boolean' ) {
 				$this->db_table_name = 'smw_di_bool';
 				$this->db_value_field = 'o_value';
 			} elseif ( $this->property_type === 'date' ) {
 				$this->db_table_name = 'smw_di_time';
 				$this->db_value_field = 'o_serialized';
 				$this->db_date_field = 'SUBSTR(o_serialized, 3, 100)';
-			} elseif ( $this->property_type === 'page' ) {
-				$this->db_table_name = 'smw_di_wikipage';
-				$this->db_value_field = 'o_ids.smw_title';
 			} elseif ( $this->property_type === 'number' ) {
 				$this->db_table_name = 'smw_di_number';
 				$this->db_value_field = 'o_serialized';
-			} else {
+			} else { // string, text, code
 				$this->db_table_name = 'smw_di_blob';
 				$this->db_value_field = 'o_hash';
 			}
