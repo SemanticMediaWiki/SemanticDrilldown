@@ -539,8 +539,9 @@ END;
 		}
 		// add 'Other' and 'None', regardless of whether either has
 		// any results - add 'Other' only if it's not a date field
-		if ( $af->filter->time_period == null )
+		if ( $af->filter->time_period == null ) {
 			$or_values[] = '_other';
+		}
 		$or_values[] = '_none';
 		foreach ( $or_values as $i => $value ) {
 			if ( $i > 0 ) { $results_line .= " · "; }
@@ -738,9 +739,9 @@ END;
 				}
 			}
 		}
-		// now get values for 'Other' and 'None', as well
+		// Now get values for 'Other' and 'None', as well
 		// - don't show 'Other' if filter values were
-		// obtained dynamically
+		// obtained dynamically.
 		if ( count( $f->allowed_values ) > 0 ) {
 			$other_filter = SDAppliedFilter::create( $f, ' other' );
 			$num_results = $this->getNumResults( $this->subcategory, $this->all_subcategories, $other_filter );
