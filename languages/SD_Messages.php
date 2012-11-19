@@ -2431,6 +2431,7 @@ $messages['nb'] = array(
 	'sd_formcreate' => 'Opprett med skjema',
 	'sd_viewform' => 'Se skjema',
 	'createfilter' => 'Opprett et filter',
+	'sd-createfilter-with-name' => 'Opprett filter: $1',
 	'sd_createfilter_name' => 'Navn:',
 	'sd_createfilter_property' => 'Egenskap dette filteret dekker:',
 	'sd_createfilter_usepropertyvalues' => 'Bruk alle verdier av denne egenskapen for filteret',
