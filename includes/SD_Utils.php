@@ -28,10 +28,10 @@ class SDUtils {
 	 * @return array of SMWDataItem
 	 */
 	public static function getSMWPropertyValues( SMWStore $store, $pageName, $pageNamespace, $propID, $requestOptions = null ) {
-		// SMWDIProperty was added in SMW 1.6
+		// SMW 1.6+
 		if ( class_exists( 'SMWDIProperty' ) ) {
 			$pageName = str_replace( ' ', '_', $pageName );
-			$page = new SMWDIWikiPage( $pageName, $pageNamespace, null );
+			$page = new SMWDIWikiPage( $pageName, $pageNamespace, '' );
 			$property = new SMWDIProperty( $propID );
 			return $store->getPropertyValues( $page, $property, $requestOptions );
 		} else {

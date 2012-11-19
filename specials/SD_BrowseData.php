@@ -1086,14 +1086,14 @@ END;
 		while ( ( $count < $num ) && ( $row = $dbr->fetchObject( $res ) ) ) {
 			$count++;
 			if ( class_exists( 'SMWDIWikiPage' ) ) {
-				// SMW 1.6
-				$qr[] = new SMWDIWikiPage( $row->t, $row->ns, null );
+				// SMW 1.6+
+				$qr[] = new SMWDIWikiPage( $row->t, $row->ns, '' );
 			} else {
 				$qr[] = SMWWikiPageValue::makePage( $row->t, $row->ns, $row->sortkey );
 			}
 			if ( method_exists( $store, 'cacheSMWPageID' ) ) {
 				if ( method_exists( 'SMWDIWikiPage', 'getSubobjectName' ) ) {
-					// SMW 1.6
+					// SMW 1.6+
 					$store->cacheSMWPageID( $row->id, $row->t, $row->ns, $row->iw, '' );
 				} else {
 					$store->cacheSMWPageID( $row->id, $row->t, $row->ns, $row->iw );
