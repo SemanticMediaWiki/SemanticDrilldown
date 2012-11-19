@@ -90,8 +90,8 @@ class SDFilter {
 		if ( $proptitle != null ) {
 			$store = smwfGetStore();
 			if ( class_exists( 'SMWDIProperty' ) ) {
-				// SMW 1.6
-				$propPage = new SMWDIWikiPage( $f->escaped_property, SMW_NS_PROPERTY, null );
+				// SMW 1.6+
+				$propPage = new SMWDIWikiPage( $f->escaped_property, SMW_NS_PROPERTY, '' );
 				$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
 			} elseif ( class_exists( 'SMWPropertyValue' ) ) {
 				$types = $store->getPropertyValues( $proptitle, SMWPropertyValue::makeUserProperty( 'Has type' ) );
@@ -102,7 +102,7 @@ class SDFilter {
 			$datatypeLabels =  $smwgContLang->getDatatypeLabels();
 			if ( count( $types ) > 0 ) {
 				if ( $types[0] instanceof SMWDIWikiPage ) {
-					// SMW 1.6
+					// SMW 1.6+
 					$typeValue = $types[0]->getDBkey();
 				} elseif ( $types[0] instanceof SMWDIURI ) {
 					// A bit inefficient, but it's the
