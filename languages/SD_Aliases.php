@@ -296,6 +296,13 @@ $specialPageAliases['ro'] = array(
 	'Filters' => array( 'Filtre' ),
 );
 
+/** Sicilian (sicilianu) */
+$specialPageAliases['scn'] = array(
+	'BrowseData' => array( 'EsploraDati' ),
+	'CreateFilter' => array( 'CreaFiltro' ),
+	'Filters' => array( 'Filtri' ),
+);
+
 /** Slovak (slovenčina) */
 $specialPageAliases['sk'] = array(
 	'BrowseData' => array( 'PrehliadaťDáta' ),
