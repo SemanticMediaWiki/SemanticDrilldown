@@ -261,7 +261,7 @@ $specialPageAliases['nb'] = array(
 	'Filters' => array( 'Filtere' ),
 );
 
-/** Nedersaksisch (Nedersaksisch) */
+/** Nedersaksies (Nedersaksies) */
 $specialPageAliases['nds-nl'] = array(
 	'BrowseData' => array( 'Gegevens_bekieken' ),
 	'CreateFilter' => array( 'Filter_anmaken' ),
