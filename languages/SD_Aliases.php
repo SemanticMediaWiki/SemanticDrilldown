@@ -217,6 +217,13 @@ $specialPageAliases['ksh'] = array(
 	'Filters' => array( 'Feltere', 'Fenge' ),
 );
 
+/** Cornish (kernowek) */
+$specialPageAliases['kw'] = array(
+	'BrowseData' => array( 'PeuryData' ),
+	'CreateFilter' => array( 'FormyaSidhel' ),
+	'Filters' => array( 'Sidhlow' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $specialPageAliases['lb'] = array(
 	'CreateFilter' => array( 'Filter_uleeën' ),
