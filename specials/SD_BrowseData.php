@@ -57,9 +57,12 @@ class SDBrowseData extends IncludableSpecialPage {
 		// category on the site, alphabetically
 		if ( ! $category ) {
 			$categories = SDUtils::getCategoriesForBrowsing();
-			if ( count( $categories ) > 0 ) {
-				$category = $categories[0];
+			if ( count( $categories ) == 0 ) {
+				// There are apparently no top-level
+				// categories in this wiki - just exit now.
+				return 0;
 			}
+			$category = $categories[0];
 		}
 
 		$subcategory = $wgRequest->getVal( '_subcat' );
