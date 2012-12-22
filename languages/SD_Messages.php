@@ -876,6 +876,7 @@ $messages['dsb'] = array(
  * @author Consta
  * @author Crazymadlover
  * @author Omnipaedista
+ * @author Protnet
  * @author ZaDiak
  */
 $messages['el'] = array(
@@ -900,7 +901,7 @@ $messages['el'] = array(
 	'sd_createfilter_name' => 'Όνομα:',
 	'sd_createfilter_inputtype' => 'Τύπος εισόδου για αυτό το φίλτρο:',
 	'sd_createfilter_listofvalues' => 'λίστα αξιών (προεπιλεγμένο)',
-	'sd_blank_error' => 'δεν γίνεται να εκκαθαριστεί',
+	'sd_blank_error' => 'δεν μπορεί να είναι κενό',
 	'sd_filter_year' => 'Χρόνος',
 	'sd_filter_month' => 'Μήνας',
 	'sd_filter_hasvalues' => 'Έχει τις τιμές $1.',
@@ -1097,6 +1098,7 @@ $messages['fa'] = array(
 	'sd_browsedata_resetfilters' => 'تنظیم فیلترها از نو',
 	'sd_browsedata_addanothervalue' => 'برای اضافه‌کردن مقداری دیگر بر روی پیکان کلیک کنید.',
 	'sd_browsedata_daterangestart' => ':شروع',
+	'sd_browsedata_daterangeend' => 'پایان:',
 	'filters' => 'پالایه‌ها',
 	'sd_filters_docu' => 'فیلترهای زیر در این ویکی وجود دارد:',
 	'createfilter' => 'پالایه‌ای بسازید',
@@ -2539,7 +2541,7 @@ $messages['nl'] = array(
 	'sd_filter_combobox' => 'keuzelijst',
 	'sd_filter_freetext' => 'tekst',
 	'sd_filter_daterange' => 'datumreeks',
-	'sd_filter_requiresfilter' => 'De filter $1 moet aanwezig zijn.',
+	'sd_filter_requiresfilter' => 'Het filter $1 moet aanwezig zijn.',
 	'sd_filter_haslabel' => 'Het heeft het label $1.',
 );
 
@@ -3085,6 +3087,29 @@ $messages['rue'] = array(
 	'sd_filter_year' => 'Рік',
 	'sd_filter_month' => 'Місяць',
 	'sd_filter_freetext' => 'текст',
+);
+
+/** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['si'] = array(
+	'sd_browsedata_removefilter' => 'මෙම පෙරහන ඉවත් කරන්න',
+	'sd_browsedata_resetfilters' => 'පෙරහන් නැවත සකසන්න',
+	'sd_browsedata_daterangestart' => 'ඇරඹුම:',
+	'sd_browsedata_daterangeend' => 'අවසානය:',
+	'filters' => 'පෙරහන්',
+	'sd_formcreate' => 'ෆෝරමය සමඟ තනන්න',
+	'sd_viewform' => 'ෆෝරමය නරඹන්න',
+	'createfilter' => 'පෙරහනක් තනන්න',
+	'sd-createfilter-with-name' => 'පෙරහන තනන්න: $1',
+	'sd_createfilter_name' => 'නම:',
+	'sd_blank_error' => 'හිස් නොවිය යුතුය',
+	'sd-pageschemas-filter' => 'පෙරහන',
+	'sd-pageschemas-values' => 'අගයන්',
+	'sd_filter_year' => 'වර්ෂය',
+	'sd_filter_month' => 'මාසය',
+	'sd_filter_freetext' => 'පෙළ',
+	'sd_filter_daterange' => 'දත්ත පරාසය',
 );
 
 /** Slovak (slovenčina)
