@@ -450,6 +450,7 @@ $messages['be-tarask'] = array(
 
 /** Bulgarian (български)
  * @author DCLXVI
+ * @author පසිඳු කාවින්ද
  */
 $messages['bg'] = array(
 	'browsedata' => 'Разглеждане на данните',
@@ -466,6 +467,7 @@ $messages['bg'] = array(
 	'sd_browsedata_removesubcategoryfilter' => 'Премахване на филтъра за подкатегория',
 	'sd_browsedata_resetfilters' => 'Изчистване на филтрите',
 	'sd_browsedata_addanothervalue' => 'Добавяне на друга стойност', # Fuzzy
+	'sd_browsedata_daterangeend' => 'Край:',
 	'filters' => 'Филтри',
 	'sd_filters_docu' => 'В {{SITENAME}} съществуват следните филтри:',
 	'createfilter' => 'Създаване на филтър',
@@ -473,6 +475,7 @@ $messages['bg'] = array(
 	'sd_createfilter_requirefilter' => 'Изисква се да бъде избран друг филтър преди да може този да бъде показан:',
 	'sd_createfilter_label' => 'Заглавие за този филтър (незадължително):',
 	'sd_blank_error' => 'не може да бъде празно',
+	'sd-pageschemas-filter' => 'Филтър',
 	'sd_filter_year' => 'Година',
 	'sd_filter_month' => 'Месец',
 	'sd_filter_hasvalues' => 'Има стойности $1.',
@@ -1760,6 +1763,7 @@ $messages['ia'] = array(
  * @author Irwangatot
  * @author IvanLanin
  * @author Rex
+ * @author පසිඳු කාවින්ද
  */
 $messages['id'] = array(
 	'semanticdrilldown-desc' => 'Suatu antarmuka penelusuran untuk menyelami data semantik',
@@ -1799,6 +1803,7 @@ $messages['id'] = array(
 	'sd_createfilter_requirefilter' => 'Perlu memilih filter lain sebelum yang satu ini ditampilkan:',
 	'sd_createfilter_label' => 'Label untuk filter ini (opsional):',
 	'sd_blank_error' => 'tidak boleh kosong',
+	'sd-pageschemas-filter' => 'Penyaring',
 	'sd_filter_coversproperty' => 'Filter ini mencakup properti $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Ia mendapat nilainya dari kategori $1.',
 	'sd_filter_usestimeperiod' => 'Ia menggunakan $1 sebagai periode waktunya.',
@@ -3090,16 +3095,20 @@ $messages['rue'] = array(
 );
 
 /** Sinhala (සිංහල)
+ * @author Singhalawap
  * @author පසිඳු කාවින්ද
  */
 $messages['si'] = array(
+	'sd_browsedata_other' => 'වෙනත්',
+	'sd_browsedata_none' => 'කිසිවක් නොමැත',
+	'sd_browsedata_or' => 'හෝ',
 	'sd_browsedata_removefilter' => 'මෙම පෙරහන ඉවත් කරන්න',
 	'sd_browsedata_resetfilters' => 'පෙරහන් නැවත සකසන්න',
 	'sd_browsedata_daterangestart' => 'ඇරඹුම:',
 	'sd_browsedata_daterangeend' => 'අවසානය:',
 	'filters' => 'පෙරහන්',
-	'sd_formcreate' => 'ෆෝරමය සමඟ තනන්න',
-	'sd_viewform' => 'ෆෝරමය නරඹන්න',
+	'sd_formcreate' => 'ෆෝමය සමග තනන්න',
+	'sd_viewform' => 'ෆෝමය (form)බලන්න',
 	'createfilter' => 'පෙරහනක් තනන්න',
 	'sd-createfilter-with-name' => 'පෙරහන තනන්න: $1',
 	'sd_createfilter_name' => 'නම:',
@@ -3587,6 +3596,7 @@ $messages['tr'] = array(
 
 /** Ukrainian (українська)
  * @author Base
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
@@ -3606,7 +3616,9 @@ $messages['uk'] = array(
 	'sd_browsedata_daterangestart' => 'Початок:',
 	'sd_browsedata_daterangeend' => 'Кінець:',
 	'filters' => 'Фільтри',
+	'sd_viewform' => 'Переглянути форму',
 	'createfilter' => 'Створити фільтр',
+	'sd-createfilter-with-name' => 'Створити фільтр: $1',
 	'sd_createfilter_name' => 'Назва:',
 	'sd_blank_error' => 'не може бути порожнім',
 	'sd-pageschemas-filter' => 'Фільтр',
