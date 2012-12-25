@@ -74,6 +74,7 @@ $messages['en'] = array(
  * @author EugeneZelenko
  * @author Jon Harald Søby
  * @author Purodha
+ * @author Siebrand
  * @author The Evil IP address
  * @author Umherirrender
  */
@@ -83,14 +84,14 @@ $messages['qqq'] = array(
 	'sd_browsedata_none' => '{{Identical|None}}',
 	'sd_browsedata_or' => '{{Identical|Or}}',
 	'filters' => '{{Identical|Filter}}',
-	'sd_createfilter_name' => 'The name that will be given to a filter', # Fuzzy
+	'sd_createfilter_name' => 'The name that will be given to a filter.',
 	'sd_blank_error' => '{{Identical|Cannot be blank}}',
 	'sd-pageschemas-filter' => 'A single filter',
 	'sd-pageschemas-values' => 'The set of values for a filter',
 	'sd_filter_year' => '{{Identical|Year}}',
 	'sd_filter_month' => '{{Identical|Month}}',
 	'sd_filter_combobox' => 'A specific type of interface input',
-	'sd_filter_freetext' => 'A specific type of interface input', # Fuzzy
+	'sd_filter_freetext' => 'A specific type of interface input.',
 	'sd_filter_daterange' => 'A specific type of interface input',
 );
 
@@ -3600,8 +3601,12 @@ $messages['tr'] = array(
  * @author Тест
  */
 $messages['uk'] = array(
+	'semanticdrilldown-desc' => 'Срозгонрутий інтерфейс для навігації у семантичних даних',
+	'specialpages-group-sd_group' => 'Семантична розгорненість',
+	'browsedata' => 'Огляд даних',
 	'sd_browsedata_choosecategory' => 'Виберіть категорію',
 	'sd_browsedata_viewcategory' => 'перегляд категорії',
+	'sd_browsedata_docu' => 'Натистіть на один або більше елементів нижче для обмеження результатів.',
 	'sd_browsedata_subcategory' => 'Підкатегорія',
 	'sd_browsedata_other' => 'Інші',
 	'sd_browsedata_none' => 'Немає',
@@ -3612,20 +3617,29 @@ $messages['uk'] = array(
 	'sd_browsedata_or' => 'або',
 	'sd_browsedata_removefilter' => 'Вилучити цей фільтр',
 	'sd_browsedata_removesubcategoryfilter' => 'Вилучити цей фільтр за підкатегорією',
+	'sd_browsedata_resetfilters' => 'Скинути фільтри',
 	'sd_browsedata_addanothervalue' => 'Натисніть на стрілку, щоб додати інше значення',
 	'sd_browsedata_daterangestart' => 'Початок:',
 	'sd_browsedata_daterangeend' => 'Кінець:',
+	'sd_browsedata_novalues' => 'Немає значень для цього фільтра',
 	'filters' => 'Фільтри',
+	'sd_filters_docu' => '{{SITENAME}} містить наступні фільтри:',
+	'sd_formcreate' => 'Створити з формою',
 	'sd_viewform' => 'Переглянути форму',
 	'createfilter' => 'Створити фільтр',
 	'sd-createfilter-with-name' => 'Створити фільтр: $1',
 	'sd_createfilter_name' => 'Назва:',
+	'sd_createfilter_property' => 'Властивість, яку цей фільтр покриває:',
+	'sd_createfilter_usepropertyvalues' => 'Використовуйте усі значення цієї властивості для фільтру',
+	'sd_createfilter_usecategoryvalues' => 'Отримати значення для фільтру із цієї категорії:',
+	'sd_createfilter_usedatevalues' => 'Використовувати діапазони дат для цього фільтру у цей періоду часу:',
 	'sd_blank_error' => 'не може бути порожнім',
 	'sd-pageschemas-filter' => 'Фільтр',
 	'sd-pageschemas-values' => 'Значення',
 	'sd_filter_year' => 'Рік',
 	'sd_filter_month' => 'Місяць',
 	'sd_filter_freetext' => 'текст',
+	'sd_filter_daterange' => 'діапазон дат',
 );
 
 /** Urdu (اردو)
