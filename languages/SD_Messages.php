@@ -3382,12 +3382,15 @@ $messages['ta'] = array(
 	'sd_browsedata_daterangeend' => 'இறுதி:',
 	'sd_browsedata_novalues' => 'இந்த வடிகட்டிக்கு மதிப்பு எதுவுமில்லை',
 	'filters' => 'வடிகட்டிகள்',
+	'createfilter' => 'ஒரு வடிகட்டியை உருவாக்கவும்',
+	'sd-createfilter-with-name' => 'வடிகட்டியை உருவாக்கு :$1',
 	'sd_createfilter_name' => 'பெயர்:',
 	'sd-pageschemas-filter' => 'வடிகட்டி',
 	'sd-pageschemas-values' => 'மதிப்புகள்',
 	'sd_filter_year' => 'ஆண்டு',
 	'sd_filter_month' => 'மாதம்',
 	'sd_filter_freetext' => 'உரை',
+	'sd_filter_daterange' => 'தேதி வரம்பு',
 );
 
 /** Telugu (తెలుగు)
