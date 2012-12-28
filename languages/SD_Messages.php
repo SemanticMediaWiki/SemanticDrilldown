@@ -73,26 +73,99 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Jon Harald Søby
+ * @author Kghbln
  * @author Purodha
+ * @author Shirayuki
  * @author Siebrand
  * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'semanticdrilldown-desc' => '{{desc}}',
-	'sd_browsedata_other' => '{{Identical|Other}}',
-	'sd_browsedata_none' => '{{Identical|None}}',
+	'semanticdrilldown-desc' => '{{{desc|name=Semantic Drilldown|url=https://www.mediawiki.org/wiki/Extension:SemanticDrilldown}}',
+	'specialpages-group-sd_group' => 'This is the title of group with links related to Semantic Drilldown on [[Special:Version]].',
+	'browsedata' => 'This is the text of the link on [[Special:SpecialPages]] pointing to [[Special:BrowseData]] as well as the label of this special page.',
+	'sd_browsedata_choosecategory' => 'This it the title of the box on [[Special:BrowseData]] that displays the categories that my be browsed.',
+	'sd_browsedata_docu' => 'This is an informatory message providing help for the usage of [[Special:BrowseData]].',
+	'sd_browsedata_subcategory' => 'This is the title of the section on [[Special:BrowseData]] listing the subcategories of the category currently browsed.',
+	'sd_browsedata_other' => 'This is the name of the value automatically shown on [[Special:BrowseData]] in case some preconditions apply. 
+{{Identical|Other}}',
+	'sd_browsedata_none' => 'This is the name of the value automatically shown on [[Special:BrowseData]] in case some preconditions apply.
+{{Identical|None}}',
+	'sd_browsedata_filterbyvalue' => 'This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over a browsable property value.',
+	'sd_browsedata_filterbysubcategory' => 'This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over a browsable subcategory.',
 	'sd_browsedata_or' => '{{Identical|Or}}',
-	'filters' => '{{Identical|Filter}}',
-	'sd_createfilter_name' => 'The name that will be given to a filter.',
-	'sd_blank_error' => '{{Identical|Cannot be blank}}',
+	'sd_browsedata_removefilter' => 'This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over a filter currently in use.',
+	'sd_browsedata_removesubcategoryfilter' => 'This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over a filter currently in use.',
+	'sd_browsedata_resetfilters' => 'This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over the category currently used for a filter.',
+	'sd_browsedata_addanothervalue' => 'This is an informatory message providing help for the usage of [[Special:BrowseData]].',
+	'sd_browsedata_daterangestart' => 'The title of the input field on [[Special:BrowseData]] that allows to enter the start date of a filter.',
+	'sd_browsedata_daterangeend' => 'The title of the input field on [[Special:BrowseData]] that allows to enter the end date of a filter.',
+	'sd_browsedata_novalues' => 'This is an informatory message on [[Special:BrowseData]].',
+	'filters' => 'This is the text of the link on [[Special:SpecialPages]] pointing to [[Special:Filters]] as well as the label of this special page.
+{{Identical|Filter}}',
+	'sd_filters_docu' => 'This is an informatory message at the top of [[Special:Filters]].',
+	'sd_formcreate' => 'This is the text of the tab at the top of a page that allows to create a filter with a form.',
+	'sd_viewform' => 'This is the text of the tab at the top of a page that allows to look at form.',
+	'createfilter' => 'This is the text of the link on [[Special:SpecialPages]] pointing to [[Special:CreateFilter]] as well as the label of this special page.',
+	'sd-createfilter-with-name' => 'This is the title of an non-existing page in namespace filter upon creation of a new filter with a form.
+* $1 - name of the filter to be created',
+	'sd_createfilter_name' => 'The title of the input field on [[Special:CreateFilter]] that allows to enter the name of a filter. 
+{{Identical|Name}}',
+	'sd_createfilter_property' => 'The title of the drop-down list on [[Special:CreateFilter]] that allows to select an available property.',
+	'sd_createfilter_usepropertyvalues' => 'An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter.',
+	'sd_createfilter_usecategoryvalues' => 'An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter. It is followed by a drop-down list that allows to select an available category.',
+	'sd_createfilter_usedatevalues' => 'An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter. It is followed by a drop-down list that allows to select an available time period. These are:
+* {{msg-mw|Sd_filter_year}}
+* {{msg-mw|Sd_filter_month}}',
+	'sd_createfilter_entervalues' => 'An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter. It is followed by an input field that allows to specify one or more property values.',
+	'sd_createfilter_inputtype' => 'The title of the drop-down list on [[Special:CreateFilter]] that allows to select available input type. These are
+* {{msg-mw|Sd_createfilter_listofvalues}}
+* {{msg-mw|Sd_filter_combobox}}
+* {{msg-mw|Sd_filter_daterange}}',
+	'sd_createfilter_listofvalues' => 'A specific type of interface input.',
+	'sd_createfilter_requirefilter' => 'The title of the drop-down list on [[Special:CreateFilter]] that allows to select an available filter.',
+	'sd_createfilter_label' => 'The title of the field on [[Special:CreateFilter]] that allows to enter the label of a filter.',
+	'sd_blank_error' => 'This is an error message that gets shown if a required input was not provided.
+{{Identical|Cannot be blank}}',
 	'sd-pageschemas-filter' => 'A single filter',
 	'sd-pageschemas-values' => 'The set of values for a filter',
-	'sd_filter_year' => '{{Identical|Year}}',
-	'sd_filter_month' => '{{Identical|Month}}',
-	'sd_filter_combobox' => 'A specific type of interface input',
-	'sd_filter_freetext' => 'A specific type of interface input.',
-	'sd_filter_daterange' => 'A specific type of interface input',
+	'sd_filter_coversproperty' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
+* $1 - name of the property',
+	'sd_filter_getsvaluesfromcategory' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
+* $1 - name of the category',
+	'sd_filter_usestimeperiod' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
+* $1 - period of time that values are divided into; holds one of the following messages:
+** {{msg-mw|Sd_filter_year}}
+** {{msg-mw|Sd_filter_month}}',
+	'sd_filter_year' => 'A specific type of interface input.
+
+This message is substituted for <code>$1</code> in {{msg-mw|Sd filter usestimeperiod}}.
+{{Identical|Year}}',
+	'sd_filter_month' => 'A specific type of interface input.
+
+This message is substituted for <code>$1</code> in {{msg-mw|Sd filter usestimeperiod}}.
+{{Identical|Month}}',
+	'sd_filter_hasvalues' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
+* $1 - name of the value(s)',
+	'sd_filter_hasinputtype' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
+* $1 - name of the input type; holds one of the following messages:
+** {{msg-mw|Sd_filter_combobox}}
+** {{msg-mw|Sd_filter_freetext}}
+** {{msg-mw|Sd_filter_daterange}}',
+	'sd_filter_combobox' => 'A specific type of interface input.
+
+This message is substituted for <code>$1</code> in {{msg-mw|Sd filter hasinputtype}}.',
+	'sd_filter_freetext' => 'A specific type of interface input.
+
+This message is substituted for <code>$1</code> in {{msg-mw|Sd filter hasinputtype}}.
+{{Identical|Text}}',
+	'sd_filter_daterange' => 'A specific type of interface input.
+
+This message is substituted for <code>$1</code> in {{msg-mw|Sd filter hasinputtype}}.',
+	'sd_filter_requiresfilter' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
+* $1 - name of the filter',
+	'sd_filter_haslabel' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
+* $1 - name of the label',
 );
 
 /** Afrikaans (Afrikaans)
@@ -786,7 +859,7 @@ $messages['de'] = array(
 	'sd_filter_month' => 'Monat',
 	'sd_filter_hasvalues' => 'Er hat den Wert $1.',
 	'sd_filter_hasinputtype' => 'Er hat den Eingabetypen $1.',
-	'sd_filter_combobox' => 'Auswahlbox',
+	'sd_filter_combobox' => 'Kombinationsfeld',
 	'sd_filter_freetext' => 'Text',
 	'sd_filter_daterange' => 'Zeitspanne',
 	'sd_filter_requiresfilter' => 'Setzt den Filter $1 voraus.',
@@ -1950,11 +2023,11 @@ $messages['ja'] = array(
 	'sd-pageschemas-values' => '値',
 	'sd_filter_coversproperty' => 'このフィルターはプロパティ $1 を対象とします。',
 	'sd_filter_getsvaluesfromcategory' => '値をカテゴリ $1 から取得します。',
-	'sd_filter_usestimeperiod' => '期間の単位として$1を使用しています。',
+	'sd_filter_usestimeperiod' => '期間の単位として$1を使用します。',
 	'sd_filter_year' => '年',
 	'sd_filter_month' => '月',
 	'sd_filter_hasvalues' => '値 $1 を取ります。',
-	'sd_filter_hasinputtype' => '入力型 $1 を持ちます。',
+	'sd_filter_hasinputtype' => '$1型の入力です。',
 	'sd_filter_combobox' => 'コンボボックス',
 	'sd_filter_freetext' => '文字列',
 	'sd_filter_daterange' => '日付範囲',
@@ -3016,9 +3089,18 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'sd_browsedata_choosecategory' => "Scacchie 'na categorije",
+	'sd_browsedata_viewcategory' => "vide 'a categorije",
+	'sd_browsedata_docu' => 'Cazze sus a une o cchiù vôsce aqquà sotte pe stringere le resultate tune.',
+	'sd_browsedata_subcategory' => 'Sotte Categorije',
+	'sd_browsedata_other' => 'Otre',
+	'sd_browsedata_none' => 'Ninde',
 	'sd_browsedata_or' => 'o',
 	'sd_browsedata_daterangestart' => 'Accumenze:',
 	'sd_browsedata_daterangeend' => 'Spiccie:',
+	'filters' => 'Filtre',
+	'sd_createfilter_name' => 'Nome:',
+	'sd-pageschemas-values' => 'Valore',
 	'sd_filter_year' => 'Anne',
 	'sd_filter_month' => 'Mese',
 	'sd_filter_freetext' => 'teste',
