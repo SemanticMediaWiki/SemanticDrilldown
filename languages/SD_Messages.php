@@ -127,8 +127,10 @@ $messages['qqq'] = array(
 	'sd_createfilter_label' => 'The title of the field on [[Special:CreateFilter]] that allows to enter the label of a filter.',
 	'sd_blank_error' => 'This is an error message that gets shown if a required input was not provided.
 {{Identical|Cannot be blank}}',
-	'sd-pageschemas-filter' => 'A single filter',
-	'sd-pageschemas-values' => 'The set of values for a filter',
+	'sd-pageschemas-filter' => 'The title of the section displaying information about a single filter used by the page schema. Provided for the [[mw:Extension:Page_Schemas|Page Schemas]] extension.
+{{Identical|Filter}}',
+	'sd-pageschemas-values' => 'The title of the subsection to {{msg-mw|Sd-pageschemas-filter}} displaying information about the set of values for a single filter used by the page schema. Provided for the [[mw:Extension:Page_Schemas|Page Schemas]] extension.
+{{Identical|Value}}',
 	'sd_filter_coversproperty' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
 * $1 - name of the property',
 	'sd_filter_getsvaluesfromcategory' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
@@ -3182,6 +3184,9 @@ $messages['rue'] = array(
  * @author පසිඳු කාවින්ද
  */
 $messages['si'] = array(
+	'browsedata' => 'දත්ත විමසන්න',
+	'sd_browsedata_viewcategory' => 'ප්‍රවර්ගය නරඹන්න',
+	'sd_browsedata_subcategory' => 'උපප්‍රවර්ගය',
 	'sd_browsedata_other' => 'වෙනත්',
 	'sd_browsedata_none' => 'කිසිවක් නොමැත',
 	'sd_browsedata_or' => 'හෝ',
