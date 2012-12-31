@@ -774,13 +774,16 @@ $messages['ce'] = array(
 /** Czech (česky)
  * @author Juan de Vojníkov
  * @author Juandev
+ * @author Vks
  */
 $messages['cs'] = array(
 	'sd_browsedata_subcategory' => 'Podkategorie',
 	'sd_browsedata_other' => 'Jiné',
 	'sd_browsedata_none' => 'Nic',
+	'sd_browsedata_removefilter' => 'Odstanit tento filtr',
 	'sd_browsedata_daterangeend' => 'Konec:',
 	'sd_createfilter_name' => 'Jméno:',
+	'sd-pageschemas-filter' => 'Filtr',
 	'sd_filter_year' => 'Rok',
 	'sd_filter_month' => 'Měsíc',
 );
@@ -3205,22 +3208,30 @@ $messages['si'] = array(
 	'sd_browsedata_resetfilters' => 'පෙරහන් නැවත සකසන්න',
 	'sd_browsedata_daterangestart' => 'ඇරඹුම:',
 	'sd_browsedata_daterangeend' => 'අවසානය:',
+	'sd_browsedata_novalues' => 'මෙම පෙරහන සඳහා අගයන් කිසිවක් නැත',
 	'filters' => 'පෙරහන්',
+	'sd_filters_docu' => '{{SITENAME}} හී පහත පෙරහන් පවතී:',
 	'sd_formcreate' => 'ෆෝමය සමග තනන්න',
 	'sd_viewform' => 'ෆෝමය (form)බලන්න',
 	'createfilter' => 'පෙරහනක් තනන්න',
 	'sd-createfilter-with-name' => 'පෙරහන තනන්න: $1',
 	'sd_createfilter_name' => 'නම:',
+	'sd_createfilter_property' => 'මෙම පෙරහන ආරක්ෂා කරන වත්කම:',
+	'sd_createfilter_usecategoryvalues' => 'පෙරහන සඳහා අගයන් මෙම ප්‍රවර්ගයෙන් ලබා ගන්න:',
 	'sd_createfilter_inputtype' => 'මෙම පෙරහන සඳහා ආදාන වර්ගය:',
 	'sd_createfilter_listofvalues' => 'අගයන් ලැයිස්තුව (පෙරනිමි)',
+	'sd_createfilter_label' => 'මෙම පෙරහන සඳහා ලේබලය (වෛකල්පික):',
 	'sd_blank_error' => 'හිස් නොවිය යුතුය',
 	'sd-pageschemas-filter' => 'පෙරහන',
 	'sd-pageschemas-values' => 'අගයන්',
 	'sd_filter_year' => 'වර්ෂය',
 	'sd_filter_month' => 'මාසය',
+	'sd_filter_hasvalues' => 'එය සතුව $1 අගයන් ඇත.',
+	'sd_filter_hasinputtype' => 'එය සතුව $1 ආදාන වර්ගය ඇත.',
 	'sd_filter_combobox' => 'සංයුක්ත කොටුව',
 	'sd_filter_freetext' => 'පෙළ',
 	'sd_filter_daterange' => 'දත්ත පරාසය',
+	'sd_filter_haslabel' => 'එය සතුව $1 ලේබලය ඇත.',
 );
 
 /** Slovak (slovenčina)
