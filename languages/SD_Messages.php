@@ -2325,6 +2325,13 @@ $messages['mhr'] = array(
 	'filters' => 'Фильтр-влак',
 );
 
+/** Minangkabau (Baso Minangkabau)
+ * @author Naval Scene
+ */
+$messages['min'] = array(
+	'sd_viewform' => 'Caliak formulir',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  * @author Brest
