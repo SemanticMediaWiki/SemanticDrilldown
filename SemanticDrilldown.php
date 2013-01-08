@@ -273,6 +273,7 @@ $wgResourceModules += array(
 			'jquery.ui.autocomplete',
 			'jquery.ui.button',
 		),
+		'position' => 'top',
 	),
 );
 
