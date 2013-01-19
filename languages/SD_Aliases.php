@@ -26,7 +26,7 @@ $specialPageAliases['ar'] = array(
 $specialPageAliases['arc'] = array(
 	'BrowseData' => array( 'ܦܐܬ_ܝܕ̈ܥܬܐ' ),
 	'CreateFilter' => array( 'ܒܪܝ_ܡܨܦܝܢܝܬܐ' ),
-	'Filters' => array( 'ܡܨܦܝܢܝܬ̈ܐ' ),
+	'Filters' => array( 'ܡܨܦܝܢܝ̈ܬܐ' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
