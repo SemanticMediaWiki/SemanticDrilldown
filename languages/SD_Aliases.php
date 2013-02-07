@@ -261,7 +261,7 @@ $specialPageAliases['myv'] = array(
 	'Filters' => array( 'Сувтеметь' ),
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎) */
+/** Norwegian Bokmål (norsk bokmål) */
 $specialPageAliases['nb'] = array(
 	'BrowseData' => array( 'Naviger_data' ),
 	'CreateFilter' => array( 'Opprett_filter' ),
