@@ -3717,6 +3717,15 @@ $messages['tr'] = array(
 	'sd_filter_daterange' => 'tarih aralığı',
 );
 
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'sd_browsedata_or' => 'ⵏⵖ',
+	'sd_browsedata_daterangestart' => 'ⵜⴰⵣⵡⴰⵔⴰ:',
+	'sd_browsedata_daterangeend' => 'ⵜⴰⴳⴰⵔⴰ:',
+);
+
 /** Ukrainian (українська)
  * @author Base
  * @author Steve.rusyn
