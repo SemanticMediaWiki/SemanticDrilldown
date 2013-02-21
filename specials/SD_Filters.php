@@ -49,19 +49,6 @@ class FiltersPage extends QueryPage {
 	function getPageFooter() {
 	}
 
-	function getSQL() {
-		$filter_ns = SD_NS_FILTER;
-		$dbr = wfGetDB( DB_SLAVE );
-		$page = $dbr->tableName( 'page' );
-		// QueryPage uses the value from this SQL in an ORDER clause,
-		// so return page_title as title.
-		return "SELECT 'Filters' as type,
-			page_title as title,
-			page_title as value
-			FROM $page
-			WHERE page_namespace = $filter_ns";
-	}
-
 	function getQueryInfo() {
 		return array(
 			'tables' => array( 'page' ),
@@ -76,7 +63,13 @@ class FiltersPage extends QueryPage {
 
 	function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( SD_NS_FILTER, $result->value );
-		$text = $skin->makeLinkObj( $title, htmlspecialchars( $title->getText() ) );
+		if ( method_exists( $skin, 'makeLinkObj' ) ) {
+			// Deprecated in MW 1.21.
+			$text = $skin->makeLinkObj( $title, htmlspecialchars( $title->getText() ) );
+		} else {
+			// Has existed since MW 1.16, but static since MW 1.18.
+			$text = Linker::link( $title, $title->getText() );
+		}
 		return $text;
 	}
 }
