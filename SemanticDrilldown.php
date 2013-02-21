@@ -146,7 +146,6 @@ function sdfInitNamespaces() {
 	sdfInitContentLanguage( $wgLanguageCode );
 
 	// Register namespace identifiers
-	if ( !is_array( $wgExtraNamespaces ) ) { $wgExtraNamespaces = array(); }
 	$wgExtraNamespaces = $wgExtraNamespaces + $sdgContLang->getNamespaces();
 	$wgNamespaceAliases = $wgNamespaceAliases + $sdgContLang->getNamespaceAliases();
 
