@@ -101,7 +101,8 @@ $messages['qqq'] = array(
 	'sd_browsedata_removesubcategoryfilter' => 'This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over a filter currently in use.',
 	'sd_browsedata_resetfilters' => 'This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over the category currently used for a filter.',
 	'sd_browsedata_addanothervalue' => 'This is an informatory message providing help for the usage of [[Special:BrowseData]].',
-	'sd_browsedata_daterangestart' => 'The title of the input field on [[Special:BrowseData]] that allows to enter the start date of a filter.',
+	'sd_browsedata_daterangestart' => 'The title of the input field on [[Special:BrowseData]] that allows to enter the start date of a filter.
+{{Identical|Start}}',
 	'sd_browsedata_daterangeend' => 'The title of the input field on [[Special:BrowseData]] that allows to enter the end date of a filter.',
 	'sd_browsedata_novalues' => 'This is an informatory message on [[Special:BrowseData]].',
 	'filters' => 'This is the text of the link on [[Special:SpecialPages]] pointing to [[Special:Filters]] as well as the label of this special page.
