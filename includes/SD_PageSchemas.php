@@ -97,6 +97,9 @@ class SDPageSchemas extends PSExtensionHandler {
 		$values_array = PageSchemas::getValueFromObject( $filter_array, 'Values' );
 		if ( !is_null( $values_array ) ) {
 			$manualSourceAttrs['checked'] = true;
+			foreach( $values_array as $i => $value ) {
+				$values_array[$i] = str_replace( ',', '\,', $value );
+			}
 			$filterValuesStr = implode( ', ', $values_array );
 		} else {
 			$filterValuesStr = '';
