@@ -81,7 +81,7 @@ $messages['en'] = array(
  * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'semanticdrilldown-desc' => '{{{desc|name=Semantic Drilldown|url=https://www.mediawiki.org/wiki/Extension:SemanticDrilldown}}',
+	'semanticdrilldown-desc' => '{{desc|name=Semantic Drilldown|url=https://www.mediawiki.org/wiki/Extension:SemanticDrilldown}}',
 	'specialpages-group-sd_group' => 'This is the title of group with links related to Semantic Drilldown on [[Special:Version]].',
 	'browsedata' => 'This is the text of the link on [[Special:SpecialPages]] pointing to [[Special:BrowseData]] as well as the label of this special page.',
 	'sd_browsedata_choosecategory' => 'This it the title of the box on [[Special:BrowseData]] that displays the categories that my be browsed.',
