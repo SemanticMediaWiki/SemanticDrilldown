@@ -621,6 +621,7 @@ $messages['br'] = array(
 	'filters' => 'Siloù',
 	'sd_filters_docu' => 'Bez ez eus eus ar siloù-mañ war {{SITENAME}} :',
 	'createfilter' => 'Krouiñ ur sil',
+	'sd-createfilter-with-name' => 'Krouiñ ar sil : $1',
 	'sd_createfilter_name' => 'Anv :',
 	'sd_createfilter_property' => "Perc'henniezh a vo goloet gant ar sil-mañ :",
 	'sd_createfilter_usepropertyvalues' => "Implijout holl talvoudoù ar berc'henniezh evit ar sil-mañ",
