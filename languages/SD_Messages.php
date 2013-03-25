@@ -82,10 +82,10 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'semanticdrilldown-desc' => '{{desc|name=Semantic Drilldown|url=https://www.mediawiki.org/wiki/Extension:SemanticDrilldown}}',
-	'specialpages-group-sd_group' => 'This is the title of group with links related to Semantic Drilldown on [[Special:Version]].',
-	'browsedata' => 'This is the text of the link on [[Special:SpecialPages]] pointing to [[Special:BrowseData]] as well as the label of this special page.',
+	'specialpages-group-sd_group' => '{{doc-special-group|that=are related to Semantic Drilldown|like=[[Special:Filters]], [[Special:CreateFilter]], [[Special:BrowseData]]}}',
+	'browsedata' => '{{doc-special|BrowseData}}',
 	'sd_browsedata_choosecategory' => 'This it the title of the box on [[Special:BrowseData]] that displays the categories that my be browsed.',
-	'sd_browsedata_viewcategory' => 'This is the text of the link on [[Special:SpecialPages]].',
+	'sd_browsedata_viewcategory' => '{{doc-special|BrowseData}}',
 	'sd_browsedata_docu' => 'This is an informatory message providing help for the usage of [[Special:BrowseData]].',
 	'sd_browsedata_subcategory' => 'This is the title of the section on [[Special:BrowseData]] listing the subcategories of the category currently browsed.',
 	'sd_browsedata_other' => 'This is the name of the value automatically shown on [[Special:BrowseData]] in case some preconditions apply. 
@@ -94,8 +94,8 @@ $messages['qqq'] = array(
 {{Identical|None}}',
 	'sd_browsedata_filterbyvalue' => 'This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over a browsable property value.',
 	'sd_browsedata_filterbysubcategory' => 'This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over a browsable subcategory.',
-	'sd_browsedata_otherfilter' => 'This is the text of the link on [[Special:SpecialPages]].',
-	'sd_browsedata_nonefilter' => 'This is the text of the link on [[Special:SpecialPages]].',
+	'sd_browsedata_otherfilter' => '{{doc-special|BrowseData}}',
+	'sd_browsedata_nonefilter' => '{{doc-special|BrowseData}}',
 	'sd_browsedata_or' => '{{Identical|Or}}',
 	'sd_browsedata_removefilter' => 'This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over a filter currently in use.',
 	'sd_browsedata_removesubcategoryfilter' => 'This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over a filter currently in use.',
@@ -105,12 +105,12 @@ $messages['qqq'] = array(
 {{Identical|Start}}',
 	'sd_browsedata_daterangeend' => 'The title of the input field on [[Special:BrowseData]] that allows to enter the end date of a filter.',
 	'sd_browsedata_novalues' => 'This is an informatory message on [[Special:BrowseData]].',
-	'filters' => 'This is the text of the link on [[Special:SpecialPages]] pointing to [[Special:Filters]] as well as the label of this special page.
+	'filters' => '{{doc-special|Filter}}
 {{Identical|Filter}}',
 	'sd_filters_docu' => 'This is an informatory message at the top of [[Special:Filters]].',
 	'sd_formcreate' => 'This is the text of the tab at the top of a page that allows to create a filter with a form.',
 	'sd_viewform' => 'This is the text of the tab at the top of a page that allows to look at form.',
-	'createfilter' => 'This is the text of the link on [[Special:SpecialPages]] pointing to [[Special:CreateFilter]] as well as the label of this special page.',
+	'createfilter' => '{{doc-special|CreateFilter}}',
 	'sd-createfilter-with-name' => 'This is the title of an non-existing page in namespace filter upon creation of a new filter with a form.
 * $1 - name of the filter to be created',
 	'sd_createfilter_name' => 'The title of the input field on [[Special:CreateFilter]] that allows to enter the name of a filter. 
