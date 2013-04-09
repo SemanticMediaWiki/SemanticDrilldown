@@ -36,7 +36,7 @@ $specialPageAliases['arz'] = array(
 	'Filters' => array( 'فلاتر' ),
 );
 
-/** Assamese (অসমীয়া) */
+/** Assamese (অসমীয়া) */
 $specialPageAliases['as'] = array(
 	'BrowseData' => array( 'তথ্য_বিচাৰক' ),
 	'CreateFilter' => array( 'চেকনী_সৃষ্ঠি_কৰক' ),
@@ -301,6 +301,12 @@ $specialPageAliases['pt-br'] = array(
 /** Romanian (română) */
 $specialPageAliases['ro'] = array(
 	'Filters' => array( 'Filtre' ),
+);
+
+/** Russian (русский) */
+$specialPageAliases['ru'] = array(
+	'CreateFilter' => array( 'Создать_фильтр' ),
+	'Filters' => array( 'Фильтры' ),
 );
 
 /** Sicilian (sicilianu) */
