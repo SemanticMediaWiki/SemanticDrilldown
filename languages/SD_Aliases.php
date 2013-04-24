@@ -355,6 +355,12 @@ $specialPageAliases['tr'] = array(
 	'Filters' => array( 'Süzgeçler', 'Filtreler' ),
 );
 
+/** Ukrainian (українська) */
+$specialPageAliases['uk'] = array(
+	'CreateFilter' => array( 'Створити_фільтр' ),
+	'Filters' => array( 'Фільтри' ),
+);
+
 /** vèneto (vèneto) */
 $specialPageAliases['vec'] = array(
 	'CreateFilter' => array( 'CreaFiltro' ),
