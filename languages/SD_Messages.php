@@ -2941,6 +2941,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Lijealso
+ * @author Luckas
  * @author Malafaya
  * @author SandroHc
  * @author Waldir
@@ -2993,7 +2994,7 @@ $messages['pt'] = array(
 	'sd_filter_month' => 'Mês',
 	'sd_filter_hasvalues' => 'Tem os valores $1.',
 	'sd_filter_hasinputtype' => 'Tem o tipo de entrada $1.',
-	'sd_filter_combobox' => 'caixa de selecção',
+	'sd_filter_combobox' => 'caixa de seleção',
 	'sd_filter_freetext' => 'texto',
 	'sd_filter_daterange' => 'intervalo de datas',
 	'sd_filter_requiresfilter' => 'Requer a presença do filtro $1.',
