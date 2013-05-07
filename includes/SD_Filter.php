@@ -114,7 +114,8 @@ class SDFilter {
 				}
 				if ( $typeValue == $datatypeLabels['_wpg'] ) {
 					$f->property_type = 'page';
-				} elseif ( $typeValue == $datatypeLabels['_str'] ) {
+				// _str stopped existing in SMW 1.9
+				} elseif ( array_key_exists( '_str', $datatypeLabels ) && $typeValue == $datatypeLabels['_str'] ) {
 					$f->property_type = 'string';
 				} elseif ( $typeValue == $datatypeLabels['_num'] ) {
 					$f->property_type = 'number';
