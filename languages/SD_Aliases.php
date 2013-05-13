@@ -84,6 +84,12 @@ $specialPageAliases['dsb'] = array(
 	'Filters' => array( 'Filtry' ),
 );
 
+/** Greek (Ελληνικά) */
+$specialPageAliases['el'] = array(
+	'CreateFilter' => array( 'ΔημιουργίαΦίλτρου' ),
+	'Filters' => array( 'Φίλτρα' ),
+);
+
 /** Esperanto (Esperanto) */
 $specialPageAliases['eo'] = array(
 	'CreateFilter' => array( 'Krei_filtrilon' ),
