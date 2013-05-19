@@ -595,9 +595,7 @@ END;
 		if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 			$lowest_num_results = min( $filter_values );
 			$highest_num_results = max( $filter_values );
-			$num_results_midpoint = ( $lowest_num_results + $highest_num_results ) / 2;
-			$font_size_midpoint = ( $sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize ) / 2;
-			$num_results_per_font_pixel = ( $highest_num_results + 1 - $lowest_num_results ) / ( $sdgFiltersLargestFontSize + 1 - $sdgFiltersSmallestFontSize );
+			$scale_factor = ( $sdgFiltersLargestFontSize - $sdgFiltersSmallestFontSize ) / ( $highest_num_results - $lowest_num_results );
 		}
 		// now print the values
 		$num_printed_values = 0;
@@ -607,7 +605,7 @@ END;
 			$filter_text .= "&nbsp;($num_results)";
 			$filter_url = $cur_url . urlencode( str_replace( ' ', '_', $f->name ) ) . '=' . urlencode( str_replace( ' ', '_', $value_str ) );
 			if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
-				$font_size = round( $font_size_midpoint + ( ( $num_results - $num_results_midpoint ) / $num_results_per_font_pixel ) );
+				$font_size = round( (($num_results - $lowest_num_results) * $scale_factor ) +  $sdgFiltersSmallestFontSize );
 				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMsg( 'sd_browsedata_filterbyvalue' ) . '" style="font-size: ' . $font_size . 'px">' . $filter_text . '</a>';
 			} else {
 				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMsg( 'sd_browsedata_filterbyvalue' ) . '">' . $filter_text . '</a>';
