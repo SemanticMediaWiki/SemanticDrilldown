@@ -604,7 +604,7 @@ END;
 		foreach ( $filter_values as $value_str => $num_results ) {
 			if ( $num_printed_values++ > 0 ) { $results_line .= " · "; }
 			$filter_text = $this->printFilterValue( $f, $value_str );
-			$filter_text .= " ($num_results)";
+			$filter_text .= "&nbsp;($num_results)";
 			$filter_url = $cur_url . urlencode( str_replace( ' ', '_', $f->name ) ) . '=' . urlencode( str_replace( ' ', '_', $value_str ) );
 			if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 				$font_size = round( $font_size_midpoint + ( ( $num_results - $num_results_midpoint ) / $num_results_per_font_pixel ) );
