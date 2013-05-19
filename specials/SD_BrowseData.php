@@ -587,7 +587,7 @@ END;
 	}
 
 	function printUnappliedFilterValues( $cur_url, $f, $filter_values ) {
-		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
+		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize, $sdgFiltersLogScale;
 
 		$results_line = "";
 		// set font-size values for filter "tag cloud", if the
@@ -596,6 +596,9 @@ END;
 			$lowest_num_results = min( $filter_values );
 			$highest_num_results = max( $filter_values );
 			$scale_factor = ( $sdgFiltersLargestFontSize - $sdgFiltersSmallestFontSize ) / ( $highest_num_results - $lowest_num_results );
+                        if( $sdgFiltersLogScale ){
+                          $scale_factor = ( $sdgFiltersLargestFontSize - $sdgFiltersSmallestFontSize ) / ( log($highest_num_results) - log($lowest_num_results) );
+                        }
 		}
 		// now print the values
 		$num_printed_values = 0;
@@ -606,6 +609,9 @@ END;
 			$filter_url = $cur_url . urlencode( str_replace( ' ', '_', $f->name ) ) . '=' . urlencode( str_replace( ' ', '_', $value_str ) );
 			if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 				$font_size = round( (($num_results - $lowest_num_results) * $scale_factor ) +  $sdgFiltersSmallestFontSize );
+                                if( $sdgFiltersLogScale ){
+                                  $font_size = round( ((log($num_results) - log($lowest_num_results)) * $scale_factor ) +  $sdgFiltersSmallestFontSize );
+                                }
 				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMsg( 'sd_browsedata_filterbyvalue' ) . '" style="font-size: ' . $font_size . 'px">' . $filter_text . '</a>';
 			} else {
 				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMsg( 'sd_browsedata_filterbyvalue' ) . '">' . $filter_text . '</a>';
