@@ -587,7 +587,7 @@ END;
 	}
 
 	function printUnappliedFilterValues( $cur_url, $f, $filter_values ) {
-		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize, $sdgFiltersLogScale;
+		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
 		$results_line = "";
 		// set font-size values for filter "tag cloud", if the
@@ -595,10 +595,9 @@ END;
 		if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 			$lowest_num_results = min( $filter_values );
 			$highest_num_results = max( $filter_values );
-			$scale_factor = ( $sdgFiltersLargestFontSize - $sdgFiltersSmallestFontSize ) / ( $highest_num_results - $lowest_num_results );
-                        if( $sdgFiltersLogScale ){
-                          $scale_factor = ( $sdgFiltersLargestFontSize - $sdgFiltersSmallestFontSize ) / ( log($highest_num_results) - log($lowest_num_results) );
-                        }
+			if ( $lowest_num_results != $highest_num_results ) {
+				$scale_factor = ( $sdgFiltersLargestFontSize - $sdgFiltersSmallestFontSize ) / ( log($highest_num_results) - log($lowest_num_results) );
+			}
 		}
 		// now print the values
 		$num_printed_values = 0;
@@ -608,10 +607,11 @@ END;
 			$filter_text .= "&nbsp;($num_results)";
 			$filter_url = $cur_url . urlencode( str_replace( ' ', '_', $f->name ) ) . '=' . urlencode( str_replace( ' ', '_', $value_str ) );
 			if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
-				$font_size = round( (($num_results - $lowest_num_results) * $scale_factor ) +  $sdgFiltersSmallestFontSize );
-                                if( $sdgFiltersLogScale ){
-                                  $font_size = round( ((log($num_results) - log($lowest_num_results)) * $scale_factor ) +  $sdgFiltersSmallestFontSize );
-                                }
+				if ( $lowest_num_results != $highest_num_results ) {
+					$font_size = round( ((log($num_results) - log($lowest_num_results)) * $scale_factor ) +  $sdgFiltersSmallestFontSize );
+				} else {
+					$font_size = ( $sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize ) / 2;
+				}
 				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMsg( 'sd_browsedata_filterbyvalue' ) . '" style="font-size: ' . $font_size . 'px">' . $filter_text . '</a>';
 			} else {
 				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMsg( 'sd_browsedata_filterbyvalue' ) . '">' . $filter_text . '</a>';
@@ -900,10 +900,9 @@ END;
 			if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 				$lowest_num_results = min( $subcat_values );
 				$highest_num_results = max( $subcat_values );
-				$num_results_midpoint = ( $lowest_num_results + $highest_num_results ) / 2;
-				$font_size_midpoint = ( $sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize ) / 2;
-				$num_results_per_font_pixel = ( $highest_num_results + 1 - $lowest_num_results ) /
-					( $sdgFiltersLargestFontSize + 1 - $sdgFiltersSmallestFontSize );
+				if ( $lowest_num_results != $highest_num_results ) {
+					$scale_factor = ( $sdgFiltersLargestFontSize - $sdgFiltersSmallestFontSize ) / ( log($highest_num_results) - log($lowest_num_results) );
+				}
 			}
 
 			foreach ( $subcat_values as $subcat => $num_results ) {
@@ -912,7 +911,11 @@ END;
 					$filter_text = str_replace( '_', ' ', $subcat ) . " ($num_results)";
 					$filter_url = $cur_url . '_subcat=' . urlencode( $subcat );
 					if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
-						$font_size = round( $font_size_midpoint + ( ( $num_results - $num_results_midpoint ) / $num_results_per_font_pixel ) );
+						if ( $lowest_num_results != $highest_num_results ) {
+							$font_size = round( ((log($num_results) - log($lowest_num_results)) * $scale_factor ) +  $sdgFiltersSmallestFontSize );
+						} else {
+							$font_size = ( $sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize ) / 2;
+						}
 						$results_line .= "\n					" . '<a href="' . $filter_url . '" title="' . wfMsg( 'sd_browsedata_filterbysubcategory' ) . '" style="font-size: ' . $font_size . 'px">' . $filter_text . '</a>';
 					} else {
 						$results_line .= "\n					" . '<a href="' . $filter_url . '" title="' . wfMsg( 'sd_browsedata_filterbysubcategory' ) . '">' . $filter_text . '</a>';

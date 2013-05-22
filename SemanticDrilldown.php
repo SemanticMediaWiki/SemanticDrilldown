@@ -121,8 +121,6 @@ $sdgNumResultsPerPage = 250;
 // set these to a positive value to trigger the "tag cloud" display
 $sdgFiltersSmallestFontSize = - 1;
 $sdgFiltersLargestFontSize = - 1;
-// logarithmic scale?
-$sdgFiltersLogScale = 0;
 // print categories list as tabs
 $sdgShowCategoriesAsTabs = false;
 
