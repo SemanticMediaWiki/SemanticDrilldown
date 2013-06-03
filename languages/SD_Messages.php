@@ -2513,7 +2513,7 @@ $messages['nah'] = array(
 	'sd_filter_month' => 'Mētztli',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Event
  * @author Harald Khan
  * @author Nghtwlkr
@@ -2641,7 +2641,7 @@ $messages['nl'] = array(
 	'sd_filter_haslabel' => 'Het heeft het label $1.',
 );
 
-/** Norwegian Nynorsk (norsk (nynorsk)‎)
+/** Norwegian Nynorsk (norsk nynorsk)
  * @author Harald Khan
  * @author Jon Harald Søby
  * @author Njardarlogar
