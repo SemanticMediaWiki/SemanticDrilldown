@@ -225,8 +225,8 @@ $specialPageAliases['ksh'] = array(
 
 /** Cornish (kernowek) */
 $specialPageAliases['kw'] = array(
-	'BrowseData' => array( 'PeuryData' ),
-	'CreateFilter' => array( 'FormyaSidhel' ),
+	'BrowseData' => array( 'PeuriData' ),
+	'CreateFilter' => array( 'GwruthylSidhel' ),
 	'Filters' => array( 'Sidhlow' ),
 );
 
