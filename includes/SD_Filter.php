@@ -108,6 +108,9 @@ class SDFilter {
 					// A bit inefficient, but it's the
 					// simplest approach.
 					$typeID = $types[0]->getFragment();
+					if ( $typeID == '_str' && !array_key_exists( '_str', $datatypeLabels ) ) {
+						$typeID = '_txt';
+					}
 					$typeValue = $datatypeLabels[$typeID];
 				} else {
 					$typeValue = $types[0]->getWikiValue();
@@ -116,6 +119,8 @@ class SDFilter {
 					$f->property_type = 'page';
 				// _str stopped existing in SMW 1.9
 				} elseif ( array_key_exists( '_str', $datatypeLabels ) && $typeValue == $datatypeLabels['_str'] ) {
+					$f->property_type = 'string';
+				} elseif ( !array_key_exists( '_str', $datatypeLabels ) && $typeValue == $datatypeLabels['_txt'] ) {
 					$f->property_type = 'string';
 				} elseif ( $typeValue == $datatypeLabels['_num'] ) {
 					$f->property_type = 'number';

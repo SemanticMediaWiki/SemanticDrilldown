@@ -119,6 +119,10 @@ class SDAppliedFilter {
 		if ( is_null( $this->filter->time_period ) ) {
 			$value_field = $this->filter->getValueField();
 		} else {
+			// Escape if this is not a date property
+			if ( $this->filter->property_type != 'date' ) {
+				return array( 'Error: date handling cannot be done on a non-date property.' );
+			}
 			$date_field = $this->filter->getDateField();
 			if ( $this->filter->time_period == wfMsg( 'sd_filter_month' ) ) {
 				$value_field = "YEAR($date_field), MONTH($date_field)";
