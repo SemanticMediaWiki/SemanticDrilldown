@@ -938,7 +938,6 @@ END;
 			}
 		}
 		$filters = SDUtils::loadFiltersForCategory( $this->category );
-$i = 0;
 		foreach ( $filters as $f ) {
 			foreach ( $this->applied_filters as $af ) {
 				if ( $af->filter->name == $f->name ) {
