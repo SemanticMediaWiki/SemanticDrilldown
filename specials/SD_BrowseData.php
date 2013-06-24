@@ -361,7 +361,11 @@ class SDBrowseDataPage extends QueryPage {
 			} else {
 				$property_field = "a$i.p_id";
 				$sql .= "\n	AND $property_field = (SELECT smw_id FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
-				$value_field = "a$i.$value_field";
+				if ( $af->filter->property_type === 'date' ) {
+					$value_field = "SUBSTRING(a$i.$value_field, 3)";
+				} else {
+					$value_field = "a$i.$value_field";
+				}
 			}
 			$sql .= $af->checkSQL( $value_field );
 		}
@@ -683,15 +687,16 @@ END;
 			wfMsgForContent( 'december' )
 		);
 
-		if ( is_array( $cur_value ) && array_key_exists( 'month', $cur_value ) )
+		if ( is_array( $cur_value ) && array_key_exists( 'month', $cur_value ) ) {
 			$selected_month = $cur_value['month'];
-		else
+		} else {
 			$selected_month = null;
+		}
 		$text = ' <select name="' . $input_name . "[month]\">\n";
 		global $wgAmericanDates;
 		foreach ( $month_names as $i => $name ) {
 			// pad out month to always be two digits
-			$month_value = ( $wgAmericanDates == true ) ? $name : str_pad( $i + 1, 2, "0", STR_PAD_LEFT );
+			$month_value = str_pad( $i + 1, 2, "0", STR_PAD_LEFT );
 			$selected_str = ( $i + 1 == $selected_month ) ? "selected" : "";
 			$text .= "\t<option value=\"$month_value\" $selected_str>$name</option>\n";
 		}
@@ -715,7 +720,13 @@ $end_label $end_month_input</p>
 
 END;
 		foreach ( $wgRequest->getValues() as $key => $val ) {
-			$text .= Html::hidden( $key, $val ) . "\n";
+			if ( is_array( $val ) ) {
+				foreach ( $val as $realKey => $realVal ) {
+					$text .= Html::hidden( $key . '[' . $realKey . ']', $realVal ) . "\n";
+				}
+			} else {
+				$text .= Html::hidden( $key, $val ) . "\n";
+			}
 		}
 		$submitButton = Html::input( null, wfMsg( 'searchresultshead' ), 'submit' );
 		$text .= Html::rawElement( 'p', null, $submitButton ) . "\n";
@@ -927,6 +938,7 @@ END;
 			}
 		}
 		$filters = SDUtils::loadFiltersForCategory( $this->category );
+$i = 0;
 		foreach ( $filters as $f ) {
 			foreach ( $this->applied_filters as $af ) {
 				if ( $af->filter->name == $f->name ) {
