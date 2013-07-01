@@ -72,9 +72,9 @@ $specialPageAliases['de'] = array(
 
 /** Zazaki (Zazaki) */
 $specialPageAliases['diq'] = array(
-	'BrowseData' => array( 'MalumatBıgeyrê' ),
-	'CreateFilter' => array( 'AvrêcDekerê' ),
-	'Filters' => array( 'Avrêci' ),
+	'BrowseData' => array( 'MalumatBıgeyré' ),
+	'CreateFilter' => array( 'AvréciDekeré' ),
+	'Filters' => array( 'Avréci' ),
 );
 
 /** Lower Sorbian (dolnoserbski) */
