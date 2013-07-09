@@ -768,8 +768,10 @@ $messages['ca'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
+	'browsedata' => 'Хаамашка хьажар',
 	'sd_filter_year' => 'Шо',
 );
 
