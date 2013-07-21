@@ -772,6 +772,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'browsedata' => 'Хаамашка хьажар',
+	'sd_browsedata_none' => 'Яц',
 	'sd_filter_year' => 'Шо',
 );
 
@@ -790,6 +791,13 @@ $messages['cs'] = array(
 	'sd-pageschemas-filter' => 'Filtr',
 	'sd_filter_year' => 'Rok',
 	'sd_filter_month' => 'Měsíc',
+);
+
+/** Church Slavic (словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
+ * @author ОйЛ
+ */
+$messages['cu'] = array(
+	'sd_createfilter_name' => 'имѧ :',
 );
 
 /** Welsh (Cymraeg)
