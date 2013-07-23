@@ -63,6 +63,12 @@ $specialPageAliases['bs'] = array(
 	'Filters' => array( 'Filteri' ),
 );
 
+/** Chechen (нохчийн) */
+$specialPageAliases['ce'] = array(
+	'CreateFilter' => array( 'Кхолла_литтар' ),
+	'Filters' => array( 'Литтарш' ),
+);
+
 /** German (Deutsch) */
 $specialPageAliases['de'] = array(
 	'BrowseData' => array( 'Daten_durchsuchen', 'Daten_browsen' ),
