@@ -2806,6 +2806,7 @@ $messages['pfl'] = array(
 /** Polish (polski)
  * @author Airwolf
  * @author BeginaFelicysym
+ * @author Chrumps
  * @author Maikking
  * @author Maire
  * @author Sp5uhe
@@ -2839,7 +2840,7 @@ $messages['pl'] = array(
 	'sd_viewform' => 'Zobacz formularz',
 	'createfilter' => 'Utwórz filtr',
 	'sd_createfilter_name' => 'Nazwa',
-	'sd_createfilter_property' => 'Własność przesłonięta tym filtrem',
+	'sd_createfilter_property' => 'Właściwość przesłonięta tym filtrem',
 	'sd_createfilter_usepropertyvalues' => 'Użyj wszystkich wartości tej własności dla filtru',
 	'sd_createfilter_usecategoryvalues' => 'Użyj wartości dla filtru z kategorii',
 	'sd_createfilter_usedatevalues' => 'Użyj dla filtru przedziału czasu',
@@ -2851,7 +2852,7 @@ $messages['pl'] = array(
 	'sd_blank_error' => 'nie może być puste',
 	'sd-pageschemas-filter' => 'Filtr',
 	'sd-pageschemas-values' => 'Wartości',
-	'sd_filter_coversproperty' => 'Ten filtr przesłania własność $1.',
+	'sd_filter_coversproperty' => 'Ten filtr przesłania właściwość $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Otrzymuje wartości z kategorii $1.',
 	'sd_filter_usestimeperiod' => 'Używa $1 jako swojego przedziału czasu.',
 	'sd_filter_year' => 'Rok',
