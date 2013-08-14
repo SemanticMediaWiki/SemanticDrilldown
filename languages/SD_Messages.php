@@ -118,14 +118,16 @@ $messages['qqq'] = array(
 	'sd_createfilter_property' => 'The title of the drop-down list on [[Special:CreateFilter]] that allows to select an available property.',
 	'sd_createfilter_usepropertyvalues' => 'An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter.',
 	'sd_createfilter_usecategoryvalues' => 'An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter. It is followed by a drop-down list that allows to select an available category.',
-	'sd_createfilter_usedatevalues' => 'An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter. It is followed by a drop-down list that allows to select an available time period. These are:
-* {{msg-mw|Sd_filter_year}}
-* {{msg-mw|Sd_filter_month}}',
+	'sd_createfilter_usedatevalues' => 'An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter.
+
+Followed by a drop-down list that allows to select an available time period. These are:
+* {{msg-mw|Sd filter year}}
+* {{msg-mw|Sd filter month}}',
 	'sd_createfilter_entervalues' => 'An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter. It is followed by an input field that allows to specify one or more property values.',
 	'sd_createfilter_inputtype' => 'The title of the drop-down list on [[Special:CreateFilter]] that allows to select available input type. These are
-* {{msg-mw|Sd_createfilter_listofvalues}}
-* {{msg-mw|Sd_filter_combobox}}
-* {{msg-mw|Sd_filter_daterange}}',
+* {{msg-mw|Sd createfilter listofvalues}}
+* {{msg-mw|Sd filter combobox}}
+* {{msg-mw|Sd filter daterange}}',
 	'sd_createfilter_listofvalues' => 'A specific type of interface input.',
 	'sd_createfilter_requirefilter' => 'The title of the drop-down list on [[Special:CreateFilter]] that allows to select an available filter.',
 	'sd_createfilter_label' => 'The title of the field on [[Special:CreateFilter]] that allows to enter the label of a filter.',
@@ -140,9 +142,11 @@ $messages['qqq'] = array(
 	'sd_filter_getsvaluesfromcategory' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
 * $1 - name of the category',
 	'sd_filter_usestimeperiod' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
+
+Parameters:
 * $1 - period of time that values are divided into; holds one of the following messages:
-** {{msg-mw|Sd_filter_year}}
-** {{msg-mw|Sd_filter_month}}',
+** {{msg-mw|Sd filter year}}
+** {{msg-mw|Sd filter month}}',
 	'sd_filter_year' => 'A specific type of interface input.
 
 This message is substituted for <code>$1</code> in {{msg-mw|Sd filter usestimeperiod}}.
@@ -154,10 +158,12 @@ This message is substituted for <code>$1</code> in {{msg-mw|Sd filter usestimepe
 	'sd_filter_hasvalues' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
 * $1 - name of the value(s)',
 	'sd_filter_hasinputtype' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
+
+Parameters:
 * $1 - name of the input type; holds one of the following messages:
-** {{msg-mw|Sd_filter_combobox}}
-** {{msg-mw|Sd_filter_freetext}}
-** {{msg-mw|Sd_filter_daterange}}',
+** {{msg-mw|Sd filter combobox}}
+** {{msg-mw|Sd filter freetext}}
+** {{msg-mw|Sd filter daterange}}',
 	'sd_filter_combobox' => 'A specific type of interface input.
 
 This message is substituted for <code>$1</code> in {{msg-mw|Sd filter hasinputtype}}.',
