@@ -3748,8 +3748,10 @@ $messages['tzm'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Base
  * @author Steve.rusyn
+ * @author SteveR
  * @author Тест
  */
 $messages['uk'] = array(
@@ -3785,13 +3787,26 @@ $messages['uk'] = array(
 	'sd_createfilter_usepropertyvalues' => 'Використовуйте усі значення цієї властивості для фільтру',
 	'sd_createfilter_usecategoryvalues' => 'Отримати значення для фільтру із цієї категорії:',
 	'sd_createfilter_usedatevalues' => 'Використовувати діапазони дат для цього фільтру у цей періоду часу:',
+	'sd_createfilter_entervalues' => 'Введіть значення для фільтра вручну (значення слід відокремлювати крапкою з комою - якщо значення містить кому, замініть її на "/"):',
+	'sd_createfilter_inputtype' => 'Тип вводу для цього фільтру:',
+	'sd_createfilter_listofvalues' => 'список значень (типових)',
+	'sd_createfilter_requirefilter' => 'Вимагати вибору іншого фільтра, перед тим, як відображати цей:',
+	'sd_createfilter_label' => "Позначка для цього фільтра (необов'язково):",
 	'sd_blank_error' => 'не може бути порожнім',
 	'sd-pageschemas-filter' => 'Фільтр',
 	'sd-pageschemas-values' => 'Значення',
+	'sd_filter_coversproperty' => 'Цей фільтр охоплює властивість  $1.',
+	'sd_filter_getsvaluesfromcategory' => 'Отримує свої значення з категорії $1.',
+	'sd_filter_usestimeperiod' => 'Використовує $1 як часовий діапазон.',
 	'sd_filter_year' => 'Рік',
 	'sd_filter_month' => 'Місяць',
+	'sd_filter_hasvalues' => 'Має значення $1.',
+	'sd_filter_hasinputtype' => 'Має тип вводу $1.',
+	'sd_filter_combobox' => 'поле зі списком',
 	'sd_filter_freetext' => 'текст',
 	'sd_filter_daterange' => 'діапазон дат',
+	'sd_filter_requiresfilter' => 'Вимагає наявності фільтру $1.',
+	'sd_filter_haslabel' => 'Має позначку  $1.',
 );
 
 /** Urdu (اردو)
