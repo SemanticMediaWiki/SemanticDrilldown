@@ -83,6 +83,9 @@ class SDUtils {
 			}
 		}
 		sort( $categories );
+		// This shouldn't be necessary, but sometimes it is, due
+		// to faulty storage in either MW or SMW.
+		$categories = array_unique( $categories );
 		return $categories;
 	}
 
@@ -141,7 +144,9 @@ class SDUtils {
 		$options->limit = 10000;
 		$used_properties = smwfGetStore()->getPropertiesSpecial( $options );
 		foreach ( $used_properties as $property ) {
-			if ( $property[0] instanceof SMWDIProperty ) {
+			if ( $property[0] instanceof SMWDIError ) {
+				continue;
+			} elseif ( $property[0] instanceof SMWDIProperty ) {
 				// SMW 1.6+
 				$propName = $property[0]->getKey();
 				if ( $propName{0} != '_' ) {
@@ -153,14 +158,18 @@ class SDUtils {
 		}
 		$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial( $options );
 		foreach ( $unused_properties as $property ) {
-			if ( $property instanceof SMWDIProperty ) {
+			if ( $property instanceof SMWDIError ) {
+				continue;
+			} elseif ( $property instanceof SMWDIProperty ) {
 				// SMW 1.6+
 				$all_properties[] = str_replace( '_', ' ', $property->getKey() );
 			} else {
 				$all_properties[] = $property->getWikiValue();
 			}
 		}
-		// remove the special properties of Semantic Drilldown from this list...
+
+		// Remove the special properties of Semantic Drilldown from
+		// this list...
 		global $sdgContLang;
 		$sd_props = $sdgContLang->getPropertyLabels();
 		$sd_prop_aliases = $sdgContLang->getPropertyAliases();
@@ -176,7 +185,16 @@ class SDUtils {
 				}
 			}
 		}
+
+		// Also remove any property names that seem incorrect.
+		foreach ( $all_properties as $i => $prop_name ) {
+			if ( strstr( $prop_name, "\n" ) || strstr( $prop_name, '#list' ) ) {
+					unset( $all_properties[$i] );
+			}
+		}
+
 		sort( $all_properties );
+		$all_properties = array_unique( $all_properties );
 		return $all_properties;
 	}
 
@@ -498,7 +516,7 @@ END;
 		$sd_row->addItem( ALItem::newFromSpecialPage( 'CreateFilter' ) );
 		$sd_name = wfMsg( 'specialpages-group-sd_group' );
 		$sd_docu_label = wfMsg( 'adminlinks_documentation', $sd_name );
-		$sd_row->addItem( AlItem::newFromExternalLink( "http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label ) );
+		$sd_row->addItem( AlItem::newFromExternalLink( "https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label ) );
 
 		$browse_search_section->addRow( $sd_row );
 
