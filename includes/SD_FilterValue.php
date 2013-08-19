@@ -15,8 +15,10 @@ class SDFilterValue {
 	var $upper_limit = null;
 	var $year = null;
 	var $month = null;
+	var $day = null;
+	var $end_year = null;
 
-	static function create( $actual_val, $filter_time_period = null ) {
+	static function create( $actual_val, $filter = null ) {
 		$fv = new SDFilterValue();
 		$fv->text = str_replace( '_', ' ', $actual_val );
 
@@ -26,18 +28,35 @@ class SDFilterValue {
 			$fv->is_other = true;
 		}
 		// set other fields, if it's a date or number range
-		if ( $filter_time_period != null ) {
-			if ( $filter_time_period == wfMsg( 'sd_filter_month' ) ) {
+		if ( $filter != null && $filter->property_type == 'date' ) {
+			// @TODO - this should ideally be handled via query
+			// string arrays - and this code merged in with
+			// date-range handling - instead of just doing string
+			// parsing on one string.
+			if ( strpos( $fv->text, ' - ' ) > 0 ) {
+				// If there's a dash, assume it's a year range
+				$years = explode( ' - ', $fv->text );
+				$fv->year = $years[0];
+				$fv->end_year = $years[1];
+				$fv->time_period = 'year range';
+			} else {
 				$date_parts = explode( ' ', $fv->text );
-				if ( count( $date_parts ) == 2 ) {
+				if ( count( $date_parts ) == 3 ) {
+					list( $month_str, $day_str, $year ) = explode( ' ', $fv->text );
+					$fv->month = SDUtils::stringToMonth( $month_str );
+					$fv->day = str_replace( ',', '', $day_str );
+					$fv->year = $year;
+					$fv->time_period = 'day';
+				} elseif ( count( $date_parts ) == 2 ) {
 					list( $month_str, $year ) = explode( ' ', $fv->text );
 					$fv->month = SDUtils::stringToMonth( $month_str );
 					$fv->year = $year;
+					$fv->time_period = 'month';
 				} else {
-					$fv->month = $fv->year = '';
+					$fv->month = null;
+					$fv->year = $fv->text;
+					$fv->time_period = 'year';
 				}
-			} else {
-				$fv->year = $fv->text;
 			}
 		} else {
 			if ( $fv->text == '' ) {

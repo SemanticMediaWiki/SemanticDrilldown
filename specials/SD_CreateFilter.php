@@ -1,7 +1,7 @@
 <?php
 /**
  * A special page holding a form that allows the user to create a filter
- * page
+ * page.
  *
  * @author Yaron Koren
  */
@@ -15,7 +15,7 @@ class SDCreateFilter extends SpecialPage {
 		parent::__construct( 'CreateFilter' );
 	}
 
-	static function createFilterText( $property_name, $values_source, $category_used, $time_period, $filter_values, $input_type, $required_filter, $filter_label ) {
+	static function createFilterText( $property_name, $values_source, $category_used, $required_filter, $filter_label ) {
 		global $sdgContLang;
 
 		$sd_props = $sdgContLang->getPropertyLabels();
@@ -26,30 +26,6 @@ class SDCreateFilter extends SpecialPage {
 			$text .= " " . wfMsgForContent( 'sd_filter_getsvaluesfromcategory', $category_tag );
 		} elseif ( $values_source == 'property' ) {
 			// do nothing
-		} elseif ( $values_source == 'dates' ) {
-			$time_period_tag = "[[" . $sd_props[SD_SP_USES_TIME_PERIOD] . "::$time_period]]";
-			$text .= " " . wfMsgForContent( 'sd_filter_usestimeperiod', $time_period_tag );
-		} elseif ( $values_source == 'manual' ) {
-			// Replace the comma with a substitution character that
-			// has no chance of being included in the values list -
-			// namely, the ASCII beep.
-			global $sdgListSeparator;
-			$filter_values = str_replace( "\\$sdgListSeparator", "\a", $filter_values );
-			$filter_values_array = explode( $sdgListSeparator, $filter_values );
-			$filter_values_tag = "";
-			foreach ( $filter_values_array as $i => $filter_value ) {
-				if ( $i > 0 ) {
-					$filter_values_tag .= ", ";
-				}
-				// replace beep with comma, trim
-				$filter_value = str_replace( "\a", $sdgListSeparator, trim( $filter_value ) );
-				$filter_values_tag .= "[[" . $sd_props[SD_SP_HAS_VALUE] . "::$filter_value]]";
-			}
-			$text .= " " . wfMsgForContent( 'sd_filter_hasvalues', $filter_values_tag );
-		}
-		if ( $input_type != '' ) {
-			$input_type_tag = "[[" . $sd_props[SD_SP_HAS_INPUT_TYPE] . "::$input_type]]";
-			$text .= " " . wfMsgForContent( 'sd_filter_hasinputtype', "\"$input_type_tag\"" );
 		}
 		if ( $required_filter != '' ) {
 			$sd_namespace_labels = $sdgContLang->getNamespaces();
@@ -82,9 +58,6 @@ class SDCreateFilter extends SpecialPage {
 		$values_source = $wgRequest->getVal( 'values_source' );
 		$property_name = $wgRequest->getVal( 'property_name' );
 		$category_name = $wgRequest->getVal( 'category_name' );
-		$time_period = $wgRequest->getVal( 'time_period' );
-		$filter_values = $wgRequest->getVal( 'filter_values' );
-		$input_type = $wgRequest->getVal( 'input_type' );
 		$required_filter = $wgRequest->getVal( 'required_filter' );
 		$filter_label = $wgRequest->getVal( 'filter_label' );
 
@@ -94,15 +67,14 @@ class SDCreateFilter extends SpecialPage {
 		$save_page = $wgRequest->getCheck( 'wpSave' );
 		$preview_page = $wgRequest->getCheck( 'wpPreview' );
 		if ( $save_page || $preview_page ) {
-			# validate filter name
+			// Validate filter name.
 			if ( $filter_name == '' ) {
 				$filter_name_error_str = wfMsg( 'sd_blank_error' );
 			} else {
-				# redirect to wiki interface
-				$namespace = SD_NS_FILTER;
-				$title = Title::newFromText( $filter_name, $namespace );
-				$full_text = self::createFilterText( $property_name, $values_source, $category_name, $time_period, $filter_values, $input_type, $required_filter, $filter_label );
-				// HTML-encode
+				// Redirect to wiki interface.
+				$title = Title::newFromText( $filter_name, SD_NS_FILTER );
+				$full_text = self::createFilterText( $property_name, $values_source, $category_name, $required_filter, $filter_label );
+				// HTML-encode.
 				$full_text = str_replace( '"', '&quot;', $full_text );
 				$text = SDUtils::printRedirectForm( $title, $full_text, "", $save_page, $preview_page, false, false, false );
 				$wgOut->addHTML( $text );
@@ -118,12 +90,13 @@ class SDCreateFilter extends SpecialPage {
 		$property_label = wfMsg( 'sd_createfilter_property' );
 		$label_label = wfMsg( 'sd_createfilter_label' );
 		$text = <<<END
+
 	<form action="" method="post">
 
 END;
 		if ( $presetFilterName === '' ) {
+			$text .= "\t" . Html::hidden( 'title', $this->getTitle()->getPrefixedText() ) . "\n";
 			$text .= <<<END
-	<input type="hidden" name="title" value="$special_namespace:CreateFilter">
 	<p>$name_label <input size="25" name="filter_name" value="">
 	<span style="color: red;">$filter_name_error_str</span></p>
 
@@ -141,21 +114,6 @@ END;
 
 		$values_from_property_label = wfMsg( 'sd_createfilter_usepropertyvalues' );
 		$values_from_category_label = wfMsg( 'sd_createfilter_usecategoryvalues' );
-		$date_values_label = wfMsg( 'sd_createfilter_usedatevalues' );
-		$enter_values_label = wfMsg( 'sd_createfilter_entervalues' );
-		// Need both label and value, in case user's language is
-		// different from wiki's
-		$year_label = wfMsg( 'sd_filter_year' );
-		$year_value = wfMsgForContent( 'sd_filter_year' );
-		$month_label = wfMsg( 'sd_filter_month' );
-		$month_value = wfMsgForContent( 'sd_filter_month' );
-		$input_type_label = wfMsg( 'sd_createfilter_inputtype' );
-		$values_list_label = wfMsg( 'sd_createfilter_listofvalues' );
-		// same as for time values
-		$combo_box_label = wfMsg( 'sd_filter_combobox' );
-		$combo_box_value = wfMsgForContent( 'sd_filter_combobox' );
-		$date_range_label = wfMsg( 'sd_filter_daterange' );
-		$date_range_value = wfMsgForContent( 'sd_filter_daterange' );
 		$require_filter_label = wfMsg( 'sd_createfilter_requirefilter' );
 		$text .= <<<END
 	</select>
@@ -174,23 +132,6 @@ END;
 			$text .= "	<option>$category</option>\n";
 		}
 		$text .= <<<END
-	</select>
-	</p>
-	<p><input type="radio" name="values_source" value="dates">
-	$date_values_label
-	<select id="time_period_dropdown" name="time_period">
-	<option value="$year_value">$year_label</option>
-	<option value="$month_value">$month_label</option>
-	</select>
-	</p>
-	<p><input type="radio" name="values_source" value="manual">
-	$enter_values_label <input size="40" name="filter_values" value="">
-	</p>
-	<p>$input_type_label
-	<select id="input_type_dropdown" name="input_type">
-	<option value="">$values_list_label</option>
-	<option value="$combo_box_value">$combo_box_label</option>
-	<option value="$date_range_value">$date_range_label</option>
 	</select>
 	</p>
 	<p>$require_filter_label

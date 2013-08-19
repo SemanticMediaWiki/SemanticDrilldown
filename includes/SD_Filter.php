@@ -13,7 +13,6 @@ class SDFilter {
 	var $property_type;
 	var $category;
 	var $time_period = null;
-	var $input_type = null;
 	var $allowed_values;
 	var $possible_applied_filters = array();
 	var $db_table_name;
@@ -51,9 +50,6 @@ class SDFilter {
 					// except for an uppercased first
 					// letter.
 					$f->property_type = strtolower( $prop_array['Type'] );
-				}
-				if ( array_key_exists( 'InputType', $filter_array ) ) {
-					$f->input_type = $filter_array['InputType'];
 				}
 				if ( array_key_exists( 'ValuesFromCategory', $filter_array ) ) {
 					$f->category = $filter_array['ValuesFromCategory'];
@@ -99,7 +95,7 @@ class SDFilter {
 				$types = $store->getSpecialValues( $proptitle, SMW_SP_HAS_TYPE );
 			}
 			global $smwgContLang;
-			$datatypeLabels =  $smwgContLang->getDatatypeLabels();
+			$datatypeLabels = $smwgContLang->getDatatypeLabels();
 			if ( count( $types ) > 0 ) {
 				if ( $types[0] instanceof SMWDIWikiPage ) {
 					// SMW 1.6+
@@ -135,22 +131,15 @@ class SDFilter {
 			}
 		}
 		$categories = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_VC', SD_SP_GETS_VALUES_FROM_CATEGORY, NS_CATEGORY );
-		$time_periods = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_TP', SD_SP_USES_TIME_PERIOD, null );
 		if ( count( $categories ) > 0 ) {
 			$f->category = $categories[0];
 			$f->allowed_values = SDUtils::getCategoryChildren( $f->category, false, 5 );
-		} elseif ( count( $time_periods ) > 0 ) {
-			$f->time_period = $time_periods[0];
+		} elseif ( $f->property_type === 'date' ) {
 			$f->allowed_values = array();
 		} elseif ( $f->property_type === 'boolean' ) {
 			$f->allowed_values = array( '0', '1' );
 		} else {
-			$values = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_V', SD_SP_HAS_VALUE, null );
-			$f->allowed_values = $values;
-		}
-		$input_types = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_IT', SD_SP_HAS_INPUT_TYPE, null );
-		if ( count( $input_types ) > 0 ) {
-			$f->input_type = $input_types[0];
+			$f->allowed_values = array();
 		}
 
 		// Set list of possible applied filters if allowed values
@@ -220,9 +209,56 @@ class SDFilter {
 		return $this->db_date_field;
 	}
 
+	function getTimePeriod() {
+		// If it's not a date property, return null.
+		if ( $this->property_type != 'date' ) {
+			return null;
+		}
+
+		// If it has already been set, just return it.
+		if ( $this->time_period != null ) {
+			return $this->time_period;
+		}
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$property_value = $this->escaped_property;
+		$date_field = $this->getDateField();
+		$datesTable = $dbr->tableName( $this->getTableName() );
+		$idsTable = $dbr->tableName( SDUtils::getIDsTableName() );
+		$sql = <<<END
+	SELECT MIN($date_field), MAX($date_field)
+	FROM semantic_drilldown_values sdv 
+	JOIN $datesTable a ON sdv.id = a.s_id
+	JOIN $idsTable p_ids ON a.p_id = p_ids.smw_id
+	WHERE p_ids.smw_title = '$property_value'
+
+END;
+		$res = $dbr->query( $sql );
+		$row = $dbr->fetchRow( $res );
+		$minDate = $row[0];
+		if ( is_null( $minDate ) ) {
+			return null;
+		}
+		list( $minYear, $minMonth, $minDay ) = explode( '/', $minDate );
+		$maxDate = $row[1];
+		list( $maxYear, $maxMonth, $maxDay ) = explode( '/', $maxDate );
+		$yearDifference = $maxYear - $minYear;
+		$monthDifference = ( 12 * $yearDifference ) + ( $maxMonth - $minMonth );
+		if ( $yearDifference > 30 ) {
+			$this->time_period = 'decade';
+		} elseif ( $yearDifference > 2 ) {
+			$this->time_period = 'year';
+		} elseif ( $monthDifference > 1 ) {
+			$this->time_period = 'month';
+		} else {
+			$this->time_period = 'day';
+		}
+		return $this->time_period;
+	}
+
 	/**
 	 * Gets an array of the possible time period values (e.g., years,
-	 * years and months) for this filter, and, for each one,
+	 * months) for this filter, and, for each one,
 	 * the number of pages that match that time period.
 	 */
 	function getTimePeriodValues() {
@@ -230,9 +266,13 @@ class SDFilter {
 		$property_value = $this->escaped_property;
 		$date_field = $this->getDateField();
 		$dbr = wfGetDB( DB_SLAVE );
-		if ( $this->time_period == wfMsg( 'sd_filter_month' ) ) {
+		if ( $this->getTimePeriod() == 'day' ) {
+			$fields = "YEAR($date_field), MONTH($date_field), DAYOFMONTH($date_field)";
+		} elseif ( $this->getTimePeriod() == 'month' ) {
 			$fields = "YEAR($date_field), MONTH($date_field)";
-		} else {
+		} elseif ( $this->getTimePeriod() == 'year' ) {
+			$fields = "YEAR($date_field)";
+		} else { // if ( $this->getTimePeriod() == 'decade' ) {
 			$fields = "YEAR($date_field)";
 		}
 		$datesTable = $dbr->tableName( $this->getTableName() );
@@ -249,13 +289,30 @@ class SDFilter {
 END;
 		$res = $dbr->query( $sql );
 		while ( $row = $dbr->fetchRow( $res ) ) {
-			if ( $this->time_period == wfMsg( 'sd_filter_month' ) ) {
+			if ( $this->getTimePeriod() == 'day' ) {
+				$date_string = SDUtils::monthToString( $row[1] ) . ' ' . $row[2] . ', ' . $row[0];
+				$possible_dates[$date_string] = $row[3];
+			} elseif ( $this->getTimePeriod() == 'month' ) {
 				global $sdgMonthValues;
-				$date_string = SDUtils::monthToString( $row[1] ) . " " . $row[0];
+				$date_string = SDUtils::monthToString( $row[1] ) . ' ' . $row[0];
 				$possible_dates[$date_string] = $row[2];
-			} else {
+			} elseif ( $this->getTimePeriod() == 'year' ) {
 				$date_string = $row[0];
 				$possible_dates[$date_string] = $row[1];
+			} else { // if ( $this->getTimePeriod() == 'decade' )
+				// Unfortunately, there's no SQL DECADE()
+				// function - so we have to take these values,
+				// which are grouped into year "buckets", and
+				// re-group them into decade buckets.
+				$year_string = $row[0];
+				$start_of_decade = $year_string - ( $year_string % 10 );
+				$end_of_decade = $start_of_decade + 9;
+				$decade_string = $start_of_decade . ' - ' . $end_of_decade;
+				if ( !array_key_exists( $decade_string, $possible_dates ) ) {
+					$possible_dates[$decade_string] = $row[1];
+				} else {
+					$possible_dates[$decade_string] += $row[1];
+				}
 			}
 		}
 		$dbr->freeResult( $res );
@@ -268,13 +325,6 @@ END;
 	 * that match that value.
 	 */
 	function getAllValues() {
-		if ( $this->time_period != null ) {
-			if ( $this->property_type == 'page' ) {
-				return "Invalid input type for this filter!";
-			}
-			return $this->getTimePeriodValues();
-		}
-
 		$possible_values = array();
 		$property_value = $this->escaped_property;
 		$dbr = wfGetDB( DB_SLAVE );

@@ -175,7 +175,7 @@ class SDBrowseDataPage extends QueryPage {
 		$this->all_subcategories = SDUtils::getCategoryChildren( $actual_cat, true, 10 );
 	}
 
-	function makeBrowseURL( $category, $applied_filters = array(), $subcategory = null ) {
+	function makeBrowseURL( $category, $applied_filters = array(), $subcategory = null, $filter_to_remove = null ) {
 		$bd = SpecialPage::getTitleFor( 'BrowseData' );
 		$url = $bd->getLocalURL() . '/' . $category;
 		if ( $this->show_single_cat ) {
@@ -187,6 +187,9 @@ class SDBrowseDataPage extends QueryPage {
 			$url .= "_subcat=" . $subcategory;
 		}
 		foreach ( $applied_filters as $i => $af ) {
+			if ( $af->filter->name == $filter_to_remove ) {
+				continue;
+			}
 			if ( count( $af->values ) == 0 ) {
 				// do nothing
 			} elseif ( count( $af->values ) == 1 ) {
@@ -546,13 +549,18 @@ END;
 			}
 			$results_line = $this->printComboBoxInput( $af->filter->name, $filter_values, $af->search_term );
 			return $this->printFilterLine( $af->filter->name, true, false, $results_line );
+		/*
 		} elseif ( $af->lower_date != null || $af->upper_date != null ) {
+			// With the current interface, this code will never get
+			// called; but at some point in the future, there may
+			// be a date-range input again.
 			$results_line = $this->printDateRangeInput( $af->filter->name, $af->lower_date, $af->upper_date );
 			return $this->printFilterLine( $af->filter->name, true, false, $results_line );
+		*/
 		}
 		// add 'Other' and 'None', regardless of whether either has
 		// any results - add 'Other' only if it's not a date field
-		if ( $af->filter->time_period == null ) {
+		if ( $af->filter->property_type != 'date' ) {
 			$or_values[] = '_other';
 		}
 		$or_values[] = '_none';
@@ -562,7 +570,7 @@ END;
 			$applied_filters = $this->applied_filters;
 			foreach ( $applied_filters as $af2 ) {
 				if ( $af->filter->name == $af2->filter->name ) {
-					$or_fv = SDFilterValue::create( $value, $af->filter->time_period );
+					$or_fv = SDFilterValue::create( $value, $af->filter );
 					$af2->values = array_merge( $current_filter_values, array( $or_fv ) );
 				}
 			}
@@ -612,7 +620,7 @@ END;
 			$filter_url = $cur_url . urlencode( str_replace( ' ', '_', $f->name ) ) . '=' . urlencode( str_replace( ' ', '_', $value_str ) );
 			if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 				if ( $lowest_num_results != $highest_num_results ) {
-					$font_size = round( ((log($num_results) - log($lowest_num_results)) * $scale_factor ) +  $sdgFiltersSmallestFontSize );
+					$font_size = round( ((log($num_results) - log($lowest_num_results)) * $scale_factor ) + $sdgFiltersSmallestFontSize );
 				} else {
 					$font_size = ( $sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize ) / 2;
 				}
@@ -622,6 +630,194 @@ END;
 			}
 		}
 		return $results_line;
+	}
+
+	/**
+	 * Copied from Miga, also written by Yaron Koren
+	 * (https://github.com/yaronkoren/miga/blob/master/NumberUtils.js)
+	 * - though that one is in Javascript.
+	 */
+	function getNearestNiceNumber( $num, $previousNum, $nextNum ) {
+		if ( $previousNum == null ) {
+			$smallestDifference = $nextNum - $num;
+		} elseif ( $nextNum == null ) {
+			$smallestDifference = $num - $previousNum;
+		} else {
+			$smallestDifference = min( $num - $previousNum, $nextNum - $num );
+		}
+
+		$base10LogOfDifference = log10( $smallestDifference );
+		$significantFigureOfDifference = floor( $base10LogOfDifference );
+
+		$powerOf10InCorrectPlace = pow( 10, $significantFigureOfDifference );
+		$significantDigitsOnly = round( $num / $powerOf10InCorrectPlace );
+		$niceNumber = $significantDigitsOnly * $powerOf10InCorrectPlace;
+
+		// Special handling if it's the first or last number in the
+		// series - we have to make sure that the "nice" equivalent is
+		// on the right "side" of the number.
+
+		// That's especially true for the last number -
+		// it has to be greater, not just equal to, because of the way
+		// number filtering works.
+		// ...or does it??
+		if ( $previousNum == null && $niceNumber > $num ) {
+			$niceNumber -= $powerOf10InCorrectPlace;
+		}
+		if ( $nextNum == null && $niceNumber < $num ) {
+			$niceNumber += $powerOf10InCorrectPlace;
+		}
+
+		return $niceNumber;
+	}
+
+	/**
+	 * Copied from Miga, also written by Yaron Koren
+	 * (https://github.com/yaronkoren/miga/blob/master/NumberUtils.js)
+	 * - though that one is in Javascript.
+	 */
+	function generateIndividualFilterValuesFromNumbers( $uniqueValues ) {
+		$propertyValues = array();
+		foreach ( $uniqueValues as $uniqueValue => $numInstances ) {
+			$curBucket = array(
+				'lowerNumber' => $uniqueValue,
+				'higherNumber' => null,
+				'numValues' => $numInstances
+			);
+			$propertyValues[] = $curBucket;
+		}
+		return $propertyValues;
+	}
+
+	/**
+	 * Copied from Miga, also written by Yaron Koren
+	 * (https://github.com/yaronkoren/miga/blob/master/NumberUtils.js)
+	 * - though that one is in Javascript.
+	 */
+	function generateFilterValuesFromNumbers( $numberArray ) {
+		global $sdgNumRangesForNumberFilters;
+
+		$numNumbers = count( $numberArray );
+
+		// First, find the number of unique values - if it's the value
+		// of $sdgNumRangesForNumberFilters, or fewer, just display
+		// each one as its own bucket.
+		$numUniqueValues = 0;
+		$uniqueValues = array();
+		foreach ( $numberArray as $curNumber ) {
+			if ( !array_key_exists( $curNumber, $uniqueValues ) ) {
+				$uniqueValues[$curNumber] = 1;
+				$numUniqueValues++;
+				if ( $numUniqueValues > $sdgNumRangesForNumberFilters ) {
+					continue;
+				}
+			} else {
+				// We do this now to save time on the next step,
+				// if we're creating individual filter values.
+				$uniqueValues[$curNumber]++;
+			}
+		}
+
+		if ( $numUniqueValues <= $sdgNumRangesForNumberFilters ) {
+			return $this->generateIndividualFilterValuesFromNumbers( $uniqueValues );
+		}
+
+		$propertyValues = array();
+		$separatorValue = $numberArray[0];
+		$startIndexOfBucket = 0;
+		$endIndexOfBucket;
+
+		// Make sure there are at least, on average, five numbers per
+		// bucket.
+		// @HACK - add 3 to the number so that we don't end up with
+		// just one bucket ( 7 + 3 / 5 = 2).
+		$numBuckets = min( $sdgNumRangesForNumberFilters, floor( ( $numNumbers + 3 ) / 5 ) );
+		$bucketSeparators = array();
+		$bucketSeparators[] = $numberArray[0];
+		for ( $i = 1; $i < $numBuckets; $i++ ) {
+			$separatorIndex = floor( $numNumbers * $i / $numBuckets ) - 1;
+			$previousSeparatorValue = $separatorValue;
+			$separatorValue = $numberArray[$separatorIndex];
+			if ( $separatorValue == $previousSeparatorValue ) {
+				continue;
+			}
+			$bucketSeparators[] = $separatorValue;
+		}
+		$lastValue = ceil( $numberArray[count( $numberArray ) - 1] );
+		if ( $lastValue != $separatorValue ) {
+			$bucketSeparators[] = $lastValue;
+		}
+
+		// Get the closest "nice" (few significant digits) number for
+		// each of the bucket separators, with the number of significant digits
+		// required based on their proximity to their neighbors.
+		// The first and last separators need special handling.
+		$bucketSeparators[0] = $this->getNearestNiceNumber( $bucketSeparators[0], null, $bucketSeparators[1] );
+		for ( $i = 1; $i < count( $bucketSeparators ) - 1; $i++ ) {
+			$bucketSeparators[$i] = $this->getNearestNiceNumber( $bucketSeparators[$i], $bucketSeparators[$i - 1], $bucketSeparators[$i + 1] );
+		}
+		$bucketSeparators[count( $bucketSeparators ) - 1] = $this->getNearestNiceNumber( $bucketSeparators[count( $bucketSeparators ) - 1], $bucketSeparators[count( $bucketSeparators ) - 2], null );
+
+		$oldSeparatorValue = $bucketSeparators[0];
+		for ( $i = 1; $i < count( $bucketSeparators ); $i++ ) {
+			$separatorValue = $bucketSeparators[$i];
+			$propertyValues[] = array(
+				'lowerNumber' => $oldSeparatorValue,
+				'higherNumber' => $separatorValue,
+				'numValues' => 0,
+			);
+			$oldSeparatorValue = $separatorValue;
+		}
+
+		$curSeparator = 0;
+		for ($i = 0; $i < count( $numberArray ); $i++) {
+			if ( $curSeparator < count( $propertyValues ) - 1 ) {
+				$curNumber = $numberArray[$i];
+				while ( $curNumber >= $bucketSeparators[$curSeparator + 1] ) {
+					$curSeparator++;
+				}
+			}
+			$propertyValues[$curSeparator]['numValues']++;
+		}
+
+		return $propertyValues;
+	}
+
+	function printNumberRanges( $filter_name, $filter_values ) {
+		// We generate $cur_url here, instead of passing it in, because
+		// if there's a previous value for this filter it may be
+		// removed.
+		$cur_url = $this->makeBrowseURL( $this->category, $this->applied_filters, $this->subcategory, $filter_name );
+		$cur_url .= ( strpos( $cur_url, '?' ) ) ? '&' : '?';
+
+		$numberArray = array();
+		foreach ( $filter_values as $value => $num_instances ) {
+			for ( $i = 0; $i < $num_instances; $i++ ) {
+				$numberArray[] = $value;
+			}
+		}
+		// Put into numerical order.
+		sort( $numberArray );
+
+		$text = '';
+		$filterValues = $this->generateFilterValuesFromNumbers( $numberArray );
+		foreach( $filterValues as $i => $curBucket ) {
+			if ( $i > 0 ) {
+				$text .= " &middot; ";
+			}
+			// number_format() adds in commas for each thousands place.
+			$curText = number_format( $curBucket['lowerNumber'] );
+			if ( $curBucket['higherNumber'] != null ) {
+				$curText .= ' - ' . number_format( $curBucket['higherNumber'] );
+			}
+			$curText .= ' (' . $curBucket['numValues'] . ') ';
+			$filterURL = $cur_url . "$filter_name=" . $curBucket['lowerNumber'];
+			if ( $curBucket['higherNumber'] != null ) {
+				$filterURL .= '-' . $curBucket['higherNumber'];
+			}
+			$text .= '<a href="' . $filterURL . '">' . $curText . '</a>';
+		}
+		return $text;
 	}
 
 	function printComboBoxInput( $filter_name, $filter_values, $cur_value = null ) {
@@ -706,6 +902,9 @@ END;
 		return $text;
 	}
 
+	// This code is not called as of version 1.3; but it may get called
+	// again in the future.
+	/*
 	function printDateRangeInput( $filter_name, $lower_date = null, $upper_date = null ) {
 		global $wgRequest;
 
@@ -733,19 +932,25 @@ END;
 		$text .= "</form>\n";
 		return $text;
 	}
+	*/
 
 	/**
 	 * Print the line showing 'AND' values for a filter that has not
 	 * been applied to the drilldown
 	 */
-	function printUnappliedFilterLine( $f, $cur_url ) {
+	function printUnappliedFilterLine( $f, $cur_url = null ) {
 		global $sdgScriptPath;
+		global $sdgMinValuesForComboBox;
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
 		$f->createTempTable();
 		$found_results_for_filter = false;
 		if ( count( $f->allowed_values ) == 0 ) {
-			$filter_values = $f->getAllValues();
+			if ( $f->property_type == 'date' ) {
+				$filter_values = $f->getTimePeriodValues();
+			} else {
+				$filter_values = $f->getAllValues();
+			}
 			if ( !is_array( $filter_values ) ) {
 				$f->dropTempTable();
 				return $this->printFilterLine( $f->name, false, false, $filter_values );
@@ -790,17 +995,15 @@ END;
 		$normal_filter = true;
 		if ( count( $filter_values ) == 0 ) {
 			$results_line = '(' . wfMsg( 'sd_browsedata_novalues' ) . ')';
-		// for backward compatibility, also check against
-		// 'sd_filter_freetext' (i.e. 'text' in English), which was
-		// the old name of the input
-		} elseif ( $f->input_type == wfMsgForContent( 'sd_filter_combobox' ) ||
-			$f->input_type == wfMsgForContent( 'sd_filter_freetext' ) ) {
+		} elseif ( $f->property_type == 'number' ) {
+			$results_line = $this->printNumberRanges( $filter_name, $filter_values );
+		} elseif ( count( $filter_values ) >= $sdgMinValuesForComboBox ) {
 			$results_line = $this->printComboBoxInput( $filter_name, $filter_values );
 			$normal_filter = false;
-		} elseif ( $f->input_type == wfMsgForContent( 'sd_filter_daterange' ) ) {
-			$results_line = $this->printDateRangeInput( $filter_name );
-			$normal_filter = false;
 		} else {
+			// If $cur_url wasn't passed in, we have to create it.
+			$cur_url = $this->makeBrowseURL( $this->category, $this->applied_filters, $this->subcategory, $f->name );
+			$cur_url .= ( strpos( $cur_url, '?' ) ) ? '&' : '?';
 			$results_line = $this->printUnappliedFilterValues( $cur_url, $f, $filter_values );
 		}
 
@@ -923,7 +1126,7 @@ END;
 					$filter_url = $cur_url . '_subcat=' . urlencode( $subcat );
 					if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 						if ( $lowest_num_results != $highest_num_results ) {
-							$font_size = round( ((log($num_results) - log($lowest_num_results)) * $scale_factor ) +  $sdgFiltersSmallestFontSize );
+							$font_size = round( ((log($num_results) - log($lowest_num_results)) * $scale_factor ) + $sdgFiltersSmallestFontSize );
 						} else {
 							$font_size = ( $sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize ) / 2;
 						}
@@ -941,7 +1144,11 @@ END;
 		foreach ( $filters as $f ) {
 			foreach ( $this->applied_filters as $af ) {
 				if ( $af->filter->name == $f->name ) {
-					$header .= $this->printAppliedFilterLine( $af );
+					if ( $f->property_type == 'date' || $f->property_type == 'number' ) {
+						$header .= $this->printUnappliedFilterLine( $f );
+					} else {
+						$header .= $this->printAppliedFilterLine( $af );
+					}
 				}
 			}
 			foreach ( $this->remaining_filters as $rf ) {

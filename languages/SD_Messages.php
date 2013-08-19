@@ -45,10 +45,6 @@ $messages['en'] = array(
 	'sd_createfilter_property'              => 'Property that this filter covers:',
 	'sd_createfilter_usepropertyvalues'     => 'Use all values of this property for the filter',
 	'sd_createfilter_usecategoryvalues'     => 'Get values for filter from this category:',
-	'sd_createfilter_usedatevalues'         => 'Use date ranges for this filter with this time period:',
-	'sd_createfilter_entervalues'           => 'Enter values for filter manually (values should be separated by commas - if a value contains a comma, replace it with "\,"):',
-	'sd_createfilter_inputtype'		=> 'Input type for this filter:',
-	'sd_createfilter_listofvalues'		=> 'list of values (default)',
 	'sd_createfilter_requirefilter'         => 'Require another filter to be selected before this one is displayed:',
 	'sd_createfilter_label'                 => 'Label for this filter (optional):',
 	'sd_blank_error'                        => 'cannot be blank',
@@ -58,14 +54,6 @@ $messages['en'] = array(
 	// content messages
 	'sd_filter_coversproperty'         => 'This filter covers the property $1.',
 	'sd_filter_getsvaluesfromcategory' => 'It gets its values from the category $1.',
-	'sd_filter_usestimeperiod'         => 'It uses $1 as its time period.',
-	'sd_filter_year'                   => 'Year',
-	'sd_filter_month'                  => 'Month',
-	'sd_filter_hasvalues'              => 'It has the values $1.',
-	'sd_filter_hasinputtype'           => 'It has the input type $1.',
-	'sd_filter_combobox'               => 'combo box',
-	'sd_filter_freetext'               => 'text',
-	'sd_filter_daterange'              => 'date range',
 	'sd_filter_requiresfilter'         => 'It requires the presence of the filter $1.',
 	'sd_filter_haslabel'               => 'It has the label $1.',
 );
@@ -118,17 +106,6 @@ $messages['qqq'] = array(
 	'sd_createfilter_property' => 'The title of the drop-down list on [[Special:CreateFilter]] that allows to select an available property.',
 	'sd_createfilter_usepropertyvalues' => 'An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter.',
 	'sd_createfilter_usecategoryvalues' => 'An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter. It is followed by a drop-down list that allows to select an available category.',
-	'sd_createfilter_usedatevalues' => 'An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter.
-
-Followed by a drop-down list that allows to select an available time period. These are:
-* {{msg-mw|Sd filter year}}
-* {{msg-mw|Sd filter month}}',
-	'sd_createfilter_entervalues' => 'An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter. It is followed by an input field that allows to specify one or more property values.',
-	'sd_createfilter_inputtype' => 'The title of the drop-down list on [[Special:CreateFilter]] that allows to select available input type. These are
-* {{msg-mw|Sd createfilter listofvalues}}
-* {{msg-mw|Sd filter combobox}}
-* {{msg-mw|Sd filter daterange}}',
-	'sd_createfilter_listofvalues' => 'A specific type of interface input.',
 	'sd_createfilter_requirefilter' => 'The title of the drop-down list on [[Special:CreateFilter]] that allows to select an available filter.',
 	'sd_createfilter_label' => 'The title of the field on [[Special:CreateFilter]] that allows to enter the label of a filter.',
 	'sd_blank_error' => 'This is an error message that gets shown if a required input was not provided.
@@ -141,39 +118,6 @@ Followed by a drop-down list that allows to select an available time period. The
 * $1 - name of the property',
 	'sd_filter_getsvaluesfromcategory' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
 * $1 - name of the category',
-	'sd_filter_usestimeperiod' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
-
-Parameters:
-* $1 - period of time that values are divided into; holds one of the following messages:
-** {{msg-mw|Sd filter year}}
-** {{msg-mw|Sd filter month}}',
-	'sd_filter_year' => 'A specific type of interface input.
-
-This message is substituted for <code>$1</code> in {{msg-mw|Sd filter usestimeperiod}}.
-{{Identical|Year}}',
-	'sd_filter_month' => 'A specific type of interface input.
-
-This message is substituted for <code>$1</code> in {{msg-mw|Sd filter usestimeperiod}}.
-{{Identical|Month}}',
-	'sd_filter_hasvalues' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
-* $1 - name of the value(s)',
-	'sd_filter_hasinputtype' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
-
-Parameters:
-* $1 - name of the input type; holds one of the following messages:
-** {{msg-mw|Sd filter combobox}}
-** {{msg-mw|Sd filter freetext}}
-** {{msg-mw|Sd filter daterange}}',
-	'sd_filter_combobox' => 'A specific type of interface input.
-
-This message is substituted for <code>$1</code> in {{msg-mw|Sd filter hasinputtype}}.',
-	'sd_filter_freetext' => 'A specific type of interface input.
-
-This message is substituted for <code>$1</code> in {{msg-mw|Sd filter hasinputtype}}.
-{{Identical|Text}}',
-	'sd_filter_daterange' => 'A specific type of interface input.
-
-This message is substituted for <code>$1</code> in {{msg-mw|Sd filter hasinputtype}}.',
 	'sd_filter_requiresfilter' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
 * $1 - name of the filter',
 	'sd_filter_haslabel' => 'This is a content message of a page in namespace filter describing an aspect of the filter defined on this page.
@@ -206,13 +150,8 @@ $messages['af'] = array(
 	'sd_filters_docu' => 'Die volgende filters bestaan in {{SITENAME}}:',
 	'createfilter' => "Skep 'n filter",
 	'sd_createfilter_name' => 'Naam:',
-	'sd_createfilter_listofvalues' => 'lys van waardes (standaard)',
 	'sd_createfilter_label' => 'Etiket vir hierdie filter (opsioneel):',
 	'sd_blank_error' => 'mag nie leeg wees nie',
-	'sd_filter_year' => 'Jaar',
-	'sd_filter_month' => 'Maand',
-	'sd_filter_freetext' => 'teks',
-	'sd_filter_daterange' => 'datumreeks',
 );
 
 /** Amharic (አማርኛ)
@@ -220,7 +159,6 @@ $messages['af'] = array(
  */
 $messages['am'] = array(
 	'sd_createfilter_name' => 'ስም:',
-	'sd_filter_month' => 'ወር',
 );
 
 /** Aragonese (aragonés)
@@ -270,23 +208,11 @@ $messages['ar'] = array(
 	'sd_createfilter_property' => 'الخاصية التي يغطيها هذا الفلتر:',
 	'sd_createfilter_usepropertyvalues' => 'استخدم كل قيم هذه الخاصية للفلتر',
 	'sd_createfilter_usecategoryvalues' => 'احصل على القيم للفلتر من هذا التصنيف:',
-	'sd_createfilter_usedatevalues' => 'استخدم نطاقات زمنية لهذا الفلتر بهذه الفترة الزمنية:',
-	'sd_createfilter_entervalues' => 'أدخل القيم للفلتر يدويا (القيم ينبغي أن يتم فصلها بواسطة فاصلات - لو أن قيمة ما تحتوي على فاصلة، استبدلها ب "\\,"):',
-	'sd_createfilter_inputtype' => ': نوع المدخل للفلتر',
-	'sd_createfilter_listofvalues' => 'قائمة القيم (أفتراضي)',
 	'sd_createfilter_requirefilter' => 'يتطلب اختيار مُرشّح آخر قبل أن يتم عرض هذا:',
 	'sd_createfilter_label' => 'علامة لهذا الفلتر (اختياري):',
 	'sd_blank_error' => 'لا يمكن أن يكون فارغا',
 	'sd_filter_coversproperty' => 'هذا الفلتر يغطي الخاصية $1.',
 	'sd_filter_getsvaluesfromcategory' => 'يحصل على قيمه من التصنيف $1.',
-	'sd_filter_usestimeperiod' => 'يستخدم $1 كفترته الزمنية.',
-	'sd_filter_year' => 'عام',
-	'sd_filter_month' => 'شهر',
-	'sd_filter_hasvalues' => 'يمتلك القيم $1.',
-	'sd_filter_hasinputtype' => 'لها نوع المدخل $1',
-	'sd_filter_combobox' => 'صندوق كومبو',
-	'sd_filter_freetext' => 'نص',
-	'sd_filter_daterange' => 'معدل البيانات',
 	'sd_filter_requiresfilter' => 'يتطلب وجود الفلتر $1.',
 	'sd_filter_haslabel' => 'يمتلك العلامة $1.',
 );
@@ -306,9 +232,6 @@ $messages['arc'] = array(
 	'createfilter' => 'ܒܪܝ ܡܨܦܝܢܝܬܐ',
 	'sd_createfilter_name' => 'ܫܡܐ:',
 	'sd_blank_error' => 'ܠܐ ܡܬܡܨܝܢܐ ܐܝܬܘܗܝ ܕܢܗܘܐ ܣܦܝܩܐ',
-	'sd_filter_year' => 'ܫܢܬܐ',
-	'sd_filter_month' => 'ܝܪܚܐ',
-	'sd_filter_freetext' => 'ܟܬܒܬܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -344,22 +267,11 @@ $messages['arz'] = array(
 	'sd_createfilter_property' => 'الخاصية التى يغطيها هذا الفلتر:',
 	'sd_createfilter_usepropertyvalues' => 'استخدم كل قيم هذه الخاصية للفلتر',
 	'sd_createfilter_usecategoryvalues' => 'احصل على القيم للفلتر من هذا التصنيف:',
-	'sd_createfilter_usedatevalues' => 'استخدم نطاقات زمنية لهذا الفلتر بهذه الفترة الزمنية:',
-	'sd_createfilter_entervalues' => 'أدخل القيم للفلتر يدويا (القيم ينبغى أن يتم فصلها بواسطة فاصلات - لو أن قيمة ما تحتوى على فاصلة، استبدلها ب "\\,"):',
-	'sd_createfilter_inputtype' => ': نوع المدخل للفلتر',
-	'sd_createfilter_listofvalues' => 'قائمة القيم (أفتراضي)',
 	'sd_createfilter_requirefilter' => 'يتطلب اختيار فلتر آخر قبل أن يتم عرض هذا:',
 	'sd_createfilter_label' => 'علامة لهذا الفلتر (اختياري):',
 	'sd_blank_error' => 'لا يمكن أن يكون فارغا',
 	'sd_filter_coversproperty' => 'هذا الفلتر يغطى الخاصية $1.',
 	'sd_filter_getsvaluesfromcategory' => 'يحصل على قيمه من التصنيف $1.',
-	'sd_filter_usestimeperiod' => 'يستخدم $1 كفترته الزمنية.',
-	'sd_filter_year' => 'عام',
-	'sd_filter_month' => 'شهر',
-	'sd_filter_hasvalues' => 'يمتلك القيم $1.',
-	'sd_filter_hasinputtype' => 'لها نوع المدخل $1',
-	'sd_filter_freetext' => 'نص',
-	'sd_filter_daterange' => 'مدى البيانات',
 	'sd_filter_requiresfilter' => 'يتطلب وجود الفلتر $1.',
 	'sd_filter_haslabel' => 'يمتلك العلامة $1.',
 );
@@ -399,10 +311,6 @@ $messages['ast'] = array(
 	'sd_createfilter_property' => 'Propiedá que cubre esta peñera:',
 	'sd_createfilter_usepropertyvalues' => "Usar tolos valores d'esta propiedá pa la peñera",
 	'sd_createfilter_usecategoryvalues' => "Sacar los valores pa la peñera d'esta categoría:",
-	'sd_createfilter_usedatevalues' => 'Usar los rangos de data pa esta peñera con esti periodu de tiempu:',
-	'sd_createfilter_entervalues' => 'Escribi manualmente los valores pa la peñera (los valores se tienen de separar con comes - si un valor contién una coma sustituyila por "\\,"):',
-	'sd_createfilter_inputtype' => "Triba d'entrada pa esta peñera:",
-	'sd_createfilter_listofvalues' => 'llista de valores (predeterminada)',
 	'sd_createfilter_requirefilter' => "Otra peñera que se tien de seleicionar enantes d'amosar esta:",
 	'sd_createfilter_label' => 'Etiqueta pa esta peñera (opcional):',
 	'sd_blank_error' => 'nun pue tar balero',
@@ -410,14 +318,6 @@ $messages['ast'] = array(
 	'sd-pageschemas-values' => 'Valores',
 	'sd_filter_coversproperty' => 'Esta peñera cubre la propiedá $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Saca los valores de la categoría $1.',
-	'sd_filter_usestimeperiod' => 'Usa $1 como periodu de tiempu.',
-	'sd_filter_year' => 'Añu',
-	'sd_filter_month' => 'Mes',
-	'sd_filter_hasvalues' => 'Tien los valores $1.',
-	'sd_filter_hasinputtype' => "Tien como tipu d'entrada $1.",
-	'sd_filter_combobox' => "caxa combinada (''combo box'')",
-	'sd_filter_freetext' => 'testu',
-	'sd_filter_daterange' => 'rangu de dates',
 	'sd_filter_requiresfilter' => 'Se requier la presencia de la peñera $1.',
 	'sd_filter_haslabel' => 'Tien la etiqueta $1.',
 );
@@ -450,10 +350,6 @@ $messages['avk'] = array(
 	'sd_blank_error' => 'me rotir vlardafa',
 	'sd_filter_coversproperty' => 'Bata espara va $1 pilkaca skur.',
 	'sd_filter_getsvaluesfromcategory' => 'Mal $1 loma in va voda plekur.',
-	'sd_filter_usestimeperiod' => 'In wetce intaf ugalolk va $1 faver.',
-	'sd_filter_year' => 'Ilana',
-	'sd_filter_month' => 'Aksat',
-	'sd_filter_hasvalues' => 'In va $1 voda se digir.',
 	'sd_filter_requiresfilter' => 'Batcoba va tira ke $1 espasiki kucilar.',
 	'sd_filter_haslabel' => 'In tir dem $1 kral.',
 );
@@ -467,9 +363,6 @@ $messages['az'] = array(
 	'sd_browsedata_daterangestart' => 'Başla:',
 	'sd_browsedata_daterangeend' => 'Son:',
 	'sd_createfilter_name' => 'Ad:',
-	'sd_filter_year' => 'İl',
-	'sd_filter_month' => 'Ay',
-	'sd_filter_freetext' => 'mətn',
 );
 
 /** Belarusian (беларуская)
@@ -477,7 +370,6 @@ $messages['az'] = array(
  */
 $messages['be'] = array(
 	'filters' => 'Фільтры',
-	'sd_filter_freetext' => 'тэкст',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
@@ -513,23 +405,11 @@ $messages['be-tarask'] = array(
 	'sd_createfilter_property' => 'Уласьцівасьць, якую пакрывае гэты фільтар:',
 	'sd_createfilter_usepropertyvalues' => 'Выкарыстоўваць усе значэньні гэтай ўласьцівасьці для фільтру',
 	'sd_createfilter_usecategoryvalues' => 'Атрымаць значэньні для фільтру з гэтай катэгорыі:',
-	'sd_createfilter_usedatevalues' => 'Выкарыстоўваць дыяпазон датаў для гэтага фільтру з гэтым пэрыядам часу:',
-	'sd_createfilter_entervalues' => 'Увядзіце значэньне для фільтру ўручную (значэньні павінны быць падзелены коскамі, калі значэньне ўтрымлівае коску, замяніце яе на «\\,»):',
-	'sd_createfilter_inputtype' => 'Выходны тып для гэтага фільтру:',
-	'sd_createfilter_listofvalues' => 'сьпіс значэньняў (па змоўчваньні)',
 	'sd_createfilter_requirefilter' => 'Патрабуецца выбар іншага фільтру перад тым, як будзе паказаны гэты:',
 	'sd_createfilter_label' => 'Метка для гэтага фільтру (неабавязкова):',
 	'sd_blank_error' => 'ня можа быць незапоўненым',
 	'sd_filter_coversproperty' => 'Гэты фільтар хавае ўласьцівасьць $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Атрымлівае свае значэньні з катэгорыі $1.',
-	'sd_filter_usestimeperiod' => 'Выкарыстоўвае $1 як пэрыяд часу.',
-	'sd_filter_year' => 'Год',
-	'sd_filter_month' => 'Месяц',
-	'sd_filter_hasvalues' => 'Мае значэньне $1.',
-	'sd_filter_hasinputtype' => 'Мае выходны тып $1.',
-	'sd_filter_combobox' => 'выпадаючы сьпіс',
-	'sd_filter_freetext' => 'тэкст',
-	'sd_filter_daterange' => 'дыяпазон дат',
 	'sd_filter_requiresfilter' => 'Патрабуе наяўнасьць фільтру $1.',
 	'sd_filter_haslabel' => 'Мае метку $1.',
 );
@@ -562,10 +442,6 @@ $messages['bg'] = array(
 	'sd_createfilter_label' => 'Заглавие за този филтър (незадължително):',
 	'sd_blank_error' => 'не може да бъде празно',
 	'sd-pageschemas-filter' => 'Филтър',
-	'sd_filter_year' => 'Година',
-	'sd_filter_month' => 'Месец',
-	'sd_filter_hasvalues' => 'Има стойности $1.',
-	'sd_filter_freetext' => 'текст',
 	'sd_filter_requiresfilter' => 'Необходимо е наличието на филтър $1.',
 );
 
@@ -591,10 +467,6 @@ $messages['bn'] = array(
 	'sd_filters_docu' => '{{SITENAME}} সাইটে নিচের ফিল্টারগুলো রয়েছে:',
 	'createfilter' => 'নতুন ফিল্টার তৈরি করুন',
 	'sd_createfilter_name' => 'নাম:',
-	'sd_filter_year' => 'বছর',
-	'sd_filter_month' => 'মাস',
-	'sd_filter_freetext' => 'লেখা',
-	'sd_filter_daterange' => 'তারিখের পরিসীমা',
 );
 
 /** Breton (brezhoneg)
@@ -632,10 +504,6 @@ $messages['br'] = array(
 	'sd_createfilter_property' => "Perc'henniezh a vo goloet gant ar sil-mañ :",
 	'sd_createfilter_usepropertyvalues' => "Implijout holl talvoudoù ar berc'henniezh evit ar sil-mañ",
 	'sd_createfilter_usecategoryvalues' => 'Kaout an talvoudoù evit ar sil adalek ar rummad-mañ :',
-	'sd_createfilter_usedatevalues' => "Implijout a ra bloc'hadoù deiziad evit ar sil-mañ gant an amzervezh-mañ :",
-	'sd_createfilter_entervalues' => "Lakait c'hwi hoc'h-unan talvoudoù evit ar sil-mañ (gant skejoù e tle an talvoudoù bezañ dispartiet - ma vez ur skej en un talvoud, lakait ur \"\\,\" en e lec'h):",
-	'sd_createfilter_inputtype' => 'Ar seurt moned e-barzh evit ar sil-mañ :',
-	'sd_createfilter_listofvalues' => 'roll talvoudoù (dre ziouer)',
 	'sd_createfilter_requirefilter' => 'Goulenn ma vo diuzet ur sil all a-raok na zeufe hemañ war wel :',
 	'sd_createfilter_label' => 'Tiketenn evit ar sil-mañ (diret) :',
 	'sd_blank_error' => "n'hall ket chom goullo",
@@ -643,14 +511,6 @@ $messages['br'] = array(
 	'sd-pageschemas-values' => 'Talvoudoù',
 	'sd_filter_coversproperty' => "Ar sil-mañ a ra war-dro ar perc'henniezh $1.",
 	'sd_filter_getsvaluesfromcategory' => 'E dalvoudoù en deus eus ar rummad $1.',
-	'sd_filter_usestimeperiod' => 'Implijout a ra $1 evel padelezh ar prantad',
-	'sd_filter_year' => 'Bloaz',
-	'sd_filter_month' => 'Miz',
-	'sd_filter_hasvalues' => 'An talvoud $1 en deus.',
-	'sd_filter_hasinputtype' => 'Ar seurt moned e-barzh $1 en deus.',
-	'sd_filter_combobox' => 'stern roll disachañ',
-	'sd_filter_freetext' => 'testenn',
-	'sd_filter_daterange' => 'emled an deiziad',
 	'sd_filter_requiresfilter' => 'Ezhomm en deus eus bezañs ar sil $1.',
 	'sd_filter_haslabel' => 'An tikedenn $1 en deus.',
 );
@@ -689,23 +549,11 @@ $messages['bs'] = array(
 	'sd_createfilter_property' => 'Svojstvo koje ovaj filter pokriva:',
 	'sd_createfilter_usepropertyvalues' => 'Koristi sve vrijednosti ovog svojstva za filter',
 	'sd_createfilter_usecategoryvalues' => 'Preuzmi vrijednosti za filter iz ove kategorije:',
-	'sd_createfilter_usedatevalues' => 'Koristite datumski period za ovaj filter za ovim vremenskim periodom:',
-	'sd_createfilter_entervalues' => 'Unesite ručno vrijednosti za filter (vrijednosti se trebaju razdvojiti zarezima - ako vrijednost sadrži zarez, zamijenite ga sa "\\,"):',
-	'sd_createfilter_inputtype' => 'Tip unosa za ovaj filter:',
-	'sd_createfilter_listofvalues' => 'spisak vrijednosti (pretpostavljeno)',
 	'sd_createfilter_requirefilter' => 'Zahtijeva drugi filter da bude odabran prije nego se ovaj prikaže:',
 	'sd_createfilter_label' => 'Naslov za ovaj filter (opcija):',
 	'sd_blank_error' => 'ne može biti prazno',
 	'sd_filter_coversproperty' => 'Ovaj filter pokriva svojstvo $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Uzima svoje vrijednosti iz kategorije $1.',
-	'sd_filter_usestimeperiod' => 'Koristi $1 kao svoj vremenski period.',
-	'sd_filter_year' => 'Godina',
-	'sd_filter_month' => 'mjesec',
-	'sd_filter_hasvalues' => 'Ima vrijednosti $1.',
-	'sd_filter_hasinputtype' => 'Ima vrstu ulaza $1.',
-	'sd_filter_combobox' => 'rasklopna kutija',
-	'sd_filter_freetext' => 'tekst',
-	'sd_filter_daterange' => 'vremenski raspon',
 	'sd_filter_requiresfilter' => 'Zahtjeva prisustvo filtera $1.',
 	'sd_filter_haslabel' => 'Ima oznaku $1.',
 );
@@ -749,10 +597,6 @@ $messages['ca'] = array(
 	'sd_createfilter_property' => 'Propietat que cobreix aquest filtre:',
 	'sd_createfilter_usepropertyvalues' => "Utilitza tots els valors d'aquesta propietat per el filtre",
 	'sd_createfilter_usecategoryvalues' => "Pren els valors pel filtre d'aquesta categoria:",
-	'sd_createfilter_usedatevalues' => 'Per aquest filtre fes servir rangs de data en aquest període de temps:',
-	'sd_createfilter_entervalues' => 'Per filtrar manualment entra valors (els valors s\'han de separar per comes - si el valor conté una como substitueix-la per "\\,"):',
-	'sd_createfilter_inputtype' => "Tipus d'entrada de dades per aquest filtre:",
-	'sd_createfilter_listofvalues' => 'Llista de valors (per defecte)',
 	'sd_createfilter_requirefilter' => 'Cal seleccionar un altre filtre abans de mostrar aquest:',
 	'sd_createfilter_label' => 'Rètol per aquest filtre (opcional):',
 	'sd_blank_error' => 'no es pot deixar buit',
@@ -760,14 +604,6 @@ $messages['ca'] = array(
 	'sd-pageschemas-values' => 'Valors',
 	'sd_filter_coversproperty' => 'Aquest filtre cobreix la propietat $1',
 	'sd_filter_getsvaluesfromcategory' => 'Pren els seus valors de la categoria $1',
-	'sd_filter_usestimeperiod' => 'Utilitza $1 com a període de temps.',
-	'sd_filter_year' => 'Any',
-	'sd_filter_month' => 'Mes',
-	'sd_filter_hasvalues' => 'Té els valors $1.',
-	'sd_filter_hasinputtype' => "Té $1 com a tipus d'entrada.",
-	'sd_filter_combobox' => "Caix combinada (''combo box'')",
-	'sd_filter_freetext' => 'text',
-	'sd_filter_daterange' => 'rang de dates',
 	'sd_filter_requiresfilter' => 'Es requereix la presencia del filtre $1',
 	'sd_filter_haslabel' => 'Té el ròtul $1.',
 );
@@ -780,7 +616,6 @@ $messages['ce'] = array(
 	'browsedata' => 'Хаамашка хьажар',
 	'sd_browsedata_none' => 'Яц',
 	'createfilter' => 'Кхолла литтар',
-	'sd_filter_year' => 'Шо',
 );
 
 /** Czech (česky)
@@ -796,8 +631,6 @@ $messages['cs'] = array(
 	'sd_browsedata_daterangeend' => 'Konec:',
 	'sd_createfilter_name' => 'Jméno:',
 	'sd-pageschemas-filter' => 'Filtr',
-	'sd_filter_year' => 'Rok',
-	'sd_filter_month' => 'Měsíc',
 );
 
 /** Church Slavic (словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
@@ -820,8 +653,6 @@ $messages['cy'] = array(
 $messages['da'] = array(
 	'sd_browsedata_none' => 'Ingen',
 	'sd_createfilter_name' => 'Navn:',
-	'sd_filter_year' => 'År',
-	'sd_filter_month' => 'Måned',
 );
 
 /** German (Deutsch)
@@ -870,10 +701,6 @@ $messages['de'] = array(
 	'sd_createfilter_property' => 'Attribut für diesen Filter:',
 	'sd_createfilter_usepropertyvalues' => 'Verwende alle Werte dieses Attributs für den Filter.',
 	'sd_createfilter_usecategoryvalues' => 'Verwende die Werte dieser Kategorie für den Filter:',
-	'sd_createfilter_usedatevalues' => 'Verwende folgende Zeitangabe für diesen Filter:',
-	'sd_createfilter_entervalues' => 'Verwende diese Werte für den Filter (Werte durch Kommata getrennt eingeben. Sofern ein Wert ein Komma enthält, stattdessen „\\,“ verwenden.):',
-	'sd_createfilter_inputtype' => 'Eingabetyp für diesen Filter:',
-	'sd_createfilter_listofvalues' => 'Liste von Werten (Standard)',
 	'sd_createfilter_requirefilter' => 'Bevor dieser Filter angezeigt werden kann, muss folgender anderer Filter gesetzt sein:',
 	'sd_createfilter_label' => 'Bezeichnung für diesen Filter (optional):',
 	'sd_blank_error' => 'darf nicht leer sein',
@@ -881,14 +708,6 @@ $messages['de'] = array(
 	'sd-pageschemas-values' => 'Werte',
 	'sd_filter_coversproperty' => 'Dieser Filter filtert nach dem Attribut $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Er erhält seine Werte aus der Kategorie $1.',
-	'sd_filter_usestimeperiod' => 'Er verwendet $1 als Zeitangabe.',
-	'sd_filter_year' => 'Jahr',
-	'sd_filter_month' => 'Monat',
-	'sd_filter_hasvalues' => 'Er hat den Wert $1.',
-	'sd_filter_hasinputtype' => 'Er hat den Eingabetypen $1.',
-	'sd_filter_combobox' => 'Kombinationsfeld',
-	'sd_filter_freetext' => 'Text',
-	'sd_filter_daterange' => 'Zeitspanne',
 	'sd_filter_requiresfilter' => 'Setzt den Filter $1 voraus.',
 	'sd_filter_haslabel' => 'Er hat die Bezeichnung $1.',
 );
@@ -915,7 +734,6 @@ $messages['diq'] = array(
 	'sd_createfilter_name' => 'Name:',
 	'sd-pageschemas-filter' => 'Avrêc',
 	'sd-pageschemas-values' => 'Erci',
-	'sd_filter_month' => 'Aşme',
 );
 
 /** Lower Sorbian (dolnoserbski)
@@ -953,10 +771,6 @@ $messages['dsb'] = array(
 	'sd_createfilter_property' => 'Kakosć, kótaruž toś ten filter wopśimujo:',
 	'sd_createfilter_usepropertyvalues' => 'Wše gódnoty toś teje kakosći za filter wužywaś',
 	'sd_createfilter_usecategoryvalues' => 'Gódnoty za filter z toś teje kategorije wobstaraś:',
-	'sd_createfilter_usedatevalues' => 'Casowe wótrězki wobłuki za toś ten filter z toś teju casoweju periodu wužywaś:',
-	'sd_createfilter_entervalues' => 'Zapódaj gódnoty za filter manuelnje (gódnoty by měli se pśez komy wótźěliś - jolic gódnota wopśimujo komu, wuměń ju pśez "\\,"):',
-	'sd_createfilter_inputtype' => 'Typ zapódaśa za toś ten filter:',
-	'sd_createfilter_listofvalues' => 'lisćina gódnotow (standardny)',
 	'sd_createfilter_requirefilter' => 'Nježli toś ten filter dajo se zwobrazniś, musyš drugi filter wubraś:',
 	'sd_createfilter_label' => 'Pomjenjenje za toś ten filter (opcionalny):',
 	'sd_blank_error' => 'njesmějo prozny byś',
@@ -964,14 +778,6 @@ $messages['dsb'] = array(
 	'sd-pageschemas-values' => 'Gódnoty',
 	'sd_filter_coversproperty' => 'Toś ten filter wopśimujo kakosć $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Dostawa swóje gódnoty z kategorije $1.',
-	'sd_filter_usestimeperiod' => 'Wužywa $1 ako swój casowy wótrězk.',
-	'sd_filter_year' => 'Lěto',
-	'sd_filter_month' => 'Mjasec',
-	'sd_filter_hasvalues' => 'Ma gódnoty $1.',
-	'sd_filter_hasinputtype' => 'Ma typ zapódaśa $1.',
-	'sd_filter_combobox' => 'kombinaciski kašćik',
-	'sd_filter_freetext' => 'tekst',
-	'sd_filter_daterange' => 'casowy wótrězk',
 	'sd_filter_requiresfilter' => 'Filter $1 musy eksistěrowaś.',
 	'sd_filter_haslabel' => 'Ma pomjenjenje $1.',
 );
@@ -1003,16 +809,7 @@ $messages['el'] = array(
 	'sd_viewform' => 'Εμφάνιση φόρμας',
 	'createfilter' => 'Δημιουργία ενός φίλτρου',
 	'sd_createfilter_name' => 'Όνομα:',
-	'sd_createfilter_inputtype' => 'Τύπος εισόδου για αυτό το φίλτρο:',
-	'sd_createfilter_listofvalues' => 'λίστα αξιών (προεπιλεγμένο)',
 	'sd_blank_error' => 'δεν μπορεί να είναι κενό',
-	'sd_filter_year' => 'Χρόνος',
-	'sd_filter_month' => 'Μήνας',
-	'sd_filter_hasvalues' => 'Έχει τις τιμές $1.',
-	'sd_filter_hasinputtype' => 'Έχει τον τύπο εισόδου $1.',
-	'sd_filter_combobox' => 'συνεχόμενο κουτί',
-	'sd_filter_freetext' => 'κείμενο',
-	'sd_filter_daterange' => 'σειρά ημερομηνιών',
 	'sd_filter_requiresfilter' => 'Απαιτεί τη παρουσία του φίλτρου $1.',
 	'sd_filter_haslabel' => 'Έχει την ετικέτα $1.',
 );
@@ -1050,21 +847,11 @@ $messages['eo'] = array(
 	'sd_createfilter_property' => 'Eco kovrita de ĉi tiu filtrilo:',
 	'sd_createfilter_usepropertyvalues' => 'Uzu ĉiujn valorojn de ĉi tiu atributo por la filtrilo',
 	'sd_createfilter_usecategoryvalues' => 'Akiru valorojn por filtrilo de ĉi tiu kategorio:',
-	'sd_createfilter_usedatevalues' => 'Uzu dat-intervalojn por ĉi tiu filtrilo kun ĉi tiu tempo-periodo:',
-	'sd_createfilter_entervalues' => 'Enigu valorojn por filtrilo permane (valoroj estu apartigitaj de komoj - se valoro enhavas komon, anstataŭigu ĝin per "\\,"):',
-	'sd_createfilter_listofvalues' => 'listo de valoroj (defaŭltaj)',
 	'sd_createfilter_requirefilter' => 'Devigu alian filtrilon esti selektita antaŭ ĉi tiu estas montrita:',
 	'sd_createfilter_label' => 'Etikedo por ĉi tiu filtrilo (nedeviga):',
 	'sd_blank_error' => 'ne povas esti malplena',
 	'sd_filter_coversproperty' => 'Ĉi tiu filtrilo kovras la econ $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Ĝi akiras ties valorojn de la kategorio $1.',
-	'sd_filter_usestimeperiod' => 'Ĝi uzas $1 kiel ies tempdaŭron.',
-	'sd_filter_year' => 'Jaro',
-	'sd_filter_month' => 'Monato',
-	'sd_filter_hasvalues' => 'Ĝi havas valorojn $1.',
-	'sd_filter_combobox' => 'falmenuo',
-	'sd_filter_freetext' => 'teksto',
-	'sd_filter_daterange' => 'tempospaco',
 	'sd_filter_requiresfilter' => 'Ĝi devigas la eston de la filtrilo $1.',
 	'sd_filter_haslabel' => 'Ĝi havas etikedon $1.',
 );
@@ -1110,10 +897,6 @@ $messages['es'] = array(
 	'sd_createfilter_property' => 'Propiedad que este filtro cubre:',
 	'sd_createfilter_usepropertyvalues' => 'Usar todos los valores de esta propiedad para el filtro',
 	'sd_createfilter_usecategoryvalues' => 'Obtenga valores para el filtro desde esta categoría:',
-	'sd_createfilter_usedatevalues' => 'Usar rangos de fecha para este filtro con este periodo de tiempo:',
-	'sd_createfilter_entervalues' => 'Ingresar valores para el filtro manualmente (valores deberían estar separados por comas - si un valor contiene una coma, reemplacela con "\\,"):',
-	'sd_createfilter_inputtype' => 'Tipo de entrada de datos para este filtro:',
-	'sd_createfilter_listofvalues' => 'lista de valores (por defecto)',
 	'sd_createfilter_requirefilter' => 'Requiere otro filtro a ser seleccionado antes que este sea mostrado:',
 	'sd_createfilter_label' => 'Etiqueta para este filtro (opcional):',
 	'sd_blank_error' => 'No puede estar en blanco',
@@ -1121,14 +904,6 @@ $messages['es'] = array(
 	'sd-pageschemas-values' => 'Valores',
 	'sd_filter_coversproperty' => 'Este filtro cubre la propiedad $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Obtiene sus valores de la categoría $1.',
-	'sd_filter_usestimeperiod' => 'Usa $1 como su periodo de tiempo.',
-	'sd_filter_year' => 'Año',
-	'sd_filter_month' => 'Mes',
-	'sd_filter_hasvalues' => 'Tiene los valores $1.',
-	'sd_filter_hasinputtype' => 'Tiene como tipo de entrada $1.',
-	'sd_filter_combobox' => "Caja combinada (''combo box'')",
-	'sd_filter_freetext' => 'texto',
-	'sd_filter_daterange' => 'rango de fechas',
 	'sd_filter_requiresfilter' => 'Requiere la presencia del filtro $1.',
 	'sd_filter_haslabel' => 'Tiene la etiqueta $1.',
 );
@@ -1144,11 +919,6 @@ $messages['et'] = array(
 	'sd_browsedata_daterangestart' => 'Algus:',
 	'sd_browsedata_daterangeend' => 'Lõpp:',
 	'sd_createfilter_name' => 'Nimi:',
-	'sd_filter_usestimeperiod' => 'See filter kasutab ajaperioodi $1.',
-	'sd_filter_year' => 'Aasta',
-	'sd_filter_month' => 'Kuu',
-	'sd_filter_freetext' => 'tekst',
-	'sd_filter_daterange' => 'kuupäevavahemik',
 );
 
 /** Basque (euskara)
@@ -1173,9 +943,6 @@ $messages['eu'] = array(
 	'createfilter' => 'Iragazki bat sortu',
 	'sd_createfilter_name' => 'Izena:',
 	'sd-pageschemas-filter' => 'Iragazkia',
-	'sd_filter_year' => 'Urtea',
-	'sd_filter_month' => 'Hilabetea',
-	'sd_filter_freetext' => 'testua',
 );
 
 /** Persian (فارسی)
@@ -1210,19 +977,11 @@ $messages['fa'] = array(
 	'sd_createfilter_property' => 'ویژگی که این فیلتر شامل آن می‌شود:',
 	'sd_createfilter_usepropertyvalues' => 'همه مقادیر این ویژگی را برای این فیلتر به‌کار برید',
 	'sd_createfilter_usecategoryvalues' => 'مقادیر فیلتر را از این رده بگیرید:',
-	'sd_createfilter_usedatevalues' => 'بازه زمانی که به عنوان پریود زمانی این فیلتر به‌کار گرفته شود:',
-	'sd_createfilter_entervalues' => 'مقادیر فیلتر را دستی وارد کنید (مقادیر باید با کاما جدا شوند، اگر یک مقدار کاما دارد، آن‌را با "\\،" جایگزین کنید):',
 	'sd_createfilter_requirefilter' => 'قبل از نمایش این یکی، یک فیلتر دیگر باید انتخاب شود:',
 	'sd_createfilter_label' => 'برچسب این فیلتر (دلخواه)',
 	'sd_blank_error' => 'نمی‌تواند خالی باشد',
 	'sd_filter_coversproperty' => 'این فیلتر ویژگی $1 را شامل می‌شود.',
 	'sd_filter_getsvaluesfromcategory' => 'مقادیرش را از رده $1 می‌گیرد',
-	'sd_filter_usestimeperiod' => '$1 را به عنوان پریود زمانی به‌کار می‌برد',
-	'sd_filter_year' => 'سال',
-	'sd_filter_month' => 'ماه',
-	'sd_filter_hasvalues' => 'مقادیر $1 را دارد.',
-	'sd_filter_freetext' => 'متن',
-	'sd_filter_daterange' => 'بازهٔ تاریخ',
 	'sd_filter_requiresfilter' => 'به وجود فیلتر $1 احتیاج دارد.',
 	'sd_filter_haslabel' => 'برچسب $1 دارد.',
 );
@@ -1268,10 +1027,6 @@ $messages['fi'] = array(
 	'sd_createfilter_property' => 'Ominaisuus, jota tämä suodatin koskee:',
 	'sd_createfilter_usepropertyvalues' => 'Käytä tämän ominaisuuden kaikkia arvoja tälle suodattimelle',
 	'sd_createfilter_usecategoryvalues' => 'Nouda suodattimen arvot tästä luokasta:',
-	'sd_createfilter_usedatevalues' => 'Käytä päiväys-rajoituksia tämän suodattimen kanssa käyttäen tätä aikajaksoa:',
-	'sd_createfilter_entervalues' => 'Syötä suodatinarvot käsin (arvot on erotettava pilkuilla - jos arvossa on pilkku, korvaa se merkillä "\\,"):',
-	'sd_createfilter_inputtype' => 'Syötetyyppi tälle suodattimelle:',
-	'sd_createfilter_listofvalues' => 'luettelo arvoista (oletus)',
 	'sd_createfilter_requirefilter' => 'Toinen suodatin on valittava ennen kuin tämä näytetään:',
 	'sd_createfilter_label' => 'Suodattimen nimi (valinnainen):',
 	'sd_blank_error' => 'ei voi olla tyhjä',
@@ -1279,14 +1034,6 @@ $messages['fi'] = array(
 	'sd-pageschemas-values' => 'Arvot',
 	'sd_filter_coversproperty' => 'Tämä suodatin käyttää ominaisuutta $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Sen arvot tulevat luokasta $1.',
-	'sd_filter_usestimeperiod' => 'Ajanjaksona on $1.',
-	'sd_filter_year' => 'Vuosi',
-	'sd_filter_month' => 'Kuukausi',
-	'sd_filter_hasvalues' => 'Sillä on arvot $1.',
-	'sd_filter_hasinputtype' => 'Sen syötetyyppi on $1.',
-	'sd_filter_combobox' => 'Yhdistelmäruutu',
-	'sd_filter_freetext' => 'teksti',
-	'sd_filter_daterange' => 'päiväväli',
 	'sd_filter_requiresfilter' => 'Se edellyttää suodattimen $1 käyttöä.',
 	'sd_filter_haslabel' => 'Sen nimi on $1.',
 );
@@ -1335,10 +1082,6 @@ $messages['fr'] = array(
 	'sd_createfilter_property' => 'Propriété que ce filtre couvrira :',
 	'sd_createfilter_usepropertyvalues' => 'Utiliser, pour ce filtre, toutes les valeurs de cette propriété',
 	'sd_createfilter_usecategoryvalues' => 'Obtenir les valeurs pour ce filtre à partir de cette catégorie :',
-	'sd_createfilter_usedatevalues' => 'Utilise des blocs de date pour ce filtre avec cette période temporelle :',
-	'sd_createfilter_entervalues' => 'Entrez manuellement les valeurs pour ce filtre (les valeurs devront être séparées par des virgules - si une valeur contient une virgule, remplacez-la par « \\, ») :',
-	'sd_createfilter_inputtype' => 'Type d’entrée pour ce filtre :',
-	'sd_createfilter_listofvalues' => 'Liste des valeurs (défaut)',
 	'sd_createfilter_requirefilter' => 'Exiger qu’un autre filtre soit sélectionné avant que celui-ci ne soit affiché :',
 	'sd_createfilter_label' => 'Étiquette pour ce filtre (facultatif) :',
 	'sd_blank_error' => 'ne peut être laissé en blanc',
@@ -1346,14 +1089,6 @@ $messages['fr'] = array(
 	'sd-pageschemas-values' => 'Valeurs',
 	'sd_filter_coversproperty' => 'Ce filtre couvre la propriété $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Il obtient ses valeurs à partir de la catégorie $1.',
-	'sd_filter_usestimeperiod' => 'Il utilise $1 comme durée de sa période',
-	'sd_filter_year' => 'Année',
-	'sd_filter_month' => 'Mois',
-	'sd_filter_hasvalues' => 'Il a $1 comme valeur',
-	'sd_filter_hasinputtype' => 'Il a le type d’entrée $1.',
-	'sd_filter_combobox' => 'Boîte combo',
-	'sd_filter_freetext' => 'texte',
-	'sd_filter_daterange' => 'Gamme de date',
 	'sd_filter_requiresfilter' => 'Il nécessite la présence du filtre $1.',
 	'sd_filter_haslabel' => 'Étiqueté $1.',
 );
@@ -1387,21 +1122,12 @@ $messages['frp'] = array(
 	'createfilter' => 'Fâre un filtro',
 	'sd-createfilter-with-name' => 'Fâre lo filtro : $1',
 	'sd_createfilter_name' => 'Nom :',
-	'sd_createfilter_inputtype' => 'Tipo d’entrâ por ceti filtro :',
-	'sd_createfilter_listofvalues' => 'Lista de les valors (per dèfôt)',
 	'sd_createfilter_label' => 'Ètiquèta por ceti filtro (u chouèx) :',
 	'sd_blank_error' => 'pôt pas étre vouedo',
 	'sd-pageschemas-filter' => 'Filtro',
 	'sd-pageschemas-values' => 'Valors',
 	'sd_filter_coversproperty' => 'Ceti filtro côvre la propriètât $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Il at ses valors dês la catègorie $1.',
-	'sd_filter_year' => 'An',
-	'sd_filter_month' => 'Mês',
-	'sd_filter_hasvalues' => 'Il at les valors $1.',
-	'sd_filter_hasinputtype' => 'Il at lo tipo d’entrâ $1.',
-	'sd_filter_combobox' => 'Bouèta combô',
-	'sd_filter_freetext' => 'tèxto',
-	'sd_filter_daterange' => 'plage de dâtes',
 	'sd_filter_haslabel' => 'Il at l’ètiquèta $1.',
 );
 
@@ -1421,7 +1147,6 @@ $messages['ga'] = array(
 	'sd_browsedata_other' => 'Eile',
 	'sd_browsedata_none' => 'Tada',
 	'sd_createfilter_name' => 'Ainm:',
-	'sd_filter_month' => 'Mí',
 );
 
 /** Galician (galego)
@@ -1460,10 +1185,6 @@ $messages['gl'] = array(
 	'sd_createfilter_property' => 'Propiedade que o filtro inclúe:',
 	'sd_createfilter_usepropertyvalues' => 'Usar todos os valores da propiedade para o filtro',
 	'sd_createfilter_usecategoryvalues' => 'Obter os valores para o filtro desta categoría:',
-	'sd_createfilter_usedatevalues' => 'Use rangos de data para este filtro con este período de tempo:',
-	'sd_createfilter_entervalues' => 'Introduza valores para filtrar manualmente (os valores deben separarse por comas - se o valor contén unha coma, substitúaa por "\\,"):',
-	'sd_createfilter_inputtype' => 'Tipo de entrada para este filtro:',
-	'sd_createfilter_listofvalues' => 'lista de valores (por defecto)',
 	'sd_createfilter_requirefilter' => 'Requírese que sexa seleccionado outro filtro antes de que este sexa amosado:',
 	'sd_createfilter_label' => 'Lapela para este filtro (opcional):',
 	'sd_blank_error' => 'non pode estar en branco',
@@ -1471,14 +1192,6 @@ $messages['gl'] = array(
 	'sd-pageschemas-values' => 'Valores',
 	'sd_filter_coversproperty' => 'O filtro inclúe a propiedade $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Obtén os seus valores da categoría $1.',
-	'sd_filter_usestimeperiod' => 'Usa $1 como o seu período de tempo.',
-	'sd_filter_year' => 'Ano',
-	'sd_filter_month' => 'Mes',
-	'sd_filter_hasvalues' => 'Ten os valores $1.',
-	'sd_filter_hasinputtype' => 'Ten o tipo de entrada $1.',
-	'sd_filter_combobox' => 'Caixa combo',
-	'sd_filter_freetext' => 'texto',
-	'sd_filter_daterange' => 'gama de data',
 	'sd_filter_requiresfilter' => 'Require a presenza do filtro $1.',
 	'sd_filter_haslabel' => 'Ten a lapela $1.',
 );
@@ -1500,9 +1213,6 @@ $messages['grc'] = array(
 	'sd_viewform' => 'Ὁρᾶν τύπον',
 	'createfilter' => 'Ποιεῖν διηθητήριον',
 	'sd_createfilter_name' => 'Ὄνομα:',
-	'sd_filter_year' => 'Ἔτος',
-	'sd_filter_month' => 'Μήν',
-	'sd_filter_freetext' => 'κείμενον',
 );
 
 /** Swiss German (Alemannisch)
@@ -1540,10 +1250,6 @@ $messages['gsw'] = array(
 	'sd_createfilter_property' => 'Eigeschaft vu däm Filter:',
 	'sd_createfilter_usepropertyvalues' => 'Alli Wärt vu däre Eigeschaft fir dr Filter bruuche.',
 	'sd_createfilter_usecategoryvalues' => 'D Wärt fir dr Filter vu däre Kategorii verwände:',
-	'sd_createfilter_usedatevalues' => 'Dää Zytruum fir dää Filter bruuche:',
-	'sd_createfilter_entervalues' => 'Bruuch die Wärt fir dr Filter (Wärt dur Komma trännt yygee - Wänn s in eme Wärt e Komma het, ersetze dur „\\,“):',
-	'sd_createfilter_inputtype' => 'Yygabtyp vu däm Filter:',
-	'sd_createfilter_listofvalues' => 'Lischt vu Wärt (Standard)',
 	'sd_createfilter_requirefilter' => 'Voreb dää Filter aazeigt wird, muess dää ander Filter gsetzt syy:',
 	'sd_createfilter_label' => 'Bezeichnig vu däm Filter (optional):',
 	'sd_blank_error' => 'derf nit läär syy',
@@ -1551,14 +1257,6 @@ $messages['gsw'] = array(
 	'sd-pageschemas-values' => 'Wärt',
 	'sd_filter_coversproperty' => 'Dää Filter betrifft d Eigenschaft $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Är chunnt syni Wärt us dr Kategorii $1 iber.',
-	'sd_filter_usestimeperiod' => 'Är bruucht $1 as Zytaagab.',
-	'sd_filter_year' => 'Johr',
-	'sd_filter_month' => 'Monet',
-	'sd_filter_hasvalues' => 'Är het dr Wärt $1.',
-	'sd_filter_hasinputtype' => 'Är het dr Yygabetyp $1.',
-	'sd_filter_combobox' => 'Combo-Chaschte',
-	'sd_filter_freetext' => 'Täxt',
-	'sd_filter_daterange' => 'Zytruum',
 	'sd_filter_requiresfilter' => 'Är setzt dr Filter $1 vorus.',
 	'sd_filter_haslabel' => 'Är het d Bezeichnig $1.',
 );
@@ -1577,8 +1275,6 @@ $messages['gv'] = array(
 	'sd_browsedata_viewcategory' => 'jeeagh er ronney',
 	'sd_browsedata_other' => 'Elley',
 	'sd_createfilter_name' => 'Ennym:',
-	'sd_filter_year' => 'Blein',
-	'sd_filter_month' => 'Mee',
 );
 
 /** Hawaiian (Hawai`i)
@@ -1625,10 +1321,6 @@ $messages['he'] = array(
 	'sd_createfilter_property' => 'המאפיין אותו מכסה מסנן זה:',
 	'sd_createfilter_usepropertyvalues' => 'שימוש בכל הערכים של מאפיין זה עבור המסנן',
 	'sd_createfilter_usecategoryvalues' => 'קבלת הערכים עבור המסנן מקטגוריה זו:',
-	'sd_createfilter_usedatevalues' => 'שימוש בטווחי תאריכים עבור מסנן זה, עם משך הזמן הבא:',
-	'sd_createfilter_entervalues' => 'כתבו ערכים ידנית עבור המסנן (הערכים אמורים להיות מופרדים בפסיקים - אם ערך מכיל פסיק, החליפו אותו ב־"\\,"):',
-	'sd_createfilter_inputtype' => 'סוג הקלט עבור מסנן זה:',
-	'sd_createfilter_listofvalues' => 'רשימת הערכים (ברירת מחדל)',
 	'sd_createfilter_requirefilter' => 'הצבת דרישה לבחירת מסנן אחר לפני שזה יוצג:',
 	'sd_createfilter_label' => 'תווית עבור מסנן זה (אופציונלי):',
 	'sd_blank_error' => 'לא ניתן להשאיר ריק',
@@ -1636,14 +1328,6 @@ $messages['he'] = array(
 	'sd-pageschemas-values' => 'ערכים',
 	'sd_filter_coversproperty' => 'מסנן זה מכסה את המאפיין $1.',
 	'sd_filter_getsvaluesfromcategory' => 'קבלת הערכים עבורו נעשית מהקטגוריה $1.',
-	'sd_filter_usestimeperiod' => 'נעשה שימוש ב־$1 כמשך הזמן שלו.',
-	'sd_filter_year' => 'שנה',
-	'sd_filter_month' => 'חודש',
-	'sd_filter_hasvalues' => 'הוא מכיל את הערכים $1.',
-	'sd_filter_hasinputtype' => 'הוא מכיל את סוג הקלט $1.',
-	'sd_filter_combobox' => 'תיבה משולבת',
-	'sd_filter_freetext' => 'טקסט',
-	'sd_filter_daterange' => 'טווח תאריכים',
 	'sd_filter_requiresfilter' => 'נדרשת עבורו נוכחות של המסנן $1.',
 	'sd_filter_haslabel' => 'חלה עליו התווית $1.',
 );
@@ -1671,9 +1355,6 @@ $messages['hi'] = array(
 	'sd_createfilter_usecategoryvalues' => 'इस फ़िल्टरके लिये इस श्रेणी से वैल्यू लें:',
 	'sd_createfilter_label' => 'इस फ़िल्टरका लेबल (वैकल्पिक):',
 	'sd_blank_error' => 'खाली नहीं हो सकता',
-	'sd_filter_year' => 'साल',
-	'sd_filter_month' => 'महिना',
-	'sd_filter_hasvalues' => 'इसमें $1 यह वैल्यू हैं।',
 	'sd_filter_haslabel' => 'इसको $1 यह लेबल हैं।',
 );
 
@@ -1719,10 +1400,6 @@ $messages['hsb'] = array(
 	'sd_createfilter_property' => 'Kajkosć tutho filtra:',
 	'sd_createfilter_usepropertyvalues' => 'Wužij wšě hódnoty tuteje kajkosće za filter',
 	'sd_createfilter_usecategoryvalues' => 'Wobstaraj hódnoty za filter z tuteje kategorije:',
-	'sd_createfilter_usedatevalues' => 'Wužij datumowe wotrězk za tutón filter z tutej dobu:',
-	'sd_createfilter_entervalues' => 'Zapodaj hódnoty za filter manuelnje (hódnoty měli so z komami rozdźělić  - jeli hódnota komu wobsahuje, narunaj ju přez "\\", "):',
-	'sd_createfilter_inputtype' => 'Typ zapodaća za tutón filter:',
-	'sd_createfilter_listofvalues' => 'lisćina hódnotow (standard)',
 	'sd_createfilter_requirefilter' => 'Zo by tutón filter zwobrazniło, je druhi filter trjeba:',
 	'sd_createfilter_label' => 'Mjeno tutoho filtra (opcionalny):',
 	'sd_blank_error' => 'njesmě prózdny być',
@@ -1730,14 +1407,6 @@ $messages['hsb'] = array(
 	'sd-pageschemas-values' => 'Hódnoty',
 	'sd_filter_coversproperty' => 'Tutón filter wobsahuje kajkosć $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Wobsahuje swoje hódnoty z kategorije $1.',
-	'sd_filter_usestimeperiod' => 'Wužiwa $1 jako dobu.',
-	'sd_filter_year' => 'Lěto',
-	'sd_filter_month' => 'Měsac',
-	'sd_filter_hasvalues' => 'Ma hódnoty $1.',
-	'sd_filter_hasinputtype' => 'Ma typ zapodaća $1.',
-	'sd_filter_combobox' => 'kombinaciski kašćik',
-	'sd_filter_freetext' => 'tekst',
-	'sd_filter_daterange' => 'rozsah datow',
 	'sd_filter_requiresfilter' => 'Trjeba filter $1.',
 	'sd_filter_haslabel' => 'Ma mjeno $1.',
 );
@@ -1779,10 +1448,6 @@ $messages['hu'] = array(
 	'sd_createfilter_property' => 'Tulajdonság, amit ez a szűrő lefed:',
 	'sd_createfilter_usepropertyvalues' => 'A tulajdonság összes értékének használata ennél a szűrőnél',
 	'sd_createfilter_usecategoryvalues' => 'A szűrő értékeinek felvétele ebből a kategóriából:',
-	'sd_createfilter_usedatevalues' => 'A szűrő a következő időtartamból vegye fel az értékeit:',
-	'sd_createfilter_entervalues' => 'Add meg a szűrő értékeit kézzel (az értékeket vesszővel válaszd el; ha az érték vesszőt tartalmaz, akkor használd a „\\,” formát):',
-	'sd_createfilter_inputtype' => 'Bevitel típusa ehhez a szűrőhöz:',
-	'sd_createfilter_listofvalues' => 'értékek listája (alapértelmezett)',
 	'sd_createfilter_requirefilter' => 'Egy másik szűrő legyen kiválasztva, mielőtt ez megjelenik:',
 	'sd_createfilter_label' => 'Szűrő címkéje (nem kötelező):',
 	'sd_blank_error' => 'nem lehet üres',
@@ -1790,14 +1455,6 @@ $messages['hu'] = array(
 	'sd-pageschemas-values' => 'Értékek',
 	'sd_filter_coversproperty' => 'Ez a szűrő lefedi a(z) $1 tulajdonságot.',
 	'sd_filter_getsvaluesfromcategory' => 'Értékeit a következő kategóriából kapja: $1.',
-	'sd_filter_usestimeperiod' => 'A(z) $1 adatot használja időintervallumként.',
-	'sd_filter_year' => 'Év',
-	'sd_filter_month' => 'Hónap',
-	'sd_filter_hasvalues' => 'Az értékei: $1.',
-	'sd_filter_hasinputtype' => 'A bemenet típusa: $1.',
-	'sd_filter_combobox' => 'legördülő menü',
-	'sd_filter_freetext' => 'szöveg',
-	'sd_filter_daterange' => 'dátumtartomány',
 	'sd_filter_requiresfilter' => 'Szükséges a(z) $1 szűrő megléte.',
 	'sd_filter_haslabel' => 'A címkéje $1.',
 );
@@ -1836,10 +1493,6 @@ $messages['ia'] = array(
 	'sd_createfilter_property' => 'Le proprietate que iste filtro coperi:',
 	'sd_createfilter_usepropertyvalues' => 'Usar tote le valores de iste proprietate pro le filtro',
 	'sd_createfilter_usecategoryvalues' => 'Obtener valores pro filtro ab iste categoria:',
-	'sd_createfilter_usedatevalues' => 'Usar intervallos de datas pro iste filtro con iste periodo de tempore:',
-	'sd_createfilter_entervalues' => 'Entra valores pro le filtro manualmente (le valores debe esser separate per commas - si un valor contine un comma, reimplacia lo con "\\,"):',
-	'sd_createfilter_inputtype' => 'Typo de input pro iste filtro:',
-	'sd_createfilter_listofvalues' => 'lista de valores (predefinite)',
 	'sd_createfilter_requirefilter' => 'Requirer que un altere filtro sia seligite ante que iste es monstrate:',
 	'sd_createfilter_label' => 'Etiquetta pro iste filtro (optional):',
 	'sd_blank_error' => 'non pote esser vacue',
@@ -1847,14 +1500,6 @@ $messages['ia'] = array(
 	'sd-pageschemas-values' => 'Valores',
 	'sd_filter_coversproperty' => 'Iste filtro coperi le proprietate $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Illo obtene su valores ab le categoria $1.',
-	'sd_filter_usestimeperiod' => 'Illo usa $1 como su periodo de tempore.',
-	'sd_filter_year' => 'Anno',
-	'sd_filter_month' => 'Mense',
-	'sd_filter_hasvalues' => 'Illo ha le valores $1.',
-	'sd_filter_hasinputtype' => 'Illo ha le typo de input $1.',
-	'sd_filter_combobox' => 'quadro combinator',
-	'sd_filter_freetext' => 'texto',
-	'sd_filter_daterange' => 'gamma de datas',
 	'sd_filter_requiresfilter' => 'Illo require le presentia del filtro $1.',
 	'sd_filter_haslabel' => 'Illo ha le etiquetta $1.',
 );
@@ -1897,24 +1542,12 @@ $messages['id'] = array(
 	'sd_createfilter_property' => 'Properti yang dicakup filter ini:',
 	'sd_createfilter_usepropertyvalues' => 'Gunakan semua nilai dari properti ini untuk filter',
 	'sd_createfilter_usecategoryvalues' => 'Dapatkan nilai untuk filter dari kategori ini:',
-	'sd_createfilter_usedatevalues' => 'Gunakan rentang tanggal untuk filter dengan periode ini:',
-	'sd_createfilter_entervalues' => 'Masukkan nilai filter secara manual (nilai harus dipisahkan oleh koma - jika suatu nilai mengandung koma, ganti dengan "\\,"):',
-	'sd_createfilter_inputtype' => 'Tipe masukan untuk filter ini:',
-	'sd_createfilter_listofvalues' => 'daftar nilai (baku)',
 	'sd_createfilter_requirefilter' => 'Perlu memilih filter lain sebelum yang satu ini ditampilkan:',
 	'sd_createfilter_label' => 'Label untuk filter ini (opsional):',
 	'sd_blank_error' => 'tidak boleh kosong',
 	'sd-pageschemas-filter' => 'Penyaring',
 	'sd_filter_coversproperty' => 'Filter ini mencakup properti $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Ia mendapat nilainya dari kategori $1.',
-	'sd_filter_usestimeperiod' => 'Ia menggunakan $1 sebagai periode waktunya.',
-	'sd_filter_year' => 'Tahun',
-	'sd_filter_month' => 'Bulan',
-	'sd_filter_hasvalues' => 'Ia memiliki nilai $1.',
-	'sd_filter_hasinputtype' => 'Ia memiliki tipe masukan $1.',
-	'sd_filter_combobox' => 'kotak pilihan',
-	'sd_filter_freetext' => 'teks',
-	'sd_filter_daterange' => 'rentang tanggal',
 	'sd_filter_requiresfilter' => 'Ia memerlukan keberadaan filter $1.',
 	'sd_filter_haslabel' => 'Ia memiliki label $1.',
 );
@@ -1926,9 +1559,6 @@ $messages['ig'] = array(
 	'sd_browsedata_other' => 'Nke ozor',
 	'sd_browsedata_or' => 'ma',
 	'sd_createfilter_name' => 'Áhà:',
-	'sd_filter_year' => 'Afọ',
-	'sd_filter_month' => 'Önwa',
-	'sd_filter_freetext' => 'mpkurụ edemede',
 );
 
 /** Icelandic (íslenska)
@@ -1977,10 +1607,6 @@ $messages['it'] = array(
 	'sd_createfilter_property' => 'Proprietà interessate da questo filtro:',
 	'sd_createfilter_usepropertyvalues' => 'Usa tutti i valori di questa proprietà per il filtro',
 	'sd_createfilter_usecategoryvalues' => 'Ottieni i valori per il filtro da questa categoria:',
-	'sd_createfilter_usedatevalues' => 'Usa intervalli di date per questo filtro con questo periodo di tempo:',
-	'sd_createfilter_entervalues' => 'Immetti manualmente i valori per il filtro (i valori dovrebbero essere separati da virgole - se un valore contiene una virgola, sostituisci la virgola stessa con "\\,"):',
-	'sd_createfilter_inputtype' => 'Tipo di dato da immettere per questo filtro:',
-	'sd_createfilter_listofvalues' => 'lista di valori (predefinita)',
 	'sd_createfilter_requirefilter' => 'Richiedi la selezione di un altro filtro prima che questo sia visualizzato:',
 	'sd_createfilter_label' => 'Etichetta per questo filtro (facoltativa):',
 	'sd_blank_error' => 'non può essere vuoto',
@@ -1988,14 +1614,6 @@ $messages['it'] = array(
 	'sd-pageschemas-values' => 'Valori',
 	'sd_filter_coversproperty' => 'Questo filtro riguarda la proprietà $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Prende i suoi valori dalla categoria $1.',
-	'sd_filter_usestimeperiod' => 'Usa $1 come suo intervallo di tempo.',
-	'sd_filter_year' => 'Anno',
-	'sd_filter_month' => 'Mese',
-	'sd_filter_hasvalues' => 'Ha i valori $1.',
-	'sd_filter_hasinputtype' => 'Ha il tipo di input $1.',
-	'sd_filter_combobox' => 'combo box',
-	'sd_filter_freetext' => 'testo',
-	'sd_filter_daterange' => 'intervallo date',
 	'sd_filter_requiresfilter' => 'Richiede la presenza del filtro $1.',
 	'sd_filter_haslabel' => "Ha l'etichetta $1.",
 );
@@ -2039,10 +1657,6 @@ $messages['ja'] = array(
 	'sd_createfilter_property' => 'このフィルターが対象とするプロパティ:',
 	'sd_createfilter_usepropertyvalues' => 'フィルターにこのプロパティのすべての値を使用',
 	'sd_createfilter_usecategoryvalues' => 'このカテゴリからフィルターの値を取得:',
-	'sd_createfilter_usedatevalues' => 'フィルターにこの単位の日付範囲を使用:',
-	'sd_createfilter_entervalues' => 'フィルターの値を手で入力 (値をカンマで区切る。値がカンマを含む場合は「\\,」に置換):',
-	'sd_createfilter_inputtype' => 'このフィルターの入力型:',
-	'sd_createfilter_listofvalues' => '値の一覧 (既定)',
 	'sd_createfilter_requirefilter' => 'このフィルターが表示される前に、別のフィルターを選択するのを必須にする:',
 	'sd_createfilter_label' => 'このフィルターのラベル (省略可能):',
 	'sd_blank_error' => '空であってはならない',
@@ -2050,14 +1664,6 @@ $messages['ja'] = array(
 	'sd-pageschemas-values' => '値',
 	'sd_filter_coversproperty' => 'このフィルターはプロパティ $1 を対象とします。',
 	'sd_filter_getsvaluesfromcategory' => '値をカテゴリ $1 から取得します。',
-	'sd_filter_usestimeperiod' => '期間の単位として$1を使用します。',
-	'sd_filter_year' => '年',
-	'sd_filter_month' => '月',
-	'sd_filter_hasvalues' => '値 $1 を取ります。',
-	'sd_filter_hasinputtype' => '$1型の入力です。',
-	'sd_filter_combobox' => 'コンボボックス',
-	'sd_filter_freetext' => '文字列',
-	'sd_filter_daterange' => '日付範囲',
 	'sd_filter_requiresfilter' => 'フィルター $1 の存在を要求します。',
 	'sd_filter_haslabel' => 'ラベル $1 を持ちます。',
 );
@@ -2080,8 +1686,6 @@ $messages['jv'] = array(
 	'sd_createfilter_property' => 'Sifat sing diliput filter iki:',
 	'sd_createfilter_label' => 'Label kanggo filter (opsional):',
 	'sd_blank_error' => 'ora bisa kosong',
-	'sd_filter_year' => 'Taun',
-	'sd_filter_month' => 'Sasi',
 	'sd_filter_requiresfilter' => 'Merlokaké anané filter $1.',
 );
 
@@ -2107,10 +1711,6 @@ $messages['ka'] = array(
 	'sd_createfilter_name' => 'სახელი:',
 	'sd-pageschemas-filter' => 'ფილტრი',
 	'sd-pageschemas-values' => 'მნიშვნელობები',
-	'sd_filter_year' => 'წელი',
-	'sd_filter_month' => 'თვე',
-	'sd_filter_freetext' => 'ტექსტი',
-	'sd_filter_daterange' => 'თარიღის დიაპაზონი',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -2145,21 +1745,11 @@ $messages['km'] = array(
 	'sd_createfilter_property' => 'លក្ខណៈសម្បត្តិ​ដែល​តម្រង​នេះ​គ្រប:',
 	'sd_createfilter_usepropertyvalues' => 'តម្លៃ​ទាំងអស់​នៃលក្ខណៈសម្បត្តិ​នេះ​សម្រាប់​តម្រង',
 	'sd_createfilter_usecategoryvalues' => 'ទទួល​តម្លៃ​សម្រាប់​តម្រង​ពី​ចំណាត់ថ្នាក់ក្រុម​នេះ:',
-	'sd_createfilter_usedatevalues' => 'ប្រើប្រាស់​ជួរ​កាលបរិច្ឆេទ សម្រាប់​តម្រង​នេះ​ជាមួយ​កំលុងពេល​នេះ:',
-	'sd_createfilter_entervalues' => 'បញ្ចូល​តម្លៃ​សម្រាប់​តម្រង​ដោយដៃ (តម្លៃ​គួរតែ​ត្រូវ​បាន​ខណ្ឌចែក​ដោយ​ចុល្លភាគ​នានា (commas)- ប្រសិនបើ​តម្លៃ​មាន​ចុល្លភាគ​មួយ ចូរ​ជំនួស​វា​ដោយ "\\,"):',
-	'sd_createfilter_inputtype' => 'បញ្ចូល​គំរូ​សម្រាប់​តម្រង​នេះ:',
-	'sd_createfilter_listofvalues' => 'បញ្ជី​នៃ​តម្លៃ (លំនាំដើម)',
 	'sd_createfilter_requirefilter' => 'ទាមទារ​តម្រង​ផ្សេងទៀត​ដើម្បី​ធ្វើការ​ជ្រើសរើស មុនពេល​តម្រង​មួយនេះ​ត្រូវ​បាន​បង្ហាញ:',
 	'sd_createfilter_label' => 'ស្លាក​សម្រាប់​តម្រង​នេះ (តាមបំណង):',
 	'sd_blank_error' => 'មិន​អាច​ទទេ​បាន​ឡើយ',
 	'sd_filter_coversproperty' => 'តម្រង​នេះ​គ្របដណ្ដប់​ចំណាត់ថ្នាក់ក្រុម $1 ។',
 	'sd_filter_getsvaluesfromcategory' => 'វា​ទទួល​តម្លៃ​របស់​ខ្លួន​ពី​ចំណាត់ថ្នាក់ក្រុម $1 ។',
-	'sd_filter_usestimeperiod' => 'វា​ប្រើប្រាស់ $1 ជា​កំលុងពេល​របស់​វា​។',
-	'sd_filter_year' => 'ឆ្នាំ',
-	'sd_filter_month' => 'ខែ',
-	'sd_filter_hasvalues' => 'វា​មាន​តម្លៃ $1 ។',
-	'sd_filter_freetext' => 'អក្សរ',
-	'sd_filter_daterange' => 'ជួរ​កាលបរិច្ឆេទ',
 	'sd_filter_requiresfilter' => 'វា​ទាមទារ​ឱ្យ​មាន​វត្តមាន​របស់​តម្រង $1 ។',
 	'sd_filter_haslabel' => 'វា​មាន​ស្លាក $1 ។',
 );
@@ -2170,9 +1760,6 @@ $messages['km'] = array(
 $messages['kn'] = array(
 	'sd_browsedata_other' => 'ಇತರ',
 	'sd_createfilter_name' => 'ಹೆಸರು:',
-	'sd_filter_year' => 'ವರ್ಷ',
-	'sd_filter_month' => 'ತಿಂಗಳು',
-	'sd_filter_freetext' => 'ಪಠ್ಯ',
 );
 
 /** Korean (한국어)
@@ -2219,13 +1806,6 @@ $messages['ksh'] = array(
 	'sd_createfilter_property' => 'De Eijeschaff, die hee jefeltert weed:',
 	'sd_createfilter_usepropertyvalues' => 'Donn all de Wääte us hee dä Eijeschaff för dä Felter bruche',
 	'sd_createfilter_usecategoryvalues' => 'De müjjelesche Wääte för noh ze feltere kumme us dä Saachjrupp:',
-	'sd_createfilter_usedatevalues' => 'Bruch ene Dattums-Berett för dö Felter mit däm Zick-Berett:',
-	'sd_createfilter_entervalues' => 'Donn de Wääte för hee dä Felter vun Hand enjävve.
-Donn emmer e Komma zwesche de einzel Wääte maache.
-Wann e Komma en enem Wäät vörkütt, dann donn shtatt dämm Komma 
-en däm Wäät <code>\\,</code> enjävve, domet et keine Dorjeneijn jitt.',
-	'sd_createfilter_inputtype' => 'De Zoot Enjabe för hee dä Felter:',
-	'sd_createfilter_listofvalues' => 'Leß met de Wääte (Shtandat)',
 	'sd_createfilter_requirefilter' => 'Ih dat hee dä Felter aanjezeish weede kann, moß vörher ald ene andere Felter ußjesooht gewääse sin, un zwa dä:',
 	'sd_createfilter_label' => 'Et Etikättsche för dä Felter (kam_mer fott lohße):',
 	'sd_blank_error' => 'kann nit leddesch bliive',
@@ -2233,14 +1813,6 @@ en däm Wäät <code>\\,</code> enjävve, domet et keine Dorjeneijn jitt.',
 	'sd-pageschemas-values' => 'Wääte',
 	'sd_filter_coversproperty' => 'Dä Felter betref de Eijeschaff $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Hä kritt sing Wääte us de Saachjrupp $1.',
-	'sd_filter_usestimeperiod' => 'Dä bruch $1 als sing Zick.',
-	'sd_filter_year' => 'Johr',
-	'sd_filter_month' => 'Mohnd',
-	'sd_filter_hasvalues' => 'Dä hät dä Wäät $1.',
-	'sd_filter_hasinputtype' => 'Dä kritt jet vun dä Zoot $1 enjejovve.',
-	'sd_filter_combobox' => 'kombineete Kaste',
-	'sd_filter_freetext' => 'Täx',
-	'sd_filter_daterange' => 'Dattums-Berett',
 	'sd_filter_requiresfilter' => 'Dä hät dä Felter $1 eets ens nüdesch.',
 	'sd_filter_haslabel' => 'Däm sing Etikättsche es „$1“',
 );
@@ -2278,8 +1850,6 @@ $messages['lb'] = array(
 	'sd_createfilter_name' => 'Numm:',
 	'sd_createfilter_usepropertyvalues' => 'All Wäerter vun dëser Eegeschaft fir de Filter benotzen',
 	'sd_createfilter_usecategoryvalues' => 'Werter fir dëse Filter vun dëser Kategorie kréien:',
-	'sd_createfilter_inputtype' => 'Gitt den Typ vun dësem Filter un.',
-	'sd_createfilter_listofvalues' => 'Lëscht vun de Wäerter (Standard)',
 	'sd_createfilter_requirefilter' => 'Verlaangen dat en anere Filter gewielt gëtt ier dësen ugewise gëtt:',
 	'sd_createfilter_label' => 'Etiquette fir dëse Filter (fakultativ):',
 	'sd_blank_error' => 'däerf net eidel sinn',
@@ -2287,13 +1857,6 @@ $messages['lb'] = array(
 	'sd-pageschemas-values' => 'Wäerter',
 	'sd_filter_coversproperty' => "Dëse Filter betrefft d'Eegeschaft $1.",
 	'sd_filter_getsvaluesfromcategory' => 'E kritt seng Werter aus der Kategorie $1.',
-	'sd_filter_usestimeperiod' => 'E benotzt $1 als Zäitraum',
-	'sd_filter_year' => 'Joer',
-	'sd_filter_month' => 'Mount',
-	'sd_filter_hasvalues' => 'En huet de Wäert $1.',
-	'sd_filter_combobox' => 'Combinéiert Këscht (combo box)',
-	'sd_filter_freetext' => 'Text',
-	'sd_filter_daterange' => 'Datumsberäich',
 	'sd_filter_requiresfilter' => "E verlaangt d'Presenz vum Filter $1.",
 	'sd_filter_haslabel' => "en huet d'Etiquette $1.",
 );
@@ -2324,17 +1887,10 @@ $messages['lv'] = array(
 	'sd_viewform' => 'Skatīt formu',
 	'createfilter' => 'Izveidot filtru',
 	'sd_createfilter_name' => 'Nosaukums:',
-	'sd_createfilter_inputtype' => 'Šī filtra ievades tips:',
-	'sd_createfilter_listofvalues' => 'vērtību saraksts (pēc noklusējuma)',
 	'sd_createfilter_label' => 'Filtra etiķete (nav obligāta):',
 	'sd_blank_error' => 'nevar būt tukšs',
 	'sd-pageschemas-filter' => 'Filtrs',
 	'sd-pageschemas-values' => 'Vērtības',
-	'sd_filter_year' => 'Gads',
-	'sd_filter_month' => 'Mēnesis',
-	'sd_filter_combobox' => 'kombinētais lodziņš',
-	'sd_filter_freetext' => 'teksts',
-	'sd_filter_daterange' => 'datumu diapazons',
 );
 
 /** Eastern Mari (олык марий)
@@ -2387,10 +1943,6 @@ $messages['mk'] = array(
 	'sd_createfilter_property' => 'Својство кое го покрива овој филтер:',
 	'sd_createfilter_usepropertyvalues' => 'Користи ги сите вредности на ова својство за филтерот',
 	'sd_createfilter_usecategoryvalues' => 'Преземи вредности за филтер од оваа категорија:',
-	'sd_createfilter_usedatevalues' => 'Користи датумски опсези за овој филтер со овој временски период:',
-	'sd_createfilter_entervalues' => 'Рачно внесете вредности за филтерот (вредностите треба да бидат одвоени со запирки - ако самата вредност содржи запирка, тогаш заменете ја со „\\,“):',
-	'sd_createfilter_inputtype' => 'Тип на внос за овој филтер:',
-	'sd_createfilter_listofvalues' => 'список на вредности (по основно)',
 	'sd_createfilter_requirefilter' => 'Побарувај да биде избран друг филтер пред да се прикаже овој:',
 	'sd_createfilter_label' => 'Наслов за овој филтер (незадолжително)',
 	'sd_blank_error' => 'не може да стои празно',
@@ -2398,14 +1950,6 @@ $messages['mk'] = array(
 	'sd-pageschemas-values' => 'Вредности',
 	'sd_filter_coversproperty' => 'Овој филтер го покрива својството $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Ги добива своите вредности од категоријата $1.',
-	'sd_filter_usestimeperiod' => 'Користи $1 како временски период.',
-	'sd_filter_year' => 'Година',
-	'sd_filter_month' => 'Месец',
-	'sd_filter_hasvalues' => 'Ги има вредностите $1.',
-	'sd_filter_hasinputtype' => 'Има тип на внос $1.',
-	'sd_filter_combobox' => 'расклопно мени',
-	'sd_filter_freetext' => 'текст',
-	'sd_filter_daterange' => 'датумски опсег',
 	'sd_filter_requiresfilter' => 'Бара присуство на филтер $1.',
 	'sd_filter_haslabel' => 'Има наслов $1.',
 );
@@ -2436,10 +1980,6 @@ $messages['ml'] = array(
 	'sd_createfilter_name' => 'പേര്‌:',
 	'sd_blank_error' => 'ശൂന്യമാക്കിയിടുന്നത് അനുവദനീയമല്ല',
 	'sd_filter_getsvaluesfromcategory' => '$1 എന്ന വർഗ്ഗത്തിൽ നിന്നാണ്‌ ഇതിനു മൂല്യങ്ങൾ കിട്ടുന്നത്.',
-	'sd_filter_usestimeperiod' => 'ഇതു സമയ പരിധിയായി ഉപയോഗിക്കുന്നത് $1 ആണ്‌.',
-	'sd_filter_year' => 'വർഷം',
-	'sd_filter_month' => 'മാസം',
-	'sd_filter_hasvalues' => 'ഇതിന്റെ മൂല്യങ്ങൾ $1 ആണ്‌.',
 );
 
 /** Mongolian (монгол)
@@ -2478,17 +2018,11 @@ $messages['mr'] = array(
 	'sd_createfilter_property' => 'हा फिल्टर कुठल्या गुणधर्मासाठी वापरायचा आहे:',
 	'sd_createfilter_usepropertyvalues' => 'या फिल्टरकरीता या गुणधर्माच्या सर्व किंमती वापरा',
 	'sd_createfilter_usecategoryvalues' => 'या फिल्टरकरीता या वर्गातून किंमती मिळवा:',
-	'sd_createfilter_usedatevalues' => 'या फिल्टरकरीता या कालावधीतील तारखा वापरा:',
-	'sd_createfilter_entervalues' => 'फिल्टरसाठी स्वत: किंमती भरा (किंमती स्वल्पविराम "," वापरून लिहाव्या, जर एखाद्या किंमतीतच स्वल्पविराम येत असेल तर त्याजागी "\\," लिहा):',
 	'sd_createfilter_requirefilter' => 'हा फिल्टर दर्शविण्याआधी जर दुसरा फिल्टर वापरायचा असेल तर त्याचे नाव:',
 	'sd_createfilter_label' => 'या फिल्टरकरीत लेबल (वैकल्पिक):',
 	'sd_blank_error' => 'रिकामे असू शकत नाही',
 	'sd_filter_coversproperty' => 'हा फिल्टर $1 या गुणधर्मावर चालतो.',
 	'sd_filter_getsvaluesfromcategory' => 'तो $1 या वर्गातून किंमती घेतो.',
-	'sd_filter_usestimeperiod' => 'तो $1 कालावधी वापरतो.',
-	'sd_filter_year' => 'वर्ष',
-	'sd_filter_month' => 'महिना',
-	'sd_filter_hasvalues' => 'त्यामध्ये $1 या किंमती आहेत.',
 	'sd_filter_requiresfilter' => 'या साठी $1 हा फिल्टर असणे आवश्यक आहे.',
 	'sd_filter_haslabel' => 'त्याला $1 हे लेबल आहे.',
 );
@@ -2514,8 +2048,6 @@ $messages['myv'] = array(
 	'filters' => 'Сувтеметь',
 	'createfilter' => 'Шкамс сувтеме',
 	'sd_createfilter_name' => 'Лемезэ:',
-	'sd_filter_year' => 'Иесь',
-	'sd_filter_month' => 'Ковось',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -2526,8 +2058,6 @@ $messages['nah'] = array(
 	'sd_browsedata_none' => 'Ahtlein',
 	'sd_browsedata_or' => 'nozo',
 	'sd_createfilter_name' => 'Tōcāitl:',
-	'sd_filter_year' => 'Xihuitl',
-	'sd_filter_month' => 'Mētztli',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -2568,10 +2098,6 @@ $messages['nb'] = array(
 	'sd_createfilter_property' => 'Egenskap dette filteret dekker:',
 	'sd_createfilter_usepropertyvalues' => 'Bruk alle verdier av denne egenskapen for filteret',
 	'sd_createfilter_usecategoryvalues' => 'Få verdier for filteret fra denne kategorien:',
-	'sd_createfilter_usedatevalues' => 'Bruk datoområder for dette filteret med denne tidsperioden:',
-	'sd_createfilter_entervalues' => 'Skriv inn verdier for filteret manuelt (verdier burde adskilles med komma – om en verdi inneholder et komma, erstatt det med «\\,»);',
-	'sd_createfilter_inputtype' => 'Inndatatype for dette filteret:',
-	'sd_createfilter_listofvalues' => 'liste over verdier (standard)',
 	'sd_createfilter_requirefilter' => 'Krev at et annet filter velges før dette vises:',
 	'sd_createfilter_label' => 'Etikett for dette filteret (valgfritt):',
 	'sd_blank_error' => 'kan ikke være blank',
@@ -2579,14 +2105,6 @@ $messages['nb'] = array(
 	'sd-pageschemas-values' => 'Verdier',
 	'sd_filter_coversproperty' => 'Dette filteret dekker egenskapen $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Det får verdiene sine fra kategorien $1.',
-	'sd_filter_usestimeperiod' => 'Det bruker $1 som tidsperiode.',
-	'sd_filter_year' => 'År',
-	'sd_filter_month' => 'Måned',
-	'sd_filter_hasvalues' => 'Den har verdiene $1.',
-	'sd_filter_hasinputtype' => 'Det har inndatatypen $1.',
-	'sd_filter_combobox' => 'kombinasjonsboks',
-	'sd_filter_freetext' => 'tekst',
-	'sd_filter_daterange' => 'datoområde',
 	'sd_filter_requiresfilter' => 'Det krever at filteret $1 er til stede.',
 	'sd_filter_haslabel' => 'Det har etiketten $1.',
 );
@@ -2635,10 +2153,6 @@ $messages['nl'] = array(
 	'sd_createfilter_property' => 'Eigenschap voor deze filter:',
 	'sd_createfilter_usepropertyvalues' => 'Alle waarden voor deze eigenschap voor deze filter gebruiken',
 	'sd_createfilter_usecategoryvalues' => 'Waarden voor deze filter uit de volgende categorie halen:',
-	'sd_createfilter_usedatevalues' => 'Gebruik voor deze filter de volgende datumreeks:',
-	'sd_createfilter_entervalues' => 'Waarden voor de filter handmatig invoeren (waarden moeten gescheiden worden door komma\'s - als de waarde een komma bevast, vervang die dan door "\\,"):',
-	'sd_createfilter_inputtype' => 'Invoertype voor deze filter:',
-	'sd_createfilter_listofvalues' => 'lijst met waarden (standaard)',
 	'sd_createfilter_requirefilter' => 'Selectie van een andere filter voor deze filter zichtbaar is vereisen:',
 	'sd_createfilter_label' => 'Label voor deze filter (optioneel):',
 	'sd_blank_error' => 'mag niet leeg blijven',
@@ -2646,14 +2160,6 @@ $messages['nl'] = array(
 	'sd-pageschemas-values' => 'Waarden',
 	'sd_filter_coversproperty' => 'Deze filter heeft betrekking op de eigenschap $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Het haalt de waarden van de categorie $1.',
-	'sd_filter_usestimeperiod' => 'Het gebruikt $1 als de tijdsduur.',
-	'sd_filter_year' => 'Jaar',
-	'sd_filter_month' => 'Maand',
-	'sd_filter_hasvalues' => 'Het heeft de waarden $1.',
-	'sd_filter_hasinputtype' => 'Het heeft het invoertype $1.',
-	'sd_filter_combobox' => 'keuzelijst',
-	'sd_filter_freetext' => 'tekst',
-	'sd_filter_daterange' => 'datumreeks',
 	'sd_filter_requiresfilter' => 'Het filter $1 moet aanwezig zijn.',
 	'sd_filter_haslabel' => 'Het heeft het label $1.',
 );
@@ -2693,22 +2199,11 @@ $messages['nn'] = array(
 	'sd_createfilter_property' => 'Eigenskap som dette fileteret dekkjer:',
 	'sd_createfilter_usepropertyvalues' => 'Nytt alle verdiar av denne eigenskapen for filteret:',
 	'sd_createfilter_usecategoryvalues' => 'Få verdiar for filteret frå denne kategorien:',
-	'sd_createfilter_usedatevalues' => 'Nytt datoområde for dette filteret med denne tidsperioden:',
-	'sd_createfilter_entervalues' => 'Skriv inn verdiar for filteret manuelt (verdiar burde vera skilde med komma, so om ein verdi inneheld eit komma, erstatt kommaet med «\\,»);',
-	'sd_createfilter_inputtype' => 'Inndatatype for dette filteret:',
-	'sd_createfilter_listofvalues' => 'lista over verdiar (standard)',
 	'sd_createfilter_requirefilter' => 'Krev at eit anna filter blir valt før dette blir vist:',
 	'sd_createfilter_label' => 'Merkelapp for dette filteret (valfritt):',
 	'sd_blank_error' => 'kan ikkje vera tom',
 	'sd_filter_coversproperty' => 'Dette filteret dekkjer eigenskapen $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Det får verdiane sine frå kategorien $1.',
-	'sd_filter_usestimeperiod' => 'Det nyttar $1 som tidsperiode.',
-	'sd_filter_year' => 'År',
-	'sd_filter_month' => 'Månad',
-	'sd_filter_hasvalues' => 'Det har verdiane $1.',
-	'sd_filter_hasinputtype' => 'Det har inndatatypen $1.',
-	'sd_filter_freetext' => 'tekst',
-	'sd_filter_daterange' => 'datoområde',
 	'sd_filter_requiresfilter' => 'Det krev at filteret $1 er til stades.',
 	'sd_filter_haslabel' => 'Det har merkelappen $1.',
 );
@@ -2720,8 +2215,6 @@ $messages['nso'] = array(
 	'sd_browsedata_viewcategory' => 'Nyakorela sehlopha',
 	'sd_browsedata_subcategory' => 'Sehlophana',
 	'sd_createfilter_name' => 'Leina:',
-	'sd_filter_year' => 'Ngwaga',
-	'sd_filter_month' => 'Kgwedi',
 );
 
 /** Occitan (occitan)
@@ -2758,23 +2251,11 @@ $messages['oc'] = array(
 	'sd_createfilter_property' => "Proprietat qu'aqueste filtre cobrirà :",
 	'sd_createfilter_usepropertyvalues' => "Utilizar, per aqueste filtre, totas las valors d'aquesta proprietat",
 	'sd_createfilter_usecategoryvalues' => "Obténer las valors per aqueste filtre a partir d'aquesta categoria :",
-	'sd_createfilter_usedatevalues' => 'Utiliza de blòts de data per aqueste filtre amb aqueste periòde temporal :',
-	'sd_createfilter_entervalues' => 'Entrar manualament las valors per aqueste filtre (las valors deuràn èsser separadas per de virgulas - se una valor conten una virgula, remplaçatz-la per « \\, ») :',
-	'sd_createfilter_inputtype' => "Tipe d'entrada per aqueste filtre :",
-	'sd_createfilter_listofvalues' => 'Lista de las valors (defaut)',
 	'sd_createfilter_requirefilter' => "Necessita un filtre devent èsser seleccionat abans qu'aqueste siá afichat :",
 	'sd_createfilter_label' => 'Etiqueta per aqueste filtre (facultatiu) :',
 	'sd_blank_error' => 'pòt pas èsser daissat en blanc',
 	'sd_filter_coversproperty' => 'Aqueste filtre cobrís la proprietat $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Obten sas valors a partir de la categoria $1.',
-	'sd_filter_usestimeperiod' => 'Utiliza $1 coma durada de son periòde',
-	'sd_filter_year' => 'Annada',
-	'sd_filter_month' => 'Mes',
-	'sd_filter_hasvalues' => 'A $1 coma valor',
-	'sd_filter_hasinputtype' => "A lo tipe d'entrada $1.",
-	'sd_filter_combobox' => 'Bóstia combo',
-	'sd_filter_freetext' => 'tèxte',
-	'sd_filter_daterange' => 'Gama de data',
 	'sd_filter_requiresfilter' => 'Necessita la preséncia del filtre $1.',
 	'sd_filter_haslabel' => 'Dispausa del labèl $1.',
 );
@@ -2784,7 +2265,6 @@ $messages['oc'] = array(
  */
 $messages['os'] = array(
 	'sd_browsedata_none' => 'Нæй',
-	'sd_filter_year' => 'Аз',
 );
 
 /** Deitsch (Deitsch)
@@ -2795,8 +2275,6 @@ $messages['pdc'] = array(
 	'sd_browsedata_none' => 'Ken',
 	'sd_browsedata_or' => 'odder',
 	'sd_createfilter_name' => 'Naame:',
-	'sd_filter_year' => 'Yaahr',
-	'sd_filter_month' => 'Munet',
 );
 
 /** Pälzisch (Pälzisch)
@@ -2806,7 +2284,6 @@ $messages['pdc'] = array(
 $messages['pfl'] = array(
 	'sd_browsedata_none' => 'Kääns',
 	'sd_browsedata_or' => 'oda',
-	'sd_filter_freetext' => 'Tegschd',
 );
 
 /** Polish (polski)
@@ -2849,10 +2326,6 @@ $messages['pl'] = array(
 	'sd_createfilter_property' => 'Właściwość przesłonięta tym filtrem',
 	'sd_createfilter_usepropertyvalues' => 'Użyj wszystkich wartości tej własności dla filtru',
 	'sd_createfilter_usecategoryvalues' => 'Użyj wartości dla filtru z kategorii',
-	'sd_createfilter_usedatevalues' => 'Użyj dla filtru przedziału czasu',
-	'sd_createfilter_entervalues' => 'Wprowadź ręcznie wartości dla filtru (wartości powinny być rozdzielone przecinkami – jeśli wartości zawierają przecinki, zastąp je „\\,”):',
-	'sd_createfilter_inputtype' => 'Podaj typ filtru',
-	'sd_createfilter_listofvalues' => 'lista wartości (domyślna)',
 	'sd_createfilter_requirefilter' => 'Wymagaj użycia innego filtru przed tym',
 	'sd_createfilter_label' => 'Etykieta filtru (nieobowiązkowa)',
 	'sd_blank_error' => 'nie może być puste',
@@ -2860,14 +2333,6 @@ $messages['pl'] = array(
 	'sd-pageschemas-values' => 'Wartości',
 	'sd_filter_coversproperty' => 'Ten filtr przesłania właściwość $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Otrzymuje wartości z kategorii $1.',
-	'sd_filter_usestimeperiod' => 'Używa $1 jako swojego przedziału czasu.',
-	'sd_filter_year' => 'Rok',
-	'sd_filter_month' => 'Miesiąc',
-	'sd_filter_hasvalues' => 'Ma wartości $1.',
-	'sd_filter_hasinputtype' => 'Typ wejściowy – $1.',
-	'sd_filter_combobox' => 'rozwijana lista',
-	'sd_filter_freetext' => 'tekst',
-	'sd_filter_daterange' => 'zakres dat',
 	'sd_filter_requiresfilter' => 'Wymaga obecności filtru $1.',
 	'sd_filter_haslabel' => 'Ma etykietę $1.',
 );
@@ -2908,10 +2373,6 @@ $messages['pms'] = array(
 	'sd_createfilter_property' => 'Proprietà che sto filtr-sì a coata:',
 	'sd_createfilter_usepropertyvalues' => 'Dovré tùit ij valor dë sta proprietà-sì për ël filtr',
 	'sd_createfilter_usecategoryvalues' => 'Pija ij valor për filtr da sta categorìa-sì:',
-	'sd_createfilter_usedatevalues' => "Dovré l'antërval ëd date për sto filtr-sì con sto antërval ëd temp-sì:",
-	'sd_createfilter_entervalues' => 'Anseriss ij valor për filtr a man (ij valor a dovrìo esse separà da vìrgole - se un valor a conten na vìrgola, rimpiassla con "\\,"):',
-	'sd_createfilter_inputtype' => 'Anseriss la sòrt dë sto filtr-sì:',
-	'sd_createfilter_listofvalues' => 'lista ëd valor (stàndard)',
 	'sd_createfilter_requirefilter' => "Ciama ëd selessioné n'àutr filtr prima che sto-sì a sia visualisà:",
 	'sd_createfilter_label' => 'Tichëtta për sto filtr-sì (opsional):',
 	'sd_blank_error' => 'a peul pa esse veuid',
@@ -2919,14 +2380,6 @@ $messages['pms'] = array(
 	'sd-pageschemas-values' => 'Valor',
 	'sd_filter_coversproperty' => 'Sto filtr-sì a coata la proprietà $1.',
 	'sd_filter_getsvaluesfromcategory' => 'A pija ij sò valor da la categorìa $1.',
-	'sd_filter_usestimeperiod' => 'A deuvra $1 com sò antërval ëd temp.',
-	'sd_filter_year' => 'Ann',
-	'sd_filter_month' => 'Mèis',
-	'sd_filter_hasvalues' => "A l'ha ij valor $1.",
-	'sd_filter_hasinputtype' => "A l'ha la sòrt ëd dàit d'intrada $1.",
-	'sd_filter_combobox' => 'casela combo',
-	'sd_filter_freetext' => 'test',
-	'sd_filter_daterange' => 'antërval ëd date',
 	'sd_filter_requiresfilter' => 'A veul la presensa dël filtr $1.',
 	'sd_filter_haslabel' => "A l'ha l'etichëtta $1.",
 );
@@ -2951,9 +2404,6 @@ $messages['ps'] = array(
 	'sd_createfilter_name' => 'نوم:',
 	'sd_blank_error' => 'بايد تش نه وي',
 	'sd-pageschemas-filter' => 'چاڼګر',
-	'sd_filter_year' => 'کال',
-	'sd_filter_month' => 'مياشت',
-	'sd_filter_freetext' => 'متن',
 );
 
 /** Portuguese (português)
@@ -2996,10 +2446,6 @@ $messages['pt'] = array(
 	'sd_createfilter_property' => 'Propriedades que este filtro abrange:',
 	'sd_createfilter_usepropertyvalues' => 'Usar todos os valores desta propriedade no filtro',
 	'sd_createfilter_usecategoryvalues' => 'Obter valores de filtro a partir desta categoria:',
-	'sd_createfilter_usedatevalues' => 'Usar intervalos de datas para este filtro com este período de tempo:',
-	'sd_createfilter_entervalues' => 'Introduza valores para o filtro manualmente (os valores devem ser separados por vírgulas - se um valor contém uma vírgula, substitua-a por "\\,"):',
-	'sd_createfilter_inputtype' => 'Tipo de entrada para este filtro:',
-	'sd_createfilter_listofvalues' => 'lista de valores (padrão)',
 	'sd_createfilter_requirefilter' => 'Exigir que outro filtro seja selecionado antes de apresentar este:',
 	'sd_createfilter_label' => 'Etiqueta para este filtro (opcional):',
 	'sd_blank_error' => 'não pode estar em branco',
@@ -3007,14 +2453,6 @@ $messages['pt'] = array(
 	'sd-pageschemas-values' => 'Valores',
 	'sd_filter_coversproperty' => 'Este filtro abrange a propriedade $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Extrai os seus valores da categoria $1.',
-	'sd_filter_usestimeperiod' => 'Utiliza $1 como seu período de tempo.',
-	'sd_filter_year' => 'Ano',
-	'sd_filter_month' => 'Mês',
-	'sd_filter_hasvalues' => 'Tem os valores $1.',
-	'sd_filter_hasinputtype' => 'Tem o tipo de entrada $1.',
-	'sd_filter_combobox' => 'caixa de seleção',
-	'sd_filter_freetext' => 'texto',
-	'sd_filter_daterange' => 'intervalo de datas',
 	'sd_filter_requiresfilter' => 'Requer a presença do filtro $1.',
 	'sd_filter_haslabel' => 'Tem a etiqueta $1.',
 );
@@ -3057,10 +2495,6 @@ $messages['pt-br'] = array(
 	'sd_createfilter_property' => 'Propriedades que este filtro abrange:',
 	'sd_createfilter_usepropertyvalues' => 'Usar todos os valores desta propriedade no filtro',
 	'sd_createfilter_usecategoryvalues' => 'Obter valores de filtro a partir desta categoria:',
-	'sd_createfilter_usedatevalues' => 'Usar intervalos de datas para este filtro com este período de tempo:',
-	'sd_createfilter_entervalues' => 'Introduza valores para o filtro manualmente (os valores devem ser separados por vírgulas - se um valor contém uma vírgula, substitua-a por "\\,"):',
-	'sd_createfilter_inputtype' => 'Tipo de entrada para este filtro:',
-	'sd_createfilter_listofvalues' => 'lista de valores (padrão)',
 	'sd_createfilter_requirefilter' => 'Necessita de outro filtro selecionado antes deste ser exibido:',
 	'sd_createfilter_label' => 'Etiqueta para este filtro (opcional):',
 	'sd_blank_error' => 'não pode estar em branco',
@@ -3068,14 +2502,6 @@ $messages['pt-br'] = array(
 	'sd-pageschemas-values' => 'Valores',
 	'sd_filter_coversproperty' => 'Este filtro abrange a propriedade $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Extrai os seus valores da categoria $1.',
-	'sd_filter_usestimeperiod' => 'Utiliza $1 como seu período de tempo.',
-	'sd_filter_year' => 'Ano',
-	'sd_filter_month' => 'Mês',
-	'sd_filter_hasvalues' => 'Possui os valores $1.',
-	'sd_filter_hasinputtype' => 'Tem o tipo de entrada $1.',
-	'sd_filter_combobox' => 'caixa de seleção',
-	'sd_filter_freetext' => 'texto',
-	'sd_filter_daterange' => 'intervalo de datas',
 	'sd_filter_requiresfilter' => 'Requer a presença do filtro $1.',
 	'sd_filter_haslabel' => 'Possui a etiqueta $1.',
 );
@@ -3115,10 +2541,6 @@ $messages['ro'] = array(
 	'sd_blank_error' => 'nu poate fi gol',
 	'sd-pageschemas-filter' => 'Filtru',
 	'sd-pageschemas-values' => 'Valori',
-	'sd_filter_year' => 'An',
-	'sd_filter_month' => 'Lună',
-	'sd_filter_hasvalues' => 'Are valorile $1.',
-	'sd_filter_freetext' => 'text',
 );
 
 /** tarandíne (tarandíne)
@@ -3140,9 +2562,6 @@ $messages['roa-tara'] = array(
 	'sd_createfilter_name' => 'Nome:',
 	'sd-pageschemas-filter' => 'Filtre',
 	'sd-pageschemas-values' => 'Valore',
-	'sd_filter_year' => 'Anne',
-	'sd_filter_month' => 'Mese',
-	'sd_filter_freetext' => 'teste',
 );
 
 /** Russian (русский)
@@ -3180,24 +2599,12 @@ $messages['ru'] = array(
 	'sd_createfilter_property' => 'Свойство, которое покрывает этот фильтр:',
 	'sd_createfilter_usepropertyvalues' => 'Использовать все значения этого свойства для фильтра',
 	'sd_createfilter_usecategoryvalues' => 'Получить значения для фильтра из этой категории:',
-	'sd_createfilter_usedatevalues' => 'Использовать следующий диапазон дат для фильтра:',
-	'sd_createfilter_entervalues' => 'Введите значения для фильтра вручную (значения должны разделяться запятыми, если значение содержит запятую, замените её на «\\,»):',
-	'sd_createfilter_inputtype' => 'Тип ввода для этого фильтра:',
-	'sd_createfilter_listofvalues' => 'список значений (по умолчанию)',
 	'sd_createfilter_requirefilter' => 'Требовать выбора другого фильтра, перед тем, как отображать этот:',
 	'sd_createfilter_label' => 'Пометка для этого фильтра (необязательно):',
 	'sd_blank_error' => 'не может быть пустым',
 	'sd-pageschemas-values' => 'Значения',
 	'sd_filter_coversproperty' => 'Этот фильтр покрывает свойство $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Получает свои значения из категории $1.',
-	'sd_filter_usestimeperiod' => 'Использует $1 как временной диапазон.',
-	'sd_filter_year' => 'Год',
-	'sd_filter_month' => 'Месяц',
-	'sd_filter_hasvalues' => 'Имеет значения $1.',
-	'sd_filter_hasinputtype' => 'Он имеет тип ввода $1.',
-	'sd_filter_combobox' => 'выпадающий список',
-	'sd_filter_freetext' => 'текст',
-	'sd_filter_daterange' => 'диапазон дат',
 	'sd_filter_requiresfilter' => 'Требует наличия фильтра $1.',
 	'sd_filter_haslabel' => 'Имеет пометку $1.',
 );
@@ -3211,9 +2618,6 @@ $messages['rue'] = array(
 	'sd_browsedata_subcategory' => 'Підкатегорія',
 	'sd_browsedata_other' => 'Інше',
 	'sd_browsedata_none' => 'Жадне',
-	'sd_filter_year' => 'Рік',
-	'sd_filter_month' => 'Місяць',
-	'sd_filter_freetext' => 'текст',
 );
 
 /** Sinhala (සිංහල)
@@ -3246,19 +2650,10 @@ $messages['si'] = array(
 	'sd_createfilter_name' => 'නම:',
 	'sd_createfilter_property' => 'මෙම පෙරහන ආරක්ෂා කරන වත්කම:',
 	'sd_createfilter_usecategoryvalues' => 'පෙරහන සඳහා අගයන් මෙම ප්‍රවර්ගයෙන් ලබා ගන්න:',
-	'sd_createfilter_inputtype' => 'මෙම පෙරහන සඳහා ආදාන වර්ගය:',
-	'sd_createfilter_listofvalues' => 'අගයන් ලැයිස්තුව (පෙරනිමි)',
 	'sd_createfilter_label' => 'මෙම පෙරහන සඳහා ලේබලය (වෛකල්පික):',
 	'sd_blank_error' => 'හිස් නොවිය යුතුය',
 	'sd-pageschemas-filter' => 'පෙරහන',
 	'sd-pageschemas-values' => 'අගයන්',
-	'sd_filter_year' => 'වර්ෂය',
-	'sd_filter_month' => 'මාසය',
-	'sd_filter_hasvalues' => 'එය සතුව $1 අගයන් ඇත.',
-	'sd_filter_hasinputtype' => 'එය සතුව $1 ආදාන වර්ගය ඇත.',
-	'sd_filter_combobox' => 'සංයුක්ත කොටුව',
-	'sd_filter_freetext' => 'පෙළ',
-	'sd_filter_daterange' => 'දත්ත පරාසය',
 	'sd_filter_haslabel' => 'එය සතුව $1 ලේබලය ඇත.',
 );
 
@@ -3297,10 +2692,6 @@ $messages['sk'] = array(
 	'sd_createfilter_property' => 'Vlastnosť, ktorú tento filter pokrýva:',
 	'sd_createfilter_usepropertyvalues' => 'Použiť všetky hodnoty tejto vlastnosti pre tento filter',
 	'sd_createfilter_usecategoryvalues' => 'Získať hodnoty filtra z tejto kategórie:',
-	'sd_createfilter_usedatevalues' => 'Použiť rozsahy dátumov pre tento filter z tohoto časového intervalu:',
-	'sd_createfilter_entervalues' => 'Zadajte hodnoty pre tento filter ručne (hodnoty by mali byť oddelené čiarkami - ak hodnota obsahuje čiarku, nahraďte ju „\\,“):',
-	'sd_createfilter_inputtype' => 'Typ vstupu pre tento filter:',
-	'sd_createfilter_listofvalues' => 'zoznam hodnôt (štandardné)',
 	'sd_createfilter_requirefilter' => 'Vyžadovať, aby bol vybraný iný filter než sa zobrazí tento:',
 	'sd_createfilter_label' => 'Označenie tohto filtra (voliteľné):',
 	'sd_blank_error' => 'nemôže byť nevyplnené',
@@ -3308,14 +2699,6 @@ $messages['sk'] = array(
 	'sd-pageschemas-values' => 'Hodnoty',
 	'sd_filter_coversproperty' => 'Tento filter pokrýva vlastnosť $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Získava hodnoty z kategórie $1.',
-	'sd_filter_usestimeperiod' => 'Používa ako časový interval $1.',
-	'sd_filter_year' => 'Rok',
-	'sd_filter_month' => 'Mesiac',
-	'sd_filter_hasvalues' => 'Má hodnoty $1.',
-	'sd_filter_hasinputtype' => 'Má typ vstupu $1.',
-	'sd_filter_combobox' => 'roletová ponuka',
-	'sd_filter_freetext' => 'text',
-	'sd_filter_daterange' => 'rozsah dátumov',
 	'sd_filter_requiresfilter' => 'Vyžaduje prítomnosť filtra $1.',
 	'sd_filter_haslabel' => 'Má označenie $1.',
 );
@@ -3324,7 +2707,6 @@ $messages['sk'] = array(
  * @author Dbc334
  */
 $messages['sl'] = array(
-	'sd_filter_year' => 'Leto',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -3343,8 +2725,6 @@ $messages['sr-ec'] = array(
 	'sd_browsedata_daterangeend' => 'Крај:',
 	'filters' => 'Филтери',
 	'sd_createfilter_name' => 'Име:',
-	'sd_filter_year' => 'Година',
-	'sd_filter_month' => 'Месец',
 );
 
 /** Serbian (Latin script) (srpski (latinica)‎)
@@ -3362,8 +2742,6 @@ $messages['sr-el'] = array(
 	'sd_browsedata_daterangeend' => 'Kraj:',
 	'filters' => 'Filteri',
 	'sd_createfilter_name' => 'Ime:',
-	'sd_filter_year' => 'Godina',
-	'sd_filter_month' => 'Mesec',
 );
 
 /** Seeltersk (Seeltersk)
@@ -3397,22 +2775,11 @@ $messages['stq'] = array(
 	'sd_createfilter_property' => 'Attribut fon disse Sieuwe:',
 	'sd_createfilter_usepropertyvalues' => 'Ferweend aal Wäide fon dit Attribut foar ju Sieuwe.',
 	'sd_createfilter_usecategoryvalues' => 'Ferweend do Wäide foar ju Sieuwe fon disse Kategorie:',
-	'sd_createfilter_usedatevalues' => 'Ferweend foulgjende Tiedangoawe foar disse Sieuwe:',
-	'sd_createfilter_entervalues' => 'Ferweend disse Wäide foar ju Sieuwe (Wäide truch Komma tränd ienreeke. Wan n Wäid n Komma änthaalt, mäd "\\,"ärsätte.):',
-	'sd_createfilter_inputtype' => 'Iengoawetyp fon disse Sieuwe:',
-	'sd_createfilter_listofvalues' => 'Lieste fon Wäide (Standoard)',
 	'sd_createfilter_requirefilter' => 'Eer disse Sieuwe anwiesd wäd, mout foulgjende uur Sieuwe sät weese:',
 	'sd_createfilter_label' => 'Beteekenge fon disse Sieuwe (optionoal):',
 	'sd_blank_error' => 'duur nit loos weese',
 	'sd_filter_coversproperty' => 'Disse Sieuwe beträft dät Attribut $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Hie kricht sien Wäide uut ju Kategorie $1.',
-	'sd_filter_usestimeperiod' => 'Ferwoant $1 as Tiedangoawe.',
-	'sd_filter_year' => 'Jier',
-	'sd_filter_month' => 'Mound',
-	'sd_filter_hasvalues' => 'Häd dän Wäid $1.',
-	'sd_filter_hasinputtype' => 'Et häd dän Iengoawetyp $1.',
-	'sd_filter_freetext' => 'Text',
-	'sd_filter_daterange' => 'Tiedsponne',
 	'sd_filter_requiresfilter' => 'Hie sät ju Sieuwe $1 foaruut.',
 	'sd_filter_haslabel' => 'Häd ju Beteekenge $1.',
 );
@@ -3454,10 +2821,6 @@ $messages['sv'] = array(
 	'sd_createfilter_property' => 'Egenskaper som detta filter döljer:',
 	'sd_createfilter_usepropertyvalues' => 'Använd alla värden av den här egenskapen för filtret',
 	'sd_createfilter_usecategoryvalues' => 'Hämta värden för filtret från den här kategorin:',
-	'sd_createfilter_usedatevalues' => 'Använd datumområden för det här filtret med den här tidsperioden:',
-	'sd_createfilter_entervalues' => 'Skriv in värden för filtret manuellt (värdena ska separeras med komma - om ett värde innehåller ett komma, ersätt det med "\\,"):',
-	'sd_createfilter_inputtype' => 'Indatatyp för detta filter:',
-	'sd_createfilter_listofvalues' => 'lista över värden (standard)',
 	'sd_createfilter_requirefilter' => 'Kräv att ett annat filter väljs före detta visas:',
 	'sd_createfilter_label' => 'Etikett för det här filtret (valfritt):',
 	'sd_blank_error' => 'kan inte vara tom',
@@ -3465,14 +2828,6 @@ $messages['sv'] = array(
 	'sd-pageschemas-values' => 'Värden',
 	'sd_filter_coversproperty' => 'Detaa filter döljer egenskapen $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Det får sina värden från kategorin $1.',
-	'sd_filter_usestimeperiod' => 'Det använder $1 som tidsperiod.',
-	'sd_filter_year' => 'År',
-	'sd_filter_month' => 'Månad',
-	'sd_filter_hasvalues' => 'Det har värdena $1.',
-	'sd_filter_hasinputtype' => 'Den har indatatypen $1.',
-	'sd_filter_combobox' => 'rullgardinsmeny',
-	'sd_filter_freetext' => 'text',
-	'sd_filter_daterange' => 'datumintervall',
 	'sd_filter_requiresfilter' => 'Det kräver att filtret $1 är på plats.',
 	'sd_filter_haslabel' => 'Det har etiketten $1.',
 );
@@ -3488,8 +2843,6 @@ $messages['sw'] = array(
 	'sd_browsedata_daterangestart' => 'Anza:',
 	'sd_viewform' => 'Tazama fomu',
 	'sd_createfilter_name' => 'Jina:',
-	'sd_filter_year' => 'Mwaka',
-	'sd_filter_month' => 'Mwezi',
 );
 
 /** Silesian (ślůnski)
@@ -3527,10 +2880,6 @@ $messages['ta'] = array(
 	'sd_createfilter_name' => 'பெயர்:',
 	'sd-pageschemas-filter' => 'வடிகட்டி',
 	'sd-pageschemas-values' => 'மதிப்புகள்',
-	'sd_filter_year' => 'ஆண்டு',
-	'sd_filter_month' => 'மாதம்',
-	'sd_filter_freetext' => 'உரை',
-	'sd_filter_daterange' => 'தேதி வரம்பு',
 );
 
 /** Telugu (తెలుగు)
@@ -3553,13 +2902,8 @@ $messages['te'] = array(
 	'sd_filters_docu' => '{{SITENAME}}లో ఈ క్రింది వడపోతలు ఉన్నాయి:',
 	'sd_createfilter_name' => 'పేరు:',
 	'sd_createfilter_usecategoryvalues' => 'వడపోతకి విలువలని ఈ వర్గంనుండి తీసుకోవాలి:',
-	'sd_createfilter_listofvalues' => 'విలువల జాబితా (అప్రమేయం)',
 	'sd_blank_error' => 'ఖాళీగా ఉండకూడదు',
 	'sd-pageschemas-values' => 'విలువలు',
-	'sd_filter_year' => 'సంవత్సరం',
-	'sd_filter_month' => 'నెల',
-	'sd_filter_freetext' => 'పాఠ్యం',
-	'sd_filter_daterange' => 'తేదీ అవధి',
 );
 
 /** Tetum (tetun)
@@ -3568,7 +2912,6 @@ $messages['te'] = array(
 $messages['tet'] = array(
 	'sd_browsedata_other' => 'Seluk',
 	'sd_createfilter_name' => 'Naran:',
-	'sd_filter_year' => 'Tinan',
 );
 
 /** Tajik (Cyrillic script) (тоҷикӣ)
@@ -3586,16 +2929,11 @@ $messages['tg-cyrl'] = array(
 	'sd_browsedata_daterangeend' => 'Охир:',
 	'filters' => 'Филтрҳо',
 	'sd_createfilter_name' => 'Ном:',
-	'sd_createfilter_entervalues' => 'Миқдорҳоро барои филтр дастӣ ворид кунед (миқдорҳо бояд бо вергулҳо ҷудо шаванд - агар миқдор вергул дошта бошад, онро бо "\\," иваз кунед):',
 	'sd_createfilter_requirefilter' => 'Қабл аз намоиши ин яке, филтри дигар бояд интихоб шавад:',
 	'sd_createfilter_label' => 'Барчасб барои ин филтр (ихтиёрӣ):',
 	'sd_blank_error' => 'наметавонад холӣ бошад',
 	'sd_filter_coversproperty' => 'Ин филтр вижагии $1-ро шомил мешавад.',
 	'sd_filter_getsvaluesfromcategory' => 'Миқдорҳояшро аз гурӯҳи $1 мегирад.',
-	'sd_filter_usestimeperiod' => '$1-ро ба унвони давраи вақти худ ба кор мебарад.',
-	'sd_filter_year' => 'Сол',
-	'sd_filter_month' => 'Моҳ',
-	'sd_filter_hasvalues' => 'Миқдорҳои $1-ро дорад.',
 	'sd_filter_requiresfilter' => 'Ба вуҷуди филтри $1 эҳтиёҷ дорад.',
 	'sd_filter_haslabel' => 'Ин барчасби $1 дорад.',
 );
@@ -3615,16 +2953,11 @@ $messages['tg-latn'] = array(
 	'sd_browsedata_daterangeend' => 'Oxir:',
 	'filters' => 'Filtrho',
 	'sd_createfilter_name' => 'Nom:',
-	'sd_createfilter_entervalues' => 'Miqdorhoro baroi filtr dastī vorid kuned (miqdorho bojad bo vergulho çudo şavand - agar miqdor vergul doşta boşad, onro bo "\\," ivaz kuned):',
 	'sd_createfilter_requirefilter' => 'Qabl az namoişi in jake, filtri digar bojad intixob şavad:',
 	'sd_createfilter_label' => 'Barcasb baroi in filtr (ixtijorī):',
 	'sd_blank_error' => 'nametavonad xolī boşad',
 	'sd_filter_coversproperty' => 'In filtr viƶagiji $1-ro şomil meşavad.',
 	'sd_filter_getsvaluesfromcategory' => 'Miqdorhojaşro az gurūhi $1 megirad.',
-	'sd_filter_usestimeperiod' => '$1-ro ba unvoni davrai vaqti xud ba kor mebarad.',
-	'sd_filter_year' => 'Sol',
-	'sd_filter_month' => 'Moh',
-	'sd_filter_hasvalues' => 'Miqdorhoi $1-ro dorad.',
 	'sd_filter_requiresfilter' => 'Ba vuçudi filtri $1 ehtijoç dorad.',
 	'sd_filter_haslabel' => 'In barcasbi $1 dorad.',
 );
@@ -3644,7 +2977,6 @@ $messages['th'] = array(
 $messages['tk'] = array(
 	'filters' => 'Filtrler',
 	'sd_createfilter_name' => 'At:',
-	'sd_filter_freetext' => 'tekst',
 );
 
 /** Tagalog (Tagalog)
@@ -3682,10 +3014,6 @@ $messages['tl'] = array(
 	'sd_createfilter_property' => 'Pag-aaring nasasakop ng pansalang ito:',
 	'sd_createfilter_usepropertyvalues' => 'Gamitin ang lahat ng mga halaga ng pag-aaring ito para sa pansalang ito',
 	'sd_createfilter_usecategoryvalues' => 'Kumuha ng mga halaga para sa pansala mula sa kauriang ito:',
-	'sd_createfilter_usedatevalues' => 'Gamitin ang mga saklaw ng petsa para sa pansalang ito na may ganitong sakop ng kapanahunan:',
-	'sd_createfilter_entervalues' => 'Kinakamay na ipasok ang mga halaga para sa pansala (dapat na pinaghihiwahiwalay ng mga kuwit ang mga halaga - kung naglalaman ng kuwit ang isang halaga, palitan ito ng "\\,"):',
-	'sd_createfilter_inputtype' => 'Uri ng pampasok/pinapasok para sa pansalang ito:',
-	'sd_createfilter_listofvalues' => 'talaan ng mga halaga (likas na nakatakda)',
 	'sd_createfilter_requirefilter' => 'Pilitin ang iba pang pansala na mapili bago ipakita ang isang ito:',
 	'sd_createfilter_label' => 'Tatak para pansalang ito (maaaring wala nito):',
 	'sd_blank_error' => 'hindi maaaring walang laman/patlang',
@@ -3693,14 +3021,6 @@ $messages['tl'] = array(
 	'sd-pageschemas-values' => 'Mga halaga',
 	'sd_filter_coversproperty' => 'Nasasakop ng pansalang ito ang ari-ariang $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Kumukuha ito ng sarili niyang mga halaga mula sa kauriang $1.',
-	'sd_filter_usestimeperiod' => 'Ginagamit nito ang $1 bilang saklaw ng kapanahunan.',
-	'sd_filter_year' => 'Taon',
-	'sd_filter_month' => 'Buwan',
-	'sd_filter_hasvalues' => 'Mayroon itong mga halagang $1.',
-	'sd_filter_hasinputtype' => 'Mayroon itong uri ng pagpasok/ipinasok na $1.',
-	'sd_filter_combobox' => 'kahong pangkombo',
-	'sd_filter_freetext' => 'teksto',
-	'sd_filter_daterange' => 'saklaw ng petsa',
 	'sd_filter_requiresfilter' => 'Kinakailangan nito ang pagkakaroon ng pansalang $1.',
 	'sd_filter_haslabel' => 'Mayroon itong tatak na $1.',
 );
@@ -3728,14 +3048,8 @@ $messages['tr'] = array(
 	'createfilter' => 'Bir filtre oluştur',
 	'sd_createfilter_name' => 'İsim:',
 	'sd_createfilter_property' => 'Bu filtrenin kapsadığı özellik:',
-	'sd_createfilter_inputtype' => 'Bu filtre için girdi türü:',
 	'sd_createfilter_label' => 'Bu filtre için etiket (opsiyonel):',
 	'sd-pageschemas-filter' => 'Süzgeç',
-	'sd_filter_year' => 'Yıl',
-	'sd_filter_month' => 'Ay',
-	'sd_filter_combobox' => 'kombo kutu',
-	'sd_filter_freetext' => 'metin',
-	'sd_filter_daterange' => 'tarih aralığı',
 );
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
@@ -3786,10 +3100,6 @@ $messages['uk'] = array(
 	'sd_createfilter_property' => 'Властивість, яку цей фільтр покриває:',
 	'sd_createfilter_usepropertyvalues' => 'Використовуйте усі значення цієї властивості для фільтру',
 	'sd_createfilter_usecategoryvalues' => 'Отримати значення для фільтру із цієї категорії:',
-	'sd_createfilter_usedatevalues' => 'Використовувати діапазони дат для цього фільтру у цей періоду часу:',
-	'sd_createfilter_entervalues' => 'Введіть значення для фільтра вручну (значення слід відокремлювати крапкою з комою - якщо значення містить кому, замініть її на "/"):',
-	'sd_createfilter_inputtype' => 'Тип вводу для цього фільтру:',
-	'sd_createfilter_listofvalues' => 'список значень (типових)',
 	'sd_createfilter_requirefilter' => 'Вимагати вибору іншого фільтра, перед тим, як відображати цей:',
 	'sd_createfilter_label' => "Позначка для цього фільтра (необов'язково):",
 	'sd_blank_error' => 'не може бути порожнім',
@@ -3797,14 +3107,6 @@ $messages['uk'] = array(
 	'sd-pageschemas-values' => 'Значення',
 	'sd_filter_coversproperty' => 'Цей фільтр охоплює властивість  $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Отримує свої значення з категорії $1.',
-	'sd_filter_usestimeperiod' => 'Використовує $1 як часовий діапазон.',
-	'sd_filter_year' => 'Рік',
-	'sd_filter_month' => 'Місяць',
-	'sd_filter_hasvalues' => 'Має значення $1.',
-	'sd_filter_hasinputtype' => 'Має тип вводу $1.',
-	'sd_filter_combobox' => 'поле зі списком',
-	'sd_filter_freetext' => 'текст',
-	'sd_filter_daterange' => 'діапазон дат',
 	'sd_filter_requiresfilter' => 'Вимагає наявності фільтру $1.',
 	'sd_filter_haslabel' => 'Має позначку  $1.',
 );
@@ -3829,10 +3131,6 @@ $messages['ur'] = array(
 	'sd_createfilter_name' => 'نام:',
 	'sd-pageschemas-filter' => 'فلٹر کریں',
 	'sd-pageschemas-values' => 'اقدار',
-	'sd_filter_year' => 'سال',
-	'sd_filter_month' => 'ماہ',
-	'sd_filter_freetext' => 'ٹیکسٹ',
-	'sd_filter_daterange' => 'تاریخ کی حد',
 );
 
 /** Veps (vepsän kel’)
@@ -3849,9 +3147,6 @@ $messages['vep'] = array(
 	'sd_filters_docu' => "{{SITENAME}}-wikiš om ningoižed fil'troid:",
 	'createfilter' => "Säta fil'tr",
 	'sd_createfilter_name' => 'Nimi:',
-	'sd_filter_year' => "Voz'",
-	'sd_filter_month' => 'Ku',
-	'sd_filter_freetext' => 'tekst',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -3886,20 +3181,12 @@ $messages['vi'] = array(
 	'sd_createfilter_property' => 'Tính chất bộ lọc này bao phủ:',
 	'sd_createfilter_usepropertyvalues' => 'Sử dụng tất cả các giá trị của thuộc tính này cho bộ lọc',
 	'sd_createfilter_usecategoryvalues' => 'Lấy giá trị cho bộ lọc từ thể loại này:',
-	'sd_createfilter_usedatevalues' => 'Sử dụng khoảng ngày cho bộ lọc này với khoảng thời gian này:',
-	'sd_createfilter_entervalues' => 'Nhập bằng tay giá trị cho bộ lọc (giá trị nên được phân tách bằng dấu phẩy - nếu một giá trị có chứa dấu phẩy, hãy thay nó bằng "\\,"):',
-	'sd_createfilter_listofvalues' => 'danh sách giá trị (mặc định)',
 	'sd_createfilter_requirefilter' => 'Cần bộ lọc khác được chọn trước khi hiển thị cái này:',
 	'sd_createfilter_label' => 'Đánh nhãn cho bộ lọc này (tùy chọn):',
 	'sd_blank_error' => 'không được để trống',
 	'sd-pageschemas-values' => 'Các giá trị',
 	'sd_filter_coversproperty' => 'Bộ lọc này bao phủ thuộc tính $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Nó có giá trị từ thể loại $1.',
-	'sd_filter_usestimeperiod' => 'Nó sử dụng $1 làm khoảng thời gian.',
-	'sd_filter_year' => 'Năm',
-	'sd_filter_month' => 'Tháng',
-	'sd_filter_hasvalues' => 'Nó có giá trị $1.',
-	'sd_filter_freetext' => 'văn bản',
 	'sd_filter_requiresfilter' => 'Nó yêu cầu sự hiện diện của bộ lọc $1.',
 	'sd_filter_haslabel' => 'Nó có nhãn $1.',
 );
@@ -3934,18 +3221,11 @@ $messages['vo'] = array(
 	'sd_createfilter_property' => 'Patöf fa sul at pageböl:',
 	'sd_createfilter_usepropertyvalues' => 'Gebön völadis valik patöfa at pro sul.',
 	'sd_createfilter_usecategoryvalues' => 'Tuvön völadis pro sul in klad at:',
-	'sd_createfilter_entervalues' => 'Penön me nams völadis pro sul (völads mutons pateilön fa liunüls - if völad semik ninädon liunüli, plaädolös oni me "\\,"):',
-	'sd_createfilter_listofvalues' => 'völadalised (kösömik)',
 	'sd_createfilter_requirefilter' => 'Flagön, das sul votik puvälon büä sul at pojonon:',
 	'sd_createfilter_label' => 'Nem sula at (no paflagöl):',
 	'sd_blank_error' => 'no dalon vagön',
 	'sd_filter_coversproperty' => 'Sul at tefon patöfi: $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Tuvon völadis okik in klad: $1.',
-	'sd_filter_usestimeperiod' => 'Gebon $1 as timadul okik.',
-	'sd_filter_year' => 'Yel',
-	'sd_filter_month' => 'Mul',
-	'sd_filter_hasvalues' => 'Labon völadis: $1.',
-	'sd_filter_freetext' => 'vödem',
 	'sd_filter_requiresfilter' => 'Flagon komi sula: $1.',
 	'sd_filter_haslabel' => 'Labon nemi: $1.',
 );
@@ -3958,9 +3238,6 @@ $messages['yi'] = array(
 	'sd_browsedata_other' => 'אנדער',
 	'sd_browsedata_none' => 'קיין',
 	'sd_createfilter_name' => 'נאָמען:',
-	'sd_filter_year' => 'יאר',
-	'sd_filter_month' => 'מאנאַט',
-	'sd_filter_freetext' => 'טעקסט',
 );
 
 /** Chinese (China) (‪中文(中国大陆)‬)
@@ -3980,17 +3257,11 @@ $messages['zh-cn'] = array(
 	'sd_createfilter_property' => '此一筛选器所涵盖的性质：',
 	'sd_createfilter_usepropertyvalues' => '将此一性质的值设给筛选器所用',
 	'sd_createfilter_usecategoryvalues' => '从此分类中为筛选器取得筛选值：',
-	'sd_createfilter_usedatevalues' => '以此一期间为此筛选器设置日期范围值：',
-	'sd_createfilter_entervalues' => '以手工的方式键入筛选器的筛选值(其值必须以半型逗号","分隔，如果您的输入值内包含半型逗号则须则"\\,"取代):',
 	'sd_createfilter_requirefilter' => '在此一筛选器展示其作用之前要求须选取其他的筛选器：',
 	'sd_createfilter_label' => '为此一筛选选器设置标签(选择性的)：',
 	'sd_blank_error' => '不得为空白',
 	'sd_filter_coversproperty' => '此筛选器涵盖了$1性质。',
 	'sd_filter_getsvaluesfromcategory' => '其从$1分类取得它的值。',
-	'sd_filter_usestimeperiod' => '其使用「$1」做为时间期限值',
-	'sd_filter_year' => '年',
-	'sd_filter_month' => '月',
-	'sd_filter_hasvalues' => '其有着$1的这些值。',
 	'sd_filter_requiresfilter' => '其以$1筛选器为基础。',
 	'sd_filter_haslabel' => '其有着此一$1标签',
 );
@@ -4033,10 +3304,6 @@ $messages['zh-hans'] = array(
 	'sd_createfilter_property' => '此筛选器所涵盖的属性：',
 	'sd_createfilter_usepropertyvalues' => '对该筛选器使用此属性的所有取值',
 	'sd_createfilter_usecategoryvalues' => '从该类别当中为筛选器获取取值：',
-	'sd_createfilter_usedatevalues' => '将该筛选器的日期范围与该时间段配合使用：',
-	'sd_createfilter_entervalues' => '为筛选器手工输入取值（应当采用逗号分隔取值 - 如果取值之中含有逗号，请采用"\\,"取代）：',
-	'sd_createfilter_inputtype' => '该筛选器的输入类型：',
-	'sd_createfilter_listofvalues' => '取值列表（默认值）',
 	'sd_createfilter_requirefilter' => '在显示该筛选器之前，要求选择另一个筛选器：',
 	'sd_createfilter_label' => '此筛选器的标签（可选）：',
 	'sd_blank_error' => '不可留空',
@@ -4044,14 +3311,6 @@ $messages['zh-hans'] = array(
 	'sd-pageschemas-values' => '取值',
 	'sd_filter_coversproperty' => '此筛选器涵盖属性$1。',
 	'sd_filter_getsvaluesfromcategory' => '它从类别$1之中获得其取值。',
-	'sd_filter_usestimeperiod' => '它使用$1作为其时间段。',
-	'sd_filter_year' => '年',
-	'sd_filter_month' => '月',
-	'sd_filter_hasvalues' => '它具有取值$1。',
-	'sd_filter_hasinputtype' => '它具有输入类型$1。',
-	'sd_filter_combobox' => '组合框',
-	'sd_filter_freetext' => '文字',
-	'sd_filter_daterange' => '日期范围',
 	'sd_filter_requiresfilter' => '它需要筛选器$1的存在。',
 	'sd_filter_haslabel' => '它具有标签$1。',
 );
@@ -4092,10 +3351,6 @@ $messages['zh-hant'] = array(
 	'sd_createfilter_property' => '此篩選器所涵蓋的屬性：',
 	'sd_createfilter_usepropertyvalues' => '對該篩選器使用此屬性的所有取值',
 	'sd_createfilter_usecategoryvalues' => '從該類別當中為篩選器獲取取值：',
-	'sd_createfilter_usedatevalues' => '將該篩選器的日期範圍與該時間段配合使用：',
-	'sd_createfilter_entervalues' => '為篩選器手工輸入取值（應當採用逗號分隔取值 - 如果取值之中含有逗號，請採用"\\,"取代）：',
-	'sd_createfilter_inputtype' => '該篩選器的輸入類型：',
-	'sd_createfilter_listofvalues' => '取值列表（默認值）',
 	'sd_createfilter_requirefilter' => '在顯示該篩選器之前，要求選擇另一個篩選器：',
 	'sd_createfilter_label' => '此篩選器的標籤（可選）：',
 	'sd_blank_error' => '不可留空',
@@ -4103,14 +3358,6 @@ $messages['zh-hant'] = array(
 	'sd-pageschemas-values' => '取值',
 	'sd_filter_coversproperty' => '此篩選器涵蓋屬性$1。',
 	'sd_filter_getsvaluesfromcategory' => '它從類別$1之中獲得其取值。',
-	'sd_filter_usestimeperiod' => '它使用$1作為其時間段。',
-	'sd_filter_year' => '年',
-	'sd_filter_month' => '月',
-	'sd_filter_hasvalues' => '它具有取值$1。',
-	'sd_filter_hasinputtype' => '它具有輸入類型$1。',
-	'sd_filter_combobox' => '組合框',
-	'sd_filter_freetext' => '文字',
-	'sd_filter_daterange' => '日期範圍',
 	'sd_filter_requiresfilter' => '它需要篩選器$1的存在。',
 	'sd_filter_haslabel' => '它具有標籤$1。',
 );
@@ -4146,22 +3393,11 @@ $messages['zh-tw'] = array(
 	'sd_createfilter_property' => '此一篩選器所涵蓋的性質：',
 	'sd_createfilter_usepropertyvalues' => '將此一性質的值設給篩選器所用',
 	'sd_createfilter_usecategoryvalues' => '從此分類中為篩選器取得篩選值：',
-	'sd_createfilter_usedatevalues' => '以此一期間為此篩選器設置日期範圍值：',
-	'sd_createfilter_entervalues' => '以手工的方式鍵入篩選器的篩選值(其值必須以半型逗號","分隔，如果您的輸入值內包含半型逗號則須則"\\,"取代):',
-	'sd_createfilter_inputtype' => '為此篩選器輸入型態：',
-	'sd_createfilter_listofvalues' => '列出值(預設)',
 	'sd_createfilter_requirefilter' => '在此一篩選器展示其作用之前要求須選取其他的篩選器(即此一篩選器的作用係以另一篩選器為其基礎)：',
 	'sd_createfilter_label' => '為此一篩選選器設定標籤(選擇性的)：',
 	'sd_blank_error' => '不得為空白',
 	'sd_filter_coversproperty' => '此篩選器涵蓋了$1性質。',
 	'sd_filter_getsvaluesfromcategory' => '其從$1分類取得它的值。',
-	'sd_filter_usestimeperiod' => '其使用「$1」做為時間期限值',
-	'sd_filter_year' => '年',
-	'sd_filter_month' => '月',
-	'sd_filter_hasvalues' => '其有著$1的這些值。',
-	'sd_filter_hasinputtype' => '其已有「$1」的輸入的型態了。',
-	'sd_filter_freetext' => '文字',
-	'sd_filter_daterange' => '資料範圍',
 	'sd_filter_requiresfilter' => '其以$1篩選器為基礎。',
 	'sd_filter_haslabel' => '其有著此一$1標籤',
 );

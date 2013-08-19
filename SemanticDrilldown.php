@@ -13,7 +13,7 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-define( 'SD_VERSION', '1.2.5' );
+define( 'SD_VERSION', '1.3-alpha' );
 
 $wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'specialpage'][] = array(
 	'path'        => __FILE__,
@@ -27,13 +27,13 @@ $wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'special
 // constants for special properties
 define( 'SD_SP_HAS_FILTER', 1 );
 define( 'SD_SP_COVERS_PROPERTY', 2 );
-define( 'SD_SP_HAS_VALUE', 3 );
+//define( 'SD_SP_HAS_VALUE', 3 );
 define( 'SD_SP_GETS_VALUES_FROM_CATEGORY', 4 );
-define( 'SD_SP_USES_TIME_PERIOD', 5 );
+//define( 'SD_SP_USES_TIME_PERIOD', 5 );
 define( 'SD_SP_REQUIRES_FILTER', 6 );
 define( 'SD_SP_HAS_LABEL', 7 );
 define( 'SD_SP_HAS_DRILLDOWN_TITLE', 8 );
-define( 'SD_SP_HAS_INPUT_TYPE', 9 );
+//define( 'SD_SP_HAS_INPUT_TYPE', 9 );
 define( 'SD_SP_HAS_DISPLAY_PARAMETERS', 10 );
 
 $sdgIP = dirname( __FILE__ );
@@ -101,9 +101,9 @@ $sdgScriptPath = $wgScriptPath . '/extensions/SemanticDrilldown';
 # than 170.
 # #
 if ( !isset( $sdgNamespaceIndex ) ) {
-        sdfInitNamespaces( 170 );
+	sdfInitNamespaces( 170 );
 } else {
-        sdfInitNamespaces();
+	sdfInitNamespaces();
 }
 
 # ##
@@ -123,6 +123,9 @@ $sdgFiltersSmallestFontSize = - 1;
 $sdgFiltersLargestFontSize = - 1;
 // print categories list as tabs
 $sdgShowCategoriesAsTabs = false;
+// other display settings
+$sdgMinValuesForComboBox = 40;
+$sdgNumRangesForNumberFilters = 6;
 
 
 /**********************************************/
@@ -220,10 +223,10 @@ function sdfInitProperties() {
 	$sd_property_vals = array(
 		SD_SP_HAS_FILTER => array( '_SD_F', '_wpg' ),
 		SD_SP_COVERS_PROPERTY => array( '_SD_CP', '_wpp' ),
-		SD_SP_HAS_VALUE => array( '_SD_V', '_str' ),
+		//SD_SP_HAS_VALUE => array( '_SD_V', '_str' ),
 		SD_SP_GETS_VALUES_FROM_CATEGORY => array( '_SD_VC', '_wpc' ),
-		SD_SP_USES_TIME_PERIOD => array( '_SD_TP', '_str' ),
-		SD_SP_HAS_INPUT_TYPE => array( '_SD_IT', '_str' ),
+		//SD_SP_USES_TIME_PERIOD => array( '_SD_TP', '_str' ),
+		//SD_SP_HAS_INPUT_TYPE => array( '_SD_IT', '_str' ),
 		SD_SP_REQUIRES_FILTER => array( '_SD_RF', '_wpg' ),
 		SD_SP_HAS_LABEL => array( '_SD_L', '_str' ),
 		SD_SP_HAS_DRILLDOWN_TITLE => array( '_SD_DT', '_str' ),

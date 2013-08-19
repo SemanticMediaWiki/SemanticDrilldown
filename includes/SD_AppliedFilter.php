@@ -31,7 +31,7 @@ class SDAppliedFilter {
 			$values = array( $values );
 		}
 		foreach ( $values as $val ) {
-			$filter_val = SDFilterValue::create( $val, $filter->time_period );
+			$filter_val = SDFilterValue::create( $val, $filter );
 			$af->values[] = $filter_val;
 		}
 		return $af;
@@ -87,12 +87,17 @@ class SDAppliedFilter {
 					$sql .= "$value_field > {$fv->lower_limit} ";
 				elseif ( $fv->upper_limit )
 					$sql .= "$value_field < {$fv->upper_limit} ";
-			} elseif ( $this->filter->time_period != null ) {
+			} elseif ( $this->filter->property_type == 'date' ) {
 				$date_field = $this->filter->getDateField();
-				if ( $this->filter->time_period == wfMsg( 'sd_filter_month' ) ) {
+				if ( $fv->time_period == 'day' ) {
+					$sql .= "YEAR($date_field) = {$fv->year} AND MONTH($date_field) = {$fv->month} AND DAYOFMONTH($date_field) = {$fv->day} ";
+				} elseif ( $fv->time_period == 'month' ) {
 					$sql .= "YEAR($date_field) = {$fv->year} AND MONTH($date_field) = {$fv->month} ";
-				} else {
+				} elseif ( $fv->time_period == 'year' ) {
 					$sql .= "YEAR($date_field) = {$fv->year} ";
+				} else { // if ( $fv->time_period == 'year range' ) {
+					$sql .= "YEAR($date_field) >= {$fv->year} ";
+					$sql .= "AND YEAR($date_field) <= {$fv->end_year} ";
 				}
 			} else {
 				$value = $fv->text;
@@ -116,17 +121,18 @@ class SDAppliedFilter {
 		$property_value = $this->filter->escaped_property;
 		$dbr = wfGetDB( DB_SLAVE );
 		$property_table_name = $dbr->tableName( $this->filter->getTableName() );
-		if ( is_null( $this->filter->time_period ) ) {
+		if ( $this->filter->property_type != 'date' ) {
 			$value_field = $this->filter->getValueField();
 		} else {
-			// Escape if this is not a date property
-			if ( $this->filter->property_type != 'date' ) {
-				return array( 'Error: date handling cannot be done on a non-date property.' );
-			}
+			// Is this necessary?
 			$date_field = $this->filter->getDateField();
-			if ( $this->filter->time_period == wfMsg( 'sd_filter_month' ) ) {
+			if ( $this->filter->getTimePeriod() == 'month' ) {
 				$value_field = "YEAR($date_field), MONTH($date_field)";
-			} else {
+			} elseif ( $this->filter->getTimePeriod() == 'day' ) {
+				$value_field = "YEAR($date_field), MONTH($date_field), DAYOFMONTH($date_field)";
+			} elseif ( $this->filter->getTimePeriod() == 'year' ) {
+				$value_field = "YEAR($date_field)";
+			} else { // if ( $this->filter->getTimePeriod() == 'year range' ) {
 				$value_field = "YEAR($date_field)";
 			}
 		}
@@ -148,11 +154,12 @@ class SDAppliedFilter {
 	ORDER BY $value_field";
 		$res = $dbr->query( $sql );
 		while ( $row = $dbr->fetchRow( $res ) ) {
-			if ( $this->filter->time_period == wfMsg( 'sd_filter_month' ) )
+			if ( $this->filter->property_type == 'date' && $this->filter->getTimePeriod() == 'month' ) {
 				$value_string = SDUtils::monthToString( $row[1] ) . " " . $row[0];
-			else
+			} else {
 				// why is trim() necessary here???
 				$value_string = str_replace( '_', ' ', trim( $row[0] ) );
+			}
 			$possible_values[] = $value_string;
 		}
 		$dbr->freeResult( $res );
