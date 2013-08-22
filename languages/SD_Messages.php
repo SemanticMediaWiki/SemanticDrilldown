@@ -3069,7 +3069,7 @@ $messages['tzm'] = array(
  * @author Тест
  */
 $messages['uk'] = array(
-	'semanticdrilldown-desc' => 'Срозгонрутий інтерфейс для навігації у семантичних даних',
+	'semanticdrilldown-desc' => 'Розгорнутий інтерфейс для навігації у семантичних даних',
 	'specialpages-group-sd_group' => 'Семантична розгорненість',
 	'browsedata' => 'Огляд даних',
 	'sd_browsedata_choosecategory' => 'Виберіть категорію',
