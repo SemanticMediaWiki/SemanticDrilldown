@@ -297,7 +297,7 @@ class SDBrowseDataPage extends QueryPage {
 				}
 			}
 			if ( $includes_none ) {
-				$property_table_name = $af->filter->getTableName();
+				$property_table_name = $dbr->tableName( $af->filter->getTableName() );
 				if ( $af->filter->property_type === 'page' ) {
 					$property_table_nickname = "nr$i";
 					$property_field = 'p_id';
