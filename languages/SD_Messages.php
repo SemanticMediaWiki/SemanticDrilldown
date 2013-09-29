@@ -1839,6 +1839,7 @@ $messages['ksh'] = array(
 /** Luxembourgish (Lëtzebuergesch)
  * @author Les Meloures
  * @author Robby
+ * @author Soued031
  */
 $messages['lb'] = array(
 	'semanticdrilldown-desc' => "En ''Drilldown''-Interface, fir duerch semantesch Daten ze navigéieren",
@@ -1870,14 +1871,14 @@ $messages['lb'] = array(
 	'sd_createfilter_usepropertyvalues' => 'All Wäerter vun dëser Eegeschaft fir de Filter benotzen',
 	'sd_createfilter_usecategoryvalues' => 'Werter fir dëse Filter vun dëser Kategorie kréien:',
 	'sd_createfilter_requirefilter' => 'Verlaangen dat en anere Filter gewielt gëtt ier dësen ugewise gëtt:',
-	'sd_createfilter_label' => 'Etiquette fir dëse Filter (fakultativ):',
+	'sd_createfilter_label' => 'Etikett fir dëse Filter (fakultativ):',
 	'sd_blank_error' => 'däerf net eidel sinn',
 	'sd-pageschemas-filter' => 'Filter',
 	'sd-pageschemas-values' => 'Wäerter',
 	'sd_filter_coversproperty' => "Dëse Filter betrefft d'Eegeschaft $1.",
 	'sd_filter_getsvaluesfromcategory' => 'E kritt seng Werter aus der Kategorie $1.',
 	'sd_filter_requiresfilter' => "E verlaangt d'Presenz vum Filter $1.",
-	'sd_filter_haslabel' => "en huet d'Etiquette $1.",
+	'sd_filter_haslabel' => "en huet d'Etikett $1.",
 );
 
 /** Latvian (latviešu)
