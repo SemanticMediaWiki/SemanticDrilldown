@@ -2416,14 +2416,14 @@ $messages['ps'] = array(
 	'sd_browsedata_none' => 'هېڅ',
 	'sd_browsedata_filterbysubcategory' => 'د همدې وړې-وېشنيزې له مخې چاڼول',
 	'sd_browsedata_or' => 'يا',
-	'sd_browsedata_removefilter' => 'همدا چاڼګر لرې کول',
+	'sd_browsedata_removefilter' => 'همدا چاڼگر لرې کول',
 	'sd_browsedata_daterangestart' => 'پيل:',
 	'sd_browsedata_daterangeend' => 'پای:',
 	'filters' => 'چاڼګرونه',
-	'createfilter' => 'يو چاڼګر جوړول',
+	'createfilter' => 'يو چاڼگر جوړول',
 	'sd_createfilter_name' => 'نوم:',
 	'sd_blank_error' => 'بايد تش نه وي',
-	'sd-pageschemas-filter' => 'چاڼګر',
+	'sd-pageschemas-filter' => 'چاڼگر',
 );
 
 /** Portuguese (português)
@@ -3336,6 +3336,7 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
  * @author Mark85296341
  * @author Oapbtommy
  * @author Wrightbus
@@ -3362,7 +3363,7 @@ $messages['zh-hant'] = array(
 	'sd_browsedata_daterangestart' => '開始：',
 	'sd_browsedata_daterangeend' => '結束：',
 	'sd_browsedata_novalues' => '該篩選器沒有任何取值',
-	'filters' => '過濾器',
+	'filters' => '搜尋',
 	'sd_filters_docu' => '下列篩選器存在於{{SITENAME}}之上：',
 	'sd_formcreate' => '用表單創建',
 	'sd_viewform' => '檢視表格',
