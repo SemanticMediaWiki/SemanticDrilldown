@@ -644,6 +644,7 @@ $messages['cu'] = array(
  * @author Lloffiwr
  */
 $messages['cy'] = array(
+	'browsedata' => "Pori'r data",
 	'sd_browsedata_choosecategory' => 'Dewis categori',
 	'sd_browsedata_viewcategory' => 'gweld y categori',
 	'sd_browsedata_docu' => "Clicio ar un eitem neu ragor isod i gyfyngu'r canlyniadau.",
@@ -662,8 +663,13 @@ $messages['cy'] = array(
 	'sd_browsedata_daterangestart' => 'Dechrau:',
 	'sd_browsedata_daterangeend' => 'Diwedd:',
 	'filters' => 'Hidlau',
+	'sd_viewform' => 'Gweld y ffurflen',
+	'createfilter' => 'Gwneud hidl',
+	'sd-createfilter-with-name' => 'Gwneud yr hidl: $1',
+	'sd_createfilter_name' => 'Enw:',
 	'sd-pageschemas-filter' => 'Hidl',
 	'sd-pageschemas-values' => 'Gwerthoedd',
+	'sd_filter_haslabel' => "Mae'r label $1 ganddo.",
 );
 
 /** Danish (dansk)
@@ -2588,6 +2594,7 @@ $messages['roa-tara'] = array(
  * @author Ferrer
  * @author Innv
  * @author Lockal
+ * @author Okras
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -2614,7 +2621,10 @@ $messages['ru'] = array(
 	'sd_browsedata_novalues' => 'Нет значений для этого фильтра',
 	'filters' => 'Фильтры',
 	'sd_filters_docu' => '{{SITENAME}} содержит следующие фильтры:',
+	'sd_formcreate' => 'Создать с формой',
+	'sd_viewform' => 'Смотреть форму',
 	'createfilter' => 'Создать фильтр',
+	'sd-createfilter-with-name' => 'Создать фильтр: $1',
 	'sd_createfilter_name' => 'Имя:',
 	'sd_createfilter_property' => 'Свойство, которое покрывает этот фильтр:',
 	'sd_createfilter_usepropertyvalues' => 'Использовать все значения этого свойства для фильтра',
@@ -2622,6 +2632,7 @@ $messages['ru'] = array(
 	'sd_createfilter_requirefilter' => 'Требовать выбора другого фильтра, перед тем, как отображать этот:',
 	'sd_createfilter_label' => 'Пометка для этого фильтра (необязательно):',
 	'sd_blank_error' => 'не может быть пустым',
+	'sd-pageschemas-filter' => 'Фильтр',
 	'sd-pageschemas-values' => 'Значения',
 	'sd_filter_coversproperty' => 'Этот фильтр покрывает свойство $1.',
 	'sd_filter_getsvaluesfromcategory' => 'Получает свои значения из категории $1.',

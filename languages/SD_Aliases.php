@@ -138,6 +138,7 @@ $specialPageAliases['frp'] = array(
 
 /** Galician (galego) */
 $specialPageAliases['gl'] = array(
+	'BrowseData' => array( 'Explorar_os_datos' ),
 	'CreateFilter' => array( 'Crear_un_filtro' ),
 	'Filters' => array( 'Filtros' ),
 );
