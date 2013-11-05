@@ -88,12 +88,12 @@ class SDPageSchemas extends PSExtensionHandler {
 			$usePropertyValuesAttr['checked'] = true;
 		}
 
-		$html_text = '<p>' . wfMsg( 'ps-optional-name' ) . ' ';
+		$html_text = '<div class="editSchemaMinorFields">' . "\n";
+		$html_text .= '<p>' . wfMsg( 'ps-optional-name' ) . ' ';
 		$html_text .= Html::input( 'sd_filter_name_num', $filterName, 'text', array( 'size' => 25 ) ) . "</p>\n";
-		$html_text .= '<fieldset><legend>' . wfMsg( 'sd-pageschemas-values' ) . '</legend>' . "\n";
-		$html_text .= '<p>' . Html::input( 'sd_values_source_num', 'property', 'radio', $usePropertyValuesAttr ) . ' ';
-		$html_text .= wfMsg( 'sd_createfilter_usepropertyvalues' ) . "</p>\n";
-		$html_text .= "\t<p>\n";
+		$html_text .= wfMsg( 'sd-pageschemas-values' ) . ":\n";
+		$html_text .= Html::input( 'sd_values_source_num', 'property', 'radio', $usePropertyValuesAttr ) . ' ';
+		$html_text .= wfMsg( 'sd_createfilter_usepropertyvalues' ) . "\n";
 		$html_text .= Html::input( 'sd_values_source_num', 'category', 'radio', $fromCategoryAttrs ) . "\n";
 		$html_text .= "\t" . wfMsg( 'sd_createfilter_usecategoryvalues' ) . "\n";
 		$categories = SDUtils::getTopLevelCategories();
@@ -108,6 +108,7 @@ class SDPageSchemas extends PSExtensionHandler {
 		}
 		$html_text .= "\t" . Html::rawElement( 'select', array( 'id' => 'category_dropdown', 'name' => 'sd_category_name_num' ), "\n" . $categoriesHTML ) . "\n";
 		$html_text .= "\t</p>\n";
+		$html_text .= "\t</div>\n";
 
 		return array( $html_text, $hasExistingValues );
 	}
