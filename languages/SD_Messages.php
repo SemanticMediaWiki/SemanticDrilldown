@@ -1514,6 +1514,7 @@ $messages['ia'] = array(
 	'sd_formcreate' => 'Crear con formulario',
 	'sd_viewform' => 'Vider formulario',
 	'createfilter' => 'Crear un filtro',
+	'sd-createfilter-with-name' => 'Crear filtro: $1',
 	'sd_createfilter_name' => 'Nomine:',
 	'sd_createfilter_property' => 'Le proprietate que iste filtro coperi:',
 	'sd_createfilter_usepropertyvalues' => 'Usar tote le valores de iste proprietate pro le filtro',
