@@ -143,6 +143,11 @@ class SDUtils {
 		$options = new SMWRequestOptions();
 		$options->limit = 10000;
 		$used_properties = smwfGetStore()->getPropertiesSpecial( $options );
+		if ( $used_properties instanceof SMW\SQLStore\PropertiesCollector ) {
+			// SMW 1.9+
+			$used_properties = $used_properties->runCollector();
+		}
+
 		foreach ( $used_properties as $property ) {
 			if ( $property[0] instanceof SMWDIError ) {
 				continue;
@@ -156,7 +161,13 @@ class SDUtils {
 				$all_properties[] = $property[0]->getWikiValue();
 			}
 		}
+
 		$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial( $options );
+		if ( $unused_properties instanceof SMW\SQLStore\UnusedPropertiesCollector ) {
+			// SMW 1.9+
+			$unused_properties = $unused_properties->runCollector();
+		}
+
 		foreach ( $unused_properties as $property ) {
 			if ( $property instanceof SMWDIError ) {
 				continue;
