@@ -1316,7 +1316,7 @@ END;
 	function addSemanticResultWrapper( $dbr, $res, $num, $query, $mainlabel, $printouts ) {
 		$qr = array();
 		$count = 0;
-		$store = smwfGetStore();
+		$store = SDUtils::getSMWStore();
 		while ( ( $count < $num ) && ( $row = $dbr->fetchObject( $res ) ) ) {
 			$count++;
 			if ( class_exists( 'SMWDIWikiPage' ) ) {

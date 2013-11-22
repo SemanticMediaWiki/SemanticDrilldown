@@ -84,7 +84,7 @@ class SDFilter {
 		}
 		$proptitle = Title::newFromText( $f->property, SMW_NS_PROPERTY );
 		if ( $proptitle != null ) {
-			$store = smwfGetStore();
+			$store = SDUtils::getSMWStore();
 			if ( class_exists( 'SMWDIProperty' ) ) {
 				// SMW 1.6+
 				$propPage = new SMWDIWikiPage( $f->escaped_property, SMW_NS_PROPERTY, '' );

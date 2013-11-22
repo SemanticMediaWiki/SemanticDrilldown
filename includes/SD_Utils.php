@@ -16,6 +16,19 @@ class SDUtils {
 	}
 
 	/**
+	 * Helper function to get the SMW data store for different versions
+	 * of SMW.
+	 */
+	public static function getSMWStore() {
+		if ( class_exists( '\SMW\StoreFactory' ) ) {
+			// SMW 1.9+
+			return \SMW\StoreFactory::getStore();
+		} else {
+			return smwfGetStore();
+		}
+	}
+
+	/**
 	 * Helper function to handle getPropertyValues() in both SMW 1.6
 	 * and earlier versions.
 	 * 
@@ -142,7 +155,7 @@ class SDUtils {
 
 		$options = new SMWRequestOptions();
 		$options->limit = 10000;
-		$used_properties = smwfGetStore()->getPropertiesSpecial( $options );
+		$used_properties = SDUtils::getSMWStore()->getPropertiesSpecial( $options );
 		if ( $used_properties instanceof SMW\SQLStore\PropertiesCollector ) {
 			// SMW 1.9+
 			$used_properties = $used_properties->runCollector();
@@ -162,7 +175,7 @@ class SDUtils {
 			}
 		}
 
-		$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial( $options );
+		$unused_properties = SDUtils::getSMWStore()->getUnusedPropertiesSpecial( $options );
 		if ( $unused_properties instanceof SMW\SQLStore\UnusedPropertiesCollector ) {
 			// SMW 1.9+
 			$unused_properties = $unused_properties->runCollector();
@@ -229,7 +242,7 @@ class SDUtils {
 	 * points to with a specific property
 	 */
 	static function getValuesForProperty( $subject, $subjectNamespace, $specialPropID ) {
-		$store = smwfGetStore();
+		$store = SDUtils::getSMWStore();
 		$res = self::getSMWPropertyValues( $store, $subject, $subjectNamespace, $specialPropID );
 		$values = array();
 		foreach ( $res as $prop_val ) {
