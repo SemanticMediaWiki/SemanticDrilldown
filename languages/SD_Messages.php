@@ -618,7 +618,7 @@ $messages['ce'] = array(
 	'createfilter' => 'Кхолла литтар',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Juan de Vojníkov
  * @author Juandev
  * @author Vks
@@ -633,7 +633,7 @@ $messages['cs'] = array(
 	'sd-pageschemas-filter' => 'Filtr',
 );
 
-/** Church Slavic (словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
+/** Church Slavic (словѣньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  * @author ОйЛ
  */
 $messages['cu'] = array(
