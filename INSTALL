@@ -12,9 +12,9 @@ For a proper legal disclaimer, see the file "COPYING".
 
 == Requirements ==
 
-The extension requires an install of Semantic MediaWiki 1.5 or
-greater. For more details, see Semantic MediaWiki's own
-installation requirements.
+The extension requires an install of Semantic MediaWiki 1.5 or greater as
+well as MediaWiki 1.18 or greater. For more details, see Semantic
+MediaWiki's own installation requirements.
 
 == Installation ==
 

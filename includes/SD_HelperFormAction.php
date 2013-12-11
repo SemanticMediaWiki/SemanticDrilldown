@@ -10,12 +10,7 @@
  * @ingroup SD
  */
 
-// TODO: Action class did not exist until MW 1.18
-if ( ! class_exists( 'Action') ) {
-	class Action{}
-}
-
-class SDHelperFormAction extends Action 
+class SDHelperFormAction extends Action
 {
 	/**
 	 * Return the name of the action this object responds to
