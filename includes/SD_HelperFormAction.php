@@ -127,28 +127,11 @@ class SDHelperFormAction extends Action
 	 * special pages)
 	 */
 	static function displayForm( $action, $article ) {
-		// TODO: This function will be called as a hook handler and $action will
-		//  be a string before MW 1.18. From 1.18 onwards this function will#
-		//  only be called for createfilter actions, i.e. the if statement can be
-		//  removed then.
-
-		// return "true" if the call failed (meaning, pass on handling
-		// of the hook to others), and "false" otherwise
-		if ( is_string( $action ) && $action !== 'createfilter' ) {
-			return true;
-		}
-
 		if ( $article->getTitle()->getNamespace() != SD_NS_FILTER ) {
 			return true;
 		}
 
-		// For backward-compatibility
-		if ( is_string( $action ) ) {
-			global $wgOut;
-			$output = $wgOut;
-		} else {
-			$output = $action->getOutput();
-		}
+		//$output = $action->getOutput();
 
 		$title = $article->getTitle();
 		$createFilterPage = new SDCreateFilter();

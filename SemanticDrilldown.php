@@ -73,12 +73,7 @@ $wgHooks['ParserFirstCallInit'][] = 'SDParserFunctions::registerFunctions';
 $wgHooks['SkinTemplateTabs'][] = 'SDHelperFormAction::displayTab';
 $wgHooks['SkinTemplateNavigation'][] = 'SDHelperFormAction::displayTab2';
 
-// Using UnknownAction is deprecated from MW 1.18 onwards.
-if ( version_compare( $wgVersion, '1.18', '<' ) ) {
-	$wgHooks['UnknownAction'][] = 'SDHelperFormAction::displayForm';
-} else {
-	$wgActions['createfilter'] = 'SDHelperFormAction';
-}
+$wgActions['createfilter'] = 'SDHelperFormAction';
 
 
 $wgPageProps['hidefromdrilldown'] = 'Whether or not the page is set as HIDEFROMDRILLDOWN';

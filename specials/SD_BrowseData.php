@@ -119,12 +119,7 @@ class SDBrowseData extends IncludableSpecialPage {
 
 		$wgOut->addHTML( "\n			<div class=\"drilldown-results\">\n" );
 		$rep = new SDBrowseDataPage( $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit );
-		// Handling changed in MW version 1.18.
-		if ( method_exists( $rep, 'execute' ) ) {
-			$num = $rep->execute( $query );
-		} else {
-			$num = $rep->doQuery( $offset, $limit );
-		}
+		$num = $rep->execute( $query );
 		$wgOut->addHTML( "\n			</div> <!-- drilldown-results -->\n" );
 
 		// This has to be set last, because otherwise the QueryPage
@@ -148,10 +143,8 @@ class SDBrowseDataPage extends QueryPage {
 	 * Initialize the variables of this page
 	 */
 	function __construct( $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit ) {
-		// Backwards compatibility for pre-version 1.18
-		if ( $this instanceof SpecialPage ) {
-			parent::__construct( 'BrowseData' );
-		}
+		parent::__construct( 'BrowseData' );
+
 		$this->category = $category;
 		$this->subcategory = $subcategory;
 		$this->applied_filters = $applied_filters;

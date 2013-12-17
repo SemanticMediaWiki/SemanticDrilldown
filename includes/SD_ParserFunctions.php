@@ -27,7 +27,7 @@ class SDParserFunctions {
 		$params = func_get_args();
 		array_shift( $params );
 
-		$specialPage = SDUtils::getSpecialPage( 'BrowseData' );
+		$specialPage = SpecialPageFactory::getPage( 'BrowseData' );
 
 		// Set defaults.
 		$inQueryArr = array();
@@ -35,7 +35,6 @@ class SDParserFunctions {
 
 		// Parameters
 		foreach ( $params as $i => $param ) {
-
 			$elements = explode( '=', $param, 2 );
 
 			// set param_name and value

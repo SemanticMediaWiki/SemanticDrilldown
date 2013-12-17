@@ -18,21 +18,13 @@ class SDFilters extends SpecialPage {
 		$this->setHeaders();
 		list( $limit, $offset ) = wfCheckLimits();
 		$rep = new FiltersPage();
-		// Handling changed in MW version 1.18.
-		if ( method_exists( $rep, 'execute' ) ) {
-			return $rep->execute( $par );
-		} else {
-			return $rep->doQuery( $offset, $limit );
-		}
+		return $rep->execute( $par );
 	}
 }
 
 class FiltersPage extends QueryPage {
 	function __construct( $name = 'Filters' ) {
-		// Backwards compatibility for pre-version 1.18.
-		if ( $this instanceof SpecialPage ) {
-			parent::__construct( $name );
-		}
+		parent::__construct( $name );
 	}
 	
 	function getName() {
@@ -63,13 +55,6 @@ class FiltersPage extends QueryPage {
 
 	function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( SD_NS_FILTER, $result->value );
-		if ( method_exists( $skin, 'makeLinkObj' ) ) {
-			// Deprecated in MW 1.21.
-			$text = $skin->makeLinkObj( $title, htmlspecialchars( $title->getText() ) );
-		} else {
-			// Has existed since MW 1.16, but static since MW 1.18.
-			$text = Linker::link( $title, $title->getText() );
-		}
-		return $text;
+		return Linker::link( $title, $title->getText() );
 	}
 }
