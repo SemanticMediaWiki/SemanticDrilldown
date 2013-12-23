@@ -615,6 +615,7 @@ $messages['ca'] = array(
 $messages['ce'] = array(
 	'browsedata' => 'Хаамашка хьажар',
 	'sd_browsedata_none' => 'Яц',
+	'sd_browsedata_otherfilter' => 'Гайта хӀокху литтарца кхин маьӀна долу агӀонаш',
 	'createfilter' => 'Кхолла литтар',
 );
 
