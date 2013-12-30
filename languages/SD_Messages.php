@@ -977,6 +977,7 @@ $messages['eu'] = array(
  * @author Huji
  * @author Ibrahim
  * @author Mjbmr
+ * @author Reza1615
  * @author Tofighi
  */
 $messages['fa'] = array(
@@ -1007,6 +1008,7 @@ $messages['fa'] = array(
 	'sd_createfilter_requirefilter' => 'قبل از نمایش این یکی، یک فیلتر دیگر باید انتخاب شود:',
 	'sd_createfilter_label' => 'برچسب این فیلتر (دلخواه)',
 	'sd_blank_error' => 'نمی‌تواند خالی باشد',
+	'sd-pageschemas-filter' => 'پالایه',
 	'sd_filter_coversproperty' => 'این فیلتر ویژگی $1 را شامل می‌شود.',
 	'sd_filter_getsvaluesfromcategory' => 'مقادیرش را از رده $1 می‌گیرد',
 	'sd_filter_requiresfilter' => 'به وجود فیلتر $1 احتیاج دارد.',
