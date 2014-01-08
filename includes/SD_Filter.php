@@ -85,20 +85,12 @@ class SDFilter {
 		$proptitle = Title::newFromText( $f->property, SMW_NS_PROPERTY );
 		if ( $proptitle != null ) {
 			$store = SDUtils::getSMWStore();
-			if ( class_exists( 'SMWDIProperty' ) ) {
-				// SMW 1.6+
-				$propPage = new SMWDIWikiPage( $f->escaped_property, SMW_NS_PROPERTY, '' );
-				$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
-			} elseif ( class_exists( 'SMWPropertyValue' ) ) {
-				$types = $store->getPropertyValues( $proptitle, SMWPropertyValue::makeUserProperty( 'Has type' ) );
-			} else {
-				$types = $store->getSpecialValues( $proptitle, SMW_SP_HAS_TYPE );
-			}
+			$propPage = new SMWDIWikiPage( $f->escaped_property, SMW_NS_PROPERTY, '' );
+			$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
 			global $smwgContLang;
 			$datatypeLabels = $smwgContLang->getDatatypeLabels();
 			if ( count( $types ) > 0 ) {
 				if ( $types[0] instanceof SMWDIWikiPage ) {
-					// SMW 1.6+
 					$typeValue = $types[0]->getDBkey();
 				} elseif ( $types[0] instanceof SMWDIURI ) {
 					// A bit inefficient, but it's the

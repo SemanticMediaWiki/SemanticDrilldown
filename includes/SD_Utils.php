@@ -29,8 +29,7 @@ class SDUtils {
 	}
 
 	/**
-	 * Helper function to handle getPropertyValues() in both SMW 1.6
-	 * and earlier versions.
+	 * Helper function to handle getPropertyValues().
 	 *
 	 * @param SMWStore $store
 	 * @param string $pageName
@@ -41,17 +40,10 @@ class SDUtils {
 	 * @return array of SMWDataItem
 	 */
 	public static function getSMWPropertyValues( SMWStore $store, $pageName, $pageNamespace, $propID, $requestOptions = null ) {
-		// SMW 1.6+
-		if ( class_exists( 'SMWDIProperty' ) ) {
-			$pageName = str_replace( ' ', '_', $pageName );
-			$page = new SMWDIWikiPage( $pageName, $pageNamespace, '' );
-			$property = new SMWDIProperty( $propID );
-			return $store->getPropertyValues( $page, $property, $requestOptions );
-		} else {
-			$title = Title::makeTitleSafe( $pageNamespace, $pageName );
-			$property = SMWPropertyValue::makeProperty( $propID );
-			return $store->getPropertyValues( $title, $property, $requestOptions );
-		}
+		$pageName = str_replace( ' ', '_', $pageName );
+		$page = new SMWDIWikiPage( $pageName, $pageNamespace, '' );
+		$property = new SMWDIProperty( $propID );
+		return $store->getPropertyValues( $page, $property, $requestOptions );
 	}
 
 	/**
@@ -164,14 +156,11 @@ class SDUtils {
 		foreach ( $used_properties as $property ) {
 			if ( $property[0] instanceof SMWDIError ) {
 				continue;
-			} elseif ( $property[0] instanceof SMWDIProperty ) {
-				// SMW 1.6+
+			} else {
 				$propName = $property[0]->getKey();
 				if ( $propName{0} != '_' ) {
 					$all_properties[] = str_replace( '_', ' ', $propName );
 				}
-			} else {
-				$all_properties[] = $property[0]->getWikiValue();
 			}
 		}
 
@@ -184,11 +173,8 @@ class SDUtils {
 		foreach ( $unused_properties as $property ) {
 			if ( $property instanceof SMWDIError ) {
 				continue;
-			} elseif ( $property instanceof SMWDIProperty ) {
-				// SMW 1.6+
-				$all_properties[] = str_replace( '_', ' ', $property->getKey() );
 			} else {
-				$all_properties[] = $property->getWikiValue();
+				$all_properties[] = str_replace( '_', ' ', $property->getKey() );
 			}
 		}
 

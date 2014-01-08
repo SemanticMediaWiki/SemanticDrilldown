@@ -1312,19 +1312,9 @@ END;
 		$store = SDUtils::getSMWStore();
 		while ( ( $count < $num ) && ( $row = $dbr->fetchObject( $res ) ) ) {
 			$count++;
-			if ( class_exists( 'SMWDIWikiPage' ) ) {
-				// SMW 1.6+
-				$qr[] = new SMWDIWikiPage( $row->t, $row->ns, '' );
-			} else {
-				$qr[] = SMWWikiPageValue::makePage( $row->t, $row->ns, $row->sortkey );
-			}
+			$qr[] = new SMWDIWikiPage( $row->t, $row->ns, '' );
 			if ( method_exists( $store, 'cacheSMWPageID' ) ) {
-				if ( method_exists( 'SMWDIWikiPage', 'getSubobjectName' ) ) {
-					// SMW 1.6+
-					$store->cacheSMWPageID( $row->id, $row->t, $row->ns, $row->iw, '' );
-				} else {
-					$store->cacheSMWPageID( $row->id, $row->t, $row->ns, $row->iw );
-				}
+				$store->cacheSMWPageID( $row->id, $row->t, $row->ns, $row->iw, '' );
 			}
 		}
 		if ( $dbr->fetchObject( $res ) ) {
