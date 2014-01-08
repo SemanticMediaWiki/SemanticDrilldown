@@ -31,13 +31,13 @@ class SDUtils {
 	/**
 	 * Helper function to handle getPropertyValues() in both SMW 1.6
 	 * and earlier versions.
-	 * 
+	 *
 	 * @param SMWStore $store
 	 * @param string $pageName
 	 * @param integer $pageNamespace
 	 * @param string $propID
 	 * @param null|SMWRequestOptions $requestOptions
-	 * 
+	 *
 	 * @return array of SMWDataItem
 	 */
 	public static function getSMWPropertyValues( SMWStore $store, $pageName, $pageNamespace, $propID, $requestOptions = null ) {
@@ -421,7 +421,7 @@ class SDUtils {
 		$edittime = $article->getTimestamp();
 		global $wgUser;
 		if ( $wgUser->isLoggedIn() )
-			$token = htmlspecialchars( $wgUser->editToken() );
+			$token = htmlspecialchars( $wgUser->getEditToken() );
 		else
 			$token = EDIT_TOKEN_SUFFIX;
 
