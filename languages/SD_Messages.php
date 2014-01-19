@@ -1795,11 +1795,41 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Albamhandae
+ * @author Priviet
  */
 $messages['ko'] = array(
+	'browsedata' => '데이터 찾아보기',
+	'sd_browsedata_choosecategory' => '분류 선택하기',
+	'sd_browsedata_viewcategory' => '분류 보기',
+	'sd_browsedata_subcategory' => '하위 분류',
+	'sd_browsedata_other' => '기타',
+	'sd_browsedata_none' => '없음',
+	'sd_browsedata_filterbyvalue' => '이 값으로 필터',
+	'sd_browsedata_filterbysubcategory' => '하위 분류로 필터',
+	'sd_browsedata_otherfilter' => '이 필터에 대한 다른 값을 보이기',
+	'sd_browsedata_nonefilter' => '이 필터에 대한 값이 없는 문서 보이기',
+	'sd_browsedata_or' => '또는',
+	'sd_browsedata_removefilter' => '이 필터를 제거',
+	'sd_browsedata_removesubcategoryfilter' => '하위 분류 필터 제거',
+	'sd_browsedata_resetfilters' => '필터 다시 설정',
+	'sd_browsedata_addanothervalue' => '화살표를 클릭하여 다른 값을 추가',
+	'sd_browsedata_daterangestart' => '시작:',
+	'sd_browsedata_daterangeend' => '끝:',
+	'sd_browsedata_novalues' => '이 필터에 대한 값이 없습니다',
 	'filters' => '필터',
+	'sd_filters_docu' => '다음 필터가 {{SITENAME}}에 존재합니다:',
 	'sd_formcreate' => '양식으로 만들기',
 	'sd_viewform' => '양식 보기',
+	'createfilter' => '필터 만들기',
+	'sd-createfilter-with-name' => '필터 만들기: $1',
+	'sd_createfilter_name' => '이름:',
+	'sd_createfilter_property' => '이 필터가 다루는 속성:',
+	'sd_blank_error' => '비워둘 수 없음',
+	'sd-pageschemas-filter' => '필터',
+	'sd-pageschemas-values' => '값',
+	'sd_filter_coversproperty' => '이 필터는 $1 속성을 다룹니다.',
+	'sd_filter_getsvaluesfromcategory' => '분류 $1의 값을 얻습니다.',
+	'sd_filter_haslabel' => '$1 레이블을 갖고 있습니다.',
 );
 
 /** Colognian (Ripoarisch)
