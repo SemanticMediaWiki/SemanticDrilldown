@@ -1798,9 +1798,12 @@ $messages['kn'] = array(
  * @author Priviet
  */
 $messages['ko'] = array(
+	'semanticdrilldown-desc' => '시맨틱 데이터를 탐색하기 위한 드릴다운 인터페이스',
+	'specialpages-group-sd_group' => '시맨틱 드릴다운',
 	'browsedata' => '데이터 찾아보기',
 	'sd_browsedata_choosecategory' => '분류 선택하기',
 	'sd_browsedata_viewcategory' => '분류 보기',
+	'sd_browsedata_docu' => '검색 결과를 줄이려면 하나 또는 그 이상의 항목을 선택하세요.',
 	'sd_browsedata_subcategory' => '하위 분류',
 	'sd_browsedata_other' => '기타',
 	'sd_browsedata_none' => '없음',
@@ -1824,11 +1827,15 @@ $messages['ko'] = array(
 	'sd-createfilter-with-name' => '필터 만들기: $1',
 	'sd_createfilter_name' => '이름:',
 	'sd_createfilter_property' => '이 필터가 다루는 속성:',
+	'sd_createfilter_usepropertyvalues' => '필터에 대한 속성의 모든 값을 사용',
+	'sd_createfilter_usecategoryvalues' => '이 분류에서 필터를 위한 값 얻기:',
+	'sd_createfilter_label' => '이 필터의 레이블(선택 사항):',
 	'sd_blank_error' => '비워둘 수 없음',
 	'sd-pageschemas-filter' => '필터',
 	'sd-pageschemas-values' => '값',
 	'sd_filter_coversproperty' => '이 필터는 $1 속성을 다룹니다.',
 	'sd_filter_getsvaluesfromcategory' => '분류 $1의 값을 얻습니다.',
+	'sd_filter_requiresfilter' => '$1 필터가 있어야 합니다.',
 	'sd_filter_haslabel' => '$1 레이블을 갖고 있습니다.',
 );
 
