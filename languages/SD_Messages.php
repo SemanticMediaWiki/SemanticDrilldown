@@ -1829,6 +1829,7 @@ $messages['ko'] = array(
 	'sd_createfilter_property' => '이 필터가 다루는 속성:',
 	'sd_createfilter_usepropertyvalues' => '필터에 대한 속성의 모든 값을 사용',
 	'sd_createfilter_usecategoryvalues' => '이 분류에서 필터를 위한 값 얻기:',
+	'sd_createfilter_requirefilter' => '이 필터를 표시하기 전에 다른 필터가 선택되야 합니다:',
 	'sd_createfilter_label' => '이 필터의 레이블(선택 사항):',
 	'sd_blank_error' => '비워둘 수 없음',
 	'sd-pageschemas-filter' => '필터',
