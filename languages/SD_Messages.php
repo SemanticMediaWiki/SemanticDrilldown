@@ -974,6 +974,7 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Armin1392
  * @author Ebraminio
  * @author Huji
  * @author Ibrahim
@@ -1001,7 +1002,10 @@ $messages['fa'] = array(
 	'sd_browsedata_daterangeend' => 'پایان:',
 	'filters' => 'پالایه‌ها',
 	'sd_filters_docu' => 'فیلترهای زیر در این ویکی وجود دارد:',
+	'sd_formcreate' => 'ایجاد با فرم',
+	'sd_viewform' => 'مشاهدهٔ فرم',
 	'createfilter' => 'پالایه‌ای بسازید',
+	'sd-createfilter-with-name' => 'ایجاد فیلتر: $1',
 	'sd_createfilter_name' => 'نام:',
 	'sd_createfilter_property' => 'ویژگی که این فیلتر شامل آن می‌شود:',
 	'sd_createfilter_usepropertyvalues' => 'همه مقادیر این ویژگی را برای این فیلتر به‌کار برید',
@@ -1010,6 +1014,7 @@ $messages['fa'] = array(
 	'sd_createfilter_label' => 'برچسب این فیلتر (دلخواه)',
 	'sd_blank_error' => 'نمی‌تواند خالی باشد',
 	'sd-pageschemas-filter' => 'پالایه',
+	'sd-pageschemas-values' => 'مقادیر',
 	'sd_filter_coversproperty' => 'این فیلتر ویژگی $1 را شامل می‌شود.',
 	'sd_filter_getsvaluesfromcategory' => 'مقادیرش را از رده $1 می‌گیرد',
 	'sd_filter_requiresfilter' => 'به وجود فیلتر $1 احتیاج دارد.',
