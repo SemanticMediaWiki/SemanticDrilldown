@@ -399,3 +399,8 @@ $specialPageAliases['zh-hans'] = array(
 	'CreateFilter' => array( '创建过滤器' ),
 	'Filters' => array( '过滤器' ),
 );
+
+/** Traditional Chinese (中文（繁體）‎) */
+$specialPageAliases['zh-hant'] = array(
+	'BrowseData' => array( '瀏覽數據' ),
+);
