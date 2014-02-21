@@ -20,6 +20,8 @@ class SDFilter {
 	var $db_date_field;
 	
 	static function loadAllFromPageSchema( $psSchemaObj ){
+		global $wgDBtype;
+		$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'");
 		$filters_ps = array();		
 		$template_all = $psSchemaObj->getTemplates();						
 		foreach ( $template_all as $template ) {
@@ -41,7 +43,7 @@ class SDFilter {
 				} else {
 					$f->property = $f->name;
 				}
-				$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', "\'" ), $f->property );
+				$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', $quoteReplace ), $f->property );
 				if ( array_key_exists( 'Type', $prop_array ) ) {
 					// Thankfully, the property type names
 					// assigned by SMW/Page Schemas, and the
@@ -73,12 +75,14 @@ class SDFilter {
 	}
 	
 	static function load( $filter_name ) {
+		global $wgDBtype;
+		$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'");
 		$f = new SDFilter();
 		$f->name = $filter_name;
 		$properties_used = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_CP', SD_SP_COVERS_PROPERTY, SMW_NS_PROPERTY );
 		if ( count( $properties_used ) > 0 ) {
 			$f->property = $properties_used[0];
-			$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', "\'" ), $f->property );
+			$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', $quoteReplace ), $f->property );
 			// This may not be necessary, or useful.
 			$f->property_type = 'page';
 		}

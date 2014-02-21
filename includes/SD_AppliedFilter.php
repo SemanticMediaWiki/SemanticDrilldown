@@ -42,10 +42,12 @@ class SDAppliedFilter {
 	 * combination to an SQL "WHERE" clause.
 	 */
 	function checkSQL( $value_field ) {
+		global $wgDBtype;
 		$sql = "(";
 		$dbr = wfGetDB( DB_SLAVE );
 		if ( $this->search_term != null ) {
-			$search_term = str_replace( "'", "\'", $this->search_term );
+			$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'");
+			$search_term = str_replace( "'", $quoteReplace, $this->search_term );
 			if ( $this->filter->property_type === 'page' ) {
 				// FIXME: 'LIKE' is supposed to be
 				// case-insensitive, but it's not acting
@@ -72,14 +74,17 @@ class SDAppliedFilter {
 		foreach ( $this->values as $i => $fv ) {
 			if ( $i > 0 ) { $sql .= " OR "; }
 			if ( $fv->is_other ) {
-				$sql .= "(! ($value_field IS NULL OR $value_field = '' ";
+				$checkNullOrEmptySql = "$value_field IS NULL " . ( $wgDBtype == 'postgres' ? '' : "OR $value_field = '' ");
+				$notOperatorSql = ( $wgDBtype == 'postgres' ? "not" : "!" );
+				$sql .= "($notOperatorSql ($checkNullOrEmptySql ";
 				foreach ( $this->filter->possible_applied_filters as $paf ) {
 					$sql .= " OR ";
 					$sql .= $paf->checkSQL( $value_field );
 				}
 				$sql .= "))";
 			} elseif ( $fv->is_none ) {
-				$sql .= "($value_field = '' OR $value_field IS NULL) ";
+				$checkNullOrEmptySql = ( $wgDBtype == 'postgres' ? '' : "$value_field = '' OR ") . "$value_field IS NULL";
+				$sql .= "($checkNullOrEmptySql) ";
 			} elseif ( $fv->is_numeric ) {
 				if ( $fv->lower_limit && $fv->upper_limit )
 					$sql .= "($value_field >= {$fv->lower_limit} AND $value_field <= {$fv->upper_limit}) ";
