@@ -983,6 +983,7 @@ $messages['eu'] = array(
  * @author Tofighi
  */
 $messages['fa'] = array(
+	'specialpages-group-sd_group' => 'دریل‌دون معنایی',
 	'browsedata' => 'نمایش اطلاعات',
 	'sd_browsedata_choosecategory' => 'انتخاب یک رده',
 	'sd_browsedata_viewcategory' => 'نمایش رده',
@@ -1000,6 +1001,7 @@ $messages['fa'] = array(
 	'sd_browsedata_addanothervalue' => 'برای اضافه‌کردن مقداری دیگر بر روی پیکان کلیک کنید.',
 	'sd_browsedata_daterangestart' => ':شروع',
 	'sd_browsedata_daterangeend' => 'پایان:',
+	'sd_browsedata_novalues' => 'هیچ مقداری برای این فیلتر وجود ندارد',
 	'filters' => 'پالایه‌ها',
 	'sd_filters_docu' => 'فیلترهای زیر در این ویکی وجود دارد:',
 	'sd_formcreate' => 'ایجاد با فرم',
