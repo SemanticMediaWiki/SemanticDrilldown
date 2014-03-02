@@ -983,10 +983,12 @@ $messages['eu'] = array(
  * @author Tofighi
  */
 $messages['fa'] = array(
+	'semanticdrilldown-desc' => 'یک رابط دریل‌دون برای مرورگر از طریق اطلاعات معنایی',
 	'specialpages-group-sd_group' => 'دریل‌دون معنایی',
 	'browsedata' => 'نمایش اطلاعات',
 	'sd_browsedata_choosecategory' => 'انتخاب یک رده',
 	'sd_browsedata_viewcategory' => 'نمایش رده',
+	'sd_browsedata_docu' => 'بر روی یک یا چند مورد زیر برای کم کردن نتایج خود کلیک کنید.',
 	'sd_browsedata_subcategory' => 'زیررده',
 	'sd_browsedata_other' => 'دیگر',
 	'sd_browsedata_none' => 'هیچکدام',
