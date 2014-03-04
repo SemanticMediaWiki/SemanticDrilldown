@@ -2967,6 +2967,7 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
@@ -2978,7 +2979,7 @@ $messages['te'] = array(
 	'sd_browsedata_none' => 'ఏమీలేదు',
 	'sd_browsedata_or' => 'లేదా',
 	'sd_browsedata_removefilter' => 'ఈ వడపోతని తొలగించు',
-	'sd_browsedata_addanothervalue' => 'మరో విలువని చేర్చండి', # Fuzzy
+	'sd_browsedata_addanothervalue' => 'మరో విలువను చేర్చడానికి బాణం గుర్తును నొక్కండి',
 	'sd_browsedata_daterangestart' => 'మొదలు:',
 	'sd_browsedata_daterangeend' => 'ముగింపు:',
 	'sd_browsedata_novalues' => 'ఈ వడపోతకి విలువలు ఏమీ లేవు',
