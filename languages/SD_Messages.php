@@ -755,7 +755,7 @@ $messages['de-formal'] = array(
  * @author Mirzali
  */
 $messages['diq'] = array(
-	'sd_browsedata_none' => 'çino',
+	'sd_browsedata_none' => 'Çıniyo',
 	'sd_browsedata_or' => 'ya zi',
 	'filters' => 'Avrêci',
 	'sd_createfilter_name' => 'Name:',
