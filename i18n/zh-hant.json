@@ -4,6 +4,7 @@
             "Cwlin0416",
             "Mark85296341",
             "Oapbtommy",
+            "Roc michael",
             "Wrightbus"
         ]
     },
@@ -26,6 +27,8 @@
     "sd_browsedata_resetfilters": "重置篩選器",
     "sd_browsedata_addanothervalue": "單擊箭頭來添加另一個取值",
     "sd_browsedata_daterangestart": "開始：",
+    "sd_formcreate": "以表單建立",
+    "sd_viewform": "查看表單",
     "sd_browsedata_daterangeend": "結束：",
     "sd_browsedata_novalues": "該篩選器沒有任何取值",
     "filters": "搜尋",
