@@ -1,9 +1,9 @@
 {
-    "@metadata": {
-        "authors": [
-            "Jon Harald Søby"
-        ]
-    },
-    "sd_browsedata_none": "Ingen",
-    "sd_createfilter_name": "Navn:"
+	"@metadata": {
+		"authors": [
+			"Jon Harald Søby"
+		]
+	},
+	"sd_browsedata_none": "Ingen",
+	"sd_createfilter_name": "Navn:"
 }

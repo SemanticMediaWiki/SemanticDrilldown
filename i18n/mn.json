@@ -1,9 +1,9 @@
 {
-    "@metadata": {
-        "authors": [
-            "Chinneeb"
-        ]
-    },
-    "sd_browsedata_other": "Бусад",
-    "filters": "Шүүлтүүрүүд"
+	"@metadata": {
+		"authors": [
+			"Chinneeb"
+		]
+	},
+	"sd_browsedata_other": "Бусад",
+	"filters": "Шүүлтүүрүүд"
 }
