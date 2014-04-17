@@ -80,7 +80,7 @@ $specialPageAliases['de'] = array(
 /** Zazaki (Zazaki) */
 $specialPageAliases['diq'] = array(
 	'BrowseData' => array( 'MalumatBıgeyré' ),
-	'CreateFilter' => array( 'AvréciDekeré' ),
+	'CreateFilter' => array( 'AvrécDekeré' ),
 	'Filters' => array( 'Avréci' ),
 );
 
