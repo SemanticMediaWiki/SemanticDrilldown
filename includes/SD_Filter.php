@@ -235,9 +235,21 @@ END;
 		if ( is_null( $minDate ) ) {
 			return null;
 		}
-		list( $minYear, $minMonth, $minDay ) = explode( '/', $minDate );
+		$minDateParts = explode( '/', $minDate );
+		if ( count( $minDateParts ) == 3 ) {
+			list( $minYear, $minMonth, $minDay ) = $minDateParts;
+		} else {
+			$minYear = $minDateParts[0];
+			$minMonth = $minDay = 0;
+		}
 		$maxDate = $row[1];
-		list( $maxYear, $maxMonth, $maxDay ) = explode( '/', $maxDate );
+		$maxDateParts = explode( '/', $maxDate );
+		if ( count( $maxDateParts ) == 3 ) {
+			list( $maxYear, $maxMonth, $maxDay ) = $maxDateParts;
+		} else {
+			$maxYear = $maxDateParts[0];
+			$maxMonth = $maxDay = 0;
+		}
 		$yearDifference = $maxYear - $minYear;
 		$monthDifference = ( 12 * $yearDifference ) + ( $maxMonth - $minMonth );
 		if ( $yearDifference > 30 ) {
