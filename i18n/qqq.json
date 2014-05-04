@@ -37,7 +37,7 @@
 	"sd_formcreate": "This is the text of the tab at the top of a page that allows to create a filter with a form.",
 	"sd_viewform": "This is the text of the tab at the top of a page that allows to look at form.",
 	"createfilter": "{{doc-special|CreateFilter}}",
-	"sd-createfilter-with-name": "This is the title of an non-existing page in namespace filter upon creation of a new filter with a form.\n* $1 - name of the filter to be created",
+	"sd-createfilter-with-name": "This is the title of a non-existing page in namespace filter upon creation of a new filter with a form.\n* $1 - name of the filter to be created",
 	"sd_createfilter_name": "The title of the input field on [[Special:CreateFilter]] that allows to enter the name of a filter. \n{{Identical|Name}}",
 	"sd_createfilter_property": "The title of the drop-down list on [[Special:CreateFilter]] that allows to select an available property.",
 	"sd_createfilter_usepropertyvalues": "An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter.",
