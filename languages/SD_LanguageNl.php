@@ -16,7 +16,9 @@ class SD_LanguageNl extends SD_Language {
 		SD_SP_COVERS_PROPERTY           => 'Omvat eigenschap',
 		SD_SP_GETS_VALUES_FROM_CATEGORY => 'Haalt waarden uit categorie',
 		SD_SP_REQUIRES_FILTER           => 'Benodigt filter',
-		SD_SP_HAS_LABEL                 => 'Heeft label'
+		SD_SP_HAS_LABEL                 => 'Heeft label',
+		// display properties
+		SD_SP_HAS_DISPLAY_PARAMETERS    => 'Heeft weergave parameters',
 	);
 
 	var $m_Namespaces = array(
