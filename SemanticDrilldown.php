@@ -19,7 +19,7 @@ $wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'special
 	'path'        => __FILE__,
 	'name'        => 'Semantic Drilldown',
 	'version'     => SD_VERSION,
-	'author'      => array( 'Yaron Koren', 'David Loomer' ),
+	'author'      => array( 'Yaron Koren', '...' ),
 	'url'         => 'https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
 	'descriptionmsg'  => 'semanticdrilldown-desc',
 );
