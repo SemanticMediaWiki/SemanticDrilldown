@@ -4,7 +4,8 @@
 			"Liangent",
 			"Linforest",
 			"PhiLiP",
-			"Yfdyh000"
+			"Yfdyh000",
+			"Mywood"
 		]
 	},
 	"semanticdrilldown-desc": "用于在语义数据之中导航的钻取界面",
@@ -30,7 +31,7 @@
 	"sd_browsedata_novalues": "该筛选器没有任何取值",
 	"filters": "过滤器",
 	"sd_filters_docu": "下列筛选器存在于{{SITENAME}}之上：",
-	"sd_formcreate": "用表单创建",
+	"sd_formcreate": "用表格创建",
 	"sd_viewform": "检视表格",
 	"createfilter": "创建筛选器",
 	"sd-createfilter-with-name": "创建过滤器：$1",
