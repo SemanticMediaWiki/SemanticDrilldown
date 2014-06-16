@@ -69,7 +69,7 @@ class SDParserFunctions {
 			}
 		}
 
-		$link_url = $specialPage->getTitle()->getLocalURL() . "/{$category}";
+		$link_url = $specialPage->getPageTitle()->getLocalURL() . "/{$category}";
 		$link_url = str_replace( ' ', '_', $link_url );
 		if ( ! empty( $inQueryArr ) ) {
 			$link_url .= ( strstr( $link_url, '?' ) ) ? '&' : '?';
