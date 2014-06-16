@@ -157,8 +157,8 @@ $specialPageAliases['he'] = array(
 
 /** Upper Sorbian (hornjoserbsce) */
 $specialPageAliases['hsb'] = array(
-	'BrowseData' => array( 'Daty přepytać' ),
-	'CreateFilter' => array( 'Filter wutworić' ),
+	'BrowseData' => array( 'Daty_přepytać' ),
+	'CreateFilter' => array( 'Filter_wutworić' ),
 	'Filters' => array( 'Filtry' ),
 );
 
