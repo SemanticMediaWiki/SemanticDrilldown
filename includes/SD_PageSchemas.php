@@ -53,7 +53,7 @@ class SDPageSchemas extends PSExtensionHandler {
 	}
 
 	public static function getFieldDisplayString() {
-		return wfMsg( 'sd-pageschemas-filter' );
+		return wfMessage( 'sd-pageschemas-filter' )->text();
 	}
 
 	/**
@@ -61,7 +61,7 @@ class SDPageSchemas extends PSExtensionHandler {
 	 * Semantic Drilldown section in Page Schemas' "edit schema" page
 	 */
 	public static function getFieldEditingHTML( $psField ){
-		//$require_filter_label = wfMsg( 'sd_createfilter_requirefilter' );
+		//$require_filter_label = wfMessage( 'sd_createfilter_requirefilter' )->text();
 
 		$filter_array = array();
 		$hasExistingValues = false;
@@ -89,13 +89,13 @@ class SDPageSchemas extends PSExtensionHandler {
 		}
 
 		$html_text = '<div class="editSchemaMinorFields">' . "\n";
-		$html_text .= '<p>' . wfMsg( 'ps-optional-name' ) . ' ';
+		$html_text .= '<p>' . wfMessage( 'ps-optional-name' )->text() . ' ';
 		$html_text .= Html::input( 'sd_filter_name_num', $filterName, 'text', array( 'size' => 25 ) ) . "</p>\n";
-		$html_text .= wfMsg( 'sd-pageschemas-values' ) . ":\n";
+		$html_text .= wfMessage( 'sd-pageschemas-values' )->text() . ":\n";
 		$html_text .= Html::input( 'sd_values_source_num', 'property', 'radio', $usePropertyValuesAttr ) . ' ';
-		$html_text .= wfMsg( 'sd_createfilter_usepropertyvalues' ) . "\n";
+		$html_text .= wfMessage( 'sd_createfilter_usepropertyvalues' )->text() . "\n";
 		$html_text .= Html::input( 'sd_values_source_num', 'category', 'radio', $fromCategoryAttrs ) . "\n";
-		$html_text .= "\t" . wfMsg( 'sd_createfilter_usecategoryvalues' ) . "\n";
+		$html_text .= "\t" . wfMessage( 'sd_createfilter_usecategoryvalues' )->text() . "\n";
 		$categories = SDUtils::getTopLevelCategories();
 		$categoriesHTML = "";
 		foreach ( $categories as $category ) {
@@ -154,7 +154,7 @@ class SDPageSchemas extends PSExtensionHandler {
 							$filterValues[] = (string)$valTag;
 						}
 						$valuesStr = implode( ', ', $filterValues );
-						$values[wfMsg( 'sd-pageschemas-values' )] = $valuesStr;
+						$values[wfMessage( 'sd-pageschemas-values' )->text()] = $valuesStr;
 					} else {
 						$values[$prop] = $value;
 					}

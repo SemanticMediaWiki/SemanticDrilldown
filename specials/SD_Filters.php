@@ -34,7 +34,7 @@ class FiltersPage extends QueryPage {
 	function isSyndicated() { return false; }
 
 	function getPageHeader() {
-		$header = '<p>' . wfMsg( 'sd_filters_docu' ) . "</p><br />\n";
+		$header = '<p>' . wfMessage( 'sd_filters_docu' )->text() . "</p><br />\n";
 		return $header;
 	}
 

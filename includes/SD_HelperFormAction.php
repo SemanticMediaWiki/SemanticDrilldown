@@ -62,9 +62,9 @@ class SDHelperFormAction extends Action
 
 		$user_can_edit = $wgUser->isAllowed( 'edit' ) && $title->userCan( 'edit' );
 		if ( $user_can_edit ) {
-			$form_create_tab_text = wfMsg( 'sd_formcreate' );
+			$form_create_tab_text = wfMessage( 'sd_formcreate' )->text();
 		} else {
-			$form_create_tab_text = wfMsg( 'sd_viewform' );
+			$form_create_tab_text = wfMessage( 'sd_viewform' )->text();
 		}
 		$class_name = ( $wgRequest->getVal( 'action' ) == 'createfilter' ) ? 'selected' : '';
 		$form_create_tab = array(

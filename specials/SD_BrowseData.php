@@ -44,13 +44,13 @@ class SDBrowseData extends IncludableSpecialPage {
 			$category = isset( $queryparts[0] ) ? $queryparts[0] : '';
 		}
 		if ( ! $category ) {
-			$category_title = wfMsg( 'browsedata' );
+			$category_title = wfMessage( 'browsedata' )->text();
 		} else {
 			$titles_for_category = SDUtils::getValuesForProperty( $category, NS_CATEGORY, '_SD_DT', SD_SP_HAS_DRILLDOWN_TITLE, NS_MAIN );
 			if ( count( $titles_for_category ) > 0 ) {
 				$category_title = str_replace( '_', ' ', $titles_for_category[0] );
 			} else {
-				$category_title = wfMsg( 'browsedata' ) . html_entity_decode( wfMsg( 'colon-separator' ) ) . str_replace( '_', ' ', $category );
+				$category_title = wfMessage( 'browsedata' )->text() . html_entity_decode( wfMessage( 'colon-separator' )->text() ) . str_replace( '_', ' ', $category );
 			}
 		}
 		// if no category was specified, go with the first
@@ -396,7 +396,7 @@ class SDBrowseDataPage extends QueryPage {
 	function printCategoriesList( $categories ) {
 		global $sdgShowCategoriesAsTabs;
 
-		$choose_category_text = wfMsg( 'sd_browsedata_choosecategory' ) . wfMsg( 'colon-separator' );
+		$choose_category_text = wfMessage( 'sd_browsedata_choosecategory' )->text() . wfMessage( 'colon-separator' )->text();
 		if ( $sdgShowCategoriesAsTabs ) {
 			$cats_wrapper_class = "drilldown-categories-tabs-wrapper";
 			$cats_list_class = "drilldown-categories-tabs";
@@ -482,7 +482,7 @@ END;
 		}
 		$text .= "\t\t\t\t\t$filterLabel:";
 		if ( $isApplied ) {
-			$add_another_str = wfMsg( 'sd_browsedata_addanothervalue' );
+			$add_another_str = wfMessage( 'sd_browsedata_addanothervalue' )->text();
 			$text .= " <span class=\"drilldown-filter-notes\">($add_another_str)</span>";
 		}
 		$displayText = ( $isApplied ) ? 'style="display: none;"' : '';
@@ -505,9 +505,9 @@ END;
 		$value = str_replace( '_', ' ', $value );
 		// if it's boolean, display something nicer than "0" or "1"
 		if ( $value === ' other' )
-			return wfMsg( 'sd_browsedata_other' );
+			return wfMessage( 'sd_browsedata_other' )->text();
 		elseif ( $value === ' none' )
-			return wfMsg( 'sd_browsedata_none' );
+			return wfMessage( 'sd_browsedata_none' )->text();
 		elseif ( $filter->property_type === 'boolean' )
 			return SDUtils::booleanToString( $value );
 		elseif ( $filter->property_type === 'date' && strpos( $value, '//T' ) )
@@ -580,7 +580,7 @@ END;
 				$results_line .= "\n				$filter_text";
 			} else {
 				$filter_url = $this->makeBrowseURL( $this->category, $applied_filters, $this->subcategory );
-				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMsg( 'sd_browsedata_filterbyvalue' ) . '">' . $filter_text . '</a>';
+				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMessage( 'sd_browsedata_filterbyvalue' )->text() . '">' . $filter_text . '</a>';
 			}
 			foreach ( $applied_filters as $af2 ) {
 				if ( $af->filter->name == $af2->filter->name ) {
@@ -617,9 +617,9 @@ END;
 				} else {
 					$font_size = ( $sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize ) / 2;
 				}
-				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMsg( 'sd_browsedata_filterbyvalue' ) . '" style="font-size: ' . $font_size . 'px">' . $filter_text . '</a>';
+				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMessage( 'sd_browsedata_filterbyvalue' )->text() . '" style="font-size: ' . $font_size . 'px">' . $filter_text . '</a>';
 			} else {
-				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMsg( 'sd_browsedata_filterbyvalue' ) . '">' . $filter_text . '</a>';
+				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMessage( 'sd_browsedata_filterbyvalue' )->text() . '">' . $filter_text . '</a>';
 			}
 		}
 		return $results_line;
@@ -854,26 +854,26 @@ END;
 				}
 			}
 		}
-		$text .= Html::input( null, wfMsg( 'searchresultshead' ), 'submit', array( 'style' => 'margin: 4px 0 8px 0;' ) ) . "\n";
+		$text .= Html::input( null, wfMessage( 'searchresultshead' )->text(), 'submit', array( 'style' => 'margin: 4px 0 8px 0;' ) ) . "\n";
 		$text .= "</form>\n";
 		return $text;
 	}
 
 	function printDateInput( $input_name, $cur_value = null ) {
 		$month_names = array(
-			wfMsgForContent( 'january' ),
-			wfMsgForContent( 'february' ),
-			wfMsgForContent( 'march' ),
-			wfMsgForContent( 'april' ),
+			wfMessage( 'january' )->inContentLanguage()->text(),
+			wfMessage( 'february' )->inContentLanguage()->text(),
+			wfMessage( 'march' )->inContentLanguage()->text(),
+			wfMessage( 'april' )->inContentLanguage()->text(),
 			// Needed to avoid using 3-letter abbreviation 
-			wfMsgForContent( 'may_long' ),
-			wfMsgForContent( 'june' ),
-			wfMsgForContent( 'july' ),
-			wfMsgForContent( 'august' ),
-			wfMsgForContent( 'september' ),
-			wfMsgForContent( 'october' ),
-			wfMsgForContent( 'november' ),
-			wfMsgForContent( 'december' )
+			wfMessage( 'may_long' )->inContentLanguage()->text(),
+			wfMessage( 'june' )->inContentLanguage()->text(),
+			wfMessage( 'july' )->inContentLanguage()->text(),
+			wfMessage( 'august' )->inContentLanguage()->text(),
+			wfMessage( 'september' )->inContentLanguage()->text(),
+			wfMessage( 'october' )->inContentLanguage()->text(),
+			wfMessage( 'november' )->inContentLanguage()->text(),
+			wfMessage( 'december' )->inContentLanguage()->text()
 		);
 
 		if ( is_array( $cur_value ) && array_key_exists( 'month', $cur_value ) ) {
@@ -901,8 +901,8 @@ END;
 	function printDateRangeInput( $filter_name, $lower_date = null, $upper_date = null ) {
 		global $wgRequest;
 
-		$start_label = wfMsg( 'sd_browsedata_daterangestart' );
-		$end_label = wfMsg( 'sd_browsedata_daterangeend' );
+		$start_label = wfMessage( 'sd_browsedata_daterangestart' )->text();
+		$end_label = wfMessage( 'sd_browsedata_daterangeend' )->text();
 		$start_month_input = $this->printDateInput( "_lower_$filter_name", $lower_date );
 		$end_month_input = $this->printDateInput( "_upper_$filter_name", $upper_date );
 		$text = <<<END
@@ -920,7 +920,7 @@ END;
 				$text .= Html::hidden( $key, $val ) . "\n";
 			}
 		}
-		$submitButton = Html::input( null, wfMsg( 'searchresultshead' ), 'submit' );
+		$submitButton = Html::input( null, wfMessage( 'searchresultshead' )->text(), 'submit' );
 		$text .= Html::rawElement( 'p', null, $submitButton ) . "\n";
 		$text .= "</form>\n";
 		return $text;
@@ -987,7 +987,7 @@ END;
 		$filter_name = urlencode( str_replace( ' ', '_', $f->name ) );
 		$normal_filter = true;
 		if ( count( $filter_values ) == 0 ) {
-			$results_line = '(' . wfMsg( 'sd_browsedata_novalues' ) . ')';
+			$results_line = '(' . wfMessage( 'sd_browsedata_novalues' )->text() . ')';
 		} elseif ( $f->property_type == 'number' ) {
 			$results_line = $this->printNumberRanges( $filter_name, $filter_values );
 		} elseif ( count( $filter_values ) >= $sdgMinValuesForComboBox ) {
@@ -1015,7 +1015,7 @@ END;
 		if ( count( $categories ) == 0 ) {
 			return "";
 		}
-		$subcategory_text = wfMsg( 'sd_browsedata_subcategory' );
+		$subcategory_text = wfMessage( 'sd_browsedata_subcategory' )->text();
 
 		$header = "";
 		$this->show_single_cat = $wgRequest->getCheck( '_single' );
@@ -1033,7 +1033,7 @@ END;
 		$header .= '				<div id="drilldown-header">' . "\n";
 		if ( count ( $this->applied_filters ) > 0 || $this->subcategory ) {
 			$category_url = $this->makeBrowseURL( $this->category );
-			$header .= '<a href="' . $category_url . '" title="' . wfMsg( 'sd_browsedata_resetfilters' ) . '">' . str_replace( '_', ' ', $this->category ) . '</a>';
+			$header .= '<a href="' . $category_url . '" title="' . wfMessage( 'sd_browsedata_resetfilters' )->text() . '">' . str_replace( '_', ' ', $this->category ) . '</a>';
 		} else
 			$header .= str_replace( '_', ' ', $this->category );
 		if ( $this->subcategory ) {
@@ -1041,7 +1041,7 @@ END;
 			$header .= "$subcategory_text: ";
 			$subcat_string = str_replace( '_', ' ', $this->subcategory );
 			$remove_filter_url = $this->makeBrowseURL( $this->category, $this->applied_filters );
-			$header .= "\n" . '				<span class="drilldown-header-value">' . $subcat_string . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg( 'sd_browsedata_removesubcategoryfilter' ) . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a> ';
+			$header .= "\n" . '				<span class="drilldown-header-value">' . $subcat_string . '</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removesubcategoryfilter' )->text() . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a> ';
 		}
 		foreach ( $this->applied_filters as $i => $af ) {
 			$header .= ( ! $this->subcategory && $i == 0 ) ? " > " : "\n					<span class=\"drilldown-header-value\">&</span> ";
@@ -1053,18 +1053,18 @@ END;
 				array_splice( $temp_filters_array, $i, 1 );
 				$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
 				array_splice( $temp_filters_array, $i, 0 );
-				$header .= $filter_label . ' <a href="' . $remove_filter_url . '" title="' . wfMsg( 'sd_browsedata_removefilter' ) . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a> : ';
+				$header .= $filter_label . ' <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a> : ';
 			} else {
 				$header .= "$filter_label: ";
 			}
 			foreach ( $af->values as $j => $fv ) {
-				if ( $j > 0 ) { $header .= ' <span class="drilldown-or">' . wfMsg( 'sd_browsedata_or' ) . '</span> '; }
+				if ( $j > 0 ) { $header .= ' <span class="drilldown-or">' . wfMessage( 'sd_browsedata_or' )->text() . '</span> '; }
 				$filter_text = $this->printFilterValue( $af->filter, $fv->text );
 				$temp_filters_array = $this->applied_filters;
 				$removed_values = array_splice( $temp_filters_array[$i]->values, $j, 1 );
 				$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
 				array_splice( $temp_filters_array[$i]->values, $j, 0, $removed_values );
-				$header .= "\n	" . '				<span class="drilldown-header-value">' . $filter_text . '</span> <a href="' . $remove_filter_url . '" title="' . wfMsg( 'sd_browsedata_removefilter' ) . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
+				$header .= "\n	" . '				<span class="drilldown-header-value">' . $filter_text . '</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
 			}
 			if ( $af->search_term != null ) {
 				$temp_filters_array = $this->applied_filters;
@@ -1072,13 +1072,13 @@ END;
 				$temp_filters_array[$i]->search_term = null;
 				$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
 				$temp_filters_array[$i]->search_term = $removed_search_term;
-				$header .= "\n\t" . '<span class="drilldown-header-value">~ \'' . $af->search_term . '\'</span> <a href="' . $remove_filter_url . '" title="' . wfMsg( 'sd_browsedata_removefilter' ) . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /> </a>';
+				$header .= "\n\t" . '<span class="drilldown-header-value">~ \'' . $af->search_term . '\'</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /> </a>';
 			} elseif ( $af->lower_date != null || $af->upper_date != null ) {
 				$header .= "\n\t<span class=\"drilldown-header-value\">" . $af->lower_date_string . " - " . $af->upper_date_string . "</span>";
 			}
 		}
 		$header .= "</div>\n";
-		$drilldown_description = wfMsg( 'sd_browsedata_docu' );
+		$drilldown_description = wfMessage( 'sd_browsedata_docu' )->text();
 		$header .= "				<p>$drilldown_description</p>\n";
 		// display the list of subcategories on one line, and below
 		// it every filter, each on its own line; each line will
@@ -1123,9 +1123,9 @@ END;
 						} else {
 							$font_size = ( $sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize ) / 2;
 						}
-						$results_line .= "\n					" . '<a href="' . $filter_url . '" title="' . wfMsg( 'sd_browsedata_filterbysubcategory' ) . '" style="font-size: ' . $font_size . 'px">' . $filter_text . '</a>';
+						$results_line .= "\n					" . '<a href="' . $filter_url . '" title="' . wfMessage( 'sd_browsedata_filterbysubcategory' )->text() . '" style="font-size: ' . $font_size . 'px">' . $filter_text . '</a>';
 					} else {
-						$results_line .= "\n					" . '<a href="' . $filter_url . '" title="' . wfMsg( 'sd_browsedata_filterbysubcategory' ) . '">' . $filter_text . '</a>';
+						$results_line .= "\n					" . '<a href="' . $filter_url . '" title="' . wfMessage( 'sd_browsedata_filterbysubcategory' )->text() . '">' . $filter_text . '</a>';
 					}
 				}
 			}

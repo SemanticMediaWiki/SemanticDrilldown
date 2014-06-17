@@ -20,10 +20,10 @@ class SDCreateFilter extends SpecialPage {
 
 		$sd_props = $sdgContLang->getPropertyLabels();
 		$property_tag = "[[" . $sd_props[SD_SP_COVERS_PROPERTY] . "::$property_name]]";
-		$text = wfMsgForContent( 'sd_filter_coversproperty', $property_tag );
+		$text = wfMessage( 'sd_filter_coversproperty', $property_tag )->inContentLanguage()->text();
 		if ( $values_source == 'category' ) {
 			$category_tag = "[[" . $sd_props[SD_SP_GETS_VALUES_FROM_CATEGORY] . "::$category_used]]";
-			$text .= " " . wfMsgForContent( 'sd_filter_getsvaluesfromcategory', $category_tag );
+			$text .= " " . wfMessage( 'sd_filter_getsvaluesfromcategory', $category_tag )->inContentLanguage()->text();
 		} elseif ( $values_source == 'property' ) {
 			// do nothing
 		}
@@ -31,11 +31,11 @@ class SDCreateFilter extends SpecialPage {
 			$sd_namespace_labels = $sdgContLang->getNamespaces();
 			$filter_namespace = $sd_namespace_labels[SD_NS_FILTER];
 			$filter_tag = "[[" . $sd_props[SD_SP_REQUIRES_FILTER] . "::$filter_namespace:$required_filter|$required_filter]]";
-			$text .= " " . wfMsgForContent( 'sd_filter_requiresfilter', $filter_tag );
+			$text .= " " . wfMessage( 'sd_filter_requiresfilter', $filter_tag )->inContentLanguage()->text();
 		}
 		if ( $filter_label != '' ) {
 			$filter_label_tag = "[[" . $sd_props[SD_SP_HAS_LABEL] . "::$filter_label]]";
-			$text .= " " . wfMsgForContent( 'sd_filter_haslabel', $filter_label_tag );
+			$text .= " " . wfMessage( 'sd_filter_haslabel', $filter_label_tag )->inContentLanguage()->text();
 		}
 		return $text;
 	}
@@ -50,7 +50,7 @@ class SDCreateFilter extends SpecialPage {
 		// local variables
 		$presetFilterName = str_replace( '_', ' ', $query );
 		if ( $presetFilterName !== '' ) {
-			$wgOut->setPageTitle( wfMsg( 'sd-createfilter-with-name', $presetFilterName) );
+			$wgOut->setPageTitle( wfMessage( 'sd-createfilter-with-name', $presetFilterName)->text() );
 			$filter_name = $presetFilterName;
 		} else {
 			$filter_name = $wgRequest->getVal( 'filter_name' );
@@ -61,15 +61,15 @@ class SDCreateFilter extends SpecialPage {
 		$required_filter = $wgRequest->getVal( 'required_filter' );
 		$filter_label = $wgRequest->getVal( 'filter_label' );
 
-		$save_button_text = wfMsg( 'savearticle' );
-		$preview_button_text = wfMsg( 'preview' );
+		$save_button_text = wfMessage( 'savearticle' )->text();
+		$preview_button_text = wfMessage( 'preview' )->text();
 		$filter_name_error_str = '';
 		$save_page = $wgRequest->getCheck( 'wpSave' );
 		$preview_page = $wgRequest->getCheck( 'wpPreview' );
 		if ( $save_page || $preview_page ) {
 			// Validate filter name.
 			if ( $filter_name == '' ) {
-				$filter_name_error_str = wfMsg( 'sd_blank_error' );
+				$filter_name_error_str = wfMessage( 'sd_blank_error' )->text();
 			} else {
 				// Redirect to wiki interface.
 				$title = Title::newFromText( $filter_name, SD_NS_FILTER );
@@ -86,9 +86,9 @@ class SDCreateFilter extends SpecialPage {
 		global $wgContLang;
 		$mw_namespace_labels = $wgContLang->getNamespaces();
 		$special_namespace = $mw_namespace_labels[NS_SPECIAL];
-		$name_label = wfMsg( 'sd_createfilter_name' );
-		$property_label = wfMsg( 'sd_createfilter_property' );
-		$label_label = wfMsg( 'sd_createfilter_label' );
+		$name_label = wfMessage( 'sd_createfilter_name' )->text();
+		$property_label = wfMessage( 'sd_createfilter_property' )->text();
+		$label_label = wfMessage( 'sd_createfilter_label' )->text();
 		$text = <<<END
 
 	<form action="" method="post">
@@ -112,9 +112,9 @@ END;
 			$text .= "	<option>$property_name</option>\n";
 		}
 
-		$values_from_property_label = wfMsg( 'sd_createfilter_usepropertyvalues' );
-		$values_from_category_label = wfMsg( 'sd_createfilter_usecategoryvalues' );
-		$require_filter_label = wfMsg( 'sd_createfilter_requirefilter' );
+		$values_from_property_label = wfMessage( 'sd_createfilter_usepropertyvalues' )->text();
+		$values_from_category_label = wfMessage( 'sd_createfilter_usecategoryvalues' )->text();
+		$require_filter_label = wfMessage( 'sd_createfilter_requirefilter' )->text();
 		$text .= <<<END
 	</select>
 	</p>

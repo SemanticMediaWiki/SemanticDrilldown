@@ -323,64 +323,64 @@ class SDUtils {
 
 	static function monthToString( $month ) {
 		if ( $month == 1 ) {
-			return wfMsg( 'january' );
+			return wfMessage( 'january' )->text();
 		} elseif ( $month == 2 ) {
-			return wfMsg( 'february' );
+			return wfMessage( 'february' )->text();
 		} elseif ( $month == 3 ) {
-			return wfMsg( 'march' );
+			return wfMessage( 'march' )->text();
 		} elseif ( $month == 4 ) {
-			return wfMsg( 'april' );
+			return wfMessage( 'april' )->text();
 		} elseif ( $month == 5 ) {
 			// Needed to avoid using 3-letter abbreviation
-			return wfMsg( 'may_long' );
+			return wfMessage( 'may_long' )->text();
 		} elseif ( $month == 6 ) {
-			return wfMsg( 'june' );
+			return wfMessage( 'june' )->text();
 		} elseif ( $month == 7 ) {
-			return wfMsg( 'july' );
+			return wfMessage( 'july' )->text();
 		} elseif ( $month == 8 ) {
-			return wfMsg( 'august' );
+			return wfMessage( 'august' )->text();
 		} elseif ( $month == 9 ) {
-			return wfMsg( 'september' );
+			return wfMessage( 'september' )->text();
 		} elseif ( $month == 10 ) {
-			return wfMsg( 'october' );
+			return wfMessage( 'october' )->text();
 		} elseif ( $month == 11 ) {
-			return wfMsg( 'november' );
+			return wfMessage( 'november' )->text();
 		} else { // if ($month == 12) {
-			return wfMsg( 'december' );
+			return wfMessage( 'december' )->text();
 		}
 	}
 
 	static function stringToMonth( $str ) {
-		if ( $str == wfMsg( 'january' ) ) {
+		if ( $str == wfMessage( 'january' )->text() ) {
 			return 1;
-		} elseif ( $str == wfMsg( 'february' ) ) {
+		} elseif ( $str == wfMessage( 'february' )->text() ) {
 			return 2;
-		} elseif ( $str == wfMsg( 'march' ) ) {
+		} elseif ( $str == wfMessage( 'march' )->text() ) {
 			return 3;
-		} elseif ( $str == wfMsg( 'april' ) ) {
+		} elseif ( $str == wfMessage( 'april' )->text() ) {
 			return 4;
-		} elseif ( $str == wfMsg( 'may_long' ) ) {
+		} elseif ( $str == wfMessage( 'may_long' )->text() ) {
 			return 5;
-		} elseif ( $str == wfMsg( 'june' ) ) {
+		} elseif ( $str == wfMessage( 'june' )->text() ) {
 			return 6;
-		} elseif ( $str == wfMsg( 'july' ) ) {
+		} elseif ( $str == wfMessage( 'july' )->text() ) {
 			return 7;
-		} elseif ( $str == wfMsg( 'august' ) ) {
+		} elseif ( $str == wfMessage( 'august' )->text() ) {
 			return 8;
-		} elseif ( $str == wfMsg( 'september' ) ) {
+		} elseif ( $str == wfMessage( 'september' )->text() ) {
 			return 9;
-		} elseif ( $str == wfMsg( 'october' ) ) {
+		} elseif ( $str == wfMessage( 'october' )->text() ) {
 			return 10;
-		} elseif ( $str == wfMsg( 'november' ) ) {
+		} elseif ( $str == wfMessage( 'november' )->text() ) {
 			return 11;
-		} else { // if ($strmonth == wfMsg('december')) {
+		} else { // if ($strmonth == wfMessage('december')->text()) {
 			return 12;
 		}
 	}
 
 	static function booleanToString( $bool_value ) {
 		$words_field_name = ( $bool_value == true ) ? 'smw_true_words' : 'smw_false_words';
-		$words_array = explode( ',', wfMsgForContent( $words_field_name ) );
+		$words_array = explode( ',', wfMessage( $words_field_name )->inContentLanguage()->text() );
 		// go with the value in the array that tends to be "yes" or
 		// "no", which is the 3rd
 		$index_of_word = 2;
@@ -503,13 +503,13 @@ END;
 	}
 
 	public static function addToAdminLinks( &$admin_links_tree ) {
-		$browse_search_section = $admin_links_tree->getSection( wfMsg( 'adminlinks_browsesearch' ) );
+		$browse_search_section = $admin_links_tree->getSection( wfMessage( 'adminlinks_browsesearch' )->text() );
 		$sd_row = new ALRow( 'sd' );
 		$sd_row->addItem( ALItem::newFromSpecialPage( 'BrowseData' ) );
 		$sd_row->addItem( ALItem::newFromSpecialPage( 'Filters' ) );
 		$sd_row->addItem( ALItem::newFromSpecialPage( 'CreateFilter' ) );
-		$sd_name = wfMsg( 'specialpages-group-sd_group' );
-		$sd_docu_label = wfMsg( 'adminlinks_documentation', $sd_name );
+		$sd_name = wfMessage( 'specialpages-group-sd_group' )->text();
+		$sd_docu_label = wfMessage( 'adminlinks_documentation', $sd_name )->text();
 		$sd_row->addItem( AlItem::newFromExternalLink( "https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label ) );
 
 		$browse_search_section->addRow( $sd_row );
