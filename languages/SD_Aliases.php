@@ -300,6 +300,11 @@ $specialPageAliases['oc'] = array(
 	'Filters' => array( 'Filtres' ),
 );
 
+/** Polish (polski) */
+$specialPageAliases['pl'] = array(
+	'Filters' => array( 'Filtry' ),
+);
+
 /** Pashto (پښتو) */
 $specialPageAliases['ps'] = array(
 	'CreateFilter' => array( 'چاڼګر جوړول' ),
