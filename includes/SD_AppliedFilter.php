@@ -9,16 +9,21 @@
 class SDAppliedFilter {
 	var $filter;
 	var $values = array();
-	var $search_term;
+	var $search_terms;
 	var $lower_date;
 	var $upper_date;
 	var $lower_date_string;
 	var $upper_date_string;
 
-	static function create( $filter, $values, $search_term = null, $lower_date = null, $upper_date = null ) {
+	static function create( $filter, $values, $search_terms = null, $lower_date = null, $upper_date = null ) {
 		$af = new SDAppliedFilter();
 		$af->filter = $filter;
-		$af->search_term = htmlspecialchars( str_replace( '_', ' ', $search_term ) );
+		if ( $search_terms != null ) {
+			$af->search_terms = array();
+			foreach( $search_terms as $search_term ) {
+				$af->search_terms[] = htmlspecialchars( str_replace( '_', ' ', $search_term ) );
+			}
+		}
 		if ( $lower_date != null ) {
 			$af->lower_date = $lower_date;
 			$af->lower_date_string = SDUtils::monthToString( $lower_date['month'] ) . " " . $lower_date['day'] . ", " . $lower_date['year'];
@@ -45,19 +50,24 @@ class SDAppliedFilter {
 		global $wgDBtype;
 		$sql = "(";
 		$dbr = wfGetDB( DB_SLAVE );
-		if ( $this->search_term != null ) {
+		if ( $this->search_terms != null ) {
 			$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'");
-			$search_term = str_replace( "'", $quoteReplace, $this->search_term );
-			if ( $this->filter->property_type === 'page' ) {
-				// FIXME: 'LIKE' is supposed to be
-				// case-insensitive, but it's not acting
-				// that way here.
-				//$search_term = strtolower( $search_term );
-				$search_term = str_replace( ' ', '\_', $search_term );
-				$sql .= "$value_field LIKE '%{$search_term}%'";
-			} else {
-				//$search_term = strtolower( $search_term );
-				$sql .= "$value_field LIKE '%{$search_term}%'";
+			foreach ( $this->search_terms as $i => $search_term ) {
+				$search_term = str_replace( "'", $quoteReplace, $search_term );
+				if ( $i > 0 ) {
+					$sql .= ' OR ';
+				}
+				if ( $this->filter->property_type === 'page' ) {
+					// FIXME: 'LIKE' is supposed to be
+					// case-insensitive, but it's not acting
+					// that way here.
+					//$search_term = strtolower( $search_term );
+					$search_term = str_replace( ' ', '\_', $search_term );
+					$sql .= "$value_field LIKE '%{$search_term}%'";
+				} else {
+					//$search_term = strtolower( $search_term );
+					$sql .= "$value_field LIKE '%{$search_term}%'";
+				}
 			}
 		}
 		if ( $this->lower_date != null ) {

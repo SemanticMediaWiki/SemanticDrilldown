@@ -77,7 +77,7 @@ class SDBrowseData extends IncludableSpecialPage {
 		$remaining_filters = array();
 		foreach ( $filters as $i => $filter ) {
 			$filter_name = str_replace( array( ' ', "'" ) , array( '_', "\'" ), $filter->name );
-			$search_term = $wgRequest->getVal( '_search_' . $filter_name );
+			$search_terms = $wgRequest->getArray( '_search_' . $filter_name );
 			$lower_date = $wgRequest->getArray( '_lower_' . $filter_name );
 			$upper_date = $wgRequest->getArray( '_upper_' . $filter_name );
 			if ( $vals_array = $wgRequest->getArray( $filter_name ) ) {
@@ -86,8 +86,8 @@ class SDBrowseData extends IncludableSpecialPage {
 				}
 				$applied_filters[] = SDAppliedFilter::create( $filter, $vals_array );
 				$filter_used[$i] = true;
-			} elseif ( $search_term != null ) {
-				$applied_filters[] = SDAppliedFilter::create( $filter, array(), $search_term );
+			} elseif ( $search_terms != null ) {
+				$applied_filters[] = SDAppliedFilter::create( $filter, array(), $search_terms );
 				$filter_used[$i] = true;
 			} elseif ( $lower_date != null || $upper_date != null ) {
 				$applied_filters[] = SDAppliedFilter::create( $filter, array(), null, $lower_date, $upper_date );
@@ -195,9 +195,11 @@ class SDBrowseDataPage extends QueryPage {
 					$url .= urlencode( str_replace( ' ', '_', $af->filter->name ) ) . "[$j]=" . urlencode( str_replace( ' ', '_', $fv->text ) );
 				}
 			}
-			if ( $af->search_term != null ) {
-				$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
-				$url .= '_search_' . urlencode( str_replace( ' ', '_', $af->filter->name ) ) . "=" . urlencode( str_replace( ' ', '_', $af->search_term ) );
+			if ( $af->search_terms != null ) {
+				foreach ( $af->search_terms as $j => $search_term ) {
+					$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
+					$url .= '_search_' . urlencode( str_replace( ' ', '_', $af->filter->name ) . '[' . $j . ']' ) . "=" . urlencode( str_replace( ' ', '_', $search_term ) );
+				}
 			}
 		}
 		return $url;
@@ -533,15 +535,16 @@ END;
 		} else {
 			$or_values = $af->getAllOrValues( $this->category );
 		}
-		if ( $af->search_term != null ) {
+		if ( $af->search_terms != null ) {
 			// HACK - printComboBoxInput() needs values as the
 			// *keys* of the array
 			$filter_values = array();
 			foreach ( $or_values as $or_value ) {
 				$filter_values[$or_value] = '';
 			}
-			$results_line = $this->printComboBoxInput( $af->filter->name, $filter_values, $af->search_term );
-			return $this->printFilterLine( $af->filter->name, true, false, $results_line );
+			$curSearchTermNum = count( $af->search_terms );
+			$results_line = $this->printComboBoxInput( $af->filter->name . '[' . $curSearchTermNum . ']', $filter_values, null );
+			return $this->printFilterLine( $af->filter->name, true, true, $results_line );
 		/*
 		} elseif ( $af->lower_date != null || $af->upper_date != null ) {
 			// With the current interface, this code will never get
@@ -824,6 +827,23 @@ END;
 
 		$text =<<< END
 <form method="get">
+
+END;
+
+		foreach ( $wgRequest->getValues() as $key => $val ) {
+			if ( $key != $inputName ) {
+				if ( is_array( $val ) ) {
+					foreach ( $val as $i => $realVal ) {
+						$keyString = $key . '[' . $i . ']';
+						$text .= Html::hidden( $keyString, $realVal ) . "\n";
+					}
+				} else {
+					$text .= Html::hidden( $key, $val ) . "\n";
+				}
+			}
+		}
+
+		$text .=<<< END
 	<div class="ui-widget">
 		<select class="semanticDrilldownCombobox" name="$cur_value">
 			<option value="$inputName"></option>;
@@ -842,18 +862,6 @@ END;
 
 END;
 
-		foreach ( $wgRequest->getValues() as $key => $val ) {
-			if ( $key != $inputName ) {
-				if ( is_array( $val ) ) {
-					foreach ( $val as $i => $realVal ) {
-						$keyString = $key . '[' . $i . ']';
-						$text .= Html::hidden( $keyString, $realVal ) . "\n";
-					}
-				} else {
-					$text .= Html::hidden( $key, $val ) . "\n";
-				}
-			}
-		}
 		$text .= Html::input( null, wfMessage( 'searchresultshead' )->text(), 'submit', array( 'style' => 'margin: 4px 0 8px 0;' ) ) . "\n";
 		$text .= "</form>\n";
 		return $text;
@@ -1066,13 +1074,16 @@ END;
 				array_splice( $temp_filters_array[$i]->values, $j, 0, $removed_values );
 				$header .= "\n	" . '				<span class="drilldown-header-value">' . $filter_text . '</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
 			}
-			if ( $af->search_term != null ) {
-				$temp_filters_array = $this->applied_filters;
-				$removed_search_term = $temp_filters_array[$i]->search_term;
-				$temp_filters_array[$i]->search_term = null;
-				$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
-				$temp_filters_array[$i]->search_term = $removed_search_term;
-				$header .= "\n\t" . '<span class="drilldown-header-value">~ \'' . $af->search_term . '\'</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /> </a>';
+
+			if ( $af->search_terms != null ) {
+				foreach ( $af->search_terms as $j => $search_term ) {
+					if ( $j > 0 ) { $header .= ' <span class="drilldown-or">' . wfMessage( 'sd_browsedata_or' )->text() . '</span> '; }
+					$temp_filters_array = $this->applied_filters;
+					$removed_values = array_splice( $temp_filters_array[$i]->search_terms, $j, 1 );
+					$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
+					array_splice( $temp_filters_array[$i]->search_terms, $j, 0, $removed_values );
+					$header .= "\n\t" . '<span class="drilldown-header-value">~ \'' . $search_term . '\'</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /> </a>';
+				}
 			} elseif ( $af->lower_date != null || $af->upper_date != null ) {
 				$header .= "\n\t<span class=\"drilldown-header-value\">" . $af->lower_date_string . " - " . $af->upper_date_string . "</span>";
 			}
