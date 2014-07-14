@@ -69,7 +69,13 @@ class SDParserFunctions {
 			}
 		}
 
-		$link_url = $specialPage->getPageTitle()->getLocalURL() . "/{$category}";
+		if ( method_exists( $specialPage, 'getPageTitle' ) ) {
+			// MW 1.23+
+			$title = $specialPage->getPageTitle();
+		} else {
+			$title = $specialPage->getTitle();
+		}
+		$link_url = $title->getLocalURL() . "/{$category}";
 		$link_url = str_replace( ' ', '_', $link_url );
 		if ( ! empty( $inQueryArr ) ) {
 			$link_url .= ( strstr( $link_url, '?' ) ) ? '&' : '?';

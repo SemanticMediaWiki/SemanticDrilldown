@@ -95,7 +95,14 @@ class SDCreateFilter extends SpecialPage {
 
 END;
 		if ( $presetFilterName === '' ) {
-			$text .= "\t" . Html::hidden( 'title', $this->getPageTitle()->getPrefixedText() ) . "\n";
+			if ( method_exists( $this, 'getPageTitle' ) ) {
+				// MW 1.23+
+				$title = $this->getPageTitle();
+			} else {
+				$title = $this->getTitle();
+			}
+			$text .= "\t" . Html::hidden( 'title', $title->getPrefix
+edText() ) . "\n";
 			$text .= <<<END
 	<p>$name_label <input size="25" name="filter_name" value="">
 	<span style="color: red;">$filter_name_error_str</span></p>
