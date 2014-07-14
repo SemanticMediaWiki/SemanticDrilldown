@@ -101,8 +101,7 @@ END;
 			} else {
 				$title = $this->getTitle();
 			}
-			$text .= "\t" . Html::hidden( 'title', $title->getPrefix
-edText() ) . "\n";
+			$text .= "\t" . Html::hidden( 'title', $title->getPrefixedText() ) . "\n";
 			$text .= <<<END
 	<p>$name_label <input size="25" name="filter_name" value="">
 	<span style="color: red;">$filter_name_error_str</span></p>
