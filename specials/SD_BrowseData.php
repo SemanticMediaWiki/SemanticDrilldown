@@ -545,7 +545,7 @@ END;
 				$filter_values[$or_value] = '';
 			}
 			$curSearchTermNum = count( $af->search_terms );
-			$results_line = $this->printComboBoxInput( $af->filter->name . '[' . $curSearchTermNum . ']', $filter_values, null );
+			$results_line = $this->printComboBoxInput( $af->filter->name, $curSearchTermNum, $filter_values );
 			return $this->printFilterLine( $af->filter->name, true, true, $results_line );
 		/*
 		} elseif ( $af->lower_date != null || $af->upper_date != null ) {
@@ -818,13 +818,18 @@ END;
 		return $text;
 	}
 
-	function printComboBoxInput( $filter_name, $filter_values, $cur_value = null ) {
+	function printComboBoxInput( $filter_name, $instance_num, $filter_values, $cur_value = null ) {
 		global $wgRequest, $sdgJQueryIncluded, $wgOut;
 
 		$filter_name = str_replace( ' ', '_', $filter_name );
 		// URL-decode the filter name - necessary if it contains
 		// any non-Latin characters.
 		$filter_name = urldecode( $filter_name );
+
+		// Add on the instance number, since it can be one of a string
+		// of values.
+		$filter_name .= '[' . $instance_num . ']';
+
 		$inputName = "_search_$filter_name";
 
 		$text =<<< END
@@ -1001,7 +1006,7 @@ END;
 		} elseif ( $f->property_type == 'number' ) {
 			$results_line = $this->printNumberRanges( $filter_name, $filter_values );
 		} elseif ( count( $filter_values ) >= $sdgMinValuesForComboBox ) {
-			$results_line = $this->printComboBoxInput( $filter_name, $filter_values );
+			$results_line = $this->printComboBoxInput( $filter_name, 0, $filter_values );
 			$normal_filter = false;
 		} else {
 			// If $cur_url wasn't passed in, we have to create it.
