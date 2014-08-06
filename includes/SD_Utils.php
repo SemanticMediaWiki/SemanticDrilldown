@@ -485,7 +485,7 @@ END;
 	public static function getIDsTableName() {
 		global $smwgDefaultStore;
 
-		if ( $smwgDefaultStore === 'SMWSQLStore3' ) {
+		if ( $smwgDefaultStore === 'SMWSQLStore3' || $smwgDefaultStore === 'SMWSparqlStore' ) {
 			return 'smw_object_ids';
 		} else {
 			return 'smw_ids';
@@ -495,7 +495,7 @@ END;
 	public static function getCategoryInstancesTableName() {
 		global $smwgDefaultStore;
 
-		if ( $smwgDefaultStore === 'SMWSQLStore3' ) {
+		if ( $smwgDefaultStore === 'SMWSQLStore3' || $smwgDefaultStore === 'SMWSparqlStore' ) {
 			return 'smw_fpt_inst';
 		} else {
 			return 'smw_inst2';
