@@ -46,10 +46,8 @@ class SDBrowseData extends IncludableSpecialPage {
 		if ( ! $category ) {
 			$category_title = wfMessage( 'browsedata' )->text();
 		} else {
-			$titles_for_category = SDUtils::getValuesForProperty( $category, NS_CATEGORY, '_SD_DT', SD_SP_HAS_DRILLDOWN_TITLE, NS_MAIN );
-			if ( count( $titles_for_category ) > 0 ) {
-				$category_title = str_replace( '_', ' ', $titles_for_category[0] );
-			} else {
+			$category_title = SDUtils::getDrilldownTitleForCategory( $category );
+			if ( $category_title == '' ) {
 				$category_title = wfMessage( 'browsedata' )->text() . html_entity_decode( wfMessage( 'colon-separator' )->text() ) . str_replace( '_', ' ', $category );
 			}
 		}
@@ -97,9 +95,8 @@ class SDBrowseData extends IncludableSpecialPage {
 		// add every unused filter to the $remaining_filters array,
 		// unless it requires some other filter that hasn't been applied
 		foreach ( $filters as $i => $filter ) {
-			$required_filters = SDUtils::getValuesForProperty( $filter->name, SD_NS_FILTER, '_SD_RF', SD_SP_REQUIRES_FILTER, SD_NS_FILTER );
 			$matched_all_required_filters = true;
-			foreach ( $required_filters as $required_filter ) {
+			foreach ( $filter->required_filters as $required_filter ) {
 				$found_match = false;
 				foreach ( $applied_filters as $af ) {
 					if ( $af->filter->name == $required_filter ) {
@@ -448,6 +445,10 @@ END;
 		return $text;
 	}
 
+	/**
+	 * @deprecated as of SD 2.0 - will be removed when the "Filter:"
+	 * namespace goes away.
+	 */
 	function printFilterLabel( $filter_name ) {
 		$labels_for_filter = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_L', SD_SP_HAS_LABEL, NS_MAIN );
 		if ( count( $labels_for_filter ) > 0 ) {
@@ -819,7 +820,7 @@ END;
 	}
 
 	function printComboBoxInput( $filter_name, $instance_num, $filter_values, $cur_value = null ) {
-		global $wgRequest, $sdgJQueryIncluded, $wgOut;
+		global $wgRequest;
 
 		$filter_name = str_replace( ' ', '_', $filter_name );
 		// URL-decode the filter name - necessary if it contains

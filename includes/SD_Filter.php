@@ -1,7 +1,6 @@
 <?php
 /**
- * Defines a class, SDFilter, that holds the information in a filter,
- * i.e. a single page in the "Filter:" namespace
+ * Defines a class, SDFilter, that holds the information in a filter.
  *
  * @author Yaron Koren
  */
@@ -14,14 +13,34 @@ class SDFilter {
 	var $category;
 	var $time_period = null;
 	var $allowed_values;
+	var $required_filters = array();
 	var $possible_applied_filters = array();
 	var $db_table_name;
 	var $db_value_field;
 	var $db_date_field;
+
+	public function setName( $name ) {
+		$this->name = $name;
+	}
+
+	public function setProperty( $prop ) {
+		global $wgDBtype;
+
+		$this->property = $prop;
+		$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'");
+		$this->escaped_property = str_replace( array( ' ', "'" ), array( '_', $quoteReplace ), $prop );
+	}
+
+	public function setCategory( $cat ) {
+		$this->category = $cat;
+		$this->allowed_values = SDUtils::getCategoryChildren( $cat, false, 5 );
+	}
+
+	public function addRequiredFilter( $filterName ) {
+		$this->required_filters[] = $filterName;
+	}
 	
 	static function loadAllFromPageSchema( $psSchemaObj ){
-		global $wgDBtype;
-		$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'");
 		$filters_ps = array();		
 		$template_all = $psSchemaObj->getTemplates();						
 		foreach ( $template_all as $template ) {
@@ -33,17 +52,16 @@ class SDFilter {
 					continue;
 				}
 				if ( array_key_exists( 'name', $filter_array ) ) {
-					$f->name = $filter_array['name'];
+					$f->setName( $filter_array['name'] );
 				} else {
-					$f->name = $fieldObj->getName();
+					$f->setName( $fieldObj->getName() );
 				}
 				$prop_array = $fieldObj->getObject('semanticmediawiki_Property');
 				if ( $prop_array['name'] != '' ) {
-					$f->property = $prop_array['name'];
+					$f->setProperty( $prop_array['name'] );
 				} else {
-					$f->property = $f->name;
+					$f->setProperty( $f->name );
 				}
-				$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', $quoteReplace ), $f->property );
 				if ( array_key_exists( 'Type', $prop_array ) ) {
 					// Thankfully, the property type names
 					// assigned by SMW/Page Schemas, and the
@@ -54,8 +72,7 @@ class SDFilter {
 					$f->property_type = strtolower( $prop_array['Type'] );
 				}
 				if ( array_key_exists( 'ValuesFromCategory', $filter_array ) ) {
-					$f->category = $filter_array['ValuesFromCategory'];
-					$f->allowed_values = SDUtils::getCategoryChildren( $f->category, false, 5 );
+					$f->setCategory( $filter_array['ValuesFromCategory'] );
 				} elseif ( array_key_exists( 'TimePeriod', $filter_array ) ) {
 					$f->time_period = $filter_array['TimePeriod'];
 					$f->allowed_values = array();
@@ -66,6 +83,8 @@ class SDFilter {
 				} else {
 					$f->allowed_values = array();
 				}				
+
+				// Must be done after property type is set.
 				$f->loadDBStructureInformation();
 
 				$filters_ps[] = $f ;
@@ -73,65 +92,27 @@ class SDFilter {
 		}				
 		return $filters_ps;
 	}
-	
+
+	/**
+	 * @deprecated as of SD 2.0 - will be removed when the "Filter:"
+	 * namespace goes away.
+	 */
 	static function load( $filter_name ) {
-		global $wgDBtype;
-		$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'");
 		$f = new SDFilter();
-		$f->name = $filter_name;
+		$f->setName( $filter_name );
 		$properties_used = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_CP', SD_SP_COVERS_PROPERTY, SMW_NS_PROPERTY );
 		if ( count( $properties_used ) > 0 ) {
-			$f->property = $properties_used[0];
-			$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', $quoteReplace ), $f->property );
+			$f->setProperty( $properties_used[0] );
 			// This may not be necessary, or useful.
 			$f->property_type = 'page';
 		}
 		$proptitle = Title::newFromText( $f->property, SMW_NS_PROPERTY );
 		if ( $proptitle != null ) {
-			$store = SDUtils::getSMWStore();
-			$propPage = new SMWDIWikiPage( $f->escaped_property, SMW_NS_PROPERTY, '' );
-			$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
-			global $smwgContLang;
-			$datatypeLabels = $smwgContLang->getDatatypeLabels();
-			if ( count( $types ) > 0 ) {
-				if ( $types[0] instanceof SMWDIWikiPage ) {
-					$typeValue = $types[0]->getDBkey();
-				} elseif ( $types[0] instanceof SMWDIURI ) {
-					// A bit inefficient, but it's the
-					// simplest approach.
-					$typeID = $types[0]->getFragment();
-					if ( $typeID == '_str' && !array_key_exists( '_str', $datatypeLabels ) ) {
-						$typeID = '_txt';
-					}
-					$typeValue = $datatypeLabels[$typeID];
-				} else {
-					$typeValue = $types[0]->getWikiValue();
-				}
-				if ( $typeValue == $datatypeLabels['_wpg'] ) {
-					$f->property_type = 'page';
-				// _str stopped existing in SMW 1.9
-				} elseif ( array_key_exists( '_str', $datatypeLabels ) && $typeValue == $datatypeLabels['_str'] ) {
-					$f->property_type = 'string';
-				} elseif ( !array_key_exists( '_str', $datatypeLabels ) && $typeValue == $datatypeLabels['_txt'] ) {
-					$f->property_type = 'string';
-				} elseif ( $typeValue == $datatypeLabels['_num'] ) {
-					$f->property_type = 'number';
-				} elseif ( $typeValue == $datatypeLabels['_boo'] ) {
-					$f->property_type = 'boolean';
-				} elseif ( $typeValue == $datatypeLabels['_dat'] ) {
-					$f->property_type = 'date';
-				} else {
-					// This should hopefully never get called.
-					print "Error! Unsupported property type ($typeValue) for filter {$f->name}.";
-				}
-			}
+			$f->loadPropertyTypeFromProperty();
 		}
 		$categories = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_VC', SD_SP_GETS_VALUES_FROM_CATEGORY, NS_CATEGORY );
 		if ( count( $categories ) > 0 ) {
-			$f->category = $categories[0];
-			$f->allowed_values = SDUtils::getCategoryChildren( $f->category, false, 5 );
-		} elseif ( $f->property_type === 'date' ) {
-			$f->allowed_values = array();
+			$f->setCategory( $categories[0] );
 		} elseif ( $f->property_type === 'boolean' ) {
 			$f->allowed_values = array( '0', '1' );
 		} else {
@@ -144,9 +125,50 @@ class SDFilter {
 			$f->possible_applied_filters[] = SDAppliedFilter::create( $f, $allowed_value );
 		}
 
-		$f->loadDBStructureInformation();
-
 		return $f;
+	}
+
+	function loadPropertyTypeFromProperty() {
+		$store = SDUtils::getSMWStore();
+		$propPage = new SMWDIWikiPage( $this->escaped_property, SMW_NS_PROPERTY, '' );
+		$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
+		global $smwgContLang;
+		$datatypeLabels = $smwgContLang->getDatatypeLabels();
+		if ( count( $types ) > 0 ) {
+			if ( $types[0] instanceof SMWDIWikiPage ) {
+				$typeValue = $types[0]->getDBkey();
+			} elseif ( $types[0] instanceof SMWDIURI ) {
+				// A bit inefficient, but it's the
+				// simplest approach.
+				$typeID = $types[0]->getFragment();
+				if ( $typeID == '_str' && !array_key_exists( '_str', $datatypeLabels ) ) {
+					$typeID = '_txt';
+				}
+				$typeValue = $datatypeLabels[$typeID];
+			} else {
+				$typeValue = $types[0]->getWikiValue();
+			}
+			if ( $typeValue == $datatypeLabels['_wpg'] ) {
+				$this->property_type = 'page';
+			// _str stopped existing in SMW 1.9
+			} elseif ( array_key_exists( '_str', $datatypeLabels ) && $typeValue == $datatypeLabels['_str'] ) {
+				$this->property_type = 'string';
+			} elseif ( !array_key_exists( '_str', $datatypeLabels ) && $typeValue == $datatypeLabels['_txt'] ) {
+				$this->property_type = 'string';
+			} elseif ( $typeValue == $datatypeLabels['_num'] ) {
+				$this->property_type = 'number';
+			} elseif ( $typeValue == $datatypeLabels['_boo'] ) {
+				$this->property_type = 'boolean';
+			} elseif ( $typeValue == $datatypeLabels['_dat'] ) {
+				$this->property_type = 'date';
+			} else {
+				// This should hopefully never get called.
+				print "Error! Unsupported property type ($typeValue) for filter {$this->name}.";
+			}
+		}
+
+		// This requires the property type to be set.
+		$this->loadDBStructureInformation();
 	}
 
 	/**
@@ -159,7 +181,7 @@ class SDFilter {
 	public function loadDBStructureInformation() {
 		global $smwgDefaultStore;
 
-		if ( $smwgDefaultStore === 'SMWSQLStore3' || $smwgDefaultStore === 'SMWSparqlStore' ) {
+		if ( $smwgDefaultStore === 'SMWSQLStore3' ) {
 			if ( $this->property_type === 'page' ) {
 				$this->db_table_name = 'smw_di_wikipage';
 				$this->db_value_field = 'o_ids.smw_title';

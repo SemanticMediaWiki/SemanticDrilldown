@@ -138,94 +138,11 @@ class SDUtils {
 	}
 
 	/**
-	 * Gets a list of the names of all properties in the wiki
-	 */
-	static function getSemanticProperties() {
-		global $smwgContLang;
-		$smw_namespace_labels = $smwgContLang->getNamespaces();
-		$all_properties = array();
-
-		$options = new SMWRequestOptions();
-		$options->limit = 10000;
-		$used_properties = SDUtils::getSMWStore()->getPropertiesSpecial( $options );
-		if ( $used_properties instanceof SMW\SQLStore\PropertiesCollector ) {
-			// SMW 1.9+
-			$used_properties = $used_properties->runCollector();
-		}
-
-		foreach ( $used_properties as $property ) {
-			if ( $property[0] instanceof SMWDIError ) {
-				continue;
-			} else {
-				$propName = $property[0]->getKey();
-				if ( $propName{0} != '_' ) {
-					$all_properties[] = str_replace( '_', ' ', $propName );
-				}
-			}
-		}
-
-		$unused_properties = SDUtils::getSMWStore()->getUnusedPropertiesSpecial( $options );
-		if ( $unused_properties instanceof SMW\SQLStore\UnusedPropertiesCollector ) {
-			// SMW 1.9+
-			$unused_properties = $unused_properties->runCollector();
-		}
-
-		foreach ( $unused_properties as $property ) {
-			if ( $property instanceof SMWDIError ) {
-				continue;
-			} else {
-				$all_properties[] = str_replace( '_', ' ', $property->getKey() );
-			}
-		}
-
-		// Remove the special properties of Semantic Drilldown from
-		// this list...
-		global $sdgContLang;
-		$sd_props = $sdgContLang->getPropertyLabels();
-		$sd_prop_aliases = $sdgContLang->getPropertyAliases();
-		foreach ( $all_properties as $i => $prop_name ) {
-			foreach ( $sd_props as $prop => $label ) {
-				if ( $prop_name == $label ) {
-					unset( $all_properties[$i] );
-				}
-			}
-			foreach ( $sd_prop_aliases as $alias => $cur_prop ) {
-				if ( $prop_name == $alias ) {
-					unset( $all_properties[$i] );
-				}
-			}
-		}
-
-		// Also remove any property names that seem incorrect.
-		foreach ( $all_properties as $i => $prop_name ) {
-			if ( strstr( $prop_name, "\n" ) || strstr( $prop_name, '#list' ) ) {
-					unset( $all_properties[$i] );
-			}
-		}
-
-		sort( $all_properties );
-		$all_properties = array_unique( $all_properties );
-		return $all_properties;
-	}
-
-	/**
-	 * Gets the names of all the filter pages, i.e. pages in the Filter
-	 * namespace
-	 */
-	static function getFilters() {
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select( 'page', 'page_title', array( 'page_namespace' => SD_NS_FILTER ) );
-		$filters = array();
-		while ( $row = $dbr->fetchRow( $res ) ) {
-			$filters[] = $row[0];
-		}
-		$dbr->freeResult( $res );
-		return $filters;
-	}
-
-	/**
 	 * Generic static function - gets all the values that a specific page
 	 * points to with a specific property
+	 *
+	 * @deprecated as of SD 2.0 - will be removed when the "Filter:"
+	 * namespace goes away.
 	 */
 	static function getValuesForProperty( $subject, $subjectNamespace, $specialPropID ) {
 		$store = SDUtils::getSMWStore();
@@ -254,10 +171,48 @@ class SDUtils {
 	 */
 	static function loadFiltersForCategory( $category ) {
 		$filters = array();
-		$filters_ps = array();
+
+		$title = Title::newFromText( $category, NS_CATEGORY );
+		$pageId = $title->getArticleID();
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 'page_props',
+			array(
+				'pp_value'
+			),
+			array(
+				'pp_page' => $pageId,
+				'pp_propname' => 'DrilldownFilters'
+			)
+		);
+
+		while ( $row = $dbr->fetchRow( $res ) ) {
+			// There should only be one row.
+			$filtersStr = $row['pp_value'];
+			$filtersInfo = unserialize( $filtersStr );
+			foreach ( $filtersInfo as $filterName => $filterValues ) {
+				$curFilter = new SDFilter();
+				$curFilter->setName( $filterName );
+				foreach ( $filterValues as $key => $value ) {
+					if ( $key == 'property' ) {
+						$curFilter->setProperty( $value );
+						$curFilter->loadPropertyTypeFromProperty();
+					} elseif ( $key == 'category' ) {
+						$curFilter->setCategory( $value );
+					} elseif ( $key == 'required' ) {
+						$curFilter->addRequiredFilter( $value );
+					}
+				}
+				$filters[] = $curFilter;
+			}
+		}
+
+		// Get "legacy" filters defined via the SMW special property
+		// "Has filter" and the Filter: namespace.
 		$filter_names = SDUtils::getValuesForProperty( str_replace( ' ', '_', $category ), NS_CATEGORY, '_SD_F' );
 		foreach ( $filter_names as $filter_name ) {
-			$filters[] = SDFilter::load( $filter_name );
+			$filter = SDFilter::load( $filter_name );
+			$filter->required_filters = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_RF', SD_SP_REQUIRES_FILTER, SD_NS_FILTER );
+			$filters[] = $filter;
 		}
 		// Read from the Page Schemas schema for this category, if
 		// it exists, and add any filters defined there.
@@ -273,15 +228,64 @@ class SDUtils {
 	}
 
 	/**
+	 * Gets the custom drilldown title for a category, if there is one.
+	 */
+	static function getDrilldownTitleForCategory( $category ) {
+		$title = Title::newFromText( $category, NS_CATEGORY );
+		$pageID = $title->getArticleID();
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 'page_props',
+			array(
+				'pp_value'
+			),
+			array(
+				'pp_page' => $pageID,
+				'pp_propname' => 'DrilldownTitle'
+			)
+		);
+
+		if ( $row = $dbr->fetchRow( $res ) ) {
+			return $row['pp_value'];
+		}
+
+		// Get "legacy" title defined via special properties.
+		$titles_for_category = SDUtils::getValuesForProperty( $category, NS_CATEGORY, '_SD_DT', SD_SP_HAS_DRILLDOWN_TITLE, NS_MAIN );
+		if ( count( $titles_for_category ) > 0 ) {
+			return str_replace( '_', ' ', $titles_for_category[0] );
+		}
+	}
+
+	/**
 	 * Gets all the display parameters defined for a category
 	 */
 	static function getDisplayParamsForCategory( $category ) {
-		$all_display_params = SDUtils::getValuesForProperty( str_replace( ' ', '_', $category ), NS_CATEGORY, '_SD_DP' );
-
 		$return_display_params = array();
+
+		$title = Title::newFromText( $category, NS_CATEGORY );
+		$pageID = $title->getArticleID();
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 'page_props',
+			array(
+				'pp_value'
+			),
+			array(
+				'pp_page' => $pageID,
+				'pp_propname' => 'DrilldownDisplayParameters'
+			)
+		);
+
+		while ( $row = $dbr->fetchRow( $res ) ) {
+			// There should only be one row.
+			$displayParamsStr = $row['pp_value'];
+			$return_display_params[] = explode( ';', $displayParamsStr );
+		}
+
+		// Get "legacy" parameters defined via special properties.
+		$all_display_params = SDUtils::getValuesForProperty( str_replace( ' ', '_', $category ), NS_CATEGORY, '_SD_DP' );
 		foreach ( $all_display_params as $display_params ) {
 			$return_display_params[] = explode( ';', $display_params );
 		}
+
 		return $return_display_params;
 	}
 
@@ -396,55 +400,6 @@ class SDUtils {
 	}
 
 	/**
-	 * Prints the mini-form contained at the bottom of various pages, that
-	 * allows pages to spoof a normal edit page, that can preview, save,
-	 * etc.
-	 */
-	static function printRedirectForm( $title, $page_contents, $edit_summary, $is_save, $is_preview, $is_diff, $is_minor_edit, $watch_this ) {
-		$article = new Article( $title );
-		$new_url = $title->getLocalURL( 'action=submit' );
-		$starttime = wfTimestampNow();
-		$edittime = $article->getTimestamp();
-		global $wgUser;
-		if ( $wgUser->isLoggedIn() )
-			$token = htmlspecialchars( $wgUser->getEditToken() );
-		else
-			$token = EDIT_TOKEN_SUFFIX;
-
-		if ( $is_save )
-			$action = "wpSave";
-		elseif ( $is_preview )
-			$action = "wpPreview";
-		else // $is_diff
-			$action = "wpDiff";
-
-		$text = <<<END
-	<form id="editform" name="editform" method="post" action="$new_url">
-	<input type="hidden" name="wpTextbox1" id="wpTextbox1" value="$page_contents" />
-	<input type="hidden" name="wpSummary" value="$edit_summary" />
-	<input type="hidden" name="wpStarttime" value="$starttime" />
-	<input type="hidden" name="wpEdittime" value="$edittime" />
-	<input type="hidden" name="wpEditToken" value="$token" />
-	<input type="hidden" name="$action" />
-
-END;
-		if ( $is_minor_edit ) {
-			$text .= '	<input type="hidden" name="wpMinoredit">' . "\n";
-		}
-		if ( $watch_this ) {
-			$text .= '	<input type="hidden" name="wpWatchthis">' . "\n";
-		}
-		$text .= <<<END
-	</form>
-	<script type="text/javascript">
-	document.editform.submit();
-	</script>
-
-END;
-		return $text;
-	}
-
-	/**
 	 * Register magic-word variable IDs
 	 */
 	static function addMagicWordVariableIDs( &$magicWordVariableIDs ) {
@@ -506,8 +461,6 @@ END;
 		$browse_search_section = $admin_links_tree->getSection( wfMessage( 'adminlinks_browsesearch' )->text() );
 		$sd_row = new ALRow( 'sd' );
 		$sd_row->addItem( ALItem::newFromSpecialPage( 'BrowseData' ) );
-		$sd_row->addItem( ALItem::newFromSpecialPage( 'Filters' ) );
-		$sd_row->addItem( ALItem::newFromSpecialPage( 'CreateFilter' ) );
 		$sd_name = wfMessage( 'specialpages-group-sd_group' )->text();
 		$sd_docu_label = wfMessage( 'adminlinks_documentation', $sd_name )->text();
 		$sd_row->addItem( AlItem::newFromExternalLink( "https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label ) );

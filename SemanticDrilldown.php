@@ -13,7 +13,7 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-define( 'SD_VERSION', '1.5' );
+define( 'SD_VERSION', '2.0-alpha' );
 
 $wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'specialpage'][] = array(
 	'path'        => __FILE__,
@@ -24,7 +24,8 @@ $wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'special
 	'descriptionmsg'  => 'semanticdrilldown-desc',
 );
 
-// constants for special properties
+// Constants for special properties - these are all deprecated
+// as of version 2.0.
 define( 'SD_SP_HAS_FILTER', 1 );
 define( 'SD_SP_COVERS_PROPERTY', 2 );
 //define( 'SD_SP_HAS_VALUE', 3 );
@@ -46,12 +47,6 @@ $wgExtensionMessagesFiles['SemanticDrilldownAlias'] = $sdgIP . '/languages/SD_Al
 $wgExtensionMessagesFiles['SemanticDrilldownMagic'] = $sdgIP . '/languages/SemanticDrilldown.i18n.magic.php';
 
 // register all special pages and other classes
-$wgSpecialPages['Filters'] = 'SDFilters';
-$wgAutoloadClasses['SDFilters'] = $sdgIP . '/specials/SD_Filters.php';
-$wgSpecialPageGroups['Filters'] = 'sd_group';
-$wgSpecialPages['CreateFilter'] = 'SDCreateFilter';
-$wgAutoloadClasses['SDCreateFilter'] = $sdgIP . '/specials/SD_CreateFilter.php';
-$wgSpecialPageGroups['CreateFilter'] = 'sd_group';
 $wgSpecialPages['BrowseData'] = 'SDBrowseData';
 $wgAutoloadClasses['SDBrowseData'] = $sdgIP . '/specials/SD_BrowseData.php';
 $wgSpecialPageGroups['BrowseData'] = 'sd_group';
@@ -62,7 +57,6 @@ $wgAutoloadClasses['SDFilterValue'] = $sdgIP . '/includes/SD_FilterValue.php';
 $wgAutoloadClasses['SDAppliedFilter'] = $sdgIP . '/includes/SD_AppliedFilter.php';
 $wgAutoloadClasses['SDPageSchemas'] = $sdgIP . '/includes/SD_PageSchemas.php';
 $wgAutoloadClasses['SDParserFunctions'] = $sdgIP . '/includes/SD_ParserFunctions.php';
-$wgAutoloadClasses['SDHelperFormAction'] = $sdgIP . '/includes/SD_HelperFormAction.php';
 
 $wgHooks['smwInitProperties'][] = 'sdfInitProperties';
 $wgHooks['AdminLinks'][] = 'SDUtils::addToAdminLinks';
@@ -71,11 +65,6 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'SDUtils::setGlobalJSVariables';
 $wgHooks['ParserBeforeTidy'][] = 'SDUtils::handleShowAndHide';
 $wgHooks['PageSchemasRegisterHandlers'][] = 'SDPageSchemas::registerClass';
 $wgHooks['ParserFirstCallInit'][] = 'SDParserFunctions::registerFunctions';
-$wgHooks['SkinTemplateTabs'][] = 'SDHelperFormAction::displayTab';
-$wgHooks['SkinTemplateNavigation'][] = 'SDHelperFormAction::displayTab2';
-
-$wgActions['createfilter'] = 'SDHelperFormAction';
-
 
 $wgPageProps['hidefromdrilldown'] = 'Whether or not the page is set as HIDEFROMDRILLDOWN';
 $wgPageProps['showindrilldown'] = 'Whether or not the page is set as SHOWINDRILLDOWN';
@@ -101,11 +90,6 @@ if ( !isset( $sdgNamespaceIndex ) ) {
 } else {
 	sdfInitNamespaces();
 }
-
-# ##
-# # List separator character
-# ##
-$sdgListSeparator = ",";
 
 # ##
 # # Variables for display
@@ -272,6 +256,11 @@ $wgResourceModules += array(
 			'jquery.ui.button',
 		),
 		'position' => 'top',
+	),
+	'ext.semanticdrilldown.info' => $sdgResourceTemplate + array(
+		'styles' => array(
+			'skins/SD_info.css',
+		),
 	),
 );
 
