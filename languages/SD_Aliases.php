@@ -311,6 +311,13 @@ $specialPageAliases['ps'] = array(
 	'Filters' => array( 'چاڼګرونه' ),
 );
 
+/** Portuguese (português) */
+$specialPageAliases['pt'] = array(
+	'BrowseData' => array( 'Navegar_pelos_dados' ),
+	'CreateFilter' => array( 'Criar_filtro' ),
+	'Filters' => array( 'Filtros' ),
+);
+
 /** Brazilian Portuguese (português do Brasil) */
 $specialPageAliases['pt-br'] = array(
 	'CreateFilter' => array( 'Criar_filtro' ),
