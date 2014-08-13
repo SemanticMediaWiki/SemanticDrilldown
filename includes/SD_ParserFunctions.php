@@ -97,12 +97,12 @@ class SDParserFunctions {
 
 		$parserOutput = $parser->getOutput();
 
-		$parserOutput->setProperty( 'DrilldownFilters',  serialize( $filtersInfoArray ) );
+		$parserOutput->setProperty( 'SDFilters',  serialize( $filtersInfoArray ) );
 		if ( $titleStr != '' ) {
-			$parserOutput->setProperty( 'DrilldownTitle', $titleStr );
+			$parserOutput->setProperty( 'SDTitle', $titleStr );
 		}
 		if ( $displayParametersStr != '' ) {
-			$parserOutput->setProperty( 'DrilldownDisplayParameters', $displayParametersStr );
+			$parserOutput->setProperty( 'SDDisplayParams', $displayParametersStr );
 		}
 
 		$parserOutput->addModules( 'ext.semanticdrilldown.info' );

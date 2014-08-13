@@ -181,7 +181,7 @@ class SDUtils {
 			),
 			array(
 				'pp_page' => $pageId,
-				'pp_propname' => 'DrilldownFilters'
+				'pp_propname' => 'SDFilters'
 			)
 		);
 
@@ -240,7 +240,7 @@ class SDUtils {
 			),
 			array(
 				'pp_page' => $pageID,
-				'pp_propname' => 'DrilldownTitle'
+				'pp_propname' => 'SDTitle'
 			)
 		);
 
@@ -270,7 +270,7 @@ class SDUtils {
 			),
 			array(
 				'pp_page' => $pageID,
-				'pp_propname' => 'DrilldownDisplayParameters'
+				'pp_propname' => 'SDDisplayParams'
 			)
 		);
 
