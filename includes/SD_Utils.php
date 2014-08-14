@@ -198,7 +198,7 @@ class SDUtils {
 						$curFilter->loadPropertyTypeFromProperty();
 					} elseif ( $key == 'category' ) {
 						$curFilter->setCategory( $value );
-					} elseif ( $key == 'required' ) {
+					} elseif ( $key == 'requires' ) {
 						$curFilter->addRequiredFilter( $value );
 					}
 				}

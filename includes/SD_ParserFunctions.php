@@ -81,6 +81,8 @@ class SDParserFunctions {
 					// Display an error message?
 					continue;
 				}
+
+				$value = trim( $filterSetting[1] );
 				// 'requires' holds a list, the other two
 				// hold individual values.
 				if ( $key == 'requires' ) {
@@ -89,7 +91,6 @@ class SDParserFunctions {
 						$filtersInfoArray[$filterName][$key] = trim( $realValue );
 					}
 				} else {
-					$value = trim( $filterSetting[1] );
 					$filtersInfoArray[$filterName][$key] = $value;
 				}
 			}
