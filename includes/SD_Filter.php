@@ -197,7 +197,7 @@ class SDFilter {
 				$this->db_value_field = 'o_serialized';
 			} else { // string, text, code
 				$this->db_table_name = 'smw_di_blob';
-				$this->db_value_field = '(CASE WHEN octet_length(o_blob) > 1 THEN CONVERT(o_blob using utf8) ELSE o_hash END)';
+				$this->db_value_field = '(IF(o_blob IS NULL, o_hash, CONVERT(o_blob using utf8)))';
 			}
 		} else {
 			// Things used to be so simple...
