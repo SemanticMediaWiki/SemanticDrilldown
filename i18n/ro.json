@@ -26,13 +26,6 @@
 	"sd_browsedata_daterangestart": "Început:",
 	"sd_browsedata_daterangeend": "Sfârșit:",
 	"sd_browsedata_novalues": "Nu există valori pentru acest filtru",
-	"filters": "Filtre",
-	"sd_filters_docu": "Următoarele filtre există la {{SITENAME}}:",
-	"sd_formcreate": "Creare cu formular",
-	"sd_viewform": "Vizualizare formular",
-	"createfilter": "Creați un filtru",
-	"sd_createfilter_name": "Nume:",
-	"sd_blank_error": "nu poate fi gol",
 	"sd-pageschemas-filter": "Filtru",
 	"sd-pageschemas-values": "Valori"
 }

@@ -26,20 +26,7 @@
 	"sd_browsedata_addanothervalue": "Legg til ny verdi",
 	"sd_browsedata_daterangestart": "Byrjing:",
 	"sd_browsedata_daterangeend": "Slutt:",
-	"filters": "Filter",
-	"sd_filters_docu": "Følgjande filter finst på {{SITENAME}}:",
-	"sd_formcreate": "Opprett med skjema",
-	"sd_viewform": "Sjå skjema",
-	"createfilter": "Opprett eit filter",
-	"sd_createfilter_name": "Namn:",
-	"sd_createfilter_property": "Eigenskap som dette fileteret dekkjer:",
 	"sd_createfilter_usepropertyvalues": "Nytt alle verdiar av denne eigenskapen for filteret:",
 	"sd_createfilter_usecategoryvalues": "Få verdiar for filteret frå denne kategorien:",
-	"sd_createfilter_requirefilter": "Krev at eit anna filter blir valt før dette blir vist:",
-	"sd_createfilter_label": "Merkelapp for dette filteret (valfritt):",
-	"sd_blank_error": "kan ikkje vera tom",
-	"sd_filter_coversproperty": "Dette filteret dekkjer eigenskapen $1.",
-	"sd_filter_getsvaluesfromcategory": "Det får verdiane sine frå kategorien $1.",
-	"sd_filter_requiresfilter": "Det krev at filteret $1 er til stades.",
-	"sd_filter_haslabel": "Det har merkelappen $1."
+	"sd_createfilter_requirefilter": "Krev at eit anna filter blir valt før dette blir vist:"
 }

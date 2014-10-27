@@ -22,12 +22,6 @@
 	"sd_browsedata_addanothervalue": "Clicio'r saeth i ychwanegu gwerth arall",
 	"sd_browsedata_daterangestart": "Dechrau:",
 	"sd_browsedata_daterangeend": "Diwedd:",
-	"filters": "Hidlau",
-	"sd_viewform": "Gweld y ffurflen",
-	"createfilter": "Gwneud hidl",
-	"sd-createfilter-with-name": "Gwneud yr hidl: $1",
-	"sd_createfilter_name": "Enw:",
 	"sd-pageschemas-filter": "Hidl",
-	"sd-pageschemas-values": "Gwerthoedd",
-	"sd_filter_haslabel": "Mae'r label $1 ganddo."
+	"sd-pageschemas-values": "Gwerthoedd"
 }

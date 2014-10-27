@@ -25,20 +25,7 @@
 	"sd_browsedata_daterangestart": "Començament :",
 	"sd_browsedata_daterangeend": "Fin :",
 	"sd_browsedata_novalues": "Existís pas de valor per aqueste filtre",
-	"filters": "Filtres",
-	"sd_filters_docu": "Lo filtre seguent existís sus {{SITENAME}} :",
-	"sd_formcreate": "Crear amb un formulari",
-	"sd_viewform": "Veire lo formulari",
-	"createfilter": "Crear un filtre",
-	"sd_createfilter_name": "Nom :",
-	"sd_createfilter_property": "Proprietat qu'aqueste filtre cobrirà :",
 	"sd_createfilter_usepropertyvalues": "Utilizar, per aqueste filtre, totas las valors d'aquesta proprietat",
 	"sd_createfilter_usecategoryvalues": "Obténer las valors per aqueste filtre a partir d'aquesta categoria :",
-	"sd_createfilter_requirefilter": "Necessita un filtre devent èsser seleccionat abans qu'aqueste siá afichat :",
-	"sd_createfilter_label": "Etiqueta per aqueste filtre (facultatiu) :",
-	"sd_blank_error": "pòt pas èsser daissat en blanc",
-	"sd_filter_coversproperty": "Aqueste filtre cobrís la proprietat $1.",
-	"sd_filter_getsvaluesfromcategory": "Obten sas valors a partir de la categoria $1.",
-	"sd_filter_requiresfilter": "Necessita la preséncia del filtre $1.",
-	"sd_filter_haslabel": "Dispausa del labèl $1."
+	"sd_createfilter_requirefilter": "Necessita un filtre devent èsser seleccionat abans qu'aqueste siá afichat :"
 }

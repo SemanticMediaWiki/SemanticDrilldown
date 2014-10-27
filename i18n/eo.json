@@ -24,20 +24,7 @@
 	"sd_browsedata_daterangestart": "Ekde:",
 	"sd_browsedata_daterangeend": "Al:",
 	"sd_browsedata_novalues": "Estas neniuj valoroj por ĉi tiu filtrilo",
-	"filters": "Filtriloj",
-	"sd_filters_docu": "La jenaj filtriloj ekzistas en {{SITENAME}}:",
-	"sd_formcreate": "Krei per formularo",
-	"sd_viewform": "Rigardi kamparon",
-	"createfilter": "Kreu filtrilon",
-	"sd_createfilter_name": "Nomo:",
-	"sd_createfilter_property": "Eco kovrita de ĉi tiu filtrilo:",
 	"sd_createfilter_usepropertyvalues": "Uzu ĉiujn valorojn de ĉi tiu atributo por la filtrilo",
 	"sd_createfilter_usecategoryvalues": "Akiru valorojn por filtrilo de ĉi tiu kategorio:",
-	"sd_createfilter_requirefilter": "Devigu alian filtrilon esti selektita antaŭ ĉi tiu estas montrita:",
-	"sd_createfilter_label": "Etikedo por ĉi tiu filtrilo (nedeviga):",
-	"sd_blank_error": "ne povas esti malplena",
-	"sd_filter_coversproperty": "Ĉi tiu filtrilo kovras la econ $1.",
-	"sd_filter_getsvaluesfromcategory": "Ĝi akiras ties valorojn de la kategorio $1.",
-	"sd_filter_requiresfilter": "Ĝi devigas la eston de la filtrilo $1.",
-	"sd_filter_haslabel": "Ĝi havas etikedon $1."
+	"sd_createfilter_requirefilter": "Devigu alian filtrilon esti selektita antaŭ ĉi tiu estas montrita:"
 }

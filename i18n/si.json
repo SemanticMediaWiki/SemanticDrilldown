@@ -21,18 +21,7 @@
 	"sd_browsedata_daterangestart": "ඇරඹුම:",
 	"sd_browsedata_daterangeend": "අවසානය:",
 	"sd_browsedata_novalues": "මෙම පෙරහන සඳහා අගයන් කිසිවක් නැත",
-	"filters": "පෙරහන්",
-	"sd_filters_docu": "{{SITENAME}} හී පහත පෙරහන් පවතී:",
-	"sd_formcreate": "ෆෝමය සමග තනන්න",
-	"sd_viewform": "ෆෝමය (form)බලන්න",
-	"createfilter": "පෙරහනක් තනන්න",
-	"sd-createfilter-with-name": "පෙරහන තනන්න: $1",
-	"sd_createfilter_name": "නම:",
-	"sd_createfilter_property": "මෙම පෙරහන ආරක්ෂා කරන වත්කම:",
 	"sd_createfilter_usecategoryvalues": "පෙරහන සඳහා අගයන් මෙම ප්‍රවර්ගයෙන් ලබා ගන්න:",
-	"sd_createfilter_label": "මෙම පෙරහන සඳහා ලේබලය (වෛකල්පික):",
-	"sd_blank_error": "හිස් නොවිය යුතුය",
 	"sd-pageschemas-filter": "පෙරහන",
-	"sd-pageschemas-values": "අගයන්",
-	"sd_filter_haslabel": "එය සතුව $1 ලේබලය ඇත."
+	"sd-pageschemas-values": "අගයන්"
 }

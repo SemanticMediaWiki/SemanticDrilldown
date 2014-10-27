@@ -25,20 +25,7 @@
 	"sd_browsedata_daterangestart": "Početak:",
 	"sd_browsedata_daterangeend": "Kraj:",
 	"sd_browsedata_novalues": "Nema vrijednosti za ovaj filter",
-	"filters": "Filteri",
-	"sd_filters_docu": "Na {{SITENAME}} postoje slijedeći filteri:",
-	"sd_formcreate": "Napravi sa obrascem",
-	"sd_viewform": "Pogledaj obrazac",
-	"createfilter": "Napravi filter",
-	"sd_createfilter_name": "Ime:",
-	"sd_createfilter_property": "Svojstvo koje ovaj filter pokriva:",
 	"sd_createfilter_usepropertyvalues": "Koristi sve vrijednosti ovog svojstva za filter",
 	"sd_createfilter_usecategoryvalues": "Preuzmi vrijednosti za filter iz ove kategorije:",
-	"sd_createfilter_requirefilter": "Zahtijeva drugi filter da bude odabran prije nego se ovaj prikaže:",
-	"sd_createfilter_label": "Naslov za ovaj filter (opcija):",
-	"sd_blank_error": "ne može biti prazno",
-	"sd_filter_coversproperty": "Ovaj filter pokriva svojstvo $1.",
-	"sd_filter_getsvaluesfromcategory": "Uzima svoje vrijednosti iz kategorije $1.",
-	"sd_filter_requiresfilter": "Zahtjeva prisustvo filtera $1.",
-	"sd_filter_haslabel": "Ima oznaku $1."
+	"sd_createfilter_requirefilter": "Zahtijeva drugi filter da bude odabran prije nego se ovaj prikaže:"
 }

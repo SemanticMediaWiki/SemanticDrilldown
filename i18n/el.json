@@ -21,13 +21,5 @@
 	"sd_browsedata_resetfilters": "Επαναφορά φίλτρων",
 	"sd_browsedata_addanothervalue": "Κάνετε κλικ στο τόξο για την προσθήκη και άλλης αξίας",
 	"sd_browsedata_daterangestart": "Έναρξη:",
-	"sd_browsedata_daterangeend": "Λήξη:",
-	"filters": "Φίλτρα",
-	"sd_formcreate": "Δημιουργία με φόρμα",
-	"sd_viewform": "Εμφάνιση φόρμας",
-	"createfilter": "Δημιουργία ενός φίλτρου",
-	"sd_createfilter_name": "Όνομα:",
-	"sd_blank_error": "δεν μπορεί να είναι κενό",
-	"sd_filter_requiresfilter": "Απαιτεί τη παρουσία του φίλτρου $1.",
-	"sd_filter_haslabel": "Έχει την ετικέτα $1."
+	"sd_browsedata_daterangeend": "Λήξη:"
 }

@@ -14,12 +14,6 @@
 	"sd_browsedata_removefilter": "ამ ფილტრის მოშორება",
 	"sd_browsedata_daterangestart": "დასაწყისი:",
 	"sd_browsedata_daterangeend": "დასასრული:",
-	"filters": "ფილტრები",
-	"sd_formcreate": "ფორმით შექმნა",
-	"sd_viewform": "ფორმის ხილვა",
-	"createfilter": "ფილტრის შექმნა",
-	"sd-createfilter-with-name": "ფილტრის შექმნა: $1",
-	"sd_createfilter_name": "სახელი:",
 	"sd-pageschemas-filter": "ფილტრი",
 	"sd-pageschemas-values": "მნიშვნელობები"
 }

@@ -15,9 +15,5 @@
 	"sd_browsedata_removefilter": "همدا چاڼگر لرې کول",
 	"sd_browsedata_daterangestart": "پيل:",
 	"sd_browsedata_daterangeend": "پای:",
-	"filters": "چاڼگرونه",
-	"createfilter": "يو چاڼگر جوړول",
-	"sd_createfilter_name": "نوم:",
-	"sd_blank_error": "بايد تش نه وي",
 	"sd-pageschemas-filter": "چاڼگر"
 }

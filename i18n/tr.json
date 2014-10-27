@@ -18,11 +18,5 @@
 	"sd_browsedata_daterangestart": "Başlangıç:",
 	"sd_browsedata_daterangeend": "Bitiş:",
 	"sd_browsedata_novalues": "Bu filtre için değer yok",
-	"filters": "Filtreler",
-	"sd_viewform": "Formu gör",
-	"createfilter": "Bir filtre oluştur",
-	"sd_createfilter_name": "İsim:",
-	"sd_createfilter_property": "Bu filtrenin kapsadığı özellik:",
-	"sd_createfilter_label": "Bu filtre için etiket (opsiyonel):",
 	"sd-pageschemas-filter": "Süzgeç"
 }

@@ -22,18 +22,6 @@
 	"sd_browsedata_resetfilters": "Tornar inicialisar los filtros",
 	"sd_browsedata_daterangestart": "Comencement :",
 	"sd_browsedata_daterangeend": "Fin :",
-	"filters": "Filtros",
-	"sd_filters_docu": "Cetos filtros ègzistont dessus {{SITENAME}} :",
-	"sd_formcreate": "Fâre avouéc un formulèro",
-	"sd_viewform": "Vêre lo formulèro",
-	"createfilter": "Fâre un filtro",
-	"sd-createfilter-with-name": "Fâre lo filtro : $1",
-	"sd_createfilter_name": "Nom :",
-	"sd_createfilter_label": "Ètiquèta por ceti filtro (u chouèx) :",
-	"sd_blank_error": "pôt pas étre vouedo",
 	"sd-pageschemas-filter": "Filtro",
-	"sd-pageschemas-values": "Valors",
-	"sd_filter_coversproperty": "Ceti filtro côvre la propriètât $1.",
-	"sd_filter_getsvaluesfromcategory": "Il at ses valors dês la catègorie $1.",
-	"sd_filter_haslabel": "Il at l’ètiquèta $1."
+	"sd-pageschemas-values": "Valors"
 }

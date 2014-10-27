@@ -13,10 +13,6 @@
 	"sd_browsedata_or": "o",
 	"sd_browsedata_daterangestart": "Accumenze:",
 	"sd_browsedata_daterangeend": "Spiccie:",
-	"filters": "Filtre",
-	"createfilter": "Ccreje 'nu filtre",
-	"sd-createfilter-with-name": "Ccreje 'u filtre: $1",
-	"sd_createfilter_name": "Nome:",
 	"sd-pageschemas-filter": "Filtre",
 	"sd-pageschemas-values": "Valore"
 }

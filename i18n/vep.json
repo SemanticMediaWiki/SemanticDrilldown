@@ -9,9 +9,5 @@
 	"sd_browsedata_none": "Ei ole",
 	"sd_browsedata_or": "vai",
 	"sd_browsedata_daterangestart": "Aug:",
-	"sd_browsedata_daterangeend": "Lop:",
-	"filters": "Fil'trad",
-	"sd_filters_docu": "{{SITENAME}}-wikiš om ningoižed fil'troid:",
-	"createfilter": "Säta fil'tr",
-	"sd_createfilter_name": "Nimi:"
+	"sd_browsedata_daterangeend": "Lop:"
 }

@@ -30,22 +30,9 @@
 	"sd_browsedata_daterangestart": "Inici:",
 	"sd_browsedata_daterangeend": "Fi:",
 	"sd_browsedata_novalues": "No s'han trobat valors per aquest filtre",
-	"filters": "Filtres",
-	"sd_filters_docu": "A {{SITENAME}} hi ha els filtres següents:",
-	"sd_formcreate": "Crea amb formulari",
-	"sd_viewform": "Visualitza el formulari",
-	"createfilter": "Crea un filtre",
-	"sd_createfilter_name": "Nom:",
-	"sd_createfilter_property": "Propietat que cobreix aquest filtre:",
 	"sd_createfilter_usepropertyvalues": "Utilitza tots els valors d'aquesta propietat per el filtre",
 	"sd_createfilter_usecategoryvalues": "Pren els valors pel filtre d'aquesta categoria:",
 	"sd_createfilter_requirefilter": "Cal seleccionar un altre filtre abans de mostrar aquest:",
-	"sd_createfilter_label": "Rètol per aquest filtre (opcional):",
-	"sd_blank_error": "no es pot deixar buit",
 	"sd-pageschemas-filter": "Filtre",
-	"sd-pageschemas-values": "Valors",
-	"sd_filter_coversproperty": "Aquest filtre cobreix la propietat $1",
-	"sd_filter_getsvaluesfromcategory": "Pren els seus valors de la categoria $1",
-	"sd_filter_requiresfilter": "Es requereix la presencia del filtre $1",
-	"sd_filter_haslabel": "Té el ròtul $1."
+	"sd-pageschemas-values": "Valors"
 }

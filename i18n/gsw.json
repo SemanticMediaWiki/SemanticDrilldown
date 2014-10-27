@@ -26,22 +26,9 @@
 	"sd_browsedata_daterangestart": "Aafang:",
 	"sd_browsedata_daterangeend": "Änd:",
 	"sd_browsedata_novalues": "S het kei Wärt fir dää Filter",
-	"filters": "Filter",
-	"sd_filters_docu": "Die Filter git s in däm Wiki:",
-	"sd_formcreate": "Mit Formular aalege",
-	"sd_viewform": "Formular aazeige",
-	"createfilter": "E Filter aalege",
-	"sd_createfilter_name": "Name:",
-	"sd_createfilter_property": "Eigeschaft vu däm Filter:",
 	"sd_createfilter_usepropertyvalues": "Alli Wärt vu däre Eigeschaft fir dr Filter bruuche.",
 	"sd_createfilter_usecategoryvalues": "D Wärt fir dr Filter vu däre Kategorii verwände:",
 	"sd_createfilter_requirefilter": "Voreb dää Filter aazeigt wird, muess dää ander Filter gsetzt syy:",
-	"sd_createfilter_label": "Bezeichnig vu däm Filter (optional):",
-	"sd_blank_error": "derf nit läär syy",
 	"sd-pageschemas-filter": "Filter",
-	"sd-pageschemas-values": "Wärt",
-	"sd_filter_coversproperty": "Dää Filter betrifft d Eigenschaft $1.",
-	"sd_filter_getsvaluesfromcategory": "Är chunnt syni Wärt us dr Kategorii $1 iber.",
-	"sd_filter_requiresfilter": "Är setzt dr Filter $1 vorus.",
-	"sd_filter_haslabel": "Är het d Bezeichnig $1."
+	"sd-pageschemas-values": "Wärt"
 }

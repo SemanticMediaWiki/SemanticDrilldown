@@ -20,13 +20,6 @@
 	"sd_browsedata_resetfilters": "Изчистване на филтрите",
 	"sd_browsedata_addanothervalue": "Добавяне на друга стойност",
 	"sd_browsedata_daterangeend": "Край:",
-	"filters": "Филтри",
-	"sd_filters_docu": "В {{SITENAME}} съществуват следните филтри:",
-	"createfilter": "Създаване на филтър",
-	"sd_createfilter_name": "Име:",
 	"sd_createfilter_requirefilter": "Изисква се да бъде избран друг филтър преди да може този да бъде показан:",
-	"sd_createfilter_label": "Заглавие за този филтър (незадължително):",
-	"sd_blank_error": "не може да бъде празно",
-	"sd-pageschemas-filter": "Филтър",
-	"sd_filter_requiresfilter": "Необходимо е наличието на филтър $1."
+	"sd-pageschemas-filter": "Филтър"
 }

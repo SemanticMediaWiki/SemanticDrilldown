@@ -31,22 +31,9 @@
 	"sd_browsedata_daterangestart": "Início:",
 	"sd_browsedata_daterangeend": "Fim:",
 	"sd_browsedata_novalues": "Não há valores para este filtro",
-	"filters": "Filtros",
-	"sd_filters_docu": "Na {{SITENAME}} existem os seguintes filtros:",
-	"sd_formcreate": "Criar com formulário",
-	"sd_viewform": "Ver formulário",
-	"createfilter": "Criar um filtro",
-	"sd_createfilter_name": "Nome:",
-	"sd_createfilter_property": "Propriedades que este filtro abrange:",
 	"sd_createfilter_usepropertyvalues": "Usar todos os valores desta propriedade no filtro",
 	"sd_createfilter_usecategoryvalues": "Obter valores de filtro a partir desta categoria:",
 	"sd_createfilter_requirefilter": "Exigir que outro filtro seja selecionado antes de apresentar este:",
-	"sd_createfilter_label": "Etiqueta para este filtro (opcional):",
-	"sd_blank_error": "não pode estar em branco",
 	"sd-pageschemas-filter": "Filtro",
-	"sd-pageschemas-values": "Valores",
-	"sd_filter_coversproperty": "Este filtro abrange a propriedade $1.",
-	"sd_filter_getsvaluesfromcategory": "Extrai os seus valores da categoria $1.",
-	"sd_filter_requiresfilter": "Requer a presença do filtro $1.",
-	"sd_filter_haslabel": "Tem a etiqueta $1."
+	"sd-pageschemas-values": "Valores"
 }

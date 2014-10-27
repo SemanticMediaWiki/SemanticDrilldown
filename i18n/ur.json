@@ -14,10 +14,6 @@
 	"sd_browsedata_daterangestart": "شروع:",
 	"sd_browsedata_daterangeend": "ديكھيں:",
 	"sd_browsedata_novalues": "وہاں کوئی اقدار اس فلٹر کریں",
-	"filters": "فلٹر",
-	"sd_viewform": "قول فارم",
-	"createfilter": "ایک فلٹر تخلیق کریں",
-	"sd_createfilter_name": "نام:",
 	"sd-pageschemas-filter": "فلٹر کریں",
 	"sd-pageschemas-values": "اقدار"
 }

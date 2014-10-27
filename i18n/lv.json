@@ -22,13 +22,6 @@
 	"sd_browsedata_addanothervalue": "Noklikšķiniet uz bultiņas, lai pievienotu citu vērtību",
 	"sd_browsedata_daterangestart": "Sākums:",
 	"sd_browsedata_daterangeend": "Beigas:",
-	"filters": "Filtri",
-	"sd_formcreate": "Izveidot ar formu",
-	"sd_viewform": "Skatīt formu",
-	"createfilter": "Izveidot filtru",
-	"sd_createfilter_name": "Nosaukums:",
-	"sd_createfilter_label": "Filtra etiķete (nav obligāta):",
-	"sd_blank_error": "nevar būt tukšs",
 	"sd-pageschemas-filter": "Filtrs",
 	"sd-pageschemas-values": "Vērtības"
 }

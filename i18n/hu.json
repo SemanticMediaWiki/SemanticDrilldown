@@ -28,22 +28,9 @@
 	"sd_browsedata_daterangestart": "Kezdődátum:",
 	"sd_browsedata_daterangeend": "Végdátum:",
 	"sd_browsedata_novalues": "Nincsenek ehhez a szűrőhöz tartozó értékek",
-	"filters": "Szűrők",
-	"sd_filters_docu": "A következő szűrők vannak a(z) {{SITENAME}} wikin:",
-	"sd_formcreate": "Létrehozás űrlappal",
-	"sd_viewform": "Űrlap megtekintése",
-	"createfilter": "Szűrő létrehozása",
-	"sd_createfilter_name": "Név:",
-	"sd_createfilter_property": "Tulajdonság, amit ez a szűrő lefed:",
 	"sd_createfilter_usepropertyvalues": "A tulajdonság összes értékének használata ennél a szűrőnél",
 	"sd_createfilter_usecategoryvalues": "A szűrő értékeinek felvétele ebből a kategóriából:",
 	"sd_createfilter_requirefilter": "Egy másik szűrő legyen kiválasztva, mielőtt ez megjelenik:",
-	"sd_createfilter_label": "Szűrő címkéje (nem kötelező):",
-	"sd_blank_error": "nem lehet üres",
 	"sd-pageschemas-filter": "Szűrő",
-	"sd-pageschemas-values": "Értékek",
-	"sd_filter_coversproperty": "Ez a szűrő lefedi a(z) $1 tulajdonságot.",
-	"sd_filter_getsvaluesfromcategory": "Értékeit a következő kategóriából kapja: $1.",
-	"sd_filter_requiresfilter": "Szükséges a(z) $1 szűrő megléte.",
-	"sd_filter_haslabel": "A címkéje $1."
+	"sd-pageschemas-values": "Értékek"
 }

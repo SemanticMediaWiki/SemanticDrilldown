@@ -12,7 +12,5 @@
 	"sd_browsedata_none": "Nema",
 	"sd_browsedata_or": "ili",
 	"sd_browsedata_daterangestart": "Početak:",
-	"sd_browsedata_daterangeend": "Kraj:",
-	"filters": "Filteri",
-	"sd_createfilter_name": "Ime:"
+	"sd_browsedata_daterangeend": "Kraj:"
 }

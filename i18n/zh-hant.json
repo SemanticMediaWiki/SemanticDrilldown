@@ -29,22 +29,9 @@
 	"sd_browsedata_daterangestart": "開始：",
 	"sd_browsedata_daterangeend": "結束：",
 	"sd_browsedata_novalues": "該篩選器沒有任何取值",
-	"filters": "搜尋",
-	"sd_filters_docu": "下列篩選器存在於{{SITENAME}}之上：",
-	"sd_formcreate": "用表單創建",
-	"sd_viewform": "檢視表格",
-	"createfilter": "創建篩選器",
-	"sd_createfilter_name": "名稱：",
-	"sd_createfilter_property": "此篩選器所涵蓋的屬性：",
 	"sd_createfilter_usepropertyvalues": "對該篩選器使用此屬性的所有取值",
 	"sd_createfilter_usecategoryvalues": "從該類別當中為篩選器獲取取值：",
 	"sd_createfilter_requirefilter": "在顯示該篩選器之前，要求選擇另一個篩選器：",
-	"sd_createfilter_label": "此篩選器的標籤（可選）：",
-	"sd_blank_error": "不可留空",
 	"sd-pageschemas-filter": "篩選器",
-	"sd-pageschemas-values": "取值",
-	"sd_filter_coversproperty": "此篩選器涵蓋屬性$1。",
-	"sd_filter_getsvaluesfromcategory": "它從類別$1之中獲得其取值。",
-	"sd_filter_requiresfilter": "它需要篩選器$1的存在。",
-	"sd_filter_haslabel": "它具有標籤$1。"
+	"sd-pageschemas-values": "取值"
 }

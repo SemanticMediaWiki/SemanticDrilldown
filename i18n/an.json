@@ -5,7 +5,5 @@
 		]
 	},
 	"sd_browsedata_other": "Un atro",
-	"sd_browsedata_none": "Garra",
-	"filters": "Filtros",
-	"sd_createfilter_name": "Nombre:"
+	"sd_browsedata_none": "Garra"
 }

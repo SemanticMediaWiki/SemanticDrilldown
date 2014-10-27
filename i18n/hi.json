@@ -15,13 +15,6 @@
 	"sd_browsedata_removefilter": "यह फ़िल्टर हटायें",
 	"sd_browsedata_removesubcategoryfilter": "यह उपश्रेणी फ़िल्टर हटायें",
 	"sd_browsedata_resetfilters": "फ़िल्टर रिसैट करें",
-	"filters": "फ़िल्टर्स",
-	"createfilter": "फ़िल्टर बनायें",
-	"sd_createfilter_name": "नाम:",
-	"sd_createfilter_property": "यह फ़िल्टर कौनसे गुणधर्मका इस्तेमाल करता हैं:",
 	"sd_createfilter_usepropertyvalues": "इस फ़िल्टरके लिये इस गुणधर्मकी सभी वैल्यूओंका इस्तेमाल करें",
-	"sd_createfilter_usecategoryvalues": "इस फ़िल्टरके लिये इस श्रेणी से वैल्यू लें:",
-	"sd_createfilter_label": "इस फ़िल्टरका लेबल (वैकल्पिक):",
-	"sd_blank_error": "खाली नहीं हो सकता",
-	"sd_filter_haslabel": "इसको $1 यह लेबल हैं।"
+	"sd_createfilter_usecategoryvalues": "इस फ़िल्टरके लिये इस श्रेणी से वैल्यू लें:"
 }

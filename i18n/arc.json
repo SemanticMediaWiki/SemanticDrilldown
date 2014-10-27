@@ -11,8 +11,5 @@
 	"sd_browsedata_none": "ܠܐ ܡܕܡ",
 	"sd_browsedata_or": "ܐܘ",
 	"sd_browsedata_daterangestart": "ܫܘܪܝܐ:",
-	"sd_browsedata_daterangeend": "ܫܘܠܡܐ:",
-	"createfilter": "ܒܪܝ ܡܨܦܝܢܝܬܐ",
-	"sd_createfilter_name": "ܫܡܐ:",
-	"sd_blank_error": "ܠܐ ܡܬܡܨܝܢܐ ܐܝܬܘܗܝ ܕܢܗܘܐ ܣܦܝܩܐ"
+	"sd_browsedata_daterangeend": "ܫܘܠܡܐ:"
 }
