@@ -211,5 +211,5 @@ $specialPageAliases['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎) */
 $specialPageAliases['zh-hant'] = array(
-	'BrowseData' => array( '瀏覽數據' ),
+	'BrowseData' => array( '瀏覽資料' ),
 );
