@@ -34,6 +34,11 @@ $specialPageAliases['as'] = array(
 	'BrowseData' => array( 'তথ্য_বিচাৰক' ),
 );
 
+/** Western Balochi (بلوچی رخشانی) */
+$specialPageAliases['bgn'] = array(
+	'BrowseData' => array( 'بانکی_مالوماتی__مرور_کورتین' ),
+);
+
 /** Banjar (Bahasa Banjar) */
 $specialPageAliases['bjn'] = array(
 	'BrowseData' => array( 'Ambahi_data' ),
