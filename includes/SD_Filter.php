@@ -129,6 +129,10 @@ class SDFilter {
 	}
 
 	function loadPropertyTypeFromProperty() {
+		// Default the property type to "Page" (matching SMW's
+		// default), in case there is no type set for this property.
+		$this->property_type = 'page';
+
 		$store = SDUtils::getSMWStore();
 		$propPage = new SMWDIWikiPage( $this->escaped_property, SMW_NS_PROPERTY, '' );
 		$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
