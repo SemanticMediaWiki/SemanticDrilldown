@@ -49,6 +49,11 @@ $specialPageAliases['bs'] = array(
 	'BrowseData' => array( 'PregledPodataka' ),
 );
 
+/** Czech (čeština) */
+$specialPageAliases['cs'] = array(
+	'BrowseData' => array( 'Procházet_data', 'Prochazet_data' ),
+);
+
 /** German (Deutsch) */
 $specialPageAliases['de'] = array(
 	'BrowseData' => array( 'Daten_durchsuchen', 'Daten_browsen' ),
