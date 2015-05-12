@@ -24,7 +24,7 @@ $specialPageAliases['arc'] = array(
 	'BrowseData' => array( 'ܦܐܬ_ܝܕ̈ܥܬܐ' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى) */
+/** Egyptian Arabic (مصرى) */
 $specialPageAliases['arz'] = array(
 	'BrowseData' => array( 'براوز_للداتا' ),
 );
@@ -79,7 +79,7 @@ $specialPageAliases['fa'] = array(
 	'BrowseData' => array( 'مرور_داده' ),
 );
 
-/** Franco-Provençal (arpetan) */
+/** Arpitan (arpetan) */
 $specialPageAliases['frp'] = array(
 	'BrowseData' => array( 'Chèrchiér_les_balyês', 'ChèrchiérLesBalyês' ),
 );
