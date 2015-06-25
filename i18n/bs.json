@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"CERminator"
+			"CERminator",
+			"KWiki"
 		]
 	},
 	"semanticdrilldown-desc": "Interfejs za postupnu navigaciju kroz semantičke podatke",
@@ -10,7 +11,7 @@
 	"sd_browsedata_choosecategory": "Izaberi kategoriju",
 	"sd_browsedata_viewcategory": "pogledaj kategoriju",
 	"sd_browsedata_docu": "Kliknite na jednu ili više stavki ispod za sužavanje vaših rezultata.",
-	"sd_browsedata_subcategory": "Podkategorija",
+	"sd_browsedata_subcategory": "Potkategorija",
 	"sd_browsedata_other": "Ostalo",
 	"sd_browsedata_none": "Ništa",
 	"sd_browsedata_filterbyvalue": "Filter po ovoj vrijednosti",
