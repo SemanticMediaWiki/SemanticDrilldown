@@ -49,7 +49,6 @@ $wgExtensionMessagesFiles['SemanticDrilldownMagic'] = $sdgIP . '/languages/Seman
 // register all special pages and other classes
 $wgSpecialPages['BrowseData'] = 'SDBrowseData';
 $wgAutoloadClasses['SDBrowseData'] = $sdgIP . '/specials/SD_BrowseData.php';
-$wgSpecialPageGroups['BrowseData'] = 'sd_group';
 
 $wgAutoloadClasses['SDUtils'] = $sdgIP . '/includes/SD_Utils.php';
 $wgAutoloadClasses['SDFilter'] = $sdgIP . '/includes/SD_Filter.php';

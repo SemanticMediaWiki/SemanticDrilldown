@@ -125,6 +125,10 @@ class SDBrowseData extends IncludableSpecialPage {
 
 		return $num;
 	}
+
+	protected function getGroupName() {
+		return 'sd_group';
+	}
 }
 
 class SDBrowseDataPage extends QueryPage {
