@@ -8,7 +8,8 @@
 			"Fitoschido",
 			"Imre",
 			"Mor",
-			"Sanbec"
+			"Sanbec",
+			"Macofe"
 		]
 	},
 	"semanticdrilldown-desc": "Una interfaz de ''drilldown'' para navegar a través de los datos semánticos.",
@@ -28,12 +29,12 @@
 	"sd_browsedata_removefilter": "Quitar este filtro",
 	"sd_browsedata_removesubcategoryfilter": "Quitar este filtro de subcategoría",
 	"sd_browsedata_resetfilters": "Restablecer filtros",
-	"sd_browsedata_addanothervalue": "Haga click en la flecha para agregar otro valor",
+	"sd_browsedata_addanothervalue": "Pulsa en la flecha para agregar otro valor",
 	"sd_browsedata_daterangestart": "Inicio:",
 	"sd_browsedata_daterangeend": "Fin:",
 	"sd_browsedata_novalues": "No hay valores para este filtro",
 	"sd_createfilter_usepropertyvalues": "Usar todos los valores de esta propiedad para el filtro",
-	"sd_createfilter_usecategoryvalues": "Obtenga valores para el filtro desde esta categoría:",
+	"sd_createfilter_usecategoryvalues": "Obtener valores para el filtro desde esta categoría:",
 	"sd_createfilter_requirefilter": "Requiere otro filtro a ser seleccionado antes que este sea mostrado:",
 	"sd-pageschemas-filter": "Filtro",
 	"sd-pageschemas-values": "Valores"
