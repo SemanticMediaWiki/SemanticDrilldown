@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"EugeneZelenko",
-			"Jim-by"
+			"Jim-by",
+			"Red Winged Duck"
 		]
 	},
 	"semanticdrilldown-desc": "Інтэрфэйс для навігацыі па сэмантычным зьвесткам",
@@ -28,5 +29,6 @@
 	"sd_browsedata_novalues": "Няма значэньняў для гэтага фільтру",
 	"sd_createfilter_usepropertyvalues": "Выкарыстоўваць усе значэньні гэтай ўласьцівасьці для фільтру",
 	"sd_createfilter_usecategoryvalues": "Атрымаць значэньні для фільтру з гэтай катэгорыі:",
-	"sd_createfilter_requirefilter": "Патрабуецца выбар іншага фільтру перад тым, як будзе паказаны гэты:"
+	"sd_createfilter_requirefilter": "Патрабуецца выбар іншага фільтру перад тым, як будзе паказаны гэты:",
+	"sd-pageschemas-filter": "Фільтар"
 }
