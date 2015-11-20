@@ -30,5 +30,6 @@
 	"sd_createfilter_usepropertyvalues": "Выкарыстоўваць усе значэньні гэтай ўласьцівасьці для фільтру",
 	"sd_createfilter_usecategoryvalues": "Атрымаць значэньні для фільтру з гэтай катэгорыі:",
 	"sd_createfilter_requirefilter": "Патрабуецца выбар іншага фільтру перад тым, як будзе паказаны гэты:",
-	"sd-pageschemas-filter": "Фільтар"
+	"sd-pageschemas-filter": "Фільтар",
+	"sd-pageschemas-values": "Значэньні"
 }
