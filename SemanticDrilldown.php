@@ -11,17 +11,23 @@
  * @author Yaron Koren
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
+// Ensure that the script cannot be executed outside of MediaWiki
+if ( !defined( 'MEDIAWIKI' ) ) {
+    die( 'This is an extension to MediaWiki and cannot be run standalone.' );
+}
 
+// Define extension's version
 define( 'SD_VERSION', '2.0.1' );
 
-$wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'specialpage'][] = array(
-	'path'        => __FILE__,
-	'name'        => 'Semantic Drilldown',
-	'version'     => SD_VERSION,
-	'author'      => array( 'Yaron Koren', '...' ),
-	'url'         => 'https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
-	'descriptionmsg'  => 'semanticdrilldown-desc',
+// Display extension's information on "Special:Version"
+$wgExtensionCredits['semantic'][] = array(
+	'path'           => __FILE__,
+	'name'           => 'Semantic Drilldown',
+	'version'        => SD_VERSION,
+	'author'         => array( 'Yaron Koren', '...' ),
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
+	'descriptionmsg' => 'semanticdrilldown-desc',
+	'license-name'   => 'GPL-2.0+'
 );
 
 // Constants for special properties - these are all deprecated
