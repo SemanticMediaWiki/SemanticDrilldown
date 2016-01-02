@@ -18,7 +18,7 @@ class SDBrowseData extends IncludableSpecialPage {
 	}
 
 	function execute( $query ) {
-		global $wgRequest, $wgOut, $wgTitle;
+		global $wgOut, $wgTitle;
 		global $sdgScriptPath, $sdgContLang, $sdgNumResultsPerPage;
 
 		if ( $wgTitle->getNamespace() != NS_SPECIAL ) {
@@ -32,12 +32,14 @@ class SDBrowseData extends IncludableSpecialPage {
 		// set default
 		if ( $sdgNumResultsPerPage == null )
 			$sdgNumResultsPerPage = 250;
-		list( $limit, $offset ) = wfCheckLimits( $sdgNumResultsPerPage, 'sdlimit' );
+
+		$request = $this->getRequest();
+		list( $limit, $offset ) = $request->getLimitOffset( $sdgNumResultsPerPage, 'sdlimit' );
 		$filters = array();
 
 		// get information on current category, subcategory and filters
 		// that have already been applied from the query string
-		$category = str_replace( '_', ' ', $wgRequest->getVal( '_cat' ) );
+		$category = str_replace( '_', ' ', $request->getVal( '_cat' ) );
 		// if query string did not contain this variables, try the URL
 		if ( ! $category ) {
 			$queryparts = explode( '/', $query, 1 );
@@ -63,7 +65,7 @@ class SDBrowseData extends IncludableSpecialPage {
 			$category = $categories[0];
 		}
 
-		$subcategory = $wgRequest->getVal( '_subcat' );
+		$subcategory = $request->getVal( '_subcat' );
 
 		$filters = SDUtils::loadFiltersForCategory( $category );
 
@@ -75,10 +77,10 @@ class SDBrowseData extends IncludableSpecialPage {
 		$remaining_filters = array();
 		foreach ( $filters as $i => $filter ) {
 			$filter_name = str_replace( array( ' ', "'" ) , array( '_', "\'" ), $filter->name );
-			$search_terms = $wgRequest->getArray( '_search_' . $filter_name );
-			$lower_date = $wgRequest->getArray( '_lower_' . $filter_name );
-			$upper_date = $wgRequest->getArray( '_upper_' . $filter_name );
-			if ( $vals_array = $wgRequest->getArray( $filter_name ) ) {
+			$search_terms = $request->getArray( '_search_' . $filter_name );
+			$lower_date = $request->getArray( '_lower_' . $filter_name );
+			$upper_date = $request->getArray( '_upper_' . $filter_name );
+			if ( $vals_array = $request->getArray( $filter_name ) ) {
 				foreach ( $vals_array as $j => $val ) {
 					$vals_array[$j] = str_replace( '_', ' ', $val );
 				}
