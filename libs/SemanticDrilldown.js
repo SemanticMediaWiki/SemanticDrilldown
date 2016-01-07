@@ -9,10 +9,11 @@
 	jQuery.ui.autocomplete.prototype._renderItem = function( ul, item) {
 		var re = new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + this.term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi");
 		var loc = item.label.search(re);
+		var t;
 		if (loc >= 0) {
-			var t = item.label.substr(0, loc) + '<strong>' + item.label.substr(loc, this.term.length) + '</strong>' + item.label.substr(loc + this.term.length);
+			t = item.label.substr(0, loc) + '<strong>' + item.label.substr(loc, this.term.length) + '</strong>' + item.label.substr(loc + this.term.length);
 		} else {
-			var t = item.label;
+			t = item.label;
 		}
 		return jQuery( "<li></li>" )
 			.data( "item.autocomplete", item )
