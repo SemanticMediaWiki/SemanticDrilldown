@@ -52,9 +52,8 @@ $wgExtensionMessagesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Message
 $wgExtensionMessagesFiles['SemanticDrilldownAlias'] = $sdgIP . '/languages/SD_Aliases.php';
 $wgExtensionMessagesFiles['SemanticDrilldownMagic'] = $sdgIP . '/languages/SemanticDrilldown.i18n.magic.php';
 
-// register all special pages and other classes
-$wgSpecialPages['BrowseData'] = 'SDBrowseData';
 $wgAutoloadClasses['SDBrowseData'] = $sdgIP . '/specials/SD_BrowseData.php';
+$wgAutoloadClasses['SDBrowseDataPage'] = $sdgIP . '/specials/SD_BrowseData.php';
 
 $wgAutoloadClasses['SDUtils'] = $sdgIP . '/includes/SD_Utils.php';
 $wgAutoloadClasses['SDFilter'] = $sdgIP . '/includes/SD_Filter.php';
@@ -63,6 +62,9 @@ $wgAutoloadClasses['SDAppliedFilter'] = $sdgIP . '/includes/SD_AppliedFilter.php
 $wgAutoloadClasses['SDPageSchemas'] = $sdgIP . '/includes/SD_PageSchemas.php';
 $wgAutoloadClasses['SDParserFunctions'] = $sdgIP . '/includes/SD_ParserFunctions.php';
 
+// register all special pages and other classes
+$wgSpecialPages['BrowseData'] = 'SDBrowseData';
+
 $wgHooks['smwInitProperties'][] = 'sdfInitProperties';
 $wgHooks['AdminLinks'][] = 'SDUtils::addToAdminLinks';
 $wgHooks['MagicWordwgVariableIDs'][] = 'SDUtils::addMagicWordVariableIDs';
@@ -70,9 +72,6 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'SDUtils::setGlobalJSVariables';
 $wgHooks['ParserBeforeTidy'][] = 'SDUtils::handleShowAndHide';
 $wgHooks['PageSchemasRegisterHandlers'][] = 'SDPageSchemas::registerClass';
 $wgHooks['ParserFirstCallInit'][] = 'SDParserFunctions::registerFunctions';
-
-$wgPageProps['hidefromdrilldown'] = 'Whether or not the page is set as HIDEFROMDRILLDOWN';
-$wgPageProps['showindrilldown'] = 'Whether or not the page is set as SHOWINDRILLDOWN';
 
 # ##
 # This is the path to your installation of Semantic Drilldown as
@@ -138,15 +137,15 @@ function sdfInitNamespaces() {
 	$wgNamespaceAliases = $wgNamespaceAliases + $sdgContLang->getNamespaceAliases();
 
 	// Support subpages only for talk pages by default
-	$wgNamespacesWithSubpages = $wgNamespacesWithSubpages + array(
+	$wgNamespacesWithSubpages = array_merge( $wgNamespacesWithSubpages, array(
 		SD_NS_FILTER_TALK => true
-	);
+	) );
 
 	// Enable semantic links on filter pages
-	$smwgNamespacesWithSemanticLinks = $smwgNamespacesWithSemanticLinks + array(
+	$smwgNamespacesWithSemanticLinks = array_merge( $smwgNamespacesWithSemanticLinks, array(
 		SD_NS_FILTER => true,
 		SD_NS_FILTER_TALK => false
-	);
+	) );
 }
 
 /**********************************************/
@@ -162,7 +161,9 @@ function sdfInitNamespaces() {
 function sdfInitContentLanguage( $langcode ) {
 	global $sdgIP, $sdgContLang;
 
-	if ( !empty( $sdgContLang ) ) { return; }
+	if ( !empty( $sdgContLang ) ) {
+		return;
+	}
 
 	$sdContLangClass = 'SD_Language' . str_replace( '-', '_', ucfirst( $langcode ) );
 
@@ -187,7 +188,9 @@ function sdfInitContentLanguage( $langcode ) {
 function sdfInitUserLanguage( $langcode ) {
 	global $sdgIP, $sdgLang;
 
-	if ( !empty( $sdgLang ) ) { return; }
+	if ( !empty( $sdgLang ) ) {
+		return;
+	}
 
 	$sdLangClass = 'SD_Language' . str_replace( '-', '_', ucfirst( $langcode ) );
 	if ( file_exists( $sdgIP . '/languages/' . $sdLangClass . '.php' ) ) {
