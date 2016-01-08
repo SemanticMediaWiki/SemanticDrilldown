@@ -5,8 +5,8 @@
  *
  * @author Sanyam Goyal
  */
-(function(jQuery) {
-	jQuery.ui.autocomplete.prototype._renderItem = function( ul, item) {
+( function ( $ ) {
+	$.ui.autocomplete.prototype._renderItem = function( ul, item) {
 		var re = new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + this.term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi");
 		var loc = item.label.search(re);
 		var t;
@@ -15,25 +15,25 @@
 		} else {
 			t = item.label;
 		}
-		return jQuery( "<li></li>" )
+		return $( "<li></li>" )
 			.data( "item.autocomplete", item )
 			.append( " <a>" + t + "</a>" )
 			.appendTo( ul );
 	};
 
-	jQuery.widget("ui.combobox", {
+	$.widget("ui.combobox", {
 		_create: function() {
 			var self = this;
 			var select = this.element.hide();
 			var inp_id = select[0].options[0].value;
 			var curval = select[0].name;
-			var input = jQuery("<input id = \""+inp_id+"\" type=\"text\" name=\""+inp_id+"\" value=\""+curval+"\">")
+			var input = $("<input id = \""+inp_id+"\" type=\"text\" name=\""+inp_id+"\" value=\""+curval+"\">")
 				.insertAfter(select)
 				.autocomplete({
 					source: function(request, response) {
 						var matcher = new RegExp("\\b" + request.term, "i" );
 						response(select.children("option").map(function() {
-							var text = jQuery(this).text();
+							var text = $(this).text();
 							if (this.value && (!request.term || matcher.test(text)))
 								return {
 									id: this.value,
@@ -58,7 +58,7 @@
 					minLength: 0
 				})
 				.addClass("ui-widget ui-widget-content ui-corner-left");
-			jQuery("<button type=\"button\">&nbsp;</button>")
+			$("<button type=\"button\">&nbsp;</button>")
 			.attr("tabIndex", -1)
 			.attr("title", "Show All Items")
 			.insertAfter(input)
@@ -87,23 +87,23 @@
 		}
 	});
 
-})(jQuery);
+}( jQuery ) );
 
 jQuery.fn.toggleValuesDisplay = function() {
-	$valuesDiv = jQuery(this).closest(".drilldown-filter")
+	jQuery.valuesDiv = jQuery(this).closest(".drilldown-filter")
 		.find(".drilldown-filter-values");
-	if ($valuesDiv.css("display") == "none") {
-		$valuesDiv.css("display", "block");
-		var downArrowImage = mw.config.get( 'sdgDownArrowImage' );
+	if ( jQuery.valuesDiv.css("display") === "none" ) {
+		jQuery.valuesDiv.css("display", "block");
+		var downArrowImage = mediaWiki.config.get( 'sdgDownArrowImage' );
 		this.find("img").attr( "src", downArrowImage );
-        } else {
-		$valuesDiv.css("display", "none");
-		var rightArrowImage = mw.config.get( 'sdgRightArrowImage' );
+	} else {
+		jQuery.valuesDiv.css("display", "none");
+		var rightArrowImage = mediaWiki.config.get( 'sdgRightArrowImage' );
 		this.find("img").attr( "src", rightArrowImage );
-        }
+	}
 };
 
 jQuery(document).ready(function() {
 	jQuery(".semanticDrilldownCombobox").combobox();
-        jQuery(".drilldown-values-toggle").click( function() {jQuery(this).toggleValuesDisplay();} );
+	jQuery(".drilldown-values-toggle").click( function() {jQuery(this).toggleValuesDisplay();} );
 });
