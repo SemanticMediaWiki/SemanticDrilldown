@@ -18,22 +18,23 @@ class SDBrowseData extends IncludableSpecialPage {
 	}
 
 	function execute( $query ) {
-		global $wgOut, $wgTitle;
 		global $sdgScriptPath, $sdgContLang, $sdgNumResultsPerPage;
 
-		if ( $wgTitle->getNamespace() != NS_SPECIAL ) {
+		$out = $this->getOutput();
+		$request = $this->getRequest();
+
+		if ( $this->getTitle()->getNamespace() != NS_SPECIAL ) {
 			global $wgParser;
 			$wgParser->disableCache();
 		}
 		$this->setHeaders();
-		$wgOut->addModules( 'ext.semanticdrilldown.main' );
-		$wgOut->addScript( '<!--[if IE]><link rel="stylesheet" href="' . $sdgScriptPath . '/skins/SD_IEfixes.css" media="screen" /><![endif]-->' );
+		$out->addModules( 'ext.semanticdrilldown.main' );
+		$out->addScript( '<!--[if IE]><link rel="stylesheet" href="' . $sdgScriptPath . '/skins/SD_IEfixes.css" media="screen" /><![endif]-->' );
 
 		// set default
 		if ( $sdgNumResultsPerPage == null )
 			$sdgNumResultsPerPage = 250;
 
-		$request = $this->getRequest();
 		list( $limit, $offset ) = $request->getLimitOffset( $sdgNumResultsPerPage, 'sdlimit' );
 		$filters = array();
 
@@ -116,14 +117,14 @@ class SDBrowseData extends IncludableSpecialPage {
 			}
 		}
 
-		$wgOut->addHTML( "\n			<div class=\"drilldown-results\">\n" );
+		$out->addHTML( "\n			<div class=\"drilldown-results\">\n" );
 		$rep = new SDBrowseDataPage( $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit );
 		$num = $rep->execute( $query );
-		$wgOut->addHTML( "\n			</div> <!-- drilldown-results -->\n" );
+		$out->addHTML( "\n			</div> <!-- drilldown-results -->\n" );
 
 		// This has to be set last, because otherwise the QueryPage
 		// code will overwrite it.
-		$wgOut->setPageTitle( $category_title );
+		$out->setPageTitle( $category_title );
 
 		return $num;
 	}
@@ -826,8 +827,6 @@ END;
 	}
 
 	function printComboBoxInput( $filter_name, $instance_num, $filter_values, $cur_value = null ) {
-		global $wgRequest;
-
 		$filter_name = str_replace( ' ', '_', $filter_name );
 		// URL-decode the filter name - necessary if it contains
 		// any non-Latin characters.
@@ -844,7 +843,7 @@ END;
 
 END;
 
-		foreach ( $wgRequest->getValues() as $key => $val ) {
+		foreach ( $this->getRequest()->getValues() as $key => $val ) {
 			if ( $key != $inputName ) {
 				if ( is_array( $val ) ) {
 					foreach ( $val as $i => $realVal ) {
@@ -921,8 +920,6 @@ END;
 	// again in the future.
 	/*
 	function printDateRangeInput( $filter_name, $lower_date = null, $upper_date = null ) {
-		global $wgRequest;
-
 		$start_label = wfMessage( 'sd_browsedata_daterangestart' )->text();
 		$end_label = wfMessage( 'sd_browsedata_daterangeend' )->text();
 		$start_month_input = $this->printDateInput( "_lower_$filter_name", $lower_date );
@@ -933,7 +930,7 @@ END;
 $end_label $end_month_input</p>
 
 END;
-		foreach ( $wgRequest->getValues() as $key => $val ) {
+		foreach ( $this->getRequest()->getValues() as $key => $val ) {
 			if ( is_array( $val ) ) {
 				foreach ( $val as $realKey => $realVal ) {
 					$text .= Html::hidden( $key . '[' . $realKey . ']', $realVal ) . "\n";
@@ -1028,7 +1025,6 @@ END;
 	}
 
 	function getPageHeader() {
-		global $wgRequest;
 		global $sdgContLang, $sdgScriptPath;
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
@@ -1040,7 +1036,7 @@ END;
 		$subcategory_text = wfMessage( 'sd_browsedata_subcategory' )->text();
 
 		$header = "";
-		$this->show_single_cat = $wgRequest->getCheck( '_single' );
+		$this->show_single_cat = $this->getRequest()->getCheck( '_single' );
 		if ( ! $this->show_single_cat ) {
 			$header .= $this->printCategoriesList( $categories );
 		}

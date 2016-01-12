@@ -425,7 +425,6 @@ class SDUtils {
 	 * 'HIDEFROMDRILLDOWN' and 'SHOWINDRILLDOWN' magic words in a page
 	 */
 	static function handleShowAndHide( &$parser, &$text ) {
-		global $wgOut, $wgAction;
 		$mw_hide = MagicWord::get( 'MAG_HIDEFROMDRILLDOWN' );
 		if ( $mw_hide->matchAndRemove( $text ) ) {
 			$parser->mOutput->setProperty( 'hidefromdrilldown', 'y' );
