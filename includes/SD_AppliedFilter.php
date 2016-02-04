@@ -21,7 +21,10 @@ class SDAppliedFilter {
 		if ( $search_terms != null ) {
 			$af->search_terms = array();
 			foreach( $search_terms as $search_term ) {
-				$af->search_terms[] = htmlspecialchars( str_replace( '_', ' ', $search_term ) );
+				$search_term = htmlspecialchars( str_replace( '_', ' ', $search_term ) );
+				// Ampersands need to be restored - hopefully
+				// this is safe.
+				$af->search_terms[] = str_replace( '&amp;', '&', $search_term );
 			}
 		}
 		if ( $lower_date != null ) {
