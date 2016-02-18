@@ -13,7 +13,7 @@
 
 // Ensure that the script cannot be executed outside of MediaWiki
 if ( !defined( 'MEDIAWIKI' ) ) {
-    die( 'This is an extension to MediaWiki and cannot be run standalone.' );
+	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
 }
 
 // Define extension's version
@@ -136,16 +136,12 @@ function sdfInitNamespaces() {
 	$wgExtraNamespaces = $wgExtraNamespaces + $sdgContLang->getNamespaces();
 	$wgNamespaceAliases = $wgNamespaceAliases + $sdgContLang->getNamespaceAliases();
 
-	// Support subpages only for talk pages by default
-	$wgNamespacesWithSubpages = array_merge( $wgNamespacesWithSubpages, array(
-		SD_NS_FILTER_TALK => true
-	) );
+	// Support subpages only for talk pages by default.
+	$wgNamespacesWithSubpages[SD_NS_FILTER_TALK] = true;
 
-	// Enable semantic links on filter pages
-	$smwgNamespacesWithSemanticLinks = array_merge( $smwgNamespacesWithSemanticLinks, array(
-		SD_NS_FILTER => true,
-		SD_NS_FILTER_TALK => false
-	) );
+	// Enable semantic links on filter pages.
+	$smwgNamespacesWithSemanticLinks[SD_NS_FILTER] = true;
+	$smwgNamespacesWithSemanticLinks[SD_NS_FILTER_TALK] = false;
 }
 
 /**********************************************/
