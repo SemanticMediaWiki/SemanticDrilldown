@@ -379,7 +379,6 @@ END;
 	JOIN $smw_ids p_ids ON p.p_id = p_ids.smw_id
 	WHERE p_ids.smw_title = '$property_value'
 	AND p_ids.smw_namespace = $prop_ns
-	AND $value_field != ''
 	GROUP BY $value_field
 	ORDER BY $value_field
 
@@ -387,6 +386,11 @@ END;
 		$res = $dbr->query( $sql );
 		while ( $row = $dbr->fetchRow( $res ) ) {
 			$value_string = str_replace( '_', ' ', $row[0] );
+			// We check this here, and not in the SQL, because
+			// for MySQL, 0 sometimes equals blank.
+			if ( $value_string === '' ) {
+				continue;
+			}
 			$possible_values[$value_string] = $row[1];
 		}
 		$dbr->freeResult( $res );
