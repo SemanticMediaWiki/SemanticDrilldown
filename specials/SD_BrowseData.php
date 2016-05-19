@@ -838,8 +838,10 @@ END;
 
 		$inputName = "_search_$filter_name";
 
+		$filter_url = $this->makeBrowseURL( $this->category, $this->applied_filters, $this->subcategory );
+
 		$text =<<< END
-<form method="get">
+<form method="get" action="$filter_url">
 
 END;
 
@@ -875,7 +877,12 @@ END;
 
 END;
 
-		$text .= Html::input( null, wfMessage( 'searchresultshead' )->text(), 'submit', array( 'style' => 'margin: 4px 0 8px 0;' ) ) . "\n";
+		$text .= Html::input(
+			null,
+			wfMessage( 'searchresultshead' )->text(),
+			'submit',
+			array( 'style' => 'margin: 4px 0 8px 0;' )
+		) . "\n";
 		$text .= "</form>\n";
 		return $text;
 	}
