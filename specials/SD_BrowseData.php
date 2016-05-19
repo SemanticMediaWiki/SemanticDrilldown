@@ -20,6 +20,11 @@ class SDBrowseData extends IncludableSpecialPage {
 	function execute( $query ) {
 		global $sdgScriptPath, $sdgContLang, $sdgNumResultsPerPage;
 
+		// If this was called from the command line, exit.
+		if ( php_sapi_name() == "cli" ) {
+			return '';
+		}
+
 		$out = $this->getOutput();
 		$request = $this->getRequest();
 
@@ -1035,6 +1040,11 @@ END;
 		global $sdgContLang, $sdgScriptPath;
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
+		// If this was called from the command line, exit.
+		if ( php_sapi_name() == "cli" ) {
+			return '';
+		}
+
 		$categories = SDUtils::getCategoriesForBrowsing();
 		// if there are no categories, escape quickly
 		if ( count( $categories ) == 0 ) {
@@ -1258,6 +1268,11 @@ END;
 	 */
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
 		global $wgContLang;
+
+		// If this was called from the command line, exit.
+		if ( php_sapi_name() == "cli" ) {
+			return '';
+		}
 
 		$all_display_params = SDUtils::getDisplayParamsForCategory( $this->category );
 		$querystring = null;
