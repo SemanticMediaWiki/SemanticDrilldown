@@ -17,7 +17,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 // Define extension's version
-define( 'SD_VERSION', '2.0.1' );
+define( 'SD_VERSION', '2.0.2' );
 
 // Display extension's information on "Special:Version"
 $wgExtensionCredits['semantic'][] = array(
