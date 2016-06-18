@@ -27,7 +27,7 @@
 	"sd_browsedata_removefilter": "Usuń ten filtr",
 	"sd_browsedata_removesubcategoryfilter": "Usuń ten filtr podkategorii",
 	"sd_browsedata_resetfilters": "Wyzeruj filtry",
-	"sd_browsedata_addanothervalue": "Kliknij strzałkę aby dodać inną wartość",
+	"sd_browsedata_addanothervalue": "Kliknij strzałkę, aby dodać inną wartość",
 	"sd_browsedata_daterangestart": "Początek",
 	"sd_browsedata_daterangeend": "Koniec",
 	"sd_browsedata_novalues": "Nie ma żadnych wartości dla tego filtru",
