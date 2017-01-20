@@ -183,7 +183,7 @@ class SDFilter {
 	 * being used.
 	 */
 	public function loadDBStructureInformation() {
-		global $smwgDefaultStore;
+		global $smwgDefaultStore, $wgDBtype;
 
 		if ( $smwgDefaultStore === 'SMWSQLStore3' || $smwgDefaultStore === 'SMWSparqlStore' ) {
 			if ( $this->property_type === 'page' ) {
@@ -201,7 +201,13 @@ class SDFilter {
 				$this->db_value_field = 'o_serialized';
 			} else { // string, text, code
 				$this->db_table_name = 'smw_di_blob';
-				$this->db_value_field = '(IF(o_blob IS NULL, o_hash, CONVERT(o_blob using utf8)))';
+				// CONVERT() is also supported in PostgreSQL, but it doesn't
+				// seem to work the same way.
+				if ( $wgDBtype == 'mysql' ) {
+					$this->db_value_field = '(IF(o_blob IS NULL, o_hash, CONVERT(o_blob using utf8)))';
+				} else {
+					$this->db_value_field = '(IF(o_blob IS NULL, o_hash, o_blob))';
+				}
 			}
 		} else {
 			// Things used to be so simple...
