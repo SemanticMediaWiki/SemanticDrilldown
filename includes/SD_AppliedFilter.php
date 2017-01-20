@@ -106,16 +106,15 @@ class SDAppliedFilter {
 				elseif ( $fv->upper_limit )
 					$sql .= "$value_field < {$fv->upper_limit} ";
 			} elseif ( $this->filter->property_type == 'date' ) {
-				$date_field = $this->filter->getDateField();
 				if ( $fv->time_period == 'day' ) {
-					$sql .= "YEAR($date_field) = {$fv->year} AND MONTH($date_field) = {$fv->month} AND DAYOFMONTH($date_field) = {$fv->day} ";
+					$sql .= "YEAR($value_field) = {$fv->year} AND MONTH($value_field) = {$fv->month} AND DAYOFMONTH($value_field) = {$fv->day} ";
 				} elseif ( $fv->time_period == 'month' ) {
-					$sql .= "YEAR($date_field) = {$fv->year} AND MONTH($date_field) = {$fv->month} ";
+					$sql .= "YEAR($value_field) = {$fv->year} AND MONTH($value_field) = {$fv->month} ";
 				} elseif ( $fv->time_period == 'year' ) {
-					$sql .= "YEAR($date_field) = {$fv->year} ";
+					$sql .= "YEAR($value_field) = {$fv->year} ";
 				} else { // if ( $fv->time_period == 'year range' ) {
-					$sql .= "YEAR($date_field) >= {$fv->year} ";
-					$sql .= "AND YEAR($date_field) <= {$fv->end_year} ";
+					$sql .= "YEAR($value_field) >= {$fv->year} ";
+					$sql .= "AND YEAR($value_field) <= {$fv->end_year} ";
 				}
 			} else {
 				$value = $fv->text;

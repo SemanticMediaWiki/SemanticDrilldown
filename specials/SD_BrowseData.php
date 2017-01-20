@@ -368,9 +368,7 @@ class SDBrowseDataPage extends QueryPage {
 			} else {
 				$property_field = "a$i.p_id";
 				$sql .= "\n	AND $property_field = (SELECT MAX(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
-				if ( $af->filter->property_type === 'date' ) {
-					$value_field = "SUBSTRING(a$i.$value_field, 3)";
-				} elseif (strncmp($value_field, '(IF(o_blob IS NULL', 18) === 0) {
+				if (strncmp($value_field, '(IF(o_blob IS NULL', 18) === 0) {
 					$value_field = str_replace('o_', "a$i.o_", $value_field);
 				} else {
 					$value_field = "a$i.$value_field";
