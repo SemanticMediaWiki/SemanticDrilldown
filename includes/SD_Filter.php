@@ -201,12 +201,16 @@ class SDFilter {
 				$this->db_value_field = 'o_serialized';
 			} else { // string, text, code
 				$this->db_table_name = 'smw_di_blob';
-				// CONVERT() is also supported in PostgreSQL, but it doesn't
-				// seem to work the same way.
+				// CONVERT() is also supported in PostgreSQL,
+				// but it doesn't seem to work the same way.
+				// IF() is not supported in PostgreSQL - there
+				// is an alternative CASE() statement, but
+				// let's just keep it simple - in part in
+				// order to also support other DB types.
 				if ( $wgDBtype == 'mysql' ) {
 					$this->db_value_field = '(IF(o_blob IS NULL, o_hash, CONVERT(o_blob using utf8)))';
 				} else {
-					$this->db_value_field = '(IF(o_blob IS NULL, o_hash, o_blob))';
+					$this->db_value_field = 'o_hash';
 				}
 			}
 		} else {
