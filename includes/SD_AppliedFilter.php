@@ -51,6 +51,7 @@ class SDAppliedFilter {
 	 */
 	function checkSQL( $value_field ) {
 		global $wgDBtype;
+
 		$sql = "(";
 		$dbr = wfGetDB( DB_SLAVE );
 		if ( $this->search_terms != null ) {
@@ -106,15 +107,27 @@ class SDAppliedFilter {
 				elseif ( $fv->upper_limit )
 					$sql .= "$value_field < {$fv->upper_limit} ";
 			} elseif ( $this->filter->property_type == 'date' ) {
+				if ( $wgDBtype == 'postgres' ) {
+					$dayValue = "DATE_PART('DAY', $value_field)";
+					$monthValue = "DATE_PART('MONTH', $value_field)";
+					$yearValue = "DATE_PART('YEAR', $value_field)";
+				} else {
+					if ( $wgDBtype == 'mssql' ) {
+						$dayValue = "DAY($value_field)";
+					} else {
+						$dayValue = "DAYOFMONTH($value_field)";
+					}
+					$monthValue = "MONTH($value_field)";
+					$yearValue = "YEAR($value_field)";
+				}
 				if ( $fv->time_period == 'day' ) {
-					$sql .= "YEAR($value_field) = {$fv->year} AND MONTH($value_field) = {$fv->month} AND DAYOFMONTH($value_field) = {$fv->day} ";
+					$sql .= "$yearValue = {$fv->year} AND $monthValue = {$fv->month} AND $dayValue = {$fv->day} ";
 				} elseif ( $fv->time_period == 'month' ) {
-					$sql .= "YEAR($value_field) = {$fv->year} AND MONTH($value_field) = {$fv->month} ";
+					$sql .= "$yearValue = {$fv->year} AND $monthValue = {$fv->month} ";
 				} elseif ( $fv->time_period == 'year' ) {
-					$sql .= "YEAR($value_field) = {$fv->year} ";
+					$sql .= "$yearValue = {$fv->year} ";
 				} else { // if ( $fv->time_period == 'year range' ) {
-					$sql .= "YEAR($value_field) >= {$fv->year} ";
-					$sql .= "AND YEAR($value_field) <= {$fv->end_year} ";
+					$sql .= "$yearValue >= {$fv->year} AND $yearValue <= {$fv->end_year} ";
 				}
 			} else {
 				$value = $fv->text;
@@ -143,14 +156,27 @@ class SDAppliedFilter {
 		} else {
 			// Is this necessary?
 			$date_field = $this->filter->getDateField();
+			if ( $wgDBtype == 'postgres' ) {
+				$dayValue = "DATE_PART('DAY', $date_field)";
+				$monthValue = "DATE_PART('MONTH', $date_field)";
+				$yearValue = "DATE_PART('YEAR', $date_field)";
+			} else {
+				if ( $wgDBtype == 'mssql' ) {
+					$dayValue = "DAY($date_field)";
+				} else {
+					$dayValue = "DAYOFMONTH($date_field)";
+				}
+				$monthValue = "MONTH($date_field)";
+				$yearValue = "YEAR($date_field)";
+			}
 			if ( $this->filter->getTimePeriod() == 'month' ) {
-				$value_field = "YEAR($date_field), MONTH($date_field)";
+				$value_field = "$yearValue, $monthValue";
 			} elseif ( $this->filter->getTimePeriod() == 'day' ) {
-				$value_field = "YEAR($date_field), MONTH($date_field), DAYOFMONTH($date_field)";
+				$value_field = "$yearValue, $monthValue, $dayValue";
 			} elseif ( $this->filter->getTimePeriod() == 'year' ) {
-				$value_field = "YEAR($date_field)";
+				$value_field = $yearValue;
 			} else { // if ( $this->filter->getTimePeriod() == 'year range' ) {
-				$value_field = "YEAR($date_field)";
+				$value_field = $yearValue;
 			}
 		}
 		$smwIDs = $dbr->tableName( SDUtils::getIDsTableName() );
