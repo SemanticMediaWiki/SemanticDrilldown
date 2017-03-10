@@ -310,20 +310,21 @@ END;
 		$property_value = $this->escaped_property;
 		$date_field = $this->getDateField();
 		$dbr = wfGetDB( DB_SLAVE );
+		list( $yearValue, $monthValue, $dayValue ) = SDUtils::getDateFunctions( $date_field );
 		if ( $this->getTimePeriod() == 'day' ) {
-			$fields = "YEAR($date_field), MONTH($date_field), DAYOFMONTH($date_field)";
+			$fields = "$yearValue, $monthValue, $dayValue";
 		} elseif ( $this->getTimePeriod() == 'month' ) {
-			$fields = "YEAR($date_field), MONTH($date_field)";
+			$fields = "$yearValue, $monthValue";
 		} elseif ( $this->getTimePeriod() == 'year' ) {
-			$fields = "YEAR($date_field)";
+			$fields = $yearValue;
 		} else { // if ( $this->getTimePeriod() == 'decade' ) {
-			$fields = "YEAR($date_field)";
+			$fields = $yearValue;
 		}
 		$datesTable = $dbr->tableName( $this->getTableName() );
 		$idsTable = $dbr->tableName( SDUtils::getIDsTableName() );
 		$sql = <<<END
 	SELECT $fields, count(*)
-	FROM semantic_drilldown_values sdv 
+	FROM semantic_drilldown_values sdv
 	JOIN $datesTable a ON sdv.id = a.s_id
 	JOIN $idsTable p_ids ON a.p_id = p_ids.smw_id
 	WHERE p_ids.smw_title = '$property_value'

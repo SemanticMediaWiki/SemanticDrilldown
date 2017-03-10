@@ -107,19 +107,7 @@ class SDAppliedFilter {
 				elseif ( $fv->upper_limit )
 					$sql .= "$value_field < {$fv->upper_limit} ";
 			} elseif ( $this->filter->property_type == 'date' ) {
-				if ( $wgDBtype == 'postgres' ) {
-					$dayValue = "DATE_PART('DAY', $value_field)";
-					$monthValue = "DATE_PART('MONTH', $value_field)";
-					$yearValue = "DATE_PART('YEAR', $value_field)";
-				} else {
-					if ( $wgDBtype == 'mssql' ) {
-						$dayValue = "DAY($value_field)";
-					} else {
-						$dayValue = "DAYOFMONTH($value_field)";
-					}
-					$monthValue = "MONTH($value_field)";
-					$yearValue = "YEAR($value_field)";
-				}
+				list( $yearValue, $monthValue, $dayValue ) = SDUtils::getDateFunctions( $value_field );	
 				if ( $fv->time_period == 'day' ) {
 					$sql .= "$yearValue = {$fv->year} AND $monthValue = {$fv->month} AND $dayValue = {$fv->day} ";
 				} elseif ( $fv->time_period == 'month' ) {
@@ -156,23 +144,11 @@ class SDAppliedFilter {
 		} else {
 			// Is this necessary?
 			$date_field = $this->filter->getDateField();
-			if ( $wgDBtype == 'postgres' ) {
-				$dayValue = "DATE_PART('DAY', $date_field)";
-				$monthValue = "DATE_PART('MONTH', $date_field)";
-				$yearValue = "DATE_PART('YEAR', $date_field)";
-			} else {
-				if ( $wgDBtype == 'mssql' ) {
-					$dayValue = "DAY($date_field)";
-				} else {
-					$dayValue = "DAYOFMONTH($date_field)";
-				}
-				$monthValue = "MONTH($date_field)";
-				$yearValue = "YEAR($date_field)";
-			}
-			if ( $this->filter->getTimePeriod() == 'month' ) {
-				$value_field = "$yearValue, $monthValue";
-			} elseif ( $this->filter->getTimePeriod() == 'day' ) {
+			list( $yearValue, $monthValue, $dayValue ) = SDUtils::getDateFunctions( $date_field );
+			if ( $this->filter->getTimePeriod() == 'day' ) {
 				$value_field = "$yearValue, $monthValue, $dayValue";
+			} elseif ( $this->filter->getTimePeriod() == 'month' ) {
+				$value_field = "$yearValue, $monthValue";
 			} elseif ( $this->filter->getTimePeriod() == 'year' ) {
 				$value_field = $yearValue;
 			} else { // if ( $this->filter->getTimePeriod() == 'year range' ) {

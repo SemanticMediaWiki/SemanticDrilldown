@@ -325,6 +325,25 @@ class SDUtils {
 		return $pages;
 	}
 
+	static function getDateFunctions( $dateDBField ) {
+		global $wgDBtype;
+
+		if ( $wgDBtype == 'postgres' ) {
+			$yearValue = "DATE_PART('YEAR', $dateDBField)";
+			$monthValue = "DATE_PART('MONTH', $dateDBField)";
+			$dayValue = "DATE_PART('DAY', $dateDBField)";
+		} else {
+			$yearValue = "YEAR($dateDBField)";
+			$monthValue = "MONTH($dateDBField)";
+			if ( $wgDBtype == 'mssql' ) {
+				$dayValue = "DAY($dateDBField)";
+			} else {
+				$dayValue = "DAYOFMONTH($dateDBField)";
+			}
+		}
+		return array( $yearValue, $monthValue, $dayValue );
+	}
+
 	static function monthToString( $month ) {
 		if ( $month == 1 ) {
 			return wfMessage( 'january' )->text();
