@@ -328,18 +328,19 @@ class SDUtils {
 	static function getDateFunctions( $dateDBField ) {
 		global $wgDBtype;
 
+		// Unfortunately, date handling in general - and date extraction
+		// specifically - is done differently in almost every DB
+		// system. If support were ever added for SQLite or Oracle,
+		// those would require special handling as well.
 		if ( $wgDBtype == 'postgres' ) {
-			$yearValue = "DATE_PART('YEAR', $dateDBField)";
-			$monthValue = "DATE_PART('MONTH', $dateDBField)";
-			$dayValue = "DATE_PART('DAY', $dateDBField)";
-		} else {
+			$yearValue = "EXTRACT(YEAR FROM TIMESTAMP $dateDBField)";
+			$monthValue = "EXTRACT(MONTH FROM TIMESTAMP $dateDBField)";
+			$dayValue = "EXTRACT(DAY FROM TIMESTAMP $dateDBField)";
+		} else { // MySQL, MS SQL Server
 			$yearValue = "YEAR($dateDBField)";
 			$monthValue = "MONTH($dateDBField)";
-			if ( $wgDBtype == 'mssql' ) {
-				$dayValue = "DAY($dateDBField)";
-			} else {
-				$dayValue = "DAYOFMONTH($dateDBField)";
-			}
+			// SQL Server only supports DAY(), not DAYOFMONTH().
+			$dayValue = "DAY($dateDBField)";
 		}
 		return array( $yearValue, $monthValue, $dayValue );
 	}
