@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"DCLXVI",
-			"පසිඳු කාවින්ද"
+			"පසිඳු කාවින්ද",
+			"StanProg"
 		]
 	},
 	"browsedata": "Разглеждане на данните",
@@ -18,7 +19,7 @@
 	"sd_browsedata_removefilter": "Премахване на филтъра",
 	"sd_browsedata_removesubcategoryfilter": "Премахване на филтъра за подкатегория",
 	"sd_browsedata_resetfilters": "Изчистване на филтрите",
-	"sd_browsedata_addanothervalue": "Добавяне на друга стойност",
+	"sd_browsedata_addanothervalue": "Щракнете на стрелката за да добавите друга стойност",
 	"sd_browsedata_daterangeend": "Край:",
 	"sd_createfilter_requirefilter": "Изисква се да бъде избран друг филтър преди да може този да бъде показан:",
 	"sd-pageschemas-filter": "Филтър"
