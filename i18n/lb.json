@@ -26,7 +26,7 @@
 	"sd_browsedata_daterangestart": "Ufank:",
 	"sd_browsedata_daterangeend": "Enn:",
 	"sd_browsedata_novalues": "Et gëtt keng Wäerter fir dëse Filter",
-	"sd_createfilter_usepropertyvalues": "All Wäerter vun dëser Eegeschaft fir de Filter benotzen",
+	"sd_createfilter_usepropertyvalues": "All Wäerter vun dëser Eegenschaft fir de Filter benotzen",
 	"sd_createfilter_usecategoryvalues": "Werter fir dëse Filter vun dëser Kategorie kréien:",
 	"sd_createfilter_requirefilter": "Verlaangen dat en anere Filter gewielt gëtt ier dësen ugewise gëtt:",
 	"sd-pageschemas-filter": "Filter",
