@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"CERminator",
-			"KWiki"
+			"KWiki",
+			"Srdjan m"
 		]
 	},
 	"semanticdrilldown-desc": "Interfejs za postupnu navigaciju kroz semantičke podatke",
@@ -17,7 +18,7 @@
 	"sd_browsedata_filterbyvalue": "Filter po ovoj vrijednosti",
 	"sd_browsedata_filterbysubcategory": "Filter po ovoj podkategoriji",
 	"sd_browsedata_otherfilter": "Prikaži stranice sa drugom vrijednošću za ovaj filter",
-	"sd_browsedata_nonefilter": "Pokaži stranice bez vrijednosti za ovaj filter",
+	"sd_browsedata_nonefilter": "Prikaži stranice bez vrijednosti za ovaj filter",
 	"sd_browsedata_or": "ili",
 	"sd_browsedata_removefilter": "Ukloni ovaj filter",
 	"sd_browsedata_removesubcategoryfilter": "Ukloni ovaj filter podkategorije",
