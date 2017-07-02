@@ -20,7 +20,7 @@
 	"sd_browsedata_removefilter": "Bỏ bộ lọc này",
 	"sd_browsedata_removesubcategoryfilter": "Bỏ bộ lọc thể loại con này",
 	"sd_browsedata_resetfilters": "Tái tạo bộ lọc",
-	"sd_browsedata_addanothervalue": "Nhấn chuột vào tên mũi để thêm giá trị khác",
+	"sd_browsedata_addanothervalue": "Nhấn chuột vào mũi tên để thêm giá trị khác",
 	"sd_browsedata_daterangestart": "Bắt đầu:",
 	"sd_browsedata_daterangeend": "Kết thúc:",
 	"sd_createfilter_usepropertyvalues": "Sử dụng tất cả các giá trị của thuộc tính này cho bộ lọc",
