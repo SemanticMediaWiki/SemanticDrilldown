@@ -61,6 +61,7 @@ $wgAutoloadClasses['SDFilterValue'] = $sdgIP . '/includes/SD_FilterValue.php';
 $wgAutoloadClasses['SDAppliedFilter'] = $sdgIP . '/includes/SD_AppliedFilter.php';
 $wgAutoloadClasses['SDPageSchemas'] = $sdgIP . '/includes/SD_PageSchemas.php';
 $wgAutoloadClasses['SDParserFunctions'] = $sdgIP . '/includes/SD_ParserFunctions.php';
+$wgAutoloadClasses['TemporaryTableManager'] = "$sdgIP/includes/TemporaryTableManager.php";
 
 // register all special pages and other classes
 $wgSpecialPages['BrowseData'] = 'SDBrowseData';
@@ -72,6 +73,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'SDUtils::setGlobalJSVariables';
 $wgHooks['ParserBeforeTidy'][] = 'SDUtils::handleShowAndHide';
 $wgHooks['PageSchemasRegisterHandlers'][] = 'SDPageSchemas::registerClass';
 $wgHooks['ParserFirstCallInit'][] = 'SDParserFunctions::registerFunctions';
+$wgHooks['UnitTestsList'][] = 'SDUtils::onUnitTestsList';
 
 # ##
 # This is the path to your installation of Semantic Drilldown as

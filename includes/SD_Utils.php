@@ -488,4 +488,15 @@ class SDUtils {
 
 		return true;
 	}
+
+	/**
+	 * Register extension unit tests with old versions of MediaWiki
+	 *
+	 * @param string[] $paths
+	 * @return bool
+	 */
+	public static function onUnitTestsList( &$paths ) {
+		$paths[] = dirname( __FILE__ ) . '/../tests/phpunit';
+		return true;
+	}
 }
