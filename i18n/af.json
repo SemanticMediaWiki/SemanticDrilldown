@@ -3,7 +3,8 @@
 		"authors": [
 			"Arnobarnard",
 			"Naudefj",
-			"SPQRobin"
+			"SPQRobin",
+			"Fwolff"
 		]
 	},
 	"browsedata": "Bekyk gegewens",
@@ -12,11 +13,11 @@
 	"sd_browsedata_subcategory": "Subkategorie",
 	"sd_browsedata_other": "Ander",
 	"sd_browsedata_none": "Geen",
-	"sd_browsedata_filterbyvalue": "Filter op hierdie waarde",
-	"sd_browsedata_filterbysubcategory": "Filter op hierdie subkategorie",
+	"sd_browsedata_filterbyvalue": "Filtreer op hierdie waarde",
+	"sd_browsedata_filterbysubcategory": "Filtreer volgens hierdie subkategorie",
 	"sd_browsedata_or": "of",
 	"sd_browsedata_removefilter": "Verwyder hierdie filter",
-	"sd_browsedata_removesubcategoryfilter": "Verwyder hierdie subkategorie-filter",
+	"sd_browsedata_removesubcategoryfilter": "Verwyder hierdie subkategoriefilter",
 	"sd_browsedata_resetfilters": "Herstel filters",
 	"sd_browsedata_addanothervalue": "Kliek die pyltjie om nog 'n waarde by te voeg",
 	"sd_browsedata_daterangestart": "Begin:",
