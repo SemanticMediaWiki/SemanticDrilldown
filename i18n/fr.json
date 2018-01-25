@@ -10,7 +10,8 @@
 			"PieRRoMaN",
 			"Sherbrooke",
 			"Tititou36",
-			"Urhixidur"
+			"Urhixidur",
+			"Wladek92"
 		]
 	},
 	"semanticdrilldown-desc": "Une interface de recherche multicritères au sein des données sémantiques",
@@ -28,13 +29,13 @@
 	"sd_browsedata_nonefilter": "Voir les pages avec aucune valeur pour ce filtre",
 	"sd_browsedata_or": "ou",
 	"sd_browsedata_removefilter": "Retirer ce filtre",
-	"sd_browsedata_removesubcategoryfilter": "Retirer cette sous-catégorie du filtre",
+	"sd_browsedata_removesubcategoryfilter": "Retirer cette sous-catégorie de filtre",
 	"sd_browsedata_resetfilters": "Remise à zéro des filtres",
 	"sd_browsedata_addanothervalue": "Cliquez sur la flèche pour ajouter une autre valeur",
 	"sd_browsedata_daterangestart": "Début :",
 	"sd_browsedata_daterangeend": "Fin :",
 	"sd_browsedata_novalues": "Il n’existe pas de valeur pour ce filtre",
-	"sd_createfilter_usepropertyvalues": "Utiliser, pour ce filtre, toutes les valeurs de cette propriété",
+	"sd_createfilter_usepropertyvalues": "Utiliser, pour ce filtre, toutes les valeurs de la propriété",
 	"sd_createfilter_usecategoryvalues": "Obtenir les valeurs pour ce filtre à partir de cette catégorie :",
 	"sd_createfilter_requirefilter": "Exiger qu’un autre filtre soit sélectionné avant que celui-ci ne soit affiché :",
 	"sd-pageschemas-filter": "Filtre",
