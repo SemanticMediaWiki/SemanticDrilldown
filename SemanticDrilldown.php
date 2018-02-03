@@ -260,7 +260,6 @@ $wgResourceModules += array(
 			'jquery.ui.autocomplete',
 			'jquery.ui.button',
 		),
-		'position' => 'top',
 	),
 	'ext.semanticdrilldown.info' => $sdgResourceTemplate + array(
 		'styles' => array(
