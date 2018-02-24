@@ -32,7 +32,6 @@
 		<exclude name="MediaWiki.Usage.DeprecatedConstantUsage.DB_SLAVE" />
 		<exclude name="MediaWiki.Usage.DirUsage.FunctionFound" />
 		<exclude name="MediaWiki.Usage.ForbiddenFunctions.extract" />
-		<exclude name="MediaWiki.Usage.PHPUnitClassUsage.NotNamespaced" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$sdgContLang" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$sdgFiltersLargestFontSize" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$sdgFiltersSmallestFontSize" />

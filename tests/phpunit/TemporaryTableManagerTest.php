@@ -1,6 +1,6 @@
 <?php
 
-class TemporaryTableManagerTest extends PHPUnit_Framework_TestCase {
+class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
 	/** @var DatabaseBase|\Wikimedia\Rdbms\IDatabase|PHPUnit_Framework_MockObject_MockObject */
 	private $databaseConnectionMock;
 
