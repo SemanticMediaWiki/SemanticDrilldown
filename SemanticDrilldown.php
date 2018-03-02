@@ -27,7 +27,7 @@ $wgExtensionCredits['semantic'][] = array(
 	'author'         => array( 'Yaron Koren', '...' ),
 	'url'            => 'https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
 	'descriptionmsg' => 'semanticdrilldown-desc',
-	'license-name'   => 'GPL-2.0+'
+	'license-name'   => 'GPL-2.0-or-later'
 );
 
 // Constants for special properties - these are all deprecated
