@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"George Animal"
+			"George Animal",
+			"Ghybu"
 		]
 	},
-	"sd_browsedata_choosecategory": "Kategoriyekê hilbijêre"
+	"sd_browsedata_choosecategory": "Kategoriyekê hilbijêre",
+	"sd_browsedata_other": "Yê din"
 }
