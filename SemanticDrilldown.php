@@ -221,7 +221,9 @@ function sdfInitProperties() {
 	$sd_prop_labels = $sdgContLang->getPropertyLabels();
 	foreach ( $sd_prop_labels as $prop_id => $prop_alias ) {
 		$prop_vals = $sd_property_vals[$prop_id];
-		if ( class_exists( 'SMWDIProperty' ) ) {
+		if ( class_exists( '\SMW\PropertyRegistry' ) ) {
+			\SMW\PropertyRegistry::getInstance()->registerProperty( $prop_vals[0], $prop_vals[1], $prop_alias, true );
+		} elseif ( class_exists( 'SMWDIProperty' ) ) {
 			SMWDIProperty::registerProperty( $prop_vals[0], $prop_vals[1], $prop_alias, true );
 		} else {
 			SMWPropertyValue::registerProperty( $prop_vals[0], $prop_vals[1], $prop_alias, true );
@@ -232,7 +234,9 @@ function sdfInitProperties() {
 		$sd_prop_aliases = $sdgContLang->getPropertyAliases();
 		foreach ( $sd_prop_aliases as $prop_alias => $prop_id ) {
 			$prop_vals = $sd_property_vals[$prop_id];
-			if ( class_exists( 'SMWDIProperty' ) ) {
+			if ( class_exists( '\SMW\PropertyRegistry' ) ) {
+				\SMW\PropertyRegistry::getInstance()->registerPropertyAlias( $prop_vals[0], $prop_alias );
+			} elseif ( class_exists( 'SMWDIProperty' ) ) {
 				SMWDIProperty::registerPropertyAlias( $prop_vals[0], $prop_alias );
 			} else {
 				SMWPropertyValue::registerPropertyAlias( $prop_vals[0], $prop_alias );
