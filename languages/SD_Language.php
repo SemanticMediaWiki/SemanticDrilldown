@@ -16,7 +16,7 @@ abstract class SD_Language {
 
 	// By default, every language has English-language aliases for
 	// special properties and namespaces
-	protected $m_SpecialPropertyAliases = array(
+	protected $m_SpecialPropertyAliases = [
 		// category properties
 		'Has filter' => SD_SP_HAS_FILTER,
 		'Has drilldown title' => SD_SP_HAS_DRILLDOWN_TITLE,
@@ -27,12 +27,12 @@ abstract class SD_Language {
 		'Has label' => SD_SP_HAS_LABEL,
 		// display properties
 		'Has display parameters' => SD_SP_HAS_DISPLAY_PARAMETERS,
-	);
+	];
 
-	protected $m_NamespaceAliases = array(
+	protected $m_NamespaceAliases = [
 		'Filter'	=> SD_NS_FILTER,
 		'Filter_talk'	=> SD_NS_FILTER_TALK
-	);
+	];
 
 	/**
 	 * Function that returns an array of namespace identifiers.

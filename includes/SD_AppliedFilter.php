@@ -8,7 +8,7 @@
 
 class SDAppliedFilter {
 	var $filter;
-	var $values = array();
+	var $values = [];
 	var $search_terms;
 	var $lower_date;
 	var $upper_date;
@@ -19,8 +19,8 @@ class SDAppliedFilter {
 		$af = new SDAppliedFilter();
 		$af->filter = $filter;
 		if ( $search_terms != null ) {
-			$af->search_terms = array();
-			foreach( $search_terms as $search_term ) {
+			$af->search_terms = [];
+			foreach ( $search_terms as $search_term ) {
 				$search_term = htmlspecialchars( str_replace( '_', ' ', $search_term ) );
 				// Ampersands need to be restored - hopefully
 				// this is safe.
@@ -36,7 +36,7 @@ class SDAppliedFilter {
 			$af->upper_date_string = SDUtils::monthToString( $upper_date['month'] ) . " " . $upper_date['day'] . ", " . $upper_date['year'];
 		}
 		if ( ! is_array( $values ) ) {
-			$values = array( $values );
+			$values = [ $values ];
 		}
 		foreach ( $values as $val ) {
 			$filter_val = SDFilterValue::create( $val, $filter );
@@ -53,9 +53,9 @@ class SDAppliedFilter {
 		global $wgDBtype;
 
 		$sql = "(";
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		if ( $this->search_terms != null ) {
-			$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'");
+			$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'" );
 			foreach ( $this->search_terms as $i => $search_term ) {
 				$search_term = str_replace( "'", $quoteReplace, $search_term );
 				if ( $i > 0 ) {
@@ -65,11 +65,11 @@ class SDAppliedFilter {
 					// FIXME: 'LIKE' is supposed to be
 					// case-insensitive, but it's not acting
 					// that way here.
-					//$search_term = strtolower( $search_term );
+					// $search_term = strtolower( $search_term );
 					$search_term = str_replace( ' ', '\_', $search_term );
 					$sql .= "$value_field LIKE '%{$search_term}%'";
 				} else {
-					//$search_term = strtolower( $search_term );
+					// $search_term = strtolower( $search_term );
 					$sql .= "$value_field LIKE '%{$search_term}%'";
 				}
 			}
@@ -86,9 +86,11 @@ class SDAppliedFilter {
 			$sql .= "date($value_field) <= date('$date_string') ";
 		}
 		foreach ( $this->values as $i => $fv ) {
-			if ( $i > 0 ) { $sql .= " OR "; }
+			if ( $i > 0 ) {
+				$sql .= " OR ";
+			}
 			if ( $fv->is_other ) {
-				$checkNullOrEmptySql = "$value_field IS NULL " . ( $wgDBtype == 'postgres' ? '' : "OR $value_field = '' ");
+				$checkNullOrEmptySql = "$value_field IS NULL " . ( $wgDBtype == 'postgres' ? '' : "OR $value_field = '' " );
 				$notOperatorSql = ( $wgDBtype == 'postgres' ? "not" : "!" );
 				$sql .= "($notOperatorSql ($checkNullOrEmptySql ";
 				foreach ( $this->filter->possible_applied_filters as $paf ) {
@@ -97,17 +99,18 @@ class SDAppliedFilter {
 				}
 				$sql .= "))";
 			} elseif ( $fv->is_none ) {
-				$checkNullOrEmptySql = ( $wgDBtype == 'postgres' ? '' : "$value_field = '' OR ") . "$value_field IS NULL";
+				$checkNullOrEmptySql = ( $wgDBtype == 'postgres' ? '' : "$value_field = '' OR " ) . "$value_field IS NULL";
 				$sql .= "($checkNullOrEmptySql) ";
 			} elseif ( $fv->is_numeric ) {
-				if ( $fv->lower_limit && $fv->upper_limit )
+				if ( $fv->lower_limit && $fv->upper_limit ) {
 					$sql .= "($value_field >= {$fv->lower_limit} AND $value_field <= {$fv->upper_limit}) ";
-				elseif ( $fv->lower_limit )
+				} elseif ( $fv->lower_limit ) {
 					$sql .= "$value_field > {$fv->lower_limit} ";
-				elseif ( $fv->upper_limit )
+				} elseif ( $fv->upper_limit ) {
 					$sql .= "$value_field < {$fv->upper_limit} ";
+				}
 			} elseif ( $this->filter->property_type == 'date' ) {
-				list( $yearValue, $monthValue, $dayValue ) = SDUtils::getDateFunctions( $value_field );	
+				list( $yearValue, $monthValue, $dayValue ) = SDUtils::getDateFunctions( $value_field );
 				if ( $fv->time_period == 'day' ) {
 					$sql .= "$yearValue = {$fv->year} AND $monthValue = {$fv->month} AND $dayValue = {$fv->day} ";
 				} elseif ( $fv->time_period == 'month' ) {
@@ -129,15 +132,14 @@ class SDAppliedFilter {
 		return $sql;
 	}
 
-
 	/**
 	 * Gets an array of all values that the property belonging to this
 	 * filter has, for pages in the passed-in category.
 	 */
 	function getAllOrValues( $category ) {
-		$possible_values = array();
+		$possible_values = [];
 		$property_value = $this->filter->escaped_property;
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$property_table_name = $dbr->tableName( $this->filter->getTableName() );
 		if ( $this->filter->property_type != 'date' ) {
 			$value_field = $this->filter->getValueField();

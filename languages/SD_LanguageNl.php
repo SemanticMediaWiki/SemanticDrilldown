@@ -6,8 +6,8 @@
  */
 
 class SD_LanguageNl extends SD_Language {
-	/* private */ var $m_SpecialProperties = array(
-		//always start upper-case
+	/* private */ var $m_SpecialProperties = [
+		// always start upper-case
 		// category properties
 		SD_SP_HAS_FILTER          => 'Heeft filter',
 		SD_SP_HAS_DRILLDOWN_TITLE => 'Heeft drilldownnaam',
@@ -19,10 +19,10 @@ class SD_LanguageNl extends SD_Language {
 		SD_SP_HAS_LABEL                 => 'Heeft label',
 		// display properties
 		SD_SP_HAS_DISPLAY_PARAMETERS    => 'Heeft weergave parameters',
-	);
+	];
 
-	var $m_Namespaces = array(
+	var $m_Namespaces = [
 		SD_NS_FILTER      => 'Filter',
 		SD_NS_FILTER_TALK => 'Overleg_filter'
-	);
+	];
 }

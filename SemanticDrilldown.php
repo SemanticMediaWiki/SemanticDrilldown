@@ -20,32 +20,32 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 define( 'SD_VERSION', '2.0.2' );
 
 // Display extension's information on "Special:Version"
-$wgExtensionCredits['semantic'][] = array(
+$wgExtensionCredits['semantic'][] = [
 	'path'           => __FILE__,
 	'name'           => 'Semantic Drilldown',
 	'version'        => SD_VERSION,
-	'author'         => array( 'Yaron Koren', '...' ),
+	'author'         => [ 'Yaron Koren', '...' ],
 	'url'            => 'https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
 	'descriptionmsg' => 'semanticdrilldown-desc',
 	'license-name'   => 'GPL-2.0-or-later'
-);
+];
 
 // Constants for special properties - these are all deprecated
 // as of version 2.0.
 define( 'SD_SP_HAS_FILTER', 1 );
 define( 'SD_SP_COVERS_PROPERTY', 2 );
-//define( 'SD_SP_HAS_VALUE', 3 );
+// define( 'SD_SP_HAS_VALUE', 3 );
 define( 'SD_SP_GETS_VALUES_FROM_CATEGORY', 4 );
-//define( 'SD_SP_USES_TIME_PERIOD', 5 );
+// define( 'SD_SP_USES_TIME_PERIOD', 5 );
 define( 'SD_SP_REQUIRES_FILTER', 6 );
 define( 'SD_SP_HAS_LABEL', 7 );
 define( 'SD_SP_HAS_DRILLDOWN_TITLE', 8 );
-//define( 'SD_SP_HAS_INPUT_TYPE', 9 );
+// define( 'SD_SP_HAS_INPUT_TYPE', 9 );
 define( 'SD_SP_HAS_DISPLAY_PARAMETERS', 10 );
 
-$sdgIP = dirname( __FILE__ );
+$sdgIP = __DIR__;
 
-require_once( $sdgIP . '/languages/SD_Language.php' );
+require_once $sdgIP . '/languages/SD_Language.php';
 
 $wgMessagesDirs['SemanticDrilldown'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['SemanticDrilldownAlias'] = $sdgIP . '/languages/SD_Aliases.php';
@@ -112,7 +112,6 @@ $sdgShowCategoriesAsTabs = false;
 $sdgMinValuesForComboBox = 40;
 $sdgNumRangesForNumberFilters = 6;
 
-
 /**********************************************/
 /***** Global functions                   *****/
 /**********************************************/
@@ -165,12 +164,12 @@ function sdfInitContentLanguage( $langcode ) {
 	$sdContLangClass = 'SD_Language' . str_replace( '-', '_', ucfirst( $langcode ) );
 
 	if ( file_exists( $sdgIP . '/languages/' . $sdContLangClass . '.php' ) ) {
-		include_once( $sdgIP . '/languages/' . $sdContLangClass . '.php' );
+		include_once $sdgIP . '/languages/' . $sdContLangClass . '.php';
 	}
 
 	// fallback if language not supported
 	if ( !class_exists( $sdContLangClass ) ) {
-		include_once( $sdgIP . '/languages/SD_LanguageEn.php' );
+		include_once $sdgIP . '/languages/SD_LanguageEn.php';
 		$sdContLangClass = 'SD_LanguageEn';
 	}
 
@@ -191,12 +190,12 @@ function sdfInitUserLanguage( $langcode ) {
 
 	$sdLangClass = 'SD_Language' . str_replace( '-', '_', ucfirst( $langcode ) );
 	if ( file_exists( $sdgIP . '/languages/' . $sdLangClass . '.php' ) ) {
-		include_once( $sdgIP . '/languages/' . $sdLangClass . '.php' );
+		include_once $sdgIP . '/languages/' . $sdLangClass . '.php';
 	}
 
 	// fallback if language not supported
 	if ( !class_exists( $sdLangClass ) ) {
-		include_once( $sdgIP . '/languages/SD_LanguageEn.php' );
+		include_once $sdgIP . '/languages/SD_LanguageEn.php';
 		$sdLangClass = 'SD_LanguageEn';
 	}
 
@@ -205,18 +204,18 @@ function sdfInitUserLanguage( $langcode ) {
 
 function sdfInitProperties() {
 	global $sdgContLang, $wgLanguageCode;
-	$sd_property_vals = array(
-		SD_SP_HAS_FILTER => array( '_SD_F', '_wpg' ),
-		SD_SP_COVERS_PROPERTY => array( '_SD_CP', '_wpp' ),
-		//SD_SP_HAS_VALUE => array( '_SD_V', '_str' ),
-		SD_SP_GETS_VALUES_FROM_CATEGORY => array( '_SD_VC', '_wpc' ),
-		//SD_SP_USES_TIME_PERIOD => array( '_SD_TP', '_str' ),
-		//SD_SP_HAS_INPUT_TYPE => array( '_SD_IT', '_str' ),
-		SD_SP_REQUIRES_FILTER => array( '_SD_RF', '_wpg' ),
-		SD_SP_HAS_LABEL => array( '_SD_L', '_str' ),
-		SD_SP_HAS_DRILLDOWN_TITLE => array( '_SD_DT', '_str' ),
-		SD_SP_HAS_DISPLAY_PARAMETERS => array( '_SD_DP', '_str' ),
-	);
+	$sd_property_vals = [
+		SD_SP_HAS_FILTER => [ '_SD_F', '_wpg' ],
+		SD_SP_COVERS_PROPERTY => [ '_SD_CP', '_wpp' ],
+		// SD_SP_HAS_VALUE => array( '_SD_V', '_str' ),
+		SD_SP_GETS_VALUES_FROM_CATEGORY => [ '_SD_VC', '_wpc' ],
+		// SD_SP_USES_TIME_PERIOD => array( '_SD_TP', '_str' ),
+		// SD_SP_HAS_INPUT_TYPE => array( '_SD_IT', '_str' ),
+		SD_SP_REQUIRES_FILTER => [ '_SD_RF', '_wpg' ],
+		SD_SP_HAS_LABEL => [ '_SD_L', '_str' ],
+		SD_SP_HAS_DRILLDOWN_TITLE => [ '_SD_DT', '_str' ],
+		SD_SP_HAS_DISPLAY_PARAMETERS => [ '_SD_DP', '_str' ],
+	];
 	// register main property labels
 	$sd_prop_labels = $sdgContLang->getPropertyLabels();
 	foreach ( $sd_prop_labels as $prop_id => $prop_alias ) {
@@ -246,29 +245,28 @@ function sdfInitProperties() {
 	return true;
 }
 
-$sdgResourceTemplate = array(
+$sdgResourceTemplate = [
 	'localBasePath' => $sdgIP,
 	'remoteExtPath' => 'SemanticDrilldown'
-);
+];
 
-$wgResourceModules += array(
-	'ext.semanticdrilldown.main' => $sdgResourceTemplate + array(
-		'styles' => array(
+$wgResourceModules += [
+	'ext.semanticdrilldown.main' => $sdgResourceTemplate + [
+		'styles' => [
 			'skins/SD_main.css',
 			'skins/SD_jquery_ui_overrides.css',
-		),
-		'scripts' => array(
+		],
+		'scripts' => [
 			'libs/SemanticDrilldown.js',
-		),
-		'dependencies' => array(
+		],
+		'dependencies' => [
 			'jquery.ui.autocomplete',
 			'jquery.ui.button',
-		),
-	),
-	'ext.semanticdrilldown.info' => $sdgResourceTemplate + array(
-		'styles' => array(
+		],
+	],
+	'ext.semanticdrilldown.info' => $sdgResourceTemplate + [
+		'styles' => [
 			'skins/SD_info.css',
-		),
-	),
-);
-
+		],
+	],
+];

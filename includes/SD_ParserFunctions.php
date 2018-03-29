@@ -22,8 +22,8 @@
 class SDParserFunctions {
 
 	static function registerFunctions( &$parser ) {
-		$parser->setFunctionHook( 'drilldowninfo', array( 'SDParserFunctions', 'renderDrilldownInfo' ) );
-		$parser->setFunctionHook( 'drilldownlink', array( 'SDParserFunctions', 'renderDrilldownLink' ) );
+		$parser->setFunctionHook( 'drilldowninfo', [ 'SDParserFunctions', 'renderDrilldownInfo' ] );
+		$parser->setFunctionHook( 'drilldownlink', [ 'SDParserFunctions', 'renderDrilldownLink' ] );
 		return true;
 	}
 
@@ -62,15 +62,15 @@ class SDParserFunctions {
 		}
 
 		// Parse the "filters=" parameter.
-		$filtersInfoArray = array();
+		$filtersInfoArray = [];
 		preg_match_all( '/([^()]*)\(([^)]*)\)/', $filtersStr, $matches );
-		foreach( $matches[1] as $i => $filterName ) {
+		foreach ( $matches[1] as $i => $filterName ) {
 			$filterName = trim( $filterName, ", \t\n\r\0\x0B" );
-			$filtersInfoArray[$filterName] = array();
+			$filtersInfoArray[$filterName] = [];
 
 			$filterSettingsStr = $matches[2][$i];
 			$filterSettings = explode( ',', $filterSettingsStr );
-			foreach( $filterSettings as $filterSettingStr ) {
+			foreach ( $filterSettings as $filterSettingStr ) {
 				$filterSetting = explode( '=', $filterSettingStr, 2 );
 				if ( count( $filterSetting ) != 2 ) {
 					continue;
@@ -111,14 +111,16 @@ class SDParserFunctions {
 		$text = "<table class=\"drilldownInfo mw-collapsible mw-collapsed\">\n";
 		$bd = Title::makeTitleSafe( NS_SPECIAL, 'BrowseData' );
 		$bdURL = $bd->getLocalURL() . "/" . $curTitle->getPartialURL();
-		$bdLink = Html::rawElement( 'a', array( 'href' => $bdURL ), "Semantic Drilldown" );
+		$bdLink = Html::rawElement( 'a', [ 'href' => $bdURL ], "Semantic Drilldown" );
 		$text .= "<tr><th colspan=\"2\">$bdLink</th></tr>\n";
 		$text .= "<tr class=\"drilldownInfoHeader\"><td colspan=\"2\">Filters</td></tr>\n";
 		foreach ( $filtersInfoArray as $filterName => $filterInfo ) {
 			$text .= "<tr><td class=\"drilldownFilterName\">$filterName</td><td>\n";
 			$i = 0;
 			foreach ( $filterInfo as $key => $value ) {
-				if ( $i++ > 0 ) { $text .= ", "; }
+				if ( $i++ > 0 ) {
+					$text .= ", ";
+				}
 				$text .= $key . ' = ';
 				if ( $key == 'property' ) {
 					$propertyTitle = Title::makeTitleSafe( SMW_NS_PROPERTY, $value );
@@ -148,7 +150,6 @@ class SDParserFunctions {
 		return $parser->insertStripItem( $text, $parser->mStripState );
 	}
 
-
 	static function renderDrilldownLink( &$parser ) {
 		$params = func_get_args();
 		array_shift( $params );
@@ -156,7 +157,7 @@ class SDParserFunctions {
 		$specialPage = SpecialPageFactory::getPage( 'BrowseData' );
 
 		// Set defaults.
-		$inQueryArr = array();
+		$inQueryArr = [];
 		$inLinkStr = $category = $classStr = $inTooltip = '';
 
 		// Parameters
@@ -179,14 +180,14 @@ class SDParserFunctions {
 			if ( $param_name == 'category' || $param_name == 'cat' ) {
 				$category = $value;
 			} elseif ( $param_name == 'subcategory' || $param_name == 'subcat' ) {
-				parse_str( '_subcat=' . $value , $arr);
+				parse_str( '_subcat=' . $value, $arr );
 				$inQueryArr = array_merge( $inQueryArr, $arr );
 			} elseif ( $param_name == 'link text' ) {
 				$inLinkStr = $value;
 			} elseif ( $param_name == 'tooltip' ) {
 				$inTooltip = Sanitizer::decodeCharReferences( $value );
 			} elseif ( $param_name == null && $value == 'single' ) {
-				parse_str( '_single' , $arr);
+				parse_str( '_single', $arr );
 				$inQueryArr = array_merge( $inQueryArr, $arr );
 			} elseif ( $param_name == 'filters' ) {
 				$inQueryStr = str_replace( '&amp;', '%26', $value );
@@ -208,12 +209,12 @@ class SDParserFunctions {
 			$link_url .= str_replace( '+', '%20', http_build_query( $inQueryArr, '', '&' ) );
 		}
 
-		$inLinkStr = ( empty($inLinkStr) ? $category : $inLinkStr ) ;
-		$link = Html::rawElement( 'a', array( 'href' => $link_url, 'class' => $classStr, 'title' => $inTooltip ), $inLinkStr );
+		$inLinkStr = ( empty( $inLinkStr ) ? $category : $inLinkStr );
+		$link = Html::rawElement( 'a', [ 'href' => $link_url, 'class' => $classStr, 'title' => $inTooltip ], $inLinkStr );
 
 		// hack to remove newline from beginning of output, thanks to
 		// http://jimbojw.com/wiki/index.php?title=Raw_HTML_Output_from_a_MediaWiki_Parser_Function
-		return $parser->insertStripItem( $link , $parser->mStripState );
+		return $parser->insertStripItem( $link, $parser->mStripState );
 	}
 
 }

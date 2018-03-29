@@ -13,8 +13,8 @@ class SDFilter {
 	var $category;
 	var $time_period = null;
 	var $allowed_values;
-	var $required_filters = array();
-	var $possible_applied_filters = array();
+	var $required_filters = [];
+	var $possible_applied_filters = [];
 	var $db_table_name;
 	var $db_value_field;
 	var $db_date_field;
@@ -27,8 +27,8 @@ class SDFilter {
 		global $wgDBtype;
 
 		$this->property = $prop;
-		$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'");
-		$this->escaped_property = str_replace( array( ' ', "'" ), array( '_', $quoteReplace ), $prop );
+		$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'" );
+		$this->escaped_property = str_replace( [ ' ', "'" ], [ '_', $quoteReplace ], $prop );
 	}
 
 	public function setCategory( $cat ) {
@@ -39,13 +39,13 @@ class SDFilter {
 	public function addRequiredFilter( $filterName ) {
 		$this->required_filters[] = $filterName;
 	}
-	
-	static function loadAllFromPageSchema( $psSchemaObj ){
-		$filters_ps = array();		
-		$template_all = $psSchemaObj->getTemplates();						
+
+	static function loadAllFromPageSchema( $psSchemaObj ) {
+		$filters_ps = [];
+		$template_all = $psSchemaObj->getTemplates();
 		foreach ( $template_all as $template ) {
 			$field_all = $template->getFields();
-			foreach( $field_all as $fieldObj ) {
+			foreach ( $field_all as $fieldObj ) {
 				$f = new SDFilter();
 				$filter_array = $fieldObj->getObject( 'semanticdrilldown_Filter' );
 				if ( is_null( $filter_array ) ) {
@@ -56,7 +56,7 @@ class SDFilter {
 				} else {
 					$f->setName( $fieldObj->getName() );
 				}
-				$prop_array = $fieldObj->getObject('semanticmediawiki_Property');
+				$prop_array = $fieldObj->getObject( 'semanticmediawiki_Property' );
 				if ( $prop_array['name'] != '' ) {
 					$f->setProperty( $prop_array['name'] );
 				} else {
@@ -75,21 +75,21 @@ class SDFilter {
 					$f->setCategory( $filter_array['ValuesFromCategory'] );
 				} elseif ( array_key_exists( 'TimePeriod', $filter_array ) ) {
 					$f->time_period = $filter_array['TimePeriod'];
-					$f->allowed_values = array();
+					$f->allowed_values = [];
 				} elseif ( $f->property_type === 'boolean' ) {
-					$f->allowed_values = array( '0', '1' );
+					$f->allowed_values = [ '0', '1' ];
 				} elseif ( array_key_exists( 'Values', $filter_array ) ) {
 					$f->allowed_values = $filter_array['Values'];
 				} else {
-					$f->allowed_values = array();
-				}				
+					$f->allowed_values = [];
+				}
 
 				// Must be done after property type is set.
 				$f->loadDBStructureInformation();
 
-				$filters_ps[] = $f ;
+				$filters_ps[] = $f;
 			}
-		}				
+		}
 		return $filters_ps;
 	}
 
@@ -114,9 +114,9 @@ class SDFilter {
 		if ( count( $categories ) > 0 ) {
 			$f->setCategory( $categories[0] );
 		} elseif ( $f->property_type === 'boolean' ) {
-			$f->allowed_values = array( '0', '1' );
+			$f->allowed_values = [ '0', '1' ];
 		} else {
-			$f->allowed_values = array();
+			$f->allowed_values = [];
 		}
 
 		// Set list of possible applied filters if allowed values
@@ -252,7 +252,7 @@ class SDFilter {
 			return $this->time_period;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$property_value = $this->escaped_property;
 		$date_field = $this->getDateField();
 		$datesTable = $dbr->tableName( $this->getTableName() );
@@ -306,10 +306,10 @@ END;
 	 * the number of pages that match that time period.
 	 */
 	function getTimePeriodValues() {
-		$possible_dates = array();
+		$possible_dates = [];
 		$property_value = $this->escaped_property;
 		$date_field = $this->getDateField();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		list( $yearValue, $monthValue, $dayValue ) = SDUtils::getDateFunctions( $date_field );
 		if ( $this->getTimePeriod() == 'day' ) {
 			$fields = "$yearValue, $monthValue, $dayValue";
@@ -370,9 +370,9 @@ END;
 	 * that match that value.
 	 */
 	function getAllValues() {
-		$possible_values = array();
+		$possible_values = [];
 		$property_value = $this->escaped_property;
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$property_table_name = $dbr->tableName( $this->getTableName() );
 		$value_field = $this->getValueField();
 		$smw_ids = $dbr->tableName( SDUtils::getIDsTableName() );
@@ -416,7 +416,7 @@ END;
 	 * and for getting the set of 'None' values.
 	 */
 	function createTempTable() {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$smw_ids = $dbr->tableName( SDUtils::getIDsTableName() );
 
@@ -445,7 +445,7 @@ END;
 	 * Deletes the temporary table.
 	 */
 	function dropTempTable() {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		// DROP TEMPORARY TABLE would be marginally safer, but it's
 		// not supported on all RDBMS's.
 		$sql = "DROP TABLE semantic_drilldown_filter_values";
