@@ -155,7 +155,7 @@ function sdfInitNamespaces() {
  * can be initialized much later when they are actually needed.
  */
 function sdfInitContentLanguage( $langcode ) {
-	global $sdgIP, $sdgContLang;
+	global $sdgContLang;
 
 	if ( !empty( $sdgContLang ) ) {
 		return;
@@ -163,13 +163,13 @@ function sdfInitContentLanguage( $langcode ) {
 
 	$sdContLangClass = 'SD_Language' . str_replace( '-', '_', ucfirst( $langcode ) );
 
-	if ( file_exists( $sdgIP . '/languages/' . $sdContLangClass . '.php' ) ) {
-		include_once $sdgIP . '/languages/' . $sdContLangClass . '.php';
+	if ( file_exists( __DIR__ . '/languages/' . $sdContLangClass . '.php' ) ) {
+		include_once __DIR__ . '/languages/' . $sdContLangClass . '.php';
 	}
 
 	// fallback if language not supported
 	if ( !class_exists( $sdContLangClass ) ) {
-		include_once $sdgIP . '/languages/SD_LanguageEn.php';
+		include_once __DIR__ . '/languages/SD_LanguageEn.php';
 		$sdContLangClass = 'SD_LanguageEn';
 	}
 
