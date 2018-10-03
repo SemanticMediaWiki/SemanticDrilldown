@@ -1,8 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Jon Harald Søby"
+			"Jon Harald Søby",
+			"Saederup92"
 		]
 	},
-	"sd_browsedata_none": "Ingen"
+	"sd_browsedata_subcategory": "Underkategori",
+	"sd_browsedata_none": "Ingen",
+	"sd-pageschemas-values": "Værdier"
 }
