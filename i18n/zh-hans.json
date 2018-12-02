@@ -6,14 +6,15 @@
 			"PhiLiP",
 			"Yfdyh000",
 			"Mywood",
-			"Liuxinyu970226"
+			"Liuxinyu970226",
+			"Angrydog001"
 		]
 	},
 	"semanticdrilldown-desc": "用于在语义数据之中导航的钻取界面",
 	"specialpages-group-sd_group": "语义钻取",
 	"browsedata": "浏览数据",
 	"sd_browsedata_choosecategory": "选择一个分类",
-	"sd_browsedata_viewcategory": "检视分类",
+	"sd_browsedata_viewcategory": "查看分类",
 	"sd_browsedata_docu": "点击下面的一个或多个项目来缩小您的结果。",
 	"sd_browsedata_subcategory": "子类别",
 	"sd_browsedata_other": "其他",
