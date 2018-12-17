@@ -34,7 +34,7 @@ class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
 			->with( $sqlQuery, $this->anything() );
 
 		$this->databaseConnectionMock->expects( $this->never() )
-			->method( 'commit' );
+			->method( 'startAtomic' );
 		$this->databaseConnectionMock->expects( $this->never() )
 			->method( 'setFlag' );
 
@@ -61,7 +61,7 @@ class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
 			->with( $sqlQuery, $this->anything() );
 
 		$this->databaseConnectionMock->expects( $this->never() )
-			->method( 'commit' );
+			->method( 'startAtomic' );
 		$this->databaseConnectionMock->expects( $this->once() )
 			->method( 'setFlag' )
 			->with( DBO_TRX );
@@ -89,7 +89,7 @@ class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
 			->with( $sqlQuery, $this->anything() );
 
 		$this->databaseConnectionMock->expects( $this->once() )
-			->method( 'commit' );
+			->method( 'startAtomic' );
 		$this->databaseConnectionMock->expects( $this->once() )
 			->method( 'setFlag' )
 			->with( DBO_TRX );

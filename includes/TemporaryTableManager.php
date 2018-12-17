@@ -28,10 +28,14 @@ class TemporaryTableManager {
 
 		// If a transaction was automatically started on first query, make sure we commit it
 		if ( $wasAutoTrx && $this->databaseConnection->trxLevel() ) {
-			$this->databaseConnection->commit( __METHOD__ );
+			$this->databaseConnection->startAtomic( __METHOD__ );
 		}
 
 		$this->databaseConnection->query( $sqlQuery, $method );
+
+		if ( $wasAutoTrx && $this->databaseConnection->trxLevel() ) {
+			$this->databaseConnection->endAtomic( __METHOD__ );
+		}
 
 		if ( $wasAutoTrx ) {
 			$this->databaseConnection->setFlag( DBO_TRX );
