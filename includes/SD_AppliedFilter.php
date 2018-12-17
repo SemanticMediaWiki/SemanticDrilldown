@@ -110,6 +110,7 @@ class SDAppliedFilter {
 					$sql .= "$value_field < {$fv->upper_limit} ";
 				}
 			} elseif ( $this->filter->property_type == 'date' ) {
+				$value_field = $this->filter->getDateField();
 				list( $yearValue, $monthValue, $dayValue ) = SDUtils::getDateFunctions( $value_field );
 				if ( $fv->time_period == 'day' ) {
 					$sql .= "$yearValue = {$fv->year} AND $monthValue = {$fv->month} AND $dayValue = {$fv->day} ";
