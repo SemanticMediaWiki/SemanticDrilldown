@@ -139,35 +139,6 @@ class SDUtils {
 	}
 
 	/**
-	 * Generic static function - gets all the values that a specific page
-	 * points to with a specific property
-	 *
-	 * @deprecated as of SD 2.0 - will be removed when the "Filter:"
-	 * namespace goes away.
-	 */
-	static function getValuesForProperty( $subject, $subjectNamespace, $specialPropID ) {
-		$store = self::getSMWStore();
-		$res = self::getSMWPropertyValues( $store, $subject, $subjectNamespace, $specialPropID );
-		$values = [];
-		foreach ( $res as $prop_val ) {
-			// depends on version of SMW
-			if ( $prop_val instanceof SMWDIWikiPage ) {
-				$actual_val = $prop_val->getDBkey();
-			} elseif ( $prop_val instanceof SMWDIString ) {
-				$actual_val = $prop_val->getString();
-			} elseif ( $prop_val instanceof SMWDIBlob ) {
-				$actual_val = $prop_val->getString();
-			} elseif ( method_exists( $prop_val, 'getValueKey' ) ) {
-				$actual_val = $prop_val->getValueKey();
-			} else {
-				$actual_val = $prop_val->getXSDValue();
-			}
-			$values[] = html_entity_decode( str_replace( '_', ' ', $actual_val ) );
-		}
-		return $values;
-	}
-
-	/**
 	 * Gets all the filters specified for a category.
 	 */
 	static function loadFiltersForCategory( $category ) {
@@ -207,14 +178,6 @@ class SDUtils {
 			}
 		}
 
-		// Get "legacy" filters defined via the SMW special property
-		// "Has filter" and the Filter: namespace.
-		$filter_names = self::getValuesForProperty( str_replace( ' ', '_', $category ), NS_CATEGORY, '_SD_F' );
-		foreach ( $filter_names as $filter_name ) {
-			$filter = SDFilter::load( $filter_name );
-			$filter->required_filters = self::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_RF', SD_SP_REQUIRES_FILTER, SD_NS_FILTER );
-			$filters[] = $filter;
-		}
 		// Read from the Page Schemas schema for this category, if
 		// it exists, and add any filters defined there.
 		if ( class_exists( 'PSSchema' ) ) {
@@ -248,12 +211,6 @@ class SDUtils {
 		if ( $row = $dbr->fetchRow( $res ) ) {
 			return $row['pp_value'];
 		}
-
-		// Get "legacy" title defined via special properties.
-		$titles_for_category = self::getValuesForProperty( $category, NS_CATEGORY, '_SD_DT', SD_SP_HAS_DRILLDOWN_TITLE, NS_MAIN );
-		if ( count( $titles_for_category ) > 0 ) {
-			return str_replace( '_', ' ', $titles_for_category[0] );
-		}
 	}
 
 	/**
@@ -279,12 +236,6 @@ class SDUtils {
 			// There should only be one row.
 			$displayParamsStr = $row['pp_value'];
 			$return_display_params[] = explode( ';', $displayParamsStr );
-		}
-
-		// Get "legacy" parameters defined via special properties.
-		$all_display_params = self::getValuesForProperty( str_replace( ' ', '_', $category ), NS_CATEGORY, '_SD_DP' );
-		foreach ( $all_display_params as $display_params ) {
-			$return_display_params[] = explode( ';', $display_params );
 		}
 
 		return $return_display_params;

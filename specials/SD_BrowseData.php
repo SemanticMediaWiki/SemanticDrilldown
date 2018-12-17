@@ -468,27 +468,12 @@ END;
 	}
 
 	/**
-	 * @deprecated as of SD 2.0 - will be removed when the "Filter:"
-	 * namespace goes away.
-	 */
-	function printFilterLabel( $filter_name ) {
-		$labels_for_filter = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_L', SD_SP_HAS_LABEL, NS_MAIN );
-		if ( count( $labels_for_filter ) > 0 ) {
-			$filter_label = $labels_for_filter[0];
-		} else {
-			$filter_label = str_replace( '_', ' ', $filter_name );
-		}
-		return $filter_label;
-	}
-
-	/**
 	 * Create the full display of the filter line, once the text for
 	 * the "results" (values) for this filter has been created.
 	 */
 	function printFilterLine( $filterName, $isApplied, $isNormalFilter, $resultsLine ) {
 		global $sdgScriptPath;
 
-		$filterLabel = $this->printFilterLabel( $filterName );
 		$text = <<<END
 				<div class="drilldown-filter">
 					<div class="drilldown-filter-label">
@@ -507,7 +492,7 @@ END;
 
 END;
 		}
-		$text .= "\t\t\t\t\t$filterLabel:";
+		$text .= "\t\t\t\t\t$filterName:";
 		if ( $isApplied ) {
 			$add_another_str = wfMessage( 'sd_browsedata_addanothervalue' )->text();
 			$text .= " <span class=\"drilldown-filter-notes\">($add_another_str)</span>";
@@ -1098,7 +1083,7 @@ END;
 		}
 		foreach ( $this->applied_filters as $i => $af ) {
 			$header .= ( ! $this->subcategory && $i == 0 ) ? " > " : "\n					<span class=\"drilldown-header-value\">&</span> ";
-			$filter_label = $this->printFilterLabel( $af->filter->name );
+			$filter_label = $af->filter->name;
 			// add an "x" to remove this filter, if it has more
 			// than one value
 			if ( count( $this->applied_filters[$i]->values ) > 1 ) {

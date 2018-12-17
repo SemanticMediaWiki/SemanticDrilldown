@@ -93,41 +93,6 @@ class SDFilter {
 		return $filters_ps;
 	}
 
-	/**
-	 * @deprecated as of SD 2.0 - will be removed when the "Filter:"
-	 * namespace goes away.
-	 */
-	static function load( $filter_name ) {
-		$f = new SDFilter();
-		$f->setName( $filter_name );
-		$properties_used = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_CP', SD_SP_COVERS_PROPERTY, SMW_NS_PROPERTY );
-		if ( count( $properties_used ) > 0 ) {
-			$f->setProperty( $properties_used[0] );
-			// This may not be necessary, or useful.
-			$f->property_type = 'page';
-		}
-		$proptitle = Title::newFromText( $f->property, SMW_NS_PROPERTY );
-		if ( $proptitle != null ) {
-			$f->loadPropertyTypeFromProperty();
-		}
-		$categories = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_VC', SD_SP_GETS_VALUES_FROM_CATEGORY, NS_CATEGORY );
-		if ( count( $categories ) > 0 ) {
-			$f->setCategory( $categories[0] );
-		} elseif ( $f->property_type === 'boolean' ) {
-			$f->allowed_values = [ '0', '1' ];
-		} else {
-			$f->allowed_values = [];
-		}
-
-		// Set list of possible applied filters if allowed values
-		// array was set.
-		foreach ( $f->allowed_values as $allowed_value ) {
-			$f->possible_applied_filters[] = SDAppliedFilter::create( $f, $allowed_value );
-		}
-
-		return $f;
-	}
-
 	function loadPropertyTypeFromProperty() {
 		// Default the property type to "Page" (matching SMW's
 		// default), in case there is no type set for this property.
