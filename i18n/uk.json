@@ -5,7 +5,8 @@
 			"Base",
 			"Steve.rusyn",
 			"SteveR",
-			"Тест"
+			"Тест",
+			"Piramidion"
 		]
 	},
 	"semanticdrilldown-desc": "Розгорнутий інтерфейс для навігації у семантичних даних",
@@ -29,8 +30,8 @@
 	"sd_browsedata_daterangestart": "Початок:",
 	"sd_browsedata_daterangeend": "Кінець:",
 	"sd_browsedata_novalues": "Немає значень для цього фільтра",
-	"sd_createfilter_usepropertyvalues": "Використовуйте усі значення цієї властивості для фільтру",
-	"sd_createfilter_usecategoryvalues": "Отримати значення для фільтру із цієї категорії:",
+	"sd_createfilter_usepropertyvalues": "Використовуйте всі значення цієї властивості для фільтра",
+	"sd_createfilter_usecategoryvalues": "Отримати значення для фільтра з цієї категорії:",
 	"sd_createfilter_requirefilter": "Вимагати вибору іншого фільтра, перед тим, як відображати цей:",
 	"sd-pageschemas-filter": "Фільтр",
 	"sd-pageschemas-values": "Значення"
