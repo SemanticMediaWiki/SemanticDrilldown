@@ -48,11 +48,11 @@ class SDBrowseData extends IncludableSpecialPage {
 		// that have already been applied from the query string
 		$category = str_replace( '_', ' ', $request->getVal( '_cat' ) );
 		// if query string did not contain this variables, try the URL
-		if ( ! $category ) {
+		if ( !$category ) {
 			$queryparts = explode( '/', $query, 1 );
 			$category = isset( $queryparts[0] ) ? $queryparts[0] : '';
 		}
-		if ( ! $category ) {
+		if ( !$category ) {
 			$category_title = wfMessage( 'browsedata' )->text();
 		} else {
 			$category_title = SDUtils::getDrilldownTitleForCategory( $category );
@@ -62,7 +62,7 @@ class SDBrowseData extends IncludableSpecialPage {
 		}
 		// if no category was specified, go with the first
 		// category on the site, alphabetically
-		if ( ! $category ) {
+		if ( !$category ) {
 			$categories = SDUtils::getCategoriesForBrowsing();
 			if ( count( $categories ) == 0 ) {
 				// There are apparently no top-level
@@ -112,13 +112,13 @@ class SDBrowseData extends IncludableSpecialPage {
 						$found_match = true;
 					}
 				}
-				if ( ! $found_match ) {
+				if ( !$found_match ) {
 					$matched_all_required_filters = false;
 					continue;
 				}
 			}
 			if ( $matched_all_required_filters ) {
-				if ( ! $filter_used[$i] ) {
+				if ( !$filter_used[$i] ) {
 					$remaining_filters[] = $filter;
 				}
 			}
@@ -1007,7 +1007,7 @@ END;
 		// if it's not a numeric filter
 		if ( count( $f->allowed_values ) > 0 ) {
 			$fv = SDFilterValue::create( $f->allowed_values[0] );
-			if ( ! $fv->is_numeric ) {
+			if ( !$fv->is_numeric ) {
 				$none_filter = SDAppliedFilter::create( $f, ' none' );
 				$num_results = $this->getNumResults( $this->subcategory, $this->all_subcategories, $none_filter );
 				if ( $num_results > 0 ) {
@@ -1055,7 +1055,7 @@ END;
 
 		$header = "";
 		$this->show_single_cat = $this->getRequest()->getCheck( '_single' );
-		if ( ! $this->show_single_cat ) {
+		if ( !$this->show_single_cat ) {
 			$header .= $this->printCategoriesList( $categories );
 		}
 		// if there are no subcategories or filters for this
@@ -1082,7 +1082,7 @@ END;
 			$header .= "\n" . '				<span class="drilldown-header-value">' . $subcat_string . '</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removesubcategoryfilter' )->text() . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a> ';
 		}
 		foreach ( $this->applied_filters as $i => $af ) {
-			$header .= ( ! $this->subcategory && $i == 0 ) ? " > " : "\n					<span class=\"drilldown-header-value\">&</span> ";
+			$header .= ( !$this->subcategory && $i == 0 ) ? " > " : "\n					<span class=\"drilldown-header-value\">&</span> ";
 			$filter_label = $af->filter->name;
 			// add an "x" to remove this filter, if it has more
 			// than one value
@@ -1293,7 +1293,7 @@ END;
 			$display_params = array_map( 'trim', $all_display_params[0] );
 			SMWQueryProcessor::processFunctionParams( $display_params, $querystring, $params, $printouts );
 		}
-		if ( ! empty( $querystring ) ) {
+		if ( !empty( $querystring ) ) {
 			$query = SMWQueryProcessor::createQuery( $querystring, $params );
 		} else {
 			$query = new SMWQuery();
@@ -1332,7 +1332,7 @@ END;
 		// How else can we do this?
 		global $wgParser;
 		SMWOutputs::commitToParser( $wgParser );
-		if ( ! is_null( $wgParser->mOutput ) ) {
+		if ( !is_null( $wgParser->mOutput ) ) {
 			$headItems = $wgParser->getOutput()->getHeadItems();
 			foreach ( $headItems as $key => $item ) {
 				$out->addHeadItem( $key, $item );

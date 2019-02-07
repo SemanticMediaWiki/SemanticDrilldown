@@ -35,7 +35,7 @@ class SDAppliedFilter {
 			$af->upper_date = $upper_date;
 			$af->upper_date_string = SDUtils::monthToString( $upper_date['month'] ) . " " . $upper_date['day'] . ", " . $upper_date['year'];
 		}
-		if ( ! is_array( $values ) ) {
+		if ( !is_array( $values ) ) {
 			$values = [ $values ];
 		}
 		foreach ( $values as $val ) {
