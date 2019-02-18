@@ -970,7 +970,7 @@ END;
 
 		$f->createTempTable();
 		$found_results_for_filter = false;
-		if ( count( $f->allowed_values ) == 0 ) {
+		if ( empty( $f->allowed_values ) ) {
 			if ( $f->property_type == 'date' ) {
 				$filter_values = $f->getTimePeriodValues();
 			} else {
@@ -996,16 +996,16 @@ END;
 		// Now get values for 'Other' and 'None', as well
 		// - don't show 'Other' if filter values were
 		// obtained dynamically.
-		if ( count( $f->allowed_values ) > 0 ) {
+		if ( !empty( $f->allowed_values ) ) {
 			$other_filter = SDAppliedFilter::create( $f, ' other' );
 			$num_results = $this->getNumResults( $this->subcategory, $this->all_subcategories, $other_filter );
 			if ( $num_results > 0 ) {
 				$filter_values['_other'] = $num_results;
 			}
 		}
-		// show 'None' only if any other results have been found, and
-		// if it's not a numeric filter
-		if ( count( $f->allowed_values ) > 0 ) {
+		// Show 'None' only if any other results have been found, and
+		// if it's not a numeric filter.
+		if ( !empty( $f->allowed_values ) ) {
 			$fv = SDFilterValue::create( $f->allowed_values[0] );
 			if ( !$fv->is_numeric ) {
 				$none_filter = SDAppliedFilter::create( $f, ' none' );
@@ -1282,7 +1282,7 @@ END;
 
 		// If this was called from the command line, exit.
 		if ( php_sapi_name() == "cli" ) {
-			return '';
+			return;
 		}
 
 		$all_display_params = SDUtils::getDisplayParamsForCategory( $this->category );
