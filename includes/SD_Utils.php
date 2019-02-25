@@ -145,6 +145,13 @@ class SDUtils {
 		$filters = [];
 
 		$title = Title::newFromText( $category, NS_CATEGORY );
+
+		// Return an empty array if the title object couldn't be created.
+		// This mainly happens if people change the $_cat parameter in the url.
+		if ( $title === null ) {
+			return $filters;
+		}
+
 		$pageId = $title->getArticleID();
 		$dbr = wfGetDB( DB_REPLICA );
 		$res = $dbr->select( 'page_props',
@@ -196,6 +203,13 @@ class SDUtils {
 	 */
 	static function getDrilldownTitleForCategory( $category ) {
 		$title = Title::newFromText( $category, NS_CATEGORY );
+
+		// Return false if the title object couldn't be created.
+		// This mainly happens if people change the $_cat in the url.
+		if ( $title === null ) {
+			return false;
+		}
+
 		$pageID = $title->getArticleID();
 		$dbr = wfGetDB( DB_REPLICA );
 		$res = $dbr->select( 'page_props',
@@ -452,5 +466,15 @@ class SDUtils {
 	public static function onUnitTestsList( &$paths ) {
 		$paths[] = __DIR__ . '/../tests/phpunit';
 		return true;
+	}
+
+	/**
+	 * Escapes the given string
+	 *
+	 * @param string $val
+	 * @return string
+	 */
+	public static function escapeString( $val ) {
+		return htmlspecialchars( $val, ENT_QUOTES, 'UTF-8' );
 	}
 }

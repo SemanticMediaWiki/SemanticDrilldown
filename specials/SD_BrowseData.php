@@ -72,7 +72,7 @@ class SDBrowseData extends IncludableSpecialPage {
 			$category = $categories[0];
 		}
 
-		$subcategory = $request->getVal( '_subcat' );
+		$subcategory = SDUtils::escapeString( $request->getVal( '_subcat' ) );
 
 		$filters = SDUtils::loadFiltersForCategory( $category );
 
@@ -89,6 +89,10 @@ class SDBrowseData extends IncludableSpecialPage {
 			$upper_date = $request->getArray( '_upper_' . $filter_name );
 			if ( $vals_array = $request->getArray( $filter_name ) ) {
 				foreach ( $vals_array as $j => $val ) {
+
+					// Escape the filter value to prevent malicious strings in the URLs
+					$val = SDUtils::escapeString( $val );
+
 					$vals_array[$j] = str_replace( '_', ' ', $val );
 				}
 				$applied_filters[] = SDAppliedFilter::create( $filter, $vals_array );
@@ -392,6 +396,13 @@ class SDBrowseDataPage extends QueryPage {
 	 */
 	function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
 		$dbr = wfGetDB( DB_REPLICA );
+
+		// Escape the given values to prevent SQL injection
+		$subcategory = $dbr->addQuotes( $subcategory );
+		foreach ( $subcategories as $key => $value ) {
+			$subcategories[$key] = $dbr->addQuotes( $value );
+		}
+
 		$sql = "SELECT COUNT(DISTINCT sdv.id) ";
 		if ( $new_filter ) {
 			$sql .= $this->getSQLFromClauseForField( $new_filter );
@@ -576,7 +587,7 @@ END;
 			if ( $i > 0 ) {
 				$results_line .= " · ";
 			}
-			$filter_text = $this->printFilterValue( $af->filter, $value );
+			$filter_text = SDUtils::escapeString( $this->printFilterValue( $af->filter, $value ) );
 			$applied_filters = $this->applied_filters;
 			foreach ( $applied_filters as $af2 ) {
 				if ( $af->filter->name == $af2->filter->name ) {
@@ -627,7 +638,7 @@ END;
 			if ( $num_printed_values++ > 0 ) {
 				$results_line .= " · ";
 			}
-			$filter_text = $this->printFilterValue( $f, $value_str );
+			$filter_text = SDUtils::escapeString( $this->printFilterValue( $f, $value_str ) );
 			$filter_text .= "&nbsp;($num_results)";
 			$filter_url = $cur_url . urlencode( str_replace( ' ', '_', $f->name ) ) . '=' . urlencode( str_replace( ' ', '_', $value_str ) );
 			if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
@@ -1099,7 +1110,7 @@ END;
 				if ( $j > 0 ) {
 					$header .= ' <span class="drilldown-or">' . wfMessage( 'sd_browsedata_or' )->text() . '</span> ';
 				}
-				$filter_text = $this->printFilterValue( $af->filter, $fv->text );
+				$filter_text = SDUtils::escapeString( $this->printFilterValue( $af->filter, $fv->text ) );
 				$temp_filters_array = $this->applied_filters;
 				$removed_values = array_splice( $temp_filters_array[$i]->values, $j, 1 );
 				$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
@@ -1390,4 +1401,5 @@ END;
 	function closeList() {
 		return "\n			<br style=\"clear: both\" />\n";
 	}
+
 }
