@@ -3,13 +3,34 @@
 		"authors": [
 			"Juan de Vojníkov",
 			"Juandev",
-			"Vks"
+			"Vks",
+			"Jaroslav Cerny"
 		]
 	},
+	"semanticdrilldown-desc": "Rozhraní pro detailní procházení sémantických dat",
+	"specialpages-group-sd_group": "Procházení sémantických hierarchií",
+	"browsedata": "Procházet data",
+	"sd_browsedata_choosecategory": "Vyberte kategorii",
+	"sd_browsedata_viewcategory": "zobrazit kategorii",
+	"sd_browsedata_docu": "Kliknutím na jednu či více položek omezíte počet výsledků.",
 	"sd_browsedata_subcategory": "Podkategorie",
 	"sd_browsedata_other": "Jiné",
 	"sd_browsedata_none": "Nic",
+	"sd_browsedata_filterbyvalue": "Filtrovat podle této hodnoty",
+	"sd_browsedata_filterbysubcategory": "Filtrovat podle této podkategorie",
+	"sd_browsedata_otherfilter": "Zobrazit stránky s jinou hodnotou pro tento filtr",
+	"sd_browsedata_nonefilter": "Zobrazit stránky neobsahující hodnotu pro tento filtr",
+	"sd_browsedata_or": "nebo",
 	"sd_browsedata_removefilter": "Odstanit tento filtr",
+	"sd_browsedata_removesubcategoryfilter": "Odebrat tento filtr podkategorie",
+	"sd_browsedata_resetfilters": "Vynulovat filtry",
+	"sd_browsedata_addanothervalue": "Kliknutím na šipku přidáte další hodnotu",
+	"sd_browsedata_daterangestart": "Počátek:",
 	"sd_browsedata_daterangeend": "Konec:",
-	"sd-pageschemas-filter": "Filtr"
+	"sd_browsedata_novalues": "Neexistují žádné hodnoty pro tento filtr",
+	"sd_createfilter_usepropertyvalues": "Použít všechny hodnoty této vlastnosti pro filtr",
+	"sd_createfilter_usecategoryvalues": "Načíst hodnoty pro filtr z této kategorie:",
+	"sd_createfilter_requirefilter": "Požádat o výběr jiného filtru před zobrazením tohoto:",
+	"sd-pageschemas-filter": "Filtr",
+	"sd-pageschemas-values": "Hodnoty"
 }
