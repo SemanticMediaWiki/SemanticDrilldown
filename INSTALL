@@ -25,7 +25,7 @@ MediaWiki's own installation requirements.
       include_once('extensions/SemanticDrilldown/SemanticDrilldown.php');
 
 '''Remark:'''  Semantic Drilldown creates an additional custom namespace,
-"Filter" (see http://www.mediawiki.org/wiki/Manual:Using_custom_namespaces).
+"Filter" (see https://www.mediawiki.org/wiki/Manual:Using_custom_namespaces).
 If you have your own custom namespaces, you have to set the parameter
 $sdgNamespaceIndex before including SemanticDrilldown.php. See
 SemanticDrilldown.php for more details.
