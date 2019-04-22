@@ -1,4 +1,7 @@
 <?php
+
+use MediaWiki\MediaWikiServices;
+
 /**
  * A class for static helper functions for Semantic Drilldown
  *
@@ -413,11 +416,18 @@ class SDUtils {
 	 * 'HIDEFROMDRILLDOWN' and 'SHOWINDRILLDOWN' magic words in a page
 	 */
 	static function handleShowAndHide( &$parser, &$text ) {
-		$mw_hide = MagicWord::get( 'MAG_HIDEFROMDRILLDOWN' );
+		if ( class_exists( MagicWordFactory::class ) ) {
+			// MW 1.32+
+			$factory = MediaWikiServices::getInstance()->getMagicWordFactory();
+			$mw_hide = $factory->get( 'MAG_HIDEFROMDRILLDOWN' );
+			$mw_show = $factory->get( 'MAG_SHOWINDRILLDOWN' );
+		} else {
+			$mw_hide = MagicWord::get( 'MAG_HIDEFROMDRILLDOWN' );
+			$mw_show = MagicWord::get( 'MAG_SHOWINDRILLDOWN' );
+		}
 		if ( $mw_hide->matchAndRemove( $text ) ) {
 			$parser->mOutput->setProperty( 'hidefromdrilldown', 'y' );
 		}
-		$mw_show = MagicWord::get( 'MAG_SHOWINDRILLDOWN' );
 		if ( $mw_show->matchAndRemove( $text ) ) {
 			$parser->mOutput->setProperty( 'showindrilldown', 'y' );
 		}
