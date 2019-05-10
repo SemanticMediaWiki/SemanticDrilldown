@@ -273,7 +273,7 @@ class SDBrowseDataPage extends QueryPage {
 	JOIN $smwCategoryInstances inst
 	ON sdv.id = inst.s_id
 	WHERE inst.o_id IN
-		(SELECT MAX(smw_id) FROM $smwIDs
+		(SELECT MIN(smw_id) FROM $smwIDs
 		WHERE smw_namespace = $ns_cat AND (smw_title = '$subcategory' ";
 		foreach ( $child_subcategories as $i => $subcat ) {
 			$subcat = str_replace( "'", "\'", $subcat );
@@ -323,7 +323,7 @@ class SDBrowseDataPage extends QueryPage {
 				$property_value = str_replace( ' ', '_', $af->filter->property );
 				$property_value = str_replace( "'", "\'", $property_value );
 				// The sub-query that returns an SMW ID contains
-				// a "SELECT MAX", even though by definition it
+				// a "SELECT MIN", even though by definition it
 				// doesn't need to, because of occasional bugs
 				// in SMW where the same page gets two
 				// different SMW IDs.
@@ -331,7 +331,7 @@ class SDBrowseDataPage extends QueryPage {
 				$sql .= "LEFT OUTER JOIN
 	(SELECT s_id
 	FROM $property_table_name
-	WHERE $property_field = (SELECT MAX(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)) $property_table_nickname
+	WHERE $property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)) $property_table_nickname
 	ON ids.smw_id = $property_table_nickname.s_id ";
 			}
 		}
@@ -370,7 +370,7 @@ class SDBrowseDataPage extends QueryPage {
 			$value_field = $af->filter->getValueField();
 			if ( $af->filter->property_type === 'page' ) {
 				$property_field = "r$i.p_id";
-				$sql .= "\n	AND ($property_field = (SELECT MAX(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)";
+				$sql .= "\n	AND ($property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)";
 				if ( $includes_none ) {
 					$sql .= " OR $property_field IS NULL";
 				}
@@ -378,7 +378,7 @@ class SDBrowseDataPage extends QueryPage {
 				$value_field = "o_ids$i.smw_title";
 			} else {
 				$property_field = "a$i.p_id";
-				$sql .= "\n	AND $property_field = (SELECT MAX(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
+				$sql .= "\n	AND $property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
 				if ( strncmp( $value_field, '(IF(o_blob IS NULL', 18 ) === 0 ) {
 					$value_field = str_replace( 'o_', "a$i.o_", $value_field );
 				} else {
