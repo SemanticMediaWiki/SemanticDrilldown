@@ -4,7 +4,8 @@
 			"Melancholie",
 			"Michawiki",
 			"Yekrats",
-			"Lucas"
+			"Lucas",
+			"Mirin"
 		]
 	},
 	"browsedata": "Foliumi datumojn",
@@ -27,5 +28,7 @@
 	"sd_browsedata_novalues": "Estas neniuj valoroj por ĉi tiu filtrilo",
 	"sd_createfilter_usepropertyvalues": "Uzu ĉiujn valorojn de ĉi tiu atributo por la filtrilo",
 	"sd_createfilter_usecategoryvalues": "Akiru valorojn por filtrilo de ĉi tiu kategorio:",
-	"sd_createfilter_requirefilter": "Devigu alian filtrilon esti selektita antaŭ ĉi tiu estas montrita:"
+	"sd_createfilter_requirefilter": "Devigu alian filtrilon esti selektita antaŭ ĉi tiu estas montrita:",
+	"sd-pageschemas-filter": "Filtri",
+	"sd-pageschemas-values": "Valoroj"
 }
