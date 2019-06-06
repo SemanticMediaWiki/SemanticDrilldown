@@ -200,7 +200,7 @@ class SDParserFunctions {
 			// MW 1.23+
 			$title = $specialPage->getPageTitle();
 		} else {
-			$title = $specialPage->getTitle();
+			$title = $specialPage->getPageTitle();
 		}
 		$link_url = $title->getLocalURL() . "/{$category}";
 		$link_url = str_replace( ' ', '_', $link_url );

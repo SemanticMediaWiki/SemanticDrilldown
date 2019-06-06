@@ -28,7 +28,7 @@ class SDBrowseData extends IncludableSpecialPage {
 		$out = $this->getOutput();
 		$request = $this->getRequest();
 
-		if ( $this->getTitle()->getNamespace() != NS_SPECIAL ) {
+		if ( $this->getPageTitle()->getNamespace() != NS_SPECIAL ) {
 			global $wgParser;
 			$wgParser->disableCache();
 		}
