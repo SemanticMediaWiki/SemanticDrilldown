@@ -7,7 +7,7 @@ class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
 	/** @var TemporaryTableManager $temporaryTableManager */
 	private $temporaryTableManager;
 
-	protected function setUp() {
+	protected function setUp() : void {
 		parent::setUp();
 
 		// Database::commit is final, cannot be mocked - we must use interface :/
