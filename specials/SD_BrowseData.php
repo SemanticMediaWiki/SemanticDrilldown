@@ -1302,7 +1302,7 @@ END;
 		// only one set of params is handled for now
 		if ( count( $all_display_params ) > 0 ) {
 			$display_params = array_map( 'trim', $all_display_params[0] );
-			SMWQueryProcessor::processFunctionParams( $display_params, $querystring, $params, $printouts );
+			list( $querystring, $params, $printouts ) = SMWQueryProcessor::getComponentsFromFunctionParams( $display_params, false );
 		}
 		if ( !empty( $querystring ) ) {
 			$query = SMWQueryProcessor::createQuery( $querystring, $params );
