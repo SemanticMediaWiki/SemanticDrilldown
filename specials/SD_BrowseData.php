@@ -30,7 +30,7 @@ class SDBrowseData extends IncludableSpecialPage {
 
 		if ( $this->getPageTitle()->getNamespace() != NS_SPECIAL ) {
 			global $wgParser;
-			$wgParser->disableCache();
+			$wgParser->getOutput()->updateCacheExpiry( 0 );
 		}
 		$this->setHeaders();
 		$out->addModules( 'ext.semanticdrilldown.main' );
