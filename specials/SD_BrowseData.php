@@ -8,6 +8,8 @@
  * @author Sanyam Goyal
  */
 
+use MediaWiki\MediaWikiServices;
+
 class SDBrowseData extends IncludableSpecialPage {
 
 	/**
@@ -27,10 +29,9 @@ class SDBrowseData extends IncludableSpecialPage {
 
 		$out = $this->getOutput();
 		$request = $this->getRequest();
-
+		$parser = MediaWikiServices::getInstance()->getParser();
 		if ( $this->getPageTitle()->getNamespace() != NS_SPECIAL ) {
-			global $wgParser;
-			$wgParser->getOutput()->updateCacheExpiry( 0 );
+			$parser->getOutput()->updateCacheExpiry( 0 );
 		}
 		$this->setHeaders();
 		$out->addModules( 'ext.semanticdrilldown.main' );
@@ -1353,15 +1354,16 @@ END;
 		// which may have been set in the result printer, and dump into
 		// headItems of $out.
 		// How else can we do this?
-		global $wgParser;
-		SMWOutputs::commitToParser( $wgParser );
-		if ( $wgParser->mOutput !== null ) {
-			$headItems = $wgParser->getOutput()->getHeadItems();
+		$parser = MediaWikiServices::getInstance()->getParser();
+		SMWOutputs::commitToParser( $parser );
+		if ( $parser->mOutput !== null ) {
+			$headItems = $parser->getOutput()->getHeadItems();
+
 			foreach ( $headItems as $key => $item ) {
 				$out->addHeadItem( $key, $item );
 			}
 			// Force one more parser function, so links appear.
-			$wgParser->replaceLinkHolders( $prtext );
+			$parser->replaceLinkHolders( $prtext );
 		}
 
 		$html = [];
