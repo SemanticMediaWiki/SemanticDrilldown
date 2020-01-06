@@ -161,7 +161,7 @@ class SDAppliedFilter {
 		$smwIDs = $dbr->tableName( SDUtils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( SDUtils::getCategoryInstancesTableName() );
 		$cat_ns = NS_CATEGORY;
-		$sql = "	SELECT $value_field
+		$sql = "SELECT $value_field
 	FROM $property_table_name p
 	JOIN $smwIDs p_ids ON p.p_id = p_ids.smw_id\n";
 		if ( $this->filter->property_type === 'page' ) {

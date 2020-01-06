@@ -217,11 +217,11 @@ class SDFilter {
 			return $this->time_period;
 		}
 
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbw = wfGetDB( DB_MASTER );
 		$property_value = $this->escaped_property;
 		$date_field = $this->getDateField();
-		$datesTable = $dbr->tableName( $this->getTableName() );
-		$idsTable = $dbr->tableName( SDUtils::getIDsTableName() );
+		$datesTable = $dbw->tableName( $this->getTableName() );
+		$idsTable = $dbw->tableName( SDUtils::getIDsTableName() );
 		$sql = <<<END
 	SELECT MIN($date_field), MAX($date_field)
 	FROM semantic_drilldown_values sdv 
@@ -230,8 +230,8 @@ class SDFilter {
 	WHERE p_ids.smw_title = '$property_value'
 
 END;
-		$res = $dbr->query( $sql );
-		$row = $dbr->fetchRow( $res );
+		$res = $dbw->query( $sql );
+		$row = $dbw->fetchRow( $res );
 		$minDate = $row[0];
 		if ( is_null( $minDate ) ) {
 			return null;
@@ -274,7 +274,7 @@ END;
 		$possible_dates = [];
 		$property_value = $this->escaped_property;
 		$date_field = $this->getDateField();
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbw = wfGetDB( DB_MASTER );
 		list( $yearValue, $monthValue, $dayValue ) = SDUtils::getDateFunctions( $date_field );
 		if ( $this->getTimePeriod() == 'day' ) {
 			$fields = "$yearValue, $monthValue, $dayValue";
@@ -285,8 +285,8 @@ END;
 		} else { // if ( $this->getTimePeriod() == 'decade' ) {
 			$fields = $yearValue;
 		}
-		$datesTable = $dbr->tableName( $this->getTableName() );
-		$idsTable = $dbr->tableName( SDUtils::getIDsTableName() );
+		$datesTable = $dbw->tableName( $this->getTableName() );
+		$idsTable = $dbw->tableName( SDUtils::getIDsTableName() );
 		$sql = <<<END
 	SELECT $fields, count(*)
 	FROM semantic_drilldown_values sdv
@@ -297,8 +297,8 @@ END;
 	ORDER BY $fields
 
 END;
-		$res = $dbr->query( $sql );
-		while ( $row = $dbr->fetchRow( $res ) ) {
+		$res = $dbw->query( $sql );
+		while ( $row = $dbw->fetchRow( $res ) ) {
 			if ( $this->getTimePeriod() == 'day' ) {
 				$date_string = SDUtils::monthToString( $row[1] ) . ' ' . $row[2] . ', ' . $row[0];
 				$possible_dates[$date_string] = $row[3];
@@ -325,7 +325,7 @@ END;
 				}
 			}
 		}
-		$dbr->freeResult( $res );
+		$dbw->freeResult( $res );
 		return $possible_dates;
 	}
 
@@ -337,10 +337,10 @@ END;
 	function getAllValues() {
 		$possible_values = [];
 		$property_value = $this->escaped_property;
-		$dbr = wfGetDB( DB_REPLICA );
-		$property_table_name = $dbr->tableName( $this->getTableName() );
+		$dbw = wfGetDB( DB_MASTER );
+		$property_table_name = $dbw->tableName( $this->getTableName() );
 		$value_field = $this->getValueField();
-		$smw_ids = $dbr->tableName( SDUtils::getIDsTableName() );
+		$smw_ids = $dbw->tableName( SDUtils::getIDsTableName() );
 		$prop_ns = SMW_NS_PROPERTY;
 		$sql = <<<END
 	SELECT $value_field, count(DISTINCT sdv.id)
@@ -359,8 +359,8 @@ END;
 	ORDER BY $value_field
 
 END;
-		$res = $dbr->query( $sql );
-		while ( $row = $dbr->fetchRow( $res ) ) {
+		$res = $dbw->query( $sql );
+		while ( $row = $dbw->fetchRow( $res ) ) {
 			$value_string = str_replace( '_', ' ', $row[0] );
 			// We check this here, and not in the SQL, because
 			// for MySQL, 0 sometimes equals blank.
@@ -369,7 +369,7 @@ END;
 			}
 			$possible_values[$value_string] = $row[1];
 		}
-		$dbr->freeResult( $res );
+		$dbw->freeResult( $res );
 		return $possible_values;
 	}
 
@@ -381,11 +381,11 @@ END;
 	 * and for getting the set of 'None' values.
 	 */
 	function createTempTable() {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbw = wfGetDB( DB_MASTER );
 
-		$smw_ids = $dbr->tableName( SDUtils::getIDsTableName() );
+		$smw_ids = $dbw->tableName( SDUtils::getIDsTableName() );
 
-		$valuesTable = $dbr->tableName( $this->getTableName() );
+		$valuesTable = $dbw->tableName( $this->getTableName() );
 		$value_field = $this->getValueField();
 
 		$query_property = $this->escaped_property;
@@ -402,7 +402,7 @@ END;
 		}
 		$sql .= "	WHERE p_ids.smw_title = '$query_property'";
 
-		$temporaryTableManager = new TemporaryTableManager( $dbr );
+		$temporaryTableManager = new TemporaryTableManager( $dbw );
 		$temporaryTableManager->queryWithAutoCommit( $sql, __METHOD__ );
 	}
 
@@ -410,12 +410,12 @@ END;
 	 * Deletes the temporary table.
 	 */
 	function dropTempTable() {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbw = wfGetDB( DB_MASTER );
 		// DROP TEMPORARY TABLE would be marginally safer, but it's
 		// not supported on all RDBMS's.
 		$sql = "DROP TABLE semantic_drilldown_filter_values";
 
-		$temporaryTableManager = new TemporaryTableManager( $dbr );
+		$temporaryTableManager = new TemporaryTableManager( $dbw );
 		$temporaryTableManager->queryWithAutoCommit( $sql, __METHOD__ );
 	}
 }

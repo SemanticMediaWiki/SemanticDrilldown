@@ -96,10 +96,14 @@ $wgResourceModules += [
 		'scripts' => [
 			'libs/SemanticDrilldown.js',
 		],
-		'dependencies' => [
-			'jquery.ui.autocomplete',
-			'jquery.ui.button',
-		],
+		'dependencies' => version_compare( $wgVersion, '1.34', '>=' )
+			? [
+				'jquery.ui',
+			]
+			: [
+				'jquery.ui.autocomplete',
+				'jquery.ui.button',
+			],
 	],
 	'ext.semanticdrilldown.info' => $sdgResourceTemplate + [
 		'styles' => [

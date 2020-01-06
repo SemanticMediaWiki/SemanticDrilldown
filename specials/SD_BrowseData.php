@@ -226,9 +226,9 @@ class SDBrowseDataPage extends QueryPage {
 	 * all remaining filters
 	 */
 	function createTempTable( $category, $subcategory, $subcategories, $applied_filters ) {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbw = wfGetDB( DB_MASTER );
 
-		$temporaryTableManager = new TemporaryTableManager( $dbr );
+		$temporaryTableManager = new TemporaryTableManager( $dbw );
 
 		$sql1 = "CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL )";
 		$temporaryTableManager->queryWithAutoCommit( $sql1, __METHOD__ );
@@ -395,12 +395,12 @@ class SDBrowseDataPage extends QueryPage {
 	 * set of filters and either a new subcategory or a new filter.
 	 */
 	function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbw = wfGetDB( DB_MASTER );
 
 		// Escape the given values to prevent SQL injection
-		$subcategory = $dbr->addQuotes( $subcategory );
+		$subcategory = $dbw->addQuotes( $subcategory );
 		foreach ( $subcategories as $key => $value ) {
-			$subcategories[$key] = $dbr->addQuotes( $value );
+			$subcategories[$key] = $dbw->addQuotes( $value );
 		}
 
 		$sql = "SELECT COUNT(DISTINCT sdv.id) ";
@@ -409,9 +409,9 @@ class SDBrowseDataPage extends QueryPage {
 		} else {
 			$sql .= $this->getSQLFromClauseForCategory( $subcategory, $subcategories );
 		}
-		$res = $dbr->query( $sql );
-		$row = $dbr->fetchRow( $res );
-		$dbr->freeResult( $res );
+		$res = $dbw->query( $sql );
+		$row = $dbw->fetchRow( $res );
+		$dbw->freeResult( $res );
 		return $row[0];
 	}
 
