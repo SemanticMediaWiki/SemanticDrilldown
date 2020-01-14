@@ -48,7 +48,7 @@ class SDFilter {
 			foreach ( $field_all as $fieldObj ) {
 				$f = new SDFilter();
 				$filter_array = $fieldObj->getObject( 'semanticdrilldown_Filter' );
-				if ( is_null( $filter_array ) ) {
+				if ( $filter_array === null ) {
 					continue;
 				}
 				if ( array_key_exists( 'name', $filter_array ) ) {
@@ -233,7 +233,7 @@ END;
 		$res = $dbw->query( $sql );
 		$row = $dbw->fetchRow( $res );
 		$minDate = $row[0];
-		if ( is_null( $minDate ) ) {
+		if ( $minDate === null ) {
 			return null;
 		}
 		$minDateParts = explode( '/', $minDate );

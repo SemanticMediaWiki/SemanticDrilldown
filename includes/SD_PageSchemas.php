@@ -29,7 +29,7 @@ class SDPageSchemas extends PSExtensionHandler {
 				continue;
 			}
 			$filterName = $child->attributes()->name;
-			if ( !is_null( $filterName ) ) {
+			if ( $filterName !== null ) {
 				$sd_array['name'] = (string)$filterName;
 			}
 			foreach ( $child->children() as $prop => $value ) {
@@ -65,9 +65,9 @@ class SDPageSchemas extends PSExtensionHandler {
 
 		$filter_array = [];
 		$hasExistingValues = false;
-		if ( !is_null( $psField ) ) {
+		if ( $psField !== null ) {
 			$filter_array = $psField->getObject( 'semanticdrilldown_Filter' );
-			if ( !is_null( $filter_array ) ) {
+			if ( $filter_array !== null ) {
 				$hasExistingValues = true;
 			}
 		}
@@ -75,7 +75,7 @@ class SDPageSchemas extends PSExtensionHandler {
 		$filterName = PageSchemas::getValueFromObject( $filter_array, 'name' );
 		$selectedCategory = PageSchemas::getValueFromObject( $filter_array, 'ValuesFromCategory' );
 		$fromCategoryAttrs = [];
-		if ( !is_null( $selectedCategory ) ) {
+		if ( $selectedCategory !== null ) {
 			$fromCategoryAttrs['checked'] = true;
 		}
 

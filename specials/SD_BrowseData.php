@@ -1343,7 +1343,7 @@ END;
 		// How else can we do this?
 		global $wgParser;
 		SMWOutputs::commitToParser( $wgParser );
-		if ( !is_null( $wgParser->mOutput ) ) {
+		if ( $wgParser->mOutput !== null ) {
 			$headItems = $wgParser->getOutput()->getHeadItems();
 			foreach ( $headItems as $key => $item ) {
 				$out->addHeadItem( $key, $item );
