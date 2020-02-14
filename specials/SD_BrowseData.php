@@ -280,16 +280,16 @@ class SDBrowseDataPage extends QueryPage {
 		$smwIDs = $dbr->tableName( SDUtils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( SDUtils::getCategoryInstancesTableName() );
 		$ns_cat = NS_CATEGORY;
-		$subcategory = str_replace( "'", "\'", $subcategory );
+		$subcategory_escaped = $dbr->addQuotes( $subcategory );
 		$sql = "FROM semantic_drilldown_values sdv
 	JOIN $smwCategoryInstances inst
 	ON sdv.id = inst.s_id
 	WHERE inst.o_id IN
 		(SELECT MIN(smw_id) FROM $smwIDs
-		WHERE smw_namespace = $ns_cat AND (smw_title = '$subcategory' ";
+		WHERE smw_namespace = $ns_cat AND (smw_title = $subcategory_escaped ";
 		foreach ( $child_subcategories as $i => $subcat ) {
-			$subcat = str_replace( "'", "\'", $subcat );
-			$sql .= "OR smw_title = '$subcat' ";
+			$subcat_escaped = $dbr->addQuotes( $subcat );
+			$sql .= "OR smw_title = $subcat_escaped ";
 		}
 		$sql .= ")) ";
 		return $sql;
