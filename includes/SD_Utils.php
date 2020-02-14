@@ -307,11 +307,19 @@ class SDUtils {
 			$yearValue = "EXTRACT(YEAR FROM TIMESTAMP $dateDBField)";
 			$monthValue = "EXTRACT(MONTH FROM TIMESTAMP $dateDBField)";
 			$dayValue = "EXTRACT(DAY FROM TIMESTAMP $dateDBField)";
-		} else { // MySQL, MS SQL Server
+		} elseif ( $wgDBtype == 'mssql' ) {
 			$yearValue = "YEAR($dateDBField)";
 			$monthValue = "MONTH($dateDBField)";
 			// SQL Server only supports DAY(), not DAYOFMONTH().
 			$dayValue = "DAY($dateDBField)";
+		} else { // MySQL
+			// $dateDBField has the following format: 2000/2/11/22/0/1/0, where every /-separated
+			// segment is optional. All of these are valid: 2000, 2000/2, 2000/2/11.
+			// However, YEAR(), MONTH() and DAY() would return NULL for incomplete date,
+			// so STR_TO_DATE is required.
+			$yearValue = "YEAR(STR_TO_DATE($dateDBField, '%Y/%m/%d'))";
+			$monthValue = "MONTH(STR_TO_DATE($dateDBField, '%Y/%m/%d'))";
+			$dayValue = "DAY(STR_TO_DATE($dateDBField, '%Y/%m/%d'))";
 		}
 		return [ $yearValue, $monthValue, $dayValue ];
 	}
