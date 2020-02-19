@@ -288,7 +288,7 @@ END;
 		$datesTable = $dbw->tableName( $this->getTableName() );
 		$idsTable = $dbw->tableName( SDUtils::getIDsTableName() );
 		$sql = <<<END
-	SELECT $fields, count(*)
+	SELECT $fields, count(*) AS matches
 	FROM semantic_drilldown_values sdv
 	JOIN $datesTable a ON sdv.id = a.s_id
 	JOIN $idsTable p_ids ON a.p_id = p_ids.smw_id
@@ -299,16 +299,38 @@ END;
 END;
 		$res = $dbw->query( $sql );
 		while ( $row = $dbw->fetchRow( $res ) ) {
-			if ( $this->getTimePeriod() == 'day' ) {
+			$timePeriod = $this->getTimePeriod();
+
+			/*
+				Some pages may have incomplete date (e.g. "February, 2019" or "2019" instead
+				of the full year/month/day). In this case day/month may be 0
+				and should be excluded from the filter that matches this particular page.
+
+				E.g. a day filter for date "February 0, 2019" is replaced with a
+				month filter "February, 2019". If month number is similarly 0, then it is replaced
+				with year filter "2019".
+				Note: if other pages have a full date, they will have a complete filter by day.
+			*/
+			if ( $timePeriod == 'day' && !$row[2] ) {
+				$timePeriod = 'month';
+			}
+
+			if ( $timePeriod == 'month' && !$row[1] ) {
+				$timePeriod = 'year';
+			}
+
+			$count = $row['matches'];
+
+			if ( $timePeriod == 'day' ) {
 				$date_string = SDUtils::monthToString( $row[1] ) . ' ' . $row[2] . ', ' . $row[0];
-				$possible_dates[$date_string] = $row[3];
-			} elseif ( $this->getTimePeriod() == 'month' ) {
+				$possible_dates[$date_string] = $count;
+			} elseif ( $timePeriod == 'month' ) {
 				global $sdgMonthValues;
 				$date_string = SDUtils::monthToString( $row[1] ) . ' ' . $row[0];
-				$possible_dates[$date_string] = $row[2];
-			} elseif ( $this->getTimePeriod() == 'year' ) {
+				$possible_dates[$date_string] = $count;
+			} elseif ( $timePeriod == 'year' ) {
 				$date_string = $row[0];
-				$possible_dates[$date_string] = $row[1];
+				$possible_dates[$date_string] = $count;
 			} else { // if ( $this->getTimePeriod() == 'decade' )
 				// Unfortunately, there's no SQL DECADE()
 				// function - so we have to take these values,
@@ -319,9 +341,9 @@ END;
 				$end_of_decade = $start_of_decade + 9;
 				$decade_string = $start_of_decade . ' - ' . $end_of_decade;
 				if ( !array_key_exists( $decade_string, $possible_dates ) ) {
-					$possible_dates[$decade_string] = $row[1];
+					$possible_dates[$decade_string] = $count;
 				} else {
-					$possible_dates[$decade_string] += $row[1];
+					$possible_dates[$decade_string] += $count;
 				}
 			}
 		}
