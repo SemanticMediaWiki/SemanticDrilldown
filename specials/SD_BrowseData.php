@@ -41,7 +41,19 @@ class SDBrowseData extends IncludableSpecialPage {
 			$sdgNumResultsPerPage = 250;
 		}
 
-		list( $limit, $offset ) = $request->getLimitOffset( $sdgNumResultsPerPage, 'sdlimit' );
+		if ( method_exists( $request, 'getLimitOffsetForUser' ) ) {
+			// MW 1.35+
+			list( $limit, $offset ) = $request->getLimitOffsetForUser(
+				$this->getUser(),
+				$sdgNumResultsPerPage,
+				'sdlimit'
+			);
+		} else {
+			list( $limit, $offset ) = $request->getLimitOffset(
+				$sdgNumResultsPerPage,
+				'sdlimit'
+			);
+		}
 		$filters = [];
 
 		// get information on current category, subcategory and filters
