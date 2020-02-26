@@ -44,7 +44,7 @@
 						} ) );
 					},
 					delay: 0,
-					change: function ( event, ui ) {
+					select: function ( event, ui ) {
 						if ( !ui.item ) {
 							// if it didn't match anything,
 							// just leave it as it is
@@ -54,6 +54,9 @@
 						self._trigger( 'selected', event, {
 							item: select.find( '[value="' + ui.item.id + '"]' )
 						} );
+						setTimeout( function () {
+							select[ 0 ].form.submit();
+						}, 0 );
 
 					},
 					minLength: 0
