@@ -19,6 +19,8 @@
  * @author mwjames
  */
 
+use MediaWiki\MediaWikiServices;
+
 class SDParserFunctions {
 
 	static function registerFunctions( &$parser ) {
@@ -154,7 +156,14 @@ class SDParserFunctions {
 		$params = func_get_args();
 		array_shift( $params );
 
-		$specialPage = SpecialPageFactory::getPage( 'BrowseData' );
+		if ( class_exists( 'MediaWiki\Special\SpecialPageFactory' ) ) {
+			// MW 1.32+
+			$specialPage = MediaWikiServices::getInstance()
+				->getSpecialPageFactory()
+				->getPage( 'BrowseData' );
+		} else {
+			$specialPage = SpecialPageFactory::getPage( 'BrowseData' );
+		}
 
 		// Set defaults.
 		$inQueryArr = [];
