@@ -52,6 +52,10 @@ class SDAppliedFilter {
 	function checkSQL( $value_field ) {
 		global $wgDBtype;
 
+		if ( $this->filter->property_type == 'date' ) {
+			$value_field = $this->filter->getDateField();
+		}
+
 		$sql = "(";
 		$dbr = wfGetDB( DB_REPLICA );
 		if ( $this->search_terms != null ) {
@@ -110,7 +114,6 @@ class SDAppliedFilter {
 					$sql .= "$value_field < {$fv->upper_limit} ";
 				}
 			} elseif ( $this->filter->property_type == 'date' ) {
-				$value_field = $this->filter->getDateField();
 				list( $yearValue, $monthValue, $dayValue ) = SDUtils::getDateFunctions( $value_field );
 				if ( $fv->time_period == 'day' ) {
 					$sql .= "$yearValue = {$fv->year} AND $monthValue = {$fv->month} AND $dayValue = {$fv->day} ";

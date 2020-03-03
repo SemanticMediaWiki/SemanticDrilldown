@@ -161,6 +161,16 @@ class SDFilter {
 				$this->db_table_name = 'smw_di_time';
 				$this->db_value_field = 'o_serialized';
 				$this->db_date_field = 'SUBSTR(o_serialized, 3, 100)';
+
+				if ( $wgDBtype == 'mysql' ) {
+					// SMW date field has the following format: 2000/2/11/22/0/1/0, where every /-separated
+					// segment is optional. All of these are valid: 2000, 2000/2, 2000/2/11.
+					// However, YEAR(), MONTH() and DAY() would return NULL for incomplete date,
+					// so STR_TO_DATE is required.
+					$this->db_date_field = "STR_TO_DATE(" . $this->db_date_field .
+						", '%Y/%m/%d')";
+				}
+
 			} elseif ( $this->property_type === 'number' ) {
 				$this->db_table_name = 'smw_di_number';
 				$this->db_value_field = 'o_serialized';
