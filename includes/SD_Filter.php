@@ -234,7 +234,7 @@ class SDFilter {
 		$idsTable = $dbw->tableName( SDUtils::getIDsTableName() );
 		$sql = <<<END
 	SELECT MIN($date_field), MAX($date_field)
-	FROM semantic_drilldown_values sdv 
+	FROM semantic_drilldown_values sdv
 	JOIN $datesTable a ON sdv.id = a.s_id
 	JOIN $idsTable p_ids ON a.p_id = p_ids.smw_id
 	WHERE p_ids.smw_title = '$property_value'
@@ -286,15 +286,7 @@ END;
 		$date_field = $this->getDateField();
 		$dbw = wfGetDB( DB_MASTER );
 		list( $yearValue, $monthValue, $dayValue ) = SDUtils::getDateFunctions( $date_field );
-		if ( $this->getTimePeriod() == 'day' ) {
-			$fields = "$yearValue, $monthValue, $dayValue";
-		} elseif ( $this->getTimePeriod() == 'month' ) {
-			$fields = "$yearValue, $monthValue";
-		} elseif ( $this->getTimePeriod() == 'year' ) {
-			$fields = $yearValue;
-		} else { // if ( $this->getTimePeriod() == 'decade' ) {
-			$fields = $yearValue;
-		}
+		$fields = "$yearValue, $monthValue, $dayValue";
 		$datesTable = $dbw->tableName( $this->getTableName() );
 		$idsTable = $dbw->tableName( SDUtils::getIDsTableName() );
 		$sql = <<<END
@@ -307,6 +299,13 @@ END;
 	ORDER BY $fields
 
 END;
+		// Additionally calculate earliest/latest date for default values of datepickers
+		// from SD_BrowseData::printDateRangeInput().
+		$min_date = '';
+		$max_date = '';
+		$min_date_padded = '';
+		$max_date_padded = '';
+
 		$res = $dbw->query( $sql );
 		while ( $row = $dbw->fetchRow( $res ) ) {
 			$timePeriod = $this->getTimePeriod();
@@ -356,9 +355,50 @@ END;
 					$possible_dates[$decade_string] += $count;
 				}
 			}
+
+			// For purposes of calculating earliest and latest dates,
+			// assume missing day to be 1 and missing month to be January.
+			$date = [
+				'year' => $row[0],
+				'month' => $row[1] ?? 0,
+				'day' => $row[2] ?? 0
+			];
+			$padded_date = sprintf( '%04d%02d%02d', // YYYYMMDD, for comparing with previous min/max date
+				$date['year'],
+				$date['month'],
+				$date['day']
+			);
+
+			if ( !$min_date || $padded_date < $min_date_padded ) {
+				$min_date_padded = $padded_date;
+				$min_date = $date;
+			}
+
+			if ( !$max_date || $padded_date > $max_date_padded ) {
+				$max_date_padded = $padded_date;
+				$max_date = $date;
+			}
 		}
 		$dbw->freeResult( $res );
-		return $possible_dates;
+
+		// If month/day are missing in $min_date/$max_date,
+		// then set them to 1 January for $min_date and to 31 December for $max_date.
+		if ( $min_date ) {
+			// YYYY-MM-DD, as expected by Datepicked inputs.
+			$min_date = sprintf( '%04d-%02d-%02d', $min_date['year'],
+				$min_date['month'] ?: 1, $min_date['day'] ?: 1 );
+		}
+
+		if ( $max_date ) {
+			$max_date = sprintf( '%04d-%02d-%02d', $max_date['year'],
+				$max_date['month'] ?: 12, $max_date['day'] ?: 31 );
+		}
+
+		return [
+			$possible_dates,
+			$min_date,
+			$max_date
+		];
 	}
 
 	/**
@@ -376,7 +416,7 @@ END;
 		$prop_ns = SMW_NS_PROPERTY;
 		$sql = <<<END
 	SELECT $value_field, count(DISTINCT sdv.id)
-	FROM semantic_drilldown_values sdv 
+	FROM semantic_drilldown_values sdv
 	JOIN $property_table_name p ON sdv.id = p.s_id
 
 END;

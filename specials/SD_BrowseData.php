@@ -9,6 +9,7 @@
  */
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Widget\DateInputWidget;
 
 class SDBrowseData extends IncludableSpecialPage {
 
@@ -98,8 +99,8 @@ class SDBrowseData extends IncludableSpecialPage {
 		foreach ( $filters as $i => $filter ) {
 			$filter_name = str_replace( [ ' ', "'" ], [ '_', "\'" ], $filter->name );
 			$search_terms = $request->getArray( '_search_' . $filter_name );
-			$lower_date = $request->getArray( '_lower_' . $filter_name );
-			$upper_date = $request->getArray( '_upper_' . $filter_name );
+			$lower_date = $request->getVal( '_lower_' . $filter_name );
+			$upper_date = $request->getVal( '_upper_' . $filter_name );
 			if ( $vals_array = $request->getArray( $filter_name ) ) {
 				foreach ( $vals_array as $j => $val ) {
 
@@ -918,44 +919,16 @@ END;
 	}
 
 	function printDateInput( $input_name, $cur_value = null ) {
-		$month_names = [
-			wfMessage( 'january' )->inContentLanguage()->text(),
-			wfMessage( 'february' )->inContentLanguage()->text(),
-			wfMessage( 'march' )->inContentLanguage()->text(),
-			wfMessage( 'april' )->inContentLanguage()->text(),
-			// Needed to avoid using 3-letter abbreviation
-			wfMessage( 'may_long' )->inContentLanguage()->text(),
-			wfMessage( 'june' )->inContentLanguage()->text(),
-			wfMessage( 'july' )->inContentLanguage()->text(),
-			wfMessage( 'august' )->inContentLanguage()->text(),
-			wfMessage( 'september' )->inContentLanguage()->text(),
-			wfMessage( 'october' )->inContentLanguage()->text(),
-			wfMessage( 'november' )->inContentLanguage()->text(),
-			wfMessage( 'december' )->inContentLanguage()->text()
-		];
+		$this->getOutput()->enableOOUI();
+		$this->getOutput()->addModuleStyles( 'mediawiki.widgets.DateInputWidget.styles' );
 
-		if ( is_array( $cur_value ) && array_key_exists( 'month', $cur_value ) ) {
-			$selected_month = $cur_value['month'];
-		} else {
-			$selected_month = null;
-		}
-		$text = ' <select name="' . $input_name . "[month]\">\n";
-		global $wgAmericanDates;
-		foreach ( $month_names as $i => $name ) {
-			// pad out month to always be two digits
-			$month_value = str_pad( $i + 1, 2, "0", STR_PAD_LEFT );
-			$selected_str = ( $i + 1 == $selected_month ) ? "selected" : "";
-			$text .= "\t<option value=\"$month_value\" $selected_str>$name</option>\n";
-		}
-		$text .= "\t</select>\n";
-		$text .= '<input name="' . $input_name . '[day]" type="text" size="2" value="' . $cur_value['day'] . '" />' . "\n";
-		$text .= '<input name="' . $input_name . '[year]" type="text" size="4" value="' . $cur_value['year'] . '" />' . "\n";
-		return $text;
+		$widget = new DateInputWidget( [
+			'name' => $input_name,
+			'value' => $cur_value
+		] );
+		return (string)$widget;
 	}
 
-	// This code is not called as of version 1.3; but it may get called
-	// again in the future.
-	/*
 	function printDateRangeInput( $filter_name, $lower_date = null, $upper_date = null ) {
 		$start_label = wfMessage( 'sd_browsedata_daterangestart' )->text();
 		$end_label = wfMessage( 'sd_browsedata_daterangeend' )->text();
@@ -968,6 +941,11 @@ $end_label $end_month_input</p>
 
 END;
 		foreach ( $this->getRequest()->getValues() as $key => $val ) {
+			if ( $key == "_lower_$filter_name" || $key == "_upper_$filter_name" ) {
+				// Prevent older value from querystring from overriding the value from inputs.
+				continue;
+			}
+
 			if ( is_array( $val ) ) {
 				foreach ( $val as $realKey => $realVal ) {
 					$text .= Html::hidden( $key . '[' . $realKey . ']', $realVal ) . "\n";
@@ -981,7 +959,6 @@ END;
 		$text .= "</form>\n";
 		return $text;
 	}
-	*/
 
 	/**
 	 * Print the line showing 'AND' values for a filter that has not
@@ -996,7 +973,7 @@ END;
 		$found_results_for_filter = false;
 		if ( empty( $f->allowed_values ) ) {
 			if ( $f->property_type == 'date' ) {
-				$filter_values = $f->getTimePeriodValues();
+				list( $filter_values, $lower_date, $upper_date ) = $f->getTimePeriodValues();
 			} else {
 				$filter_values = $f->getAllValues();
 			}
@@ -1054,6 +1031,11 @@ END;
 			$cur_url = $this->makeBrowseURL( $this->category, $this->applied_filters, $this->subcategory, $f->name );
 			$cur_url .= ( strpos( $cur_url, '?' ) ) ? '&' : '?';
 			$results_line = $this->printUnappliedFilterValues( $cur_url, $f, $filter_values );
+		}
+
+		// For dates additionally add two datepicker inputs (Start/End) to select a custom interval.
+		if ( $f->property_type == 'date' && count( $filter_values ) != 0 ) {
+			$results_line .= '<br>' . $this->printDateRangeInput( $filter_name, $lower_date, $upper_date );
 		}
 
 		$text = $this->printFilterLine( $f->name, false, $normal_filter, $results_line );

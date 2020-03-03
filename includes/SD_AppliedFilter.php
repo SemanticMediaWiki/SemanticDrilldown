@@ -27,14 +27,19 @@ class SDAppliedFilter {
 				$af->search_terms[] = str_replace( '&amp;', '&', $search_term );
 			}
 		}
-		if ( $lower_date != null ) {
-			$af->lower_date = $lower_date;
-			$af->lower_date_string = SDUtils::monthToString( $lower_date['month'] ) . " " . $lower_date['day'] . ", " . $lower_date['year'];
+
+		$dateParsed = $af->parseUpperOrLowerDate( $lower_date, false );
+		if ( $dateParsed ) {
+			$af->lower_date = $dateParsed;
+			$af->lower_date_string = $af->lowerOrUpperDateToString( $dateParsed );
 		}
-		if ( $upper_date != null ) {
-			$af->upper_date = $upper_date;
-			$af->upper_date_string = SDUtils::monthToString( $upper_date['month'] ) . " " . $upper_date['day'] . ", " . $upper_date['year'];
+
+		$dateParsed = $af->parseUpperOrLowerDate( $upper_date, true );
+		if ( $dateParsed ) {
+			$af->upper_date = $dateParsed;
+			$af->upper_date_string = $af->lowerOrUpperDateToString( $dateParsed );
 		}
+
 		if ( !is_array( $values ) ) {
 			$values = [ $values ];
 		}
@@ -43,6 +48,54 @@ class SDAppliedFilter {
 			$af->values[] = $filter_val;
 		}
 		return $af;
+	}
+
+	/**
+	 * Convert the value in _lower and _upper parameter into SQL-safe value,
+	 * and replace incomplete dates with complete dates (e.g. "1760" -> "1760-01-01").
+	 * Aside from "/" delimiter, it should only contain digits.
+	 * @param string|null $raw_date Query string of _upper_ or _lower from WebRequest.
+	 * @param bool $is_upper True if this is upper filter, false if this is lower filter.
+	 * @return array|null If a valid date is found, returned array has 'year', 'month' and 'day' keys.
+	 *
+	 * @phan-return array{year:int,month:int,day:int}|null
+	 */
+	protected function parseUpperOrLowerDate( $raw_date, $is_upper ) {
+		$parts = array_filter( array_map( 'intval', explode( '-', $raw_date ) ) );
+		if ( !$parts ) {
+			return null;
+		}
+
+		$year = array_shift( $parts );
+
+		// If day and/or month is missing in lower filter, we treat this as 1 January.
+		// If day and/or month is missing in upper filter, we treat this as 31 December.
+		// This way specifying "2012-2018" will include all dates within these years.
+		$month = $parts ? array_shift( $parts ) : ( $is_upper ? 12 : 1 );
+		$day = $parts ? array_shift( $parts ) : ( $is_upper ? 31 : 1 );
+
+		return [
+			'year' => $year,
+			'month' => $month,
+			'day' => $day
+		];
+	}
+
+	/**
+	 * Convert value of datepicker field (e.g. "1760-11-23") into a human-readable representation
+	 * (e.g. "June 15, 2000").
+	 */
+	protected function lowerOrUpperDateToString( $date ) {
+		$ts = sprintf( '%04d%02d%02d000000', $date['year'], $date['month'], $date['day'] );
+		return RequestContext::getMain()->getLanguage()->date( $ts );
+	}
+
+	/**
+	 * Convert value of datepicker field (e.g. "1760-11-23") into value usable in SQL queries.
+	 * (e.g. DATE(...)).
+	 */
+	protected function lowerOrUpperDateToSql( $date ) {
+		return "DATE('" . $date['year'] . "-" . $date['month'] . "-" . $date['day'] . "')";
 	}
 
 	/**
@@ -79,15 +132,13 @@ class SDAppliedFilter {
 			}
 		}
 		if ( $this->lower_date != null ) {
-			$date_string = $this->lower_date['year'] . "-" . $this->lower_date['month'] . "-" . $this->lower_date['day'];
-			$sql .= "date($value_field) >= date('$date_string') ";
+			$sql .= "date($value_field) >= " . $this->lowerOrUpperDateToSql( $this->lower_date ) . " ";
 		}
 		if ( $this->upper_date != null ) {
 			if ( $this->lower_date != null ) {
 				$sql .= " AND ";
 			}
-			$date_string = $this->upper_date['year'] . "-" . $this->upper_date['month'] . "-" . $this->upper_date['day'];
-			$sql .= "date($value_field) <= date('$date_string') ";
+			$sql .= "date($value_field) <= " . $this->lowerOrUpperDateToSql( $this->upper_date ) . " ";
 		}
 		foreach ( $this->values as $i => $fv ) {
 			if ( $i > 0 ) {
@@ -133,6 +184,7 @@ class SDAppliedFilter {
 			}
 		}
 		$sql .= ")";
+
 		return $sql;
 	}
 
