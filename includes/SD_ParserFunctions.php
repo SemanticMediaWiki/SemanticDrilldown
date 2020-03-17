@@ -80,8 +80,6 @@ class SDParserFunctions {
 				$key = trim( $filterSetting[0] );
 				if ( $key != 'property' && $key != 'category' && $key != 'requires' ) {
 					return "<div class=\"error\">Error: unknown setting, \"$key\".</div>";
-					// Display an error message?
-					continue;
 				}
 
 				$value = trim( $filterSetting[1] );

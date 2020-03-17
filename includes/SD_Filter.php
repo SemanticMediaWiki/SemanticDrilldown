@@ -334,7 +334,6 @@ END;
 				$date_string = SDUtils::monthToString( $row[1] ) . ' ' . $row[2] . ', ' . $row[0];
 				$possible_dates[$date_string] = $count;
 			} elseif ( $timePeriod == 'month' ) {
-				global $sdgMonthValues;
 				$date_string = SDUtils::monthToString( $row[1] ) . ' ' . $row[0];
 				$possible_dates[$date_string] = $count;
 			} elseif ( $timePeriod == 'year' ) {

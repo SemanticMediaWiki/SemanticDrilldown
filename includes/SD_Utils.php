@@ -474,7 +474,7 @@ class SDUtils {
 	/**
 	 * Register extension unit tests with old versions of MediaWiki
 	 *
-	 * @param string[] $paths
+	 * @param string[] &$paths
 	 * @return bool
 	 */
 	public static function onUnitTestsList( &$paths ) {

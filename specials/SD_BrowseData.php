@@ -13,18 +13,15 @@ use MediaWiki\Widget\DateInputWidget;
 
 class SDBrowseData extends IncludableSpecialPage {
 
-	/**
-	 * Constructor
-	 */
 	public function __construct() {
 		parent::__construct( 'BrowseData' );
 	}
 
 	function execute( $query ) {
-		global $sdgScriptPath, $sdgContLang, $sdgNumResultsPerPage;
+		global $sdgScriptPath, $sdgNumResultsPerPage;
 
 		// If this was called from the command line, exit.
-		if ( php_sapi_name() == "cli" ) {
+		if ( PHP_SAPI === 'cli' ) {
 			return '';
 		}
 
@@ -154,6 +151,9 @@ class SDBrowseData extends IncludableSpecialPage {
 		return $num;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	protected function getGroupName() {
 		return 'sd_group';
 	}
@@ -276,8 +276,6 @@ class SDBrowseDataPage extends QueryPage {
 	 * subcategory's child subcategories, to ensure completeness.
 	 */
 	function getSQLFromClauseForCategory( $subcategory, $child_subcategories ) {
-		global $smwgDefaultStore;
-
 		$dbr = wfGetDB( DB_REPLICA );
 		$smwIDs = $dbr->tableName( SDUtils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( SDUtils::getCategoryInstancesTableName() );
@@ -303,8 +301,6 @@ class SDBrowseDataPage extends QueryPage {
 	 * category, subcategory and filters.
 	 */
 	function getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters ) {
-		global $smwgDefaultStore;
-
 		$dbr = wfGetDB( DB_REPLICA );
 		$smwIDs = $dbr->tableName( SDUtils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( SDUtils::getCategoryInstancesTableName() );
@@ -559,8 +555,6 @@ END;
 	 * at least one value set
 	 */
 	function printAppliedFilterLine( $af ) {
-		global $sdgScriptPath;
-
 		$results_line = "";
 		foreach ( $this->applied_filters as $af2 ) {
 			if ( $af->filter->name == $af2->filter->name ) {
@@ -965,9 +959,7 @@ END;
 	 * been applied to the drilldown
 	 */
 	function printUnappliedFilterLine( $f, $cur_url = null ) {
-		global $sdgScriptPath;
 		global $sdgMinValuesForComboBox;
-		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
 		$f->createTempTable();
 		$found_results_for_filter = false;
@@ -1044,11 +1036,11 @@ END;
 	}
 
 	function getPageHeader() {
-		global $sdgContLang, $sdgScriptPath;
+		global $sdgScriptPath;
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
 		// If this was called from the command line, exit.
-		if ( php_sapi_name() == "cli" ) {
+		if ( PHP_SAPI === 'cli' ) {
 			return '';
 		}
 
@@ -1287,7 +1279,7 @@ END;
 		global $wgContLang;
 
 		// If this was called from the command line, exit.
-		if ( php_sapi_name() == "cli" ) {
+		if ( PHP_SAPI === 'cli' ) {
 			return;
 		}
 
@@ -1362,11 +1354,12 @@ END;
 		$out->addHTML( $html );
 	}
 
-	// Take non-semantic result set returned by Database->query() method,
-	// and wrap it in a SMWQueryResult container for passing to any of the
-	// various semantic result printers.
-	// Code stolen largely from SMWSQLStore2QueryEngine->getInstanceQueryResult() method.
-	// (does this mean it will only work with certain semantic SQL stores?)
+	/**
+	 * Take non-semantic result set returned by Database->query() method, and wrap it in a
+	 * SMWQueryResult container for passing to any of the various semantic result printers.
+	 * Code stolen largely from SMWSQLStore2QueryEngine->getInstanceQueryResult() method.
+	 * (does this mean it will only work with certain semantic SQL stores?)
+	 */
 	function addSemanticResultWrapper( $dbr, $res, $num, $query, $mainlabel, $printouts ) {
 		$qr = [];
 		$count = 0;
