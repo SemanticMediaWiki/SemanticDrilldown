@@ -2,8 +2,10 @@
 	"@metadata": {
 		"authors": [
 			"Octahedron80",
-			"Passawuth"
+			"Passawuth",
+			"Aefgh39622"
 		]
 	},
+	"sd_browsedata_subcategory": "หมวดหมู่ย่อย",
 	"sd_browsedata_none": "ไม่มี"
 }
