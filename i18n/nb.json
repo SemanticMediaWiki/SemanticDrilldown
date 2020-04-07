@@ -3,9 +3,9 @@
 		"authors": [
 			"Event",
 			"Harald Khan",
+			"Jon Harald Søby",
 			"Nghtwlkr",
-			"Njardarlogar",
-			"Jon Harald Søby"
+			"Njardarlogar"
 		]
 	},
 	"semanticdrilldown-desc": "Et «drilldown»-grensesnitt for navigering gjennom semantiske data",
