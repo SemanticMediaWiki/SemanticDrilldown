@@ -1211,6 +1211,7 @@ END;
 		if ( $this->subcategory ) {
 			$params['_subcat'] = $this->subcategory;
 		}
+
 		foreach ( $this->applied_filters as $i => $af ) {
 			if ( count( $af->values ) == 1 ) {
 				$key_string = str_replace( ' ', '_', $af->filter->name );
@@ -1228,7 +1229,16 @@ END;
 					$params[$key_string] = $value_string;
 				}
 			}
+
+			// Add search terms (if any).
+			$search_terms = $af->search_terms ?? [];
+			foreach ( $search_terms as $i => $text ) {
+				$key_string = '_search_' . str_replace( ' ', '_', $af->filter->name . "[$i]" );
+				$value_string = str_replace( ' ', '_', $text );
+				$params[$key_string] = $value_string;
+			}
 		}
+
 		return $params;
 	}
 
