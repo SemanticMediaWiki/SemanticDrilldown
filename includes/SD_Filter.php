@@ -101,8 +101,7 @@ class SDFilter {
 		$store = SDUtils::getSMWStore();
 		$propPage = new SMWDIWikiPage( $this->escaped_property, SMW_NS_PROPERTY, '' );
 		$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
-		global $smwgContLang;
-		$datatypeLabels = $smwgContLang->getDatatypeLabels();
+		$datatypeLabels = SDUtils::getSMWContLang()->getDatatypeLabels();
 		if ( count( $types ) > 0 ) {
 			if ( $types[0] instanceof SMWDIWikiPage ) {
 				$typeValue = $types[0]->getDBkey();

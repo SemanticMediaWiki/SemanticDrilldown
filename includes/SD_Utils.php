@@ -32,6 +32,20 @@ class SDUtils {
 	}
 
 	/**
+	 * Helper function to have backward compatibility with SMW < 3.2
+	 *
+	 * @return \SMW\Localizer\LocalLanguage\LocalLanguage
+	 */
+	public static function getSMWContLang() {
+		if ( function_exists( 'smwfContLang' ) ) {
+			return smwfContLang();
+		} else {
+			global $smwgContLang;
+			return $smwgContLang;
+		}
+	}
+
+	/**
 	 * Helper function to handle getPropertyValues().
 	 *
 	 * @param SMWStore $store
