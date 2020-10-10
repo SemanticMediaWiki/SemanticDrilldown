@@ -129,6 +129,8 @@ class SDFilter {
 				$this->property_type = 'boolean';
 			} elseif ( $typeValue == $datatypeLabels['_dat'] ) {
 				$this->property_type = 'date';
+			} elseif ( $typeValue == $datatypeLabels['_eid'] ) {
+				$this->property_type = 'external_id';
 			} else {
 				// This should hopefully never get called.
 				print "Error! Unsupported property type ($typeValue) for filter {$this->name}.";
