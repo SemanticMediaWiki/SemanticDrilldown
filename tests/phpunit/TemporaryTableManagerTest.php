@@ -7,7 +7,7 @@ class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
 	/** @var DatabaseBase|\Wikimedia\Rdbms\IDatabase|PHPUnit_Framework_MockObject_MockObject */
 	private $databaseConnectionMock;
 
-	/** @var TemporaryTableManager $temporaryTableManager */
+	/** @var TemporaryTableManager */
 	private $temporaryTableManager;
 
 	protected function setUp() : void {

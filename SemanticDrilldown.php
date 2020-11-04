@@ -74,8 +74,8 @@ $sdgScriptPath = $wgScriptPath . '/extensions/SemanticDrilldown';
 $sdgHideCategoriesByDefault = false;
 $sdgNumResultsPerPage = 250;
 // set these to a positive value to trigger the "tag cloud" display
-$sdgFiltersSmallestFontSize = - 1;
-$sdgFiltersLargestFontSize = - 1;
+$sdgFiltersSmallestFontSize = -1;
+$sdgFiltersLargestFontSize = -1;
 // print categories list as tabs
 $sdgShowCategoriesAsTabs = false;
 // other display settings

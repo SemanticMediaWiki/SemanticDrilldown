@@ -4,7 +4,7 @@
  */
 
 class TemporaryTableManager {
-	/** @var \Wikimedia\Rdbms\IDatabase|DatabaseBase $databaseConnection */
+	/** @var \Wikimedia\Rdbms\IDatabase|DatabaseBase */
 	private $databaseConnection;
 
 	/**
