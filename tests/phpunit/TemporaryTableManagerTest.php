@@ -4,7 +4,7 @@
  * @covers \TemporaryTableManager
  */
 class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
-	/** @var DatabaseBase|\Wikimedia\Rdbms\IDatabase|PHPUnit_Framework_MockObject_MockObject */
+	/** @var DatabaseBase|\Wikimedia\Rdbms\IDatabase */
 	private $databaseConnectionMock;
 
 	/** @var TemporaryTableManager */
@@ -14,7 +14,7 @@ class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
 		parent::setUp();
 
 		// Database::commit is final, cannot be mocked - we must use interface :/
-		$dbClassName = class_exists( 'DatabaseType' ) ? 'DatabaseType' : 'IDatabase';
+		$dbClassName = class_exists( DatabaseType::class ) ? DatabaseType::class : Wikimedia\Rdbms\IDatabase::class;
 		$this->databaseConnectionMock = $this->getMockBuilder( $dbClassName )
 			->disableOriginalConstructor()
 			->getMock();
