@@ -23,13 +23,13 @@ use MediaWiki\MediaWikiServices;
 
 class SDParserFunctions {
 
-	static function registerFunctions( &$parser ) {
+	public static function registerFunctions( &$parser ) {
 		$parser->setFunctionHook( 'drilldowninfo', [ 'SDParserFunctions', 'renderDrilldownInfo' ] );
 		$parser->setFunctionHook( 'drilldownlink', [ 'SDParserFunctions', 'renderDrilldownLink' ] );
 		return true;
 	}
 
-	static function renderDrilldownInfo( &$parser ) {
+	public static function renderDrilldownInfo( &$parser ) {
 		$curTitle = $parser->getTitle();
 		if ( $curTitle->getNamespace() != NS_CATEGORY ) {
 			return '<div class="error">Error: #drilldowninfo can only be called in category pages.</div>';
@@ -150,7 +150,7 @@ class SDParserFunctions {
 		return $parser->insertStripItem( $text, $parser->mStripState );
 	}
 
-	static function renderDrilldownLink( &$parser ) {
+	public static function renderDrilldownLink( &$parser ) {
 		$params = func_get_args();
 		array_shift( $params );
 

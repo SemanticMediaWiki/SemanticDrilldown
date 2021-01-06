@@ -6,18 +6,18 @@
  */
 
 class SDFilter {
-	var $name;
-	var $property;
-	var $escaped_property;
-	var $property_type;
-	var $category;
-	var $time_period = null;
-	var $allowed_values;
-	var $required_filters = [];
-	var $possible_applied_filters = [];
-	var $db_table_name;
-	var $db_value_field;
-	var $db_date_field;
+	public $name;
+	public $property;
+	public $escaped_property;
+	public $property_type;
+	public $category;
+	public $time_period = null;
+	public $allowed_values;
+	public $required_filters = [];
+	public $possible_applied_filters = [];
+	public $db_table_name;
+	public $db_value_field;
+	public $db_date_field;
 
 	public function setName( $name ) {
 		$this->name = $name;
@@ -40,7 +40,7 @@ class SDFilter {
 		$this->required_filters[] = $filterName;
 	}
 
-	static function loadAllFromPageSchema( $psSchemaObj ) {
+	public static function loadAllFromPageSchema( $psSchemaObj ) {
 		$filters_ps = [];
 		$template_all = $psSchemaObj->getTemplates();
 		foreach ( $template_all as $template ) {
@@ -93,7 +93,7 @@ class SDFilter {
 		return $filters_ps;
 	}
 
-	function loadPropertyTypeFromProperty() {
+	public function loadPropertyTypeFromProperty() {
 		// Default the property type to "Page" (matching SMW's
 		// default), in case there is no type set for this property.
 		$this->property_type = 'page';
@@ -217,7 +217,7 @@ class SDFilter {
 		return $this->db_date_field;
 	}
 
-	function getTimePeriod() {
+	public function getTimePeriod() {
 		// If it's not a date property, return null.
 		if ( $this->property_type != 'date' ) {
 			return null;
@@ -281,7 +281,7 @@ END;
 	 * months) for this filter, and, for each one,
 	 * the number of pages that match that time period.
 	 */
-	function getTimePeriodValues() {
+	public function getTimePeriodValues() {
 		$possible_dates = [];
 		$property_value = $this->escaped_property;
 		$date_field = $this->getDateField();
@@ -406,7 +406,7 @@ END;
 	 * filter has, and, for each one, the number of pages
 	 * that match that value.
 	 */
-	function getAllValues() {
+	public function getAllValues() {
 		$possible_values = [];
 		$property_value = $this->escaped_property;
 		$dbw = wfGetDB( DB_MASTER );
@@ -452,7 +452,7 @@ END;
 	 * both for speeding up later queries (at least, that's the hope)
 	 * and for getting the set of 'None' values.
 	 */
-	function createTempTable() {
+	public function createTempTable() {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$smw_ids = $dbw->tableName( SDUtils::getIDsTableName() );
@@ -481,7 +481,7 @@ END;
 	/**
 	 * Deletes the temporary table.
 	 */
-	function dropTempTable() {
+	public function dropTempTable() {
 		$dbw = wfGetDB( DB_MASTER );
 		// DROP TEMPORARY TABLE would be marginally safer, but it's
 		// not supported on all RDBMS's.

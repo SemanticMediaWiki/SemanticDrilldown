@@ -17,7 +17,7 @@ class SDBrowseData extends IncludableSpecialPage {
 		parent::__construct( 'BrowseData' );
 	}
 
-	function execute( $query ) {
+	public function execute( $query ) {
 		global $sdgScriptPath, $sdgNumResultsPerPage;
 
 		// If this was called from the command line, exit.
@@ -160,18 +160,18 @@ class SDBrowseData extends IncludableSpecialPage {
 }
 
 class SDBrowseDataPage extends QueryPage {
-	var $category = "";
-	var $subcategory = "";
-	var $next_level_subcategories = [];
-	var $all_subcategories = [];
-	var $applied_filters = [];
-	var $remaining_filters = [];
-	var $show_single_cat = false;
+	private $category = "";
+	private $subcategory = "";
+	private $next_level_subcategories = [];
+	private $all_subcategories = [];
+	private $applied_filters = [];
+	private $remaining_filters = [];
+	private $show_single_cat = false;
 
 	/**
 	 * Initialize the variables of this page
 	 */
-	function __construct( $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit ) {
+	public function __construct( $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit ) {
 		parent::__construct( 'BrowseData' );
 
 		$this->category = $category;
@@ -197,7 +197,7 @@ class SDBrowseDataPage extends QueryPage {
 		$this->all_subcategories = SDUtils::getCategoryChildren( $actual_cat, true, 10 );
 	}
 
-	function makeBrowseURL( $category, $applied_filters = [], $subcategory = null, $filter_to_remove = null ) {
+	private function makeBrowseURL( $category, $applied_filters = [], $subcategory = null, $filter_to_remove = null ) {
 		$bd = SpecialPage::getTitleFor( 'BrowseData' );
 		$url = $bd->getLocalURL() . '/' . $category;
 		if ( $this->show_single_cat ) {
@@ -239,7 +239,7 @@ class SDBrowseDataPage extends QueryPage {
 	 * set of filters selected by the user - used for displaying
 	 * all remaining filters
 	 */
-	function createTempTable( $category, $subcategory, $subcategories, $applied_filters ) {
+	private function createTempTable( $category, $subcategory, $subcategories, $applied_filters ) {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$temporaryTableManager = new TemporaryTableManager( $dbw );
@@ -261,7 +261,7 @@ class SDBrowseDataPage extends QueryPage {
 	 * selected filters, plus the one new filter (with value) that
 	 * was passed in to this function.
 	 */
-	function getSQLFromClauseForField( $new_filter ) {
+	private function getSQLFromClauseForField( $new_filter ) {
 		$sql = "FROM semantic_drilldown_values sdv
 	LEFT OUTER JOIN semantic_drilldown_filter_values sdfv
 	ON sdv.id = sdfv.id
@@ -275,7 +275,7 @@ class SDBrowseDataPage extends QueryPage {
 	 * of a new filter passed in, it's a subcategory, plus all that
 	 * subcategory's child subcategories, to ensure completeness.
 	 */
-	function getSQLFromClauseForCategory( $subcategory, $child_subcategories ) {
+	private function getSQLFromClauseForCategory( $subcategory, $child_subcategories ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$smwIDs = $dbr->tableName( SDUtils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( SDUtils::getCategoryInstancesTableName() );
@@ -300,7 +300,7 @@ class SDBrowseDataPage extends QueryPage {
 	 * to get all pages that match a certain set of criteria for
 	 * category, subcategory and filters.
 	 */
-	function getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters ) {
+	private function getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$smwIDs = $dbr->tableName( SDUtils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( SDUtils::getCategoryInstancesTableName() );
@@ -404,7 +404,7 @@ class SDBrowseDataPage extends QueryPage {
 	 * Gets the number of pages matching both the currently-selected
 	 * set of filters and either a new subcategory or a new filter.
 	 */
-	function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
+	private function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
 		$dbw = wfGetDB( DB_MASTER );
 
 		// Escape the given values to prevent SQL injection
@@ -425,19 +425,19 @@ class SDBrowseDataPage extends QueryPage {
 		return $row[0];
 	}
 
-	function getName() {
+	public function getName() {
 		return "BrowseData";
 	}
 
-	function isExpensive() {
+	public function isExpensive() {
 		return false;
 	}
 
-	function isSyndicated() {
+	public function isSyndicated() {
 		return false;
 	}
 
-	function printCategoriesList( $categories ) {
+	private function printCategoriesList( $categories ) {
 		global $sdgShowCategoriesAsTabs;
 
 		$choose_category_text = wfMessage( 'sd_browsedata_choosecategory' )->text() . wfMessage( 'colon-separator' )->text();
@@ -492,7 +492,7 @@ END;
 	 * Create the full display of the filter line, once the text for
 	 * the "results" (values) for this filter has been created.
 	 */
-	function printFilterLine( $filterName, $isApplied, $isNormalFilter, $resultsLine ) {
+	private function printFilterLine( $filterName, $isApplied, $isNormalFilter, $resultsLine ) {
 		global $sdgScriptPath;
 
 		$text = <<<END
@@ -534,7 +534,7 @@ END;
 	 * Print a "nice" version of the value for a filter, if it's some
 	 * special case like 'other', 'none', a boolean, etc.
 	 */
-	function printFilterValue( $filter, $value ) {
+	private function printFilterValue( $filter, $value ) {
 		$value = str_replace( '_', ' ', $value );
 		// if it's boolean, display something nicer than "0" or "1"
 		if ( $value === ' other' ) {
@@ -554,7 +554,7 @@ END;
 	 * Print the line showing 'OR' values for a filter that already has
 	 * at least one value set
 	 */
-	function printAppliedFilterLine( $af ) {
+	private function printAppliedFilterLine( $af ) {
 		$results_line = "";
 		foreach ( $this->applied_filters as $af2 ) {
 			if ( $af->filter->name == $af2->filter->name ) {
@@ -627,7 +627,7 @@ END;
 		return $this->printFilterLine( $af->filter->name, true, true, $results_line );
 	}
 
-	function printUnappliedFilterValues( $cur_url, $f, $filter_values ) {
+	private function printUnappliedFilterValues( $cur_url, $f, $filter_values ) {
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
 		$results_line = "";
@@ -668,7 +668,7 @@ END;
 	 * (https://github.com/yaronkoren/miga/blob/master/NumberUtils.js)
 	 * - though that one is in Javascript.
 	 */
-	function getNearestNiceNumber( $num, $previousNum, $nextNum ) {
+	private function getNearestNiceNumber( $num, $previousNum, $nextNum ) {
 		if ( $previousNum == null ) {
 			$smallestDifference = $nextNum - $num;
 		} elseif ( $nextNum == null ) {
@@ -707,7 +707,7 @@ END;
 	 * (https://github.com/yaronkoren/miga/blob/master/NumberUtils.js)
 	 * - though that one is in Javascript.
 	 */
-	function generateIndividualFilterValuesFromNumbers( $uniqueValues ) {
+	private function generateIndividualFilterValuesFromNumbers( $uniqueValues ) {
 		$propertyValues = [];
 		foreach ( $uniqueValues as $uniqueValue => $numInstances ) {
 			$curBucket = [
@@ -725,7 +725,7 @@ END;
 	 * (https://github.com/yaronkoren/miga/blob/master/NumberUtils.js)
 	 * - though that one is in Javascript.
 	 */
-	function generateFilterValuesFromNumbers( $numberArray ) {
+	private function generateFilterValuesFromNumbers( $numberArray ) {
 		global $sdgNumRangesForNumberFilters;
 
 		$numNumbers = count( $numberArray );
@@ -814,7 +814,7 @@ END;
 		return $propertyValues;
 	}
 
-	function printNumberRanges( $filter_name, $filter_values ) {
+	private function printNumberRanges( $filter_name, $filter_values ) {
 		// We generate $cur_url here, instead of passing it in, because
 		// if there's a previous value for this filter it may be
 		// removed.
@@ -851,7 +851,7 @@ END;
 		return $text;
 	}
 
-	function printComboBoxInput( $filter_name, $instance_num, $filter_values, $cur_value = null ) {
+	private function printComboBoxInput( $filter_name, $instance_num, $filter_values, $cur_value = null ) {
 		$filter_name = str_replace( ' ', '_', $filter_name );
 		// URL-decode the filter name - necessary if it contains
 		// any non-Latin characters.
@@ -912,7 +912,7 @@ END;
 		return $text;
 	}
 
-	function printDateInput( $input_name, $cur_value = null ) {
+	private function printDateInput( $input_name, $cur_value = null ) {
 		$this->getOutput()->enableOOUI();
 		$this->getOutput()->addModuleStyles( 'mediawiki.widgets.DateInputWidget.styles' );
 
@@ -923,7 +923,7 @@ END;
 		return (string)$widget;
 	}
 
-	function printDateRangeInput( $filter_name, $lower_date = null, $upper_date = null ) {
+	private function printDateRangeInput( $filter_name, $lower_date = null, $upper_date = null ) {
 		$start_label = wfMessage( 'sd_browsedata_daterangestart' )->text();
 		$end_label = wfMessage( 'sd_browsedata_daterangeend' )->text();
 		$start_month_input = $this->printDateInput( "_lower_$filter_name", $lower_date );
@@ -958,7 +958,7 @@ END;
 	 * Print the line showing 'AND' values for a filter that has not
 	 * been applied to the drilldown
 	 */
-	function printUnappliedFilterLine( $f, $cur_url = null ) {
+	private function printUnappliedFilterLine( $f, $cur_url = null ) {
 		global $sdgMinValuesForComboBox;
 
 		$f->createTempTable();
@@ -1035,7 +1035,7 @@ END;
 		return $text;
 	}
 
-	function getPageHeader() {
+	protected function getPageHeader() {
 		global $sdgScriptPath;
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
@@ -1202,7 +1202,7 @@ END;
 	/**
 	 * Used to set URL for additional pages of results.
 	 */
-	function linkParameters() {
+	protected function linkParameters() {
 		$params = [];
 		if ( $this->show_single_cat ) {
 			$params['_single'] = null;
@@ -1242,7 +1242,7 @@ END;
 		return $params;
 	}
 
-	function getSQL() {
+	protected function getSQL() {
 		// QueryPage uses the value from this SQL in an ORDER clause,
 		// so return page_title as title.
 		$sql = "SELECT DISTINCT ids.smw_title AS title,
@@ -1257,19 +1257,19 @@ END;
 		return $sql;
 	}
 
-	function getOrder() {
+	protected function getOrder() {
 		return ' ORDER BY sortkey ';
 	}
 
-	function getOrderFields() {
+	protected function getOrderFields() {
 		return [ 'sortkey' ];
 	}
 
-	function sortDescending() {
+	protected function sortDescending() {
 		return false;
 	}
 
-	function formatResult( $skin, $result ) {
+	protected function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( $result->namespace, $result->value );
 		return Linker::link( $title, htmlspecialchars( $title->getText() ) );
 	}
@@ -1370,7 +1370,7 @@ END;
 	 * Code stolen largely from SMWSQLStore2QueryEngine->getInstanceQueryResult() method.
 	 * (does this mean it will only work with certain semantic SQL stores?)
 	 */
-	function addSemanticResultWrapper( $dbr, $res, $num, $query, $mainlabel, $printouts ) {
+	private function addSemanticResultWrapper( $dbr, $res, $num, $query, $mainlabel, $printouts ) {
 		$qr = [];
 		$count = 0;
 		$store = SDUtils::getSMWStore();
@@ -1394,10 +1394,10 @@ END;
 		return new SMWQueryResult( $printouts, $query, $qr, $store, ( $count > $num ) );
 	}
 
-	function openList( $offset ) {
+	protected function openList( $offset ) {
 	}
 
-	function closeList() {
+	protected function closeList() {
 		return "\n			<br style=\"clear: both\" />\n";
 	}
 

@@ -10,7 +10,7 @@ use MediaWiki\MediaWikiServices;
 
 class SDUtils {
 
-	static function setGlobalJSVariables( &$vars ) {
+	public static function setGlobalJSVariables( &$vars ) {
 		global $sdgScriptPath;
 
 		$vars['sdgDownArrowImage'] = "$sdgScriptPath/skins/down-arrow.png";
@@ -69,7 +69,7 @@ class SDUtils {
 	 * and excludes, categories that are manually set with
 	 * 'SHOWINDRILLDOWN' and 'HIDEFROMDRILLDOWN', respectively.
 	 */
-	static function getTopLevelCategories() {
+	public static function getTopLevelCategories() {
 		$categories = [];
 		$dbr = wfGetDB( DB_REPLICA );
 		extract( $dbr->tableNames( 'page', 'categorylinks', 'page_props' ) );
@@ -116,7 +116,7 @@ class SDUtils {
 	 * Gets the list of names of only those categories in the wiki
 	 * that have a __SHOWINDRILLDOWN__ declaration on their page.
 	 */
-	static function getOnlyExplicitlyShownCategories() {
+	public static function getOnlyExplicitlyShownCategories() {
 		$shown_cats = [];
 
 		$dbr = wfGetDB( DB_REPLICA );
@@ -158,7 +158,7 @@ class SDUtils {
 	/**
 	 * Gets all the filters specified for a category.
 	 */
-	static function loadFiltersForCategory( $category ) {
+	public static function loadFiltersForCategory( $category ) {
 		$filters = [];
 
 		$title = Title::newFromText( $category, NS_CATEGORY );
@@ -218,7 +218,7 @@ class SDUtils {
 	/**
 	 * Gets the custom drilldown title for a category, if there is one.
 	 */
-	static function getDrilldownTitleForCategory( $category ) {
+	public static function getDrilldownTitleForCategory( $category ) {
 		$title = Title::newFromText( $category, NS_CATEGORY );
 
 		// Return false if the title object couldn't be created.
@@ -247,7 +247,7 @@ class SDUtils {
 	/**
 	 * Gets all the display parameters defined for a category
 	 */
-	static function getDisplayParamsForCategory( $category ) {
+	public static function getDisplayParamsForCategory( $category ) {
 		$return_display_params = [];
 
 		$title = Title::newFromText( $category, NS_CATEGORY );
@@ -272,7 +272,7 @@ class SDUtils {
 		return $return_display_params;
 	}
 
-	static function getCategoryChildren( $category_name, $get_categories, $levels ) {
+	public static function getCategoryChildren( $category_name, $get_categories, $levels ) {
 		if ( $levels == 0 ) {
 			return [];
 		}
@@ -310,7 +310,7 @@ class SDUtils {
 		return $pages;
 	}
 
-	static function getDateFunctions( $dateDBField ) {
+	public static function getDateFunctions( $dateDBField ) {
 		global $wgDBtype;
 
 		// Unfortunately, date handling in general - and date extraction
@@ -334,7 +334,7 @@ class SDUtils {
 		return [ $yearValue, $monthValue, $dayValue ];
 	}
 
-	static function monthToString( $month ) {
+	public static function monthToString( $month ) {
 		if ( $month == 1 ) {
 			return wfMessage( 'january' )->text();
 		} elseif ( $month == 2 ) {
@@ -363,7 +363,7 @@ class SDUtils {
 		}
 	}
 
-	static function stringToMonth( $str ) {
+	public static function stringToMonth( $str ) {
 		if ( $str == wfMessage( 'january' )->text() ) {
 			return 1;
 		} elseif ( $str == wfMessage( 'february' )->text() ) {
@@ -391,7 +391,7 @@ class SDUtils {
 		}
 	}
 
-	static function booleanToString( $bool_value ) {
+	public static function booleanToString( $bool_value ) {
 		$words_field_name = ( $bool_value == true ) ? 'smw_true_words' : 'smw_false_words';
 		$words_array = explode( ',', wfMessage( $words_field_name )->inContentLanguage()->text() );
 		// go with the value in the array that tends to be "yes" or
@@ -411,7 +411,7 @@ class SDUtils {
 	/**
 	 * Register magic-word variable IDs
 	 */
-	static function addMagicWordVariableIDs( &$magicWordVariableIDs ) {
+	public static function addMagicWordVariableIDs( &$magicWordVariableIDs ) {
 		$magicWordVariableIDs[] = 'MAG_HIDEFROMDRILLDOWN';
 		$magicWordVariableIDs[] = 'MAG_SHOWINDRILLDOWN';
 		return true;
@@ -420,7 +420,7 @@ class SDUtils {
 	/**
 	 * Set the actual value of the magic words
 	 */
-	static function addMagicWordLanguage( &$magicWords, $langCode ) {
+	public static function addMagicWordLanguage( &$magicWords, $langCode ) {
 		switch ( $langCode ) {
 		default:
 			$magicWords['MAG_HIDEFROMDRILLDOWN'] = [ 0, '__HIDEFROMDRILLDOWN__' ];
@@ -433,7 +433,7 @@ class SDUtils {
 	 * Set values in the page_props table based on the presence of the
 	 * 'HIDEFROMDRILLDOWN' and 'SHOWINDRILLDOWN' magic words in a page
 	 */
-	static function handleShowAndHide( &$parser, &$text ) {
+	public static function handleShowAndHide( &$parser, &$text ) {
 		if ( class_exists( MagicWordFactory::class ) ) {
 			// MW 1.32+
 			$factory = MediaWikiServices::getInstance()->getMagicWordFactory();

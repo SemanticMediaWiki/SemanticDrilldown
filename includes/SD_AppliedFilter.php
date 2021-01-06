@@ -7,15 +7,15 @@
  */
 
 class SDAppliedFilter {
-	var $filter;
-	var $values = [];
-	var $search_terms;
-	var $lower_date;
-	var $upper_date;
-	var $lower_date_string;
-	var $upper_date_string;
+	public $filter;
+	public $values = [];
+	public $search_terms;
+	public $lower_date;
+	public $upper_date;
+	public $lower_date_string;
+	public $upper_date_string;
 
-	static function create( $filter, $values, $search_terms = null, $lower_date = null, $upper_date = null ) {
+	public static function create( $filter, $values, $search_terms = null, $lower_date = null, $upper_date = null ) {
 		$af = new SDAppliedFilter();
 		$af->filter = $filter;
 		if ( $search_terms != null ) {
@@ -102,7 +102,7 @@ class SDAppliedFilter {
 	 * Returns a string that adds a check for this filter/value
 	 * combination to an SQL "WHERE" clause.
 	 */
-	function checkSQL( $value_field ) {
+	public function checkSQL( $value_field ) {
 		global $wgDBtype;
 
 		if ( $this->filter->property_type == 'date' ) {
@@ -192,7 +192,7 @@ class SDAppliedFilter {
 	 * Gets an array of all values that the property belonging to this
 	 * filter has, for pages in the passed-in category.
 	 */
-	function getAllOrValues( $category ) {
+	public function getAllOrValues( $category ) {
 		$possible_values = [];
 		$property_value = $this->filter->escaped_property;
 		$dbr = wfGetDB( DB_REPLICA );

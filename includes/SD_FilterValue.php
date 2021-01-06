@@ -7,18 +7,18 @@
  */
 
 class SDFilterValue {
-	var $text;
-	var $is_none = false;
-	var $is_other = false;
-	var $is_numeric = false;
-	var $lower_limit = null;
-	var $upper_limit = null;
-	var $year = null;
-	var $month = null;
-	var $day = null;
-	var $end_year = null;
+	public $text;
+	public $is_none = false;
+	public $is_other = false;
+	public $is_numeric = false;
+	public $lower_limit = null;
+	public $upper_limit = null;
+	public $year = null;
+	public $month = null;
+	public $day = null;
+	public $end_year = null;
 
-	static function create( $actual_val, $filter = null ) {
+	public static function create( $actual_val, $filter = null ) {
 		$fv = new SDFilterValue();
 		$fv->text = str_replace( '_', ' ', $actual_val );
 
