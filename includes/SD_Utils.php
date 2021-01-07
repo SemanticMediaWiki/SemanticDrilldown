@@ -72,31 +72,56 @@ class SDUtils {
 	public static function getTopLevelCategories() {
 		$categories = [];
 		$dbr = wfGetDB( DB_REPLICA );
-		extract( $dbr->tableNames( 'page', 'categorylinks', 'page_props' ) );
-		$cat_ns = NS_CATEGORY;
-		$sql = "SELECT page_title FROM $page p LEFT OUTER JOIN $categorylinks cl ON p.page_id = cl.cl_from WHERE p.page_namespace = $cat_ns AND cl.cl_to IS NULL";
-		$res = $dbr->query( $sql );
-		if ( $dbr->numRows( $res ) > 0 ) {
-			while ( $row = $dbr->fetchRow( $res ) ) {
-				$categories[] = str_replace( '_', ' ', $row[0] );
-			}
+		$res = $dbr->select(
+			[ 'page', 'categorylinks' ],
+			'page_title',
+			[
+				'page_namespace' => NS_CATEGORY,
+				'cl_to' => null,
+			],
+			__METHOD__,
+			[],
+			[
+				'categorylinks' => [
+					'LEFT OUTER JOIN',
+					[
+						'page_id = cl_from'
+					]
+				],
+			]
+		);
+		foreach ( $res as $row ) {
+			$categories[] = str_replace( '_', ' ', $row->page_title );
 		}
-		$dbr->freeResult( $res );
 
 		// get 'hide' and 'show' categories
 		$hidden_cats = $shown_cats = [];
-		$sql2 = "SELECT p.page_title, pp.pp_propname FROM $page p JOIN $page_props pp ON p.page_id = pp.pp_page WHERE p.page_namespace = $cat_ns AND (pp.pp_propname = 'hidefromdrilldown' OR pp.pp_propname = 'showindrilldown') AND pp.pp_value = 'y'";
-		$res2 = $dbr->query( $sql2 );
-		if ( $dbr->numRows( $res2 ) > 0 ) {
-			while ( $row = $dbr->fetchRow( $res2 ) ) {
-				if ( $row[1] == 'hidefromdrilldown' ) {
-					$hidden_cats[] = str_replace( '_', ' ', $row[0] );
-				} else {
-					$shown_cats[] = str_replace( '_', ' ', $row[0] );
-				}
+		$res2 = $dbr->select(
+			[ 'page', 'page_props' ],
+			[ 'page_title', 'pp_propname' ],
+			[
+				'page_namespace' => NS_CATEGORY,
+				'pp_propname' => [ 'hidefromdrilldown', 'showindrilldown' ],
+				'pp_value' => 'y',
+			],
+			__METHOD__,
+			[],
+			[
+				'page_props' => [
+					'JOIN',
+					[
+						'page_id = pp_page'
+					]
+				],
+			]
+		);
+		foreach ( $res2 as $row ) {
+			if ( $row->pp_propname == 'hidefromdrilldown' ) {
+				$hidden_cats[] = str_replace( '_', ' ', $row->page_title );
+			} else {
+				$shown_cats[] = str_replace( '_', ' ', $row->page_title );
 			}
 		}
-		$dbr->freeResult( $res2 );
 		$categories = array_merge( $categories, $shown_cats );
 		foreach ( $hidden_cats as $hidden_cat ) {
 			foreach ( $categories as $i => $cat ) {
@@ -133,10 +158,9 @@ class SDUtils {
 			[ 'pp' => [ 'JOIN', 'p.page_id = pp.pp_page' ] ]
 		);
 
-		while ( $row = $dbr->fetchRow( $res ) ) {
-			$shown_cats[] = str_replace( '_', ' ', $row[0] );
+		foreach ( $res as $row ) {
+			$shown_cats[] = str_replace( '_', ' ', $row->page_title );
 		}
-		$dbr->freeResult( $res );
 
 		return $shown_cats;
 	}
@@ -181,9 +205,9 @@ class SDUtils {
 			]
 		);
 
-		while ( $row = $dbr->fetchRow( $res ) ) {
+		foreach ( $res as $row ) {
 			// There should only be one row.
-			$filtersStr = $row['pp_value'];
+			$filtersStr = $row->pp_value;
 			$filtersInfo = unserialize( $filtersStr );
 			foreach ( $filtersInfo as $filterName => $filterValues ) {
 				$curFilter = new SDFilter();
@@ -229,7 +253,7 @@ class SDUtils {
 
 		$pageID = $title->getArticleID();
 		$dbr = wfGetDB( DB_REPLICA );
-		$res = $dbr->select( 'page_props',
+		return $dbr->selectField( 'page_props',
 			[
 				'pp_value'
 			],
@@ -238,10 +262,6 @@ class SDUtils {
 				'pp_propname' => 'SDTitle'
 			]
 		);
-
-		if ( $row = $dbr->fetchRow( $res ) ) {
-			return $row['pp_value'];
-		}
 	}
 
 	/**
@@ -263,9 +283,9 @@ class SDUtils {
 			]
 		);
 
-		while ( $row = $dbr->fetchRow( $res ) ) {
+		foreach ( $res as $row ) {
 			// There should only be one row.
-			$displayParamsStr = $row['pp_value'];
+			$displayParamsStr = $row->pp_value;
 			$return_display_params[] = explode( ';', $displayParamsStr );
 		}
 
@@ -279,31 +299,41 @@ class SDUtils {
 		$pages = [];
 		$subcategories = [];
 		$dbr = wfGetDB( DB_REPLICA );
-		extract( $dbr->tableNames( 'page', 'categorylinks' ) );
-		$cat_ns = NS_CATEGORY;
-		$query_category = str_replace( ' ', '_', $category_name );
-		$query_category = str_replace( "'", "\'", $query_category );
-		$sql = "SELECT p.page_title, p.page_namespace FROM $categorylinks cl
-	JOIN $page p on cl.cl_from = p.page_id
-	WHERE cl.cl_to = '$query_category'\n";
+		$conds = [ 'cl_to' => str_replace( ' ', '_', $category_name ), ];
 		if ( $get_categories ) {
-			$sql .= "AND p.page_namespace = $cat_ns\n";
+			$conds['page_namespace'] = NS_CATEGORY;
 		}
-		$sql .= "ORDER BY cl.cl_sortkey";
-		$res = $dbr->query( $sql );
-		while ( $row = $dbr->fetchRow( $res ) ) {
+
+		$res = $dbr->select(
+			[ 'categorylinks', 'page' ],
+			[ 'page_title', 'page_namespace' ],
+			$conds,
+			__METHOD__,
+			[
+				'ORDER BY' => 'cl_sortkey',
+			],
+			[
+				'page' => [
+					'JOIN',
+					[
+						'cl_from = page_id'
+					]
+				]
+			]
+		);
+
+		foreach ( $res as $row ) {
 			if ( $get_categories ) {
-				$subcategories[] = $row[0];
-				$pages[] = $row[0];
+				$subcategories[] = $row->page_title;
+				$pages[] = $row->page_namespace;
 			} else {
-				if ( $row[1] == $cat_ns ) {
-					$subcategories[] = $row[0];
+				if ( $row->page_title == NS_CATEGORY ) {
+					$subcategories[] = $row->page_title;
 				} else {
-					$pages[] = $row[0];
+					$pages[] = $row->page_title;
 				}
 			}
 		}
-		$dbr->freeResult( $res );
 		foreach ( $subcategories as $subcategory ) {
 			$pages = array_merge( $pages, self::getCategoryChildren( $subcategory, $get_categories, $levels - 1 ) );
 		}
