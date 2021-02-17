@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Crochet.david",
+			"Golmore",
 			"Gomoko",
 			"Grondin",
 			"IAlex",
@@ -22,7 +23,7 @@
 	"sd_browsedata_docu": "Cliquez sur un ou plusieurs éléments pour filtrer vos résultats.",
 	"sd_browsedata_subcategory": "Sous-catégorie",
 	"sd_browsedata_other": "Autre",
-	"sd_browsedata_none": "Néant",
+	"sd_browsedata_none": "Aucun",
 	"sd_browsedata_filterbyvalue": "Filtrer par valeur",
 	"sd_browsedata_filterbysubcategory": "Filtrer par cette sous-catégorie",
 	"sd_browsedata_otherfilter": "Voir les pages avec une autre valeur pour ce filtre",
