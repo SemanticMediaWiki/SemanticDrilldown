@@ -474,10 +474,10 @@ class SDUtils {
 			$mw_show = MagicWord::get( 'MAG_SHOWINDRILLDOWN' );
 		}
 		if ( $mw_hide->matchAndRemove( $text ) ) {
-			$parser->mOutput->setProperty( 'hidefromdrilldown', 'y' );
+			$parser->getOutput()->setProperty( 'hidefromdrilldown', 'y' );
 		}
 		if ( $mw_show->matchAndRemove( $text ) ) {
-			$parser->mOutput->setProperty( 'showindrilldown', 'y' );
+			$parser->getOutput()->setProperty( 'showindrilldown', 'y' );
 		}
 		return true;
 	}

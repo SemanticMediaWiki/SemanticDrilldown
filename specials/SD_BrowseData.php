@@ -1340,7 +1340,7 @@ END;
 		// How else can we do this?
 		$parser = MediaWikiServices::getInstance()->getParser();
 		SMWOutputs::commitToParser( $parser );
-		if ( $parser->mOutput !== null ) {
+		if ( $parser->getOutput() !== null ) {
 			$headItems = $parser->getOutput()->getHeadItems();
 
 			foreach ( $headItems as $key => $item ) {
