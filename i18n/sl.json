@@ -1,7 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Dbc334"
+			"Dbc334",
+			"Eleassar"
 		]
-	}
+	},
+	"sd-pageschemas-filter": "Filter"
 }
