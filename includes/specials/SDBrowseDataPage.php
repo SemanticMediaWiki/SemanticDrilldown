@@ -1130,7 +1130,7 @@ END;
 	 * @param int $offset Paging offset
 	 */
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
-		global $wgContLang;
+		$contLang = MediaWikiServices::getInstance()->getContentLanguage();
 
 		// If this was called from the command line, exit.
 		if ( PHP_SAPI === 'cli' ) {
@@ -1202,7 +1202,7 @@ END;
 		}
 
 		$html = $this->listoutput
-			? $wgContLang->listToText( $html )
+			? $contLang->listToText( $html )
 			: implode( '', $html );
 
 		$out->addHTML( $html );

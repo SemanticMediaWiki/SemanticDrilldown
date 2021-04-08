@@ -39,12 +39,12 @@ $wgExtensionMessagesFiles['SemanticDrilldownMagic'] = $sdgIP . '/languages/Seman
 $wgAutoloadClasses['SDBrowseData'] = $sdgIP . '/includes/specials/SDBrowseData.php';
 $wgAutoloadClasses['SDBrowseDataPage'] = $sdgIP . '/includes/specials/SDBrowseDataPage.php';
 
-$wgAutoloadClasses['SDUtils'] = $sdgIP . '/includes/SD_Utils.php';
-$wgAutoloadClasses['SDFilter'] = $sdgIP . '/includes/SD_Filter.php';
-$wgAutoloadClasses['SDFilterValue'] = $sdgIP . '/includes/SD_FilterValue.php';
-$wgAutoloadClasses['SDAppliedFilter'] = $sdgIP . '/includes/SD_AppliedFilter.php';
-$wgAutoloadClasses['SDPageSchemas'] = $sdgIP . '/includes/SD_PageSchemas.php';
-$wgAutoloadClasses['SDParserFunctions'] = $sdgIP . '/includes/SD_ParserFunctions.php';
+$wgAutoloadClasses['SDUtils'] = $sdgIP . '/includes/SDUtils.php';
+$wgAutoloadClasses['SDFilter'] = $sdgIP . '/includes/SDFilter.php';
+$wgAutoloadClasses['SDFilterValue'] = $sdgIP . '/includes/SDFilterValue.php';
+$wgAutoloadClasses['SDAppliedFilter'] = $sdgIP . '/includes/SDAppliedFilter.php';
+$wgAutoloadClasses['SDPageSchemas'] = $sdgIP . '/includes/SDPageSchemas.php';
+$wgAutoloadClasses['SDParserFunctions'] = $sdgIP . '/includes/SDParserFunctions.php';
 $wgAutoloadClasses['TemporaryTableManager'] = "$sdgIP/includes/TemporaryTableManager.php";
 
 // register all special pages and other classes
