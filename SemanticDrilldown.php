@@ -36,8 +36,8 @@ $wgMessagesDirs['SemanticDrilldown'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['SemanticDrilldownAlias'] = $sdgIP . '/languages/SD_Aliases.php';
 $wgExtensionMessagesFiles['SemanticDrilldownMagic'] = $sdgIP . '/languages/SemanticDrilldown.i18n.magic.php';
 
-$wgAutoloadClasses['SDBrowseData'] = $sdgIP . '/specials/SD_BrowseData.php';
-$wgAutoloadClasses['SDBrowseDataPage'] = $sdgIP . '/specials/SD_BrowseData.php';
+$wgAutoloadClasses['SDBrowseData'] = $sdgIP . '/includes/specials/SDBrowseData.php';
+$wgAutoloadClasses['SDBrowseDataPage'] = $sdgIP . '/includes/specials/SDBrowseDataPage.php';
 
 $wgAutoloadClasses['SDUtils'] = $sdgIP . '/includes/SD_Utils.php';
 $wgAutoloadClasses['SDFilter'] = $sdgIP . '/includes/SD_Filter.php';
