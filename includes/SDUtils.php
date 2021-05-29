@@ -345,17 +345,12 @@ class SDUtils {
 
 		// Unfortunately, date handling in general - and date extraction
 		// specifically - is done differently in almost every DB
-		// system. If support were ever added for SQLite or Oracle,
-		// those would require special handling as well.
+		// system. If support were ever added for SQLite,
+		// that would require special handling as well.
 		if ( $wgDBtype == 'postgres' ) {
 			$yearValue = "EXTRACT(YEAR FROM TIMESTAMP $dateDBField)";
 			$monthValue = "EXTRACT(MONTH FROM TIMESTAMP $dateDBField)";
 			$dayValue = "EXTRACT(DAY FROM TIMESTAMP $dateDBField)";
-		} elseif ( $wgDBtype == 'mssql' ) {
-			$yearValue = "YEAR($dateDBField)";
-			$monthValue = "MONTH($dateDBField)";
-			// SQL Server only supports DAY(), not DAYOFMONTH().
-			$dayValue = "DAY($dateDBField)";
 		} else { // MySQL
 			$yearValue = "YEAR($dateDBField)";
 			$monthValue = "MONTH($dateDBField)";
