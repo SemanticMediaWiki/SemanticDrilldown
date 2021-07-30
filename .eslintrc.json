@@ -11,7 +11,6 @@
 	"rules": {
 		"no-underscore-dangle": "off",
 		"camelcase": "off",
-		"vars-on-top": "off",
 		"array-callback-return": "warn"
 	}
 }
