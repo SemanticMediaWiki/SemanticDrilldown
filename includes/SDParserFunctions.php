@@ -106,7 +106,7 @@ class SDParserFunctions {
 			$parserOutput->setProperty( 'SDDisplayParams', $displayParametersStr );
 		}
 
-		$parserOutput->addModules( 'ext.semanticdrilldown.info' );
+		$parserOutput->addModules( [ 'ext.semanticdrilldown.info' ] );
 
 		$text = "<table class=\"drilldownInfo mw-collapsible mw-collapsed\">\n";
 		$bd = Title::makeTitleSafe( NS_SPECIAL, 'BrowseData' );
