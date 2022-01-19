@@ -748,7 +748,7 @@ END;
 
 		$text .= Html::input(
 			null,
-			wfMessage( 'searchresultshead' )->text(),
+			wfMessage( 'sd_browsedata_search' )->text(),
 			'submit',
 			[ 'style' => 'margin: 4px 0 8px 0;' ]
 		) . "\n";

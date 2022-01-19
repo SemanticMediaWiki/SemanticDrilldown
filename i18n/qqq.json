@@ -37,5 +37,6 @@
 	"sd_createfilter_usecategoryvalues": "An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter. It is followed by a drop-down list that allows to select an available category.",
 	"sd_createfilter_requirefilter": "The title of the drop-down list on [[Special:CreateFilter]] that allows to select an available filter.",
 	"sd-pageschemas-filter": "The title of the section displaying information about a single filter used by the page schema. Provided for the [[mw:Extension:Page_Schemas|Page Schemas]] extension.\n{{Identical|Filter}}",
-	"sd-pageschemas-values": "The title of the subsection to {{msg-mw|Sd-pageschemas-filter}} displaying information about the set of values for a single filter used by the page schema. Provided for the [[mw:Extension:Page_Schemas|Page Schemas]] extension.\n{{Identical|Value}}"
+	"sd-pageschemas-values": "The title of the subsection to {{msg-mw|Sd-pageschemas-filter}} displaying information about the set of values for a single filter used by the page schema. Provided for the [[mw:Extension:Page_Schemas|Page Schemas]] extension.\n{{Identical|Value}}",
+	"sd_browsedata_search": "{{Identical|Search}}"
 }
