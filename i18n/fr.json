@@ -40,5 +40,6 @@
 	"sd_createfilter_usecategoryvalues": "Obtenir les valeurs pour ce filtre à partir de cette catégorie :",
 	"sd_createfilter_requirefilter": "Exiger qu’un autre filtre soit sélectionné avant que celui-ci ne soit affiché :",
 	"sd-pageschemas-filter": "Filtre",
-	"sd-pageschemas-values": "Valeurs"
+	"sd-pageschemas-values": "Valeurs",
+	"sd_browsedata_search": "Rechercher"
 }

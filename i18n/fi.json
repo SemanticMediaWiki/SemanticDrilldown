@@ -4,6 +4,7 @@
 			"Beluga",
 			"Cimon Avaro",
 			"Crt",
+			"MITO",
 			"Nedergard",
 			"Nike",
 			"Str4nd",
@@ -35,5 +36,6 @@
 	"sd_createfilter_usecategoryvalues": "Nouda suodattimen arvot tästä luokasta:",
 	"sd_createfilter_requirefilter": "Toinen suodatin on valittava ennen kuin tämä näytetään:",
 	"sd-pageschemas-filter": "Suodatin",
-	"sd-pageschemas-values": "Arvot"
+	"sd-pageschemas-values": "Arvot",
+	"sd_browsedata_search": "Hae"
 }

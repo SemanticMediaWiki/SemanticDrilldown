@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"BaRaN6161 TURK",
+			"Can",
 			"Karduelis",
 			"Suelnur",
 			"Vito Genovese"
@@ -32,5 +33,6 @@
 	"sd_createfilter_usecategoryvalues": "Bu kategoriden filtre için değerleri alın:",
 	"sd_createfilter_requirefilter": "Bu filtre gösterilmeden önce başka bir filtrenin seçilmesini iste:",
 	"sd-pageschemas-filter": "Süzgeç",
-	"sd-pageschemas-values": "Değerler"
+	"sd-pageschemas-values": "Değerler",
+	"sd_browsedata_search": "Ara"
 }

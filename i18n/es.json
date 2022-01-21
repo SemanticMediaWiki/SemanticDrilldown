@@ -8,6 +8,7 @@
 			"Fitoschido",
 			"Imre",
 			"Macofe",
+			"MarcoAurelio",
 			"Mor",
 			"Sanbec"
 		]
@@ -37,5 +38,6 @@
 	"sd_createfilter_usecategoryvalues": "Obtener valores para el filtro desde esta categoría:",
 	"sd_createfilter_requirefilter": "Requiere otro filtro a ser seleccionado antes que este sea mostrado:",
 	"sd-pageschemas-filter": "Filtro",
-	"sd-pageschemas-values": "Valores"
+	"sd-pageschemas-values": "Valores",
+	"sd_browsedata_search": "Buscar"
 }
