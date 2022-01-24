@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"A2y4",
 			"Aotake",
 			"Fryed-peach",
 			"Hosiryuhosi",
@@ -33,5 +34,6 @@
 	"sd_createfilter_usecategoryvalues": "このカテゴリからフィルターの値を取得:",
 	"sd_createfilter_requirefilter": "このフィルターが表示される前に、別のフィルターを選択するのを必須にする:",
 	"sd-pageschemas-filter": "フィルター",
-	"sd-pageschemas-values": "値"
+	"sd-pageschemas-values": "値",
+	"sd_browsedata_search": "検索"
 }

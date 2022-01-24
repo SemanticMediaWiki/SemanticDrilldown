@@ -31,5 +31,6 @@
 	"sd_createfilter_usecategoryvalues": "קבלת הערכים עבור המסנן מקטגוריה זו:",
 	"sd_createfilter_requirefilter": "הצבת דרישה לבחירת מסנן אחר לפני שזה יוצג:",
 	"sd-pageschemas-filter": "מסנן",
-	"sd-pageschemas-values": "ערכים"
+	"sd-pageschemas-values": "ערכים",
+	"sd_browsedata_search": "חיפוש"
 }

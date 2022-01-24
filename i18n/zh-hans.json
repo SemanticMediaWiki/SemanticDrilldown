@@ -7,6 +7,7 @@
 			"Liuxinyu970226",
 			"Mywood",
 			"PhiLiP",
+			"Willy1018",
 			"Yfdyh000"
 		]
 	},
@@ -35,5 +36,6 @@
 	"sd_createfilter_usecategoryvalues": "从此分类中获取过滤器的值：",
 	"sd_createfilter_requirefilter": "在显示该过滤器之前，要求选择另一个过滤器：",
 	"sd-pageschemas-filter": "过滤器",
-	"sd-pageschemas-values": "取值"
+	"sd-pageschemas-values": "取值",
+	"sd_browsedata_search": "搜索"
 }
