@@ -30,5 +30,6 @@
 	"sd_createfilter_usecategoryvalues": "Преземи вредности за филтер од оваа категорија:",
 	"sd_createfilter_requirefilter": "Побарувај да биде избран друг филтер пред да се прикаже овој:",
 	"sd-pageschemas-filter": "Филтер",
-	"sd-pageschemas-values": "Вредности"
+	"sd-pageschemas-values": "Вредности",
+	"sd_browsedata_search": "Пребарај"
 }
