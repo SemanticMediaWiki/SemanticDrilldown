@@ -5,6 +5,7 @@
 			"Melancholie",
 			"Michawiki",
 			"Mirin",
+			"Robin van der Vliet",
 			"Yekrats"
 		]
 	},
@@ -33,5 +34,6 @@
 	"sd_createfilter_usecategoryvalues": "Akiru valorojn por filtrilo de ĉi tiu kategorio:",
 	"sd_createfilter_requirefilter": "Devigu alian filtrilon esti selektita antaŭ ĉi tiu estas montrita:",
 	"sd-pageschemas-filter": "Filtri",
-	"sd-pageschemas-values": "Valoroj"
+	"sd-pageschemas-values": "Valoroj",
+	"sd_browsedata_search": "Serĉi"
 }
