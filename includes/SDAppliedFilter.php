@@ -230,7 +230,7 @@ class SDAppliedFilter {
 	GROUP BY $value_field
 	ORDER BY $value_field";
 		$res = $dbr->query( $sql );
-		while ( $row = $dbr->fetchRow( $res ) ) {
+		while ( $row = $res->fetchRow() ) {
 			if ( $this->filter->property_type == 'date' && $this->filter->getTimePeriod() == 'month' ) {
 				$value_string = SDUtils::monthToString( $row[1] ) . " " . $row[0];
 			} else {
@@ -239,7 +239,6 @@ class SDAppliedFilter {
 			}
 			$possible_values[] = $value_string;
 		}
-		$dbr->freeResult( $res );
 		return $possible_values;
 	}
 

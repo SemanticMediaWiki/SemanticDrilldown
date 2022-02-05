@@ -242,7 +242,7 @@ class SDFilter {
 
 END;
 		$res = $dbw->query( $sql );
-		$row = $dbw->fetchRow( $res );
+		$row = $res->fetchRow();
 		$minDate = $row[0];
 		if ( $minDate === null ) {
 			return null;
@@ -308,7 +308,7 @@ END;
 		$max_date_padded = '';
 
 		$res = $dbw->query( $sql );
-		while ( $row = $dbw->fetchRow( $res ) ) {
+		while ( $row = $res->fetchRow() ) {
 			$timePeriod = $this->getTimePeriod();
 
 			/*
@@ -379,7 +379,6 @@ END;
 				$max_date = $date;
 			}
 		}
-		$dbw->freeResult( $res );
 
 		// If month/day are missing in $min_date/$max_date,
 		// then set them to 1 January for $min_date and to 31 December for $max_date.
@@ -432,7 +431,7 @@ END;
 
 END;
 		$res = $dbw->query( $sql );
-		while ( $row = $dbw->fetchRow( $res ) ) {
+		while ( $row = $res->fetchRow() ) {
 			$value_string = str_replace( '_', ' ', $row[0] );
 			// We check this here, and not in the SQL, because
 			// for MySQL, 0 sometimes equals blank.
@@ -441,7 +440,6 @@ END;
 			}
 			$possible_values[$value_string] = $row[1];
 		}
-		$dbw->freeResult( $res );
 		return $possible_values;
 	}
 
