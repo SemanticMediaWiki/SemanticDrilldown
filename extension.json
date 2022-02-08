@@ -1,0 +1,77 @@
+{
+	"name": "SemanticDrilldown",
+	"version": "2.1",
+	"author": "Yaron Koren",
+	"url": "https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown",
+	"descriptionmsg": "semanticdrilldown-desc",
+	"license-name": "GPL-2.0-or-later",
+	"type": "specialpage",
+	"requires": {
+		"MediaWiki": ">= 1.34"
+	},
+	"SpecialPages": {
+		"BrowseData": "SDBrowseData"
+	},
+	"MessagesDirs": {
+		"SemanticDrilldown": [
+			"i18n"
+		]
+	},
+	"ExtensionMessagesFiles": {
+		"SemanticDrilldownMagic": "languages/SemanticDrilldown.i18n.magic.php",
+		"SemanticDrilldownAlias": "languages/SD_Aliases.php"
+	},
+	"AutoloadClasses": {
+		"SDUtils": "includes/SDUtils.php",
+		"SDFilter": "includes/SDFilter.php",
+		"SDFilterValue": "includes/SDFilterValue.php",
+		"SDAppliedFilter": "includes/SDAppliedFilter.php",
+		"SDPageSchemas": "includes/SDPageSchemas.php",
+		"SDParserFunctions": "includes/SDParserFunctions.php",
+		"TemporaryTableManager": "includes/TemporaryTableManager.php",
+		"SDBrowseData": "includes/specials/SDBrowseData.php",
+		"SDBrowseDataPage": "includes/specials/SDBrowseDataPage.php"
+	},
+	"ResourceModules": {
+		"ext.semanticdrilldown.main": {
+			"scripts": "libs/SemanticDrilldown.js",
+			"styles": [
+				"skins/SD_main.css",
+				"skins/SD_jquery_ui_overrides.css"
+			],
+			"dependencies": [
+				"jquery.ui"
+			]
+		},
+		"ext.semanticdrilldown.info": {
+			"styles": [
+				"skins/SD_info.css"
+			]
+		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "",
+		"remoteExtPath": "SemanticDrilldown"
+	},
+	"Hooks": {
+		"AdminLinks": "SDUtils::addToAdminLinks",
+		"MagicWordwgVariableIDs": "SDUtils::addMagicWordVariableIDs",
+		"MakeGlobalVariablesScript": "SDUtils::setGlobalJSVariables",
+		"ParserAfterTidy": "SDUtils::handleShowAndHide",
+		"PageSchemasRegisterHandlers": "SDPageSchemas::registerClass",
+		"ParserFirstCallInit": "SDParserFunctions::registerFunctions",
+		"UnitTestsList": "SDUtils::onUnitTestsList"
+	},
+	"config": {
+		"HideCategoriesByDefault": false,
+		"NumResultsPerPage": 250,
+		"FiltersSmallestFontSize": -1,
+		"FiltersLargestFontSize": -1,
+		"ShowCategoriesAsTabs": false,
+		"MinValuesForComboBox": 40,
+		"NumRangesForNumberFilters": 6,
+		"_prefix": "sdg"
+
+	},
+	"manifest_version": 1
+}
