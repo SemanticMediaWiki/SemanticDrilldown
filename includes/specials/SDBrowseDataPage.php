@@ -264,8 +264,7 @@ class SDBrowseDataPage extends QueryPage {
 			$sql .= $this->getSQLFromClauseForCategory( $subcategory, $subcategories );
 		}
 		$res = $dbw->query( $sql );
-		$row = $dbw->fetchRow( $res );
-		$dbw->freeResult( $res );
+		$row = $res->fetchRow();
 		return $row[0];
 	}
 
@@ -1218,17 +1217,16 @@ END;
 		$qr = [];
 		$count = 0;
 		$store = SDUtils::getSMWStore();
-		while ( ( $count < $num ) && ( $row = $dbr->fetchObject( $res ) ) ) {
+		while ( ( $count < $num ) && ( $row = $res->fetchObject() ) ) {
 			$count++;
 			$qr[] = new SMWDIWikiPage( $row->t, $row->ns, '' );
 			if ( method_exists( $store, 'cacheSMWPageID' ) ) {
 				$store->cacheSMWPageID( $row->id, $row->t, $row->ns, $row->iw, '' );
 			}
 		}
-		if ( $dbr->fetchObject( $res ) ) {
+		if ( $res->fetchObject() ) {
 			$count++;
 		}
-		$dbr->freeResult( $res );
 
 		$printrequest = new SMWPrintRequest( SMWPrintRequest::PRINT_THIS, $mainlabel );
 		$main_printout = [];
