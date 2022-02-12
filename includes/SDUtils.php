@@ -468,11 +468,22 @@ class SDUtils {
 			$mw_hide = MagicWord::get( 'MAG_HIDEFROMDRILLDOWN' );
 			$mw_show = MagicWord::get( 'MAG_SHOWINDRILLDOWN' );
 		}
+		$parserOutput = $parser->getOutput();
 		if ( $mw_hide->matchAndRemove( $text ) ) {
-			$parser->getOutput()->setProperty( 'hidefromdrilldown', 'y' );
+			if ( method_exists( $parserOutput, 'setPageProperty' ) ) {
+				// MW 1.38
+				$parserOutput->setPageProperty( 'hidefromdrilldown', 'y' );
+			} else {
+				$parserOutput->setProperty( 'hidefromdrilldown', 'y' );
+			}
 		}
 		if ( $mw_show->matchAndRemove( $text ) ) {
-			$parser->getOutput()->setProperty( 'showindrilldown', 'y' );
+			if ( method_exists( $parserOutput, 'setPageProperty' ) ) {
+				// MW 1.38
+				$parserOutput->setPageProperty( 'showindrilldown', 'y' );
+			} else {
+				$parserOutput->setProperty( 'showindrilldown', 'y' );
+			}
 		}
 		return true;
 	}

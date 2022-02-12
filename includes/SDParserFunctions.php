@@ -98,12 +98,23 @@ class SDParserFunctions {
 
 		$parserOutput = $parser->getOutput();
 
-		$parserOutput->setProperty( 'SDFilters',  serialize( $filtersInfoArray ) );
-		if ( $titleStr != '' ) {
-			$parserOutput->setProperty( 'SDTitle', $titleStr );
-		}
-		if ( $displayParametersStr != '' ) {
-			$parserOutput->setProperty( 'SDDisplayParams', $displayParametersStr );
+		if ( method_exists( $parserOutput, 'setPageProperty' ) ) {
+			// MW 1.38
+			$parserOutput->setPageProperty( 'SDFilters', serialize( $filtersInfoArray ) );
+			if ( $titleStr != '' ) {
+				$parserOutput->setPageProperty( 'SDTitle', $titleStr );
+			}
+			if ( $displayParametersStr != '' ) {
+				$parserOutput->setPageProperty( 'SDDisplayParams', $displayParametersStr );
+			}
+		} else {
+			$parserOutput->setProperty( 'SDFilters', serialize( $filtersInfoArray ) );
+			if ( $titleStr != '' ) {
+				$parserOutput->setProperty( 'SDTitle', $titleStr );
+			}
+			if ( $displayParametersStr != '' ) {
+				$parserOutput->setProperty( 'SDDisplayParams', $displayParametersStr );
+			}
 		}
 
 		$parserOutput->addModules( [ 'ext.semanticdrilldown.info' ] );
