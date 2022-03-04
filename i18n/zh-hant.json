@@ -6,6 +6,7 @@
 			"Mark85296341",
 			"Oapbtommy",
 			"Roc michael",
+			"Winston Sung",
 			"Wrightbus"
 		]
 	},
@@ -15,7 +16,7 @@
 	"sd_browsedata_choosecategory": "選擇一個分類",
 	"sd_browsedata_viewcategory": "檢視分類",
 	"sd_browsedata_docu": "點擊下面的一個或多個項目來縮小您的結果。",
-	"sd_browsedata_subcategory": "子類別",
+	"sd_browsedata_subcategory": "子分類",
 	"sd_browsedata_other": "其他",
 	"sd_browsedata_none": "無",
 	"sd_browsedata_filterbyvalue": "按此值篩選",

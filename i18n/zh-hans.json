@@ -8,6 +8,7 @@
 			"Mywood",
 			"PhiLiP",
 			"Willy1018",
+			"Winston Sung",
 			"Yfdyh000"
 		]
 	},
@@ -17,7 +18,7 @@
 	"sd_browsedata_choosecategory": "选择一个分类",
 	"sd_browsedata_viewcategory": "查看分类",
 	"sd_browsedata_docu": "点击下面的一个或多个项目来缩小您的结果。",
-	"sd_browsedata_subcategory": "子类别",
+	"sd_browsedata_subcategory": "子分类",
 	"sd_browsedata_other": "其他",
 	"sd_browsedata_none": "无",
 	"sd_browsedata_filterbyvalue": "按此值筛选",
