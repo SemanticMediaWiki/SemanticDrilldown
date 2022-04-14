@@ -11,10 +11,10 @@ use MediaWiki\MediaWikiServices;
 class SDUtils {
 
 	public static function setGlobalJSVariables( &$vars ) {
-		global $sdgScriptPath;
+		global $wgScriptPath;
 
-		$vars['sdgDownArrowImage'] = "$sdgScriptPath/skins/down-arrow.png";
-		$vars['sdgRightArrowImage'] = "$sdgScriptPath/skins/right-arrow.png";
+		$vars['sdgDownArrowImage'] = "$wgScriptPath/extensions/SemanticDrilldown/skins/down-arrow.png";
+		$vars['sdgRightArrowImage'] = "$wgScriptPath/extensions/SemanticDrilldown/skins/right-arrow.png";
 		return true;
 	}
 
