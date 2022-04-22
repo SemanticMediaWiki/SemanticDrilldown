@@ -194,9 +194,10 @@ class SDAppliedFilter {
 	 */
 	public function getAllOrValues( $category ) {
 		$possible_values = [];
-		$property_value = $this->filter->escaped_property;
+		$property_value = $dbr->addQuotes( $this->filter->escaped_property );
 		$dbr = wfGetDB( DB_REPLICA );
 		$property_table_name = $dbr->tableName( $this->filter->getTableName() );
+		$category = $dbr->addQuotes( $category );
 		if ( $this->filter->property_type != 'date' ) {
 			$value_field = $this->filter->getValueField();
 		} else {
@@ -224,9 +225,9 @@ class SDAppliedFilter {
 		}
 		$sql .= "	JOIN $smwCategoryInstances insts ON p.s_id = insts.s_id
 	JOIN $smwIDs cat_ids ON insts.o_id = cat_ids.smw_id
-	WHERE p_ids.smw_title = '$property_value'
+	WHERE p_ids.smw_title = $property_value
 	AND cat_ids.smw_namespace = $cat_ns
-	AND cat_ids.smw_title = '$category'
+	AND cat_ids.smw_title = $category
 	GROUP BY $value_field
 	ORDER BY $value_field";
 		$res = $dbr->query( $sql );
