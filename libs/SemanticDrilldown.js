@@ -3,6 +3,7 @@
  *
  * Javascript code for use by the Semantic Drilldown extension.
  *
+ * @param $
  * @author Sanyam Goyal
  */
 ( function ( $ ) {
@@ -11,7 +12,7 @@
 		var loc = item.label.search( re );
 		var t;
 		if ( loc >= 0 ) {
-			t = item.label.substr( 0, loc ) + '<strong>' + item.label.substr( loc, this.term.length ) + '</strong>' + item.label.substr( loc + this.term.length );
+			t = item.label.slice( 0, Math.max( 0, loc ) ) + '<strong>' + item.label.substr( loc, this.term.length ) + '</strong>' + item.label.slice( loc + this.term.length );
 		} else {
 			t = item.label;
 		}
