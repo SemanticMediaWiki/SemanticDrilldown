@@ -165,14 +165,9 @@ class SDParserFunctions {
 		$params = func_get_args();
 		array_shift( $params );
 
-		if ( class_exists( 'MediaWiki\Special\SpecialPageFactory' ) ) {
-			// MW 1.32+
-			$specialPage = MediaWikiServices::getInstance()
-				->getSpecialPageFactory()
-				->getPage( 'BrowseData' );
-		} else {
-			$specialPage = SpecialPageFactory::getPage( 'BrowseData' );
-		}
+		$specialPage = MediaWikiServices::getInstance()
+			->getSpecialPageFactory()
+			->getPage( 'BrowseData' );
 
 		// Set defaults.
 		$inQueryArr = [];
