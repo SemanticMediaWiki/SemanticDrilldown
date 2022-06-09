@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\MediaWikiServices;
+use SMW\SQLStore\SQLStore;
 
 /**
  * A class for static helper functions for Semantic Drilldown
@@ -489,23 +490,11 @@ class SDUtils {
 	}
 
 	public static function getIDsTableName() {
-		global $smwgDefaultStore;
-
-		if ( $smwgDefaultStore === 'SMWSQLStore3' || $smwgDefaultStore === 'SMWSparqlStore' ) {
-			return 'smw_object_ids';
-		} else {
-			return 'smw_ids';
-		}
+		return SQLStore::ID_TABLE;
 	}
 
 	public static function getCategoryInstancesTableName() {
-		global $smwgDefaultStore;
-
-		if ( $smwgDefaultStore === 'SMWSQLStore3' || $smwgDefaultStore === 'SMWSparqlStore' ) {
-			return 'smw_fpt_inst';
-		} else {
-			return 'smw_inst2';
-		}
+		return 'smw_fpt_inst';
 	}
 
 	public static function addToAdminLinks( &$admin_links_tree ) {
