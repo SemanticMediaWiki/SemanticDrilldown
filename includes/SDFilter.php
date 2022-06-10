@@ -192,12 +192,12 @@ class SDFilter {
 		} else {
 			// Things used to be so simple...
 			if ( $this->property_type === 'page' ) {
-				$this->db_table_name = 'smw_rels2';
+				$this->db_table_name = 'smw_di_wikipage';
 				$this->db_value_field = 'o_ids.smw_title';
 			} else {
-				$this->db_table_name = 'smw_atts2';
-				$this->db_date_field = 'value_xsd';
-				$this->db_value_field = 'value_xsd';
+				$this->db_table_name = 'smw_di_blob';
+				$this->db_date_field = 'o_hash';
+				$this->db_value_field = 'o_hash';
 			}
 		}
 	}
