@@ -806,6 +806,7 @@ END;
 	 */
 	private function printUnappliedFilterLine( $f, $cur_url = null ) {
 		global $sdgMinValuesForComboBox;
+		global $sdgHideFiltersWithoutValues;
 
 		$f->createTempTable();
 		$found_results_for_filter = false;
@@ -878,6 +879,11 @@ END;
 
 		$text = $this->printFilterLine( $f->name, false, $normal_filter, $results_line );
 		$f->dropTempTable();
+
+		if ( $sdgHideFiltersWithoutValues && count( $filter_values ) == 0 ) {
+			$text = '';
+		}
+
 		return $text;
 	}
 

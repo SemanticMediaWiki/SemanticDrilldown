@@ -70,6 +70,7 @@
 		"ShowCategoriesAsTabs": false,
 		"MinValuesForComboBox": 40,
 		"NumRangesForNumberFilters": 6,
+		"HideFiltersWithoutValues": false,
 		"_prefix": "sdg"
 
 	},
