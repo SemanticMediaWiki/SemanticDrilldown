@@ -340,6 +340,16 @@ END;
 	 */
 	private function printFilterLine( $filterName, $isApplied, $isNormalFilter, $resultsLine ) {
 		global $sdgScriptPath;
+		global $sdgDisableFilterCollapsible;
+
+		if ( $sdgDisableFilterCollapsible ) {
+			$text  = '<div class="drilldown-filter">';
+			$text .= "	<div class='drilldown-filter-label'>  \t\t\t\t\t$filterName</div>";
+			$text .= '	<div class="drilldown-filter-values">' . $resultsLine . '</div>';
+			$text .= '</div>';
+
+			return $text;
+		}
 
 		$text = <<<END
 				<div class="drilldown-filter">

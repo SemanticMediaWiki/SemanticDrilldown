@@ -71,6 +71,7 @@
 		"MinValuesForComboBox": 40,
 		"NumRangesForNumberFilters": 6,
 		"HideFiltersWithoutValues": false,
+		"DisableFilterCollapsible": false,
 		"_prefix": "sdg"
 
 	},
