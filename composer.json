@@ -19,8 +19,7 @@
 		"analyze": [
 			"@lint",
 			"@phpcs",
-			"@phpstan",
-			"@psalm"
+			"@phpstan"
 		],
 		"lint": "parallel-lint . --exclude vendor --exclude node_modules",
 		"phpcs": "phpcs -p -s includes tests/phpunit",
