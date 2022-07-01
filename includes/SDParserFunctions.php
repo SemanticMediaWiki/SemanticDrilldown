@@ -39,6 +39,8 @@ class SDParserFunctions {
 		array_shift( $params );
 
 		$filtersStr = $titleStr = $displayParametersStr = "";
+		$header = '';
+		$footer = '';
 
 		// Parameters
 		foreach ( $params as $i => $param ) {
@@ -60,6 +62,10 @@ class SDParserFunctions {
 				$titleStr = $value;
 			} elseif ( $param_name == 'display parameters' ) {
 				$displayParametersStr = $value;
+			} elseif ( $param_name === 'header' ) { // Header
+				$header = $value;
+			} elseif ( $param_name === 'footer' ) { // Footer
+				$footer = $value;
 			}
 		}
 
@@ -107,6 +113,12 @@ class SDParserFunctions {
 			if ( $displayParametersStr != '' ) {
 				$parserOutput->setPageProperty( 'SDDisplayParams', $displayParametersStr );
 			}
+			if ( $header !== '' ) {
+				$parserOutput->setPageProperty( 'SDHeader', $header );
+			}
+			if ( $footer !== '' ) {
+				$parserOutput->setPageProperty( 'SDFooter', $footer );
+			}
 		} else {
 			$parserOutput->setProperty( 'SDFilters', serialize( $filtersInfoArray ) );
 			if ( $titleStr != '' ) {
@@ -114,6 +126,12 @@ class SDParserFunctions {
 			}
 			if ( $displayParametersStr != '' ) {
 				$parserOutput->setProperty( 'SDDisplayParams', $displayParametersStr );
+			}
+			if ( $header !== '' ) {
+				$parserOutput->setProperty( 'SDHeader', $header );
+			}
+			if ( $footer !== '' ) {
+				$parserOutput->setProperty( 'SDFooter', $footer );
 			}
 		}
 

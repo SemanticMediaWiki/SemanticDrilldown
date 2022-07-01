@@ -360,6 +360,54 @@ class SDUtils {
 		return [ $yearValue, $monthValue, $dayValue ];
 	}
 
+	/**
+	 * Gets the custom drilldown title for a category, if there is one.
+	 */
+	public static function getDrilldownHeader( $category ) {
+		$title = Title::newFromText( $category, NS_CATEGORY );
+		$pageID = $title->getArticleID();
+		$dbr = wfGetDB( DB_REPLICA );
+		$res = $dbr->select( 'page_props',
+			[
+				'pp_value'
+			],
+			[
+				'pp_page' => $pageID,
+				'pp_propname' => 'SDHeader'
+			]
+		);
+
+		if ( $row = $dbr->fetchRow( $res ) ) {
+			return $row['pp_value'];
+		} else {
+			return '';
+		}
+	}
+
+	/**
+	 * Gets the custom drilldown title for a category, if there is one.
+	 */
+	public static function getDrilldownFooter( $category ) {
+		$title = Title::newFromText( $category, NS_CATEGORY );
+		$pageID = $title->getArticleID();
+		$dbr = wfGetDB( DB_REPLICA );
+		$res = $dbr->select( 'page_props',
+			[
+				'pp_value'
+			],
+			[
+				'pp_page' => $pageID,
+				'pp_propname' => 'SDFooter'
+			]
+		);
+
+		if ( $row = $dbr->fetchRow( $res ) ) {
+			return $row['pp_value'];
+		} else {
+			return '';
+		}
+	}
+
 	public static function monthToString( $month ) {
 		if ( $month == 1 ) {
 			return wfMessage( 'january' )->text();

@@ -88,6 +88,9 @@ class SDBrowseDataPage extends QueryPage {
 
 		$temporaryTableManager = new TemporaryTableManager( $dbw );
 
+		$sql0 = "DROP TABLE IF EXISTS semantic_drilldown_values;";
+		$temporaryTableManager->queryWithAutoCommit( $sql0, __METHOD__ );
+
 		$sql1 = "CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL )";
 		$temporaryTableManager->queryWithAutoCommit( $sql1, __METHOD__ );
 
@@ -895,6 +898,20 @@ END;
 		$subcategory_text = wfMessage( 'sd_browsedata_subcategory' )->text();
 
 		$header = "";
+
+		// Add intro template
+		$headerPage = SDUtils::getDrilldownHeader( $this->category );
+		if ( $headerPage !== '' ) {
+			$title = Title::newFromText( $headerPage );
+			$page = WikiPage::factory( $title );
+			if ( $page->exists() ) {
+				$content = $page->getContent();
+				$pageContent = $content->serialize();
+				$out = $this->getOutput();
+				$header .= $out->parseInline( $pageContent );
+			}
+		}
+
 		$this->show_single_cat = $this->getRequest()->getCheck( '_single' );
 		if ( !$this->show_single_cat ) {
 			$header .= $this->printCategoriesList( $categories );
@@ -1136,6 +1153,7 @@ END;
 			return;
 		}
 
+		// Add Drilldown Results
 		$all_display_params = SDUtils::getDisplayParamsForCategory( $this->category );
 		$querystring = null;
 		$printouts = $params = [];
@@ -1205,6 +1223,21 @@ END;
 			: implode( '', $html );
 
 		$out->addHTML( $html );
+
+		// Add outro template
+		$footerPage = SDUtils::getDrilldownFooter( $this->category );
+
+		if ( $footerPage !== '' ) {
+
+			$title = Title::newFromText( 'Template:' . $footerPage );
+			$page = WikiPage::factory( $title );
+
+			if ( $page->exists() ) {
+				$content = $page->getContent();
+				$pageContent = $content->serialize();
+				$out->addWikiText( $pageContent );
+			}
+		}
 	}
 
 	/**
