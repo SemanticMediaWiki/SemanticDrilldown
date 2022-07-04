@@ -338,9 +338,13 @@ END;
 	 * Create the full display of the filter line, once the text for
 	 * the "results" (values) for this filter has been created.
 	 */
-	private function printFilterLine( $filterName, $isApplied, $isNormalFilter, $resultsLine ) {
+	private function printFilterLine( $filterName, $isApplied, $isNormalFilter, $resultsLine, $filter ) {
 		global $sdgScriptPath;
 		global $sdgDisableFilterCollapsible;
+
+		if ( isset( $filter->int ) ) {
+			$filterName = wfMessage( $filter->int )->text();
+		}
 
 		if ( $sdgDisableFilterCollapsible ) {
 			$text  = '<div class="drilldown-filter">';
@@ -431,7 +435,7 @@ END;
 			}
 			$curSearchTermNum = count( $af->search_terms );
 			$results_line = $this->printComboBoxInput( $af->filter->name, $curSearchTermNum, $filter_values );
-			return $this->printFilterLine( $af->filter->name, true, true, $results_line );
+			return $this->printFilterLine( $af->filter->name, true, true, $results_line, $af->filter );
 		/*
 		} elseif ( $af->lower_date != null || $af->upper_date != null ) {
 			// With the current interface, this code will never get
@@ -480,7 +484,7 @@ END;
 				}
 			}
 		}
-		return $this->printFilterLine( $af->filter->name, true, true, $results_line );
+		return $this->printFilterLine( $af->filter->name, true, true, $results_line, $af->filter );
 	}
 
 	private function printUnappliedFilterValues( $cur_url, $f, $filter_values ) {
@@ -828,7 +832,7 @@ END;
 			}
 			if ( !is_array( $filter_values ) ) {
 				$f->dropTempTable();
-				return $this->printFilterLine( $f->name, false, false, $filter_values );
+				return $this->printFilterLine( $f->name, false, false, $filter_values, $f );
 			}
 			if ( count( $filter_values ) > 0 ) {
 				$found_results_for_filter = true;
@@ -887,7 +891,7 @@ END;
 			$results_line .= '<br>' . $this->printDateRangeInput( $filter_name, $lower_date, $upper_date );
 		}
 
-		$text = $this->printFilterLine( $f->name, false, $normal_filter, $results_line );
+		$text = $this->printFilterLine( $f->name, false, $normal_filter, $results_line, $f );
 		$f->dropTempTable();
 
 		if ( $sdgHideFiltersWithoutValues && count( $filter_values ) == 0 ) {

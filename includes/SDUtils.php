@@ -221,6 +221,8 @@ class SDUtils {
 						$curFilter->setCategory( $value );
 					} elseif ( $key == 'requires' ) {
 						$curFilter->addRequiredFilter( $value );
+					} elseif ( $key == 'int' ) {
+						$curFilter->setInt( $value );
 					}
 				}
 				$filters[] = $curFilter;

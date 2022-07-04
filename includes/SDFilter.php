@@ -18,6 +18,7 @@ class SDFilter {
 	public $db_table_name;
 	public $db_value_field;
 	public $db_date_field;
+	public $int;
 
 	public function setName( $name ) {
 		$this->name = $name;
@@ -38,6 +39,10 @@ class SDFilter {
 
 	public function addRequiredFilter( $filterName ) {
 		$this->required_filters[] = $filterName;
+	}
+
+	public function setInt( $int ) {
+		$this->int = $int;
 	}
 
 	public static function loadAllFromPageSchema( $psSchemaObj ) {
