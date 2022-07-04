@@ -1183,6 +1183,8 @@ END;
 			return;
 		}
 
+		$this->getOutput()->addHTML( Html::openElement( 'div', [ 'class' => 'drilldown-results-output' ] ) );
+
 		// Add Drilldown Results
 		$all_display_params = SDUtils::getDisplayParamsForCategory( $this->category );
 		$querystring = null;
@@ -1238,6 +1240,9 @@ END;
 				$out->addWikiText( $pageContent );
 			}
 		}
+
+		// close drilldown-results
+		$this->getOutput()->addHTML( Html::closeElement( 'div' ) );
 
 		// close the Bootstrap Panel wrapper opened in getPageHeader();
 		$this->getOutput()->addHTML('</div></div>');
