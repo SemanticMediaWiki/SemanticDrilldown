@@ -1216,41 +1216,12 @@ END;
 		$prresult = $printer->getResult(
 			$r,
 			$params,
-			SMW_OUTPUT_HTML
+			SMW_OUTPUT_WIKI
 		);
 
 		$prtext = is_array( $prresult ) ? $prresult[0] : $prresult;
 
-		SMWOutputs::commitToOutputPage( $out );
-
-		// Crappy hack to get the contents of SMWOutputs::$mHeadItems,
-		// which may have been set in the result printer, and dump into
-		// headItems of $out.
-		// How else can we do this?
-		$parser = MediaWikiServices::getInstance()->getParser();
-		SMWOutputs::commitToParser( $parser );
-		if ( $parser->getOutput() !== null ) {
-			$headItems = $parser->getOutput()->getHeadItems();
-
-			foreach ( $headItems as $key => $item ) {
-				$out->addHeadItem( $key, $item );
-			}
-			// Force one more parser function, so links appear.
-			$parser->replaceLinkHolders( $prtext );
-		}
-
-		$html = [];
-		$html[] = $prtext;
-
-		if ( !$this->listoutput ) {
-			$html[] = $this->closeList();
-		}
-
-		$html = $this->listoutput
-			? $contLang->listToText( $html )
-			: implode( '', $html );
-
-		$out->addHTML( $html );
+		$out->addWikiText( $prtext );
 
 		// Add outro template
 		$footerPage = SDUtils::getDrilldownFooter( $this->category );
