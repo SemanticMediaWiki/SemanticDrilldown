@@ -940,6 +940,9 @@ END;
 			}
 		}
 
+		// wrap output in Bootstrap panel
+		$header .= '<div class="panel panel-default"><div class="panel-heading">&nbsp;</div><div class="panel-body">';
+
 		$this->show_single_cat = $this->getRequest()->getCheck( '_single' );
 		if ( !$this->show_single_cat ) {
 			$header .= $this->printCategoriesList( $categories );
@@ -957,9 +960,8 @@ END;
 		if ( count( $this->applied_filters ) > 0 || $this->subcategory ) {
 			$category_url = $this->makeBrowseURL( $this->category );
 			$header .= '<a href="' . $category_url . '" title="' . wfMessage( 'sd_browsedata_resetfilters' )->text() . '">' . str_replace( '_', ' ', $this->category ) . '</a>';
-		} else {
-			$header .= str_replace( '_', ' ', $this->category );
 		}
+
 		if ( $this->subcategory ) {
 			$header .= " > ";
 			$header .= "$subcategory_text: ";
@@ -1227,8 +1229,7 @@ END;
 		$footerPage = SDUtils::getDrilldownFooter( $this->category );
 
 		if ( $footerPage !== '' ) {
-
-			$title = Title::newFromText( 'Template:' . $footerPage );
+			$title = Title::newFromText($footerPage);
 			$page = WikiPage::factory( $title );
 
 			if ( $page->exists() ) {
@@ -1237,6 +1238,9 @@ END;
 				$out->addWikiText( $pageContent );
 			}
 		}
+
+		// close the Bootstrap Panel wrapper opened in getPageHeader();
+		$this->getOutput()->addHTML('</div></div>');
 	}
 
 	/**
