@@ -32,7 +32,7 @@
 				.insertAfter( select )
 				.autocomplete( {
 					source: function ( request, response ) {
-						var matcher = new RegExp( '\\b' + request.term, 'i' );
+						var matcher = new RegExp( request.term, 'i' );
 						response( select.children( 'option' ).map( function () {
 							var text = $( this ).text();
 							if ( this.value && ( !request.term || matcher.test( text ) ) ) {
