@@ -346,8 +346,16 @@ END;
 			$filterName = wfMessage( $filter->int )->text();
 		}
 
+		$additionalClasses = '';
+		if ( $isApplied ) {
+			$additionalClasses .= ' is-applied';
+		}
+		if ( $isNormalFilter ) {
+			$additionalClasses .= ' is-normal-filter';
+		}
+
 		if ( $sdgDisableFilterCollapsible ) {
-			$text  = '<div class="drilldown-filter">';
+			$text  = '<div class="drilldown-filter' . $additionalClasses . '">';
 			$text .= "	<div class='drilldown-filter-label'>  \t\t\t\t\t$filterName</div>";
 			$text .= '	<div class="drilldown-filter-values">' . $resultsLine . '</div>';
 			$text .= '</div>';
@@ -356,7 +364,7 @@ END;
 		}
 
 		$text = <<<END
-				<div class="drilldown-filter">
+				<div class="drilldown-filter' . $additionalClasses . '">
 					<div class="drilldown-filter-label">
 
 END;

@@ -113,6 +113,10 @@ span.drilldown-filter-notes {
 div.drilldown-filter-values {
 }
 
+.is-applied .drilldown-filter-label {
+	font-style: italic;
+}
+
 .ui-button { margin-left: -1px; }
 .ui-button-icon-only .ui-button-text { padding: 0.35em; }
 button.ui-button-icon-only {
