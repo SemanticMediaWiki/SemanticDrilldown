@@ -443,7 +443,7 @@ END;
 			}
 			$curSearchTermNum = count( $af->search_terms );
 			$results_line = $this->printComboBoxInput( $af->filter->name, $curSearchTermNum, $filter_values );
-			return $this->printFilterLine( $af->filter->name, true, true, $results_line, $af->filter );
+			return $this->printFilterLine( $af->filter->name, true, false, $results_line, $af->filter );
 		/*
 		} elseif ( $af->lower_date != null || $af->upper_date != null ) {
 			// With the current interface, this code will never get
