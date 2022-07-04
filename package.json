@@ -6,6 +6,7 @@
 		"test-coverage": "npm run analyze",
 		"analyze": "npm run eslint && npm run banana-checker",
 		"eslint": "eslint libs/**/*.js",
+		"eslint-fix": "npm run eslint -- --fix",
 		"banana-checker": "banana-checker i18n/"
 	},
 	"devDependencies": {

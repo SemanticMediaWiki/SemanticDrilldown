@@ -34,7 +34,7 @@
 					source: function ( request, response ) {
 						var matcher = new RegExp( request.term, 'i' );
 						response( select.children( 'option' ).map( function () {
-							var text = $( this ).text();
+							var text = this.innerHTML;
 							if ( this.value && ( !request.term || matcher.test( text ) ) ) {
 								return {
 									id: this.value,
