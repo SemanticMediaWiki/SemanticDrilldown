@@ -1,4 +1,7 @@
 <?php
+
+use MediaWiki\MediaWikiServices;
+
 /**
  * Defines a class, SDAppliedFilter, that adds a value or a value range
  * onto a an SDFilter instance.
@@ -194,8 +197,11 @@ class SDAppliedFilter {
 	 */
 	public function getAllOrValues( $category ) {
 		$possible_values = [];
+
+		$lb = MediaWikiServices::getInstance()->getDBLoadBalancer();
+		$dbr = $lb->getConnection( $lb::DB_REPLICA );
+
 		$property_value = $dbr->addQuotes( $this->filter->escaped_property );
-		$dbr = wfGetDB( DB_REPLICA );
 		$property_table_name = $dbr->tableName( $this->filter->getTableName() );
 		$category = $dbr->addQuotes( $category );
 		if ( $this->filter->property_type != 'date' ) {
