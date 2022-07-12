@@ -1114,7 +1114,7 @@ END;
 
 	protected function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( $result->namespace, $result->value );
-		return Linker::link( $title, htmlspecialchars( $title->getText() ) );
+		return $this->getLinkRenderer()->makeLink( $title, $title->getText() );
 	}
 
 	/**
