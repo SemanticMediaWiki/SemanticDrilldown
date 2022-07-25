@@ -1231,7 +1231,7 @@ END;
 		$footerPage = SDUtils::getDrilldownFooter( $this->category );
 
 		if ( $footerPage !== '' ) {
-			$title = Title::newFromText($footerPage);
+			$title = Title::newFromText( $footerPage );
 			$page = WikiPage::factory( $title );
 
 			if ( $page->exists() ) {
@@ -1245,7 +1245,7 @@ END;
 		$this->getOutput()->addHTML( Html::closeElement( 'div' ) );
 
 		// close the Bootstrap Panel wrapper opened in getPageHeader();
-		$this->getOutput()->addHTML('</div></div>');
+		$this->getOutput()->addHTML( '</div></div>' );
 	}
 
 	/**
