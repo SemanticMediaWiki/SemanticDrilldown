@@ -936,7 +936,7 @@ END;
 				$content = $page->getContent();
 				$pageContent = $content->serialize();
 				$out = $this->getOutput();
-				$header .= $out->parseInline( $pageContent );
+				$header .= $out->parseInlineAsInterface( $pageContent );
 			}
 		}
 
@@ -1225,7 +1225,7 @@ END;
 
 		$prtext = is_array( $prresult ) ? $prresult[0] : $prresult;
 
-		$out->addWikiText( $prtext );
+		$out->addWikiTextAsInterface( $prtext );
 
 		// Add outro template
 		$footerPage = SDUtils::getDrilldownFooter( $this->category );
@@ -1237,7 +1237,7 @@ END;
 			if ( $page->exists() ) {
 				$content = $page->getContent();
 				$pageContent = $content->serialize();
-				$out->addWikiText( $pageContent );
+				$out->addWikiTextAsInterface( $pageContent );
 			}
 		}
 
