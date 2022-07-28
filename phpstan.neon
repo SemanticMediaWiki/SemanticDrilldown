@@ -10,6 +10,7 @@ parameters:
 	excludePaths:
 	scanDirectories:
 		- ../SemanticMediaWiki/includes
+		- ../SemanticMediaWiki/tests/phpunit
 		- ../PageSchemas/includes
 		- ../../includes
 		- ../../languages

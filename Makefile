@@ -1,7 +1,7 @@
 EXTENSION := SemanticDrilldown
 
 MW_VERSION ?= 1.35
-SMW_VERSION ?= 4.0.1
+SMW_VERSION ?= 4.0.2
 
 EXTENSION_FOLDER := /var/www/html/extensions/$(EXTENSION)
 IMAGE_NAME := $(shell echo $(EXTENSION) | tr A-Z a-z}):test-$(MW_VERSION)-$(SMW_VERSION)
@@ -55,7 +55,10 @@ bash:
 
 .PHONY: dev-bash
 dev-bash:
-	docker run -it --rm -v $(PWD):$(EXTENSION_FOLDER) -v $(EXTENSION_FOLDER)/node_modules -v $(EXTENSION_FOLDER)/vendor -w $(EXTENSION_FOLDER) $(IMAGE_NAME) bash
+	docker run -it --rm -p 8080:8080 \
+		-v $(PWD):$(EXTENSION_FOLDER) \
+		-v $(EXTENSION_FOLDER)/vendor/ -v $(EXTENSION_FOLDER)/node_modules/ \
+		-w $(EXTENSION_FOLDER) $(IMAGE_NAME) bash -c 'service apache2 start && bash'
 
 # ======== Releasing ========
 

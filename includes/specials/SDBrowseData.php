@@ -19,11 +19,6 @@ class SDBrowseData extends IncludableSpecialPage {
 	public function execute( $query ) {
 		global $sdgScriptPath, $sdgNumResultsPerPage;
 
-		// If this was called from the command line, exit.
-		if ( PHP_SAPI === 'cli' ) {
-			return '';
-		}
-
 		$out = $this->getOutput();
 		$request = $this->getRequest();
 		$parser = MediaWikiServices::getInstance()->getParser();
@@ -139,7 +134,7 @@ class SDBrowseData extends IncludableSpecialPage {
 		}
 
 		$out->addHTML( "\n			<div class=\"drilldown-results\">\n" );
-		$rep = new SDBrowseDataPage( $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit );
+		$rep = new SDBrowseDataPage( $this->getContext(), $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit );
 		$num = $rep->execute( $query );
 		$out->addHTML( "\n			</div> <!-- drilldown-results -->\n" );
 

@@ -14,6 +14,7 @@
     </projectFiles>
     <extraFiles>
         <directory name="../SemanticMediaWiki/includes" />
+        <directory name="../SemanticMediaWiki/tests/phpunit" />
         <directory name="../PageSchemas/includes" />
         <directory name="../../includes" />
         <directory name="../../languages" />

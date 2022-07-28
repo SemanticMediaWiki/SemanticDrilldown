@@ -15,8 +15,10 @@ class SDBrowseDataPage extends QueryPage {
 	/**
 	 * Initialize the variables of this page
 	 */
-	public function __construct( $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit ) {
+	public function __construct( $context, $category, $subcategory, $applied_filters,
+								 $remaining_filters, $offset, $limit ) {
 		parent::__construct( 'BrowseData' );
+		$this->setContext( $context );
 
 		$this->category = $category;
 		$this->subcategory = $subcategory;
@@ -913,11 +915,6 @@ END;
 		global $sdgScriptPath;
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
-		// If this was called from the command line, exit.
-		if ( PHP_SAPI === 'cli' ) {
-			return '';
-		}
-
 		$categories = SDUtils::getCategoriesForBrowsing();
 		// if there are no categories, escape quickly
 		if ( count( $categories ) == 0 ) {
@@ -1177,11 +1174,6 @@ END;
 	 */
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
 		$contLang = MediaWikiServices::getInstance()->getContentLanguage();
-
-		// If this was called from the command line, exit.
-		if ( PHP_SAPI === 'cli' ) {
-			return;
-		}
 
 		$this->getOutput()->addHTML( Html::openElement( 'div', [ 'class' => 'drilldown-results-output' ] ) );
 
