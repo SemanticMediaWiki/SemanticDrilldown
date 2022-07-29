@@ -3,9 +3,8 @@
 namespace SD\Tests\Unit;
 
 use DatabaseBase;
-use DatabaseType;
 use PHPUnit;
-use TemporaryTableManager;
+use SD\TemporaryTableManager;
 use Wikimedia;
 use const DBO_TRX;
 

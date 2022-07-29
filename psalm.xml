@@ -16,6 +16,7 @@
         <directory name="../SemanticMediaWiki/includes" />
         <directory name="../SemanticMediaWiki/tests/phpunit" />
         <directory name="../PageSchemas/includes" />
+        <directory name="../AdminLinks/includes" />
         <directory name="../../includes" />
         <directory name="../../languages" />
         <directory name="../../tests/phpunit" />

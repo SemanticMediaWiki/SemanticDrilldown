@@ -2,10 +2,14 @@ ARG MW_VERSION
 FROM gesinn/docker-mediawiki-sqlite:${MW_VERSION}
 
 ARG SMW_VERSION
+ARG PS_VERSION
+ARG AL_VERSION
 RUN sed -i s/80/8080/g /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf && \
     COMPOSER=composer.local.json composer require --no-update mediawiki/semantic-media-wiki ${SMW_VERSION} && \
-    curl -L https://github.com/wikimedia/mediawiki-extensions-PageSchemas/archive/refs/tags/0.6.1.tar.gz \
+    curl -L https://github.com/wikimedia/mediawiki-extensions-PageSchemas/archive/refs/tags/${PS_VERSION}.tar.gz \
         | tar zx --strip-components=1 --one-top-level=extensions/PageSchemas && \
+    curl -L https://github.com/wikimedia/mediawiki-extensions-AdminLinks/archive/refs/tags/${AL_VERSION}.tar.gz \
+        | tar zx --strip-components=1 --one-top-level=extensions/AdminLinks && \
     sudo -u www-data composer update && \
     echo \
         "wfLoadExtension( 'SemanticMediaWiki' );\n" \

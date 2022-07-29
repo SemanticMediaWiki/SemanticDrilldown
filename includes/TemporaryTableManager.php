@@ -1,4 +1,9 @@
 <?php
+
+namespace SD;
+
+use DatabaseBase;
+
 /**
  * Provides helper method to execute SQL queries in auto-commit mode
  */

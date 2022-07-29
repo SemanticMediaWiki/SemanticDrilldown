@@ -1,5 +1,10 @@
 <?php
 
+namespace SD\Specials\BrowseData;
+
+use SD\TemporaryTableManager;
+use SD\Utils;
+
 class SqlProvider {
 
 	private $category;
@@ -54,6 +59,30 @@ class SqlProvider {
 	}
 
 	/**
+	 * Gets the number of pages matching both the currently-selected
+	 * set of filters and either a new subcategory or a new filter.
+	 */
+	public function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
+		$dbw = wfGetDB( DB_MASTER );
+
+		// Escape the given values to prevent SQL injection
+		$subcategory = $dbw->addQuotes( $subcategory );
+		foreach ( $subcategories as $key => $value ) {
+			$subcategories[$key] = $dbw->addQuotes( $value );
+		}
+
+		$sql = "SELECT COUNT(DISTINCT sdv.id) ";
+		if ( $new_filter ) {
+			$sql .= $this->getSQLFromClauseForField( $new_filter );
+		} else {
+			$sql .= $this->getSQLFromClauseForCategory( $subcategory, $subcategories );
+		}
+		$res = $dbw->query( $sql );
+		$row = $res->fetchRow();
+		return $row[0];
+	}
+
+	/**
 	 * Creates a SQL statement, lacking only the initial "SELECT"
 	 * clause, to get all the pages that match all the previously-
 	 * selected filters, plus the one new filter (with value) that
@@ -75,8 +104,8 @@ class SqlProvider {
 	 */
 	private function getSQLFromClauseForCategory( $subcategory, $child_subcategories ) {
 		$dbr = wfGetDB( DB_REPLICA );
-		$smwIDs = $dbr->tableName( SDUtils::getIDsTableName() );
-		$smwCategoryInstances = $dbr->tableName( SDUtils::getCategoryInstancesTableName() );
+		$smwIDs = $dbr->tableName( Utils::getIDsTableName() );
+		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
 		$ns_cat = NS_CATEGORY;
 		$subcategory_escaped = $dbr->addQuotes( $subcategory );
 		$sql = "FROM semantic_drilldown_values sdv
@@ -100,8 +129,8 @@ class SqlProvider {
 	 */
 	private function getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters ) {
 		$dbr = wfGetDB( DB_REPLICA );
-		$smwIDs = $dbr->tableName( SDUtils::getIDsTableName() );
-		$smwCategoryInstances = $dbr->tableName( SDUtils::getCategoryInstancesTableName() );
+		$smwIDs = $dbr->tableName( Utils::getIDsTableName() );
+		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
 		$cat_ns = NS_CATEGORY;
 		$prop_ns = SMW_NS_PROPERTY;
 
@@ -196,30 +225,6 @@ class SqlProvider {
 			$sql .= $af->checkSQL( $value_field );
 		}
 		return $sql;
-	}
-
-	/**
-	 * Gets the number of pages matching both the currently-selected
-	 * set of filters and either a new subcategory or a new filter.
-	 */
-	private function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
-		$dbw = wfGetDB( DB_MASTER );
-
-		// Escape the given values to prevent SQL injection
-		$subcategory = $dbw->addQuotes( $subcategory );
-		foreach ( $subcategories as $key => $value ) {
-			$subcategories[$key] = $dbw->addQuotes( $value );
-		}
-
-		$sql = "SELECT COUNT(DISTINCT sdv.id) ";
-		if ( $new_filter ) {
-			$sql .= $this->getSQLFromClauseForField( $new_filter );
-		} else {
-			$sql .= $this->getSQLFromClauseForCategory( $subcategory, $subcategories );
-		}
-		$res = $dbw->query( $sql );
-		$row = $res->fetchRow();
-		return $row[0];
 	}
 
 }

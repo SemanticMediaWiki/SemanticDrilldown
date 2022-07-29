@@ -1,12 +1,17 @@
 <?php
+
+namespace SD;
+
+use RequestContext;
+
 /**
- * Defines a class, SDAppliedFilter, that adds a value or a value range
- * onto a an SDFilter instance.
+ * Defines a class, AppliedFilter, that adds a value or a value range
+ * onto a an Filter instance.
  *
  * @author Yaron Koren
  */
 
-class SDAppliedFilter {
+class AppliedFilter {
 	public $filter;
 	public $values = [];
 	public $search_terms;
@@ -16,7 +21,7 @@ class SDAppliedFilter {
 	public $upper_date_string;
 
 	public static function create( $filter, $values, $search_terms = null, $lower_date = null, $upper_date = null ) {
-		$af = new SDAppliedFilter();
+		$af = new AppliedFilter();
 		$af->filter = $filter;
 		if ( $search_terms != null ) {
 			$af->search_terms = [];
@@ -44,7 +49,7 @@ class SDAppliedFilter {
 			$values = [ $values ];
 		}
 		foreach ( $values as $val ) {
-			$filter_val = SDFilterValue::create( $val, $filter );
+			$filter_val = FilterValue::create( $val, $filter );
 			$af->values[] = $filter_val;
 		}
 		return $af;
@@ -165,7 +170,7 @@ class SDAppliedFilter {
 					$sql .= "$value_field < {$fv->upper_limit} ";
 				}
 			} elseif ( $this->filter->property_type == 'date' ) {
-				list( $yearValue, $monthValue, $dayValue ) = SDUtils::getDateFunctions( $value_field );
+				list( $yearValue, $monthValue, $dayValue ) = Utils::getDateFunctions( $value_field );
 				if ( $fv->time_period == 'day' ) {
 					$sql .= "$yearValue = {$fv->year} AND $monthValue = {$fv->month} AND $dayValue = {$fv->day} ";
 				} elseif ( $fv->time_period == 'month' ) {
@@ -203,7 +208,7 @@ class SDAppliedFilter {
 		} else {
 			// Is this necessary?
 			$date_field = $this->filter->getDateField();
-			list( $yearValue, $monthValue, $dayValue ) = SDUtils::getDateFunctions( $date_field );
+			list( $yearValue, $monthValue, $dayValue ) = Utils::getDateFunctions( $date_field );
 			if ( $this->filter->getTimePeriod() == 'day' ) {
 				$value_field = "$yearValue, $monthValue, $dayValue";
 			} elseif ( $this->filter->getTimePeriod() == 'month' ) {
@@ -214,8 +219,8 @@ class SDAppliedFilter {
 				$value_field = $yearValue;
 			}
 		}
-		$smwIDs = $dbr->tableName( SDUtils::getIDsTableName() );
-		$smwCategoryInstances = $dbr->tableName( SDUtils::getCategoryInstancesTableName() );
+		$smwIDs = $dbr->tableName( Utils::getIDsTableName() );
+		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
 		$cat_ns = NS_CATEGORY;
 		$sql = "SELECT $value_field
 	FROM $property_table_name p
@@ -233,7 +238,7 @@ class SDAppliedFilter {
 		$res = $dbr->query( $sql );
 		while ( $row = $res->fetchRow() ) {
 			if ( $this->filter->property_type == 'date' && $this->filter->getTimePeriod() == 'month' ) {
-				$value_string = SDUtils::monthToString( $row[1] ) . " " . $row[0];
+				$value_string = Utils::monthToString( $row[1] ) . " " . $row[0];
 			} else {
 				// why is trim() necessary here???
 				$value_string = str_replace( '_', ' ', trim( $row[0] ) );

@@ -1,7 +1,18 @@
 <?php
 
+namespace SD;
+
+use ALItem;
+use ALRow;
+use MagicWord;
+use MagicWordFactory;
 use MediaWiki\MediaWikiServices;
+use SMW\RequestOptions;
 use SMW\SQLStore\SQLStore;
+use SMWDIProperty;
+use SMWDIWikiPage;
+use SMWStore;
+use Title;
 
 /**
  * A class for static helper functions for Semantic Drilldown
@@ -9,7 +20,7 @@ use SMW\SQLStore\SQLStore;
  * @author Yaron Koren
  */
 
-class SDUtils {
+class Utils {
 
 	public static function setGlobalJSVariables( &$vars ) {
 		global $sdgScriptPath;
@@ -53,7 +64,7 @@ class SDUtils {
 	 * @param string $pageName
 	 * @param int $pageNamespace
 	 * @param string $propID
-	 * @param null|SMWRequestOptions $requestOptions
+	 * @param null|RequestOptions $requestOptions
 	 *
 	 * @return array of SMWDataItem
 	 */
@@ -154,7 +165,7 @@ class SDUtils {
 				'pp.pp_propname' => 'showindrilldown',
 				'pp.pp_value' => 'y'
 			],
-			'SDUtils::getOnlyExplicitlyShownCategories',
+			self::class . '::getOnlyExplicitlyShownCategories',
 			[ 'ORDER BY' => 'p.page_title' ],
 			[ 'pp' => [ 'JOIN', 'p.page_id = pp.pp_page' ] ]
 		);
@@ -211,7 +222,7 @@ class SDUtils {
 			$filtersStr = $row->pp_value;
 			$filtersInfo = unserialize( $filtersStr );
 			foreach ( $filtersInfo as $filterName => $filterValues ) {
-				$curFilter = new SDFilter();
+				$curFilter = new Filter();
 				$curFilter->setName( $filterName );
 				foreach ( $filterValues as $key => $value ) {
 					if ( $key == 'property' ) {
@@ -232,9 +243,9 @@ class SDUtils {
 		// Read from the Page Schemas schema for this category, if
 		// it exists, and add any filters defined there.
 		if ( class_exists( 'PSSchema' ) ) {
-			$pageSchemaObj = new PSSchema( $category );
+			$pageSchemaObj = new \PSSchema( $category );
 			if ( $pageSchemaObj->isPSDefined() ) {
-				$filters_ps = SDFilter::loadAllFromPageSchema( $pageSchemaObj );
+				$filters_ps = Filter::loadAllFromPageSchema( $pageSchemaObj );
 				$result_filters = array_merge( $filters, $filters_ps );
 				return $result_filters;
 			}
@@ -553,7 +564,7 @@ class SDUtils {
 		$sd_row->addItem( ALItem::newFromSpecialPage( 'BrowseData' ) );
 		$sd_name = wfMessage( 'specialpages-group-sd_group' )->text();
 		$sd_docu_label = wfMessage( 'adminlinks_documentation', $sd_name )->text();
-		$sd_row->addItem( AlItem::newFromExternalLink( "https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label ) );
+		$sd_row->addItem( ALItem::newFromExternalLink( "https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label ) );
 
 		$browse_search_section->addRow( $sd_row );
 

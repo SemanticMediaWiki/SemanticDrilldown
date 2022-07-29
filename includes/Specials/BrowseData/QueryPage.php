@@ -1,9 +1,23 @@
 <?php
 
+namespace SD\Specials\BrowseData;
+
+use Html;
+use IDatabase;
+use Linker;
+use OutputPage;
+use SD\Utils;
+use Skin;
 use SMW\Query\PrintRequest;
 use SMW\Query\QueryResult;
+use SMWDIWikiPage;
+use SMWOutputs;
+use SMWQuery;
+use SMWQueryProcessor;
+use Title;
+use WikiPage;
 
-class SDBrowseDataPage extends QueryPage {
+class QueryPage extends \QueryPage {
 	private $category;
 	private $sqlProvider;
 	private $printer;
@@ -26,8 +40,8 @@ class SDBrowseDataPage extends QueryPage {
 		// Get the two arrays for subcategories - one for only the
 		// immediate subcategories, for display, and the other for
 		// all subcategories, sub-subcategories etc., for querying.
-		$next_level_subcategories = SDUtils::getCategoryChildren( $actual_cat, true, 1 );
-		$all_subcategories = SDUtils::getCategoryChildren( $actual_cat, true, 10 );
+		$next_level_subcategories = Utils::getCategoryChildren( $actual_cat, true, 1 );
+		$all_subcategories = Utils::getCategoryChildren( $actual_cat, true, 10 );
 
 		$this->sqlProvider = new SqlProvider( $this->category, $subcategory,
 			$all_subcategories, $applied_filters );
@@ -88,7 +102,7 @@ class SDBrowseDataPage extends QueryPage {
 		$this->getOutput()->addHTML( Html::openElement( 'div', [ 'class' => 'drilldown-results-output' ] ) );
 
 		// Add Drilldown Results
-		$all_display_params = SDUtils::getDisplayParamsForCategory( $this->category );
+		$all_display_params = Utils::getDisplayParamsForCategory( $this->category );
 		$querystring = null;
 		$printouts = $params = [];
 		// only one set of params is handled for now
@@ -130,7 +144,7 @@ class SDBrowseDataPage extends QueryPage {
 		$out->addWikiTextAsInterface( $prtext );
 
 		// Add outro template
-		$footerPage = SDUtils::getDrilldownFooter( $this->category );
+		$footerPage = Utils::getDrilldownFooter( $this->category );
 
 		if ( $footerPage !== '' ) {
 			$title = Title::newFromText( $footerPage );
@@ -161,7 +175,7 @@ class SDBrowseDataPage extends QueryPage {
 	private function addSemanticResultWrapper( $res, $num, $query, $mainlabel, $printouts ) {
 		$qr = [];
 		$count = 0;
-		$store = SDUtils::getSMWStore();
+		$store = Utils::getSMWStore();
 		while ( ( $count < $num ) && ( $row = $res->fetchObject() ) ) {
 			$count++;
 			$qr[] = new SMWDIWikiPage( $row->t, $row->ns, '' );
@@ -182,6 +196,7 @@ class SDBrowseDataPage extends QueryPage {
 	}
 
 	protected function openList( $offset ) {
+		return "";
 	}
 
 	protected function closeList() {

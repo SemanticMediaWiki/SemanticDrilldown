@@ -1,12 +1,15 @@
 <?php
+
+namespace SD;
+
 /**
- * Defines a class, SDFilterValue, representing a single value of an
- * applied filter (i.e., an instance of the SDAppliedFilter class).
+ * Defines a class, FilterValue, representing a single value of an
+ * applied filter (i.e., an instance of the AppliedFilter class).
  *
  * @author Yaron Koren
  */
 
-class SDFilterValue {
+class FilterValue {
 	public $text;
 	public $is_none = false;
 	public $is_other = false;
@@ -19,7 +22,7 @@ class SDFilterValue {
 	public $end_year = null;
 
 	public static function create( $actual_val, $filter = null ) {
-		$fv = new SDFilterValue();
+		$fv = new FilterValue();
 		$fv->text = str_replace( '_', ' ', $actual_val );
 
 		if ( $fv->text == ' none' ) {
@@ -43,13 +46,13 @@ class SDFilterValue {
 				$date_parts = explode( ' ', $fv->text );
 				if ( count( $date_parts ) == 3 ) {
 					list( $month_str, $day_str, $year ) = explode( ' ', $fv->text );
-					$fv->month = SDUtils::stringToMonth( $month_str );
+					$fv->month = Utils::stringToMonth( $month_str );
 					$fv->day = str_replace( ',', '', $day_str );
 					$fv->year = $year;
 					$fv->time_period = 'day';
 				} elseif ( count( $date_parts ) == 2 ) {
 					list( $month_str, $year ) = explode( ' ', $fv->text );
-					$fv->month = SDUtils::stringToMonth( $month_str );
+					$fv->month = Utils::stringToMonth( $month_str );
 					$fv->year = $year;
 					$fv->time_period = 'month';
 				} else {

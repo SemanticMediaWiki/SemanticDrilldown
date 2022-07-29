@@ -1,6 +1,15 @@
 <?php
 
+namespace SD\Specials\BrowseData;
+
+use Html;
 use MediaWiki\Widget\DateInputWidget;
+use SD\AppliedFilter;
+use SD\FilterValue;
+use SD\Utils;
+use SpecialPage;
+use Title;
+use WikiPage;
 
 class Printer {
 
@@ -12,13 +21,13 @@ class Printer {
 	private $remaining_filters;
 	private $output;
 	private $request;
-	private $queryProcessor;
+	private $sqlProvider;
 
 	private $show_single_cat = false;
 
 	public function __construct(
 		$category, $subcategory, $next_level_subcategories, $all_subcategories, $applied_filters,
-		$remaining_filters, $output, $request, $queryProcessor
+		$remaining_filters, $output, $request, $sqlProvider
 	) {
 		$this->category = $category;
 		$this->subcategory = $subcategory;
@@ -28,14 +37,14 @@ class Printer {
 		$this->remaining_filters = $remaining_filters;
 		$this->output = $output;
 		$this->request = $request;
-		$this->queryProcessor = $queryProcessor;
+		$this->sqlProvider = $sqlProvider;
 	}
 
 	public function getPageHeader() {
 		global $sdgScriptPath;
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
-		$categories = SDUtils::getCategoriesForBrowsing();
+		$categories = Utils::getCategoriesForBrowsing();
 		// if there are no categories, escape quickly
 		if ( count( $categories ) == 0 ) {
 			return "";
@@ -45,7 +54,7 @@ class Printer {
 		$header = "";
 
 		// Add intro template
-		$headerPage = SDUtils::getDrilldownHeader( $this->category );
+		$headerPage = Utils::getDrilldownHeader( $this->category );
 		if ( $headerPage !== '' ) {
 			$title = Title::newFromText( $headerPage );
 			$page = WikiPage::factory( $title );
@@ -104,7 +113,7 @@ class Printer {
 				if ( $j > 0 ) {
 					$header .= ' <span class="drilldown-or">' . wfMessage( 'sd_browsedata_or' )->text() . '</span> ';
 				}
-				$filter_text = SDUtils::escapeString( $this->printFilterValue( $af->filter, $fv->text ) );
+				$filter_text = Utils::escapeString( $this->printFilterValue( $af->filter, $fv->text ) );
 				$temp_filters_array = $this->applied_filters;
 				$removed_values = array_splice( $temp_filters_array[$i]->values, $j, 1 );
 				$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
@@ -137,7 +146,7 @@ class Printer {
 		$header .= "				<div class=\"drilldown-filters\">\n";
 		$cur_url = $this->makeBrowseURL( $this->category, $this->applied_filters, $this->subcategory );
 		$cur_url .= ( strpos( $cur_url, '?' ) ) ? '&' : '?';
-		$this->queryProcessor->createTempTable( $this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters );
+		$this->sqlProvider->createTempTable( $this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters );
 		$num_printed_values = 0;
 		if ( count( $this->next_level_subcategories ) > 0 ) {
 			$results_line = "";
@@ -148,8 +157,8 @@ class Printer {
 			// display if necessary
 			$subcat_values = [];
 			foreach ( $this->next_level_subcategories as $i => $subcat ) {
-				$further_subcats = SDUtils::getCategoryChildren( $subcat, true, 10 );
-				$num_results = $this->queryProcessor->getNumResults( $subcat, $further_subcats );
+				$further_subcats = Utils::getCategoryChildren( $subcat, true, 10 );
+				$num_results = $this->sqlProvider->getNumResults( $subcat, $further_subcats );
 				$subcat_values[$subcat] = $num_results;
 			}
 			// get necessary values for creating the tag cloud,
@@ -185,7 +194,7 @@ class Printer {
 				$header .= "					<p><strong>$subcategory_text:</strong> $results_line</p>\n";
 			}
 		}
-		$filters = SDUtils::loadFiltersForCategory( $this->category );
+		$filters = Utils::loadFiltersForCategory( $this->category );
 		foreach ( $filters as $f ) {
 			foreach ( $this->applied_filters as $af ) {
 				if ( $af->filter->name == $f->name ) {
@@ -270,7 +279,7 @@ class Printer {
 				$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
 				$url .= urlencode( str_replace( ' ', '_', $af->filter->name ) ) . "=" . urlencode( str_replace( ' ', '_', $af->values[0]->text ) );
 			} else {
-				usort( $af->values, [ "SDFilterValue", "compare" ] );
+				usort( $af->values, [ FilterValue::class, "compare" ] );
 				foreach ( $af->values as $j => $fv ) {
 					$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
 					$url .= urlencode( str_replace( ' ', '_', $af->filter->name ) ) . "[$j]=" . urlencode( str_replace( ' ', '_', $fv->text ) );
@@ -316,7 +325,7 @@ END;
 END;
 		}
 		foreach ( $categories as $i => $category ) {
-			$category_children = SDUtils::getCategoryChildren( $category, false, 5 );
+			$category_children = Utils::getCategoryChildren( $category, false, 5 );
 			$category_str = $category . " (" . count( array_unique( $category_children ) ) . ")";
 			if ( str_replace( '_', ' ', $this->category ) == $category ) {
 				$text .= '						<li class="category selected">';
@@ -413,7 +422,7 @@ END;
 		} elseif ( $value === ' none' ) {
 			return wfMessage( 'sd_browsedata_none' )->text();
 		} elseif ( $filter->property_type === 'boolean' ) {
-			return SDUtils::booleanToString( $value );
+			return Utils::booleanToString( $value );
 		} elseif ( $filter->property_type === 'date' && strpos( $value, '//T' ) ) {
 			return str_replace( '//T', '', $value );
 		} else {
@@ -466,11 +475,11 @@ END;
 			if ( $i > 0 ) {
 				$results_line .= " · ";
 			}
-			$filter_text = SDUtils::escapeString( $this->printFilterValue( $af->filter, $value ) );
+			$filter_text = Utils::escapeString( $this->printFilterValue( $af->filter, $value ) );
 			$applied_filters = $this->applied_filters;
 			foreach ( $applied_filters as $af2 ) {
 				if ( $af->filter->name == $af2->filter->name ) {
-					$or_fv = SDFilterValue::create( $value, $af->filter );
+					$or_fv = FilterValue::create( $value, $af->filter );
 					$af2->values = array_merge( $current_filter_values, [ $or_fv ] );
 				}
 			}
@@ -517,7 +526,7 @@ END;
 			if ( $num_printed_values++ > 0 ) {
 				$results_line .= " · ";
 			}
-			$filter_text = SDUtils::escapeString( $this->printFilterValue( $f, $value_str ) );
+			$filter_text = Utils::escapeString( $this->printFilterValue( $f, $value_str ) );
 			$filter_text .= "&nbsp;($num_results)";
 			$filter_url = $cur_url . urlencode( str_replace( ' ', '_', $f->name ) ) . '=' . urlencode( str_replace( ' ', '_', $value_str ) );
 			if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
@@ -849,8 +858,8 @@ END;
 		} else {
 			$filter_values = [];
 			foreach ( $f->allowed_values as $value ) {
-				$new_filter = SDAppliedFilter::create( $f, $value );
-				$num_results = $this->queryProcessor->getNumResults( $this->subcategory, $this->all_subcategories, $new_filter );
+				$new_filter = AppliedFilter::create( $f, $value );
+				$num_results = $this->sqlProvider->getNumResults( $this->subcategory, $this->all_subcategories, $new_filter );
 				if ( $num_results > 0 ) {
 					$filter_values[$value] = $num_results;
 				}
@@ -860,8 +869,8 @@ END;
 		// - don't show 'Other' if filter values were
 		// obtained dynamically.
 		if ( !empty( $f->allowed_values ) ) {
-			$other_filter = SDAppliedFilter::create( $f, ' other' );
-			$num_results = $this->queryProcessor->getNumResults( $this->subcategory, $this->all_subcategories, $other_filter );
+			$other_filter = AppliedFilter::create( $f, ' other' );
+			$num_results = $this->sqlProvider->getNumResults( $this->subcategory, $this->all_subcategories, $other_filter );
 			if ( $num_results > 0 ) {
 				$filter_values['_other'] = $num_results;
 			}
@@ -869,10 +878,10 @@ END;
 		// Show 'None' only if any other results have been found, and
 		// if it's not a numeric filter.
 		if ( !empty( $f->allowed_values ) ) {
-			$fv = SDFilterValue::create( $f->allowed_values[0] );
+			$fv = FilterValue::create( $f->allowed_values[0] );
 			if ( !$fv->is_numeric ) {
-				$none_filter = SDAppliedFilter::create( $f, ' none' );
-				$num_results = $this->queryProcessor->getNumResults( $this->subcategory, $this->all_subcategories, $none_filter );
+				$none_filter = AppliedFilter::create( $f, ' none' );
+				$num_results = $this->sqlProvider->getNumResults( $this->subcategory, $this->all_subcategories, $none_filter );
 				if ( $num_results > 0 ) {
 					$filter_values['_none'] = $num_results;
 				}

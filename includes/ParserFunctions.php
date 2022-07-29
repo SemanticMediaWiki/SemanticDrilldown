@@ -1,4 +1,7 @@
 <?php
+
+namespace SD;
+
 /**
  * Parser functions for Semantic Drilldown
  *
@@ -19,13 +22,18 @@
  * @author mwjames
  */
 
+use Html;
+use Linker;
 use MediaWiki\MediaWikiServices;
+use Sanitizer;
+use Title;
 
-class SDParserFunctions {
+class ParserFunctions {
 
 	public static function registerFunctions( &$parser ) {
-		$parser->setFunctionHook( 'drilldowninfo', [ 'SDParserFunctions', 'renderDrilldownInfo' ] );
-		$parser->setFunctionHook( 'drilldownlink', [ 'SDParserFunctions', 'renderDrilldownLink' ] );
+		$class = self::class;
+		$parser->setFunctionHook( 'drilldowninfo', "$class::renderDrilldownInfo" );
+		$parser->setFunctionHook( 'drilldownlink', "$class::renderDrilldownLink" );
 		return true;
 	}
 

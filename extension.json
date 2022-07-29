@@ -10,7 +10,7 @@
 		"MediaWiki": ">= 1.35"
 	},
 	"SpecialPages": {
-		"BrowseData": "SDBrowseData"
+		"BrowseData": "SD\\Specials\\BrowseData\\SpecialBrowseData"
 	},
 	"MessagesDirs": {
 		"SemanticDrilldown": [
@@ -21,18 +21,8 @@
 		"SemanticDrilldownMagic": "languages/SemanticDrilldown.i18n.magic.php",
 		"SemanticDrilldownAlias": "languages/SD_Aliases.php"
 	},
-	"AutoloadClasses": {
-		"SDUtils": "includes/SDUtils.php",
-		"SDFilter": "includes/SDFilter.php",
-		"SDFilterValue": "includes/SDFilterValue.php",
-		"SDAppliedFilter": "includes/SDAppliedFilter.php",
-		"SDPageSchemas": "includes/SDPageSchemas.php",
-		"SDParserFunctions": "includes/SDParserFunctions.php",
-		"TemporaryTableManager": "includes/TemporaryTableManager.php",
-		"SDBrowseData": "includes/specials/SDBrowseData.php",
-		"SDBrowseDataPage": "includes/specials/SDBrowseDataPage.php",
-		"SqlProvider": "includes/specials/SqlProvider.php",
-		"Printer": "includes/specials/Printer.php"
+	"AutoloadNamespaces": {
+		"SD\\": "includes/"
 	},
 	"ResourceModules": {
 		"ext.semanticdrilldown.main": {
@@ -56,13 +46,13 @@
 		"remoteExtPath": "SemanticDrilldown"
 	},
 	"Hooks": {
-		"AdminLinks": "SDUtils::addToAdminLinks",
-		"MagicWordwgVariableIDs": "SDUtils::addMagicWordVariableIDs",
-		"MakeGlobalVariablesScript": "SDUtils::setGlobalJSVariables",
-		"ParserAfterTidy": "SDUtils::handleShowAndHide",
-		"PageSchemasRegisterHandlers": "SDPageSchemas::registerClass",
-		"ParserFirstCallInit": "SDParserFunctions::registerFunctions",
-		"UnitTestsList": "SDUtils::onUnitTestsList"
+		"AdminLinks": "SD\\Utils::addToAdminLinks",
+		"MagicWordwgVariableIDs": "SD\\Utils::addMagicWordVariableIDs",
+		"MakeGlobalVariablesScript": "SD\\Utils::setGlobalJSVariables",
+		"ParserAfterTidy": "SD\\Utils::handleShowAndHide",
+		"PageSchemasRegisterHandlers": "SD\\PageSchemas::registerClass",
+		"ParserFirstCallInit": "SD\\ParserFunctions::registerFunctions",
+		"UnitTestsList": "SD\\Utils::onUnitTestsList"
 	},
 	"config": {
 		"HideCategoriesByDefault": false,

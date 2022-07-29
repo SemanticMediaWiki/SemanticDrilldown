@@ -1,4 +1,7 @@
 <?php
+
+namespace SD\Specials\BrowseData;
+
 /**
  * Displays an interface to let the user drill down through all data on
  * the wiki, using categories and custom-defined filters that have
@@ -8,9 +11,12 @@
  * @author Sanyam Goyal
  */
 
+use IncludableSpecialPage;
 use MediaWiki\MediaWikiServices;
+use SD\AppliedFilter;
+use SD\Utils;
 
-class SDBrowseData extends IncludableSpecialPage {
+class SpecialBrowseData extends IncludableSpecialPage {
 
 	public function __construct() {
 		parent::__construct( 'BrowseData' );
@@ -45,7 +51,7 @@ class SDBrowseData extends IncludableSpecialPage {
 		if ( !$category ) {
 			$category_title = wfMessage( 'browsedata' )->text();
 		} else {
-			$category_title = SDUtils::getDrilldownTitleForCategory( $category );
+			$category_title = Utils::getDrilldownTitleForCategory( $category );
 			if ( $category_title == '' ) {
 				$category_title = wfMessage( 'browsedata' )->text() . html_entity_decode( wfMessage( 'colon-separator' )->text() ) . str_replace( '_', ' ', $category );
 			}
@@ -53,7 +59,7 @@ class SDBrowseData extends IncludableSpecialPage {
 		// if no category was specified, go with the first
 		// category on the site, alphabetically
 		if ( !$category ) {
-			$categories = SDUtils::getCategoriesForBrowsing();
+			$categories = Utils::getCategoriesForBrowsing();
 			if ( count( $categories ) == 0 ) {
 				// There are apparently no top-level
 				// categories in this wiki - just exit now.
@@ -62,9 +68,9 @@ class SDBrowseData extends IncludableSpecialPage {
 			$category = $categories[0];
 		}
 
-		$subcategory = SDUtils::escapeString( $request->getVal( '_subcat' ) );
+		$subcategory = Utils::escapeString( $request->getVal( '_subcat' ) );
 
-		$filters = SDUtils::loadFiltersForCategory( $category );
+		$filters = Utils::loadFiltersForCategory( $category );
 
 		$filter_used = [];
 		foreach ( $filters as $filter ) {
@@ -80,16 +86,16 @@ class SDBrowseData extends IncludableSpecialPage {
 			if ( $vals_array = $request->getArray( $filter_name ) ) {
 				foreach ( $vals_array as $j => $val ) {
 					// Escape the filter value to prevent malicious strings in the URLs
-					$val = SDUtils::escapeString( $val );
+					$val = Utils::escapeString( $val );
 					$vals_array[$j] = str_replace( '_', ' ', $val );
 				}
-				$applied_filters[] = SDAppliedFilter::create( $filter, $vals_array );
+				$applied_filters[] = AppliedFilter::create( $filter, $vals_array );
 				$filter_used[$i] = true;
 			} elseif ( $search_terms != null ) {
-				$applied_filters[] = SDAppliedFilter::create( $filter, [], $search_terms );
+				$applied_filters[] = AppliedFilter::create( $filter, [], $search_terms );
 				$filter_used[$i] = true;
 			} elseif ( $lower_date != null || $upper_date != null ) {
-				$applied_filters[] = SDAppliedFilter::create( $filter, [], null, $lower_date, $upper_date );
+				$applied_filters[] = AppliedFilter::create( $filter, [], null, $lower_date, $upper_date );
 				$filter_used[$i] = true;
 			}
 		}
@@ -122,7 +128,7 @@ class SDBrowseData extends IncludableSpecialPage {
 			$sdgNumResultsPerPage,
 			'sdlimit'
 		);
-		$rep = new SDBrowseDataPage( $this->getContext(), $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit );
+		$rep = new QueryPage( $this->getContext(), $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit );
 		$rep->execute( $query );
 
 		$out->addHTML( "\n			</div> <!-- drilldown-results -->\n" );

@@ -1,6 +1,5 @@
 includes:
 	- phpstan-baseline.neon
-	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
 
 parameters:
 	level: 0
@@ -14,6 +13,7 @@ parameters:
 		- ../SemanticMediaWiki/src/Query
 		- ../SemanticMediaWiki/tests/phpunit
 		- ../PageSchemas/includes
+		- ../AdminLinks/includes
 		- ../../includes
 		- ../../languages
 		- ../../tests/phpunit

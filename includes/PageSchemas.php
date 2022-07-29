@@ -1,4 +1,9 @@
 <?php
+
+namespace SD;
+
+use Html;
+
 /**
  * Static functions for Semantic Drilldown, for use by the Page Schemas
  * extension.
@@ -7,10 +12,10 @@
  * @author Ankit Garg
  */
 
-class SDPageSchemas extends PSExtensionHandler {
+class PageSchemas extends \PSExtensionHandler {
 	public static function registerClass() {
 		global $wgPageSchemasHandlerClasses;
-		$wgPageSchemasHandlerClasses[] = 'SDPageSchemas';
+		$wgPageSchemasHandlerClasses[] = self::class;
 		return true;
 	}
 
@@ -72,8 +77,8 @@ class SDPageSchemas extends PSExtensionHandler {
 			}
 		}
 
-		$filterName = PageSchemas::getValueFromObject( $filter_array, 'name' );
-		$selectedCategory = PageSchemas::getValueFromObject( $filter_array, 'ValuesFromCategory' );
+		$filterName = \PageSchemas::getValueFromObject( $filter_array, 'name' );
+		$selectedCategory = \PageSchemas::getValueFromObject( $filter_array, 'ValuesFromCategory' );
 		$fromCategoryAttrs = [];
 		if ( $selectedCategory !== null ) {
 			$fromCategoryAttrs['checked'] = true;
@@ -96,7 +101,7 @@ class SDPageSchemas extends PSExtensionHandler {
 		$html_text .= wfMessage( 'sd_createfilter_usepropertyvalues' )->text() . "\n";
 		$html_text .= Html::input( 'sd_values_source_num', 'category', 'radio', $fromCategoryAttrs ) . "\n";
 		$html_text .= "\t" . wfMessage( 'sd_createfilter_usecategoryvalues' )->text() . "\n";
-		$categories = SDUtils::getTopLevelCategories();
+		$categories = Utils::getTopLevelCategories();
 		$categoriesHTML = "";
 		foreach ( $categories as $category ) {
 			$categoryOptionAttrs = [];

@@ -1,11 +1,18 @@
 <?php
+
+namespace SD;
+
+use SMWDIProperty;
+use SMWDIUri;
+use SMWDIWikiPage;
+
 /**
- * Defines a class, SDFilter, that holds the information in a filter.
+ * Defines a class, Filter, that holds the information in a filter.
  *
  * @author Yaron Koren
  */
 
-class SDFilter {
+class Filter {
 	public $name;
 	public $property;
 	public $escaped_property;
@@ -34,7 +41,7 @@ class SDFilter {
 
 	public function setCategory( $cat ) {
 		$this->category = $cat;
-		$this->allowed_values = SDUtils::getCategoryChildren( $cat, false, 5 );
+		$this->allowed_values = Utils::getCategoryChildren( $cat, false, 5 );
 	}
 
 	public function addRequiredFilter( $filterName ) {
@@ -51,7 +58,7 @@ class SDFilter {
 		foreach ( $template_all as $template ) {
 			$field_all = $template->getFields();
 			foreach ( $field_all as $fieldObj ) {
-				$f = new SDFilter();
+				$f = new Filter();
 				$filter_array = $fieldObj->getObject( 'semanticdrilldown_Filter' );
 				if ( $filter_array === null ) {
 					continue;
@@ -103,10 +110,10 @@ class SDFilter {
 		// default), in case there is no type set for this property.
 		$this->property_type = 'page';
 
-		$store = SDUtils::getSMWStore();
+		$store = Utils::getSMWStore();
 		$propPage = new SMWDIWikiPage( $this->escaped_property, SMW_NS_PROPERTY, '' );
 		$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
-		$datatypeLabels = SDUtils::getSMWContLang()->getDatatypeLabels();
+		$datatypeLabels = Utils::getSMWContLang()->getDatatypeLabels();
 		if ( count( $types ) > 0 ) {
 			if ( $types[0] instanceof SMWDIWikiPage ) {
 				$typeValue = $types[0]->getDBkey();
@@ -237,7 +244,7 @@ class SDFilter {
 		$property_value = $this->escaped_property;
 		$date_field = $this->getDateField();
 		$datesTable = $dbw->tableName( $this->getTableName() );
-		$idsTable = $dbw->tableName( SDUtils::getIDsTableName() );
+		$idsTable = $dbw->tableName( Utils::getIDsTableName() );
 		$sql = <<<END
 	SELECT MIN($date_field), MAX($date_field)
 	FROM semantic_drilldown_values sdv
@@ -291,10 +298,10 @@ END;
 		$property_value = $this->escaped_property;
 		$date_field = $this->getDateField();
 		$dbw = wfGetDB( DB_MASTER );
-		list( $yearValue, $monthValue, $dayValue ) = SDUtils::getDateFunctions( $date_field );
+		list( $yearValue, $monthValue, $dayValue ) = Utils::getDateFunctions( $date_field );
 		$fields = "$yearValue, $monthValue, $dayValue";
 		$datesTable = $dbw->tableName( $this->getTableName() );
-		$idsTable = $dbw->tableName( SDUtils::getIDsTableName() );
+		$idsTable = $dbw->tableName( Utils::getIDsTableName() );
 		$sql = <<<END
 	SELECT $fields, count(*) AS matches
 	FROM semantic_drilldown_values sdv
@@ -337,10 +344,10 @@ END;
 			$count = $row['matches'];
 
 			if ( $timePeriod == 'day' ) {
-				$date_string = SDUtils::monthToString( $row[1] ) . ' ' . $row[2] . ', ' . $row[0];
+				$date_string = Utils::monthToString( $row[1] ) . ' ' . $row[2] . ', ' . $row[0];
 				$possible_dates[$date_string] = $count;
 			} elseif ( $timePeriod == 'month' ) {
-				$date_string = SDUtils::monthToString( $row[1] ) . ' ' . $row[0];
+				$date_string = Utils::monthToString( $row[1] ) . ' ' . $row[0];
 				$possible_dates[$date_string] = $count;
 			} elseif ( $timePeriod == 'year' ) {
 				$date_string = $row[0];
@@ -416,7 +423,7 @@ END;
 		$dbw = wfGetDB( DB_MASTER );
 		$property_table_name = $dbw->tableName( $this->getTableName() );
 		$value_field = $this->getValueField();
-		$smw_ids = $dbw->tableName( SDUtils::getIDsTableName() );
+		$smw_ids = $dbw->tableName( Utils::getIDsTableName() );
 		$prop_ns = SMW_NS_PROPERTY;
 		$sql = <<<END
 	SELECT $value_field, count(DISTINCT sdv.id)
@@ -458,7 +465,7 @@ END;
 	public function createTempTable() {
 		$dbw = wfGetDB( DB_MASTER );
 
-		$smw_ids = $dbw->tableName( SDUtils::getIDsTableName() );
+		$smw_ids = $dbw->tableName( Utils::getIDsTableName() );
 
 		$valuesTable = $dbw->tableName( $this->getTableName() );
 		$value_field = $this->getValueField();
