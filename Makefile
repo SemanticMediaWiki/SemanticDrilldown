@@ -4,7 +4,8 @@ MW_VERSION ?= 1.35
 SMW_VERSION ?= 4.0.2
 
 EXTENSION_FOLDER := /var/www/html/extensions/$(EXTENSION)
-IMAGE_NAME := $(shell echo $(EXTENSION) | tr A-Z a-z}):test-$(MW_VERSION)-$(SMW_VERSION)
+extension := $(shell echo $(EXTENSION) | tr A-Z a-z})
+IMAGE_NAME := $(extension):test-$(MW_VERSION)-$(SMW_VERSION)
 PWD := $(shell bash -c "pwd -W 2>/dev/null || pwd")# this way it works on Windows and Linux
 DOCKER_RUN_ARGS := --rm -v $(PWD)/coverage:$(EXTENSION_FOLDER)/coverage -w $(EXTENSION_FOLDER) $(IMAGE_NAME)
 docker_run := docker run $(DOCKER_RUN_ARGS)
@@ -59,6 +60,13 @@ dev-bash:
 		-v $(PWD):$(EXTENSION_FOLDER) \
 		-v $(EXTENSION_FOLDER)/vendor/ -v $(EXTENSION_FOLDER)/node_modules/ \
 		-w $(EXTENSION_FOLDER) $(IMAGE_NAME) bash -c 'service apache2 start && bash'
+
+.PHONY: run
+run:
+	docker run -d -p 8080:8080 --name $(extension) \
+		-v $(PWD):$(EXTENSION_FOLDER) \
+		-v $(EXTENSION_FOLDER)/vendor/ -v $(EXTENSION_FOLDER)/node_modules/ \
+		$(IMAGE_NAME)
 
 # ======== Releasing ========
 

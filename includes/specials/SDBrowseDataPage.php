@@ -1238,6 +1238,8 @@ END;
 
 		// close the Bootstrap Panel wrapper opened in getPageHeader();
 		$this->getOutput()->addHTML( '</div></div>' );
+
+		SMWOutputs::commitToOutputPage( $out );
 	}
 
 	/**
