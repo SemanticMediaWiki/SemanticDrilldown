@@ -1,5 +1,6 @@
 includes:
 	- phpstan-baseline.neon
+	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
 
 parameters:
 	level: 0
@@ -10,6 +11,7 @@ parameters:
 	excludePaths:
 	scanDirectories:
 		- ../SemanticMediaWiki/includes
+		- ../SemanticMediaWiki/src/Query
 		- ../SemanticMediaWiki/tests/phpunit
 		- ../PageSchemas/includes
 		- ../../includes

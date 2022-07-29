@@ -7,7 +7,7 @@
 	"license-name": "GPL-2.0-or-later",
 	"type": "specialpage",
 	"requires": {
-		"MediaWiki": ">= 1.34"
+		"MediaWiki": ">= 1.35"
 	},
 	"SpecialPages": {
 		"BrowseData": "SDBrowseData"
@@ -30,7 +30,9 @@
 		"SDParserFunctions": "includes/SDParserFunctions.php",
 		"TemporaryTableManager": "includes/TemporaryTableManager.php",
 		"SDBrowseData": "includes/specials/SDBrowseData.php",
-		"SDBrowseDataPage": "includes/specials/SDBrowseDataPage.php"
+		"SDBrowseDataPage": "includes/specials/SDBrowseDataPage.php",
+		"SqlProvider": "includes/specials/SqlProvider.php",
+		"Printer": "includes/specials/Printer.php"
 	},
 	"ResourceModules": {
 		"ext.semanticdrilldown.main": {

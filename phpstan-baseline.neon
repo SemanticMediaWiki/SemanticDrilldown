@@ -26,31 +26,6 @@ parameters:
                         path: includes/SDUtils.php
 
                 -
-                        message: "#^Access to constant PRINT_THIS on an unknown class SMWPrintRequest\\.$#"
-                        count: 1
-                        path: includes/specials/SDBrowseDataPage.php
-
-                -
-                        message: "#^Access to undefined constant SMWQueryProcessor\\:\\:SPECIAL_PAGE\\.$#"
-                        count: 1
-                        path: includes/specials/SDBrowseDataPage.php
-
-                -
-                        message: "#^Instantiated class SMWPrintRequest not found\\.$#"
-                        count: 1
-                        path: includes/specials/SDBrowseDataPage.php
-
-                -
-                        message: "#^Instantiated class SMWQueryResult not found\\.$#"
-                        count: 1
-                        path: includes/specials/SDBrowseDataPage.php
-
-                -
                         message: "#^Method SDBrowseDataPage\\:\\:openList\\(\\) should return string but return statement is missing\\.$#"
-                        count: 1
-                        path: includes/specials/SDBrowseDataPage.php
-
-                -
-                        message: "#^Undefined variable\\: \\$endIndexOfBucket$#"
                         count: 1
                         path: includes/specials/SDBrowseDataPage.php

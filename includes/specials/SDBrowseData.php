@@ -16,7 +16,7 @@ class SDBrowseData extends IncludableSpecialPage {
 		parent::__construct( 'BrowseData' );
 	}
 
-	public function execute( $query ) {
+	public function execute( $query ): void {
 		global $sdgScriptPath, $sdgNumResultsPerPage;
 
 		$out = $this->getOutput();
@@ -33,21 +33,6 @@ class SDBrowseData extends IncludableSpecialPage {
 		if ( $sdgNumResultsPerPage == null ) {
 			$sdgNumResultsPerPage = 250;
 		}
-
-		if ( method_exists( $request, 'getLimitOffsetForUser' ) ) {
-			// MW 1.35+
-			list( $limit, $offset ) = $request->getLimitOffsetForUser(
-				$this->getUser(),
-				$sdgNumResultsPerPage,
-				'sdlimit'
-			);
-		} else {
-			list( $limit, $offset ) = $request->getLimitOffset(
-				$sdgNumResultsPerPage,
-				'sdlimit'
-			);
-		}
-		$filters = [];
 
 		// get information on current category, subcategory and filters
 		// that have already been applied from the query string
@@ -72,7 +57,7 @@ class SDBrowseData extends IncludableSpecialPage {
 			if ( count( $categories ) == 0 ) {
 				// There are apparently no top-level
 				// categories in this wiki - just exit now.
-				return 0;
+				return;
 			}
 			$category = $categories[0];
 		}
@@ -81,8 +66,8 @@ class SDBrowseData extends IncludableSpecialPage {
 
 		$filters = SDUtils::loadFiltersForCategory( $category );
 
-		$filters_used = [];
-		foreach ( $filters as $i => $filter ) {
+		$filter_used = [];
+		foreach ( $filters as $filter ) {
 			$filter_used[] = false;
 		}
 		$applied_filters = [];
@@ -94,10 +79,8 @@ class SDBrowseData extends IncludableSpecialPage {
 			$upper_date = $request->getVal( '_upper_' . $filter_name );
 			if ( $vals_array = $request->getArray( $filter_name ) ) {
 				foreach ( $vals_array as $j => $val ) {
-
 					// Escape the filter value to prevent malicious strings in the URLs
 					$val = SDUtils::escapeString( $val );
-
 					$vals_array[$j] = str_replace( '_', ' ', $val );
 				}
 				$applied_filters[] = SDAppliedFilter::create( $filter, $vals_array );
@@ -123,7 +106,6 @@ class SDBrowseData extends IncludableSpecialPage {
 				}
 				if ( !$found_match ) {
 					$matched_all_required_filters = false;
-					continue;
 				}
 			}
 			if ( $matched_all_required_filters ) {
@@ -134,15 +116,19 @@ class SDBrowseData extends IncludableSpecialPage {
 		}
 
 		$out->addHTML( "\n			<div class=\"drilldown-results\">\n" );
-		$rep = new SDBrowseDataPage( $this->getContext(), $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit );
-		$num = $rep->execute( $query );
-		$out->addHTML( "\n			</div> <!-- drilldown-results -->\n" );
 
+		[ $limit, $offset ] = $request->getLimitOffsetForUser(
+			$this->getUser(),
+			$sdgNumResultsPerPage,
+			'sdlimit'
+		);
+		$rep = new SDBrowseDataPage( $this->getContext(), $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit );
+		$rep->execute( $query );
+
+		$out->addHTML( "\n			</div> <!-- drilldown-results -->\n" );
 		// This has to be set last, because otherwise the QueryPage
 		// code will overwrite it.
 		$out->setPageTitle( $category_title );
-
-		return $num;
 	}
 
 	/**
