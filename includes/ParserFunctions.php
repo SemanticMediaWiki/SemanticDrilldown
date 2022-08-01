@@ -29,14 +29,14 @@ use Title;
 
 class ParserFunctions {
 
-	public static function registerFunctions( &$parser ) {
+	public static function registerFunctions( $parser ) {
 		$class = self::class;
 		$parser->setFunctionHook( 'drilldowninfo', "$class::renderDrilldownInfo" );
 		$parser->setFunctionHook( 'drilldownlink', "$class::renderDrilldownLink" );
 		return true;
 	}
 
-	public static function renderDrilldownInfo( &$parser ) {
+	public static function renderDrilldownInfo( $parser ) {
 		$curTitle = $parser->getTitle();
 		if ( $curTitle->getNamespace() != NS_CATEGORY ) {
 			return '<div class="error">Error: #drilldowninfo can only be called in category pages.</div>';
@@ -111,35 +111,18 @@ class ParserFunctions {
 
 		$parserOutput = $parser->getOutput();
 
-		if ( method_exists( $parserOutput, 'setPageProperty' ) ) {
-			// MW 1.38
-			$parserOutput->setPageProperty( 'SDFilters', serialize( $filtersInfoArray ) );
-			if ( $titleStr != '' ) {
-				$parserOutput->setPageProperty( 'SDTitle', $titleStr );
-			}
-			if ( $displayParametersStr != '' ) {
-				$parserOutput->setPageProperty( 'SDDisplayParams', $displayParametersStr );
-			}
-			if ( $header !== '' ) {
-				$parserOutput->setPageProperty( 'SDHeader', $header );
-			}
-			if ( $footer !== '' ) {
-				$parserOutput->setPageProperty( 'SDFooter', $footer );
-			}
-		} else {
-			$parserOutput->setProperty( 'SDFilters', serialize( $filtersInfoArray ) );
-			if ( $titleStr != '' ) {
-				$parserOutput->setProperty( 'SDTitle', $titleStr );
-			}
-			if ( $displayParametersStr != '' ) {
-				$parserOutput->setProperty( 'SDDisplayParams', $displayParametersStr );
-			}
-			if ( $header !== '' ) {
-				$parserOutput->setProperty( 'SDHeader', $header );
-			}
-			if ( $footer !== '' ) {
-				$parserOutput->setProperty( 'SDFooter', $footer );
-			}
+		Compat::setPageProperty( $parserOutput, 'SDFilters', serialize( $filtersInfoArray ) );
+		if ( $titleStr != '' ) {
+			Compat::setPageProperty( $parserOutput, 'SDTitle', $titleStr );
+		}
+		if ( $displayParametersStr != '' ) {
+			Compat::setPageProperty( $parserOutput, 'SDDisplayParams', $displayParametersStr );
+		}
+		if ( $header !== '' ) {
+			Compat::setPageProperty( $parserOutput, 'SDHeader', $header );
+		}
+		if ( $footer !== '' ) {
+			Compat::setPageProperty( $parserOutput, 'SDFooter', $footer );
 		}
 
 		$parserOutput->addModules( [ 'ext.semanticdrilldown.info' ] );
@@ -186,7 +169,7 @@ class ParserFunctions {
 		return $parser->insertStripItem( $text );
 	}
 
-	public static function renderDrilldownLink( &$parser ) {
+	public static function renderDrilldownLink( $parser ) {
 		$params = func_get_args();
 		array_shift( $params );
 

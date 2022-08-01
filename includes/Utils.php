@@ -533,20 +533,10 @@ class Utils {
 		}
 		$parserOutput = $parser->getOutput();
 		if ( $mw_hide->matchAndRemove( $text ) ) {
-			if ( method_exists( $parserOutput, 'setPageProperty' ) ) {
-				// MW 1.38
-				$parserOutput->setPageProperty( 'hidefromdrilldown', 'y' );
-			} else {
-				$parserOutput->setProperty( 'hidefromdrilldown', 'y' );
-			}
+			Compat::setPageProperty( $parserOutput, 'hidefromdrilldown', 'y' );
 		}
 		if ( $mw_show->matchAndRemove( $text ) ) {
-			if ( method_exists( $parserOutput, 'setPageProperty' ) ) {
-				// MW 1.38
-				$parserOutput->setPageProperty( 'showindrilldown', 'y' );
-			} else {
-				$parserOutput->setProperty( 'showindrilldown', 'y' );
-			}
+			Compat::setPageProperty( $parserOutput, 'showindrilldown', 'y' );
 		}
 		return true;
 	}
