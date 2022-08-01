@@ -125,8 +125,7 @@ class QueryPage extends \QueryPage {
 			$mainlabel = '';
 		}
 
-		$r = $this->addSemanticResultWrapper( $res, $num, $query, $mainlabel, $printouts );
-		$printer = SMWQueryProcessor::getResultPrinter( $params['format'], SMWQueryProcessor::SPECIAL_PAGE, $r );
+		$printer = SMWQueryProcessor::getResultPrinter( $params['format'], SMWQueryProcessor::SPECIAL_PAGE );
 
 		if ( version_compare( SMW_VERSION, '1.6.1', '>' ) ) {
 			SMWQueryProcessor::addThisPrintout( $printouts, $params );
@@ -134,7 +133,7 @@ class QueryPage extends \QueryPage {
 		}
 
 		$prresult = $printer->getResult(
-			$r,
+			$this->addSemanticResultWrapper( $res, $num, $query, $mainlabel, $printouts ),
 			$params,
 			SMW_OUTPUT_WIKI
 		);

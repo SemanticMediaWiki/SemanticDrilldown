@@ -25,8 +25,8 @@
 			"@phpcs-fix"
 		],
 		"lint": "parallel-lint . --exclude vendor --exclude node_modules",
-		"phpcs": "phpcs -p -s includes tests/phpunit",
-		"phpcs-fix": "phpcbf includes tests/phpunit",
+		"phpcs": "phpcs -ps",
+		"phpcs-fix": "phpcbf -p",
 		"phpstan": "phpstan analyse --configuration=phpstan.neon --memory-limit=2G",
 		"phpstan-baseline": "phpstan analyse --configuration=phpstan.neon --memory-limit=2G --generate-baseline",
 		"psalm": "psalm --config=psalm.xml",
