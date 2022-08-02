@@ -7,7 +7,10 @@
 	"license-name": "GPL-2.0-or-later",
 	"type": "specialpage",
 	"requires": {
-		"MediaWiki": ">= 1.35"
+		"MediaWiki": ">= 1.35",
+		"platform": {
+			"php": ">= 7.4"
+		}
 	},
 	"SpecialPages": {
 		"BrowseData": "SD\\Specials\\BrowseData\\SpecialBrowseData"
@@ -45,13 +48,18 @@
 		"localBasePath": "",
 		"remoteExtPath": "SemanticDrilldown"
 	},
+	"HookHandlers": {
+		"services": {
+			"class": "SD\\Services"
+		}
+	},
 	"Hooks": {
 		"AdminLinks": "SD\\Utils::addToAdminLinks",
 		"MagicWordwgVariableIDs": "SD\\Utils::addMagicWordVariableIDs",
 		"MakeGlobalVariablesScript": "SD\\Utils::setGlobalJSVariables",
 		"ParserAfterTidy": "SD\\Utils::handleShowAndHide",
 		"PageSchemasRegisterHandlers": "SD\\PageSchemas::registerClass",
-		"ParserFirstCallInit": "SD\\ParserFunctions::registerFunctions",
+		"ParserFirstCallInit": "services",
 		"UnitTestsList": "SD\\Utils::onUnitTestsList"
 	},
 	"config": {
