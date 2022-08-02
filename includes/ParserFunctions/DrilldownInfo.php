@@ -17,30 +17,32 @@
 namespace SD\ParserFunctions;
 
 use Html;
-use Linker;
 use Parser;
-use SD\Compat;
-use Title;
+use SD\Parameters\DisplayParametersList;
+use SD\Parameters\Filters;
+use SD\Parameters\Footer;
+use SD\Parameters\Header;
+use SD\Parameters\Title;
 
 class DrilldownInfo {
 
 	private Parser $parser;
-	private string $title;
-	private array $filters;
-	private array $displayParametersList;
-	private string $header;
-	private string $footer;
+	private Title $title;
+	private Filters $filters;
+	private Header $header;
+	private Footer $footer;
+	private DisplayParametersList $displayParametersList;
 
 	public function __construct( $parser ) {
 		$this->parser = $parser;
 	}
 
 	public function __invoke( $params ): string {
-		$this->title = '';
-		$this->filters = [];
-		$this->displayParametersList = [];
-		$this->header = '';
-		$this->footer = '';
+		$this->title = new Title;
+		$this->filters = new Filters;
+		$this->header = new Header;
+		$this->footer = new Footer;
+		$this->displayParametersList = new DisplayParametersList;
 
 		if ( $this->parser->getTitle()->getNamespace() != NS_CATEGORY ) {
 			return '<div class="error">Error: #drilldowninfo can only be called in category pages.</div>';
@@ -52,10 +54,6 @@ class DrilldownInfo {
 	}
 
 	private function parse( $params ) {
-		$this->readParameters( $params );
-	}
-
-	private function readParameters( $params ) {
 		foreach ( $params as $param ) {
 			$elements = explode( '=', $param, 2 );
 			if ( count( $elements ) > 1 ) {
@@ -67,73 +65,27 @@ class DrilldownInfo {
 				// has no unnamed parameters.
 				continue;
 			}
-			if ( $param_name == 'filters' ) {
-				$this->filters = $this->parseFilters( $value );
-			} elseif ( $param_name == 'title' ) {
-				$this->title = $value;
-			} elseif ( $param_name == 'display parameters' ) {
-				$this->displayParametersList[] = $value;
+			if ( $param_name == 'title' ) {
+				$this->title = new Title( $value );
 			} elseif ( $param_name === 'header' ) {
-				$this->header = $value;
+				$this->header = new Header( $value );
 			} elseif ( $param_name === 'footer' ) {
-				$this->footer = $value;
+				$this->footer = new Footer( $value );
+			} elseif ( $param_name == 'filters' ) {
+				$this->filters = new Filters( $value );
+			} elseif ( $param_name == 'display parameters' ) {
+				$this->displayParametersList->add( $value );
 			}
 		}
 	}
 
 	private function setPageProperties() {
 		$parserOutput = $this->parser->getOutput();
-
-		Compat::setPageProperty( $parserOutput, 'SDFilters', serialize( $this->filters ) );
-		if ( $this->title != '' ) {
-			Compat::setPageProperty( $parserOutput, 'SDTitle', $this->title );
-		}
-		if ( $this->displayParametersList != '' ) {
-			$displayParametersString = implode( '|', $this->displayParametersList );
-			Compat::setPageProperty( $parserOutput, 'SDDisplayParams', $displayParametersString );
-		}
-		if ( $this->header !== '' ) {
-			Compat::setPageProperty( $parserOutput, 'SDHeader', $this->header );
-		}
-		if ( $this->footer !== '' ) {
-			Compat::setPageProperty( $parserOutput, 'SDFooter', $this->footer );
-		}
-	}
-
-	private static function parseFilters( $filtersStr ) {
-		$filters = [];
-		preg_match_all( '/([^()]*)\(([^)]*)\)/', $filtersStr, $matches );
-		foreach ( $matches[1] as $i => $filterName ) {
-			$filterName = trim( $filterName, ", \t\n\r\0\x0B" );
-			$filters[$filterName] = [];
-
-			$filterSettingsStr = $matches[2][$i];
-			$filterSettings = explode( ',', $filterSettingsStr );
-			foreach ( $filterSettings as $filterSettingStr ) {
-				$filterSetting = explode( '=', $filterSettingStr, 2 );
-				if ( count( $filterSetting ) != 2 ) {
-					continue;
-				}
-				$key = trim( $filterSetting[0] );
-				if ( $key != 'property' && $key != 'category' && $key != 'requires' && $key != 'int' ) {
-					return "<div class=\"error\">Error: unknown setting, \"$key\".</div>";
-				}
-
-				$value = trim( $filterSetting[1] );
-				// 'requires' holds a list, the other two
-				// hold individual values.
-				if ( $key == 'requires' ) {
-					$values = explode( ',', $value );
-					foreach ( $values as $realValue ) {
-						$filters[$filterName][$key] = trim( $realValue );
-					}
-				} else {
-					$filters[$filterName][$key] = $value;
-				}
-			}
-		}
-
-		return $filters;
+		$this->title->setPageProperty( $parserOutput );
+		$this->header->setPageProperty( $parserOutput );
+		$this->footer->setPageProperty( $parserOutput );
+		$this->filters->setPageProperty( $parserOutput );
+		$this->displayParametersList->setPageProperty( $parserOutput );
 	}
 
 	private function writeOutput(): string {
@@ -143,7 +95,7 @@ class DrilldownInfo {
 		$parserOutput->addModules( [ 'ext.semanticdrilldown.info' ] );
 
 		$text = "<table class=\"drilldownInfo mw-collapsible mw-collapsed\">\n";
-		$bd = Title::makeTitleSafe( NS_SPECIAL, 'BrowseData' );
+		$bd = \Title::makeTitleSafe( NS_SPECIAL, 'BrowseData' );
 		$bdURL = $bd->getLocalURL() . "/" . $curTitle->getPartialURL();
 		$bdLink = Html::rawElement( 'a', [ 'href' => $bdURL ], "Semantic Drilldown" );
 		$text .= "<tr><th colspan=\"2\">$bdLink</th></tr>\n";
@@ -157,10 +109,10 @@ class DrilldownInfo {
 				}
 				$text .= $key . ' = ';
 				if ( $key == 'property' ) {
-					$propertyTitle = Title::makeTitleSafe( SMW_NS_PROPERTY, $value );
+					$propertyTitle = \Title::makeTitleSafe( SMW_NS_PROPERTY, $value );
 					$text .= $parser->getLinkRenderer()->makeLink($propertyTitle, $value);
 				} elseif ( $key == 'category' ) {
-					$categoryTitle = Title::makeTitleSafe( NS_CATEGORY, $value );
+					$categoryTitle = \Title::makeTitleSafe( NS_CATEGORY, $value );
 					$text .= $parser->getLinkRenderer()->makeLink($categoryTitle, $value);
 				} elseif ( $key == 'requires' ) {
 					$text .= '<strong>' . $value . '</strong>';
@@ -171,12 +123,12 @@ class DrilldownInfo {
 			}
 			$text .= "</td></tr>\n";
 		}
-		if ( $this->title != '' ) {
+		if ( $this->title !== null ) {
 			$text .= "<tr class=\"drilldownInfoHeader\"><td colspan=\"2\">Title</td></tr>\n";
 			$text .= "<tr><td colspan=\"2\">$this->title</td></tr>\n";
 		}
 		$text .= "<tr class=\"drilldownInfoHeader\"><td colspan=\"2\">Display parameters</td></tr>\n";
-		foreach ( $this->displayParametersList as $displayParameters ) {
+		foreach ( $this->displayParametersList->strings() as $displayParameters ) {
 			$text .= "<tr><td colspan=\"2\">$displayParameters</td></tr>\n";
 		}
 		$text .= "</table>\n";

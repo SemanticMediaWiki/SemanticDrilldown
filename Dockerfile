@@ -15,6 +15,7 @@ RUN sed -i s/80/8080/g /etc/apache2/sites-available/000-default.conf /etc/apache
         "wfLoadExtension( 'SemanticMediaWiki' );\n" \
         "enableSemantics( 'localhost' );\n" \
         "wfLoadExtension( 'PageSchemas' );\n" \
+        "wfLoadExtension( 'AdminLinks' );\n" \
     >> LocalSettings.php && \
     php maintenance/update.php --skip-external-dependencies --quick
 

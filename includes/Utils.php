@@ -7,12 +7,7 @@ use ALRow;
 use MagicWord;
 use MagicWordFactory;
 use MediaWiki\MediaWikiServices;
-use SMW\RequestOptions;
 use SMW\SQLStore\SQLStore;
-use SMWDIProperty;
-use SMWDIWikiPage;
-use SMWStore;
-use Title;
 
 /**
  * A class for static helper functions for Semantic Drilldown
@@ -56,24 +51,6 @@ class Utils {
 			global $smwgContLang;
 			return $smwgContLang;
 		}
-	}
-
-	/**
-	 * Helper function to handle getPropertyValues().
-	 *
-	 * @param SMWStore $store
-	 * @param string $pageName
-	 * @param int $pageNamespace
-	 * @param string $propID
-	 * @param null|RequestOptions $requestOptions
-	 *
-	 * @return array of SMWDataItem
-	 */
-	public static function getSMWPropertyValues( SMWStore $store, $pageName, $pageNamespace, $propID, $requestOptions = null ) {
-		$pageName = str_replace( ' ', '_', $pageName );
-		$page = new SMWDIWikiPage( $pageName, $pageNamespace, '' );
-		$property = new SMWDIProperty( $propID );
-		return $store->getPropertyValues( $page, $property, $requestOptions );
 	}
 
 	/**
@@ -192,123 +169,6 @@ class Utils {
 		}
 	}
 
-	/**
-	 * Gets all the filters specified for a category.
-	 */
-	public static function loadFiltersForCategory( $category ) {
-		$filters = [];
-
-		$title = Title::newFromText( $category, NS_CATEGORY );
-
-		// Return an empty array if the title object couldn't be created.
-		// This mainly happens if people change the $_cat parameter in the url.
-		if ( $title === null ) {
-			return $filters;
-		}
-
-		$pageId = $title->getArticleID();
-		$dbr = wfGetDB( DB_REPLICA );
-		$res = $dbr->select( 'page_props',
-			[
-				'pp_value'
-			],
-			[
-				'pp_page' => $pageId,
-				'pp_propname' => 'SDFilters'
-			]
-		);
-
-		foreach ( $res as $row ) {
-			// There should only be one row.
-			$filtersStr = $row->pp_value;
-			$filtersInfo = unserialize( $filtersStr );
-			foreach ( $filtersInfo as $filterName => $filterValues ) {
-				$curFilter = new Filter();
-				$curFilter->setName( $filterName );
-				foreach ( $filterValues as $key => $value ) {
-					if ( $key == 'property' ) {
-						$curFilter->setProperty( $value );
-						$curFilter->loadPropertyTypeFromProperty();
-					} elseif ( $key == 'category' ) {
-						$curFilter->setCategory( $value );
-					} elseif ( $key == 'requires' ) {
-						$curFilter->addRequiredFilter( $value );
-					} elseif ( $key == 'int' ) {
-						$curFilter->setInt( $value );
-					}
-				}
-				$filters[] = $curFilter;
-			}
-		}
-
-		// Read from the Page Schemas schema for this category, if
-		// it exists, and add any filters defined there.
-		if ( class_exists( 'PSSchema' ) ) {
-			$pageSchemaObj = new \PSSchema( $category );
-			if ( $pageSchemaObj->isPSDefined() ) {
-				$filters_ps = Filter::loadAllFromPageSchema( $pageSchemaObj );
-				$result_filters = array_merge( $filters, $filters_ps );
-				return $result_filters;
-			}
-		}
-		return $filters;
-	}
-
-	/**
-	 * Gets the custom drilldown title for a category, if there is one.
-	 */
-	public static function getDrilldownTitleForCategory( $category ) {
-		$title = Title::newFromText( $category, NS_CATEGORY );
-
-		// Return false if the title object couldn't be created.
-		// This mainly happens if people change the $_cat in the url.
-		if ( $title === null ) {
-			return false;
-		}
-
-		$pageID = $title->getArticleID();
-		$dbr = wfGetDB( DB_REPLICA );
-		return $dbr->selectField( 'page_props',
-			[
-				'pp_value'
-			],
-			[
-				'pp_page' => $pageID,
-				'pp_propname' => 'SDTitle'
-			]
-		);
-	}
-
-	/**
-	 * Gets all the display parameters defined for a category
-	 */
-	public static function getDisplayParametersListForCategory( $category ): array {
-		$title = Title::newFromText( $category, NS_CATEGORY );
-		$pageID = $title->getArticleID();
-		$dbr = wfGetDB( DB_REPLICA );
-		$res = $dbr->select( 'page_props',
-			[
-				'pp_value'
-			],
-			[
-				'pp_page' => $pageID,
-				'pp_propname' => 'SDDisplayParams'
-			]
-		);
-
-		$displayParametersList = [];
-		foreach ( $res as $row ) {
-			// There should only be one row.
-			$displayParametersListString = $row->pp_value;
-			$displayParametersStrings = explode( '|', $displayParametersListString );
-			foreach ( $displayParametersStrings as $displayParametersString ) {
-				$displayParametersList[] = explode( ';', $displayParametersString );
-			}
-		}
-
-		return $displayParametersList;
-	}
-
 	public static function getCategoryChildren( $category_name, $get_categories, $levels ) {
 		if ( $levels == 0 ) {
 			return [];
@@ -374,54 +234,6 @@ class Utils {
 			$dayValue = "DAY($dateDBField)";
 		}
 		return [ $yearValue, $monthValue, $dayValue ];
-	}
-
-	/**
-	 * Gets the custom drilldown title for a category, if there is one.
-	 */
-	public static function getDrilldownHeader( $category ) {
-		$title = Title::newFromText( $category, NS_CATEGORY );
-		$pageID = $title->getArticleID();
-		$dbr = wfGetDB( DB_REPLICA );
-		$res = $dbr->select( 'page_props',
-			[
-				'pp_value'
-			],
-			[
-				'pp_page' => $pageID,
-				'pp_propname' => 'SDHeader'
-			]
-		);
-
-		if ( $row = $dbr->fetchRow( $res ) ) {
-			return $row['pp_value'];
-		} else {
-			return '';
-		}
-	}
-
-	/**
-	 * Gets the custom drilldown title for a category, if there is one.
-	 */
-	public static function getDrilldownFooter( $category ) {
-		$title = Title::newFromText( $category, NS_CATEGORY );
-		$pageID = $title->getArticleID();
-		$dbr = wfGetDB( DB_REPLICA );
-		$res = $dbr->select( 'page_props',
-			[
-				'pp_value'
-			],
-			[
-				'pp_page' => $pageID,
-				'pp_propname' => 'SDFooter'
-			]
-		);
-
-		if ( $row = $dbr->fetchRow( $res ) ) {
-			return $row['pp_value'];
-		} else {
-			return '';
-		}
 	}
 
 	public static function monthToString( $month ) {

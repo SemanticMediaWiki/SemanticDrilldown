@@ -5,14 +5,11 @@ namespace SD\Specials\BrowseData;
 use Html;
 use IDatabase;
 use OutputPage;
+use SD\Parameters\DisplayParametersList;
+use SD\Parameters\Footer;
 use SD\Utils;
 use Skin;
-use SMW\Query\PrintRequest;
-use SMW\Query\QueryResult;
-use SMWDIWikiPage;
 use SMWOutputs;
-use SMWQuery;
-use SMWQueryProcessor;
 use Title;
 use WikiPage;
 
@@ -100,16 +97,15 @@ class QueryPage extends \QueryPage {
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
 		$this->getOutput()->addHTML( Html::openElement( 'div', [ 'class' => 'drilldown-results-output' ] ) );
 
-		$getSemanticResult = $this->addSemanticResultWrapper( $res, $num );
-		$displayParametersList = Utils::getDisplayParametersListForCategory( $this->category );
+		$semanticResultPrinter = new SemanticResultPrinter( $res, $num );
+		$displayParametersList = DisplayParametersList::forCategory( $this->category );
 		foreach ( $displayParametersList as $displayParameters ) {
-			// $displayParameters = $displayParametersList[1];
-			$text = $this->getDrilldownResults( $displayParameters, $getSemanticResult );
+			$text = $semanticResultPrinter->getText( $displayParameters );
 			$out->addWikiTextAsInterface( $text );
 		}
 
 		// Add outro template
-		$footerPage = Utils::getDrilldownFooter( $this->category );
+		$footerPage = Footer::forCategory( $this->category )->value;
 
 		if ( $footerPage !== '' ) {
 			$title = Title::newFromText( $footerPage );
@@ -129,71 +125,6 @@ class QueryPage extends \QueryPage {
 		$this->getOutput()->addHTML( '</div></div>' );
 
 		SMWOutputs::commitToOutputPage( $out );
-	}
-
-	protected function getDrilldownResults( $displayParameters, $getSemanticResult ) {
-		$display_params = array_map( 'trim', $displayParameters );
-		[ $querystring, $params, $printouts ] =
-			SMWQueryProcessor::getComponentsFromFunctionParams( $display_params, false );
-
-		if ( !empty( $querystring ) ) {
-			$query = SMWQueryProcessor::createQuery( $querystring, $params );
-		} else {
-			$query = new SMWQuery();
-		}
-		if ( !array_key_exists( 'format', $params ) ) {
-			$params['format'] = 'category';
-		}
-
-		$mainlabel = array_key_exists( 'mainlabel', $params )
-			? $params['mainlabel']
-			: '';
-
-		$printer = SMWQueryProcessor::getResultPrinter( $params['format'],
-				SMWQueryProcessor::SPECIAL_PAGE );
-
-		if ( version_compare( SMW_VERSION, '1.6.1', '>' ) ) {
-			SMWQueryProcessor::addThisPrintout( $printouts, $params );
-			$params = SMWQueryProcessor::getProcessedParams( $params, $printouts );
-		}
-
-		$prresult = $printer->getResult( $getSemanticResult( $query, $mainlabel, $printouts ),
-				$params, SMW_OUTPUT_WIKI );
-
-		$prtext = is_array( $prresult ) ? $prresult[0] : $prresult;
-
-		return $prtext;
-	}
-
-	/**
-	 * Take non-semantic result set returned by Database->query() method, and wrap it in a
-	 * SMWQueryResult container for passing to any of the various semantic result printers.
-	 * Code stolen largely from SMWSQLStore2QueryEngine->getInstanceQueryResult() method.
-	 * (does this mean it will only work with certain semantic SQL stores?)
-	 */
-	private function addSemanticResultWrapper( $res, $num ) {
-		$qr = [];
-		$count = 0;
-		$store = Utils::getSMWStore();
-		while ( ( $count < $num ) && ( $row = $res->fetchObject() ) ) {
-			$count++;
-			$qr[] = new SMWDIWikiPage( $row->t, $row->ns, '' );
-			if ( method_exists( $store, 'cacheSMWPageID' ) ) {
-				$store->cacheSMWPageID( $row->id, $row->t, $row->ns, $row->iw, '' );
-			}
-		}
-		if ( $res->fetchObject() ) {
-			$count++;
-		}
-		$furtherRes = $count > $num;
-
-		return static function ( $query, $mainlabel, $printouts ) use( $qr, $store, $furtherRes ) {
-			$printrequest = new PrintRequest( PrintRequest::PRINT_THIS, $mainlabel );
-			$main_printout = [];
-			$main_printout[$printrequest->getHash()] = $printrequest;
-			$printouts = array_merge( $main_printout, $printouts );
-			return new QueryResult( $printouts, $query, $qr, $store, $furtherRes );
-		};
 	}
 
 	protected function openList( $offset ) {

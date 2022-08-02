@@ -1,0 +1,41 @@
+{
+	"description": "Multiple 'display parameters'",
+	"setup": [
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "Category1",
+			"contents": "{{#drilldowninfo: display parameters=format=list|display parameters=format=table}}"
+		},
+		{
+			"page": "Page1",
+			"contents": "[[Category:Category1]]"
+		}
+
+	],
+	"tests": [
+		{
+			"type": "special",
+			"about": "Multiple result formats are shown, one for each 'display parameters' parameter",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"Page1",
+					"class=\"smw-format list-format\"",
+					"smwtable"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgLang": "en"
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

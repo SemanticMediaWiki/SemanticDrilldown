@@ -1,0 +1,140 @@
+{
+	"description": "Multiple 'display parameters'",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Color",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Group",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Unused",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"page": "Header1",
+			"contents": "This is Header1"
+		},
+		{
+			"page": "Footer1",
+			"contents": "This is Footer1"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "Category1",
+			"contents": "{{#drilldowninfo: title=Exploring category 1|header=Header1|footer=Footer1|filters=Kolor (property=Color),Gruppe (property=Group),Unused (property=Unused)|display parameters=?Color;format=list}}"
+		},
+		{
+			"page": "BluePage1",
+			"contents": "[[Category:Category1]][[Color::blue]][[Group::A]]"
+		},
+		{
+			"page": "BluePage1b",
+			"contents": "[[Category:Category1]][[Color::blue]][[Group::A]]"
+		},
+		{
+			"page": "BluePage2",
+			"contents": "[[Category:Category1]][[Color::blue]]"
+		},
+		{
+			"page": "RedPage1",
+			"contents": "[[Category:Category1]][[Color::red]][[Group::B]]"
+		},
+		{
+			"page": "BluePageWithoutCategory",
+			"contents": "[[Color::blue]]"
+		}
+	],
+	"tests": [
+		{
+			"//type": "special",
+			"//": "cannot be tested this way because the title is not part of the output",
+			"about": "custom title is used",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"Exploring category 1"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "header and footer are uses",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"This is Header1",
+					"This is Footer1"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "without filter all pages with matching category are shown and filters with matching pages are offered",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"BluePage1",
+					"BluePage2",
+					"RedPage1",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Kolor=blue\" title=\"Filter by this value\">blue&nbsp;(3)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Kolor=red\" title=\"Filter by this value\">red&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Gruppe=A\" title=\"Filter by this value\">A&nbsp;(2)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Gruppe=B\" title=\"Filter by this value\">B&nbsp;(1)</a>",
+					"Unused:", "(There are no values for this filter)"
+				],
+				"not-contain": [
+					"BluePageWithoutCategory",
+					"Special:BrowseData/Category1?Unused="
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "with filter only pages matching the filter are shown and only filters with matches within these pages are offered",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {
+					"Kolor": "blue"
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"BluePage1",
+					"BluePage2",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Kolor=blue&Gruppe=A\" title=\"Filter by this value\">A&nbsp;(2)</a>"
+				],
+				"not-contain":[
+					"RedPage1",
+					"Special:BrowseData/Category1?Kolor=blue&Gruppe=B"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgLang": "en"
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

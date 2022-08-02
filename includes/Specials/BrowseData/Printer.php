@@ -6,6 +6,8 @@ use Html;
 use MediaWiki\Widget\DateInputWidget;
 use SD\AppliedFilter;
 use SD\FilterValue;
+use SD\Parameters\Filters;
+use SD\Parameters\Header;
 use SD\Utils;
 use SpecialPage;
 use Title;
@@ -55,7 +57,7 @@ class Printer {
 		$header = "";
 
 		// Add intro template
-		$headerPage = Utils::getDrilldownHeader( $this->category );
+		$headerPage = Header::forCategory( $this->category )->value;
 		if ( $headerPage !== '' ) {
 			$title = Title::newFromText( $headerPage );
 			$page = WikiPage::factory( $title );
@@ -195,7 +197,7 @@ class Printer {
 				$header .= "					<p><strong>$subcategory_text:</strong> $results_line</p>\n";
 			}
 		}
-		$filters = Utils::loadFiltersForCategory( $this->category );
+		$filters = Filters::forCategory( $this->category );
 		foreach ( $filters as $f ) {
 			foreach ( $this->applied_filters as $af ) {
 				if ( $af->filter->name == $f->name ) {
