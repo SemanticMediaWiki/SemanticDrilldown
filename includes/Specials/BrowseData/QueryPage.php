@@ -100,46 +100,13 @@ class QueryPage extends \QueryPage {
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
 		$this->getOutput()->addHTML( Html::openElement( 'div', [ 'class' => 'drilldown-results-output' ] ) );
 
-		// Add Drilldown Results
-		$all_display_params = Utils::getDisplayParamsForCategory( $this->category );
-		$querystring = null;
-		$printouts = $params = [];
-		// only one set of params is handled for now
-		if ( count( $all_display_params ) > 0 ) {
-			$display_params = array_map( 'trim', $all_display_params[0] );
-			list( $querystring, $params, $printouts ) = SMWQueryProcessor::getComponentsFromFunctionParams( $display_params, false );
+		$getSemanticResult = $this->addSemanticResultWrapper( $res, $num );
+		$displayParametersList = Utils::getDisplayParametersListForCategory( $this->category );
+		foreach ( $displayParametersList as $displayParameters ) {
+			// $displayParameters = $displayParametersList[1];
+			$text = $this->getDrilldownResults( $displayParameters, $getSemanticResult );
+			$out->addWikiTextAsInterface( $text );
 		}
-		if ( !empty( $querystring ) ) {
-			$query = SMWQueryProcessor::createQuery( $querystring, $params );
-		} else {
-			$query = new SMWQuery();
-		}
-		if ( !array_key_exists( 'format', $params ) ) {
-			$params['format'] = 'category';
-		}
-
-		if ( array_key_exists( 'mainlabel', $params ) ) {
-			$mainlabel = $params['mainlabel'];
-		} else {
-			$mainlabel = '';
-		}
-
-		$printer = SMWQueryProcessor::getResultPrinter( $params['format'], SMWQueryProcessor::SPECIAL_PAGE );
-
-		if ( version_compare( SMW_VERSION, '1.6.1', '>' ) ) {
-			SMWQueryProcessor::addThisPrintout( $printouts, $params );
-			$params = SMWQueryProcessor::getProcessedParams( $params, $printouts );
-		}
-
-		$prresult = $printer->getResult(
-			$this->addSemanticResultWrapper( $res, $num, $query, $mainlabel, $printouts ),
-			$params,
-			SMW_OUTPUT_WIKI
-		);
-
-		$prtext = is_array( $prresult ) ? $prresult[0] : $prresult;
-
-		$out->addWikiTextAsInterface( $prtext );
 
 		// Add outro template
 		$footerPage = Utils::getDrilldownFooter( $this->category );
@@ -164,13 +131,47 @@ class QueryPage extends \QueryPage {
 		SMWOutputs::commitToOutputPage( $out );
 	}
 
+	protected function getDrilldownResults( $displayParameters, $getSemanticResult ) {
+		$display_params = array_map( 'trim', $displayParameters );
+		[ $querystring, $params, $printouts ] =
+			SMWQueryProcessor::getComponentsFromFunctionParams( $display_params, false );
+
+		if ( !empty( $querystring ) ) {
+			$query = SMWQueryProcessor::createQuery( $querystring, $params );
+		} else {
+			$query = new SMWQuery();
+		}
+		if ( !array_key_exists( 'format', $params ) ) {
+			$params['format'] = 'category';
+		}
+
+		$mainlabel = array_key_exists( 'mainlabel', $params )
+			? $params['mainlabel']
+			: '';
+
+		$printer = SMWQueryProcessor::getResultPrinter( $params['format'],
+				SMWQueryProcessor::SPECIAL_PAGE );
+
+		if ( version_compare( SMW_VERSION, '1.6.1', '>' ) ) {
+			SMWQueryProcessor::addThisPrintout( $printouts, $params );
+			$params = SMWQueryProcessor::getProcessedParams( $params, $printouts );
+		}
+
+		$prresult = $printer->getResult( $getSemanticResult( $query, $mainlabel, $printouts ),
+				$params, SMW_OUTPUT_WIKI );
+
+		$prtext = is_array( $prresult ) ? $prresult[0] : $prresult;
+
+		return $prtext;
+	}
+
 	/**
 	 * Take non-semantic result set returned by Database->query() method, and wrap it in a
 	 * SMWQueryResult container for passing to any of the various semantic result printers.
 	 * Code stolen largely from SMWSQLStore2QueryEngine->getInstanceQueryResult() method.
 	 * (does this mean it will only work with certain semantic SQL stores?)
 	 */
-	private function addSemanticResultWrapper( $res, $num, $query, $mainlabel, $printouts ) {
+	private function addSemanticResultWrapper( $res, $num ) {
 		$qr = [];
 		$count = 0;
 		$store = Utils::getSMWStore();
@@ -184,13 +185,15 @@ class QueryPage extends \QueryPage {
 		if ( $res->fetchObject() ) {
 			$count++;
 		}
+		$furtherRes = $count > $num;
 
-		$printrequest = new PrintRequest( PrintRequest::PRINT_THIS, $mainlabel );
-		$main_printout = [];
-		$main_printout[$printrequest->getHash()] = $printrequest;
-		$printouts = array_merge( $main_printout, $printouts );
-
-		return new QueryResult( $printouts, $query, $qr, $store, ( $count > $num ) );
+		return static function ( $query, $mainlabel, $printouts ) use( $qr, $store, $furtherRes ) {
+			$printrequest = new PrintRequest( PrintRequest::PRINT_THIS, $mainlabel );
+			$main_printout = [];
+			$main_printout[$printrequest->getHash()] = $printrequest;
+			$printouts = array_merge( $main_printout, $printouts );
+			return new QueryResult( $printouts, $query, $qr, $store, $furtherRes );
+		};
 	}
 
 	protected function openList( $offset ) {

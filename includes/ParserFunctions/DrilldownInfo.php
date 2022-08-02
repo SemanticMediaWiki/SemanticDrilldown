@@ -27,7 +27,7 @@ class DrilldownInfo {
 	private Parser $parser;
 	private string $title;
 	private array $filters;
-	private string $displayParameters;
+	private array $displayParametersList;
 	private string $header;
 	private string $footer;
 
@@ -38,7 +38,7 @@ class DrilldownInfo {
 	public function __invoke( $params ): string {
 		$this->title = '';
 		$this->filters = [];
-		$this->displayParameters = '';
+		$this->displayParametersList = [];
 		$this->header = '';
 		$this->footer = '';
 
@@ -72,7 +72,7 @@ class DrilldownInfo {
 			} elseif ( $param_name == 'title' ) {
 				$this->title = $value;
 			} elseif ( $param_name == 'display parameters' ) {
-				$this->displayParameters = $value;
+				$this->displayParametersList[] = $value;
 			} elseif ( $param_name === 'header' ) {
 				$this->header = $value;
 			} elseif ( $param_name === 'footer' ) {
@@ -88,8 +88,9 @@ class DrilldownInfo {
 		if ( $this->title != '' ) {
 			Compat::setPageProperty( $parserOutput, 'SDTitle', $this->title );
 		}
-		if ( $this->displayParameters != '' ) {
-			Compat::setPageProperty( $parserOutput, 'SDDisplayParams', $this->displayParameters );
+		if ( $this->displayParametersList != '' ) {
+			$displayParametersString = implode( '|', $this->displayParametersList );
+			Compat::setPageProperty( $parserOutput, 'SDDisplayParams', $displayParametersString );
 		}
 		if ( $this->header !== '' ) {
 			Compat::setPageProperty( $parserOutput, 'SDHeader', $this->header );
@@ -174,9 +175,9 @@ class DrilldownInfo {
 			$text .= "<tr class=\"drilldownInfoHeader\"><td colspan=\"2\">Title</td></tr>\n";
 			$text .= "<tr><td colspan=\"2\">$this->title</td></tr>\n";
 		}
-		if ( $this->displayParameters != '' ) {
-			$text .= "<tr class=\"drilldownInfoHeader\"><td colspan=\"2\">Display parameters</td></tr>\n";
-			$text .= "<tr><td colspan=\"2\">$this->displayParameters</td></tr>\n";
+		$text .= "<tr class=\"drilldownInfoHeader\"><td colspan=\"2\">Display parameters</td></tr>\n";
+		foreach ( $this->displayParametersList as $displayParameters ) {
+			$text .= "<tr><td colspan=\"2\">$displayParameters</td></tr>\n";
 		}
 		$text .= "</table>\n";
 

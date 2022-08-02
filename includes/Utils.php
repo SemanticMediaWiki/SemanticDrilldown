@@ -282,9 +282,7 @@ class Utils {
 	/**
 	 * Gets all the display parameters defined for a category
 	 */
-	public static function getDisplayParamsForCategory( $category ) {
-		$return_display_params = [];
-
+	public static function getDisplayParametersListForCategory( $category ): array {
 		$title = Title::newFromText( $category, NS_CATEGORY );
 		$pageID = $title->getArticleID();
 		$dbr = wfGetDB( DB_REPLICA );
@@ -298,13 +296,17 @@ class Utils {
 			]
 		);
 
+		$displayParametersList = [];
 		foreach ( $res as $row ) {
 			// There should only be one row.
-			$displayParamsStr = $row->pp_value;
-			$return_display_params[] = explode( ';', $displayParamsStr );
+			$displayParametersListString = $row->pp_value;
+			$displayParametersStrings = explode( '|', $displayParametersListString );
+			foreach ( $displayParametersStrings as $displayParametersString ) {
+				$displayParametersList[] = explode( ';', $displayParametersString );
+			}
 		}
 
-		return $return_display_params;
+		return $displayParametersList;
 	}
 
 	public static function getCategoryChildren( $category_name, $get_categories, $levels ) {
