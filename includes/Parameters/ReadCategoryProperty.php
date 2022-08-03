@@ -2,10 +2,12 @@
 
 namespace SD\Parameters;
 
+use Title;
+
 class ReadCategoryProperty {
 
 	public static function for( $category, $propertyName ) {
-		$title = \Title::newFromText( $category, NS_CATEGORY );
+		$title = Title::newFromText( $category, NS_CATEGORY );
 
 		// Return false if the title object couldn't be created.
 		// This mainly happens if people change the $_cat in the url.

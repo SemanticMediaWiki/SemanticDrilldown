@@ -22,7 +22,7 @@ class SemanticResultPrinter {
 		$this->getSmwQueryResult = self::createGetSmwQueryResult( $res, $num );
 	}
 
-	public function getText( $displayParameters ) {
+	public function getText( array $displayParameters ) {
 		[ $querystring, $params, $printouts ] =
 			SMWQueryProcessor::getComponentsFromFunctionParams( $displayParameters, false );
 

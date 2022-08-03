@@ -2,13 +2,14 @@
 
 namespace SD\Parameters;
 
-use ArrayIterator;
+use Generator;
 use IteratorAggregate;
 
 class DisplayParametersList extends Parameter implements IteratorAggregate {
 
 	protected const PAGE_PROPERTY_NAME = 'SDDisplayParams';
 
+	/** @readonly */
 	private array $list = [];
 
 	/**
@@ -18,14 +19,12 @@ class DisplayParametersList extends Parameter implements IteratorAggregate {
 	 * @return void
 	 */
 	public function add( string $displayParameters ) {
-		$this->list[] = array_map( 'trim', explode( ';', $displayParameters ) );
+		$this->list[] = new DisplayParameters( $displayParameters );
 	}
 
 	protected function propertyValue(): ?string {
-		return empty( $this->list )
-			? null
-			: implode( '|',
-				array_map( fn( $xs ) => implode( ';', $xs ), $this->list ) );
+		return empty( $this->list ) ? null
+			: implode( '|',  array_map( fn( $dps ) => "$dps", $this->list ) );
 	}
 
 	protected static function fromPropertyValue( ?string $value ): self {
@@ -35,16 +34,18 @@ class DisplayParametersList extends Parameter implements IteratorAggregate {
 				$result->add( $displayParameters );
 			}
 		}
+
 		return $result;
 	}
 
-	public function getIterator(): ArrayIterator {
-		return new ArrayIterator( $this->list );
+	public function getIterator(): Generator {
+		yield from $this->list;
 	}
 
-	public function strings() {
+	public function strings(): Generator {
 		foreach ( $this->list as $displayParameters ) {
-			yield implode( ';', $displayParameters );
+			yield "$displayParameters";
 		}
 	}
+
 }

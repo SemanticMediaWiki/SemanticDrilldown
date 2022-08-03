@@ -1,20 +1,19 @@
 {
-	"description": "Multiple 'display parameters'",
+	"description": "Caption parameter of 'display parameters'",
 	"setup": [
 		{
 			"namespace": "NS_CATEGORY",
 			"page": "Category1",
-			"contents": "{{#drilldowninfo: display parameters=format=list|display parameters=format=table}}"
+			"contents": "{{#drilldowninfo: display parameters=caption=THIS IS THE CAPTION}}"
 		},
 		{
 			"page": "Page1",
 			"contents": "[[Category:Category1]]"
-		}
-	],
+		}	],
 	"tests": [
 		{
 			"type": "special",
-			"about": "Multiple result formats are shown, one for each 'display parameters' parameter",
+			"about": "Caption is displayed",
 			"special-page": {
 				"page": "BrowseData",
 				"query-parameters": "Category1",
@@ -22,9 +21,7 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"Page1",
-					"class=\"smw-format list-format\"",
-					"smwtable"
+					"<h2><span class=\"mw-headline\" id=\"THIS_IS_THE_CAPTION\">THIS IS THE CAPTION</span></h2>"
 				]
 			}
 		}

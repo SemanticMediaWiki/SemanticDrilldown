@@ -110,10 +110,10 @@ class DrilldownInfo {
 				$text .= $key . ' = ';
 				if ( $key == 'property' ) {
 					$propertyTitle = \Title::makeTitleSafe( SMW_NS_PROPERTY, $value );
-					$text .= $parser->getLinkRenderer()->makeLink($propertyTitle, $value);
+					$text .= $this->parser->getLinkRenderer()->makeLink( $propertyTitle, $value );
 				} elseif ( $key == 'category' ) {
 					$categoryTitle = \Title::makeTitleSafe( NS_CATEGORY, $value );
-					$text .= $parser->getLinkRenderer()->makeLink($categoryTitle, $value);
+					$text .= $this->parser->getLinkRenderer()->makeLink( $categoryTitle, $value );
 				} elseif ( $key == 'requires' ) {
 					$text .= '<strong>' . $value . '</strong>';
 				} else {

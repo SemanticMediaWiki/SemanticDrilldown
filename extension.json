@@ -1,6 +1,6 @@
 {
 	"name": "SemanticDrilldown",
-	"version": "3.0-alpha2-dev",
+	"version": "3.0.0",
 	"author": "Yaron Koren",
 	"url": "https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown",
 	"descriptionmsg": "semanticdrilldown-desc",

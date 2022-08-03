@@ -100,8 +100,12 @@ class QueryPage extends \QueryPage {
 		$semanticResultPrinter = new SemanticResultPrinter( $res, $num );
 		$displayParametersList = DisplayParametersList::forCategory( $this->category );
 		foreach ( $displayParametersList as $displayParameters ) {
-			$text = $semanticResultPrinter->getText( $displayParameters );
-			$out->addWikiTextAsInterface( $text );
+			$caption = $displayParameters->caption !== null
+				? \Html::element( 'h2', [], $displayParameters->caption )
+				: '';
+
+			$text = $semanticResultPrinter->getText( iterator_to_array( $displayParameters ) );
+			$out->addWikiTextAsInterface( "$caption\n$text" );
 		}
 
 		// Add outro template

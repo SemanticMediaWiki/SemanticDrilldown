@@ -2,6 +2,10 @@
 
 namespace SD\Parameters;
 
+/**
+ * Parameter implementation for the most simple case where the value represented
+ * is stored directly as a page property
+ */
 class SimpleParameter extends Parameter {
 
 	/** @readonly */
