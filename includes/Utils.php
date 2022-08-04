@@ -23,10 +23,11 @@ use Title;
 class Utils {
 
 	public static function setGlobalJSVariables( &$vars ) {
-		global $sdgScriptPath;
+		global $wgScriptPath;
+		$sdSkinsPath = "$wgScriptPath/extensions/SemanticDrilldown/skins";
 
-		$vars['sdgDownArrowImage'] = "$sdgScriptPath/skins/down-arrow.png";
-		$vars['sdgRightArrowImage'] = "$sdgScriptPath/skins/right-arrow.png";
+		$vars['sdgDownArrowImage'] = "$sdSkinsPath/down-arrow.png";
+		$vars['sdgRightArrowImage'] = "$sdSkinsPath/right-arrow.png";
 		return true;
 	}
 

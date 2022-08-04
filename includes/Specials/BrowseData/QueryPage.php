@@ -4,7 +4,6 @@ namespace SD\Specials\BrowseData;
 
 use Html;
 use IDatabase;
-use Linker;
 use OutputPage;
 use SD\Utils;
 use Skin;
@@ -84,7 +83,7 @@ class QueryPage extends \QueryPage {
 
 	protected function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( $result->namespace, $result->value );
-		return Linker::link( $title, htmlspecialchars( $title->getText() ) );
+		return $this->getLinkRenderer()->makeLink( $title, $title->getText() );
 	}
 
 	/**

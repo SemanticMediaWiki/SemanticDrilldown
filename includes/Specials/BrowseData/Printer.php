@@ -41,8 +41,9 @@ class Printer {
 	}
 
 	public function getPageHeader() {
-		global $sdgScriptPath;
+		global $wgScriptPath;
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
+		$sdSkinsPath = $wgScriptPath . '/extensions/SemanticDrilldown/skins';
 
 		$categories = Utils::getCategoriesForBrowsing();
 		// if there are no categories, escape quickly
@@ -93,7 +94,7 @@ class Printer {
 			$header .= "$subcategory_text: ";
 			$subcat_string = str_replace( '_', ' ', $this->subcategory );
 			$remove_filter_url = $this->makeBrowseURL( $this->category, $this->applied_filters );
-			$header .= "\n" . '				<span class="drilldown-header-value">' . $subcat_string . '</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removesubcategoryfilter' )->text() . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a> ';
+			$header .= "\n" . '				<span class="drilldown-header-value">' . $subcat_string . '</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removesubcategoryfilter' )->text() . '"><img src="' . $sdSkinsPath . '/filter-x.png" /></a> ';
 		}
 		foreach ( $this->applied_filters as $i => $af ) {
 			$header .= ( !$this->subcategory && $i == 0 ) ? " > " : "\n					<span class=\"drilldown-header-value\">&</span> ";
@@ -105,7 +106,7 @@ class Printer {
 				array_splice( $temp_filters_array, $i, 1 );
 				$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
 				array_splice( $temp_filters_array, $i, 0 );
-				$header .= $filter_label . ' <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a> : ';
+				$header .= $filter_label . ' <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdSkinsPath . '/filter-x.png" /></a> : ';
 			} else {
 				$header .= "$filter_label: ";
 			}
@@ -118,7 +119,7 @@ class Printer {
 				$removed_values = array_splice( $temp_filters_array[$i]->values, $j, 1 );
 				$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
 				array_splice( $temp_filters_array[$i]->values, $j, 0, $removed_values );
-				$header .= '				<span class="drilldown-header-value">' . $filter_text . '</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /></a>';
+				$header .= '				<span class="drilldown-header-value">' . $filter_text . '</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdSkinsPath . '/filter-x.png" /></a>';
 			}
 
 			if ( $af->search_terms != null ) {
@@ -130,7 +131,7 @@ class Printer {
 					$removed_values = array_splice( $temp_filters_array[$i]->search_terms, $j, 1 );
 					$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
 					array_splice( $temp_filters_array[$i]->search_terms, $j, 0, $removed_values );
-					$header .= "\n\t" . '<span class="drilldown-header-value">~ \'' . $search_term . '\'</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdgScriptPath . '/skins/filter-x.png" /> </a>';
+					$header .= "\n\t" . '<span class="drilldown-header-value">~ \'' . $search_term . '\'</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdSkinsPath . '/filter-x.png" /> </a>';
 				}
 			} elseif ( $af->lower_date != null || $af->upper_date != null ) {
 				$header .= "\n\t<span class=\"drilldown-header-value\">" . $af->lower_date_string . " - " . $af->upper_date_string . "</span>";
@@ -351,8 +352,9 @@ END;
 	 * the "results" (values) for this filter has been created.
 	 */
 	private function printFilterLine( $filterName, $isApplied, $isNormalFilter, $resultsLine, $filter ) {
-		global $sdgScriptPath;
+		global $wgScriptPath;
 		global $sdgDisableFilterCollapsible;
+		$sdSkinsPath = "$wgScriptPath/extensions/SemanticDrilldown/skins";
 
 		if ( isset( $filter->int ) ) {
 			$filterName = wfMessage( $filter->int )->text();
@@ -384,9 +386,9 @@ END;
 		// single text or date input.
 		if ( $isNormalFilter ) {
 			if ( $isApplied ) {
-				$arrowImage = "$sdgScriptPath/skins/right-arrow.png";
+				$arrowImage = "$sdSkinsPath/right-arrow.png";
 			} else {
-				$arrowImage = "$sdgScriptPath/skins/down-arrow.png";
+				$arrowImage = "$sdSkinsPath/down-arrow.png";
 			}
 			$text .= <<<END
 					<a class="drilldown-values-toggle" style="cursor: default;"><img src="$arrowImage" /></a>

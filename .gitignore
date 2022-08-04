@@ -6,3 +6,5 @@
 /composer.lock
 /.eslintcache
 .phpunit.result.cache
+coverage
+.tmp

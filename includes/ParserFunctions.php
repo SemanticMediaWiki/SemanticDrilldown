@@ -23,7 +23,6 @@ namespace SD;
  */
 
 use Html;
-use Linker;
 use MediaWiki\MediaWikiServices;
 use Sanitizer;
 use Title;
@@ -161,10 +160,10 @@ class ParserFunctions {
 				$text .= $key . ' = ';
 				if ( $key == 'property' ) {
 					$propertyTitle = Title::makeTitleSafe( SMW_NS_PROPERTY, $value );
-					$text .= Linker::link( $propertyTitle, $value );
+					$text .= $parser->getLinkRenderer()->makeLink( $propertyTitle, $value );
 				} elseif ( $key == 'category' ) {
 					$categoryTitle = Title::makeTitleSafe( NS_CATEGORY, $value );
-					$text .= Linker::link( $categoryTitle, $value );
+					$text .= $parser->getLinkRenderer()->makeLink( $categoryTitle, $value );
 				} elseif ( $key == 'requires' ) {
 					$text .= '<strong>' . $value . '</strong>';
 				} else {

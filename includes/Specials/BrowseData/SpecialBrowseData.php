@@ -23,7 +23,8 @@ class SpecialBrowseData extends IncludableSpecialPage {
 	}
 
 	public function execute( $query ): void {
-		global $sdgScriptPath, $sdgNumResultsPerPage;
+		global $wgScriptPath, $sdgNumResultsPerPage;
+		$sdSkinsPath = "$wgScriptPath/extensions/SemanticDrilldown/skins";
 
 		$out = $this->getOutput();
 		$request = $this->getRequest();
@@ -33,7 +34,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 		}
 		$this->setHeaders();
 		$out->addModules( 'ext.semanticdrilldown.main' );
-		$out->addScript( '<!--[if IE]><link rel="stylesheet" href="' . $sdgScriptPath . '/skins/SD_IEfixes.css" media="screen" /><![endif]-->' );
+		$out->addScript( '<!--[if IE]><link rel="stylesheet" href="' . $sdSkinsPath . '/SD_IEfixes.css" media="screen" /><![endif]-->' );
 
 		// set default
 		if ( $sdgNumResultsPerPage == null ) {

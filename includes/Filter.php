@@ -161,54 +161,41 @@ class Filter {
 	 * being used.
 	 */
 	public function loadDBStructureInformation() {
-		global $smwgDefaultStore, $wgDBtype;
+		global $wgDBtype;
 
-		if ( $smwgDefaultStore === 'SMWSQLStore3' || $smwgDefaultStore === 'SMWSparqlStore' ) {
-			if ( $this->property_type === 'page' ) {
-				$this->db_table_name = 'smw_di_wikipage';
-				$this->db_value_field = 'o_ids.smw_title';
-			} elseif ( $this->property_type === 'boolean' ) {
-				$this->db_table_name = 'smw_di_bool';
-				$this->db_value_field = 'o_value';
-			} elseif ( $this->property_type === 'date' ) {
-				$this->db_table_name = 'smw_di_time';
-				$this->db_value_field = 'o_serialized';
-				$this->db_date_field = 'SUBSTR(o_serialized, 3, 100)';
+		if ( $this->property_type === 'page' ) {
+			$this->db_table_name = 'smw_di_wikipage';
+			$this->db_value_field = 'o_ids.smw_title';
+		} elseif ( $this->property_type === 'boolean' ) {
+			$this->db_table_name = 'smw_di_bool';
+			$this->db_value_field = 'o_value';
+		} elseif ( $this->property_type === 'date' ) {
+			$this->db_table_name = 'smw_di_time';
+			$this->db_value_field = 'o_serialized';
+			$this->db_date_field = 'SUBSTR(o_serialized, 3, 100)';
 
-				if ( $wgDBtype == 'mysql' ) {
-					// SMW date field has the following format: 2000/2/11/22/0/1/0, where every /-separated
-					// segment is optional. All of these are valid: 2000, 2000/2, 2000/2/11.
-					// However, YEAR(), MONTH() and DAY() would return NULL for incomplete date,
-					// so STR_TO_DATE is required.
-					$this->db_date_field = "STR_TO_DATE(" . $this->db_date_field .
-						", '%Y/%m/%d')";
-				}
-
-			} elseif ( $this->property_type === 'number' ) {
-				$this->db_table_name = 'smw_di_number';
-				$this->db_value_field = 'o_serialized';
-			} else { // string, text, code
-				$this->db_table_name = 'smw_di_blob';
-				// CONVERT() is also supported in PostgreSQL,
-				// but it doesn't seem to work the same way.
-				// IF() is not supported in PostgreSQL - there
-				// is an alternative CASE() statement, but
-				// let's just keep it simple - in part in
-				// order to also support other DB types.
-				if ( $wgDBtype == 'mysql' ) {
-					$this->db_value_field = '(IF(o_blob IS NULL, o_hash, CONVERT(o_blob using utf8)))';
-				} else {
-					$this->db_value_field = 'o_hash';
-				}
+			if ( $wgDBtype == 'mysql' ) {
+				// SMW date field has the following format: 2000/2/11/22/0/1/0, where every /-separated
+				// segment is optional. All of these are valid: 2000, 2000/2, 2000/2/11.
+				// However, YEAR(), MONTH() and DAY() would return NULL for incomplete date,
+				// so STR_TO_DATE is required.
+				$this->db_date_field = "STR_TO_DATE(" . $this->db_date_field .
+					", '%Y/%m/%d')";
 			}
-		} else {
-			// Things used to be so simple...
-			if ( $this->property_type === 'page' ) {
-				$this->db_table_name = 'smw_di_wikipage';
-				$this->db_value_field = 'o_ids.smw_title';
+		} elseif ( $this->property_type === 'number' ) {
+			$this->db_table_name = 'smw_di_number';
+			$this->db_value_field = 'o_serialized';
+		} else { // string, text, code
+			$this->db_table_name = 'smw_di_blob';
+			// CONVERT() is also supported in PostgreSQL,
+			// but it doesn't seem to work the same way.
+			// IF() is not supported in PostgreSQL - there
+			// is an alternative CASE() statement, but
+			// let's just keep it simple - in part in
+			// order to also support other DB types.
+			if ( $wgDBtype == 'mysql' ) {
+				$this->db_value_field = '(IF(o_blob IS NULL, o_hash, CONVERT(o_blob using utf8)))';
 			} else {
-				$this->db_table_name = 'smw_di_blob';
-				$this->db_date_field = 'o_hash';
 				$this->db_value_field = 'o_hash';
 			}
 		}

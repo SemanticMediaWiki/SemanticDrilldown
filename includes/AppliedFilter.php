@@ -2,6 +2,7 @@
 
 namespace SD;
 
+use MediaWiki\MediaWikiServices;
 use RequestContext;
 
 /**
@@ -199,7 +200,10 @@ class AppliedFilter {
 	 */
 	public function getAllOrValues( $category ) {
 		$possible_values = [];
-		$dbr = wfGetDB( DB_REPLICA );
+
+		$lb = MediaWikiServices::getInstance()->getDBLoadBalancer();
+		$dbr = $lb->getConnection( $lb::DB_REPLICA );
+
 		$property_value = $dbr->addQuotes( $this->filter->escaped_property );
 		$property_table_name = $dbr->tableName( $this->filter->getTableName() );
 		$category = $dbr->addQuotes( $category );
