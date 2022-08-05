@@ -7,6 +7,7 @@ use IDatabase;
 use OutputPage;
 use SD\Parameters\DisplayParametersList;
 use SD\Parameters\Footer;
+use SD\Sql\SqlProvider;
 use SD\Utils;
 use Skin;
 use SMWOutputs;

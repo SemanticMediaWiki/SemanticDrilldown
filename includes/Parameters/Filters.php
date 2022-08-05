@@ -70,7 +70,7 @@ class Filters extends Parameter implements IteratorAggregate {
 		if ( class_exists( 'PSSchema' ) ) {
 			$pageSchemaObj = new \PSSchema( $category );
 			if ( $pageSchemaObj->isPSDefined() ) {
-				$filters_ps = Filter::loadAllFromPageSchema( $pageSchemaObj );
+				$filters_ps = self::loadFiltersFromPageSchema( $pageSchemaObj );
 				$result->filters = array_merge( $result->filters, $filters_ps );
 			}
 		}
@@ -111,6 +111,59 @@ class Filters extends Parameter implements IteratorAggregate {
 			}
 		}
 		return $filters;
+	}
+
+	private static function loadFiltersFromPageSchema( $psSchemaObj ) {
+		$result = [];
+		$template_all = $psSchemaObj->getTemplates();
+		foreach ( $template_all as $template ) {
+			$field_all = $template->getFields();
+			foreach ( $field_all as $fieldObj ) {
+				$f = new Filter();
+				$filter_array = $fieldObj->getObject( 'semanticdrilldown_Filter' );
+				if ( $filter_array === null ) {
+					continue;
+				}
+				if ( array_key_exists( 'name', $filter_array ) ) {
+					$f->setName( $filter_array['name'] );
+				} else {
+					$f->setName( $fieldObj->getName() );
+				}
+				$prop_array = $fieldObj->getObject( 'semanticmediawiki_Property' );
+				if ( $prop_array['name'] != '' ) {
+					$f->setProperty( $prop_array['name'] );
+				} else {
+					$f->setProperty( $f->name );
+				}
+				if ( array_key_exists( 'Type', $prop_array ) ) {
+					// Thankfully, the property type names
+					// assigned by SMW/Page Schemas, and the
+					// internal ones used by SD, are the
+					// same (for all the relevant types)
+					// except for an uppercased first
+					// letter.
+					$f->property_type = strtolower( $prop_array['Type'] );
+				}
+				if ( array_key_exists( 'ValuesFromCategory', $filter_array ) ) {
+					$f->setCategory( $filter_array['ValuesFromCategory'] );
+				} elseif ( array_key_exists( 'TimePeriod', $filter_array ) ) {
+					$f->time_period = $filter_array['TimePeriod'];
+					$f->allowed_values = [];
+				} elseif ( $f->property_type === 'boolean' ) {
+					$f->allowed_values = [ '0', '1' ];
+				} elseif ( array_key_exists( 'Values', $filter_array ) ) {
+					$f->allowed_values = $filter_array['Values'];
+				} else {
+					$f->allowed_values = [];
+				}
+
+				// Must be done after property type is set.
+				$f->loadDBStructureInformation();
+
+				$result[] = $f;
+			}
+		}
+		return $result;
 	}
 
 }

@@ -53,7 +53,7 @@ parameters:
 		-
 			message: "#^Constant SMW_NS_PROPERTY not found\\.$#"
 			count: 1
-			path: includes/Specials/BrowseData/SqlProvider.php
+			path: includes/Sql/SqlProvider.php
 
 		-
 			message: "#^Access to constant ID_TABLE on an unknown class SMW\\\\SQLStore\\\\SQLStore\\.$#"

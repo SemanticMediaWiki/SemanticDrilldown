@@ -380,7 +380,7 @@ END;
 		}
 
 		$text = <<<END
-				<div class="drilldown-filter' . $additionalClasses . '">
+				<div class="drilldown-filter $additionalClasses">
 					<div class="drilldown-filter-label">
 
 END;

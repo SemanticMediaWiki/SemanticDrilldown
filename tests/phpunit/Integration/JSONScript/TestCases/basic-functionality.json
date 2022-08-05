@@ -3,13 +3,13 @@
 	"setup": [
 		{
 			"namespace": "SMW_NS_PROPERTY",
-			"page": "Color",
+			"page": "SomeText",
 			"contents": "[[Has type::Text]]"
 		},
 		{
 			"namespace": "SMW_NS_PROPERTY",
-			"page": "Group",
-			"contents": "[[Has type::Text]]"
+			"page": "SomeNumber",
+			"contents": "[[Has type::Number]]"
 		},
 		{
 			"namespace": "SMW_NS_PROPERTY",
@@ -27,27 +27,27 @@
 		{
 			"namespace": "NS_CATEGORY",
 			"page": "Category1",
-			"contents": "{{#drilldowninfo: title=Exploring category 1|header=Header1|footer=Footer1|filters=Kolor (property=Color),Gruppe (property=Group),Unused (property=Unused)|display parameters=?Color;format=list}}"
+			"contents": "{{#drilldowninfo: title=Exploring category 1|header=Header1|footer=Footer1|filters=XText (property=SomeText),XNumber (property=SomeNumber),Unused (property=Unused)|display parameters=?Text;format=list}}"
 		},
 		{
 			"page": "BluePage1",
-			"contents": "[[Category:Category1]][[Color::blue]][[Group::A]]"
+			"contents": "[[Category:Category1]][[SomeText::blue]][[SomeNumber::1]]"
 		},
 		{
 			"page": "BluePage1b",
-			"contents": "[[Category:Category1]][[Color::blue]][[Group::A]]"
+			"contents": "[[Category:Category1]][[SomeText::blue]][[SomeNumber::1]]"
 		},
 		{
 			"page": "BluePage2",
-			"contents": "[[Category:Category1]][[Color::blue]]"
+			"contents": "[[Category:Category1]][[SomeText::blue]]"
 		},
 		{
 			"page": "RedPage1",
-			"contents": "[[Category:Category1]][[Color::red]][[Group::B]]"
+			"contents": "[[Category:Category1]][[SomeText::red]][[SomeNumber::2]]"
 		},
 		{
 			"page": "BluePageWithoutCategory",
-			"contents": "[[Color::blue]]"
+			"contents": "[[SomeText::blue]]"
 		}
 	],
 	"tests": [
@@ -94,10 +94,10 @@
 					"BluePage1",
 					"BluePage2",
 					"RedPage1",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Kolor=blue\" title=\"Filter by this value\">blue&nbsp;(3)</a>",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Kolor=red\" title=\"Filter by this value\">red&nbsp;(1)</a>",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Gruppe=A\" title=\"Filter by this value\">A&nbsp;(2)</a>",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Gruppe=B\" title=\"Filter by this value\">B&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?XText=blue\" title=\"Filter by this value\">blue&nbsp;(3)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?XText=red\" title=\"Filter by this value\">red&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?XNumber=1\">1 (2) </a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?XNumber=2\">2 (1) </a>",
 					"Unused:", "(There are no values for this filter)"
 				],
 				"not-contain": [
@@ -113,18 +113,18 @@
 				"page": "BrowseData",
 				"query-parameters": "Category1",
 				"request-parameters": {
-					"Kolor": "blue"
+					"XText": "blue"
 				}
 			},
 			"assert-output": {
 				"to-contain": [
 					"BluePage1",
 					"BluePage2",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Kolor=blue&Gruppe=A\" title=\"Filter by this value\">A&nbsp;(2)</a>"
+					"<a href=\"/index.php/Special:BrowseData/Category1?XText=blue&XNumber=1\">1 () </a>"
 				],
 				"not-contain":[
 					"RedPage1",
-					"Special:BrowseData/Category1?Kolor=blue&Gruppe=B"
+					"Special:BrowseData/Category1?XText=blue&XNumber=2"
 				]
 			}
 		}

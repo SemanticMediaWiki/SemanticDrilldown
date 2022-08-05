@@ -4,6 +4,8 @@ namespace SD;
 
 use MediaWiki\MediaWikiServices;
 use RequestContext;
+use SD\Sql\PropertyTypeDbInfo;
+use SD\Sql\SqlProvider;
 
 /**
  * Defines a class, AppliedFilter, that adds a value or a value range
@@ -13,7 +15,7 @@ use RequestContext;
  */
 
 class AppliedFilter {
-	public $filter;
+	public Filter $filter;
 	public $values = [];
 	public $search_terms;
 	public $lower_date;
@@ -112,7 +114,7 @@ class AppliedFilter {
 		global $wgDBtype;
 
 		if ( $this->filter->property_type == 'date' ) {
-			$value_field = $this->filter->getDateField();
+			$value_field = PropertyTypeDbInfo::dateField( $this->filter->propertyType() );
 		}
 
 		$sql = "(";
@@ -205,13 +207,14 @@ class AppliedFilter {
 		$dbr = $lb->getConnection( $lb::DB_REPLICA );
 
 		$property_value = $dbr->addQuotes( $this->filter->escaped_property );
-		$property_table_name = $dbr->tableName( $this->filter->getTableName() );
+		$property_table_name = $dbr->tableName(
+			PropertyTypeDbInfo::tableName( $this->filter->propertyType() ) );
 		$category = $dbr->addQuotes( $category );
 		if ( $this->filter->property_type != 'date' ) {
-			$value_field = $this->filter->getValueField();
+			$value_field = PropertyTypeDbInfo::valueField( $this->filter->propertyType() );
 		} else {
 			// Is this necessary?
-			$date_field = $this->filter->getDateField();
+			$date_field = PropertyTypeDbInfo::dateField( $this->filter->propertyType() );
 			list( $yearValue, $monthValue, $dayValue ) = Utils::getDateFunctions( $date_field );
 			if ( $this->filter->getTimePeriod() == 'day' ) {
 				$value_field = "$yearValue, $monthValue, $dayValue";

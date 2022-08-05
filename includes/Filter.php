@@ -2,6 +2,8 @@
 
 namespace SD;
 
+use SD\Sql\PropertyTypeDbInfo;
+use SD\Sql\SqlProvider;
 use SMWDIProperty;
 use SMWDIUri;
 use SMWDIWikiPage;
@@ -22,10 +24,11 @@ class Filter {
 	public $allowed_values;
 	public $required_filters = [];
 	public $possible_applied_filters = [];
-	public $db_table_name;
-	public $db_value_field;
-	public $db_date_field;
 	public $int;
+
+	public function propertyType() {
+		return $this->property_type;
+	}
 
 	public function setName( $name ) {
 		$this->name = $name;
@@ -50,59 +53,6 @@ class Filter {
 
 	public function setInt( $int ) {
 		$this->int = $int;
-	}
-
-	public static function loadAllFromPageSchema( $psSchemaObj ) {
-		$filters_ps = [];
-		$template_all = $psSchemaObj->getTemplates();
-		foreach ( $template_all as $template ) {
-			$field_all = $template->getFields();
-			foreach ( $field_all as $fieldObj ) {
-				$f = new Filter();
-				$filter_array = $fieldObj->getObject( 'semanticdrilldown_Filter' );
-				if ( $filter_array === null ) {
-					continue;
-				}
-				if ( array_key_exists( 'name', $filter_array ) ) {
-					$f->setName( $filter_array['name'] );
-				} else {
-					$f->setName( $fieldObj->getName() );
-				}
-				$prop_array = $fieldObj->getObject( 'semanticmediawiki_Property' );
-				if ( $prop_array['name'] != '' ) {
-					$f->setProperty( $prop_array['name'] );
-				} else {
-					$f->setProperty( $f->name );
-				}
-				if ( array_key_exists( 'Type', $prop_array ) ) {
-					// Thankfully, the property type names
-					// assigned by SMW/Page Schemas, and the
-					// internal ones used by SD, are the
-					// same (for all the relevant types)
-					// except for an uppercased first
-					// letter.
-					$f->property_type = strtolower( $prop_array['Type'] );
-				}
-				if ( array_key_exists( 'ValuesFromCategory', $filter_array ) ) {
-					$f->setCategory( $filter_array['ValuesFromCategory'] );
-				} elseif ( array_key_exists( 'TimePeriod', $filter_array ) ) {
-					$f->time_period = $filter_array['TimePeriod'];
-					$f->allowed_values = [];
-				} elseif ( $f->property_type === 'boolean' ) {
-					$f->allowed_values = [ '0', '1' ];
-				} elseif ( array_key_exists( 'Values', $filter_array ) ) {
-					$f->allowed_values = $filter_array['Values'];
-				} else {
-					$f->allowed_values = [];
-				}
-
-				// Must be done after property type is set.
-				$f->loadDBStructureInformation();
-
-				$filters_ps[] = $f;
-			}
-		}
-		return $filters_ps;
 	}
 
 	public function loadPropertyTypeFromProperty() {
@@ -148,72 +98,6 @@ class Filter {
 				print "Error! Unsupported property type ($typeValue) for filter {$this->name}.";
 			}
 		}
-
-		// This requires the property type to be set.
-		$this->loadDBStructureInformation();
-	}
-
-	/**
-	 * This function is a little confusingly named - it's not
-	 * loading any information from the database, but rather
-	 * loading information *about* the structure of the Semantic
-	 * MediaWiki tables in the database, based on the SQL store
-	 * being used.
-	 */
-	public function loadDBStructureInformation() {
-		global $wgDBtype;
-
-		if ( $this->property_type === 'page' ) {
-			$this->db_table_name = 'smw_di_wikipage';
-			$this->db_value_field = 'o_ids.smw_title';
-		} elseif ( $this->property_type === 'boolean' ) {
-			$this->db_table_name = 'smw_di_bool';
-			$this->db_value_field = 'o_value';
-		} elseif ( $this->property_type === 'date' ) {
-			$this->db_table_name = 'smw_di_time';
-			$this->db_value_field = 'o_serialized';
-			$this->db_date_field = 'SUBSTR(o_serialized, 3, 100)';
-
-			if ( $wgDBtype == 'mysql' ) {
-				// SMW date field has the following format: 2000/2/11/22/0/1/0, where every /-separated
-				// segment is optional. All of these are valid: 2000, 2000/2, 2000/2/11.
-				// However, YEAR(), MONTH() and DAY() would return NULL for incomplete date,
-				// so STR_TO_DATE is required.
-				$this->db_date_field = "STR_TO_DATE(" . $this->db_date_field .
-					", '%Y/%m/%d')";
-			}
-		} elseif ( $this->property_type === 'number' ) {
-			$this->db_table_name = 'smw_di_number';
-			$this->db_value_field = 'o_serialized';
-		} else { // string, text, code
-			$this->db_table_name = 'smw_di_blob';
-			// CONVERT() is also supported in PostgreSQL,
-			// but it doesn't seem to work the same way.
-			// IF() is not supported in PostgreSQL - there
-			// is an alternative CASE() statement, but
-			// let's just keep it simple - in part in
-			// order to also support other DB types.
-			if ( $wgDBtype == 'mysql' ) {
-				$this->db_value_field = '(IF(o_blob IS NULL, o_hash, CONVERT(o_blob using utf8)))';
-			} else {
-				$this->db_value_field = 'o_hash';
-			}
-		}
-	}
-
-	public function getTableName() {
-		return $this->db_table_name;
-	}
-
-	public function getValueField() {
-		return $this->db_value_field;
-	}
-
-	/**
-	 * Used for getting year and month from the date field.
-	 */
-	public function getDateField() {
-		return $this->db_date_field;
 	}
 
 	public function getTimePeriod() {
@@ -229,8 +113,8 @@ class Filter {
 
 		$dbw = wfGetDB( DB_MASTER );
 		$property_value = $this->escaped_property;
-		$date_field = $this->getDateField();
-		$datesTable = $dbw->tableName( $this->getTableName() );
+		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );
+		$datesTable = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
 		$idsTable = $dbw->tableName( Utils::getIDsTableName() );
 		$sql = <<<END
 	SELECT MIN($date_field), MAX($date_field)
@@ -283,11 +167,11 @@ END;
 	public function getTimePeriodValues() {
 		$possible_dates = [];
 		$property_value = $this->escaped_property;
-		$date_field = $this->getDateField();
+		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );
 		$dbw = wfGetDB( DB_MASTER );
 		list( $yearValue, $monthValue, $dayValue ) = Utils::getDateFunctions( $date_field );
 		$fields = "$yearValue, $monthValue, $dayValue";
-		$datesTable = $dbw->tableName( $this->getTableName() );
+		$datesTable = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
 		$idsTable = $dbw->tableName( Utils::getIDsTableName() );
 		$sql = <<<END
 	SELECT $fields, count(*) AS matches
@@ -408,8 +292,8 @@ END;
 		$possible_values = [];
 		$property_value = $this->escaped_property;
 		$dbw = wfGetDB( DB_MASTER );
-		$property_table_name = $dbw->tableName( $this->getTableName() );
-		$value_field = $this->getValueField();
+		$property_table_name = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
+		$value_field = PropertyTypeDbInfo::valueField( $this->propertyType() );
 		$smw_ids = $dbw->tableName( Utils::getIDsTableName() );
 		$prop_ns = SMW_NS_PROPERTY;
 		$sql = <<<END
@@ -454,8 +338,8 @@ END;
 
 		$smw_ids = $dbw->tableName( Utils::getIDsTableName() );
 
-		$valuesTable = $dbw->tableName( $this->getTableName() );
-		$value_field = $this->getValueField();
+		$valuesTable = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
+		$value_field = PropertyTypeDbInfo::valueField( $this->propertyType() );
 
 		$query_property = $this->escaped_property;
 

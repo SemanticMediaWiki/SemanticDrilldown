@@ -1,7 +1,8 @@
 <?php
 
-namespace SD\Specials\BrowseData;
+namespace SD\Sql;
 
+use SD\AppliedFilter;
 use SD\TemporaryTableManager;
 use SD\Utils;
 
@@ -126,6 +127,8 @@ class SqlProvider {
 	 * Returns everything from the FROM clause onward for a SQL statement
 	 * to get all pages that match a certain set of criteria for
 	 * category, subcategory and filters.
+	 *
+	 * @param AppliedFilter[] $applied_filters
 	 */
 	private function getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters ) {
 		$dbr = wfGetDB( DB_REPLICA );
@@ -149,7 +152,8 @@ class SqlProvider {
 				}
 			}
 			if ( $includes_none ) {
-				$property_table_name = $dbr->tableName( $af->filter->getTableName() );
+				$property_table_name = $dbr->tableName(
+					PropertyTypeDbInfo::tableName( $af->filter->propertyType() ) );
 				if ( $af->filter->property_type === 'page' ) {
 					$property_table_nickname = "nr$i";
 					$property_field = 'p_id';
@@ -174,7 +178,8 @@ class SqlProvider {
 		}
 		foreach ( $applied_filters as $i => $af ) {
 			$sql .= "\n	";
-			$property_table_name = $dbr->tableName( $af->filter->getTableName() );
+			$property_table_name = $dbr->tableName(
+				PropertyTypeDbInfo::tableName( $af->filter->propertyType() ) );
 			if ( $af->filter->property_type === 'page' ) {
 				if ( $includes_none ) {
 					$sql .= "LEFT OUTER ";
@@ -204,7 +209,7 @@ class SqlProvider {
 		$sql .= ")) ";
 		foreach ( $applied_filters as $i => $af ) {
 			$property_value = $af->filter->escaped_property;
-			$value_field = $af->filter->getValueField();
+			$value_field = PropertyTypeDbInfo::valueField( $af->filter->propertyType() );
 			if ( $af->filter->property_type === 'page' ) {
 				$property_field = "r$i.p_id";
 				$sql .= "\n	AND ($property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)";
