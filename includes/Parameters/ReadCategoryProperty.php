@@ -12,7 +12,7 @@ class ReadCategoryProperty {
 		// Return false if the title object couldn't be created.
 		// This mainly happens if people change the $_cat in the url.
 		if ( $title === null ) {
-			return false;
+			return null;
 		}
 
 		$pageID = $title->getArticleID();
@@ -22,7 +22,7 @@ class ReadCategoryProperty {
 				'pp_page' => $pageID,
 				'pp_propname' => $propertyName
 			]
-		);
+		) ?: null;
 	}
 
 }

@@ -111,7 +111,7 @@ class QueryPage extends \QueryPage {
 		// Add outro template
 		$footerPage = Footer::forCategory( $this->category )->value;
 
-		if ( $footerPage !== '' ) {
+		if ( $footerPage !== null ) {
 			$title = Title::newFromText( $footerPage );
 			$page = WikiPage::factory( $title );
 

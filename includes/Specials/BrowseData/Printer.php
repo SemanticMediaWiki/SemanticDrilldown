@@ -58,7 +58,7 @@ class Printer {
 
 		// Add intro template
 		$headerPage = Header::forCategory( $this->category )->value;
-		if ( $headerPage !== '' ) {
+		if ( $headerPage !== null ) {
 			$title = Title::newFromText( $headerPage );
 			$page = WikiPage::factory( $title );
 			if ( $page->exists() ) {

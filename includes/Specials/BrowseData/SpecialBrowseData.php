@@ -55,7 +55,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 			$category_title = wfMessage( 'browsedata' )->text();
 		} else {
 			$category_title = Title::forCategory( $category )->value;
-			if ( $category_title == '' ) {
+			if ( $category_title === null ) {
 				$category_title = wfMessage( 'browsedata' )->text() . html_entity_decode( wfMessage( 'colon-separator' )->text() ) . str_replace( '_', ' ', $category );
 			}
 		}
@@ -63,7 +63,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 		// category on the site, alphabetically
 		if ( !$category ) {
 			$categories = Utils::getCategoriesForBrowsing();
-			if ( count( $categories ) == 0 ) {
+			if ( count( $categories ) === 0 ) {
 				// There are apparently no top-level
 				// categories in this wiki - just exit now.
 				return;
