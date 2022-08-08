@@ -7,6 +7,7 @@ use IDatabase;
 use OutputPage;
 use SD\Parameters\DisplayParametersList;
 use SD\Parameters\Footer;
+use SD\Repository;
 use SD\Sql\SqlProvider;
 use SD\Utils;
 use Skin;
@@ -15,12 +16,12 @@ use Title;
 use WikiPage;
 
 class QueryPage extends \QueryPage {
-	private $category;
-	private $sqlProvider;
-	private $printer;
+	private string $category;
+	private Printer $printer;
+	private string $sql;
 
 	public function __construct( $context, $category, $subcategory, $applied_filters,
-								 $remaining_filters, $offset, $limit ) {
+								 $remaining_filters, $offset, $limit, Repository $repository ) {
 		parent::__construct( 'BrowseData' );
 		$this->offset = $offset;
 		$this->limit = $limit;
@@ -40,12 +41,11 @@ class QueryPage extends \QueryPage {
 		$next_level_subcategories = Utils::getCategoryChildren( $actual_cat, true, 1 );
 		$all_subcategories = Utils::getCategoryChildren( $actual_cat, true, 10 );
 
-		$this->sqlProvider = new SqlProvider( $this->category, $subcategory,
-			$all_subcategories, $applied_filters );
-
+		$this->sql = SqlProvider::getSQL( $category, $subcategory, $all_subcategories, $applied_filters );
 		$this->printer = new Printer( $this->category, $subcategory,
 			$next_level_subcategories, $all_subcategories, $applied_filters,
-			$remaining_filters, $this->getOutput(), $this->getRequest(), $this->sqlProvider );
+			$remaining_filters, $this->getOutput(), $this->getRequest(),
+			$repository );
 	}
 
 	public function getName() {
@@ -68,7 +68,7 @@ class QueryPage extends \QueryPage {
 		// From the overridden method:
 		// "For back-compat, subclasses may return a raw SQL query here, as a string.
 		// This is strongly deprecated; getQueryInfo() should be overridden instead."
-		return $this->sqlProvider->getSQL();
+		return $this->sql;
 	}
 
 	protected function getOrderFields() {

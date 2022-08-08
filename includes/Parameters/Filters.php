@@ -142,23 +142,20 @@ class Filters extends Parameter implements IteratorAggregate {
 					// same (for all the relevant types)
 					// except for an uppercased first
 					// letter.
-					$f->property_type = strtolower( $prop_array['Type'] );
+					$f->setPropertyType( strtolower( $prop_array['Type'] ) );
 				}
 				if ( array_key_exists( 'ValuesFromCategory', $filter_array ) ) {
 					$f->setCategory( $filter_array['ValuesFromCategory'] );
 				} elseif ( array_key_exists( 'TimePeriod', $filter_array ) ) {
-					$f->time_period = $filter_array['TimePeriod'];
+					$f->setTimePeriod( $filter_array['TimePeriod'] );
 					$f->allowed_values = [];
-				} elseif ( $f->property_type === 'boolean' ) {
+				} elseif ( $f->propertyType() === 'boolean' ) {
 					$f->allowed_values = [ '0', '1' ];
 				} elseif ( array_key_exists( 'Values', $filter_array ) ) {
 					$f->allowed_values = $filter_array['Values'];
 				} else {
 					$f->allowed_values = [];
 				}
-
-				// Must be done after property type is set.
-				$f->loadDBStructureInformation();
 
 				$result[] = $f;
 			}

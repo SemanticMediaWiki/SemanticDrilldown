@@ -5,6 +5,8 @@ namespace SD;
 use MediaWiki\Hook\ParserFirstCallInitHook;
 use SD\ParserFunctions\DrilldownInfo;
 use SD\ParserFunctions\DrilldownLink;
+use SD\Specials\BrowseData\SpecialBrowseData;
+use Wikimedia\Rdbms\DBConnRef;
 
 /**
  * The service locator of the SemanticDrilldown extension.
@@ -22,6 +24,18 @@ class Services implements ParserFirstCallInitHook {
 			$parser->setFunctionHook( $name,
 				fn( $parser, ...$params ) => ( new $class( $parser ) )( $params ) );
 		}
+	}
+
+	public static function getSpecialBrowseData(): SpecialBrowseData {
+		return new SpecialBrowseData( self::getRepository() );
+	}
+
+	private static function getRepository(): Repository {
+		return new Repository( self::getDbw() );
+	}
+
+	private static function getDbw(): DBConnRef {
+		return wfGetDB( DB_MASTER );
 	}
 
 }

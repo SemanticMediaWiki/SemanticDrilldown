@@ -113,7 +113,7 @@ class AppliedFilter {
 	public function checkSQL( $value_field ) {
 		global $wgDBtype;
 
-		if ( $this->filter->property_type == 'date' ) {
+		if ( $this->filter->propertyType() == 'date' ) {
 			$value_field = PropertyTypeDbInfo::dateField( $this->filter->propertyType() );
 		}
 
@@ -126,7 +126,7 @@ class AppliedFilter {
 				if ( $i > 0 ) {
 					$sql .= ' OR ';
 				}
-				if ( $this->filter->property_type === 'page' ) {
+				if ( $this->filter->propertyType() === 'page' ) {
 					// FIXME: 'LIKE' is supposed to be
 					// case-insensitive, but it's not acting
 					// that way here.
@@ -172,7 +172,7 @@ class AppliedFilter {
 				} elseif ( $fv->upper_limit ) {
 					$sql .= "$value_field < {$fv->upper_limit} ";
 				}
-			} elseif ( $this->filter->property_type == 'date' ) {
+			} elseif ( $this->filter->propertyType() == 'date' ) {
 				list( $yearValue, $monthValue, $dayValue ) = SqlProvider::getDateFunctions( $value_field );
 				if ( $fv->time_period == 'day' ) {
 					$sql .= "$yearValue = {$fv->year} AND $monthValue = {$fv->month} AND $dayValue = {$fv->day} ";
@@ -185,7 +185,7 @@ class AppliedFilter {
 				}
 			} else {
 				$value = $fv->text;
-				if ( $this->filter->property_type === 'page' ) {
+				if ( $this->filter->propertyType() === 'page' ) {
 					$value = str_replace( ' ', '_', $value );
 				}
 				$sql .= "$value_field = '{$dbr->strencode($value)}'";
@@ -206,11 +206,11 @@ class AppliedFilter {
 		$lb = MediaWikiServices::getInstance()->getDBLoadBalancer();
 		$dbr = $lb->getConnection( $lb::DB_REPLICA );
 
-		$property_value = $dbr->addQuotes( $this->filter->escaped_property );
+		$property_value = $dbr->addQuotes( $this->filter->escapedProperty() );
 		$property_table_name = $dbr->tableName(
 			PropertyTypeDbInfo::tableName( $this->filter->propertyType() ) );
 		$category = $dbr->addQuotes( $category );
-		if ( $this->filter->property_type != 'date' ) {
+		if ( $this->filter->propertyType() != 'date' ) {
 			$value_field = PropertyTypeDbInfo::valueField( $this->filter->propertyType() );
 		} else {
 			// Is this necessary?
@@ -232,7 +232,7 @@ class AppliedFilter {
 		$sql = "SELECT $value_field
 	FROM $property_table_name p
 	JOIN $smwIDs p_ids ON p.p_id = p_ids.smw_id\n";
-		if ( $this->filter->property_type === 'page' ) {
+		if ( $this->filter->propertyType() === 'page' ) {
 			$sql .= "       JOIN $smwIDs o_ids ON p.o_id = o_ids.smw_id\n";
 		}
 		$sql .= "	JOIN $smwCategoryInstances insts ON p.s_id = insts.s_id
@@ -244,7 +244,7 @@ class AppliedFilter {
 	ORDER BY $value_field";
 		$res = $dbr->query( $sql );
 		while ( $row = $res->fetchRow() ) {
-			if ( $this->filter->property_type == 'date' && $this->filter->getTimePeriod() == 'month' ) {
+			if ( $this->filter->propertyType() == 'date' && $this->filter->getTimePeriod() == 'month' ) {
 				$value_string = Utils::monthToString( $row[1] ) . " " . $row[0];
 			} else {
 				// why is trim() necessary here???

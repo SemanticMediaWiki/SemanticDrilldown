@@ -3,24 +3,11 @@
 namespace SD\Sql;
 
 use SD\AppliedFilter;
-use SD\TemporaryTableManager;
 use SD\Utils;
 
 class SqlProvider {
 
-	private $category;
-	private $subcategory;
-	private $all_subcategories;
-	private $applied_filters;
-
-	public function __construct( $category, $subcategory, $all_subcategories, $applied_filters ) {
-		$this->category = $category;
-		$this->subcategory = $subcategory;
-		$this->all_subcategories = $all_subcategories;
-		$this->applied_filters = $applied_filters;
-	}
-
-	public function getSQL() {
+	public static function getSQL( $category, $subcategory, $all_subcategories, $applied_filters ) {
 		// QueryPage uses the value from this SQL in an ORDER clause,
 		// so return page_title as title.
 		$sql = "SELECT DISTINCT ids.smw_title AS title,
@@ -31,56 +18,8 @@ class SqlProvider {
 	ids.smw_id AS id,
 	ids.smw_iw AS iw,
 	ids.smw_sortkey AS sortkey\n";
-		$sql .= $this->getSQLFromClause( $this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters );
+		$sql .= self::getSQLFromClause( $category, $subcategory, $all_subcategories, $applied_filters );
 		return $sql;
-	}
-
-	/**
-	 * Creates a temporary database table of values that match the current
-	 * set of filters selected by the user - used for displaying
-	 * all remaining filters
-	 */
-	public function createTempTable( $category, $subcategory, $subcategories, $applied_filters ) {
-		$dbw = wfGetDB( DB_MASTER );
-
-		$temporaryTableManager = new TemporaryTableManager( $dbw );
-
-		$sql0 = "DROP TABLE IF EXISTS semantic_drilldown_values;";
-		$temporaryTableManager->queryWithAutoCommit( $sql0, __METHOD__ );
-
-		$sql1 = "CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL )";
-		$temporaryTableManager->queryWithAutoCommit( $sql1, __METHOD__ );
-
-		$sql2 = "CREATE INDEX id_index ON semantic_drilldown_values ( id )";
-		$temporaryTableManager->queryWithAutoCommit( $sql2, __METHOD__ );
-
-		$sql3 = "INSERT INTO semantic_drilldown_values SELECT ids.smw_id AS id\n";
-		$sql3 .= $this->getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters );
-		$temporaryTableManager->queryWithAutoCommit( $sql3, __METHOD__ );
-	}
-
-	/**
-	 * Gets the number of pages matching both the currently-selected
-	 * set of filters and either a new subcategory or a new filter.
-	 */
-	public function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
-		$dbw = wfGetDB( DB_MASTER );
-
-		// Escape the given values to prevent SQL injection
-		$subcategory = $dbw->addQuotes( $subcategory );
-		foreach ( $subcategories as $key => $value ) {
-			$subcategories[$key] = $dbw->addQuotes( $value );
-		}
-
-		$sql = "SELECT COUNT(DISTINCT sdv.id) ";
-		if ( $new_filter ) {
-			$sql .= $this->getSQLFromClauseForField( $new_filter );
-		} else {
-			$sql .= $this->getSQLFromClauseForCategory( $subcategory, $subcategories );
-		}
-		$res = $dbw->query( $sql );
-		$row = $res->fetchRow();
-		return $row[0];
 	}
 
 	/**
@@ -89,7 +28,7 @@ class SqlProvider {
 	 * selected filters, plus the one new filter (with value) that
 	 * was passed in to this function.
 	 */
-	private function getSQLFromClauseForField( $new_filter ) {
+	public static function getSQLFromClauseForField( $new_filter ) {
 		$sql = "FROM semantic_drilldown_values sdv
 	LEFT OUTER JOIN semantic_drilldown_filter_values sdfv
 	ON sdv.id = sdfv.id
@@ -103,7 +42,7 @@ class SqlProvider {
 	 * of a new filter passed in, it's a subcategory, plus all that
 	 * subcategory's child subcategories, to ensure completeness.
 	 */
-	private function getSQLFromClauseForCategory( $subcategory, $child_subcategories ) {
+	public static function getSQLFromClauseForCategory( $subcategory, $child_subcategories ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$smwIDs = $dbr->tableName( Utils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
@@ -134,7 +73,7 @@ class SqlProvider {
 	 * @param AppliedFilter[] $applied_filters
 	 * @return string
 	 */
-	private function getSQLFromClause( string $category, string $subcategory, array $subcategories, array $applied_filters ) {
+	public static function getSQLFromClause( string $category, string $subcategory, array $subcategories, array $applied_filters ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$smwIDs = $dbr->tableName( Utils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
@@ -158,14 +97,14 @@ class SqlProvider {
 			if ( $includes_none ) {
 				$property_table_name = $dbr->tableName(
 					PropertyTypeDbInfo::tableName( $af->filter->propertyType() ) );
-				if ( $af->filter->property_type === 'page' ) {
+				if ( $af->filter->propertyType() === 'page' ) {
 					$property_table_nickname = "nr$i";
 					$property_field = 'p_id';
 				} else {
 					$property_table_nickname = "na$i";
 					$property_field = 'p_id';
 				}
-				$property_value = str_replace( ' ', '_', $af->filter->property );
+				$property_value = str_replace( ' ', '_', $af->filter->property() );
 				$property_value = str_replace( "'", "\'", $property_value );
 				// The sub-query that returns an SMW ID contains
 				// a "SELECT MIN", even though by definition it
@@ -184,7 +123,7 @@ class SqlProvider {
 			$sql .= "\n	";
 			$property_table_name = $dbr->tableName(
 				PropertyTypeDbInfo::tableName( $af->filter->propertyType() ) );
-			if ( $af->filter->property_type === 'page' ) {
+			if ( $af->filter->propertyType() === 'page' ) {
 				if ( $includes_none ) {
 					$sql .= "LEFT OUTER ";
 				}
@@ -212,9 +151,9 @@ class SqlProvider {
 		}
 		$sql .= ")) ";
 		foreach ( $applied_filters as $i => $af ) {
-			$property_value = $af->filter->escaped_property;
+			$property_value = $af->filter->escapedProperty();
 			$value_field = PropertyTypeDbInfo::valueField( $af->filter->propertyType() );
-			if ( $af->filter->property_type === 'page' ) {
+			if ( $af->filter->propertyType() === 'page' ) {
 				$property_field = "r$i.p_id";
 				$sql .= "\n	AND ($property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)";
 				if ( $includes_none ) {

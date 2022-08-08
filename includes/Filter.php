@@ -16,18 +16,31 @@ use SMWDIWikiPage;
 
 class Filter {
 	public $name;
-	public $property;
-	public $escaped_property;
-	public $property_type;
+	private $property;
+	private $property_type;
 	public $category;
-	public $time_period = null;
+	private $time_period = null;
 	public $allowed_values;
 	public $required_filters = [];
 	public $possible_applied_filters = [];
 	public $int;
 
+	public function property() {
+		return $this->property;
+	}
+
+	public function escapedProperty() {
+		global $wgDBtype;
+		$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'" );
+		return str_replace( [ ' ', "'" ], [ '_', $quoteReplace ], $this->property );
+	}
+
 	public function propertyType() {
 		return $this->property_type;
+	}
+
+	public function setPropertyType( $propertyType ) {
+		$this->property_type = $propertyType;
 	}
 
 	public function setName( $name ) {
@@ -35,11 +48,7 @@ class Filter {
 	}
 
 	public function setProperty( $prop ) {
-		global $wgDBtype;
-
 		$this->property = $prop;
-		$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'" );
-		$this->escaped_property = str_replace( [ ' ', "'" ], [ '_', $quoteReplace ], $prop );
 	}
 
 	public function setCategory( $cat ) {
@@ -56,12 +65,17 @@ class Filter {
 	}
 
 	public function loadPropertyTypeFromProperty() {
+		// when loading from PagesSchemas, property_type is already set there; good?
+		if ( $this->propertyType() !== null ) {
+			return;
+		}
+
 		// Default the property type to "Page" (matching SMW's
 		// default), in case there is no type set for this property.
 		$this->property_type = 'page';
 
 		$store = Utils::getSMWStore();
-		$propPage = new SMWDIWikiPage( $this->escaped_property, SMW_NS_PROPERTY, '' );
+		$propPage = new SMWDIWikiPage( $this->escapedProperty(), SMW_NS_PROPERTY, '' );
 		$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
 		$datatypeLabels = Utils::getSMWContLang()->getDatatypeLabels();
 		if ( count( $types ) > 0 ) {
@@ -100,6 +114,10 @@ class Filter {
 		}
 	}
 
+	public function setTimePeriod( $timePeriod ) {
+		$this->time_period = $timePeriod;
+	}
+
 	public function getTimePeriod() {
 		// If it's not a date property, return null.
 		if ( $this->property_type != 'date' ) {
@@ -112,7 +130,7 @@ class Filter {
 		}
 
 		$dbw = wfGetDB( DB_MASTER );
-		$property_value = $this->escaped_property;
+		$property_value = $this->escapedProperty();
 		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );
 		$datesTable = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
 		$idsTable = $dbw->tableName( Utils::getIDsTableName() );
@@ -166,7 +184,7 @@ END;
 	 */
 	public function getTimePeriodValues() {
 		$possible_dates = [];
-		$property_value = $this->escaped_property;
+		$property_value = $this->escapedProperty();
 		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );
 		$dbw = wfGetDB( DB_MASTER );
 		list( $yearValue, $monthValue, $dayValue ) = SqlProvider::getDateFunctions( $date_field );
@@ -290,7 +308,7 @@ END;
 	 */
 	public function getAllValues() {
 		$possible_values = [];
-		$property_value = $this->escaped_property;
+		$property_value = $this->escapedProperty();
 		$dbw = wfGetDB( DB_MASTER );
 		$property_table_name = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
 		$value_field = PropertyTypeDbInfo::valueField( $this->propertyType() );
@@ -326,49 +344,4 @@ END;
 		return $possible_values;
 	}
 
-	/**
-	 * Creates a temporary database table, semantic_drilldown_filter_values,
-	 * that holds every value held by any page in the wiki that matches
-	 * the property associated with this filter. This table is useful
-	 * both for speeding up later queries (at least, that's the hope)
-	 * and for getting the set of 'None' values.
-	 */
-	public function createTempTable() {
-		$dbw = wfGetDB( DB_MASTER );
-
-		$smw_ids = $dbw->tableName( Utils::getIDsTableName() );
-
-		$valuesTable = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
-		$value_field = PropertyTypeDbInfo::valueField( $this->propertyType() );
-
-		$query_property = $this->escaped_property;
-
-		$sql = <<<END
-	CREATE TEMPORARY TABLE semantic_drilldown_filter_values
-	AS SELECT s_id AS id, $value_field AS value
-	FROM $valuesTable
-	JOIN $smw_ids p_ids ON $valuesTable.p_id = p_ids.smw_id
-
-END;
-		if ( $this->property_type === 'page' ) {
-			$sql .= "	JOIN $smw_ids o_ids ON $valuesTable.o_id = o_ids.smw_id\n";
-		}
-		$sql .= "	WHERE p_ids.smw_title = '$query_property'";
-
-		$temporaryTableManager = new TemporaryTableManager( $dbw );
-		$temporaryTableManager->queryWithAutoCommit( $sql, __METHOD__ );
-	}
-
-	/**
-	 * Deletes the temporary table.
-	 */
-	public function dropTempTable() {
-		$dbw = wfGetDB( DB_MASTER );
-		// DROP TEMPORARY TABLE would be marginally safer, but it's
-		// not supported on all RDBMS's.
-		$sql = "DROP TABLE semantic_drilldown_filter_values";
-
-		$temporaryTableManager = new TemporaryTableManager( $dbw );
-		$temporaryTableManager->queryWithAutoCommit( $sql, __METHOD__ );
-	}
 }

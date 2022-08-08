@@ -13,7 +13,7 @@
 		}
 	},
 	"SpecialPages": {
-		"BrowseData": "SD\\Specials\\BrowseData\\SpecialBrowseData"
+		"BrowseData": "SD\\Services::getSpecialBrowseData"
 	},
 	"MessagesDirs": {
 		"SemanticDrilldown": [

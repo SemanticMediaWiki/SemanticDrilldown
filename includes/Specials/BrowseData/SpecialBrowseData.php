@@ -16,12 +16,16 @@ use MediaWiki\MediaWikiServices;
 use SD\AppliedFilter;
 use SD\Parameters\Filters;
 use SD\Parameters\Title;
+use SD\Repository;
 use SD\Utils;
 
 class SpecialBrowseData extends IncludableSpecialPage {
 
-	public function __construct() {
+	private Repository $repository;
+
+	public function __construct( Repository $repository ) {
 		parent::__construct( 'BrowseData' );
+		$this->repository = $repository;
 	}
 
 	public function execute( $query ): void {
@@ -131,7 +135,8 @@ class SpecialBrowseData extends IncludableSpecialPage {
 			$sdgNumResultsPerPage,
 			'sdlimit'
 		);
-		$rep = new QueryPage( $this->getContext(), $category, $subcategory, $applied_filters, $remaining_filters, $offset, $limit );
+		$rep = new QueryPage( $this->getContext(), $category, $subcategory, $applied_filters,
+			$remaining_filters, $offset, $limit, $this->repository );
 		$rep->execute( $query );
 
 		$out->addHTML( "\n			</div> <!-- drilldown-results -->\n" );

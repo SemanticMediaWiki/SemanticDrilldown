@@ -5,9 +5,11 @@ namespace SD\Specials\BrowseData;
 use Html;
 use MediaWiki\Widget\DateInputWidget;
 use SD\AppliedFilter;
+use SD\Filter;
 use SD\FilterValue;
 use SD\Parameters\Filters;
 use SD\Parameters\Header;
+use SD\Repository;
 use SD\Utils;
 use SpecialPage;
 use Title;
@@ -23,13 +25,14 @@ class Printer {
 	private $remaining_filters;
 	private $output;
 	private $request;
-	private $sqlProvider;
+
+	private Repository $repository;
 
 	private $show_single_cat = false;
 
 	public function __construct(
 		$category, $subcategory, $next_level_subcategories, $all_subcategories, $applied_filters,
-		$remaining_filters, $output, $request, $sqlProvider
+		$remaining_filters, $output, $request, $repository
 	) {
 		$this->category = $category;
 		$this->subcategory = $subcategory;
@@ -39,7 +42,7 @@ class Printer {
 		$this->remaining_filters = $remaining_filters;
 		$this->output = $output;
 		$this->request = $request;
-		$this->sqlProvider = $sqlProvider;
+		$this->repository = $repository;
 	}
 
 	public function getPageHeader() {
@@ -149,7 +152,7 @@ class Printer {
 		$header .= "				<div class=\"drilldown-filters\">\n";
 		$cur_url = $this->makeBrowseURL( $this->category, $this->applied_filters, $this->subcategory );
 		$cur_url .= ( strpos( $cur_url, '?' ) ) ? '&' : '?';
-		$this->sqlProvider->createTempTable( $this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters );
+		$this->repository->createTempTable( $this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters );
 		$num_printed_values = 0;
 		if ( count( $this->next_level_subcategories ) > 0 ) {
 			$results_line = "";
@@ -161,7 +164,7 @@ class Printer {
 			$subcat_values = [];
 			foreach ( $this->next_level_subcategories as $i => $subcat ) {
 				$further_subcats = Utils::getCategoryChildren( $subcat, true, 10 );
-				$num_results = $this->sqlProvider->getNumResults( $subcat, $further_subcats );
+				$num_results = $this->repository->getNumResults( $subcat, $further_subcats );
 				$subcat_values[$subcat] = $num_results;
 			}
 			// get necessary values for creating the tag cloud,
@@ -201,7 +204,7 @@ class Printer {
 		foreach ( $filters as $f ) {
 			foreach ( $this->applied_filters as $af ) {
 				if ( $af->filter->name == $f->name ) {
-					if ( $f->property_type == 'date' || $f->property_type == 'number' ) {
+					if ( $f->propertyType() == 'date' || $f->propertyType() == 'number' ) {
 						$header .= $this->printUnappliedFilterLine( $f );
 					} else {
 						$header .= $this->printAppliedFilterLine( $af );
@@ -418,16 +421,16 @@ END;
 	 * Print a "nice" version of the value for a filter, if it's some
 	 * special case like 'other', 'none', a boolean, etc.
 	 */
-	private function printFilterValue( $filter, $value ) {
+	private function printFilterValue( Filter $filter, string $value ) {
 		$value = str_replace( '_', ' ', $value );
 		// if it's boolean, display something nicer than "0" or "1"
 		if ( $value === ' other' ) {
 			return wfMessage( 'sd_browsedata_other' )->text();
 		} elseif ( $value === ' none' ) {
 			return wfMessage( 'sd_browsedata_none' )->text();
-		} elseif ( $filter->property_type === 'boolean' ) {
+		} elseif ( $filter->propertyType() === 'boolean' ) {
 			return Utils::booleanToString( $value );
-		} elseif ( $filter->property_type === 'date' && strpos( $value, '//T' ) ) {
+		} elseif ( $filter->propertyType() === 'date' && strpos( $value, '//T' ) ) {
 			return str_replace( '//T', '', $value );
 		} else {
 			return $value;
@@ -471,7 +474,7 @@ END;
 		}
 		// add 'Other' and 'None', regardless of whether either has
 		// any results - add 'Other' only if it's not a date field
-		if ( $af->filter->property_type != 'date' ) {
+		if ( $af->filter->propertyType() != 'date' ) {
 			$or_values[] = '_other';
 		}
 		$or_values[] = '_none';
@@ -840,30 +843,26 @@ END;
 	 * Print the line showing 'AND' values for a filter that has not
 	 * been applied to the drilldown
 	 */
-	private function printUnappliedFilterLine( $f, $cur_url = null ) {
+	private function printUnappliedFilterLine( Filter $f, string $cur_url = null ) {
 		global $sdgMinValuesForComboBox;
 		global $sdgHideFiltersWithoutValues;
 
-		$f->createTempTable();
-		$found_results_for_filter = false;
+		$this->repository->createFilterValuesTempTable( $f->propertyType(), $f->escapedProperty() );
 		if ( empty( $f->allowed_values ) ) {
-			if ( $f->property_type == 'date' ) {
+			if ( $f->propertyType() == 'date' ) {
 				list( $filter_values, $lower_date, $upper_date ) = $f->getTimePeriodValues();
 			} else {
 				$filter_values = $f->getAllValues();
 			}
 			if ( !is_array( $filter_values ) ) {
-				$f->dropTempTable();
+				$this->repository->dropFilterValuesTempTable();
 				return $this->printFilterLine( $f->name, false, false, $filter_values, $f );
-			}
-			if ( count( $filter_values ) > 0 ) {
-				$found_results_for_filter = true;
 			}
 		} else {
 			$filter_values = [];
 			foreach ( $f->allowed_values as $value ) {
 				$new_filter = AppliedFilter::create( $f, $value );
-				$num_results = $this->sqlProvider->getNumResults( $this->subcategory, $this->all_subcategories, $new_filter );
+				$num_results = $this->repository->getNumResults( $this->subcategory, $this->all_subcategories, $new_filter );
 				if ( $num_results > 0 ) {
 					$filter_values[$value] = $num_results;
 				}
@@ -874,7 +873,7 @@ END;
 		// obtained dynamically.
 		if ( !empty( $f->allowed_values ) ) {
 			$other_filter = AppliedFilter::create( $f, ' other' );
-			$num_results = $this->sqlProvider->getNumResults( $this->subcategory, $this->all_subcategories, $other_filter );
+			$num_results = $this->repository->getNumResults( $this->subcategory, $this->all_subcategories, $other_filter );
 			if ( $num_results > 0 ) {
 				$filter_values['_other'] = $num_results;
 			}
@@ -885,7 +884,7 @@ END;
 			$fv = FilterValue::create( $f->allowed_values[0] );
 			if ( !$fv->is_numeric ) {
 				$none_filter = AppliedFilter::create( $f, ' none' );
-				$num_results = $this->sqlProvider->getNumResults( $this->subcategory, $this->all_subcategories, $none_filter );
+				$num_results = $this->repository->getNumResults( $this->subcategory, $this->all_subcategories, $none_filter );
 				if ( $num_results > 0 ) {
 					$filter_values['_none'] = $num_results;
 				}
@@ -896,7 +895,7 @@ END;
 		$normal_filter = true;
 		if ( count( $filter_values ) == 0 ) {
 			$results_line = '(' . wfMessage( 'sd_browsedata_novalues' )->text() . ')';
-		} elseif ( $f->property_type == 'number' ) {
+		} elseif ( $f->propertyType() == 'number' ) {
 			$results_line = $this->printNumberRanges( $filter_name, $filter_values );
 		} elseif ( count( $filter_values ) >= $sdgMinValuesForComboBox ) {
 			$results_line = $this->printComboBoxInput( $filter_name, 0, $filter_values );
@@ -909,12 +908,12 @@ END;
 		}
 
 		// For dates additionally add two datepicker inputs (Start/End) to select a custom interval.
-		if ( $f->property_type == 'date' && count( $filter_values ) != 0 ) {
+		if ( $f->propertyType() == 'date' && count( $filter_values ) != 0 ) {
 			$results_line .= '<br>' . $this->printDateRangeInput( $filter_name, $lower_date, $upper_date );
 		}
 
 		$text = $this->printFilterLine( $f->name, false, $normal_filter, $results_line, $f );
-		$f->dropTempTable();
+		$this->repository->dropFilterValuesTempTable();
 
 		if ( $sdgHideFiltersWithoutValues && count( $filter_values ) == 0 ) {
 			$text = '';
