@@ -217,25 +217,6 @@ class Utils {
 		return $pages;
 	}
 
-	public static function getDateFunctions( $dateDBField ) {
-		global $wgDBtype;
-
-		// Unfortunately, date handling in general - and date extraction
-		// specifically - is done differently in almost every DB
-		// system. If support were ever added for SQLite,
-		// that would require special handling as well.
-		if ( $wgDBtype == 'postgres' ) {
-			$yearValue = "EXTRACT(YEAR FROM TIMESTAMP $dateDBField)";
-			$monthValue = "EXTRACT(MONTH FROM TIMESTAMP $dateDBField)";
-			$dayValue = "EXTRACT(DAY FROM TIMESTAMP $dateDBField)";
-		} else { // MySQL
-			$yearValue = "YEAR($dateDBField)";
-			$monthValue = "MONTH($dateDBField)";
-			$dayValue = "DAY($dateDBField)";
-		}
-		return [ $yearValue, $monthValue, $dayValue ];
-	}
-
 	public static function monthToString( $month ) {
 		if ( $month == 1 ) {
 			return wfMessage( 'january' )->text();

@@ -1,5 +1,5 @@
 {
-	"description": "Categories are shown by default",
+	"description": "display of categories default",
 	"setup": [
 		{
 			"namespace": "NS_CATEGORY",
@@ -10,20 +10,19 @@
 	"tests": [
 		{
 			"type": "special",
-			"about": "Categories are shown by default",
+			"about": "display of categories is enabled by default",
 			"special-page": {
 				"page": "BrowseData",
 				"query-parameters": "",
 				"request-parameters": {}
 			},
 			"assert-output": {
-				"not-contain": "Choose a category:"
+				"to-contain": "Choose a category:"
 			}
 		}
 	],
 	"settings": {
-		"wgLang": "en",
-		"sdgHideCategoriesByDefault": true
+		"wgLang": "en"
 	},
 	"meta": {
 		"version": "2",

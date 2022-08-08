@@ -128,9 +128,13 @@ class SqlProvider {
 	 * to get all pages that match a certain set of criteria for
 	 * category, subcategory and filters.
 	 *
+	 * @param string $category
+	 * @param string $subcategory
+	 * @param string[] $subcategories
 	 * @param AppliedFilter[] $applied_filters
+	 * @return string
 	 */
-	private function getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters ) {
+	private function getSQLFromClause( string $category, string $subcategory, array $subcategories, array $applied_filters ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$smwIDs = $dbr->tableName( Utils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
@@ -230,6 +234,28 @@ class SqlProvider {
 			$sql .= $af->checkSQL( $value_field );
 		}
 		return $sql;
+	}
+
+	public static function getDateFunctions( $dateDBField ) {
+		global $wgDBtype;
+
+		// Unfortunately, date handling in general - and date extraction
+		// specifically - is done differently in almost every DB
+		// system.
+		if ( $wgDBtype == 'postgres' ) {
+			$yearValue = "EXTRACT(YEAR FROM TIMESTAMP $dateDBField)";
+			$monthValue = "EXTRACT(MONTH FROM TIMESTAMP $dateDBField)";
+			$dayValue = "EXTRACT(DAY FROM TIMESTAMP $dateDBField)";
+		} elseif ( $wgDBtype == 'sqlite' ) {
+			$yearValue = "cast(strftime('%Y', $dateDBField) as integer)";
+			$monthValue = "cast(strftime('%m', $dateDBField) as integer)";
+			$dayValue = "cast(strftime('%d', $dateDBField) as integer)";
+		} else { // MySQL
+			$yearValue = "YEAR($dateDBField)";
+			$monthValue = "MONTH($dateDBField)";
+			$dayValue = "DAY($dateDBField)";
+		}
+		return [ $yearValue, $monthValue, $dayValue ];
 	}
 
 }

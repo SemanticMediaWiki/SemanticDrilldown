@@ -1,0 +1,316 @@
+{
+	"description": "filters",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeText",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeNumber",
+			"contents": "[[Has type::Number]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeDate",
+			"contents": "[[Has type::Date]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomePage",
+			"contents": "[[Has type::Page]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeBoolean",
+			"contents": "[[Has type::Boolean]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Unused",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "Category1",
+			"contents": "{{#drilldowninfo: filters=Text (property=SomeText),Number (property=SomeNumber),Date (property=SomeDate),Page (property=SomePage),Boolean (property=SomeBoolean),Unused (property=Unused)|display parameters=format=list}}"
+		},
+		{
+			"page": "Category2TextANumber1Date1Page1BoolY",
+			"contents": "[[Category:Category2]]{{#set: SomeText=A|SomeNumber=1|SomeDate=2000-01-01|SomePage=Page1|SomeBoolean=y}}"
+		},
+		{
+			"page": "Category1TextANumber1Date1Page1BoolY",
+			"contents": "[[Category:Category1]]{{#set: SomeText=A|SomeNumber=1|SomeDate=2000-01-01|SomePage=Page1|SomeBoolean=y}}"
+		},
+		{
+			"page": "Category1TextBNumber2Date2Page2BoolN",
+			"contents": "[[Category:Category1]]{{#set: SomeText=B|SomeNumber=2|SomeDate=2000-01-02|SomePage=Page2|SomeBoolean=n}}"
+		}
+	],
+	"tests": [
+		{
+			"type": "special",
+			"about": "no filter applied",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"Text:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Text=A\" title=\"Filter by this value\">A&nbsp;(1)</a",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Text=B\" title=\"Filter by this value\">B&nbsp;(1)</a>",
+
+					"Number:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1\">1 (1) </a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Number=2\">2 (1) </a>",
+
+					"Date:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_2%2C_2000\" title=\"Filter by this value\">January 2, 2000&nbsp;(1)</a>",
+					"<input type='date' tabindex='0' aria-disabled='false' name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
+					"<input type='date' tabindex='0' aria-disabled='false' name='_upper_Date' value='2000-01-02' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
+
+					"Page:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page2\" title=\"Filter by this value\">Page2&nbsp;(1)</a>",
+
+					"Boolean:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean=1\" title=\"Filter by this value\">Yes&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean=0\" title=\"Filter by this value\">No&nbsp;(1)</a>",
+
+					"Unused:",
+					"(There are no values for this filter)",
+
+					"<div class=\"drilldown-results-output\">",
+					"<a href=\"/index.php/Category1TextANumber1Date1Page1BoolY\" title=\"Category1TextANumber1Date1Page1BoolY\">Category1TextANumber1Date1Page1BoolY</a>",
+					"<a href=\"/index.php/Category1TextBNumber2Date2Page2BoolN\" title=\"Category1TextBNumber2Date2Page2BoolN\">Category1TextBNumber2Date2Page2BoolN</a>"
+				],
+				"not-contain": [
+					"Category2TextANumber1Date1Page1BoolY",
+					"Special:BrowseData/Category1?Unused="
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "text filter applied",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {
+					"Text": "A"
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> >",
+					"<span class=\"drilldown-header-value\">A</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\"><img src=\"/extensions/SemanticDrilldown/skins/filter-x.png\" /></a>",
+
+					"Text:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&Text[1]=B\" title=\"Filter by this value\">B</a>",
+
+					"Number:",
+					"<div class=\"drilldown-filter-values\" ><a href=\"/index.php/Special:BrowseData/Category1?Text=A&Number=1\">1 (1) </a>",
+
+					"Date:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Text=A&Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
+
+					"Page:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Text=A&Page=Page1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
+
+					"Boolean:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Text=A&Boolean=1\" title=\"Filter by this value\">Yes&nbsp;(1)</a>",
+
+					"Unused:",
+					"(There are no values for this filter)",
+
+					"<div class=\"drilldown-results-output\">",
+					"<a href=\"/index.php/Category1TextANumber1Date1Page1BoolY\" title=\"Category1TextANumber1Date1Page1BoolY\">Category1TextANumber1Date1Page1BoolY</a>"
+				],
+				"not-contain": [
+					"Category1TextBNumber2Date2Page2BoolN"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "number filter applied",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {
+					"Number": "1"
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> >",
+					"<span class=\"drilldown-header-value\">1</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\"><img src=\"/extensions/SemanticDrilldown/skins/filter-x.png\" /></a>",
+
+					"Text:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1&Text=A\" title=\"Filter by this value\">A&nbsp;(1)</a>",
+
+					"Number:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1\">1 (1) </a>",
+
+					"Date:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1&Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
+					"<input type='date' tabindex='0' aria-disabled='false' name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
+
+					"Page:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1&Page=Page1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
+
+					"Boolean:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1&Boolean=1\" title=\"Filter by this value\">Yes&nbsp;(1)</a>",
+
+					"Unused:",
+					"(There are no values for this filter)",
+
+					"<div class=\"drilldown-results-output\">",
+					"<a href=\"/index.php/Category1TextANumber1Date1Page1BoolY\" title=\"Category1TextANumber1Date1Page1BoolY\">Category1TextANumber1Date1Page1BoolY</a>"
+				],
+				"not-contain": [
+					"Category1TextBNumber2Date2Page2BoolN"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "date filter applied",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {
+					"Date": "January 1 2000"
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> >",
+					"<span class=\"drilldown-header-value\">January 1 2000</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
+
+					"Text:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1_2000&Text=A\" title=\"Filter by this value\">A&nbsp;(1)</a>",
+
+					"Number:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1_2000&Number=1\">1 (1) </a>",
+
+					"Date:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
+					"<input type='date' tabindex='0' aria-disabled='false' name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
+
+					"Page:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1_2000&Page=Page1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
+
+					"Boolean:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1_2000&Boolean=1\" title=\"Filter by this value\">Yes&nbsp;(1)</a>",
+
+					"Unused:",
+					"(There are no values for this filter)",
+
+					"<div class=\"drilldown-results-output\">",
+					"<a href=\"/index.php/Category1TextANumber1Date1Page1BoolY\" title=\"Category1TextANumber1Date1Page1BoolY\">Category1TextANumber1Date1Page1BoolY</a>"
+				],
+				"not-contain": [
+					"Category1TextBNumber2Date2Page2BoolN"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "page filter applied",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {
+					"Page": "Page1"
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> >",
+					"<span class=\"drilldown-header-value\">Page1</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
+
+					"Text:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page1&Text=A\" title=\"Filter by this value\">A&nbsp;(1)</a>",
+
+					"Number:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page1&Number=1\">1 (1) </a>",
+
+					"Date:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page1&Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
+					"<input type='date' tabindex='0' aria-disabled='false' name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
+
+					"Page:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page[0]=Page1&Page[1]=Page2\" title=\"Filter by this value\">Page2</a>",
+
+					"Boolean:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page1&Boolean=1\" title=\"Filter by this value\">Yes&nbsp;(1)</a>",
+
+					"Unused:",
+					"(There are no values for this filter)",
+
+					"<div class=\"drilldown-results-output\">",
+					"<a href=\"/index.php/Category1TextANumber1Date1Page1BoolY\" title=\"Category1TextANumber1Date1Page1BoolY\">Category1TextANumber1Date1Page1BoolY</a>"
+				],
+				"not-contain": [
+					"Category1TextBNumber2Date2Page2BoolN"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "boolean filter applied",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {
+					"Boolean": "1"
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> >",
+					"<span class=\"drilldown-header-value\">Yes</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
+
+					"Text:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean=1&Text=A\" title=\"Filter by this value\">A&nbsp;(1)</a>",
+
+					"Number:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean=1&Number=1\">1 (1) </a>",
+
+					"Date:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean=1&Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
+					"<input type='date' tabindex='0' aria-disabled='false' name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
+
+					"Page:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean=1&Page=Page1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
+
+					"Boolean:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean[0]=0&Boolean[1]=1\" title=\"Filter by this value\">No</a>",
+
+					"Unused:",
+					"(There are no values for this filter)",
+
+					"<div class=\"drilldown-results-output\">",
+					"<a href=\"/index.php/Category1TextANumber1Date1Page1BoolY\" title=\"Category1TextANumber1Date1Page1BoolY\">Category1TextANumber1Date1Page1BoolY</a>"
+				],
+				"not-contain": [
+					"Category1TextBNumber2Date2Page2BoolN"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgLang": "en"
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

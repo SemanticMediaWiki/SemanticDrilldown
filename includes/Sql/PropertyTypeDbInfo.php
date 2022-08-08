@@ -54,7 +54,13 @@ class PropertyTypeDbInfo {
 					// segment is optional. All of these are valid: 2000, 2000/2, 2000/2/11.
 					// However, YEAR(), MONTH() and DAY() would return NULL for incomplete date,
 					// so STR_TO_DATE is required.
-					$result = "STR_TO_DATE(" . $result . ", '%Y/%m/%d')";
+					$result = "STR_TO_DATE($result, '%Y/%m/%d')";
+				} elseif ( $wgDBtype == 'sqlite' ) {
+					// probably one of the greatest moments in software development:
+					$result = "DATE(SUBSTR(
+						REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE($result || '/', '/', '//'), 
+						'/1/', '/01/'), '/2/', '/02/'), '/3/', '/03/'), '/4/', '/04/'), '/5/', '/05/'), '/6/', '/06/'), '/7/', '/07/'), '/8/', '/08/'), '/9/', '/09/'),
+						'//', '-'), 1, 10))";
 				}
 
 				return $result;

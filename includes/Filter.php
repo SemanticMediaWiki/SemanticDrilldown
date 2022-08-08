@@ -126,7 +126,7 @@ class Filter {
 END;
 		$res = $dbw->query( $sql );
 		$row = $res->fetchRow();
-		$minDate = $row[0];
+		$minDate = str_replace( '-', '/', $row[0] ); // for sqlite
 		if ( $minDate === null ) {
 			return null;
 		}
@@ -137,7 +137,7 @@ END;
 			$minYear = $minDateParts[0];
 			$minMonth = $minDay = 0;
 		}
-		$maxDate = $row[1];
+		$maxDate = str_replace( '-', '/', $row[1] ); // for sqlite
 		$maxDateParts = explode( '/', $maxDate );
 		if ( count( $maxDateParts ) == 3 ) {
 			list( $maxYear, $maxMonth, $maxDay ) = $maxDateParts;
@@ -169,7 +169,7 @@ END;
 		$property_value = $this->escaped_property;
 		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );
 		$dbw = wfGetDB( DB_MASTER );
-		list( $yearValue, $monthValue, $dayValue ) = Utils::getDateFunctions( $date_field );
+		list( $yearValue, $monthValue, $dayValue ) = SqlProvider::getDateFunctions( $date_field );
 		$fields = "$yearValue, $monthValue, $dayValue";
 		$datesTable = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
 		$idsTable = $dbw->tableName( Utils::getIDsTableName() );
