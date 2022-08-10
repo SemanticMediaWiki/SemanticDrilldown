@@ -14,7 +14,7 @@ namespace SD\Specials\BrowseData;
 use IncludableSpecialPage;
 use MediaWiki\MediaWikiServices;
 use SD\AppliedFilter;
-use SD\Parameters\Filters;
+use SD\FilterBuilder;
 use SD\Parameters\Title;
 use SD\Repository;
 use SD\Utils;
@@ -22,10 +22,12 @@ use SD\Utils;
 class SpecialBrowseData extends IncludableSpecialPage {
 
 	private Repository $repository;
+	private FilterBuilder $filterBuilder;
 
-	public function __construct( Repository $repository ) {
+	public function __construct( Repository $repository, FilterBuilder $filterBuilder ) {
 		parent::__construct( 'BrowseData' );
 		$this->repository = $repository;
+		$this->filterBuilder = $filterBuilder;
 	}
 
 	public function execute( $query ): void {
@@ -77,7 +79,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 
 		$subcategory = Utils::escapeString( $request->getVal( '_subcat' ) );
 
-		$filters = Filters::forCategory( $category );
+		$filters = $this->filterBuilder->buildComplete( $category );
 
 		$filter_used = [];
 		foreach ( $filters as $filter ) {
@@ -86,7 +88,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 		$applied_filters = [];
 		$remaining_filters = [];
 		foreach ( $filters as $i => $filter ) {
-			$filter_name = str_replace( [ ' ', "'" ], [ '_', "\'" ], $filter->name );
+			$filter_name = str_replace( [ ' ', "'" ], [ '_', "\'" ], $filter->name() );
 			$search_terms = $request->getArray( '_search_' . $filter_name );
 			$lower_date = $request->getVal( '_lower_' . $filter_name );
 			$upper_date = $request->getVal( '_upper_' . $filter_name );
@@ -110,10 +112,10 @@ class SpecialBrowseData extends IncludableSpecialPage {
 		// unless it requires some other filter that hasn't been applied
 		foreach ( $filters as $i => $filter ) {
 			$matched_all_required_filters = true;
-			foreach ( $filter->required_filters as $required_filter ) {
+			foreach ( $filter->requiredFilters() as $required_filter ) {
 				$found_match = false;
 				foreach ( $applied_filters as $af ) {
-					if ( $af->filter->name == $required_filter ) {
+					if ( $af->filter->name() == $required_filter ) {
 						$found_match = true;
 					}
 				}
@@ -135,8 +137,9 @@ class SpecialBrowseData extends IncludableSpecialPage {
 			$sdgNumResultsPerPage,
 			'sdlimit'
 		);
-		$rep = new QueryPage( $this->getContext(), $category, $subcategory, $applied_filters,
-			$remaining_filters, $offset, $limit, $this->repository );
+		$rep = new QueryPage( $this->getContext(), $category, $subcategory,
+			$filters, $applied_filters, $remaining_filters,
+			$offset, $limit, $this->repository );
 		$rep->execute( $query );
 
 		$out->addHTML( "\n			</div> <!-- drilldown-results -->\n" );

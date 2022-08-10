@@ -4,40 +4,48 @@ namespace SD\Specials\BrowseData;
 
 use Html;
 use MediaWiki\Widget\DateInputWidget;
+use OutputPage;
 use SD\AppliedFilter;
 use SD\Filter;
 use SD\FilterValue;
-use SD\Parameters\Filters;
 use SD\Parameters\Header;
 use SD\Repository;
 use SD\Utils;
 use SpecialPage;
 use Title;
+use WebRequest;
 use WikiPage;
 
 class Printer {
 
-	private $category;
-	private $subcategory;
-	private $next_level_subcategories;
-	private $all_subcategories;
+	private string $category;
+	private string $subcategory;
+	/** @var string[] */
+	private array $next_level_subcategories;
+	/** @var string[] */
+	private array $all_subcategories;
+	/** @var Filter[] */
+	private array $filters;
+	/** @var AppliedFilter[] */
 	private $applied_filters;
+	/** @var Filter[] */
 	private $remaining_filters;
-	private $output;
-	private $request;
 
+	private OutputPage $output;
+	private WebRequest $request;
 	private Repository $repository;
 
 	private $show_single_cat = false;
 
 	public function __construct(
-		$category, $subcategory, $next_level_subcategories, $all_subcategories, $applied_filters,
-		$remaining_filters, $output, $request, $repository
+		$category, $subcategory, $next_level_subcategories, $all_subcategories,
+		$filters, $applied_filters, $remaining_filters, $output, $request, $repository
 	) {
 		$this->category = $category;
 		$this->subcategory = $subcategory;
 		$this->next_level_subcategories = $next_level_subcategories;
 		$this->all_subcategories = $all_subcategories;
+		$this->filters = $filters;
 		$this->applied_filters = $applied_filters;
 		$this->remaining_filters = $remaining_filters;
 		$this->output = $output;
@@ -103,7 +111,7 @@ class Printer {
 		}
 		foreach ( $this->applied_filters as $i => $af ) {
 			$header .= ( !$this->subcategory && $i == 0 ) ? " > " : "\n					<span class=\"drilldown-header-value\">&</span> ";
-			$filter_label = $af->filter->name;
+			$filter_label = $af->filter->name();
 			// add an "x" to remove this filter, if it has more
 			// than one value
 			if ( count( $this->applied_filters[$i]->values ) > 1 ) {
@@ -200,10 +208,9 @@ class Printer {
 				$header .= "					<p><strong>$subcategory_text:</strong> $results_line</p>\n";
 			}
 		}
-		$filters = Filters::forCategory( $this->category );
-		foreach ( $filters as $f ) {
+		foreach ( $this->filters as $f ) {
 			foreach ( $this->applied_filters as $af ) {
-				if ( $af->filter->name == $f->name ) {
+				if ( $af->filter->name() == $f->name() ) {
 					if ( $f->propertyType() == 'date' || $f->propertyType() == 'number' ) {
 						$header .= $this->printUnappliedFilterLine( $f );
 					} else {
@@ -212,7 +219,7 @@ class Printer {
 				}
 			}
 			foreach ( $this->remaining_filters as $rf ) {
-				if ( $rf->name == $f->name ) {
+				if ( $rf->name() == $f->name() ) {
 					$header .= $this->printUnappliedFilterLine( $rf, $cur_url );
 				}
 			}
@@ -236,7 +243,7 @@ class Printer {
 
 		foreach ( $this->applied_filters as $i => $af ) {
 			if ( count( $af->values ) == 1 ) {
-				$key_string = str_replace( ' ', '_', $af->filter->name );
+				$key_string = str_replace( ' ', '_', $af->filter->name() );
 				$value_string = str_replace( ' ', '_', $af->values[0]->text );
 				$params[$key_string] = $value_string;
 			} else {
@@ -246,7 +253,7 @@ class Printer {
 				// need - instead, add the brackets directly
 				// to the key string
 				foreach ( $af->values as $i => $value ) {
-					$key_string = str_replace( ' ', '_', $af->filter->name . "[$i]" );
+					$key_string = str_replace( ' ', '_', $af->filter->name() . "[$i]" );
 					$value_string = str_replace( ' ', '_', $value->text );
 					$params[$key_string] = $value_string;
 				}
@@ -255,7 +262,7 @@ class Printer {
 			// Add search terms (if any).
 			$search_terms = $af->search_terms ?? [];
 			foreach ( $search_terms as $i => $text ) {
-				$key_string = '_search_' . str_replace( ' ', '_', $af->filter->name . "[$i]" );
+				$key_string = '_search_' . str_replace( ' ', '_', $af->filter->name() . "[$i]" );
 				$value_string = str_replace( ' ', '_', $text );
 				$params[$key_string] = $value_string;
 			}
@@ -276,25 +283,25 @@ class Printer {
 			$url .= "_subcat=" . $subcategory;
 		}
 		foreach ( $applied_filters as $i => $af ) {
-			if ( $af->filter->name == $filter_to_remove ) {
+			if ( $af->filter->name() == $filter_to_remove ) {
 				continue;
 			}
 			if ( count( $af->values ) == 0 ) {
 				// do nothing
 			} elseif ( count( $af->values ) == 1 ) {
 				$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
-				$url .= urlencode( str_replace( ' ', '_', $af->filter->name ) ) . "=" . urlencode( str_replace( ' ', '_', $af->values[0]->text ) );
+				$url .= urlencode( str_replace( ' ', '_', $af->filter->name() ) ) . "=" . urlencode( str_replace( ' ', '_', $af->values[0]->text ) );
 			} else {
 				usort( $af->values, [ FilterValue::class, "compare" ] );
 				foreach ( $af->values as $j => $fv ) {
 					$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
-					$url .= urlencode( str_replace( ' ', '_', $af->filter->name ) ) . "[$j]=" . urlencode( str_replace( ' ', '_', $fv->text ) );
+					$url .= urlencode( str_replace( ' ', '_', $af->filter->name() ) ) . "[$j]=" . urlencode( str_replace( ' ', '_', $fv->text ) );
 				}
 			}
 			if ( $af->search_terms != null ) {
 				foreach ( $af->search_terms as $j => $search_term ) {
 					$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
-					$url .= '_search_' . urlencode( str_replace( ' ', '_', $af->filter->name ) . '[' . $j . ']' ) . "=" . urlencode( str_replace( ' ', '_', $search_term ) );
+					$url .= '_search_' . urlencode( str_replace( ' ', '_', $af->filter->name() ) . '[' . $j . ']' ) . "=" . urlencode( str_replace( ' ', '_', $search_term ) );
 				}
 			}
 		}
@@ -441,15 +448,15 @@ END;
 	 * Print the line showing 'OR' values for a filter that already has
 	 * at least one value set
 	 */
-	private function printAppliedFilterLine( $af ) {
+	private function printAppliedFilterLine( AppliedFilter $af ) {
 		$results_line = "";
 		foreach ( $this->applied_filters as $af2 ) {
-			if ( $af->filter->name == $af2->filter->name ) {
+			if ( $af->filter->name() == $af2->filter->name() ) {
 				$current_filter_values = $af2->values;
 			}
 		}
-		if ( $af->filter->allowed_values != null ) {
-			$or_values = $af->filter->allowed_values;
+		if ( $af->filter->allowedValues() != null ) {
+			$or_values = $af->filter->allowedValues();
 		} else {
 			$or_values = $af->getAllOrValues( $this->category );
 		}
@@ -461,15 +468,15 @@ END;
 				$filter_values[$or_value] = '';
 			}
 			$curSearchTermNum = count( $af->search_terms );
-			$results_line = $this->printComboBoxInput( $af->filter->name, $curSearchTermNum, $filter_values );
-			return $this->printFilterLine( $af->filter->name, true, false, $results_line, $af->filter );
+			$results_line = $this->printComboBoxInput( $af->filter->name(), $curSearchTermNum, $filter_values );
+			return $this->printFilterLine( $af->filter->name(), true, false, $results_line, $af->filter );
 			/*
 			} elseif ( $af->lower_date != null || $af->upper_date != null ) {
 				// With the current interface, this code will never get
 				// called; but at some point in the future, there may
 				// be a date-range input again.
-				$results_line = $this->printDateRangeInput( $af->filter->name, $af->lower_date, $af->upper_date );
-				return $this->printFilterLine( $af->filter->name, true, false, $results_line );
+				$results_line = $this->printDateRangeInput( $af->filter->name(), $af->lower_date, $af->upper_date );
+				return $this->printFilterLine( $af->filter->name(), true, false, $results_line );
 			*/
 		}
 		// add 'Other' and 'None', regardless of whether either has
@@ -485,7 +492,7 @@ END;
 			$filter_text = Utils::escapeString( $this->printFilterValue( $af->filter, $value ) );
 			$applied_filters = $this->applied_filters;
 			foreach ( $applied_filters as $af2 ) {
-				if ( $af->filter->name == $af2->filter->name ) {
+				if ( $af->filter->name() == $af2->filter->name() ) {
 					$or_fv = FilterValue::create( $value, $af->filter );
 					$af2->values = array_merge( $current_filter_values, [ $or_fv ] );
 				}
@@ -506,12 +513,12 @@ END;
 				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMessage( 'sd_browsedata_filterbyvalue' )->text() . '">' . $filter_text . '</a>';
 			}
 			foreach ( $applied_filters as $af2 ) {
-				if ( $af->filter->name == $af2->filter->name ) {
+				if ( $af->filter->name() == $af2->filter->name() ) {
 					$af2->values = $current_filter_values;
 				}
 			}
 		}
-		return $this->printFilterLine( $af->filter->name, true, true, $results_line, $af->filter );
+		return $this->printFilterLine( $af->filter->name(), true, true, $results_line, $af->filter );
 	}
 
 	private function printUnappliedFilterValues( $cur_url, $f, $filter_values ) {
@@ -535,7 +542,7 @@ END;
 			}
 			$filter_text = Utils::escapeString( $this->printFilterValue( $f, $value_str ) );
 			$filter_text .= "&nbsp;($num_results)";
-			$filter_url = $cur_url . urlencode( str_replace( ' ', '_', $f->name ) ) . '=' . urlencode( str_replace( ' ', '_', $value_str ) );
+			$filter_url = $cur_url . urlencode( str_replace( ' ', '_', $f->name() ) ) . '=' . urlencode( str_replace( ' ', '_', $value_str ) );
 			if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 				if ( $lowest_num_results != $highest_num_results ) {
 					$font_size = round( ( ( log( $num_results ) - log( $lowest_num_results ) ) * $scale_factor ) + $sdgFiltersSmallestFontSize );
@@ -848,7 +855,7 @@ END;
 		global $sdgHideFiltersWithoutValues;
 
 		$this->repository->createFilterValuesTempTable( $f->propertyType(), $f->escapedProperty() );
-		if ( empty( $f->allowed_values ) ) {
+		if ( empty( $f->allowedValues() ) ) {
 			if ( $f->propertyType() == 'date' ) {
 				list( $filter_values, $lower_date, $upper_date ) = $f->getTimePeriodValues();
 			} else {
@@ -856,11 +863,11 @@ END;
 			}
 			if ( !is_array( $filter_values ) ) {
 				$this->repository->dropFilterValuesTempTable();
-				return $this->printFilterLine( $f->name, false, false, $filter_values, $f );
+				return $this->printFilterLine( $f->name(), false, false, $filter_values, $f );
 			}
 		} else {
 			$filter_values = [];
-			foreach ( $f->allowed_values as $value ) {
+			foreach ( $f->allowedValues() as $value ) {
 				$new_filter = AppliedFilter::create( $f, $value );
 				$num_results = $this->repository->getNumResults( $this->subcategory, $this->all_subcategories, $new_filter );
 				if ( $num_results > 0 ) {
@@ -871,7 +878,7 @@ END;
 		// Now get values for 'Other' and 'None', as well
 		// - don't show 'Other' if filter values were
 		// obtained dynamically.
-		if ( !empty( $f->allowed_values ) ) {
+		if ( !empty( $f->allowedValues() ) ) {
 			$other_filter = AppliedFilter::create( $f, ' other' );
 			$num_results = $this->repository->getNumResults( $this->subcategory, $this->all_subcategories, $other_filter );
 			if ( $num_results > 0 ) {
@@ -880,8 +887,8 @@ END;
 		}
 		// Show 'None' only if any other results have been found, and
 		// if it's not a numeric filter.
-		if ( !empty( $f->allowed_values ) ) {
-			$fv = FilterValue::create( $f->allowed_values[0] );
+		if ( !empty( $f->allowedValues() ) ) {
+			$fv = FilterValue::create( $f->allowedValues()[0] );
 			if ( !$fv->is_numeric ) {
 				$none_filter = AppliedFilter::create( $f, ' none' );
 				$num_results = $this->repository->getNumResults( $this->subcategory, $this->all_subcategories, $none_filter );
@@ -891,7 +898,7 @@ END;
 			}
 		}
 
-		$filter_name = urlencode( str_replace( ' ', '_', $f->name ) );
+		$filter_name = urlencode( str_replace( ' ', '_', $f->name() ) );
 		$normal_filter = true;
 		if ( count( $filter_values ) == 0 ) {
 			$results_line = '(' . wfMessage( 'sd_browsedata_novalues' )->text() . ')';
@@ -902,7 +909,7 @@ END;
 			$normal_filter = false;
 		} else {
 			// If $cur_url wasn't passed in, we have to create it.
-			$cur_url = $this->makeBrowseURL( $this->category, $this->applied_filters, $this->subcategory, $f->name );
+			$cur_url = $this->makeBrowseURL( $this->category, $this->applied_filters, $this->subcategory, $f->name() );
 			$cur_url .= ( strpos( $cur_url, '?' ) ) ? '&' : '?';
 			$results_line = $this->printUnappliedFilterValues( $cur_url, $f, $filter_values );
 		}
@@ -912,7 +919,7 @@ END;
 			$results_line .= '<br>' . $this->printDateRangeInput( $filter_name, $lower_date, $upper_date );
 		}
 
-		$text = $this->printFilterLine( $f->name, false, $normal_filter, $results_line, $f );
+		$text = $this->printFilterLine( $f->name(), false, $normal_filter, $results_line, $f );
 		$this->repository->dropFilterValuesTempTable();
 
 		if ( $sdgHideFiltersWithoutValues && count( $filter_values ) == 0 ) {

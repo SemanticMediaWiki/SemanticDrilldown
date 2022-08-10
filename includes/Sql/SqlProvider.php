@@ -197,4 +197,10 @@ class SqlProvider {
 		return [ $yearValue, $monthValue, $dayValue ];
 	}
 
+	public static function escapedProperty( $property ) {
+		global $wgDBtype;
+		$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'" );
+		return str_replace( [ ' ', "'" ], [ '_', $quoteReplace ], $property );
+	}
+
 }

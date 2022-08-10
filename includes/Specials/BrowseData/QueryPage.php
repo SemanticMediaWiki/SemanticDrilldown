@@ -20,8 +20,9 @@ class QueryPage extends \QueryPage {
 	private Printer $printer;
 	private string $sql;
 
-	public function __construct( $context, $category, $subcategory, $applied_filters,
-								 $remaining_filters, $offset, $limit, Repository $repository ) {
+	public function __construct( $context, $category, $subcategory,
+								 $filters, $applied_filters, $remaining_filters,
+								 $offset, $limit, Repository $repository ) {
 		parent::__construct( 'BrowseData' );
 		$this->offset = $offset;
 		$this->limit = $limit;
@@ -42,9 +43,8 @@ class QueryPage extends \QueryPage {
 		$all_subcategories = Utils::getCategoryChildren( $actual_cat, true, 10 );
 
 		$this->sql = SqlProvider::getSQL( $category, $subcategory, $all_subcategories, $applied_filters );
-		$this->printer = new Printer( $this->category, $subcategory,
-			$next_level_subcategories, $all_subcategories, $applied_filters,
-			$remaining_filters, $this->getOutput(), $this->getRequest(),
+		$this->printer = new Printer( $this->category, $subcategory, $next_level_subcategories, $all_subcategories,
+			$filters, $applied_filters, $remaining_filters, $this->getOutput(), $this->getRequest(),
 			$repository );
 	}
 

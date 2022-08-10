@@ -2,7 +2,7 @@
 
 namespace SD;
 
-use MediaWiki\Hook\ParserFirstCallInitHook;
+use MediaWiki\MediaWikiServices;
 use SD\ParserFunctions\DrilldownInfo;
 use SD\ParserFunctions\DrilldownLink;
 use SD\Specials\BrowseData\SpecialBrowseData;
@@ -12,14 +12,29 @@ use Wikimedia\Rdbms\DBConnRef;
  * The service locator of the SemanticDrilldown extension.
  * In the best case, only methods defined here are referenced by extension.json.
  */
-class Services implements ParserFirstCallInitHook {
+class Services {
+
+	private static ?Services $instance = null;
+
+	private static function instance(): Services {
+		if ( self::$instance === null ) {
+			self::$instance = new Services();
+		}
+		return self::$instance;
+	}
+
+	private MediaWikiServices $services;
+
+	private function __construct() {
+		$this->services = MediaWikiServices::getInstance();
+	}
 
 	private const PARSER_FUNCTIONS = [
 		'drilldowninfo' => DrilldownInfo::class,
 		'drilldownlink' => DrilldownLink::class,
 	];
 
-	public function onParserFirstCallInit( $parser ) {
+	public static function onParserFirstCallInit( $parser ) {
 		foreach ( self::PARSER_FUNCTIONS as $name => $class ) {
 			$parser->setFunctionHook( $name,
 				fn( $parser, ...$params ) => ( new $class( $parser ) )( $params ) );
@@ -27,15 +42,30 @@ class Services implements ParserFirstCallInitHook {
 	}
 
 	public static function getSpecialBrowseData(): SpecialBrowseData {
-		return new SpecialBrowseData( self::getRepository() );
+		$s = self::instance();
+		return new SpecialBrowseData( $s->getRepository(), $s->getFilterBuilder() );
 	}
 
-	private static function getRepository(): Repository {
-		return new Repository( self::getDbw() );
+	private function getRepository(): Repository {
+		return new Repository( $this->getDbConnectionRef() );
 	}
 
-	private static function getDbw(): DBConnRef {
-		return wfGetDB( DB_MASTER );
+	private function getFilterBuilder() {
+		return new FilterBuilder( $this->getPageSchemaFactory() );
+	}
+
+	private function getPageSchemaFactory(): PageSchemaFactory {
+		return new class() implements PageSchemaFactory {
+			public function get( $category ) {
+				return class_exists( 'PSSchema' )
+					? new \PSSchema( $category )
+					: null;
+			}
+		};
+	}
+
+	private function getDbConnectionRef(): DBConnRef {
+		return $this->services->getDBLoadBalancer()->getConnectionRef( DB_PRIMARY );
 	}
 
 }

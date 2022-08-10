@@ -15,166 +15,78 @@ use SMWDIWikiPage;
  */
 
 class Filter {
-	public $name;
+	private $name;
 	private $property;
 	private $property_type;
-	public $category;
-	private $time_period = null;
-	public $allowed_values;
-	public $required_filters = [];
+	private $category;
+	private $required_filters;
+	private $int;
+	private $time_period;
+	private $allowed_values;
+
 	public $possible_applied_filters = [];
-	public $int;
+
+	public function __construct(
+		$name, $property, $category, $requiredFilters, $int,
+		$propertyType = null, $timePeriod = null, $allowedValues = null
+	) {
+		$this->name = $name;
+		$this->property = $property;
+		$this->category = $category;
+		$this->required_filters = $requiredFilters ?? [];
+		$this->int = $int;
+		$this->property_type = $propertyType;
+		$this->time_period = $timePeriod;
+		$this->allowed_values = $allowedValues;
+
+		// overwrite existing?!
+		if ( $category !== null ) {
+			$this->allowed_values = Utils::getCategoryChildren( $category, false, 5 );
+		}
+	}
+
+	public function name() {
+		return $this->name;
+	}
 
 	public function property() {
 		return $this->property;
 	}
 
-	public function escapedProperty() {
-		global $wgDBtype;
-		$quoteReplace = ( $wgDBtype == 'postgres' ? "''" : "\'" );
-		return str_replace( [ ' ', "'" ], [ '_', $quoteReplace ], $this->property );
+	public function category() {
+		return $this->category;
+	}
+
+	public function requiredFilters() {
+		return $this->required_filters;
+	}
+
+	public function int() {
+		return $this->int;
 	}
 
 	public function propertyType() {
+		if ( $this->property_type === null ) {
+			$this->property_type = $this->getPropertyType();
+		}
+
 		return $this->property_type;
 	}
 
-	public function setPropertyType( $propertyType ) {
-		$this->property_type = $propertyType;
-	}
-
-	public function setName( $name ) {
-		$this->name = $name;
-	}
-
-	public function setProperty( $prop ) {
-		$this->property = $prop;
-	}
-
-	public function setCategory( $cat ) {
-		$this->category = $cat;
-		$this->allowed_values = Utils::getCategoryChildren( $cat, false, 5 );
-	}
-
-	public function addRequiredFilter( $filterName ) {
-		$this->required_filters[] = $filterName;
-	}
-
-	public function setInt( $int ) {
-		$this->int = $int;
-	}
-
-	public function loadPropertyTypeFromProperty() {
-		// when loading from PagesSchemas, property_type is already set there; good?
-		if ( $this->propertyType() !== null ) {
-			return;
+	public function timePeriod() {
+		if ( $this->time_period === null && $this->property_type !== 'date' ) {
+			$this->time_period = $this->getTimePeriod();
 		}
 
-		// Default the property type to "Page" (matching SMW's
-		// default), in case there is no type set for this property.
-		$this->property_type = 'page';
-
-		$store = Utils::getSMWStore();
-		$propPage = new SMWDIWikiPage( $this->escapedProperty(), SMW_NS_PROPERTY, '' );
-		$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
-		$datatypeLabels = Utils::getSMWContLang()->getDatatypeLabels();
-		if ( count( $types ) > 0 ) {
-			if ( $types[0] instanceof SMWDIWikiPage ) {
-				$typeValue = $types[0]->getDBkey();
-			} elseif ( $types[0] instanceof SMWDIURI ) {
-				// A bit inefficient, but it's the
-				// simplest approach.
-				$typeID = $types[0]->getFragment();
-				if ( $typeID == '_str' && !array_key_exists( '_str', $datatypeLabels ) ) {
-					$typeID = '_txt';
-				}
-				$typeValue = $datatypeLabels[$typeID];
-			} else {
-				$typeValue = $types[0]->getWikiValue();
-			}
-			if ( $typeValue == $datatypeLabels['_wpg'] ) {
-				$this->property_type = 'page';
-			// _str stopped existing in SMW 1.9
-			} elseif ( array_key_exists( '_str', $datatypeLabels ) && $typeValue == $datatypeLabels['_str'] ) {
-				$this->property_type = 'string';
-			} elseif ( !array_key_exists( '_str', $datatypeLabels ) && $typeValue == $datatypeLabels['_txt'] ) {
-				$this->property_type = 'string';
-			} elseif ( $typeValue == $datatypeLabels['_num'] ) {
-				$this->property_type = 'number';
-			} elseif ( $typeValue == $datatypeLabels['_boo'] ) {
-				$this->property_type = 'boolean';
-			} elseif ( $typeValue == $datatypeLabels['_dat'] ) {
-				$this->property_type = 'date';
-			} elseif ( $typeValue == $datatypeLabels['_eid'] ) {
-				$this->property_type = 'external_id';
-			} else {
-				// This should hopefully never get called.
-				print "Error! Unsupported property type ($typeValue) for filter {$this->name}.";
-			}
-		}
-	}
-
-	public function setTimePeriod( $timePeriod ) {
-		$this->time_period = $timePeriod;
-	}
-
-	public function getTimePeriod() {
-		// If it's not a date property, return null.
-		if ( $this->property_type != 'date' ) {
-			return null;
-		}
-
-		// If it has already been set, just return it.
-		if ( $this->time_period != null ) {
-			return $this->time_period;
-		}
-
-		$dbw = wfGetDB( DB_MASTER );
-		$property_value = $this->escapedProperty();
-		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );
-		$datesTable = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
-		$idsTable = $dbw->tableName( Utils::getIDsTableName() );
-		$sql = <<<END
-	SELECT MIN($date_field), MAX($date_field)
-	FROM semantic_drilldown_values sdv
-	JOIN $datesTable a ON sdv.id = a.s_id
-	JOIN $idsTable p_ids ON a.p_id = p_ids.smw_id
-	WHERE p_ids.smw_title = '$property_value'
-
-END;
-		$res = $dbw->query( $sql );
-		$row = $res->fetchRow();
-		$minDate = str_replace( '-', '/', $row[0] ); // for sqlite
-		if ( $minDate === null ) {
-			return null;
-		}
-		$minDateParts = explode( '/', $minDate );
-		if ( count( $minDateParts ) == 3 ) {
-			list( $minYear, $minMonth, $minDay ) = $minDateParts;
-		} else {
-			$minYear = $minDateParts[0];
-			$minMonth = $minDay = 0;
-		}
-		$maxDate = str_replace( '-', '/', $row[1] ); // for sqlite
-		$maxDateParts = explode( '/', $maxDate );
-		if ( count( $maxDateParts ) == 3 ) {
-			list( $maxYear, $maxMonth, $maxDay ) = $maxDateParts;
-		} else {
-			$maxYear = $maxDateParts[0];
-			$maxMonth = $maxDay = 0;
-		}
-		$yearDifference = $maxYear - $minYear;
-		$monthDifference = ( 12 * $yearDifference ) + ( $maxMonth - $minMonth );
-		if ( $yearDifference > 30 ) {
-			$this->time_period = 'decade';
-		} elseif ( $yearDifference > 2 ) {
-			$this->time_period = 'year';
-		} elseif ( $monthDifference > 1 ) {
-			$this->time_period = 'month';
-		} else {
-			$this->time_period = 'day';
-		}
 		return $this->time_period;
+	}
+
+	public function allowedValues() {
+		return $this->allowed_values;
+	}
+
+	public function escapedProperty() {
+		return SqlProvider::escapedProperty( $this->property() );
 	}
 
 	/**
@@ -342,6 +254,104 @@ END;
 			$possible_values[$value_string] = $row[1];
 		}
 		return $possible_values;
+	}
+
+	private function getTimePeriod() {
+		$dbw = wfGetDB( DB_MASTER );
+		$property_value = $this->escapedProperty();
+		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );
+		$datesTable = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
+		$idsTable = $dbw->tableName( Utils::getIDsTableName() );
+		$sql = <<<END
+	SELECT MIN($date_field), MAX($date_field)
+	FROM semantic_drilldown_values sdv
+	JOIN $datesTable a ON sdv.id = a.s_id
+	JOIN $idsTable p_ids ON a.p_id = p_ids.smw_id
+	WHERE p_ids.smw_title = '$property_value'
+
+END;
+		$res = $dbw->query( $sql );
+		$row = $res->fetchRow();
+		$minDate = str_replace( '-', '/', $row[0] ); // for sqlite
+		if ( $minDate === null ) {
+			return null;
+		}
+		$minDateParts = explode( '/', $minDate );
+		if ( count( $minDateParts ) == 3 ) {
+			list( $minYear, $minMonth, $minDay ) = $minDateParts;
+		} else {
+			$minYear = $minDateParts[0];
+			$minMonth = $minDay = 0;
+		}
+		$maxDate = str_replace( '-', '/', $row[1] ); // for sqlite
+		$maxDateParts = explode( '/', $maxDate );
+		if ( count( $maxDateParts ) == 3 ) {
+			list( $maxYear, $maxMonth, $maxDay ) = $maxDateParts;
+		} else {
+			$maxYear = $maxDateParts[0];
+			$maxMonth = $maxDay = 0;
+		}
+		$yearDifference = $maxYear - $minYear;
+		$monthDifference = ( 12 * $yearDifference ) + ( $maxMonth - $minMonth );
+		if ( $yearDifference > 30 ) {
+			$timePeriod = 'decade';
+		} elseif ( $yearDifference > 2 ) {
+			$timePeriod = 'year';
+		} elseif ( $monthDifference > 1 ) {
+			$timePeriod = 'month';
+		} else {
+			$timePeriod = 'day';
+		}
+
+		return $timePeriod;
+	}
+
+	private function getPropertyType() {
+		// Default the property type to "Page" (matching SMW's
+		// default), in case there is no type set for this property.
+		$propertyType = 'page';
+
+		$store = Utils::getSMWStore();
+		$escapedProperty = $this->escapedProperty();
+		$propPage = new SMWDIWikiPage( $escapedProperty, SMW_NS_PROPERTY, '' );
+		$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
+		$datatypeLabels = Utils::getSMWContLang()->getDatatypeLabels();
+		if ( count( $types ) > 0 ) {
+			if ( $types[0] instanceof SMWDIWikiPage ) {
+				$typeValue = $types[0]->getDBkey();
+			} elseif ( $types[0] instanceof SMWDIURI ) {
+				// A bit inefficient, but it's the
+				// simplest approach.
+				$typeID = $types[0]->getFragment();
+				if ( $typeID == '_str' && !array_key_exists( '_str', $datatypeLabels ) ) {
+					$typeID = '_txt';
+				}
+				$typeValue = $datatypeLabels[$typeID];
+			} else {
+				$typeValue = $types[0]->getWikiValue();
+			}
+			if ( $typeValue == $datatypeLabels['_wpg'] ) {
+				$propertyType = 'page';
+				// _str stopped existing in SMW 1.9
+			} elseif ( array_key_exists( '_str', $datatypeLabels ) && $typeValue == $datatypeLabels['_str'] ) {
+				$propertyType = 'string';
+			} elseif ( !array_key_exists( '_str', $datatypeLabels ) && $typeValue == $datatypeLabels['_txt'] ) {
+				$propertyType = 'string';
+			} elseif ( $typeValue == $datatypeLabels['_num'] ) {
+				$propertyType = 'number';
+			} elseif ( $typeValue == $datatypeLabels['_boo'] ) {
+				$propertyType = 'boolean';
+			} elseif ( $typeValue == $datatypeLabels['_dat'] ) {
+				$propertyType = 'date';
+			} elseif ( $typeValue == $datatypeLabels['_eid'] ) {
+				$propertyType = 'external_id';
+			} else {
+				// This should hopefully never get called.
+				print "Error! Unsupported property type ($typeValue) for filter {$this->name}.";
+			}
+		}
+
+		return $propertyType;
 	}
 
 }
