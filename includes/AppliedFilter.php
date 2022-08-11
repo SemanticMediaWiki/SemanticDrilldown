@@ -23,7 +23,7 @@ class AppliedFilter {
 	public $lower_date_string;
 	public $upper_date_string;
 
-	public static function create( $filter, $values, $search_terms = null, $lower_date = null, $upper_date = null ) {
+	public static function create( Filter $filter, $values, $search_terms = null, $lower_date = null, $upper_date = null ) {
 		$af = new AppliedFilter();
 		$af->filter = $filter;
 		if ( $search_terms != null ) {

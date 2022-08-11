@@ -51,7 +51,7 @@ class Services {
 	}
 
 	private function getFilterBuilder() {
-		return new FilterBuilder( $this->getPageSchemaFactory() );
+		return new FilterBuilder( $this->getRepository(), $this->getPageSchemaFactory() );
 	}
 
 	private function getPageSchemaFactory(): PageSchemaFactory {

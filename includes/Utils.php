@@ -169,54 +169,6 @@ class Utils {
 		}
 	}
 
-	public static function getCategoryChildren( $category_name, $get_categories, $levels ) {
-		if ( $levels == 0 ) {
-			return [];
-		}
-		$pages = [];
-		$subcategories = [];
-		$dbr = wfGetDB( DB_REPLICA );
-		$conds = [ 'cl_to' => str_replace( ' ', '_', $category_name ), ];
-		if ( $get_categories ) {
-			$conds['page_namespace'] = NS_CATEGORY;
-		}
-
-		$res = $dbr->select(
-			[ 'categorylinks', 'page' ],
-			[ 'page_title', 'page_namespace' ],
-			$conds,
-			__METHOD__,
-			[
-				'ORDER BY' => 'cl_sortkey',
-			],
-			[
-				'page' => [
-					'JOIN',
-					[
-						'cl_from = page_id'
-					]
-				]
-			]
-		);
-
-		foreach ( $res as $row ) {
-			if ( $get_categories ) {
-				$subcategories[] = $row->page_title;
-				$pages[] = $row->page_namespace;
-			} else {
-				if ( $row->page_title == NS_CATEGORY ) {
-					$subcategories[] = $row->page_title;
-				} else {
-					$pages[] = $row->page_title;
-				}
-			}
-		}
-		foreach ( $subcategories as $subcategory ) {
-			$pages = array_merge( $pages, self::getCategoryChildren( $subcategory, $get_categories, $levels - 1 ) );
-		}
-		return $pages;
-	}
-
 	public static function monthToString( $month ) {
 		if ( $month == 1 ) {
 			return wfMessage( 'january' )->text();

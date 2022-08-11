@@ -171,7 +171,7 @@ class Printer {
 			// display if necessary
 			$subcat_values = [];
 			foreach ( $this->next_level_subcategories as $i => $subcat ) {
-				$further_subcats = Utils::getCategoryChildren( $subcat, true, 10 );
+				$further_subcats = $this->repository->getCategoryChildren( $subcat, true, 10 );
 				$num_results = $this->repository->getNumResults( $subcat, $further_subcats );
 				$subcat_values[$subcat] = $num_results;
 			}
@@ -338,7 +338,7 @@ END;
 END;
 		}
 		foreach ( $categories as $i => $category ) {
-			$category_children = Utils::getCategoryChildren( $category, false, 5 );
+			$category_children = $this->repository->getCategoryChildren( $category, false, 5 );
 			$category_str = $category . " (" . count( array_unique( $category_children ) ) . ")";
 			if ( str_replace( '_', ' ', $this->category ) == $category ) {
 				$text .= '						<li class="category selected">';

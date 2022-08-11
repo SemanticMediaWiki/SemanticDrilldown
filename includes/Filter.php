@@ -15,33 +15,38 @@ use SMWDIWikiPage;
  */
 
 class Filter {
-	private $name;
-	private $property;
-	private $property_type;
-	private $category;
-	private $required_filters;
-	private $int;
-	private $time_period;
-	private $allowed_values;
+	private Repository $repository;
+
+	private string $name;
+	private string $property;
+	private ?string $propertyType;
+	private ?string $category;
+	private $requiredFilters;
+	private ?string $int;
+	private ?string $timePeriod;
+	private $allowedValues;
 
 	public $possible_applied_filters = [];
 
 	public function __construct(
+		Repository $repository,
 		$name, $property, $category, $requiredFilters, $int,
 		$propertyType = null, $timePeriod = null, $allowedValues = null
 	) {
+		$this->repository = $repository;
+
 		$this->name = $name;
 		$this->property = $property;
 		$this->category = $category;
-		$this->required_filters = $requiredFilters ?? [];
+		$this->requiredFilters = $requiredFilters ?? [];
 		$this->int = $int;
-		$this->property_type = $propertyType;
-		$this->time_period = $timePeriod;
-		$this->allowed_values = $allowedValues;
+		$this->propertyType = $propertyType;
+		$this->timePeriod = $timePeriod;
+		$this->allowedValues = $allowedValues;
 
-		// overwrite existing?!
-		if ( $category !== null ) {
-			$this->allowed_values = Utils::getCategoryChildren( $category, false, 5 );
+		if ( $this->category !== null && $this->allowedValues === null ) {
+			$this->allowedValues =
+				$this->repository->getCategoryChildren( $category, false, 5 );
 		}
 	}
 
@@ -58,7 +63,7 @@ class Filter {
 	}
 
 	public function requiredFilters() {
-		return $this->required_filters;
+		return $this->requiredFilters;
 	}
 
 	public function int() {
@@ -66,23 +71,23 @@ class Filter {
 	}
 
 	public function propertyType() {
-		if ( $this->property_type === null ) {
-			$this->property_type = $this->getPropertyType();
+		if ( $this->propertyType === null ) {
+			$this->propertyType = $this->getPropertyType();
 		}
 
-		return $this->property_type;
+		return $this->propertyType;
 	}
 
 	public function timePeriod() {
-		if ( $this->time_period === null && $this->property_type !== 'date' ) {
-			$this->time_period = $this->getTimePeriod();
+		if ( $this->timePeriod === null && $this->propertyType !== 'date' ) {
+			$this->timePeriod = $this->getTimePeriod();
 		}
 
-		return $this->time_period;
+		return $this->timePeriod;
 	}
 
 	public function allowedValues() {
-		return $this->allowed_values;
+		return $this->allowedValues;
 	}
 
 	public function escapedProperty() {
@@ -232,7 +237,7 @@ END;
 	JOIN $property_table_name p ON sdv.id = p.s_id
 
 END;
-		if ( $this->property_type === 'page' ) {
+		if ( $this->propertyType === 'page' ) {
 			$sql .= "	JOIN $smw_ids o_ids ON p.o_id = o_ids.smw_id";
 		}
 		$sql .= <<<END
@@ -256,7 +261,7 @@ END;
 		return $possible_values;
 	}
 
-	private function getTimePeriod() {
+	public function getTimePeriod() {
 		$dbw = wfGetDB( DB_MASTER );
 		$property_value = $this->escapedProperty();
 		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );

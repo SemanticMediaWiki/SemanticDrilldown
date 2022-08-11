@@ -6,9 +6,11 @@ use SD\Parameters\Filters;
 
 class FilterBuilder {
 
+	private Repository $repository;
 	private PageSchemaFactory $pageSchemaFactory;
 
-	public function __construct( PageSchemaFactory $pageSchemaFactory ) {
+	public function __construct( Repository $repository, PageSchemaFactory $pageSchemaFactory ) {
+		$this->repository = $repository;
 		$this->pageSchemaFactory = $pageSchemaFactory;
 	}
 
@@ -36,12 +38,9 @@ class FilterBuilder {
 		return $filters;
 	}
 
-	/**
-	 * @param Parameters\Filter $parameter
-	 * @return Filter
-	 */
-	private function build( Parameters\Filter $parameter ) {
+	private function build( Parameters\Filter $parameter ): Filter {
 		return new Filter(
+			$this->repository,
 			$parameter->name(),
 			$parameter->property(),
 			$parameter->category(),
@@ -106,6 +105,7 @@ class FilterBuilder {
 				}
 
 				$result[] = new Filter(
+					$this->repository,
 					$name,
 					$property,
 					$propertyType,
@@ -115,9 +115,9 @@ class FilterBuilder {
 					$timePeriod,
 					$allowedValues
 				);
-
 			}
 		}
+
 		return $result;
 	}
 

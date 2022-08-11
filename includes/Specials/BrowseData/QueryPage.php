@@ -9,7 +9,6 @@ use SD\Parameters\DisplayParametersList;
 use SD\Parameters\Footer;
 use SD\Repository;
 use SD\Sql\SqlProvider;
-use SD\Utils;
 use Skin;
 use SMWOutputs;
 use Title;
@@ -39,8 +38,8 @@ class QueryPage extends \QueryPage {
 		// Get the two arrays for subcategories - one for only the
 		// immediate subcategories, for display, and the other for
 		// all subcategories, sub-subcategories etc., for querying.
-		$next_level_subcategories = Utils::getCategoryChildren( $actual_cat, true, 1 );
-		$all_subcategories = Utils::getCategoryChildren( $actual_cat, true, 10 );
+		$next_level_subcategories = $repository->getCategoryChildren( $actual_cat, true, 1 );
+		$all_subcategories = $repository->getCategoryChildren( $actual_cat, true, 10 );
 
 		$this->sql = SqlProvider::getSQL( $category, $subcategory, $all_subcategories, $applied_filters );
 		$this->printer = new Printer( $this->category, $subcategory, $next_level_subcategories, $all_subcategories,
