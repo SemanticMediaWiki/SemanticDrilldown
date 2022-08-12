@@ -98,8 +98,10 @@ class Filter {
 	 * Gets an array of the possible time period values (e.g., years,
 	 * months) for this filter, and, for each one,
 	 * the number of pages that match that time period.
+	 *
+	 * @return PossibleFilterValues
 	 */
-	public function getTimePeriodValues() {
+	public function getTimePeriodValues(): PossibleFilterValues {
 		$possible_dates = [];
 		$property_value = $this->escapedProperty();
 		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );
@@ -211,19 +213,22 @@ END;
 				$max_date['month'] ?: 12, $max_date['day'] ?: 31 );
 		}
 
-		return [
-			$possible_dates,
-			$min_date,
-			$max_date
-		];
+		$possibleFilterValues = [];
+		foreach ( $possible_dates as $date => $count ) {
+			$possibleFilterValues[] = new PossibleFilterValue( $date, $count );
+		}
+
+		return new PossibleFilterValues( $possibleFilterValues, $min_date, $max_date );
 	}
 
 	/**
 	 * Gets an array of all values that the property belonging to this
 	 * filter has, and, for each one, the number of pages
 	 * that match that value.
+	 *
+	 * @return PossibleFilterValues
 	 */
-	public function getAllValues() {
+	public function getAllValues(): PossibleFilterValues {
 		$possible_values = [];
 		$property_value = $this->escapedProperty();
 		$dbw = wfGetDB( DB_MASTER );
@@ -256,9 +261,10 @@ END;
 			if ( $value_string === '' ) {
 				continue;
 			}
-			$possible_values[$value_string] = $row[1];
+			$possible_values[] = new PossibleFilterValue( $value_string, $row[1] );
 		}
-		return $possible_values;
+
+		return new PossibleFilterValues( $possible_values );
 	}
 
 	public function getTimePeriod() {

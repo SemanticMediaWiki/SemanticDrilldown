@@ -9,6 +9,8 @@ use SD\AppliedFilter;
 use SD\Filter;
 use SD\FilterValue;
 use SD\Parameters\Header;
+use SD\PossibleFilterValue;
+use SD\PossibleFilterValues;
 use SD\Repository;
 use SD\Utils;
 use SpecialPage;
@@ -463,12 +465,13 @@ END;
 		if ( $af->search_terms != null ) {
 			// HACK - printComboBoxInput() needs values as the
 			// *keys* of the array
-			$filter_values = [];
+			$possibleValues = [];
 			foreach ( $or_values as $or_value ) {
-				$filter_values[$or_value] = '';
+				$possibleValues[] = new PossibleFilterValue( $or_value );
 			}
 			$curSearchTermNum = count( $af->search_terms );
-			$results_line = $this->printComboBoxInput( $af->filter->name(), $curSearchTermNum, $filter_values );
+			$results_line = $this->printComboBoxInput(
+				$af->filter->name(), $curSearchTermNum, new PossibleFilterValues( $possibleValues ) );
 			return $this->printFilterLine( $af->filter->name(), true, false, $results_line, $af->filter );
 			/*
 			} elseif ( $af->lower_date != null || $af->upper_date != null ) {
@@ -521,28 +524,28 @@ END;
 		return $this->printFilterLine( $af->filter->name(), true, true, $results_line, $af->filter );
 	}
 
-	private function printUnappliedFilterValues( $cur_url, $f, $filter_values ) {
+	private function printUnappliedFilterValues( $cur_url, $f, PossibleFilterValues $possibleValues ) {
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
 		$results_line = "";
 		// set font-size values for filter "tag cloud", if the
 		// appropriate global variables are set
 		if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
-			$lowest_num_results = min( $filter_values );
-			$highest_num_results = max( $filter_values );
+			[ $lowest_num_results, $highest_num_results ] = $possibleValues->countRange();
 			if ( $lowest_num_results != $highest_num_results ) {
 				$scale_factor = ( $sdgFiltersLargestFontSize - $sdgFiltersSmallestFontSize ) / ( log( $highest_num_results ) - log( $lowest_num_results ) );
 			}
 		}
 		// now print the values
 		$num_printed_values = 0;
-		foreach ( $filter_values as $value_str => $num_results ) {
+		foreach ( $possibleValues as $value ) {
+			$num_results = $value->count();
 			if ( $num_printed_values++ > 0 ) {
 				$results_line .= " · ";
 			}
-			$filter_text = Utils::escapeString( $this->printFilterValue( $f, $value_str ) );
+			$filter_text = Utils::escapeString( $this->printFilterValue( $f, $value->value() ) );
 			$filter_text .= "&nbsp;($num_results)";
-			$filter_url = $cur_url . urlencode( str_replace( ' ', '_', $f->name() ) ) . '=' . urlencode( str_replace( ' ', '_', $value_str ) );
+			$filter_url = $cur_url . urlencode( str_replace( ' ', '_', $f->name() ) ) . '=' . urlencode( str_replace( ' ', '_', $value->value() ) );
 			if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 				if ( $lowest_num_results != $highest_num_results ) {
 					$font_size = round( ( ( log( $num_results ) - log( $lowest_num_results ) ) * $scale_factor ) + $sdgFiltersSmallestFontSize );
@@ -619,7 +622,7 @@ END;
 	 * (https://github.com/yaronkoren/miga/blob/master/NumberUtils.js)
 	 * - though that one is in Javascript.
 	 */
-	private function generateFilterValuesFromNumbers( $numberArray ) {
+	private function generateFilterValuesFromNumbers( array $numberArray ) {
 		global $sdgNumRangesForNumberFilters;
 
 		$numNumbers = count( $numberArray );
@@ -706,7 +709,7 @@ END;
 		return $propertyValues;
 	}
 
-	private function printNumberRanges( $filter_name, $filter_values ) {
+	private function printNumberRanges( $filter_name, PossibleFilterValues $possibleValues ) {
 		// We generate $cur_url here, instead of passing it in, because
 		// if there's a previous value for this filter it may be
 		// removed.
@@ -714,9 +717,9 @@ END;
 		$cur_url .= ( strpos( $cur_url, '?' ) ) ? '&' : '?';
 
 		$numberArray = [];
-		foreach ( $filter_values as $value => $num_instances ) {
-			for ( $i = 0; $i < $num_instances; $i++ ) {
-				$numberArray[] = $value;
+		foreach ( $possibleValues as $value ) {
+			for ( $i = 0; $i < $value->count(); $i++ ) {
+				$numberArray[] = $value->value();
 			}
 		}
 		// Put into numerical order.
@@ -743,7 +746,7 @@ END;
 		return $text;
 	}
 
-	private function printComboBoxInput( $filter_name, $instance_num, $filter_values, $cur_value = null ) {
+	private function printComboBoxInput( $filter_name, $instance_num, PossibleFilterValues $possibleValues, $cur_value = null ) {
 		$filter_name = str_replace( ' ', '_', $filter_name );
 		// URL-decode the filter name - necessary if it contains
 		// any non-Latin characters.
@@ -781,9 +784,9 @@ END;
 			<option value="$inputName"></option>;
 
 END;
-		foreach ( $filter_values as $value => $num_instances ) {
-			if ( $value != '_other' && $value != '_none' ) {
-				$display_value = str_replace( '_', ' ', $value );
+		foreach ( $possibleValues as $value ) {
+			if ( $value->value() != '_other' && $value->value() != '_none' ) {
+				$display_value = str_replace( '_', ' ', $value->displayValue() );
 				$text .= "\t\t" . Html::element( 'option', [ 'value' => $display_value ], $display_value ) . "\n";
 			}
 		}
@@ -815,7 +818,8 @@ END;
 		return (string)$widget;
 	}
 
-	private function printDateRangeInput( $filter_name, $lower_date = null, $upper_date = null ) {
+	private function printDateRangeInput( $filter_name, $dateRange ) {
+		[ $lower_date, $upper_date ] = $dateRange;
 		$start_label = wfMessage( 'sd_browsedata_daterangestart' )->text();
 		$end_label = wfMessage( 'sd_browsedata_daterangeend' )->text();
 		$start_month_input = $this->printDateInput( "_lower_$filter_name", $lower_date );
@@ -854,27 +858,59 @@ END;
 		global $sdgMinValuesForComboBox;
 		global $sdgHideFiltersWithoutValues;
 
+		$possibleValues = $this->getPossibleValues( $f );
+
+		$filter_name = urlencode( str_replace( ' ', '_', $f->name() ) );
+		$normal_filter = true;
+		if ( $possibleValues->count() == 0 ) {
+			$results_line = '(' . wfMessage( 'sd_browsedata_novalues' )->text() . ')';
+		} elseif ( $f->propertyType() == 'number' ) {
+			$results_line = $this->printNumberRanges( $filter_name, $possibleValues );
+		} elseif ( $possibleValues->count() >= $sdgMinValuesForComboBox ) {
+			$results_line = $this->printComboBoxInput( $filter_name, 0, $possibleValues );
+			$normal_filter = false;
+		} else {
+			if ( $cur_url === null ) {
+				$cur_url = $this->makeBrowseURL( $this->category, $this->applied_filters, $this->subcategory, $f->name() );
+			}
+			$cur_url .= ( strpos( $cur_url, '?' ) ) ? '&' : '?';
+			$results_line = $this->printUnappliedFilterValues( $cur_url, $f, $possibleValues );
+		}
+
+		// For dates additionally add two datepicker inputs (Start/End) to select a custom interval.
+		if ( $f->propertyType() == 'date' && $possibleValues->count() != 0 ) {
+			$results_line .= '<br>' . $this->printDateRangeInput( $filter_name, $possibleValues->dateRange() );
+		}
+
+		$text = $this->printFilterLine( $f->name(), false, $normal_filter, $results_line, $f );
+
+		if ( $sdgHideFiltersWithoutValues && $possibleValues->count() === 0 ) {
+			$text = '';
+		}
+
+		return $text;
+	}
+
+	private function getPossibleValues( Filter $f ): PossibleFilterValues {
 		$this->repository->createFilterValuesTempTable( $f->propertyType(), $f->escapedProperty() );
 		if ( empty( $f->allowedValues() ) ) {
-			if ( $f->propertyType() == 'date' ) {
-				list( $filter_values, $lower_date, $upper_date ) = $f->getTimePeriodValues();
-			} else {
-				$filter_values = $f->getAllValues();
-			}
-			if ( !is_array( $filter_values ) ) {
-				$this->repository->dropFilterValuesTempTable();
-				return $this->printFilterLine( $f->name(), false, false, $filter_values, $f );
-			}
+			$possibleFilterValues = $f->propertyType() == 'date'
+				? $f->getTimePeriodValues()
+				: $f->getAllValues();
 		} else {
-			$filter_values = [];
+			$possibleValues = [];
 			foreach ( $f->allowedValues() as $value ) {
 				$new_filter = AppliedFilter::create( $f, $value );
 				$num_results = $this->repository->getNumResults( $this->subcategory, $this->all_subcategories, $new_filter );
 				if ( $num_results > 0 ) {
-					$filter_values[$value] = $num_results;
+					$possibleValues[] = new PossibleFilterValue( $value, $num_results );
 				}
 			}
+			$possibleFilterValues = new PossibleFilterValues( $possibleValues );
 		}
+		$this->repository->dropFilterValuesTempTable();
+
+		$additionalPossibleValues = [];
 		// Now get values for 'Other' and 'None', as well
 		// - don't show 'Other' if filter values were
 		// obtained dynamically.
@@ -882,7 +918,7 @@ END;
 			$other_filter = AppliedFilter::create( $f, ' other' );
 			$num_results = $this->repository->getNumResults( $this->subcategory, $this->all_subcategories, $other_filter );
 			if ( $num_results > 0 ) {
-				$filter_values['_other'] = $num_results;
+				$additionalPossibleValues[] = new PossibleFilterValue( '_other', $num_results );
 			}
 		}
 		// Show 'None' only if any other results have been found, and
@@ -893,39 +929,12 @@ END;
 				$none_filter = AppliedFilter::create( $f, ' none' );
 				$num_results = $this->repository->getNumResults( $this->subcategory, $this->all_subcategories, $none_filter );
 				if ( $num_results > 0 ) {
-					$filter_values['_none'] = $num_results;
+					$additionalPossibleValues[] = new PossibleFilterValue( '_none', $num_results );
 				}
 			}
 		}
 
-		$filter_name = urlencode( str_replace( ' ', '_', $f->name() ) );
-		$normal_filter = true;
-		if ( count( $filter_values ) == 0 ) {
-			$results_line = '(' . wfMessage( 'sd_browsedata_novalues' )->text() . ')';
-		} elseif ( $f->propertyType() == 'number' ) {
-			$results_line = $this->printNumberRanges( $filter_name, $filter_values );
-		} elseif ( count( $filter_values ) >= $sdgMinValuesForComboBox ) {
-			$results_line = $this->printComboBoxInput( $filter_name, 0, $filter_values );
-			$normal_filter = false;
-		} else {
-			// If $cur_url wasn't passed in, we have to create it.
-			$cur_url = $this->makeBrowseURL( $this->category, $this->applied_filters, $this->subcategory, $f->name() );
-			$cur_url .= ( strpos( $cur_url, '?' ) ) ? '&' : '?';
-			$results_line = $this->printUnappliedFilterValues( $cur_url, $f, $filter_values );
-		}
-
-		// For dates additionally add two datepicker inputs (Start/End) to select a custom interval.
-		if ( $f->propertyType() == 'date' && count( $filter_values ) != 0 ) {
-			$results_line .= '<br>' . $this->printDateRangeInput( $filter_name, $lower_date, $upper_date );
-		}
-
-		$text = $this->printFilterLine( $f->name(), false, $normal_filter, $results_line, $f );
-		$this->repository->dropFilterValuesTempTable();
-
-		if ( $sdgHideFiltersWithoutValues && count( $filter_values ) == 0 ) {
-			$text = '';
-		}
-
-		return $text;
+		return $possibleFilterValues->merge( $additionalPossibleValues );
 	}
+
 }

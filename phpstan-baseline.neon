@@ -26,11 +26,6 @@ parameters:
 			path: includes/Specials/BrowseData/Printer.php
 
 		-
-			message: "#^Variable \\$lower_date might not be defined\\.$#"
-			count: 1
-			path: includes/Specials/BrowseData/Printer.php
-
-		-
 			message: "#^Variable \\$lowest_num_results might not be defined\\.$#"
 			count: 4
 			path: includes/Specials/BrowseData/Printer.php
@@ -38,11 +33,6 @@ parameters:
 		-
 			message: "#^Variable \\$scale_factor might not be defined\\.$#"
 			count: 2
-			path: includes/Specials/BrowseData/Printer.php
-
-		-
-			message: "#^Variable \\$upper_date might not be defined\\.$#"
-			count: 1
 			path: includes/Specials/BrowseData/Printer.php
 
 		-

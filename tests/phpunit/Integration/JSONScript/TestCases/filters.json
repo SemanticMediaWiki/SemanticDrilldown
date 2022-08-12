@@ -138,6 +138,33 @@
 		},
 		{
 			"type": "special",
+			"about": "text filter applied using combobox (_search_ parameter)",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {
+					"_search_Text": [ "A" ]
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> >",
+					"<span class=\"drilldown-header-value\">~ 'A'</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
+
+					"Text:",
+					"<option value=\"_search_Text[1]\"></option>",
+					"<option value=\"B\">B</option>",
+
+					"Number:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?_search_Text%5B0%5D=A&Number=1\">1 (1) </a>"
+				],
+				"not-contain": [
+					"Category1TextBNumber2Date2Page2BoolN"
+				]
+			}
+		},
+		{
+			"type": "special",
 			"about": "number filter applied",
 			"special-page": {
 				"page": "BrowseData",
