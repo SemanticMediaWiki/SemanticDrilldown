@@ -52,7 +52,7 @@ class AppliedFilter {
 			$values = [ $values ];
 		}
 		foreach ( $values as $val ) {
-			$filter_val = FilterValue::create( $val, $filter );
+			$filter_val = AppliedFilterValue::create( $val, $filter );
 			$af->values[] = $filter_val;
 		}
 		return $af;
@@ -200,7 +200,7 @@ class AppliedFilter {
 	 * Gets an array of all values that the property belonging to this
 	 * filter has, for pages in the passed-in category.
 	 */
-	public function getAllOrValues( $category ) {
+	public function getAllOrValues( $category ): PossibleFilterValues {
 		$possible_values = [];
 
 		$lb = MediaWikiServices::getInstance()->getDBLoadBalancer();
@@ -209,6 +209,8 @@ class AppliedFilter {
 		$property_value = $dbr->addQuotes( $this->filter->escapedProperty() );
 		$property_table_name = $dbr->tableName(
 			PropertyTypeDbInfo::tableName( $this->filter->propertyType() ) );
+		$revision_table_name = $dbr->tableName( 'revision' );
+		$page_props_table_name = $dbr->tableName( 'page_props' );
 		$category = $dbr->addQuotes( $category );
 		if ( $this->filter->propertyType() != 'date' ) {
 			$value_field = PropertyTypeDbInfo::valueField( $this->filter->propertyType() );
@@ -226,17 +228,22 @@ class AppliedFilter {
 				$value_field = $yearValue;
 			}
 		}
-		$smwIDs = $dbr->tableName( Utils::getIDsTableName() );
+		$displaytitle = $this->filter->propertyType() === 'page' ? "displaytitle.pp_value" : $value_field;
+		$smw_ids = $dbr->tableName( Utils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
 		$cat_ns = NS_CATEGORY;
-		$sql = "SELECT $value_field
+		$sql = "SELECT $value_field, $displaytitle
 	FROM $property_table_name p
-	JOIN $smwIDs p_ids ON p.p_id = p_ids.smw_id\n";
+	JOIN $smw_ids p_ids ON p.p_id = p_ids.smw_id\n";
 		if ( $this->filter->propertyType() === 'page' ) {
-			$sql .= "       JOIN $smwIDs o_ids ON p.o_id = o_ids.smw_id\n";
+			$sql .= <<<END
+	JOIN $smw_ids o_ids ON p.o_id = o_ids.smw_id
+	LEFT JOIN $revision_table_name ON $revision_table_name.rev_id = o_ids.smw_rev
+	LEFT JOIN $page_props_table_name displaytitle ON $revision_table_name.rev_page = displaytitle.pp_page AND displaytitle.pp_propname = 'displaytitle'
+END;
 		}
 		$sql .= "	JOIN $smwCategoryInstances insts ON p.s_id = insts.s_id
-	JOIN $smwIDs cat_ids ON insts.o_id = cat_ids.smw_id
+	JOIN $smw_ids cat_ids ON insts.o_id = cat_ids.smw_id
 	WHERE p_ids.smw_title = $property_value
 	AND cat_ids.smw_namespace = $cat_ns
 	AND cat_ids.smw_title = $category
@@ -247,12 +254,11 @@ class AppliedFilter {
 			if ( $this->filter->propertyType() == 'date' && $this->filter->getTimePeriod() == 'month' ) {
 				$value_string = Utils::monthToString( $row[1] ) . " " . $row[0];
 			} else {
-				// why is trim() necessary here???
-				$value_string = str_replace( '_', ' ', trim( $row[0] ) );
+				$value_string = str_replace( '_', ' ', $row[0] );
 			}
-			$possible_values[] = $value_string;
+			$possible_values[] = new PossibleFilterValue( $value_string, null, $row[1] );
 		}
-		return $possible_values;
+		return new PossibleFilterValues( $possible_values );
 	}
 
 }

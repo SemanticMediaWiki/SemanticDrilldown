@@ -13,6 +13,7 @@ namespace SD\Specials\BrowseData;
 
 use IncludableSpecialPage;
 use MediaWiki\MediaWikiServices;
+use PageProps;
 use SD\AppliedFilter;
 use SD\FilterBuilder;
 use SD\Parameters\Title;
@@ -22,11 +23,15 @@ use SD\Utils;
 class SpecialBrowseData extends IncludableSpecialPage {
 
 	private Repository $repository;
+	private PageProps $pageProps;
 	private FilterBuilder $filterBuilder;
 
-	public function __construct( Repository $repository, FilterBuilder $filterBuilder ) {
+	public function __construct(
+		Repository $repository, PageProps $pageProps, FilterBuilder $filterBuilder
+	) {
 		parent::__construct( 'BrowseData' );
 		$this->repository = $repository;
+		$this->pageProps = $pageProps;
 		$this->filterBuilder = $filterBuilder;
 	}
 
@@ -137,9 +142,9 @@ class SpecialBrowseData extends IncludableSpecialPage {
 			$sdgNumResultsPerPage,
 			'sdlimit'
 		);
-		$rep = new QueryPage( $this->getContext(), $category, $subcategory,
-			$filters, $applied_filters, $remaining_filters,
-			$offset, $limit, $this->repository );
+		$rep = new QueryPage( $this->repository, $this->pageProps,
+			$this->getContext(), $category, $subcategory, $filters, $applied_filters,
+			$remaining_filters, $offset, $limit );
 		$rep->execute( $query );
 
 		$out->addHTML( "\n			</div> <!-- drilldown-results -->\n" );

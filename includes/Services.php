@@ -3,6 +3,7 @@
 namespace SD;
 
 use MediaWiki\MediaWikiServices;
+use PageProps;
 use SD\ParserFunctions\DrilldownInfo;
 use SD\ParserFunctions\DrilldownLink;
 use SD\Specials\BrowseData\SpecialBrowseData;
@@ -43,7 +44,8 @@ class Services {
 
 	public static function getSpecialBrowseData(): SpecialBrowseData {
 		$s = self::instance();
-		return new SpecialBrowseData( $s->getRepository(), $s->getFilterBuilder() );
+		return new SpecialBrowseData(
+			$s->getRepository(),  $s->getPageProps(), $s->getFilterBuilder() );
 	}
 
 	private function getRepository(): Repository {
@@ -62,6 +64,10 @@ class Services {
 					: null;
 			}
 		};
+	}
+
+	private function getPageProps(): PageProps {
+		return PageProps::getInstance();
 	}
 
 	private function getDbConnectionRef(): DBConnRef {

@@ -1,0 +1,91 @@
+{
+	"description": "filters",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomePage",
+			"contents": "[[Has type::Page]]"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "Category1",
+			"contents": "{{#drilldowninfo: filters=Page (property=SomePage)|display parameters=?SomePage;format=list}}"
+		},
+		{
+			"page": "Page1",
+			"contents": "[[Category:Category1]]{{#set: SomePage=Page1,Page2,Page3|+sep=,}}"
+		},
+		{
+			"page": "Page2",
+			"contents": "{{DISPLAYTITLE:DisplayTitle2}}"
+		}
+	],
+	"tests": [
+		{
+			"type": "special",
+			"about": "no filter applied",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"Page:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page2\" title=\"Filter by this value\">DisplayTitle2&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page3\" title=\"Filter by this value\">Page3&nbsp;(1)</a>"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "page filter applied with display-title page",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {
+					"Page": "Page2"
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> > Page:",
+					"<span class=\"drilldown-header-value\">DisplayTitle2</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
+
+					"Page:",
+					"DisplayTitle2 ·"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "page filter applied with non-display-title page",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {
+					"Page": "Page1"
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> > Page:",
+					"<span class=\"drilldown-header-value\">Page1</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
+
+					"Page:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page[0]=Page1&Page[1]=Page2\" title=\"Filter by this value\">DisplayTitle2</a>"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgLang": "en",
+		"wgRestrictDisplayTitle": false
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

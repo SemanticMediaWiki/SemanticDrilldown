@@ -39,7 +39,7 @@
 								return {
 									id: this.value,
 									label: text,
-									value: text
+									value: this.value
 								};
 							}
 						} ) );

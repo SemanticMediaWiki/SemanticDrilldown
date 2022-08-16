@@ -3,13 +3,13 @@
 namespace SD;
 
 /**
- * Defines a class, FilterValue, representing a single value of an
+ * Defines a class, AppliedFilterValue, representing a single value of an
  * applied filter (i.e., an instance of the AppliedFilter class).
  *
  * @author Yaron Koren
  */
 
-class FilterValue {
+class AppliedFilterValue {
 	public $text;
 	public $is_none = false;
 	public $is_other = false;
@@ -22,7 +22,7 @@ class FilterValue {
 	public $end_year = null;
 
 	public static function create( $actual_val, Filter $filter = null ) {
-		$fv = new FilterValue();
+		$fv = new AppliedFilterValue();
 		$fv->text = str_replace( '_', ' ', $actual_val );
 
 		if ( $fv->text == ' none' ) {

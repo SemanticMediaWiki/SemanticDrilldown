@@ -233,17 +233,23 @@ END;
 		$property_value = $this->escapedProperty();
 		$dbw = wfGetDB( DB_MASTER );
 		$property_table_name = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
+		$revision_table_name = $dbw->tableName( 'revision' );
+		$page_props_table_name = $dbw->tableName( 'page_props' );
 		$value_field = PropertyTypeDbInfo::valueField( $this->propertyType() );
+		$displaytitle = $this->propertyType === 'page' ? "displaytitle.pp_value" : $value_field;
 		$smw_ids = $dbw->tableName( Utils::getIDsTableName() );
 		$prop_ns = SMW_NS_PROPERTY;
 		$sql = <<<END
-	SELECT $value_field, count(DISTINCT sdv.id)
+	SELECT $value_field, $displaytitle, count(DISTINCT sdv.id) 
 	FROM semantic_drilldown_values sdv
 	JOIN $property_table_name p ON sdv.id = p.s_id
-
 END;
 		if ( $this->propertyType === 'page' ) {
-			$sql .= "	JOIN $smw_ids o_ids ON p.o_id = o_ids.smw_id";
+			$sql .= <<<END
+	JOIN $smw_ids o_ids ON p.o_id = o_ids.smw_id
+	LEFT JOIN $revision_table_name ON $revision_table_name.rev_id = o_ids.smw_rev
+	LEFT JOIN $page_props_table_name displaytitle ON $revision_table_name.rev_page = displaytitle.pp_page AND displaytitle.pp_propname = 'displaytitle'
+END;
 		}
 		$sql .= <<<END
 	JOIN $smw_ids p_ids ON p.p_id = p_ids.smw_id
@@ -261,7 +267,7 @@ END;
 			if ( $value_string === '' ) {
 				continue;
 			}
-			$possible_values[] = new PossibleFilterValue( $value_string, $row[1] );
+			$possible_values[] = new PossibleFilterValue( $value_string, $row[2], $row[1] );
 		}
 
 		return new PossibleFilterValues( $possible_values );

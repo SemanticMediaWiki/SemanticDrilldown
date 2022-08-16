@@ -5,6 +5,7 @@ namespace SD\Specials\BrowseData;
 use Html;
 use IDatabase;
 use OutputPage;
+use PageProps;
 use SD\Parameters\DisplayParametersList;
 use SD\Parameters\Footer;
 use SD\Repository;
@@ -15,13 +16,17 @@ use Title;
 use WikiPage;
 
 class QueryPage extends \QueryPage {
-	private string $category;
+	private PageProps $pageProps;
 	private Printer $printer;
+
+	private string $category;
 	private string $sql;
 
-	public function __construct( $context, $category, $subcategory,
-								 $filters, $applied_filters, $remaining_filters,
-								 $offset, $limit, Repository $repository ) {
+	public function __construct(
+		Repository $repository, PageProps $pageProps,
+		$context, $category, $subcategory, $filters, $applied_filters, $remaining_filters,
+		$offset, $limit
+	) {
 		parent::__construct( 'BrowseData' );
 		$this->offset = $offset;
 		$this->limit = $limit;
@@ -41,10 +46,12 @@ class QueryPage extends \QueryPage {
 		$next_level_subcategories = $repository->getCategoryChildren( $actual_cat, true, 1 );
 		$all_subcategories = $repository->getCategoryChildren( $actual_cat, true, 10 );
 
+		$this->pageProps = $pageProps;
+		$this->printer = new Printer( $repository, $pageProps,
+			$this->category, $subcategory, $next_level_subcategories, $all_subcategories,
+			$filters, $applied_filters, $remaining_filters, $this->getOutput(), $this->getRequest() );
+
 		$this->sql = SqlProvider::getSQL( $category, $subcategory, $all_subcategories, $applied_filters );
-		$this->printer = new Printer( $this->category, $subcategory, $next_level_subcategories, $all_subcategories,
-			$filters, $applied_filters, $remaining_filters, $this->getOutput(), $this->getRequest(),
-			$repository );
 	}
 
 	public function getName() {
