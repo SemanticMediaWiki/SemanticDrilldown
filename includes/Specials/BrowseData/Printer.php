@@ -21,43 +21,20 @@ use WikiPage;
 
 class Printer {
 
+	private Repository $repository;
 	private PageProps $pageProps;
-
-	private string $category;
-	private string $subcategory;
-	/** @var string[] */
-	private array $next_level_subcategories;
-	/** @var string[] */
-	private array $all_subcategories;
-	/** @var Filter[] */
-	private array $filters;
-	/** @var AppliedFilter[] */
-	private $applied_filters;
-	/** @var Filter[] */
-	private $remaining_filters;
-
 	private OutputPage $output;
 	private WebRequest $request;
-	private Repository $repository;
-
-	private $show_single_cat = false;
+	private DrilldownQuery $query;
 
 	public function __construct(
-		Repository $repository, PageProps $pageProps,
-		$category, $subcategory, $next_level_subcategories, $all_subcategories,
-		$filters, $applied_filters, $remaining_filters, $output, $request
+		Repository $repository, PageProps $pageProps, $output, $request, DrilldownQuery $query
 	) {
 		$this->repository = $repository;
 		$this->pageProps = $pageProps;
-		$this->category = $category;
-		$this->subcategory = $subcategory;
-		$this->next_level_subcategories = $next_level_subcategories;
-		$this->all_subcategories = $all_subcategories;
-		$this->filters = $filters;
-		$this->applied_filters = $applied_filters;
-		$this->remaining_filters = $remaining_filters;
 		$this->output = $output;
 		$this->request = $request;
+		$this->query = $query;
 	}
 
 	public function getPageHeader() {
@@ -75,56 +52,54 @@ class Printer {
 		$header = "";
 
 		// Add intro template
-		$headerPage = Header::forCategory( $this->category )->value;
+		$headerPage = Header::forCategory( $this->query->category() )->value;
 		if ( $headerPage !== null ) {
 			$title = Title::newFromText( $headerPage );
 			$page = WikiPage::factory( $title );
 			if ( $page->exists() ) {
 				$content = $page->getContent();
 				$pageContent = $content->serialize();
-				$out = $this->output;
-				$header .= $out->parseInlineAsInterface( $pageContent );
+				$header .= $this->output->parseInlineAsInterface( $pageContent );
 			}
 		}
 
 		// wrap output in Bootstrap panel
 		$header .= '<div class="panel panel-default"><div class="panel-heading">&nbsp;</div><div class="panel-body">';
 
-		$this->show_single_cat = $this->request->getCheck( '_single' );
-		if ( !$this->show_single_cat ) {
+		if ( !$this->showSingleCat() ) {
 			$header .= $this->printCategoriesList( $categories );
 		}
 		// if there are no subcategories or filters for this
 		// category, escape now that we've (possibly) printed the
 		// categories list
-		if ( ( count( $this->next_level_subcategories ) == 0 ) &&
-			( count( $this->applied_filters ) == 0 ) &&
-			( count( $this->remaining_filters ) == 0 )
+		if ( ( count( $this->query->nextLevelSubcategories() ) == 0 ) &&
+			( count( $this->query->appliedFilters() ) == 0 ) &&
+			( count( $this->query->remainingFilters() ) == 0 )
 		) {
 			return $header;
 		}
 		$header .= '				<div id="drilldown-header">' . "\n";
-		if ( count( $this->applied_filters ) > 0 || $this->subcategory ) {
-			$category_url = $this->makeBrowseURL( $this->category );
-			$header .= '<a href="' . $category_url . '" title="' . wfMessage( 'sd_browsedata_resetfilters' )->text() . '">' . str_replace( '_', ' ', $this->category ) . '</a>';
+		if ( count( $this->query->appliedFilters() ) > 0 || $this->query->subcategory() ) {
+			$category_url = $this->makeBrowseURL( $this->query->category() );
+			$header .= '<a href="' . $category_url . '" title="' . wfMessage( 'sd_browsedata_resetfilters' )->text() . '">' . str_replace( '_', ' ', $this->query->category() ) . '</a>';
 		}
 
-		if ( $this->subcategory ) {
+		if ( $this->query->subcategory() ) {
 			$header .= " > ";
 			$header .= "$subcategory_text: ";
-			$subcat_string = str_replace( '_', ' ', $this->subcategory );
-			$remove_filter_url = $this->makeBrowseURL( $this->category, $this->applied_filters );
+			$subcat_string = str_replace( '_', ' ', $this->query->subcategory() );
+			$remove_filter_url = $this->makeBrowseURL( $this->query->category(), $this->query->appliedFilters() );
 			$header .= "\n" . '				<span class="drilldown-header-value">' . $subcat_string . '</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removesubcategoryfilter' )->text() . '"><img src="' . $sdSkinsPath . '/filter-x.png" /></a> ';
 		}
-		foreach ( $this->applied_filters as $i => $af ) {
-			$header .= ( !$this->subcategory && $i == 0 ) ? " > " : "\n					<span class=\"drilldown-header-value\">&</span> ";
+		foreach ( $this->query->appliedFilters() as $i => $af ) {
+			$header .= ( !$this->query->subcategory() && $i == 0 ) ? " > " : "\n					<span class=\"drilldown-header-value\">&</span> ";
 			$filter_label = $af->filter->name();
 			// add an "x" to remove this filter, if it has more
 			// than one value
-			if ( count( $this->applied_filters[$i]->values ) > 1 ) {
-				$temp_filters_array = $this->applied_filters;
+			if ( count( $this->query->appliedFilters()[$i]->values ) > 1 ) {
+				$temp_filters_array = $this->query->appliedFilters();
 				array_splice( $temp_filters_array, $i, 1 );
-				$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
+				$remove_filter_url = $this->makeBrowseURL( $this->query->category(), $temp_filters_array, $this->query->subcategory() );
 				array_splice( $temp_filters_array, $i, 0 );
 				$header .= $filter_label . ' <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdSkinsPath . '/filter-x.png" /></a> : ';
 			} else {
@@ -135,9 +110,9 @@ class Printer {
 					$header .= ' <span class="drilldown-or">' . wfMessage( 'sd_browsedata_or' )->text() . '</span> ';
 				}
 				$filter_text = Utils::escapeString( $this->getNiceAppliedFilterValue( $af->filter->propertyType(), $fv->text ) );
-				$temp_filters_array = $this->applied_filters;
+				$temp_filters_array = $this->query->appliedFilters();
 				$removed_values = array_splice( $temp_filters_array[$i]->values, $j, 1 );
-				$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
+				$remove_filter_url = $this->makeBrowseURL( $this->query->category(), $temp_filters_array, $this->query->subcategory() );
 				array_splice( $temp_filters_array[$i]->values, $j, 0, $removed_values );
 				$header .= '				<span class="drilldown-header-value">' . $filter_text . '</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdSkinsPath . '/filter-x.png" /></a>';
 			}
@@ -147,9 +122,9 @@ class Printer {
 					if ( $j > 0 ) {
 						$header .= ' <span class="drilldown-or">' . wfMessage( 'sd_browsedata_or' )->text() . '</span> ';
 					}
-					$temp_filters_array = $this->applied_filters;
+					$temp_filters_array = $this->query->appliedFilters();
 					$removed_values = array_splice( $temp_filters_array[$i]->search_terms, $j, 1 );
-					$remove_filter_url = $this->makeBrowseURL( $this->category, $temp_filters_array, $this->subcategory );
+					$remove_filter_url = $this->makeBrowseURL( $this->query->category(), $temp_filters_array, $this->query->subcategory() );
 					array_splice( $temp_filters_array[$i]->search_terms, $j, 0, $removed_values );
 					$header .= "\n\t" . '<span class="drilldown-header-value">~ \'' . $search_term . '\'</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdSkinsPath . '/filter-x.png" /> </a>';
 				}
@@ -165,11 +140,11 @@ class Printer {
 		// contain the possible values, and, in parentheses, the
 		// number of pages that match that value
 		$header .= "				<div class=\"drilldown-filters\">\n";
-		$cur_url = $this->makeBrowseURL( $this->category, $this->applied_filters, $this->subcategory );
+		$cur_url = $this->makeBrowseURL( $this->query->category(), $this->query->appliedFilters(), $this->query->subcategory() );
 		$cur_url .= ( strpos( $cur_url, '?' ) ) ? '&' : '?';
-		$this->repository->createTempTable( $this->category, $this->subcategory, $this->all_subcategories, $this->applied_filters );
+		$this->repository->createTempTable( $this->query->category(), $this->query->subcategory(), $this->query->allSubcategories(), $this->query->appliedFilters() );
 		$num_printed_values = 0;
-		if ( count( $this->next_level_subcategories ) > 0 ) {
+		if ( count( $this->query->nextLevelSubcategories() ) > 0 ) {
 			$results_line = "";
 			// loop through to create an array of subcategory
 			// names and their number of values, then loop through
@@ -177,7 +152,7 @@ class Printer {
 			// instead of once, to be able to print a tag-cloud
 			// display if necessary
 			$subcat_values = [];
-			foreach ( $this->next_level_subcategories as $i => $subcat ) {
+			foreach ( $this->query->nextLevelSubcategories() as $i => $subcat ) {
 				$further_subcats = $this->repository->getCategoryChildren( $subcat, true, 10 );
 				$num_results = $this->repository->getNumResults( $subcat, $further_subcats );
 				$subcat_values[$subcat] = $num_results;
@@ -215,8 +190,8 @@ class Printer {
 				$header .= "					<p><strong>$subcategory_text:</strong> $results_line</p>\n";
 			}
 		}
-		foreach ( $this->filters as $f ) {
-			foreach ( $this->applied_filters as $af ) {
+		foreach ( $this->query->filters() as $f ) {
+			foreach ( $this->query->appliedFilters() as $af ) {
 				if ( $af->filter->name() == $f->name() ) {
 					if ( $f->propertyType() == 'date' || $f->propertyType() == 'number' ) {
 						$header .= $this->printUnappliedFilterLine( $f );
@@ -225,7 +200,7 @@ class Printer {
 					}
 				}
 			}
-			foreach ( $this->remaining_filters as $rf ) {
+			foreach ( $this->query->remainingFilters() as $rf ) {
 				if ( $rf->name() == $f->name() ) {
 					$header .= $this->printUnappliedFilterLine( $rf );
 				}
@@ -240,15 +215,15 @@ class Printer {
 	 */
 	public function linkParameters() {
 		$params = [];
-		if ( $this->show_single_cat ) {
+		if ( $this->showSingleCat() ) {
 			$params['_single'] = null;
 		}
-		$params['_cat'] = $this->category;
-		if ( $this->subcategory ) {
-			$params['_subcat'] = $this->subcategory;
+		$params['_cat'] = $this->query->category();
+		if ( $this->query->subcategory() ) {
+			$params['_subcat'] = $this->query->subcategory();
 		}
 
-		foreach ( $this->applied_filters as $i => $af ) {
+		foreach ( $this->query->appliedFilters() as $i => $af ) {
 			if ( count( $af->values ) == 1 ) {
 				$key_string = str_replace( ' ', '_', $af->filter->name() );
 				$value_string = str_replace( ' ', '_', $af->values[0]->text );
@@ -281,7 +256,7 @@ class Printer {
 							  $filter_to_remove = null ) {
 		$bd = SpecialPage::getTitleFor( 'BrowseData' );
 		$url = $bd->getLocalURL() . '/' . $category;
-		if ( $this->show_single_cat ) {
+		if ( $this->showSingleCat() ) {
 			$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
 			$url .= "_single";
 		}
@@ -347,7 +322,7 @@ END;
 		foreach ( $categories as $i => $category ) {
 			$category_children = $this->repository->getCategoryChildren( $category, false, 5 );
 			$category_str = $category . " (" . count( array_unique( $category_children ) ) . ")";
-			if ( str_replace( '_', ' ', $this->category ) == $category ) {
+			if ( str_replace( '_', ' ', $this->query->category() ) == $category ) {
 				$text .= '						<li class="category selected">';
 				$text .= $category_str;
 			} else {
@@ -467,7 +442,7 @@ END;
 	 */
 	private function printAppliedFilterLine( AppliedFilter $af ) {
 		$results_line = "";
-		foreach ( $this->applied_filters as $af2 ) {
+		foreach ( $this->query->appliedFilters() as $af2 ) {
 			if ( $af->filter->name() == $af2->filter->name() ) {
 				$current_filter_values = $af2->values;
 			}
@@ -475,7 +450,7 @@ END;
 		if ( $af->filter->allowedValues() != null ) {
 			$or_values = $af->filter->allowedValues();
 		} else {
-			$or_values = $af->getAllOrValues( $this->category );
+			$or_values = $af->getAllOrValues( $this->query->category() );
 		}
 		if ( $af->search_terms != null ) {
 			$curSearchTermNum = count( $af->search_terms );
@@ -507,7 +482,7 @@ END;
 				$results_line .= " · ";
 			}
 			$filter_text = Utils::escapeString( $this->getNiceFilterValue( $af->filter->propertyType(), $or_value->displayValue() ) );
-			$applied_filters = $this->applied_filters;
+			$applied_filters = $this->query->appliedFilters();
 			foreach ( $applied_filters as $af2 ) {
 				if ( $af->filter->name() == $af2->filter->name() ) {
 					$or_fv = AppliedFilterValue::create( $value, $af->filter );
@@ -526,7 +501,7 @@ END;
 			if ( $found_match ) {
 				$results_line .= "\n				$filter_text";
 			} else {
-				$filter_url = $this->makeBrowseURL( $this->category, $applied_filters, $this->subcategory );
+				$filter_url = $this->makeBrowseURL( $this->query->category(), $applied_filters, $this->query->subcategory() );
 				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMessage( 'sd_browsedata_filterbyvalue' )->text() . '">' . $filter_text . '</a>';
 			}
 			foreach ( $applied_filters as $af2 ) {
@@ -727,7 +702,7 @@ END;
 		// We generate $cur_url here, instead of passing it in, because
 		// if there's a previous value for this filter it may be
 		// removed.
-		$cur_url = $this->makeBrowseURL( $this->category, $this->applied_filters, $this->subcategory, $filter_name );
+		$cur_url = $this->makeBrowseURL( $this->query->category(), $this->query->appliedFilters(), $this->query->subcategory(), $filter_name );
 		$cur_url .= ( strpos( $cur_url, '?' ) ) ? '&' : '?';
 
 		$numberArray = [];
@@ -772,7 +747,7 @@ END;
 
 		$inputName = "_search_$filter_name";
 
-		$filter_url = $this->makeBrowseURL( $this->category, $this->applied_filters, $this->subcategory );
+		$filter_url = $this->makeBrowseURL( $this->query->category(), $this->query->appliedFilters(), $this->query->subcategory() );
 
 		$text = <<< END
 <form method="get" action="$filter_url">
@@ -887,7 +862,7 @@ END;
 			$results_line = $this->printComboBoxInput( $filter_name, 0, $possibleValues );
 			$normal_filter = false;
 		} else {
-			$cur_url = $this->makeBrowseURL( $this->category, $this->applied_filters, $this->subcategory, $f->name() );
+			$cur_url = $this->makeBrowseURL( $this->query->category(), $this->query->appliedFilters(), $this->query->subcategory(), $f->name() );
 			$cur_url .= ( strpos( $cur_url, '?' ) ) ? '&' : '?';
 			$results_line = $this->printUnappliedFilterValues( $cur_url, $f, $possibleValues );
 		}
@@ -916,7 +891,7 @@ END;
 			$possibleValues = [];
 			foreach ( $f->allowedValues() as $value ) {
 				$new_filter = AppliedFilter::create( $f, $value );
-				$num_results = $this->repository->getNumResults( $this->subcategory, $this->all_subcategories, $new_filter );
+				$num_results = $this->repository->getNumResults( $this->query->subcategory(), $this->query->allSubcategories(), $new_filter );
 				if ( $num_results > 0 ) {
 					$possibleValues[] = new PossibleFilterValue( $value, $num_results );
 				}
@@ -931,7 +906,7 @@ END;
 		// obtained dynamically.
 		if ( !empty( $f->allowedValues() ) ) {
 			$other_filter = AppliedFilter::create( $f, ' other' );
-			$num_results = $this->repository->getNumResults( $this->subcategory, $this->all_subcategories, $other_filter );
+			$num_results = $this->repository->getNumResults( $this->query->subcategory(), $this->query->allSubcategories(), $other_filter );
 			if ( $num_results > 0 ) {
 				$additionalPossibleValues[] = new PossibleFilterValue( '_other', $num_results );
 			}
@@ -942,7 +917,7 @@ END;
 			$fv = AppliedFilterValue::create( $f->allowedValues()[0] );
 			if ( !$fv->is_numeric ) {
 				$none_filter = AppliedFilter::create( $f, ' none' );
-				$num_results = $this->repository->getNumResults( $this->subcategory, $this->all_subcategories, $none_filter );
+				$num_results = $this->repository->getNumResults( $this->query->subcategory(), $this->query->allSubcategories(), $none_filter );
 				if ( $num_results > 0 ) {
 					$additionalPossibleValues[] = new PossibleFilterValue( '_none', $num_results );
 				}
@@ -952,4 +927,7 @@ END;
 		return $possibleFilterValues->merge( $additionalPossibleValues );
 	}
 
+	private function showSingleCat() {
+		return $this->request->getCheck( '_single' );
+	}
 }

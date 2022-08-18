@@ -2,11 +2,17 @@
 
 namespace SD;
 
+use Closure;
 use MediaWiki\MediaWikiServices;
+use OutputPage;
 use PageProps;
 use SD\ParserFunctions\DrilldownInfo;
 use SD\ParserFunctions\DrilldownLink;
+use SD\Specials\BrowseData\DrilldownQuery;
+use SD\Specials\BrowseData\Printer;
+use SD\Specials\BrowseData\QueryPage;
 use SD\Specials\BrowseData\SpecialBrowseData;
+use WebRequest;
 use Wikimedia\Rdbms\DBConnRef;
 
 /**
@@ -45,7 +51,7 @@ class Services {
 	public static function getSpecialBrowseData(): SpecialBrowseData {
 		$s = self::instance();
 		return new SpecialBrowseData(
-			$s->getRepository(),  $s->getPageProps(), $s->getFilterBuilder() );
+			$s->getNewQuery(), $s->getNewQueryPage(),	$s->getFilterBuilder() );
 	}
 
 	private function getRepository(): Repository {
@@ -53,17 +59,29 @@ class Services {
 	}
 
 	private function getFilterBuilder() {
-		return new FilterBuilder( $this->getRepository(), $this->getPageSchemaFactory() );
+		return new FilterBuilder( $this->getRepository(), $this->getGetPageSchema() );
 	}
 
-	private function getPageSchemaFactory(): PageSchemaFactory {
-		return new class() implements PageSchemaFactory {
-			public function get( $category ) {
-				return class_exists( 'PSSchema' )
-					? new \PSSchema( $category )
-					: null;
-			}
-		};
+	private function getGetPageSchema(): Closure {
+		return fn( $category ) => class_exists( 'PSSchema' )
+			? new \PSSchema( $category )
+			: null;
+	}
+
+	private function getNewQuery(): Closure {
+		return fn( $category, $subcategory, $filters, $applied_filters, $remaining_filters ) =>
+			new DrilldownQuery( $this->getRepository(),
+				$category, $subcategory, $filters, $applied_filters, $remaining_filters );
+	}
+
+	private function getNewQueryPage(): Closure {
+		return fn( $context, $query, $offset, $limit ) =>
+			new QueryPage( $this->getNewPrinter(), $context, $query, $offset, $limit );
+	}
+
+	private function getNewPrinter(): Closure {
+		return fn( OutputPage $output, WebRequest $request, DrilldownQuery $query ) =>
+			new Printer( $this->getRepository(), $this->getPageProps(), $output, $request, $query );
 	}
 
 	private function getPageProps(): PageProps {

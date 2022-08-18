@@ -11,27 +11,26 @@ namespace SD\Specials\BrowseData;
  * @author Sanyam Goyal
  */
 
+use Closure;
 use IncludableSpecialPage;
 use MediaWiki\MediaWikiServices;
-use PageProps;
 use SD\AppliedFilter;
 use SD\FilterBuilder;
 use SD\Parameters\Title;
-use SD\Repository;
 use SD\Utils;
 
 class SpecialBrowseData extends IncludableSpecialPage {
 
-	private Repository $repository;
-	private PageProps $pageProps;
+	private Closure $newDrilldownQuery;
+	private Closure $newQueryPage;
 	private FilterBuilder $filterBuilder;
 
 	public function __construct(
-		Repository $repository, PageProps $pageProps, FilterBuilder $filterBuilder
+		$newDrilldownQuery, $newQueryPage, FilterBuilder $filterBuilder
 	) {
 		parent::__construct( 'BrowseData' );
-		$this->repository = $repository;
-		$this->pageProps = $pageProps;
+		$this->newDrilldownQuery = $newDrilldownQuery;
+		$this->newQueryPage = $newQueryPage;
 		$this->filterBuilder = $filterBuilder;
 	}
 
@@ -142,9 +141,9 @@ class SpecialBrowseData extends IncludableSpecialPage {
 			$sdgNumResultsPerPage,
 			'sdlimit'
 		);
-		$rep = new QueryPage( $this->repository, $this->pageProps,
-			$this->getContext(), $category, $subcategory, $filters, $applied_filters,
-			$remaining_filters, $offset, $limit );
+		$drilldownQuery = ( $this->newDrilldownQuery )(
+			$category, $subcategory, $filters, $applied_filters, $remaining_filters );
+		$rep = ( $this->newQueryPage )( $this->getContext(), $drilldownQuery, $offset, $limit );
 		$rep->execute( $query );
 
 		$out->addHTML( "\n			</div> <!-- drilldown-results -->\n" );

@@ -2,16 +2,17 @@
 
 namespace SD;
 
+use Closure;
 use SD\Parameters\Filters;
 
 class FilterBuilder {
 
 	private Repository $repository;
-	private PageSchemaFactory $pageSchemaFactory;
+	private Closure $getPageSchema;
 
-	public function __construct( Repository $repository, PageSchemaFactory $pageSchemaFactory ) {
+	public function __construct( Repository $repository, Closure $getPageSchema ) {
 		$this->repository = $repository;
-		$this->pageSchemaFactory = $pageSchemaFactory;
+		$this->getPageSchema = $getPageSchema;
 	}
 
 	/**
@@ -52,7 +53,7 @@ class FilterBuilder {
 	private function buildPageSchemaFilters( $category ) {
 		// Read from the Page Schemas schema for this category, if
 		// it exists, and add any filters defined there.
-		$pageSchema = $this->pageSchemaFactory->get( $category );
+		$pageSchema = ( $this->getPageSchema )( $category );
 		return $pageSchema !== null && $pageSchema->isPSDefined()
 			? self::loadFiltersFromPageSchema( $pageSchema )
 			: [];

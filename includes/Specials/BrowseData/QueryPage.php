@@ -5,10 +5,8 @@ namespace SD\Specials\BrowseData;
 use Html;
 use IDatabase;
 use OutputPage;
-use PageProps;
 use SD\Parameters\DisplayParametersList;
 use SD\Parameters\Footer;
-use SD\Repository;
 use SD\Sql\SqlProvider;
 use Skin;
 use SMWOutputs;
@@ -16,42 +14,18 @@ use Title;
 use WikiPage;
 
 class QueryPage extends \QueryPage {
-	private PageProps $pageProps;
 	private Printer $printer;
+	private DrilldownQuery $query;
 
-	private string $category;
-	private string $sql;
-
-	public function __construct(
-		Repository $repository, PageProps $pageProps,
-		$context, $category, $subcategory, $filters, $applied_filters, $remaining_filters,
-		$offset, $limit
-	) {
+	public function __construct( $newPrinter, $context, $query, $offset, $limit ) {
 		parent::__construct( 'BrowseData' );
+
+		$this->setContext( $context );
+		$this->query = $query;
 		$this->offset = $offset;
 		$this->limit = $limit;
 
-		$this->setContext( $context );
-
-		$this->category = $category;
-		if ( $subcategory ) {
-			$actual_cat = str_replace( ' ', '_', $subcategory );
-		} else {
-			$actual_cat = str_replace( ' ', '_', $this->category );
-		}
-
-		// Get the two arrays for subcategories - one for only the
-		// immediate subcategories, for display, and the other for
-		// all subcategories, sub-subcategories etc., for querying.
-		$next_level_subcategories = $repository->getCategoryChildren( $actual_cat, true, 1 );
-		$all_subcategories = $repository->getCategoryChildren( $actual_cat, true, 10 );
-
-		$this->pageProps = $pageProps;
-		$this->printer = new Printer( $repository, $pageProps,
-			$this->category, $subcategory, $next_level_subcategories, $all_subcategories,
-			$filters, $applied_filters, $remaining_filters, $this->getOutput(), $this->getRequest() );
-
-		$this->sql = SqlProvider::getSQL( $category, $subcategory, $all_subcategories, $applied_filters );
+		$this->printer = $newPrinter( $this->getOutput(), $this->getRequest(), $query );
 	}
 
 	public function getName() {
@@ -74,7 +48,9 @@ class QueryPage extends \QueryPage {
 		// From the overridden method:
 		// "For back-compat, subclasses may return a raw SQL query here, as a string.
 		// This is strongly deprecated; getQueryInfo() should be overridden instead."
-		return $this->sql;
+		return SqlProvider::getSQL(
+			$this->query->category(), $this->query->subcategory(),
+			$this->query->allSubcategories(), $this->query->appliedFilters() );
 	}
 
 	protected function getOrderFields() {
@@ -105,7 +81,7 @@ class QueryPage extends \QueryPage {
 		$this->getOutput()->addHTML( Html::openElement( 'div', [ 'class' => 'drilldown-results-output' ] ) );
 
 		$semanticResultPrinter = new SemanticResultPrinter( $res, $num );
-		$displayParametersList = DisplayParametersList::forCategory( $this->category );
+		$displayParametersList = DisplayParametersList::forCategory( $this->query->category() );
 		foreach ( $displayParametersList as $displayParameters ) {
 			$caption = $displayParameters->caption !== null
 				? \Html::element( 'h2', [], $displayParameters->caption )
@@ -116,7 +92,7 @@ class QueryPage extends \QueryPage {
 		}
 
 		// Add outro template
-		$footerPage = Footer::forCategory( $this->category )->value;
+		$footerPage = Footer::forCategory( $this->query->category() )->value;
 
 		if ( $footerPage !== null ) {
 			$title = Title::newFromText( $footerPage );
