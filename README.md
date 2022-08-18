@@ -1,4 +1,7 @@
-== About ==
+[![CI](https://github.com/gesinn-it-pub/mediawiki-extensions-SemanticDrilldown/actions/workflows/ci.yml/badge.svg)](https://github.com/gesinn-it-pub/mediawiki-extensions-SemanticDrilldown/actions/workflows/ci.yml)
+
+
+# About
 
 Semantic Drilldown is an extension to MediaWiki that works in
 conjunction with another extension, Semantic MediaWiki, to provide
@@ -10,7 +13,7 @@ https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown
 
 Notes on installing Semantic Drilldown can be found in the file INSTALL.
 
-== Credits ==
+# Credits
 
 Semantic Drilldown was mainly written by Yaron Koren.
 
@@ -21,7 +24,7 @@ of Code, and by David Loomer, MWJames, Edward Chernenko and others.
 Language translations were provided by many people; see the files in
 the /i18n directory for the full listings.
 
-== Contact ==
+# Contact
 
 Most comments, questions and suggestions should be sent to the Semantic
 MediaWiki mailing list:
@@ -35,7 +38,7 @@ Bug reports should be submitted at the MediaWiki Bugzilla site:
 
  https://bugzilla.wikimedia.org/
 
-== Credits to other projects ==
+# Credits to other projects
 
 * The Semantic Drilldown extension makes use of the jQuery and jQuery UI
 Javascript libraries, embedded within MediaWiki.

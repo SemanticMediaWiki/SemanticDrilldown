@@ -18,16 +18,20 @@ jobs:
       matrix:
         include:
           - mediawiki_version: '1.35'
-            smw_version: '4.0.1'
+            smw_version: '4.0.2'
             coverage: true
+            experimental: false
+          - mediawiki_version: '1.35'
+            smw_version: dev-master
+            coverage: false
             experimental: false
           - mediawiki_version: '1.36'
             smw_version: dev-master
-            coverage: true
+            coverage: false
             experimental: false
           - mediawiki_version: '1.37'
             smw_version: dev-master
-            coverage: true
+            coverage: false
             experimental: false
 
     env:
@@ -44,4 +48,10 @@ jobs:
 
       - name: Run tests with coverage
         run: make ci-coverage
+        if: matrix.coverage == true
+
+      - name: Upload code coverage
+        uses: codecov/codecov-action@v2
+        with:
+          files: coverage/php/coverage.xml
         if: matrix.coverage == true
