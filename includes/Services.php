@@ -6,6 +6,8 @@ use Closure;
 use MediaWiki\MediaWikiServices;
 use OutputPage;
 use PageProps;
+use SD\Parameters\LoadParameters;
+use SD\Parameters\Parameters;
 use SD\ParserFunctions\DrilldownInfo;
 use SD\ParserFunctions\DrilldownLink;
 use SD\Specials\BrowseData\DrilldownQuery;
@@ -27,6 +29,7 @@ class Services {
 		if ( self::$instance === null ) {
 			self::$instance = new Services();
 		}
+
 		return self::$instance;
 	}
 
@@ -50,22 +53,21 @@ class Services {
 
 	public static function getSpecialBrowseData(): SpecialBrowseData {
 		$s = self::instance();
-		return new SpecialBrowseData(
-			$s->getNewQuery(), $s->getNewQueryPage(),	$s->getFilterBuilder() );
+
+		return new SpecialBrowseData( $s->getLoadParameters(), $s->getNewQuery(),
+			$s->getNewQueryPage(), $s->getBuildFilters() );
 	}
 
 	private function getRepository(): Repository {
 		return new Repository( $this->getDbConnectionRef() );
 	}
 
-	private function getFilterBuilder() {
-		return new FilterBuilder( $this->getRepository(), $this->getGetPageSchema() );
+	private function getBuildFilters(): BuildFilters {
+		return new BuildFilters( $this->getNewFilter(), $this->getGetPageSchema() );
 	}
 
 	private function getGetPageSchema(): Closure {
-		return fn( $category ) => class_exists( 'PSSchema' )
-			? new \PSSchema( $category )
-			: null;
+		return fn( $category ) => class_exists( 'PSSchema' ) ? new \PSSchema( $category ) : null;
 	}
 
 	private function getNewQuery(): Closure {
@@ -75,13 +77,25 @@ class Services {
 	}
 
 	private function getNewQueryPage(): Closure {
-		return fn( $context, $query, $offset, $limit ) =>
-			new QueryPage( $this->getNewPrinter(), $context, $query, $offset, $limit );
+		return fn( $context, $parameters, $query, $offset, $limit ) =>
+			new QueryPage( $this->getNewPrinter(), $context, $parameters, $query, $offset, $limit );
 	}
 
 	private function getNewPrinter(): Closure {
-		return fn( OutputPage $output, WebRequest $request, DrilldownQuery $query ) =>
-			new Printer( $this->getRepository(), $this->getPageProps(), $output, $request, $query );
+		return fn( OutputPage $output, WebRequest $request, Parameters $parameters, DrilldownQuery $query ) =>
+			new Printer( $this->getRepository(), $this->getPageProps(), $output, $request, $parameters, $query );
+	}
+
+	private function getNewFilter(): Closure {
+		// phpcs:ignore MediaWiki.Usage.AssignmentInReturn.AssignmentInReturn
+		return fn( $name, $property, $category, $requiredFilters, $int, $propertyType = null,
+				   $timePeriod = null, $allowedValues = null ) =>
+			new Filter( $this->getRepository(),
+			   $name, $property, $category, $requiredFilters, $int, $propertyType, $timePeriod, $allowedValues );
+	}
+
+	private function getLoadParameters(): LoadParameters {
+		return new LoadParameters( $this->getPageProps() );
 	}
 
 	private function getPageProps(): PageProps {

@@ -7,7 +7,7 @@ use IteratorAggregate;
 
 class DisplayParametersList extends Parameter implements IteratorAggregate {
 
-	protected const PAGE_PROPERTY_NAME = 'SDDisplayParams';
+	public const PAGE_PROPERTY_NAME = 'SDDisplayParams';
 
 	/** @readonly */
 	private array $list = [];
@@ -27,7 +27,7 @@ class DisplayParametersList extends Parameter implements IteratorAggregate {
 			: implode( '|',  array_map( fn( $dps ) => "$dps", $this->list ) );
 	}
 
-	protected static function fromPropertyValue( ?string $value ): self {
+	public static function fromPropertyValue( ?string $value ): self {
 		$result = new self;
 		if ( !empty( $value ) ) {
 			foreach ( explode( '|', $value ) as $displayParameters ) {

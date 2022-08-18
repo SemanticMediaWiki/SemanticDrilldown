@@ -26,18 +26,13 @@ abstract class Parameter implements IParameter {
 	 * @param string|null $value
 	 * @return static
 	 */
-	abstract protected static function fromPropertyValue( ?string $value ): self;
+	abstract public static function fromPropertyValue( ?string $value ): self;
 
 	public function setPageProperty( ParserOutput $parserOutput ) {
 		$propertyValue = $this->propertyValue();
 		if ( $propertyValue !== null ) {
 			Compat::setPageProperty( $parserOutput, static::PAGE_PROPERTY_NAME, $propertyValue );
 		}
-	}
-
-	public static function forCategory( $category ): self {
-		$value = ReadCategoryProperty::for( $category, static::PAGE_PROPERTY_NAME );
-		return static::fromPropertyValue( $value );
 	}
 
 }

@@ -5,8 +5,7 @@ namespace SD\Specials\BrowseData;
 use Html;
 use IDatabase;
 use OutputPage;
-use SD\Parameters\DisplayParametersList;
-use SD\Parameters\Footer;
+use SD\Parameters\Parameters;
 use SD\Sql\SqlProvider;
 use Skin;
 use SMWOutputs;
@@ -15,17 +14,19 @@ use WikiPage;
 
 class QueryPage extends \QueryPage {
 	private Printer $printer;
+	private Parameters $parameters;
 	private DrilldownQuery $query;
 
-	public function __construct( $newPrinter, $context, $query, $offset, $limit ) {
+	public function __construct( $newPrinter, $context, $parameters, $query, $offset, $limit ) {
 		parent::__construct( 'BrowseData' );
 
 		$this->setContext( $context );
+		$this->printer = $newPrinter( $this->getOutput(), $this->getRequest(), $parameters, $query );
+
+		$this->parameters = $parameters;
 		$this->query = $query;
 		$this->offset = $offset;
 		$this->limit = $limit;
-
-		$this->printer = $newPrinter( $this->getOutput(), $this->getRequest(), $query );
 	}
 
 	public function getName() {
@@ -81,7 +82,7 @@ class QueryPage extends \QueryPage {
 		$this->getOutput()->addHTML( Html::openElement( 'div', [ 'class' => 'drilldown-results-output' ] ) );
 
 		$semanticResultPrinter = new SemanticResultPrinter( $res, $num );
-		$displayParametersList = DisplayParametersList::forCategory( $this->query->category() );
+		$displayParametersList = $this->parameters->displayParametersList();
 		foreach ( $displayParametersList as $displayParameters ) {
 			$caption = $displayParameters->caption !== null
 				? \Html::element( 'h2', [], $displayParameters->caption )
@@ -92,8 +93,7 @@ class QueryPage extends \QueryPage {
 		}
 
 		// Add outro template
-		$footerPage = Footer::forCategory( $this->query->category() )->value;
-
+		$footerPage = $this->parameters->footer();
 		if ( $footerPage !== null ) {
 			$title = Title::newFromText( $footerPage );
 			$page = WikiPage::factory( $title );

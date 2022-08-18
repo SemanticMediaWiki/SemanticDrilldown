@@ -5,13 +5,13 @@ namespace SD;
 use Closure;
 use SD\Parameters\Filters;
 
-class FilterBuilder {
+class BuildFilters {
 
-	private Repository $repository;
+	private Closure $newFilter;
 	private Closure $getPageSchema;
 
-	public function __construct( Repository $repository, Closure $getPageSchema ) {
-		$this->repository = $repository;
+	public function __construct( Closure $newFilter, Closure $getPageSchema ) {
+		$this->newFilter = $newFilter;
 		$this->getPageSchema = $getPageSchema;
 	}
 
@@ -23,25 +23,23 @@ class FilterBuilder {
 	 * @param string $category
 	 * @return Filter[]
 	 */
-	public function buildComplete( $category ): array {
-		$filterParameters = Filters::forCategory( $category );
+	public function __invoke( $category, ?Filters $filterParameters ): array {
 		return array_merge(
-			$this->buildList( $filterParameters ),
+			$this->buildFilterList( $filterParameters ?? [] ),
 			$this->buildPageSchemaFilters( $category ) );
 	}
 
-	private function buildList( $filterParameters ) {
+	private function buildFilterList( $filterParameters ) {
 		$filters = [];
 		foreach ( $filterParameters as $filterParameter ) {
-			$filters[] = self::build( $filterParameter );
+			$filters[] = self::buildFilter( $filterParameter );
 		}
 
 		return $filters;
 	}
 
-	private function build( Parameters\Filter $parameter ): Filter {
-		return new Filter(
-			$this->repository,
+	private function buildFilter( Parameters\Filter $parameter ): Filter {
+		return ( $this->newFilter )(
 			$parameter->name(),
 			$parameter->property(),
 			$parameter->category(),
@@ -105,8 +103,7 @@ class FilterBuilder {
 					$allowedValues = [];
 				}
 
-				$result[] = new Filter(
-					$this->repository,
+				$result[] = ( $this->newFilter )(
 					$name,
 					$property,
 					$propertyType,

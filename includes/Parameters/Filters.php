@@ -7,7 +7,7 @@ use IteratorAggregate;
 
 class Filters extends Parameter implements IteratorAggregate {
 
-	protected const PAGE_PROPERTY_NAME = 'SDFilters';
+	public const PAGE_PROPERTY_NAME = 'SDFilters';
 
 	private array $filters;
 
@@ -27,7 +27,7 @@ class Filters extends Parameter implements IteratorAggregate {
 			: serialize( $this->filters );
 	}
 
-	protected static function fromPropertyValue( ?string $value ): self {
+	public static function fromPropertyValue( ?string $value ): self {
 		$result = new self;
 
 		$filters = [];

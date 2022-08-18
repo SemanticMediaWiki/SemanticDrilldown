@@ -15,23 +15,25 @@ use Closure;
 use IncludableSpecialPage;
 use MediaWiki\MediaWikiServices;
 use SD\AppliedFilter;
-use SD\FilterBuilder;
-use SD\Parameters\Title;
+use SD\BuildFilters;
+use SD\Parameters\LoadParameters;
 use SD\Utils;
 
 class SpecialBrowseData extends IncludableSpecialPage {
 
+	private LoadParameters $loadParameters;
 	private Closure $newDrilldownQuery;
 	private Closure $newQueryPage;
-	private FilterBuilder $filterBuilder;
+	private BuildFilters $buildFilters;
 
 	public function __construct(
-		$newDrilldownQuery, $newQueryPage, FilterBuilder $filterBuilder
+		LoadParameters $loadParameters, $newDrilldownQuery, $newQueryPage, BuildFilters $buildFilters
 	) {
 		parent::__construct( 'BrowseData' );
+		$this->loadParameters = $loadParameters;
 		$this->newDrilldownQuery = $newDrilldownQuery;
 		$this->newQueryPage = $newQueryPage;
-		$this->filterBuilder = $filterBuilder;
+		$this->buildFilters = $buildFilters;
 	}
 
 	public function execute( $query ): void {
@@ -63,15 +65,8 @@ class SpecialBrowseData extends IncludableSpecialPage {
 		}
 		if ( !$category ) {
 			$category_title = wfMessage( 'browsedata' )->text();
-		} else {
-			$category_title = Title::forCategory( $category )->value;
-			if ( $category_title === null ) {
-				$category_title = wfMessage( 'browsedata' )->text() . html_entity_decode( wfMessage( 'colon-separator' )->text() ) . str_replace( '_', ' ', $category );
-			}
-		}
-		// if no category was specified, go with the first
-		// category on the site, alphabetically
-		if ( !$category ) {
+			// if no category was specified, go with the first
+			// category on the site, alphabetically
 			$categories = Utils::getCategoriesForBrowsing();
 			if ( count( $categories ) === 0 ) {
 				// There are apparently no top-level
@@ -79,16 +74,18 @@ class SpecialBrowseData extends IncludableSpecialPage {
 				return;
 			}
 			$category = $categories[0];
+			$parameters = ( $this->loadParameters )( $category );
+		} else {
+			$parameters = ( $this->loadParameters )( $category );
+			$category_title = $parameters->title();
+			if ( $category_title === null ) {
+				$category_title = wfMessage( 'browsedata' )->text() . html_entity_decode( wfMessage( 'colon-separator' )->text() ) . str_replace( '_', ' ', $category );
+			}
 		}
 
 		$subcategory = Utils::escapeString( $request->getVal( '_subcat' ) );
-
-		$filters = $this->filterBuilder->buildComplete( $category );
-
-		$filter_used = [];
-		foreach ( $filters as $filter ) {
-			$filter_used[] = false;
-		}
+		$filters = ( $this->buildFilters )( $category, $parameters->filters() );
+		$filter_used = array_fill( 0, count( $filters ), false );
 		$applied_filters = [];
 		$remaining_filters = [];
 		foreach ( $filters as $i => $filter ) {
@@ -143,7 +140,8 @@ class SpecialBrowseData extends IncludableSpecialPage {
 		);
 		$drilldownQuery = ( $this->newDrilldownQuery )(
 			$category, $subcategory, $filters, $applied_filters, $remaining_filters );
-		$rep = ( $this->newQueryPage )( $this->getContext(), $drilldownQuery, $offset, $limit );
+		$rep = ( $this->newQueryPage )(
+			$this->getContext(), $parameters, $drilldownQuery, $offset, $limit );
 		$rep->execute( $query );
 
 		$out->addHTML( "\n			</div> <!-- drilldown-results -->\n" );

@@ -19,7 +19,7 @@ class SimpleParameter extends Parameter {
 		return $this->value;
 	}
 
-	protected static function fromPropertyValue( ?string $value ): SimpleParameter {
+	public static function fromPropertyValue( ?string $value ): SimpleParameter {
 		return new self( $value );
 	}
 

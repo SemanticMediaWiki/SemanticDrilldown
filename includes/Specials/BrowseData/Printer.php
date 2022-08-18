@@ -9,7 +9,7 @@ use PageProps;
 use SD\AppliedFilter;
 use SD\AppliedFilterValue;
 use SD\Filter;
-use SD\Parameters\Header;
+use SD\Parameters\Parameters;
 use SD\PossibleFilterValue;
 use SD\PossibleFilterValues;
 use SD\Repository;
@@ -25,15 +25,18 @@ class Printer {
 	private PageProps $pageProps;
 	private OutputPage $output;
 	private WebRequest $request;
+	private Parameters $parameters;
 	private DrilldownQuery $query;
 
 	public function __construct(
-		Repository $repository, PageProps $pageProps, $output, $request, DrilldownQuery $query
+		Repository $repository, PageProps $pageProps,
+		OutputPage $output, WebRequest $request, Parameters $parameters, DrilldownQuery $query
 	) {
 		$this->repository = $repository;
 		$this->pageProps = $pageProps;
 		$this->output = $output;
 		$this->request = $request;
+		$this->parameters = $parameters;
 		$this->query = $query;
 	}
 
@@ -52,7 +55,7 @@ class Printer {
 		$header = "";
 
 		// Add intro template
-		$headerPage = Header::forCategory( $this->query->category() )->value;
+		$headerPage = $this->parameters->header();
 		if ( $headerPage !== null ) {
 			$title = Title::newFromText( $headerPage );
 			$page = WikiPage::factory( $title );

@@ -12,5 +12,5 @@ use ParserOutput;
 interface IParameter {
 	public function setPageProperty( ParserOutput $parserOutput );
 
-	public static function forCategory( $category ): self;
+	public static function fromPropertyValue( ?string $value ): self;
 }
