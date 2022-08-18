@@ -1,0 +1,96 @@
+{
+	"description": "filters",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomePage",
+			"contents": "[[Has type::Page]]"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "Category1",
+			"contents": "{{#drilldowninfo: filters=Page (property=SomePage)|display parameters=?SomePage;format=list}}"
+		},
+		{
+			"page": "Page1",
+			"contents": "[[Category:Category1]]{{#set: SomePage=Page1,Page2,Page3|+sep=,}}"
+		},
+		{
+			"page": "Page2",
+			"contents": "{{DISPLAYTITLE:DisplayTitle2}}"
+		}
+	],
+	"tests": [
+		{
+			"type": "special",
+			"about": "no filter applied",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"Page:",
+					"<option value=\"Page1\">Page1</option>",
+					"<option value=\"Page2\">DisplayTitle2</option>",
+					"<option value=\"Page3\">Page3</option>"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "page filter applied with display-title page",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {
+					"_search_Page": [ "Page2" ]
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> > Page:",
+					"<span class=\"drilldown-header-value\">~ 'DisplayTitle2'</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
+
+					"Page:",
+					"<option value=\"Page1\">Page1</option>",
+					"<option value=\"Page2\">DisplayTitle2</option>",
+					"<option value=\"Page3\">Page3</option>"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "page filter applied with non-display-title page",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {
+					"_search_Page": [ "Page1" ]
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> > Page:",
+					"<span class=\"drilldown-header-value\">~ 'Page1'</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
+
+					"Page:",
+					"<option value=\"Page1\">Page1</option>",
+					"<option value=\"Page2\">DisplayTitle2</option>",
+					"<option value=\"Page3\">Page3</option>"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgLang": "en",
+		"wgRestrictDisplayTitle": false,
+		"sdgMinValuesForComboBox": 0
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

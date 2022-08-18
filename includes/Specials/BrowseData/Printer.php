@@ -125,11 +125,12 @@ class Printer {
 					if ( $j > 0 ) {
 						$header .= ' <span class="drilldown-or">' . wfMessage( 'sd_browsedata_or' )->text() . '</span> ';
 					}
+					$filter_text = Utils::escapeString( $this->getNiceAppliedFilterValue( $af->filter->propertyType(), $search_term ) );
 					$temp_filters_array = $this->query->appliedFilters();
 					$removed_values = array_splice( $temp_filters_array[$i]->search_terms, $j, 1 );
 					$remove_filter_url = $this->makeBrowseURL( $this->query->category(), $temp_filters_array, $this->query->subcategory() );
 					array_splice( $temp_filters_array[$i]->search_terms, $j, 0, $removed_values );
-					$header .= "\n\t" . '<span class="drilldown-header-value">~ \'' . $search_term . '\'</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdSkinsPath . '/filter-x.png" /> </a>';
+					$header .= "\n\t" . '<span class="drilldown-header-value">~ \'' . $filter_text . '\'</span> <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdSkinsPath . '/filter-x.png" /> </a>';
 				}
 			} elseif ( $af->lower_date != null || $af->upper_date != null ) {
 				$header .= "\n\t<span class=\"drilldown-header-value\">" . $af->lower_date_string . " - " . $af->upper_date_string . "</span>";
@@ -379,19 +380,15 @@ END;
 					<div class="drilldown-filter-label">
 
 END;
-		// No point showing arrow if it's just a
-		// single text or date input.
-		if ( $isNormalFilter ) {
-			if ( $isApplied ) {
-				$arrowImage = "$sdSkinsPath/right-arrow.png";
-			} else {
-				$arrowImage = "$sdSkinsPath/down-arrow.png";
-			}
-			$text .= <<<END
-					<a class="drilldown-values-toggle" style="cursor: default;"><img src="$arrowImage" /></a>
+		if ( $isApplied ) {
+			$arrowImage = "$sdSkinsPath/right-arrow.png";
+		} else {
+			$arrowImage = "$sdSkinsPath/down-arrow.png";
+		}
+		$text .= <<<END
+				<a class="drilldown-values-toggle" style="cursor: default;"><img src="$arrowImage" /></a>
 
 END;
-		}
 		$text .= "\t\t\t\t\t$filterName:";
 		if ( $isApplied ) {
 			$add_another_str = wfMessage( 'sd_browsedata_addanothervalue' )->text();

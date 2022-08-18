@@ -9,7 +9,7 @@ use Wikimedia;
 use const DBO_TRX;
 
 /**
- * @covers \TemporaryTableManager
+ * @covers \SD\TemporaryTableManager
  */
 class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
 	/** @var DatabaseBase|\Wikimedia\Rdbms\IDatabase */
