@@ -240,7 +240,7 @@ END;
 		$smw_ids = $dbw->tableName( Utils::getIDsTableName() );
 		$prop_ns = SMW_NS_PROPERTY;
 		$sql = <<<END
-	SELECT $value_field, $displaytitle, count(DISTINCT sdv.id) 
+	SELECT $value_field as value, $displaytitle as displayTitle, count(DISTINCT sdv.id) as count 
 	FROM semantic_drilldown_values sdv
 	JOIN $property_table_name p ON sdv.id = p.s_id
 END;
@@ -261,13 +261,13 @@ END;
 END;
 		$res = $dbw->query( $sql );
 		while ( $row = $res->fetchRow() ) {
-			$value_string = str_replace( '_', ' ', $row[0] );
+			$value_string = str_replace( '_', ' ', $row['value'] );
 			// We check this here, and not in the SQL, because
 			// for MySQL, 0 sometimes equals blank.
 			if ( $value_string === '' ) {
 				continue;
 			}
-			$possible_values[] = new PossibleFilterValue( $value_string, $row[2], $row[1] );
+			$possible_values[] = new PossibleFilterValue( $value_string, $row['count'], $row['displayTitle'] );
 		}
 
 		return new PossibleFilterValues( $possible_values );

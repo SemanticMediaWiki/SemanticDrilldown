@@ -232,7 +232,7 @@ class AppliedFilter {
 		$smw_ids = $dbr->tableName( Utils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
 		$cat_ns = NS_CATEGORY;
-		$sql = "SELECT $value_field, $displaytitle
+		$sql = "SELECT $value_field as value, $displaytitle as displayTitle
 	FROM $property_table_name p
 	JOIN $smw_ids p_ids ON p.p_id = p_ids.smw_id\n";
 		if ( $this->filter->propertyType() === 'page' ) {
@@ -252,11 +252,11 @@ END;
 		$res = $dbr->query( $sql );
 		while ( $row = $res->fetchRow() ) {
 			if ( $this->filter->propertyType() == 'date' && $this->filter->getTimePeriod() == 'month' ) {
-				$value_string = Utils::monthToString( $row[1] ) . " " . $row[0];
+				$value_string = Utils::monthToString( $row[1] ) . " " . $row['value'];
 			} else {
-				$value_string = str_replace( '_', ' ', $row[0] );
+				$value_string = str_replace( '_', ' ', $row['value'] );
 			}
-			$possible_values[] = new PossibleFilterValue( $value_string, null, $row[1] );
+			$possible_values[] = new PossibleFilterValue( $value_string, null, $row['displayTitle'] );
 		}
 		return new PossibleFilterValues( $possible_values );
 	}
