@@ -527,24 +527,26 @@ END;
 		}
 		// now print the values
 		$num_printed_values = 0;
+		$filterByValueMessage = wfMessage( 'sd_browsedata_filterbyvalue' )->text();
 		foreach ( $possibleValues as $value ) {
 			$num_results = $value->count();
 			if ( $num_printed_values++ > 0 ) {
-				$results_line .= " · ";
+				$results_line .= "<span class=\"sep\"> · </span>";
 			}
 			$filter_text = Utils::escapeString( $this->getNiceFilterValue( $f->propertyType(), $value->displayValue() ) );
 			$filter_text .= "&nbsp;($num_results)";
 			$filter_url = $cur_url . urlencode( str_replace( ' ', '_', $f->name() ) ) . '=' . urlencode( str_replace( ' ', '_', $value->value() ) );
+			$styleAttribute = "";
 			if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 				if ( $lowest_num_results != $highest_num_results ) {
 					$font_size = round( ( ( log( $num_results ) - log( $lowest_num_results ) ) * $scale_factor ) + $sdgFiltersSmallestFontSize );
 				} else {
 					$font_size = ( $sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize ) / 2;
 				}
-				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMessage( 'sd_browsedata_filterbyvalue' )->text() . '" style="font-size: ' . $font_size . 'px">' . $filter_text . '</a>';
-			} else {
-				$results_line .= "\n						" . '<a href="' . $filter_url . '" title="' . wfMessage( 'sd_browsedata_filterbyvalue' )->text() . '">' . $filter_text . '</a>';
+				$styleAttribute = " style=\"font-size: $font_size px;\"";
 			}
+			$results_line .=
+				"<span class=\"drilldown-filter-value\"><a href=\"$filter_url\" title=\"$filterByValueMessage\"$styleAttribute>$filter_text</a></span>";
 		}
 		return $results_line;
 	}
