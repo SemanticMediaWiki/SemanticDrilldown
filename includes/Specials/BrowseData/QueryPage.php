@@ -79,17 +79,25 @@ class QueryPage extends \QueryPage {
 	 * @param int $offset Paging offset
 	 */
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
-		$this->getOutput()->addHTML( Html::openElement( 'div', [ 'class' => 'drilldown-results-output' ] ) );
+		$out->addHTML( Html::openElement( 'div', [ 'class' => 'drilldown-results-output' ] ) );
 
 		$semanticResultPrinter = new SemanticResultPrinter( $res, $num );
 		$displayParametersList = $this->parameters->displayParametersList();
 		foreach ( $displayParametersList as $displayParameters ) {
-			$caption = $displayParameters->caption !== null
-				? \Html::element( 'h2', [], $displayParameters->caption )
-				: '';
-
 			$text = $semanticResultPrinter->getText( iterator_to_array( $displayParameters ) );
-			$out->addWikiTextAsInterface( "$caption\n$text" );
+
+			$out->addHTML( Html::openElement( 'div', [ 'class' => 'drilldown-result' ] ) );
+			// add caption
+			if ( $displayParameters->caption !== null ) {
+				$out->addHTML( Html::element( 'div', [ 'class' => 'drilldown-result-heading' ],
+					$displayParameters->caption ) );
+			}
+			// add results
+			$out->addHTML( Html::openElement( 'div', [ 'class' => 'drilldown-result-body' ] ) );
+			$out->addWikiTextAsInterface( $text );
+			$out->addHTML( Html::closeElement( 'div' ) );
+
+			$out->addHTML( Html::closeElement( 'div' ) );
 		}
 
 		// Add outro template
@@ -106,10 +114,10 @@ class QueryPage extends \QueryPage {
 		}
 
 		// close drilldown-results
-		$this->getOutput()->addHTML( Html::closeElement( 'div' ) );
+		$out->addHTML( Html::closeElement( 'div' ) );
 
 		// close the Bootstrap Panel wrapper opened in getPageHeader();
-		$this->getOutput()->addHTML( '</div></div>' );
+		$out->addHTML( '</div></div>' );
 
 		SMWOutputs::commitToOutputPage( $out );
 	}

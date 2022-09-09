@@ -1,5 +1,5 @@
 {
-	"description": "Caption parameter of 'display parameters'",
+	"description": "display parameters",
 	"setup": [
 		{
 			"namespace": "NS_CATEGORY",
@@ -13,7 +13,7 @@
 	"tests": [
 		{
 			"type": "special",
-			"about": "Caption is displayed",
+			"about": "Caption and results are wrapped in corresponding divs",
 			"special-page": {
 				"page": "BrowseData",
 				"query-parameters": "Category1",
@@ -21,7 +21,9 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<h2><span class=\"mw-headline\" id=\"THIS_IS_THE_CAPTION\">THIS IS THE CAPTION</span></h2>"
+					"<div class=\"drilldown-result\">",
+					"<div class=\"drilldown-result-heading\">THIS IS THE CAPTION</div>",
+					"<div class=\"drilldown-result-body\">"
 				]
 			}
 		}
