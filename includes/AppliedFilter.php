@@ -26,15 +26,7 @@ class AppliedFilter {
 	public static function create( Filter $filter, $values, $search_terms = null, $lower_date = null, $upper_date = null ) {
 		$af = new AppliedFilter();
 		$af->filter = $filter;
-		if ( $search_terms != null ) {
-			$af->search_terms = [];
-			foreach ( $search_terms as $search_term ) {
-				$search_term = htmlspecialchars( str_replace( '_', ' ', $search_term ) );
-				// Ampersands need to be restored - hopefully
-				// this is safe.
-				$af->search_terms[] = str_replace( '&amp;', '&', $search_term );
-			}
-		}
+		$af->search_terms = $search_terms;
 
 		$dateParsed = $af->parseUpperOrLowerDate( $lower_date, false );
 		if ( $dateParsed ) {

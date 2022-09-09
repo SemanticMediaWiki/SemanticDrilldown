@@ -94,14 +94,15 @@ class SpecialBrowseData extends IncludableSpecialPage {
 			$lower_date = $request->getVal( '_lower_' . $filter_name );
 			$upper_date = $request->getVal( '_upper_' . $filter_name );
 			if ( $vals_array = $request->getArray( $filter_name ) ) {
-				foreach ( $vals_array as $j => $val ) {
-					// Escape the filter value to prevent malicious strings in the URLs
-					$val = Utils::escapeString( $val );
-					$vals_array[$j] = str_replace( '_', ' ', $val );
+				foreach ( $vals_array as &$val ) {
+					$val = str_replace( '_', ' ', $val );
 				}
 				$applied_filters[] = AppliedFilter::create( $filter, $vals_array );
 				$filter_used[$i] = true;
 			} elseif ( $search_terms != null ) {
+				foreach ( $search_terms as &$search_term ) {
+					$search_term = str_replace( '_', ' ', $search_term );
+				}
 				$applied_filters[] = AppliedFilter::create( $filter, [], $search_terms );
 				$filter_used[$i] = true;
 			} elseif ( $lower_date != null || $upper_date != null ) {
