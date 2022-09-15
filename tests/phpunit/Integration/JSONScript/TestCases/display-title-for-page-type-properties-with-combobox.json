@@ -50,8 +50,8 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> > Page:",
-					"<span class=\"drilldown-header-value\">~ 'DisplayTitle2'</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a>",
+					"> Page: <span class=\"drilldown-header-value\">~ 'DisplayTitle2'</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
 
 					"Page:",
 					"<option value=\"Page1\">Page1</option>",
@@ -72,8 +72,8 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> > Page:",
-					"<span class=\"drilldown-header-value\">~ 'Page1'</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a>",
+					"> Page: <span class=\"drilldown-header-value\">~ 'Page1'</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
 
 					"Page:",
 					"<option value=\"Page1\">Page1</option>",

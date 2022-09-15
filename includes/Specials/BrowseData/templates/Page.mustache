@@ -1,0 +1,16 @@
+{{{introTemplate}}}
+{{#categories}}{{>Categories}}{{/categories}}
+<div class="panel panel panel-default">
+    <div class="panel-heading">&nbsp;</div>
+    <div class="panel-body">
+        {{#appliedFilters}}
+            <div id="drilldown-header">
+                <a href="{{categoryUrl}}" title="{{msg_sd_browsedata_resetfilters}}">{{category}}</a>
+                {{{remainingHtml}}}
+            </div>
+        {{/appliedFilters}}
+        {{#applicableFilters}}
+            {{{remainingHtml}}}
+        {{/applicableFilters}}
+    </div>
+</div>

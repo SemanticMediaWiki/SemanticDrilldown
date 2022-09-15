@@ -107,8 +107,8 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> >",
-					"<span class=\"drilldown-header-value\">A</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\"><img src=\"/extensions/SemanticDrilldown/skins/filter-x.png\" /></a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a>",
+					"> Text: <span class=\"drilldown-header-value\">A</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\"><img src=\"/extensions/SemanticDrilldown/skins/filter-x.png\" /></a>",
 
 					"Text:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&Text[1]=B\" title=\"Filter by this value\">B</a>",
@@ -148,8 +148,8 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> >",
-					"<span class=\"drilldown-header-value\">~ 'A'</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a>",
+					"> Text: <span class=\"drilldown-header-value\">~ 'A'</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
 
 					"Text:",
 					"<option value=\"_search_Text[1]\"></option>",
@@ -175,8 +175,8 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> >",
-					"<span class=\"drilldown-header-value\">1</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\"><img src=\"/extensions/SemanticDrilldown/skins/filter-x.png\" /></a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a>",
+					"> Number: <span class=\"drilldown-header-value\">1</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\"><img src=\"/extensions/SemanticDrilldown/skins/filter-x.png\" /></a>",
 
 					"Text:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1&Text=A\" title=\"Filter by this value\">A&nbsp;(1)</a>",
@@ -217,8 +217,8 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> >",
-					"<span class=\"drilldown-header-value\">January 1 2000</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a>",
+					"> Date: <span class=\"drilldown-header-value\">January 1 2000</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
 
 					"Text:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1_2000&Text=A\" title=\"Filter by this value\">A&nbsp;(1)</a>",
@@ -259,8 +259,8 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> >",
-					"<span class=\"drilldown-header-value\">Page1</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a>",
+					"> Page: <span class=\"drilldown-header-value\">Page1</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
 
 					"Text:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page1&Text=A\" title=\"Filter by this value\">A&nbsp;(1)</a>",
@@ -301,8 +301,8 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a> >",
-					"<span class=\"drilldown-header-value\">Yes</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a>",
+					"> Boolean: <span class=\"drilldown-header-value\">Yes</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
 
 					"Text:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean=1&Text=A\" title=\"Filter by this value\">A&nbsp;(1)</a>",
