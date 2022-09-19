@@ -210,13 +210,13 @@ class AppliedFilter {
 			// Is this necessary?
 			$date_field = PropertyTypeDbInfo::dateField( $this->filter->propertyType() );
 			list( $yearValue, $monthValue, $dayValue ) = SqlProvider::getDateFunctions( $date_field );
-			if ( $this->filter->getTimePeriod() == 'day' ) {
+			if ( $this->filter->timePeriod() == 'day' ) {
 				$value_field = "$yearValue, $monthValue, $dayValue";
-			} elseif ( $this->filter->getTimePeriod() == 'month' ) {
+			} elseif ( $this->filter->timePeriod() == 'month' ) {
 				$value_field = "$yearValue, $monthValue";
-			} elseif ( $this->filter->getTimePeriod() == 'year' ) {
+			} elseif ( $this->filter->timePeriod() == 'year' ) {
 				$value_field = $yearValue;
-			} else { // if ( $this->filter->getTimePeriod() == 'year range' ) {
+			} else { // if ( $this->filter->timePeriod() == 'year range' ) {
 				$value_field = $yearValue;
 			}
 		}
@@ -243,7 +243,7 @@ END;
 	ORDER BY $value_field";
 		$res = $dbr->query( $sql );
 		while ( $row = $res->fetchRow() ) {
-			if ( $this->filter->propertyType() == 'date' && $this->filter->getTimePeriod() == 'month' ) {
+			if ( $this->filter->propertyType() == 'date' && $this->filter->timePeriod() == 'month' ) {
 				$value_string = Utils::monthToString( $row[1] ) . " " . $row['value'];
 			} else {
 				$value_string = str_replace( '_', ' ', $row['value'] );

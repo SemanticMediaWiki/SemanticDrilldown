@@ -79,7 +79,7 @@ class Filter {
 	}
 
 	public function timePeriod() {
-		if ( $this->timePeriod === null && $this->propertyType !== 'date' ) {
+		if ( $this->timePeriod === null && $this->propertyType === 'date' ) {
 			$this->timePeriod = $this->getTimePeriod();
 		}
 
@@ -129,7 +129,7 @@ END;
 
 		$res = $dbw->query( $sql );
 		while ( $row = $res->fetchRow() ) {
-			$timePeriod = $this->getTimePeriod();
+			$timePeriod = $this->timePeriod();
 
 			/*
 				Some pages may have incomplete date (e.g. "February, 2019" or "2019" instead
@@ -160,7 +160,7 @@ END;
 			} elseif ( $timePeriod == 'year' ) {
 				$date_string = $row[0];
 				$possible_dates[$date_string] = $count;
-			} else { // if ( $this->getTimePeriod() == 'decade' )
+			} else { // if ( $this->timePeriod() == 'decade' )
 				// Unfortunately, there's no SQL DECADE()
 				// function - so we have to take these values,
 				// which are grouped into year "buckets", and
@@ -273,7 +273,7 @@ END;
 		return new PossibleFilterValues( $possible_values );
 	}
 
-	public function getTimePeriod() {
+	private function getTimePeriod() {
 		$dbw = wfGetDB( DB_MASTER );
 		$property_value = $this->escapedProperty();
 		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );
