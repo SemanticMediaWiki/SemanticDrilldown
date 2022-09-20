@@ -345,7 +345,7 @@ END;
 		if ( $propertyType === 'page' ) {
 			$title = Title::newFromText( $value );
 			$displayTitle = $this->pageProps->getProperties( $title, 'displaytitle' );
-			$value = $displayTitle === [] ? $value : array_values( $displayTitle )[0];
+			$value = $displayTitle === [] ? $value : htmlspecialchars_decode( array_values( $displayTitle )[0] );
 		}
 
 		return $this->getNiceFilterValue( $propertyType, $value );
@@ -389,8 +389,7 @@ END;
 		}
 		if ( $af->search_terms != null ) {
 			$curSearchTermNum = count( $af->search_terms );
-			$results_line = $this->getComboBoxInput(
-				$af->filter->name(), $curSearchTermNum, $or_values );
+			$results_line = $this->getComboBoxInput( $af->filter->name(), $curSearchTermNum, $or_values );
 			return $this->getFilterLine( $af->filter->name(), true, false, $results_line, $af->filter );
 			/*
 			} elseif ( $af->lower_date != null || $af->upper_date != null ) {

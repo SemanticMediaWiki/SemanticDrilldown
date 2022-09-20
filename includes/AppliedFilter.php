@@ -125,6 +125,9 @@ class AppliedFilter {
 					// $search_term = strtolower( $search_term );
 					$search_term = str_replace( ' ', '\_', $search_term );
 					$sql .= "$value_field LIKE '%{$search_term}%'";
+					if ( $wgDBtype == 'sqlite' ) {
+						$sql .= " ESCAPE '\'";
+					}
 				} else {
 					// $search_term = strtolower( $search_term );
 					$sql .= "$value_field LIKE '%{$search_term}%'";
@@ -199,8 +202,7 @@ class AppliedFilter {
 		$dbr = $lb->getConnection( $lb::DB_REPLICA );
 
 		$property_value = $dbr->addQuotes( $this->filter->escapedProperty() );
-		$property_table_name = $dbr->tableName(
-			PropertyTypeDbInfo::tableName( $this->filter->propertyType() ) );
+		$property_table_name = $dbr->tableName( PropertyTypeDbInfo::tableName( $this->filter->propertyType() ) );
 		$revision_table_name = $dbr->tableName( 'revision' );
 		$page_props_table_name = $dbr->tableName( 'page_props' );
 		$category = $dbr->addQuotes( $category );
@@ -220,7 +222,7 @@ class AppliedFilter {
 				$value_field = $yearValue;
 			}
 		}
-		$displaytitle = $this->filter->propertyType() === 'page' ? "displaytitle.pp_value" : $value_field;
+		$displaytitle = $this->filter->propertyType() === 'page' ? 'displaytitle.pp_value' : 'null';
 		$smw_ids = $dbr->tableName( Utils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
 		$cat_ns = NS_CATEGORY;
@@ -248,7 +250,7 @@ END;
 			} else {
 				$value_string = str_replace( '_', ' ', $row['value'] );
 			}
-			$possible_values[] = new PossibleFilterValue( $value_string, null, $row['displayTitle'] );
+			$possible_values[] = new PossibleFilterValue( $value_string, null, htmlspecialchars_decode( $row['displayTitle'] ) );
 		}
 		return new PossibleFilterValues( $possible_values );
 	}

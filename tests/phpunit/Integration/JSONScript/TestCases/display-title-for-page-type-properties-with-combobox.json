@@ -13,11 +13,15 @@
 		},
 		{
 			"page": "Page1",
-			"contents": "[[Category:Category1]]{{#set: SomePage=Page1,Page2,Page3|+sep=,}}"
+			"contents": "[[Category:Category1]]{{#set: SomePage=Page1,Page2,Page3,Page4|+sep=,}}"
 		},
 		{
 			"page": "Page2",
 			"contents": "{{DISPLAYTITLE:DisplayTitle2}}"
+		},
+		{
+			"page": "Page4",
+			"contents": "{{DISPLAYTITLE:DisplayTitle4 <&>}}"
 		}
 	],
 	"tests": [
@@ -34,7 +38,8 @@
 					"Page:",
 					"<option value=\"Page1\">Page1</option>",
 					"<option value=\"Page2\">DisplayTitle2</option>",
-					"<option value=\"Page3\">Page3</option>"
+					"<option value=\"Page3\">Page3</option>",
+					"<option value=\"Page4\">DisplayTitle4 &lt;&amp;></option>"
 				]
 			}
 		},
@@ -56,7 +61,8 @@
 					"Page:",
 					"<option value=\"Page1\">Page1</option>",
 					"<option value=\"Page2\">DisplayTitle2</option>",
-					"<option value=\"Page3\">Page3</option>"
+					"<option value=\"Page3\">Page3</option>",
+					"<option value=\"Page4\">DisplayTitle4 &lt;&amp;></option>"
 				]
 			}
 		},
@@ -78,7 +84,8 @@
 					"Page:",
 					"<option value=\"Page1\">Page1</option>",
 					"<option value=\"Page2\">DisplayTitle2</option>",
-					"<option value=\"Page3\">Page3</option>"
+					"<option value=\"Page3\">Page3</option>",
+					"<option value=\"Page4\">DisplayTitle4 &lt;&amp;></option>"
 				]
 			}
 		}

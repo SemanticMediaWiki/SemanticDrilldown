@@ -8,9 +8,9 @@ class PossibleFilterValue {
 	private ?string $displayValue;
 	private ?int $count;
 
-	public function __construct( string $value, ?int $count = null, string $displayValue = null ) {
+	public function __construct( string $value, ?int $count = null, ?string $displayValue = null ) {
 		$this->value = $value;
-		$this->displayValue = $displayValue;
+		$this->displayValue = $displayValue ?: null;
 		$this->count = $count;
 	}
 
