@@ -4,18 +4,19 @@ namespace SD;
 
 use Closure;
 use MediaWiki\MediaWikiServices;
-use OutputPage;
 use PageProps;
 use SD\Parameters\LoadParameters;
-use SD\Parameters\Parameters;
 use SD\ParserFunctions\DrilldownInfo;
 use SD\ParserFunctions\DrilldownLink;
 use SD\Specials\BrowseData\DrilldownQuery;
-use SD\Specials\BrowseData\Printer;
 use SD\Specials\BrowseData\QueryPage;
 use SD\Specials\BrowseData\SpecialBrowseData;
+use SD\Specials\BrowseData\UrlService;
+use SpecialPage;
+use Title;
 use WebRequest;
 use Wikimedia\Rdbms\DBConnRef;
+use WikiPage;
 
 /**
  * The service locator of the SemanticDrilldown extension.
@@ -58,8 +59,8 @@ class Services {
 			$s->getNewQueryPage(), $s->getBuildFilters() );
 	}
 
-	private function getRepository(): Repository {
-		return new Repository( $this->getDbConnectionRef() );
+	private function getRepository(): DbService {
+		return new DbService( $this->getPrimaryDbConnectionRef(), $this->getReplicaDbConnectionRef() );
 	}
 
 	private function getBuildFilters(): BuildFilters {
@@ -77,13 +78,22 @@ class Services {
 	}
 
 	private function getNewQueryPage(): Closure {
+		// Using a prefix different from wg, the ServiceOptions approach does not work anymore;
+		// use the global variable instead:
+		global $sdgResultFormatTypes;
+
 		return fn( $context, $parameters, $query, $offset, $limit ) =>
-			new QueryPage( $this->getNewPrinter(), $context, $parameters, $query, $offset, $limit );
+			new QueryPage(
+				$sdgResultFormatTypes,
+				$this->getRepository(), $this->getPageProps(), $this->getNewUrlService(),
+				$this->getGetPageFromTitleText(),
+				$context, $parameters, $query, $offset, $limit );
 	}
 
-	private function getNewPrinter(): Closure {
-		return fn( OutputPage $output, WebRequest $request, Parameters $parameters, DrilldownQuery $query ) =>
-			new Printer( $this->getRepository(), $this->getPageProps(), $output, $request, $parameters, $query );
+	private function getNewUrlService(): Closure {
+		return fn( WebRequest $request, DrilldownQuery $query ) =>
+			new UrlService(
+				SpecialPage::getTitleFor( 'BrowseData' )->getLocalURL(), $request, $query );
 	}
 
 	private function getNewFilter(): Closure {
@@ -102,8 +112,19 @@ class Services {
 		return PageProps::getInstance();
 	}
 
-	private function getDbConnectionRef(): DBConnRef {
+	private function getGetPageFromTitleText(): Closure {
+		return static function ( string $text ) {
+			$title = Title::newFromText( $text );
+			return WikiPage::factory( $title );
+		};
+	}
+
+	private function getPrimaryDbConnectionRef(): DBConnRef {
 		return $this->services->getDBLoadBalancer()->getConnectionRef( DB_PRIMARY );
+	}
+
+	private function getReplicaDbConnectionRef(): DBConnRef {
+		return $this->services->getDBLoadBalancer()->getConnectionRef( DB_REPLICA );
 	}
 
 }

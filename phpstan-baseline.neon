@@ -18,22 +18,22 @@ parameters:
 		-
 			message: "#^Variable \\$current_filter_values might not be defined\\.$#"
 			count: 2
-			path: includes/Specials/BrowseData/Printer.php
+			path: includes/Specials/BrowseData/GetApplicableFilters.php
 
 		-
 			message: "#^Variable \\$highest_num_results might not be defined\\.$#"
 			count: 2
-			path: includes/Specials/BrowseData/Printer.php
+			path: includes/Specials/BrowseData/GetApplicableFilters.php
 
 		-
 			message: "#^Variable \\$lowest_num_results might not be defined\\.$#"
 			count: 4
-			path: includes/Specials/BrowseData/Printer.php
+			path: includes/Specials/BrowseData/GetApplicableFilters.php
 
 		-
 			message: "#^Variable \\$scale_factor might not be defined\\.$#"
 			count: 2
-			path: includes/Specials/BrowseData/Printer.php
+			path: includes/Specials/BrowseData/GetApplicableFilters.php
 
 		-
 			message: "#^Constant SMW_OUTPUT_WIKI not found\\.$#"

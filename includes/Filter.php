@@ -15,8 +15,6 @@ use SMWDIWikiPage;
  */
 
 class Filter {
-	private Repository $repository;
-
 	private string $name;
 	private string $property;
 	private ?string $propertyType;
@@ -29,12 +27,10 @@ class Filter {
 	public $possible_applied_filters = [];
 
 	public function __construct(
-		Repository $repository,
+		DbService $db,
 		$name, $property, $category, $requiredFilters, $int,
 		$propertyType = null, $timePeriod = null, $allowedValues = null
 	) {
-		$this->repository = $repository;
-
 		$this->name = $name;
 		$this->property = $property;
 		$this->category = $category;
@@ -46,7 +42,7 @@ class Filter {
 
 		if ( $this->category !== null && $this->allowedValues === null ) {
 			$this->allowedValues =
-				$this->repository->getCategoryChildren( $category, false, 5 );
+				$db->getCategoryChildren( $category, false, 5 );
 		}
 	}
 

@@ -85,7 +85,7 @@
 					"Unused:",
 					"(There are no values for this filter)",
 
-					"<div class=\"drilldown-results-output\">",
+					"<div class=\"drilldown-results-output drilldown-results-output-paged\">",
 					"<a href=\"/index.php/Category1TextANumber1Date1Page1BoolY\" title=\"Category1TextANumber1Date1Page1BoolY\">Category1TextANumber1Date1Page1BoolY</a>",
 					"<a href=\"/index.php/Category1TextBNumber2Date2Page2BoolN\" title=\"Category1TextBNumber2Date2Page2BoolN\">Category1TextBNumber2Date2Page2BoolN</a>"
 				],
@@ -128,7 +128,7 @@
 					"Unused:",
 					"(There are no values for this filter)",
 
-					"<div class=\"drilldown-results-output\">",
+					"<div class=\"drilldown-results-output drilldown-results-output-paged\">",
 					"<a href=\"/index.php/Category1TextANumber1Date1Page1BoolY\" title=\"Category1TextANumber1Date1Page1BoolY\">Category1TextANumber1Date1Page1BoolY</a>"
 				],
 				"not-contain": [
@@ -197,7 +197,7 @@
 					"Unused:",
 					"(There are no values for this filter)",
 
-					"<div class=\"drilldown-results-output\">",
+					"<div class=\"drilldown-results-output drilldown-results-output-paged\">",
 					"<a href=\"/index.php/Category1TextANumber1Date1Page1BoolY\" title=\"Category1TextANumber1Date1Page1BoolY\">Category1TextANumber1Date1Page1BoolY</a>"
 				],
 				"not-contain": [
@@ -239,7 +239,7 @@
 					"Unused:",
 					"(There are no values for this filter)",
 
-					"<div class=\"drilldown-results-output\">",
+					"<div class=\"drilldown-results-output drilldown-results-output-paged\">",
 					"<a href=\"/index.php/Category1TextANumber1Date1Page1BoolY\" title=\"Category1TextANumber1Date1Page1BoolY\">Category1TextANumber1Date1Page1BoolY</a>"
 				],
 				"not-contain": [
@@ -281,7 +281,7 @@
 					"Unused:",
 					"(There are no values for this filter)",
 
-					"<div class=\"drilldown-results-output\">",
+					"<div class=\"drilldown-results-output drilldown-results-output-paged\">",
 					"<a href=\"/index.php/Category1TextANumber1Date1Page1BoolY\" title=\"Category1TextANumber1Date1Page1BoolY\">Category1TextANumber1Date1Page1BoolY</a>"
 				],
 				"not-contain": [
@@ -323,7 +323,7 @@
 					"Unused:",
 					"(There are no values for this filter)",
 
-					"<div class=\"drilldown-results-output\">",
+					"<div class=\"drilldown-results-output drilldown-results-output-paged\">",
 					"<a href=\"/index.php/Category1TextANumber1Date1Page1BoolY\" title=\"Category1TextANumber1Date1Page1BoolY\">Category1TextANumber1Date1Page1BoolY</a>"
 				],
 				"not-contain": [

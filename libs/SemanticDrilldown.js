@@ -93,25 +93,33 @@
 		}
 	} );
 
-}( jQuery ) );
+	$.fn.toggleValuesDisplay = function () {
+		$.valuesDiv = $( this ).closest( '.drilldown-filter' )
+			.find( '.drilldown-filter-values' );
+		if ( $.valuesDiv.css( 'display' ) === 'none' ) {
+			$.valuesDiv.css( 'display', 'block' );
+			var downArrowImage = mediaWiki.config.get( 'sdgDownArrowImage' );
+			this.find( 'img' ).attr( 'src', downArrowImage );
+		} else {
+			$.valuesDiv.css( 'display', 'none' );
+			var rightArrowImage = mediaWiki.config.get( 'sdgRightArrowImage' );
+			this.find( 'img' ).attr( 'src', rightArrowImage );
+		}
+	};
 
-jQuery.fn.toggleValuesDisplay = function () {
-	jQuery.valuesDiv = jQuery( this ).closest( '.drilldown-filter' )
-		.find( '.drilldown-filter-values' );
-	if ( jQuery.valuesDiv.css( 'display' ) === 'none' ) {
-		jQuery.valuesDiv.css( 'display', 'block' );
-		var downArrowImage = mediaWiki.config.get( 'sdgDownArrowImage' );
-		this.find( 'img' ).attr( 'src', downArrowImage );
-	} else {
-		jQuery.valuesDiv.css( 'display', 'none' );
-		var rightArrowImage = mediaWiki.config.get( 'sdgRightArrowImage' );
-		this.find( 'img' ).attr( 'src', rightArrowImage );
+	function removePagingIfNotRequired() {
+		if ( $( '.drilldown-results-output-paged' ).length === 0 ) {
+			const pagingSectionSelectors = $( '#drilldown-top-paging, .mw-spcontent > p:last-of-type' );
+			$( pagingSectionSelectors ).remove();
+		}
 	}
-};
 
-jQuery( document ).ready( function () {
-	jQuery( '.semanticDrilldownCombobox' ).combobox();
-	jQuery( '.drilldown-values-toggle' ).click( function () {
-		jQuery( this ).toggleValuesDisplay();
+	$( function () {
+		removePagingIfNotRequired();
+		$( '.semanticDrilldownCombobox' ).combobox();
+		$( '.drilldown-values-toggle' ).click( function () {
+			$( this ).toggleValuesDisplay();
+		} );
 	} );
-} );
+
+}( jQuery ) );

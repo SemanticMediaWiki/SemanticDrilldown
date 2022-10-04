@@ -41,5 +41,7 @@
 	"sd_createfilter_requirefilter": "Bevor dieser Filter angezeigt werden kann, muss folgender anderer Filter gesetzt sein:",
 	"sd-pageschemas-filter": "Filter",
 	"sd-pageschemas-values": "Werte",
-	"sd_browsedata_search": "Suchen"
+	"sd_browsedata_search": "Suchen",
+	"sd_displayparameters_with_unknown_format": "Display parameters mit unbekanntem format",
+	"sd_displayparameters_with_unsupported_format": "Display parameters mit nicht unterstütztem format"
 }

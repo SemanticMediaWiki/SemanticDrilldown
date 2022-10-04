@@ -5,178 +5,45 @@ namespace SD\Specials\BrowseData;
 use Html;
 use MediaWiki\Widget\DateInputWidget;
 use OutputPage;
-use PageProps;
 use SD\AppliedFilter;
 use SD\AppliedFilterValue;
+use SD\DbService;
 use SD\Filter;
-use SD\Parameters\Parameters;
 use SD\PossibleFilterValue;
 use SD\PossibleFilterValues;
-use SD\Repository;
 use SD\Utils;
-use SpecialPage;
-use TemplateParser;
-use Title;
 use WebRequest;
-use WikiPage;
 
-class Printer {
+class GetApplicableFilters {
 
-	private Repository $repository;
-	private PageProps $pageProps;
+	private DbService $db;
+	private UrlService $urlService;
 	private OutputPage $output;
 	private WebRequest $request;
-	private Parameters $parameters;
 	private DrilldownQuery $query;
 
-	private TemplateParser $templateParser;
-
 	public function __construct(
-		Repository $repository, PageProps $pageProps,
-		OutputPage $output, WebRequest $request, Parameters $parameters, DrilldownQuery $query
+		DbService $db, UrlService $urlService,
+		OutputPage $output, WebRequest $request, DrilldownQuery $query
 	) {
-		$this->repository = $repository;
-		$this->pageProps = $pageProps;
+		$this->db = $db;
+		$this->urlService = $urlService;
 		$this->output = $output;
 		$this->request = $request;
-		$this->parameters = $parameters;
 		$this->query = $query;
-
-		$this->templateParser = new TemplateParser( __DIR__ . '/templates' );
 	}
 
-	public function getPageHeader(): string {
-		$categories = Utils::getCategoriesForBrowsing();
-		// if there are no categories, escape quickly
-		if ( count( $categories ) == 0 ) {
-			return "";
-		}
-
-		$vm = [
-			'introTemplate' => $this->getIntroTemplate(),
-			'categories' => $this->showSingleCat() ? null : $this->getCategories( $categories ),
-		];
-
-		// if there are no subcategories or filters for this
-		// category, escape now that we've (possibly) printed the
-		// categories list
-		if ( empty( $this->query->nextLevelSubcategories() ) &&
-			 empty( $this->query->appliedFilters() ) &&
-			 empty( $this->query->remainingFilters() )
-		) {
-			return $this->processTemplate( 'Page', $vm );
-		}
-
-		if ( count( $this->query->appliedFilters() ) > 0 || $this->query->subcategory() ) {
-			$vm['appliedFilters'] = $this->getAppliedFilters();
-		}
-
-		$vm['applicableFilters'] = $this->getApplicableFilters();
-
-		return $this->processTemplate( 'Page', $vm );
-	}
-
-	private function getCategories( $categories ): array {
-		$toCategoryViewModel = function ( $category ) {
-			$category_children = $this->repository->getCategoryChildren( $category, false, 5 );
-			return [
-				'name' => $category . " (" . count( array_unique( $category_children ) ) . ")",
-				'isSelected' => str_replace( '_', ' ', $this->query->category() ) == $category,
-				'url' => $this->getUrl( $category )
-			];
-		};
-
-		global $sdgShowCategoriesAsTabs;
-		return [
-			'categoriesAsTabs' => $sdgShowCategoriesAsTabs,
-			'categories' => array_map( $toCategoryViewModel, $categories )
-		];
-	}
-
-	private function getAppliedFilters(): array {
-		global $wgScriptPath;
-		$sdSkinsPath = $wgScriptPath . '/extensions/SemanticDrilldown/skins';
-
-		$remainingHtml = '';
-		$subcategory_text = wfMessage( 'sd_browsedata_subcategory' )->text();
-
-		$query = $this->query;
-
-		if ( $query->subcategory() ) {
-			$remainingHtml .= " > ";
-			$remainingHtml .= "$subcategory_text: ";
-			$subcat_string = str_replace( '_', ' ', $query->subcategory() );
-			$remove_filter_url = $this->getUrl( $query->category(), $query->appliedFilters() );
-			$remainingHtml .= '<span class="drilldown-header-value">' . $subcat_string . '</span>' .
-				'<a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removesubcategoryfilter' )->text() . '"><img src="' . $sdSkinsPath . '/filter-x.png" /></a> ';
-		}
-
-		foreach ( $query->appliedFilters() as $i => $af ) {
-			$remainingHtml .= ( !$query->subcategory() && $i == 0 ) ? " > " : "<span class=\"drilldown-header-value\">&</span>";
-			$filter_label = $af->filter->name();
-			// add an "x" to remove this filter, if it has more
-			// than one value
-			if ( count( $query->appliedFilters()[$i]->values ) > 1 ) {
-				$temp_filters_array = $query->appliedFilters();
-				array_splice( $temp_filters_array, $i, 1 );
-				$remove_filter_url = $this->getUrl( $query->category(), $temp_filters_array, $query->subcategory() );
-				array_splice( $temp_filters_array, $i, 0 );
-				$remainingHtml .= $filter_label . ' <a href="' . $remove_filter_url . '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdSkinsPath . '/filter-x.png" /></a> : ';
-			} else {
-				$remainingHtml .= "$filter_label: ";
-			}
-			foreach ( $af->values as $j => $fv ) {
-				if ( $j > 0 ) {
-					$remainingHtml .= ' <span class="drilldown-or">' . wfMessage( 'sd_browsedata_or' )->text() . '</span> ';
-				}
-				$filter_text = Utils::escapeString( $this->getNiceAppliedFilterValue( $af->filter->propertyType(), $fv->text ) );
-				$temp_filters_array = $query->appliedFilters();
-				$removed_values = array_splice( $temp_filters_array[$i]->values, $j, 1 );
-				$remove_filter_url = $this->getUrl( $query->category(), $temp_filters_array, $query->subcategory() );
-				array_splice( $temp_filters_array[$i]->values, $j, 0, $removed_values );
-				$remainingHtml .= '<span class="drilldown-header-value">' . $filter_text . '</span> <a href="' . $remove_filter_url
-					. '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdSkinsPath . '/filter-x.png" /></a>';
-			}
-
-			if ( $af->search_terms != null ) {
-				foreach ( $af->search_terms as $j => $search_term ) {
-					if ( $j > 0 ) {
-						$remainingHtml .= ' <span class="drilldown-or">' . wfMessage( 'sd_browsedata_or' )->text() . '</span> ';
-					}
-					$filter_text = Utils::escapeString( $this->getNiceAppliedFilterValue( $af->filter->propertyType(), $search_term ) );
-					$temp_filters_array = $query->appliedFilters();
-					$removed_values = array_splice( $temp_filters_array[$i]->search_terms, $j, 1 );
-					$remove_filter_url = $this->getUrl( $query->category(), $temp_filters_array, $query->subcategory() );
-					array_splice( $temp_filters_array[$i]->search_terms, $j, 0, $removed_values );
-					$remainingHtml .= '<span class="drilldown-header-value">~ \'' . $filter_text . '\'</span> <a href="' . $remove_filter_url
-						. '" title="' . wfMessage( 'sd_browsedata_removefilter' )->text() . '"><img src="' . $sdSkinsPath . '/filter-x.png" /> </a>';
-				}
-			} elseif ( $af->lower_date != null || $af->upper_date != null ) {
-				$remainingHtml .= "<span class=\"drilldown-header-value\">" . $af->lower_date_string . " - " . $af->upper_date_string . "</span>";
-			}
-		}
-
-		return [
-			'category' => str_replace( '_', ' ', $query->category() ),
-			'categoryUrl' => $this->getUrl( $query->category() ),
-			'remainingHtml' => $remainingHtml,
-		];
-	}
-
-	private function getApplicableFilters(): array {
+	public function __invoke(): array {
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
 		$remainingHtml = '';
-		$drilldown_description = wfMessage( 'sd_browsedata_docu' )->text();
-		$remainingHtml .= "<p>$drilldown_description</p>";
 		// display the list of subcategories on one line, and below
 		// it every filter, each on its own line; each line will
 		// contain the possible values, and, in parentheses, the
 		// number of pages that match that value
-		$remainingHtml .= "<div class=\"drilldown-filters\">";
 		$cur_url = $this->getUrl( $this->query->category(), $this->query->appliedFilters(), $this->query->subcategory() );
 		$cur_url .= ( strpos( $cur_url, '?' ) ) ? '&' : '?';
-		$this->repository->createTempTable( $this->query->category(), $this->query->subcategory(), $this->query->allSubcategories(), $this->query->appliedFilters() );
+		$this->db->createTempTable( $this->query->category(), $this->query->subcategory(), $this->query->allSubcategories(), $this->query->appliedFilters() );
 		$num_printed_values = 0;
 		if ( count( $this->query->nextLevelSubcategories() ) > 0 ) {
 			$results_line = "";
@@ -187,8 +54,8 @@ class Printer {
 			// display if necessary
 			$subcat_values = [];
 			foreach ( $this->query->nextLevelSubcategories() as $i => $subcat ) {
-				$further_subcats = $this->repository->getCategoryChildren( $subcat, true, 10 );
-				$num_results = $this->repository->getNumResults( $subcat, $further_subcats );
+				$further_subcats = $this->db->getCategoryChildren( $subcat, true, 10 );
+				$num_results = $this->db->getNumResults( $subcat, $further_subcats );
 				$subcat_values[$subcat] = $num_results;
 			}
 			// get necessary values for creating the tag cloud,
@@ -243,45 +110,8 @@ class Printer {
 		}
 
 		return [
-			'remainingHtml' => $remainingHtml
+			'remainingHtml' => $remainingHtml,
 		];
-	}
-
-	private function getUrl( $category, $applied_filters = [], $subcategory = null, $filter_to_remove = null ): string {
-		$bd = SpecialPage::getTitleFor( 'BrowseData' );
-		$url = $bd->getLocalURL() . '/' . $category;
-		if ( $this->showSingleCat() ) {
-			$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
-			$url .= "_single";
-		}
-		if ( $subcategory ) {
-			$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
-			$url .= "_subcat=" . $subcategory;
-		}
-		foreach ( $applied_filters as $i => $af ) {
-			if ( $af->filter->name() == $filter_to_remove ) {
-				continue;
-			}
-			if ( count( $af->values ) == 0 ) {
-				// do nothing
-			} elseif ( count( $af->values ) == 1 ) {
-				$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
-				$url .= urlencode( str_replace( ' ', '_', $af->filter->name() ) ) . "=" . urlencode( str_replace( ' ', '_', $af->values[0]->text ) );
-			} else {
-				usort( $af->values, [ AppliedFilterValue::class, "compare" ] );
-				foreach ( $af->values as $j => $fv ) {
-					$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
-					$url .= urlencode( str_replace( ' ', '_', $af->filter->name() ) ) . "[$j]=" . urlencode( str_replace( ' ', '_', $fv->text ) );
-				}
-			}
-			if ( $af->search_terms != null ) {
-				foreach ( $af->search_terms as $j => $search_term ) {
-					$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
-					$url .= '_search_' . urlencode( str_replace( ' ', '_', $af->filter->name() ) . '[' . $j . ']' ) . "=" . urlencode( str_replace( ' ', '_', $search_term ) );
-				}
-			}
-		}
-		return $url;
 	}
 
 	/**
@@ -341,36 +171,6 @@ END;
 		return $text;
 	}
 
-	private function getNiceAppliedFilterValue( string $propertyType, string $value ): string {
-		if ( $propertyType === 'page' ) {
-			$title = Title::newFromText( $value );
-			$displayTitle = $this->pageProps->getProperties( $title, 'displaytitle' );
-			$value = $displayTitle === [] ? $value : htmlspecialchars_decode( array_values( $displayTitle )[0] );
-		}
-
-		return $this->getNiceFilterValue( $propertyType, $value );
-	}
-
-	/**
-	 * Return a "nice" version of the value for a filter, if it's some
-	 * special case like 'other', 'none', a boolean, etc.
-	 */
-	private function getNiceFilterValue( string $propertyType, string $value ): string {
-		$value = str_replace( '_', ' ', $value );
-		// if it's boolean, display something nicer than "0" or "1"
-		if ( $value === ' other' ) {
-			return wfMessage( 'sd_browsedata_other' )->text();
-		} elseif ( $value === ' none' ) {
-			return wfMessage( 'sd_browsedata_none' )->text();
-		} elseif ( $propertyType === 'boolean' ) {
-			return Utils::booleanToString( $value );
-		} elseif ( $propertyType === 'date' && strpos( $value, '//T' ) ) {
-			return str_replace( '//T', '', $value );
-		} else {
-			return $value;
-		}
-	}
-
 	/**
 	 * Print the line showing 'OR' values for a filter that already has
 	 * at least one value set
@@ -415,7 +215,8 @@ END;
 			if ( $i++ > 0 ) {
 				$results_line .= " · ";
 			}
-			$filter_text = Utils::escapeString( $this->getNiceFilterValue( $af->filter->propertyType(), $or_value->displayValue() ) );
+			$filter_text = Utils::escapeString( Utils::getNiceFilterValue( $af->filter->propertyType(),
+				$or_value->displayValue() ) );
 			$applied_filters = $this->query->appliedFilters();
 			foreach ( $applied_filters as $af2 ) {
 				if ( $af->filter->name() == $af2->filter->name() ) {
@@ -467,7 +268,8 @@ END;
 			if ( $num_printed_values++ > 0 ) {
 				$results_line .= "<span class=\"sep\"> · </span>";
 			}
-			$filter_text = Utils::escapeString( $this->getNiceFilterValue( $f->propertyType(), $value->displayValue() ) );
+			$filter_text = Utils::escapeString( Utils::getNiceFilterValue( $f->propertyType(),
+				$value->displayValue() ) );
 			$filter_text .= "&nbsp;($num_results)";
 			$filter_url = $cur_url . urlencode( str_replace( ' ', '_', $f->name() ) ) . '=' . urlencode( str_replace( ' ', '_', $value->value() ) );
 			$styleAttribute = "";
@@ -573,11 +375,11 @@ END;
 END;
 
 		$text .= Html::input(
-				null,
-				wfMessage( 'sd_browsedata_search' )->text(),
-				'submit',
-				[ 'style' => 'margin: 4px 0 8px 0;' ]
-			);
+			null,
+			wfMessage( 'sd_browsedata_search' )->text(),
+			'submit',
+			[ 'style' => 'margin: 4px 0 8px 0;' ]
+		);
 		$text .= "</form>";
 		return $text;
 	}
@@ -666,7 +468,7 @@ END;
 	}
 
 	private function getPossibleValues( Filter $f ): PossibleFilterValues {
-		$this->repository->createFilterValuesTempTable( $f->propertyType(), $f->escapedProperty() );
+		$this->db->createFilterValuesTempTable( $f->propertyType(), $f->escapedProperty() );
 		if ( empty( $f->allowedValues() ) ) {
 			$possibleFilterValues = $f->propertyType() == 'date'
 				? $f->getTimePeriodValues()
@@ -675,14 +477,14 @@ END;
 			$possibleValues = [];
 			foreach ( $f->allowedValues() as $value ) {
 				$new_filter = AppliedFilter::create( $f, $value );
-				$num_results = $this->repository->getNumResults( $this->query->subcategory(), $this->query->allSubcategories(), $new_filter );
+				$num_results = $this->db->getNumResults( $this->query->subcategory(), $this->query->allSubcategories(), $new_filter );
 				if ( $num_results > 0 ) {
 					$possibleValues[] = new PossibleFilterValue( $value, $num_results );
 				}
 			}
 			$possibleFilterValues = new PossibleFilterValues( $possibleValues );
 		}
-		$this->repository->dropFilterValuesTempTable();
+		$this->db->dropFilterValuesTempTable();
 
 		$additionalPossibleValues = [];
 		// Now get values for 'Other' and 'None', as well
@@ -690,7 +492,7 @@ END;
 		// obtained dynamically.
 		if ( !empty( $f->allowedValues() ) ) {
 			$other_filter = AppliedFilter::create( $f, ' other' );
-			$num_results = $this->repository->getNumResults( $this->query->subcategory(), $this->query->allSubcategories(), $other_filter );
+			$num_results = $this->db->getNumResults( $this->query->subcategory(), $this->query->allSubcategories(), $other_filter );
 			if ( $num_results > 0 ) {
 				$additionalPossibleValues[] = new PossibleFilterValue( '_other', $num_results );
 			}
@@ -701,7 +503,7 @@ END;
 			$fv = AppliedFilterValue::create( $f->allowedValues()[0] );
 			if ( !$fv->is_numeric ) {
 				$none_filter = AppliedFilter::create( $f, ' none' );
-				$num_results = $this->repository->getNumResults( $this->query->subcategory(), $this->query->allSubcategories(), $none_filter );
+				$num_results = $this->db->getNumResults( $this->query->subcategory(), $this->query->allSubcategories(), $none_filter );
 				if ( $num_results > 0 ) {
 					$additionalPossibleValues[] = new PossibleFilterValue( '_none', $num_results );
 				}
@@ -711,92 +513,10 @@ END;
 		return $possibleFilterValues->merge( $additionalPossibleValues );
 	}
 
-	private function showSingleCat() {
-		return $this->request->getCheck( '_single' );
-	}
-
-	private function getIntroTemplate() {
-		$headerPage = $this->parameters->header();
-		if ( $headerPage !== null ) {
-			$title = Title::newFromText( $headerPage );
-			$page = WikiPage::factory( $title );
-			if ( $page->exists() ) {
-				$content = $page->getContent();
-				$pageContent = $content->serialize();
-				return $this->output->parseInlineAsInterface( $pageContent );
-			}
-		}
-		return '';
-	}
-
-	private function processTemplate( $template, $vm ) {
-		$messages = [
-			'sd_browsedata_subcategory',
-			'sd_browsedata_resetfilters',
-			'sd_browsedata_removesubcategoryfilter',
-			'sd_browsedata_removefilter',
-			'sd_browsedata_or',
-			'sd_browsedata_docu',
-			'sd_browsedata_filterbysubcategory',
-			'sd_browsedata_choosecategory',
-			'colon-separator',
-			'sd_browsedata_addanothervalue',
-			'sd_browsedata_other',
-			'sd_browsedata_none',
-			'sd_browsedata_filterbyvalue',
-			'sd_browsedata_search',
-			'sd_browsedata_daterangestart',
-			'sd_browsedata_daterangeend',
-			'searchresultshead',
-			'sd_browsedata_novalues',
-		];
-		foreach ( $messages as $message ) {
-			$msg[ "msg_$message" ] = wfMessage( $message )->text();
-		}
-
-		return $this->templateParser->processTemplate( $template, $vm + $msg );
-	}
-
-	/**
-	 * Used to set URL for additional pages of results.
-	 */
-	public function linkParameters(): array {
-		$params = [];
-		if ( $this->showSingleCat() ) {
-			$params['_single'] = null;
-		}
-		$params['_cat'] = $this->query->category();
-		if ( $this->query->subcategory() ) {
-			$params['_subcat'] = $this->query->subcategory();
-		}
-
-		foreach ( $this->query->appliedFilters() as $i => $af ) {
-			if ( count( $af->values ) == 1 ) {
-				$key_string = str_replace( ' ', '_', $af->filter->name() );
-				$value_string = str_replace( ' ', '_', $af->values[0]->text );
-				$params[$key_string] = $value_string;
-			} else {
-				// HACK - QueryPage's pagination-URL code,
-				// which uses wfArrayToCGI(), doesn't support
-				// two-dimensional arrays, which is what we
-				// need - instead, add the brackets directly
-				// to the key string
-				foreach ( $af->values as $i => $value ) {
-					$key_string = str_replace( ' ', '_', $af->filter->name() . "[$i]" );
-					$value_string = str_replace( ' ', '_', $value->text );
-					$params[$key_string] = $value_string;
-				}
-			}
-
-			// Add search terms (if any).
-			$search_terms = $af->search_terms ?? [];
-			foreach ( $search_terms as $i => $text ) {
-				$key_string = '_search_' . str_replace( ' ', '_', $af->filter->name() . "[$i]" );
-				$value_string = str_replace( ' ', '_', $text );
-				$params[$key_string] = $value_string;
-			}
-		}
-		return $params;
+	private function getUrl(
+		$category, $applied_filters = [], $subcategory = null, $filter_to_remove = null
+	): string {
+		return $this->urlService->getUrl( $category, $applied_filters, $subcategory, $filter_to_remove );
 	}
 
 }

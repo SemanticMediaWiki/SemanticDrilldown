@@ -82,7 +82,7 @@ ul#drilldown-categories-tabs li.selected {
 
 /* End of categories-list CSS */
 
-div#drilldown-header {
+div#drilldown-applied-filters {
 	font-size: large;
 	font-weight: bold;
 }
@@ -91,7 +91,7 @@ span.drilldown-header-value {
 	font-weight: normal;
 }
 
-div.drilldown-filters {
+div#drilldown-applicable-filters {
 	margin-top: 10px;
 	padding-bottom: 8px;
 	margin-bottom: 8px;

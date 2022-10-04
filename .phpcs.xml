@@ -38,7 +38,9 @@
 		<severity>0</severity>
 	</rule>
 
-	<file>.</file>
+	<file>includes</file>
+	<file>languages</file>
+	<file>tests/phpunit</file>
 	<arg name="extensions" value="php"/>
 	<arg name="encoding" value="UTF-8"/>
 </ruleset>

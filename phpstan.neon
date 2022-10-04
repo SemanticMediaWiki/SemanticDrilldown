@@ -4,11 +4,9 @@ includes:
 parameters:
 	level: 1
 	paths:
-	    - .
-	excludePaths:
-	    - ./vendor
-	    - ./node_modules
-	    - ./coverage
+	    - includes
+	    - languages
+	    - tests/phpunit
 	scanDirectories:
 		- ../SemanticMediaWiki/includes
 		- ../SemanticMediaWiki/src/Query

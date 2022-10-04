@@ -2,35 +2,86 @@
 
 namespace SD\Specials\BrowseData;
 
-use Html;
-use IDatabase;
-use OutputPage;
+use Closure;
+use PageProps;
+use RequestContext;
+use SD\DbService;
 use SD\Parameters\Parameters;
 use SD\Sql\SqlProvider;
-use Skin;
+use SD\Utils;
 use SMWOutputs;
 use Title;
-use WikiPage;
 
 class QueryPage extends \QueryPage {
-	private Printer $printer;
-	private Parameters $parameters;
+
+	private DbService $db;
+	private UrlService $urlService;
+	private GetPageContent $getPageContent;
+	private GetCategories $getCategories;
+	private GetAppliedFilters $getAppliedFilters;
+	private GetApplicableFilters $getApplicableFilters;
+	private GetSemanticResults $getSemanticResults;
+
+	private ProcessTemplate $processTemplate;
+
 	private DrilldownQuery $query;
+	private ?string $headerPage;
+	private ?string $footerPage;
+	private array $displayParametersWithUnknownFormat = [];
+	private array $unpagedDisplayParametersList = [];
+	private array $pagedDisplayParametersList = [];
+	private array $displayParametersWithUnsupportedFormat = [];
 
-	public function __construct( $newPrinter, $context, $parameters, $query, $offset, $limit ) {
+	/** @var string|null cache for getSQL() */
+	private ?string $sql = null;
+
+	public function __construct(
+		array $resultFormatTypes,
+		DbService $db, PageProps $pageProps, Closure $newUrlService,
+		Closure $getPageFromTitleText, RequestContext $context, Parameters $parameters,
+		DrilldownQuery $query, int $offset, int $limit
+	) {
 		parent::__construct( 'BrowseData' );
-
 		$this->setContext( $context );
-		$this->printer = $newPrinter( $this->getOutput(), $this->getRequest(), $parameters, $query );
 
-		$this->parameters = $parameters;
+		$request = $context->getRequest();
+		$output = $this->getOutput();
+
+		$urlService = $newUrlService( $request, $query );
+		$this->getPageContent = new GetPageContent( $getPageFromTitleText, $output );
+		$this->getCategories = new GetCategories( $db, $urlService, $query );
+		$this->getAppliedFilters = new GetAppliedFilters( $pageProps, $urlService, $query );
+		$this->getApplicableFilters = new GetApplicableFilters( $db, $urlService, $output, $request, $query );
+		$this->getSemanticResults = new GetSemanticResults();
+
+		$this->db = $db;
+		$this->urlService = $urlService;
 		$this->query = $query;
+		$this->headerPage = $parameters->header();
+		$this->footerPage = $parameters->footer();
 		$this->offset = $offset;
 		$this->limit = $limit;
+
+		if ( $parameters->displayParametersList() ) {
+			foreach ( $parameters->displayParametersList() as $dps ) {
+				$format = $dps->format();
+				if ( !array_key_exists( $format, $resultFormatTypes ) ) {
+					$this->displayParametersWithUnknownFormat[] = $dps;
+				} elseif ( $resultFormatTypes[ $format ] === 'unpaged' ) {
+					$this->unpagedDisplayParametersList[] = $dps;
+				} elseif ( $resultFormatTypes[ $format ] === 'paged' ) {
+					$this->pagedDisplayParametersList[] = $dps;
+				} else {
+					$this->displayParametersWithUnsupportedFormat[] = $dps;
+				}
+			}
+		}
+
+		$this->processTemplate = new ProcessTemplate;
 	}
 
 	public function getName() {
-		return "BrowseData";
+		return 'BrowseData';
 	}
 
 	public function isExpensive() {
@@ -42,16 +93,37 @@ class QueryPage extends \QueryPage {
 	}
 
 	protected function getPageHeader(): string {
-		return $this->printer->getPageHeader();
+		$categories = Utils::getCategoriesForBrowsing();
+		if ( $this->query->category() === null && empty( $categories ) ) {
+			return '';
+		}
+
+		$res = $this->db->query( $this->getSQL() );
+		return ( $this->processTemplate ) ( 'QueryPageHeader', [
+			'displayParametersWithUnknownFormat' =>
+				array_map( fn( $x ) => "$x", $this->displayParametersWithUnknownFormat ),
+			'displayParametersWithUnsupportedFormat' =>
+				array_map( fn( $x ) => "$x", $this->displayParametersWithUnsupportedFormat ),
+			'header' => ( $this->getPageContent )( $this->headerPage ),
+			'categories' => ( $this->getCategories )( $categories ),
+			'appliedFilters' => ( $this->getAppliedFilters )(),
+			'applicableFilters' => ( $this->getApplicableFilters )(),
+			'results' => ( $this->getSemanticResults )( $this->unpagedDisplayParametersList, $this->getOutput(), $res ),
+		] );
 	}
 
 	protected function getSQL(): string {
 		// From the overridden method:
 		// "For back-compat, subclasses may return a raw SQL query here, as a string.
 		// This is strongly deprecated; getQueryInfo() should be overridden instead."
-		return SqlProvider::getSQL(
-			$this->query->category(), $this->query->subcategory(),
-			$this->query->allSubcategories(), $this->query->appliedFilters() );
+		if ( $this->sql === null ) {
+			$this->sql = SqlProvider::getSQL( $this->query->category(), $this->query->subcategory(),
+				$this->query->allSubcategories(), $this->query->appliedFilters() );
+		}
+
+		// Note: we have to return the SQL here even if we already know that there are no paged
+		// result displays; if there are no results, QueryPage also doesn't show the page header
+		return $this->sql;
 	}
 
 	protected function getOrderFields() {
@@ -67,57 +139,11 @@ class QueryPage extends \QueryPage {
 		return $this->getLinkRenderer()->makeLink( $title, $title->getText() );
 	}
 
-	/**
-	 * Format and output report results using the given information plus
-	 * OutputPage
-	 *
-	 * @param OutputPage $out OutputPage to print to
-	 * @param Skin $skin User skin to use
-	 * @param IDatabase $dbr Database (read) connection to use
-	 * @param int $res Result pointer
-	 * @param int $num Number of available result rows
-	 * @param int $offset Paging offset
-	 */
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
-		$out->addHTML( Html::openElement( 'div', [ 'class' => 'drilldown-results-output' ] ) );
-
-		$semanticResultPrinter = new SemanticResultPrinter( $res, $num );
-		$displayParametersList = $this->parameters->displayParametersList();
-		foreach ( $displayParametersList as $displayParameters ) {
-			$text = $semanticResultPrinter->getText( iterator_to_array( $displayParameters ) );
-
-			$out->addHTML( Html::openElement( 'div', [ 'class' => 'drilldown-result' ] ) );
-			// add caption
-			if ( $displayParameters->caption !== null ) {
-				$out->addHTML( Html::element( 'div', [ 'class' => 'drilldown-result-heading' ],
-					$displayParameters->caption ) );
-			}
-			// add results
-			$out->addHTML( Html::openElement( 'div', [ 'class' => 'drilldown-result-body' ] ) );
-			$out->addWikiTextAsInterface( $text );
-			$out->addHTML( Html::closeElement( 'div' ) );
-
-			$out->addHTML( Html::closeElement( 'div' ) );
-		}
-
-		// Add outro template
-		$footerPage = $this->parameters->footer();
-		if ( $footerPage !== null ) {
-			$title = Title::newFromText( $footerPage );
-			$page = WikiPage::factory( $title );
-
-			if ( $page->exists() ) {
-				$content = $page->getContent();
-				$pageContent = $content->serialize();
-				$out->addWikiTextAsInterface( $pageContent );
-			}
-		}
-
-		// close drilldown-results
-		$out->addHTML( Html::closeElement( 'div' ) );
-
-		// close the Bootstrap Panel wrapper opened in getPageHeader();
-		$out->addHTML( '</div></div>' );
+		$out->addHTML( ( $this->processTemplate )( 'QueryPageOutput', [
+			'results' => ( $this->getSemanticResults )( $this->pagedDisplayParametersList, $out, $res, $num ),
+			'footer' => ( $this->getPageContent )( $this->footerPage ),
+		] ) );
 
 		SMWOutputs::commitToOutputPage( $out );
 	}
@@ -127,11 +153,11 @@ class QueryPage extends \QueryPage {
 	}
 
 	protected function closeList() {
-		return "\n			<br style=\"clear: both\" />\n";
+		return '<br style="clear: both" />';
 	}
 
 	protected function linkParameters() {
-		return $this->printer->linkParameters();
+		return $this->urlService->getLinkParameters( $this->getRequest(), $this->query );
 	}
 
 }

@@ -2,11 +2,11 @@
 
 namespace SD\Specials\BrowseData;
 
-use SD\Repository;
+use SD\DbService;
 
 class DrilldownQuery {
 
-	private Repository $repository;
+	private DbService $db;
 
 	private $category;
 	private $subcategory;
@@ -19,10 +19,10 @@ class DrilldownQuery {
 	private ?array $all_subcategories = null;
 
 	public function __construct(
-		Repository $repository,
+		DbService $db,
 		$category, $subcategory, $filters, $applied_filters, $remaining_filters
 	) {
-		$this->repository = $repository;
+		$this->db = $db;
 		$this->category = $category;
 		$this->subcategory = $subcategory;
 		$this->filters = $filters;
@@ -53,7 +53,7 @@ class DrilldownQuery {
 	public function nextLevelSubcategories() {
 		if ( $this->next_level_subcategories === null ) {
 			$this->next_level_subcategories =
-				$this->repository->getCategoryChildren( $this->actualCategory(), true, 1 );
+				$this->db->getCategoryChildren( $this->actualCategory(), true, 1 );
 		}
 
 		return $this->next_level_subcategories;
@@ -62,7 +62,7 @@ class DrilldownQuery {
 	public function allSubcategories() {
 		if ( $this->all_subcategories === null ) {
 			$this->all_subcategories =
-				$this->repository->getCategoryChildren( $this->actualCategory(), true, 10 );
+				$this->db->getCategoryChildren( $this->actualCategory(), true, 10 );
 		}
 
 		return $this->all_subcategories;

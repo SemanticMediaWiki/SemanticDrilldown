@@ -1,0 +1,14 @@
+{{!close div#drilldown-top-paging opened in QueryPageOutput}}
+</div>
+
+{{#results.0}}  {{! .0 is undocumented, but working in PHP: require first element of results being not empty }}
+    <div class="drilldown-results-output drilldown-results-output-paged">
+        {{>Results}}
+    </div>
+{{/results.0}}
+
+{{#footer}}
+    <div id="drilldown-footer">
+        {{{footer}}}
+    </div>
+{{/footer}}

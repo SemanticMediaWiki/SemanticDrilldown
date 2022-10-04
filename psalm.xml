@@ -8,12 +8,9 @@
     errorBaseline="psalm-baseline.xml"
 >
     <projectFiles>
-        <directory name="." />
-        <ignoreFiles>
-            <directory name="vendor" />
-            <directory name="node_modules" />
-            <directory name="coverage" />
-        </ignoreFiles>
+        <directory name="includes" />
+        <directory name="languages" />
+        <directory name="tests/phpunit" />
     </projectFiles>
     <extraFiles>
         <directory name="../SemanticMediaWiki/includes" />

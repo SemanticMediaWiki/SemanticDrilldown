@@ -330,4 +330,24 @@ class Utils {
 		return htmlspecialchars( $val, ENT_QUOTES, 'UTF-8' );
 	}
 
+	/**
+	 * Return a "nice" version of the value for a filter, if it's some
+	 * special case like 'other', 'none', a boolean, etc.
+	 */
+	public static function getNiceFilterValue( string $propertyType, string $value ): string {
+		$value = str_replace( '_', ' ', $value );
+		// if it's boolean, display something nicer than "0" or "1"
+		if ( $value === ' other' ) {
+			return wfMessage( 'sd_browsedata_other' )->text();
+		} elseif ( $value === ' none' ) {
+			return wfMessage( 'sd_browsedata_none' )->text();
+		} elseif ( $propertyType === 'boolean' ) {
+			return self::booleanToString( $value );
+		} elseif ( $propertyType === 'date' && strpos( $value, '//T' ) ) {
+			return str_replace( '//T', '', $value );
+		} else {
+			return $value;
+		}
+	}
+
 }

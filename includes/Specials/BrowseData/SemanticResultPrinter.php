@@ -56,7 +56,7 @@ class SemanticResultPrinter {
 		$qr = [];
 		$count = 0;
 		$store = Utils::getSMWStore();
-		while ( ( $count < $num ) && ( $row = $res->fetchObject() ) ) {
+		while ( ( $num === null || $count < $num ) && $row = $res->fetchObject() ) {
 			$count++;
 			$qr[] = new SMWDIWikiPage( $row->t, $row->ns, '' );
 			if ( method_exists( $store, 'cacheSMWPageID' ) ) {
@@ -66,7 +66,7 @@ class SemanticResultPrinter {
 		if ( $res->fetchObject() ) {
 			$count++;
 		}
-		$furtherRes = $count > $num;
+		$furtherRes = $num !== null && $count > $num;
 
 		return static function ( $query, $mainlabel, $printouts ) use ( $qr, $store, $furtherRes ) {
 			$printrequest = new PrintRequest( PrintRequest::PRINT_THIS, $mainlabel );

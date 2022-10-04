@@ -19,6 +19,7 @@ class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
 			"wgRestrictDisplayTitle",
 			"sdgHideCategoriesByDefault",
 			"sdgMinValuesForComboBox",
+			"sdgResultFormatTypes"
 		] );
 	}
 

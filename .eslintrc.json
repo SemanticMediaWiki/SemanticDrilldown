@@ -1,5 +1,8 @@
 {
 	"root": true,
+	"parserOptions": {
+		"ecmaVersion": 6
+	},
 	"extends": [
 		"wikimedia/client-es5",
 		"wikimedia/mediawiki"

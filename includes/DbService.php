@@ -5,13 +5,26 @@ namespace SD;
 use SD\Sql\PropertyTypeDbInfo;
 use SD\Sql\SqlProvider;
 use Wikimedia\Rdbms\DBConnRef;
+use Wikimedia\Rdbms\IResultWrapper;
 
-class Repository {
+class DbService {
 
 	private DBConnRef $dbw;
+	private DBConnRef $dbr;
 
-	public function __construct( DBConnRef $dbw ) {
+	public function __construct( DBConnRef $dbw, DBConnRef $dbr ) {
 		$this->dbw = $dbw;
+		$this->dbr = $dbr;
+	}
+
+	/**
+	 * Execute a (readonly) query to the replica connection
+	 *
+	 * @param string $sql
+	 * @return bool|IResultWrapper
+	 */
+	public function query( string $sql ) {
+		return $this->dbr->query( $sql );
 	}
 
 	/**
@@ -44,9 +57,9 @@ class Repository {
 	 * and for getting the set of 'None' values.
 	 */
 	public function createFilterValuesTempTable( $propertyType, $escaped_property ) {
-		$smw_ids = $this->dbw->tableName( Utils::getIDsTableName() );
+		$smw_ids = $this->dbr->tableName( Utils::getIDsTableName() );
 
-		$valuesTable = $this->dbw->tableName( PropertyTypeDbInfo::tableName( $propertyType ) );
+		$valuesTable = $this->dbr->tableName( PropertyTypeDbInfo::tableName( $propertyType ) );
 		$value_field = PropertyTypeDbInfo::valueField( $propertyType );
 
 		$query_property = $escaped_property;
@@ -85,9 +98,9 @@ END;
 	 */
 	public function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
 		// Escape the given values to prevent SQL injection
-		$subcategory = $this->dbw->addQuotes( $subcategory );
+		$subcategory = $this->dbr->addQuotes( $subcategory );
 		foreach ( $subcategories as $key => $value ) {
-			$subcategories[$key] = $this->dbw->addQuotes( $value );
+			$subcategories[$key] = $this->dbr->addQuotes( $value );
 		}
 
 		$sql = "SELECT COUNT(DISTINCT sdv.id) ";
@@ -96,7 +109,7 @@ END;
 		} else {
 			$sql .= SqlProvider::getSQLFromClauseForCategory( $subcategory, $subcategories );
 		}
-		$res = $this->dbw->query( $sql );
+		$res = $this->query( $sql );
 		$row = $res->fetchRow();
 		return $row[0];
 	}
@@ -107,13 +120,12 @@ END;
 		}
 		$pages = [];
 		$subcategories = [];
-		$dbr = $this->dbw;
 		$conds = [ 'cl_to' => str_replace( ' ', '_', $category_name ), ];
 		if ( $get_categories ) {
 			$conds['page_namespace'] = NS_CATEGORY;
 		}
 
-		$res = $dbr->select(
+		$res = $this->dbr->select(
 			[ 'categorylinks', 'page' ],
 			[ 'page_title', 'page_namespace' ],
 			$conds,

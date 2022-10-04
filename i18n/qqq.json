@@ -38,5 +38,7 @@
 	"sd_createfilter_requirefilter": "The title of the drop-down list on [[Special:CreateFilter]] that allows to select an available filter.",
 	"sd-pageschemas-filter": "The title of the section displaying information about a single filter used by the page schema. Provided for the [[mw:Extension:Page_Schemas|Page Schemas]] extension.\n{{Identical|Filter}}",
 	"sd-pageschemas-values": "The title of the subsection to {{msg-mw|Sd-pageschemas-filter}} displaying information about the set of values for a single filter used by the page schema. Provided for the [[mw:Extension:Page_Schemas|Page Schemas]] extension.\n{{Identical|Value}}",
-	"sd_browsedata_search": "{{Identical|Search}}"
+	"sd_browsedata_search": "{{Identical|Search}}",
+	"sd_displayparameters_with_unknown_format": "Display parameters with unknown format",
+	"sd_displayparameters_with_unsupported_format": "Display parameters with unsupported format"
 }

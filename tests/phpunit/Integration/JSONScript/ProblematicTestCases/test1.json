@@ -1,0 +1,29 @@
+{
+	"description": "test 1",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeText",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"page": "Page1",
+			"contents": "{{#set:XSomeText=ABC}} Some strange behavior: test2.json will fail; if we remove the X it will succeed"
+		}
+	],
+	"tests": [
+		{
+			"type": "format",
+			"about": "dummy test",
+			"subject": "Page1"
+		}
+	],
+	"settings": {
+		"wgLang": "en"
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}
