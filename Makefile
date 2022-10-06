@@ -4,10 +4,12 @@ MW_VERSION ?= 1.35
 SMW_VERSION ?= 4.0.2
 PS_VERSION ?= 0.6.1
 AL_VERSION ?= 0.4.2
+MAPS_VERSION ?= 9.0.7
+SRF_VERSION ?= 4.0.1
 
 EXTENSION_FOLDER := /var/www/html/extensions/$(EXTENSION)
 extension := $(shell echo $(EXTENSION) | tr A-Z a-z})
-IMAGE_NAME := $(extension):test-$(MW_VERSION)-$(SMW_VERSION)-$(PS_VERSION)-$(AL_VERSION)
+IMAGE_NAME := $(extension):test-$(MW_VERSION)-$(SMW_VERSION)-$(PS_VERSION)-$(AL_VERSION)-$(MAPS_VERSION)-$(SRF_VERSION)
 PWD := $(shell bash -c "pwd -W 2>/dev/null || pwd")# this way it works on Windows and Linux
 DOCKER_RUN_ARGS := --rm -v $(PWD)/coverage:$(EXTENSION_FOLDER)/coverage -w $(EXTENSION_FOLDER) $(IMAGE_NAME)
 docker_run := docker run $(DOCKER_RUN_ARGS)
@@ -30,6 +32,8 @@ build:
 		--build-arg=SMW_VERSION=$(SMW_VERSION) \
 		--build-arg=PS_VERSION=$(PS_VERSION) \
 		--build-arg=AL_VERSION=$(AL_VERSION) \
+		--build-arg=MAPS_VERSION=$(MAPS_VERSION) \
+		--build-arg=SRF_VERSION=$(SRF_VERSION) \
 		.
 
 .PHONY: test
