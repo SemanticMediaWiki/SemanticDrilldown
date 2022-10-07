@@ -13,6 +13,8 @@ div#drilldown-categories-wrapper {
 ul#drilldown-categories {
 	border: 2px #888888 solid;
 	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
 ul#drilldown-categories li {
