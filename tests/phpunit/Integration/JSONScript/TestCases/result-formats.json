@@ -58,12 +58,17 @@
 		},
 		{
 			"namespace": "NS_CATEGORY",
+			"page": "C-template",
+			"contents": "{{#drilldowninfo: display parameters=format=template}}"
+		},
+		{
+			"namespace": "NS_CATEGORY",
 			"page": "C-ul",
 			"contents": "{{#drilldowninfo: display parameters=format=ul}}"
 		},
 		{
 			"page": "Page1",
-			"contents": "[[Category:C-broadtable]][[Category:C-category]][[Category:C-embedded]][[Category:C-jqplotseries]][[Category:C-list]][[Category:C-map]][[Category:C-ol]][[Category:C-plainlist]][[Category:C-table]][[Category:C-ul]][[Coordinates::49.3274,12.1059]]"
+			"contents": "[[Category:C-broadtable]][[Category:C-category]][[Category:C-embedded]][[Category:C-jqplotseries]][[Category:C-list]][[Category:C-map]][[Category:C-ol]][[Category:C-plainlist]][[Category:C-table]][[Category:C-template]][[Category:C-ul]][[Coordinates::49.3274,12.1059]]"
 		}
 	],
 	"tests": [
@@ -209,10 +214,27 @@
 		},
 		{
 			"type": "special",
-			"about": "ul format is supported",
+			"about": "table format is supported",
 			"special-page": {
 				"page": "BrowseData",
-				"query-parameters": "C-ul",
+				"query-parameters": "C-table",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Page1\" title=\"Page1\">Page1</a>"
+				],
+				"not-contain": [
+					"Display parameters with unknown format",
+					"Display parameters with unsupported format"
+				]
+			}
+		},		{
+			"type": "special",
+			"about": "template format is supported",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "C-template",
 				"request-parameters": {}
 			},
 			"assert-output": {
@@ -227,10 +249,10 @@
 		},
 		{
 			"type": "special",
-			"about": "table format is supported",
+			"about": "ul format is supported",
 			"special-page": {
 				"page": "BrowseData",
-				"query-parameters": "C-table",
+				"query-parameters": "C-ul",
 				"request-parameters": {}
 			},
 			"assert-output": {

@@ -11,7 +11,9 @@ class UrlService {
 	private $request;
 	private $query;
 
-	public function __construct( string $browseDataLocalUrl, WebRequest $request, DrilldownQuery $query ) {
+	public function __construct(
+		string $browseDataLocalUrl, WebRequest $request, ?DrilldownQuery $query
+	) {
 		$this->browseDataLocalUrl = $browseDataLocalUrl;
 		$this->request = $request;
 		$this->query = $query;

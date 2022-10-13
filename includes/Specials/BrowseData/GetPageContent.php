@@ -3,30 +3,36 @@
 namespace SD\Specials\BrowseData;
 
 use Closure;
+use IContextSource;
 use OutputPage;
 
+/**
+ * Return HTML and resource loader modules corresponding to a page
+ * as an array [ $html, $modules ] ([ '', [] ] if the page does not exist).
+ */
 class GetPageContent {
 
 	private $getPageFromTitleText;
-	private $output;
+	private $context;
 
 	public function __construct(
-		Closure $getPageFromTitleText, OutputPage $output
+		Closure $getPageFromTitleText, IContextSource $context
 	) {
 		$this->getPageFromTitleText = $getPageFromTitleText;
-		$this->output = $output;
+		$this->context = $context;
 	}
 
-	public function __invoke( $titleText ): string {
+	public function __invoke( $titleText ): array {
 		if ( $titleText !== null ) {
 			$page = ( $this->getPageFromTitleText )( $titleText );
 			if ( $page->exists() ) {
-				$content = $page->getContent();
-				$pageContent = $content->serialize();
-				return $this->output->parseInlineAsInterface( $pageContent );
+				$pageContent = $page->getContent()->serialize();
+				$out = new OutputPage( $this->context );
+				$out->addWikiTextAsInterface( $pageContent );
+				return [ $out->getHTML(), $out->getModules() ];
 			}
 		}
-		return '';
+		return [ '', [] ];
 	}
 
 }

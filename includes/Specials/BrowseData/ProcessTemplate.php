@@ -35,7 +35,14 @@ class ProcessTemplate {
 			$msg[ "msg_$message" ] = wfMessage( $message )->text();
 		}
 
-		return $templateParser->processTemplate( $template, $vm + $msg );
+		$html = $templateParser->processTemplate( $template, $vm + $msg );
+
+		// Remove leading whitespace from all lines as the parser will interpret lines containing
+		// text starting with whitespace as preformatted text later;
+		// see Parser::internalParseHalfParsed where $text is first unstripped (the previously
+		// inserted marker is replaced with the corresponding HTML from the transcluded page) and
+		// afterwards the BlockLevelPass::doBlockLevels is executed (<pre>s are inserted etc.)
+		return preg_replace( '/^\s+/m', '', $html );
 	}
 
 }

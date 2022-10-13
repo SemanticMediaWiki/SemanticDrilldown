@@ -55,11 +55,13 @@ class Services {
 	public static function getSpecialBrowseData(): SpecialBrowseData {
 		$s = self::instance();
 
-		return new SpecialBrowseData( $s->getLoadParameters(), $s->getNewQuery(),
+		return new SpecialBrowseData(
+			$s->getDbService(), $s->getNewUrlService(),
+			$s->getLoadParameters(), $s->getNewQuery(),
 			$s->getNewQueryPage(), $s->getBuildFilters() );
 	}
 
-	private function getRepository(): DbService {
+	private function getDbService(): DbService {
 		return new DbService( $this->getPrimaryDbConnectionRef(), $this->getReplicaDbConnectionRef() );
 	}
 
@@ -73,7 +75,7 @@ class Services {
 
 	private function getNewQuery(): Closure {
 		return fn( $category, $subcategory, $filters, $applied_filters, $remaining_filters ) =>
-			new DrilldownQuery( $this->getRepository(),
+			new DrilldownQuery( $this->getDbService(),
 				$category, $subcategory, $filters, $applied_filters, $remaining_filters );
 	}
 
@@ -85,13 +87,14 @@ class Services {
 		return fn( $context, $parameters, $query, $offset, $limit ) =>
 			new QueryPage(
 				$sdgResultFormatTypes,
-				$this->getRepository(), $this->getPageProps(), $this->getNewUrlService(),
+				$this->getDbService(), $this->getPageProps(), $this->getNewUrlService(),
 				$this->getGetPageFromTitleText(),
 				$context, $parameters, $query, $offset, $limit );
 	}
 
 	private function getNewUrlService(): Closure {
-		return fn( WebRequest $request, DrilldownQuery $query ) =>
+        // phpcs:ignore MediaWiki.Usage.AssignmentInReturn.AssignmentInReturn
+		return fn( WebRequest $request, ?DrilldownQuery $query = null ) =>
 			new UrlService(
 				SpecialPage::getTitleFor( 'BrowseData' )->getLocalURL(), $request, $query );
 	}
@@ -100,7 +103,7 @@ class Services {
 		// phpcs:ignore MediaWiki.Usage.AssignmentInReturn.AssignmentInReturn
 		return fn( $name, $property, $category, $requiredFilters, $int, $propertyType = null,
 				   $timePeriod = null, $allowedValues = null ) =>
-			new Filter( $this->getRepository(),
+			new Filter( $this->getDbService(),
 			   $name, $property, $category, $requiredFilters, $int, $propertyType, $timePeriod, $allowedValues );
 	}
 

@@ -1,8 +1,9 @@
+{{#categories.0}}
 {{#categoriesAsTabs}}
     <div id="drilldown-categories-tabs-wrapper">
         <p id="categories-header">{{msg_sd_browsedata_choosecategory}}{{msg_colon-separator}}</p>
         <ul id="drilldown-categories-tabs">
-            {{>QueryPageHeader.Categories.List}}
+            {{>Categories.List}}
         </ul>
     </div>
 {{/categoriesAsTabs}}
@@ -10,7 +11,8 @@
     <div id="drilldown-categories-wrapper">
         <ul id="drilldown-categories">
             <li id="categories-header">{{msg_sd_browsedata_choosecategory}}{{msg_colon-separator}}</li>
-            {{>QueryPageHeader.Categories.List}}
+            {{>Categories.List}}
         </ul>
     </div>
 {{/categoriesAsTabs}}
+{{/categories.0}}

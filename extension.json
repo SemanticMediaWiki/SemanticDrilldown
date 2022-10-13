@@ -1,6 +1,6 @@
 {
 	"name": "SemanticDrilldown",
-	"version": "4.0.0-beta1",
+	"version": "4.0.0-beta2",
 	"author": "Yaron Koren",
 	"url": "https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown",
 	"descriptionmsg": "semanticdrilldown-desc",
@@ -88,6 +88,7 @@
 			"rdf": "unsupported",
 			"spreadsheet": "unsupported",
 			"table": "paged",
+			"template": "paged",
 			"templatefile": "unsupported",
 			"ul": "paged"
 		},

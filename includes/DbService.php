@@ -12,7 +12,7 @@ class DbService {
 	private DBConnRef $dbw;
 	private DBConnRef $dbr;
 
-	public function __construct( DBConnRef $dbw, DBConnRef $dbr ) {
+	public function __construct( ?DBConnRef $dbw, ?DBConnRef $dbr ) {
 		$this->dbw = $dbw;
 		$this->dbr = $dbr;
 	}
@@ -160,4 +160,119 @@ END;
 		}
 		return $pages;
 	}
+
+	/**
+	 * Returns the list of categories that will show up in the
+	 * header/sidebar of the 'BrowseData' special page.
+	 */
+	public function getCategoriesForBrowsing() {
+		global $sdgHideCategoriesByDefault;
+
+		if ( $sdgHideCategoriesByDefault ) {
+			return $this->getOnlyExplicitlyShownCategories();
+		} else {
+			return $this->getTopLevelCategories();
+		}
+	}
+
+	/**
+	 * Gets the list of names of only those categories in the wiki
+	 * that have a __SHOWINDRILLDOWN__ declaration on their page.
+	 */
+	private function getOnlyExplicitlyShownCategories() {
+		$shown_cats = [];
+
+		$res = $this->dbr->select(
+			[ 'p' => 'page', 'pp' => 'page_props' ],
+			'p.page_title',
+			[
+				'p.page_namespace' => NS_CATEGORY,
+				'pp.pp_propname' => 'showindrilldown',
+				'pp.pp_value' => 'y'
+			],
+			self::class . '::getOnlyExplicitlyShownCategories',
+			[ 'ORDER BY' => 'p.page_title' ],
+			[ 'pp' => [ 'JOIN', 'p.page_id = pp.pp_page' ] ]
+		);
+
+		foreach ( $res as $row ) {
+			$shown_cats[] = str_replace( '_', ' ', $row->page_title );
+		}
+
+		return $shown_cats;
+	}
+
+	/**
+	 * Gets a list of the names of all categories in the wiki that aren't
+	 * children of some other category - this list additionally includes,
+	 * and excludes, categories that are manually set with
+	 * 'SHOWINDRILLDOWN' and 'HIDEFROMDRILLDOWN', respectively.
+	 */
+	public function getTopLevelCategories() {
+		$categories = [];
+		$res = $this->dbr->select(
+			[ 'page', 'categorylinks' ],
+			'page_title',
+			[
+				'page_namespace' => NS_CATEGORY,
+				'cl_to' => null,
+			],
+			__METHOD__,
+			[],
+			[
+				'categorylinks' => [
+					'LEFT OUTER JOIN',
+					[
+						'page_id = cl_from'
+					]
+				],
+			]
+		);
+		foreach ( $res as $row ) {
+			$categories[] = str_replace( '_', ' ', $row->page_title );
+		}
+
+		// get 'hide' and 'show' categories
+		$hidden_cats = $shown_cats = [];
+		$res2 = $this->dbr->select(
+			[ 'page', 'page_props' ],
+			[ 'page_title', 'pp_propname' ],
+			[
+				'page_namespace' => NS_CATEGORY,
+				'pp_propname' => [ 'hidefromdrilldown', 'showindrilldown' ],
+				'pp_value' => 'y',
+			],
+			__METHOD__,
+			[],
+			[
+				'page_props' => [
+					'JOIN',
+					[
+						'page_id = pp_page'
+					]
+				],
+			]
+		);
+		foreach ( $res2 as $row ) {
+			if ( $row->pp_propname == 'hidefromdrilldown' ) {
+				$hidden_cats[] = str_replace( '_', ' ', $row->page_title );
+			} else {
+				$shown_cats[] = str_replace( '_', ' ', $row->page_title );
+			}
+		}
+		$categories = array_merge( $categories, $shown_cats );
+		foreach ( $hidden_cats as $hidden_cat ) {
+			foreach ( $categories as $i => $cat ) {
+				if ( $cat == $hidden_cat ) {
+					unset( $categories[$i] );
+				}
+			}
+		}
+		sort( $categories );
+		// This shouldn't be necessary, but sometimes it is, due
+		// to faulty storage in either MW or SMW.
+		$categories = array_unique( $categories );
+		return $categories;
+	}
+
 }

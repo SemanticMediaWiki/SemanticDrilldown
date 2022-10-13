@@ -16,20 +16,24 @@ use IncludableSpecialPage;
 use MediaWiki\MediaWikiServices;
 use SD\AppliedFilter;
 use SD\BuildFilters;
+use SD\DbService;
 use SD\Parameters\LoadParameters;
 use SD\Utils;
 
 class SpecialBrowseData extends IncludableSpecialPage {
 
+	private GetCategories $getCategories;
 	private LoadParameters $loadParameters;
 	private Closure $newDrilldownQuery;
 	private Closure $newQueryPage;
 	private BuildFilters $buildFilters;
 
 	public function __construct(
-		LoadParameters $loadParameters, $newDrilldownQuery, $newQueryPage, BuildFilters $buildFilters
+		DbService $dbService, Closure $newUrlService, LoadParameters $loadParameters,
+		$newDrilldownQuery, $newQueryPage, BuildFilters $buildFilters
 	) {
 		parent::__construct( 'BrowseData' );
+		$this->getCategories = new GetCategories( $dbService, $newUrlService( $this->getRequest() ) );
 		$this->loadParameters = $loadParameters;
 		$this->newDrilldownQuery = $newDrilldownQuery;
 		$this->newQueryPage = $newQueryPage;
@@ -63,25 +67,40 @@ class SpecialBrowseData extends IncludableSpecialPage {
 			$queryparts = explode( '/', $query, 1 );
 			$category = isset( $queryparts[0] ) ? $queryparts[0] : '';
 		}
-		if ( !$category ) {
-			$category_title = wfMessage( 'browsedata' )->text();
-			// if no category was specified, go with the first
-			// category on the site, alphabetically
-			$categories = Utils::getCategoriesForBrowsing();
-			if ( count( $categories ) === 0 ) {
-				// There are apparently no top-level
-				// categories in this wiki - just exit now.
-				return;
-			}
-			$category = $categories[0];
-			$parameters = ( $this->loadParameters )( $category );
-		} else {
+
+		$out->addHtml( ( new ProcessTemplate )( 'Categories', ( $this->getCategories )( $category ) ) );
+
+		if ( $category ) {
 			$parameters = ( $this->loadParameters )( $category );
 			$category_title = $parameters->title();
 			if ( $category_title === null ) {
 				$category_title = wfMessage( 'browsedata' )->text() . html_entity_decode( wfMessage( 'colon-separator' )->text() ) . str_replace( '_', ' ', $category );
 			}
+
+			[ $limit, $offset ] = $request->getLimitOffsetForUser(
+				$this->getUser(),
+				$sdgNumResultsPerPage,
+				'sdlimit'
+			);
+
+			$out->addHTML( "<div class=\"drilldown-results\">\n" );
+
+			$drilldownQuery = $this->createDrilldownQuery( $category, $parameters );
+			$queryPage = ( $this->newQueryPage )( $this->getContext(), $parameters, $drilldownQuery, $offset, $limit );
+			$queryPage->execute( $query );
+
+			$out->addHTML( "</div> <!-- drilldown-results -->\n" );
+		} else {
+			$category_title = wfMessage( 'browsedata' )->text();
 		}
+
+		// This has to be set last, because otherwise the QueryPage
+		// code will overwrite it.
+		$out->setPageTitle( $category_title );
+	}
+
+	private function createDrilldownQuery( $category, $parameters ) {
+		$request = $this->getRequest();
 
 		$subcategory = Utils::escapeString( $request->getVal( '_subcat' ) );
 		$filters = ( $this->buildFilters )( $category, $parameters->filters() );
@@ -106,7 +125,8 @@ class SpecialBrowseData extends IncludableSpecialPage {
 				$applied_filters[] = AppliedFilter::create( $filter, [], $search_terms );
 				$filter_used[$i] = true;
 			} elseif ( $lower_date != null || $upper_date != null ) {
-				$applied_filters[] = AppliedFilter::create( $filter, [], null, $lower_date, $upper_date );
+				$applied_filters[] =
+					AppliedFilter::create( $filter, [], null, $lower_date, $upper_date );
 				$filter_used[$i] = true;
 			}
 		}
@@ -132,23 +152,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 			}
 		}
 
-		$out->addHTML( "\n			<div class=\"drilldown-results\">\n" );
-
-		[ $limit, $offset ] = $request->getLimitOffsetForUser(
-			$this->getUser(),
-			$sdgNumResultsPerPage,
-			'sdlimit'
-		);
-		$drilldownQuery = ( $this->newDrilldownQuery )(
-			$category, $subcategory, $filters, $applied_filters, $remaining_filters );
-		$rep = ( $this->newQueryPage )(
-			$this->getContext(), $parameters, $drilldownQuery, $offset, $limit );
-		$rep->execute( $query );
-
-		$out->addHTML( "\n			</div> <!-- drilldown-results -->\n" );
-		// This has to be set last, because otherwise the QueryPage
-		// code will overwrite it.
-		$out->setPageTitle( $category_title );
+		return ( $this->newDrilldownQuery )( $category, $subcategory, $filters, $applied_filters, $remaining_filters );
 	}
 
 	/**

@@ -10,14 +10,33 @@
 	"tests": [
 		{
 			"type": "special",
-			"about": "display of categories is enabled by default",
+			"about": "display of categories is enabled by default, no category is selected if not requested",
 			"special-page": {
 				"page": "BrowseData",
 				"query-parameters": "",
 				"request-parameters": {}
 			},
 			"assert-output": {
-				"to-contain": "Choose a category:"
+				"to-contain": [
+					"Choose a category:",
+					"<li class=\"category\"><a href=\"/index.php/Special:BrowseData/Category1\" title=\"Choose a category\">Category1 (0)</a></li>"
+				],
+				"not-contain": "<li class=\"category selected\">Category1 (0)</li>"
+			}
+		},
+		{
+			"type": "special",
+			"about": "category is selected if requested",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"Choose a category:",
+					"<li class=\"category selected\">Category1 (0)</li>"
+				]
 			}
 		}
 	],

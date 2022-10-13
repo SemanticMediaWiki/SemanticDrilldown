@@ -8,31 +8,32 @@ class GetCategories {
 
 	private DbService $db;
 	private UrlService $urlService;
-	private DrilldownQuery $query;
 
 	public function __construct(
-		DbService $db, UrlService $urlService, DrilldownQuery $query
+		DbService $db, UrlService $urlService
 	) {
 		$this->db = $db;
 		$this->urlService = $urlService;
-		$this->query = $query;
 	}
 
-	public function __invoke( $categories ): ?array {
+	public function __invoke( $selectedCategory ): ?array {
 		if ( $this->urlService->showSingleCat() ) {
 			return null;
 		}
 
-		$toCategoryViewModel = function ( $category ) {
+		$toCategoryViewModel = function ( $category ) use ( $selectedCategory ) {
 			$category_children = $this->db->getCategoryChildren( $category, false, 5 );
+
 			return [
 				'name' => $category . " (" . count( array_unique( $category_children ) ) . ")",
-				'isSelected' => str_replace( '_', ' ', $this->query->category() ) == $category,
+				'isSelected' => str_replace( '_', ' ', $selectedCategory ) == $category,
 				'url' => $this->urlService->getUrl( $category )
 			];
 		};
 
 		global $sdgShowCategoriesAsTabs;
+		$categories = $this->db->getCategoriesForBrowsing();
+
 		return [
 			'categoriesAsTabs' => $sdgShowCategoriesAsTabs,
 			'categories' => array_map( $toCategoryViewModel, $categories )

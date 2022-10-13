@@ -26,10 +26,6 @@
     </div>
 {{/header}}
 
-{{#categories}}
-    {{>QueryPageHeader.Categories}}
-{{/categories}}
-
 <div id="drilldown-filters">
     {{#appliedFilters}}
         <div id="drilldown-applied-filters">
@@ -38,7 +34,7 @@
         </div>
     {{/appliedFilters}}
     {{#applicableFilters}}
-        <p>{{msg_sd_browsedata_docu}}</p>
+        <p>{{{msg_sd_browsedata_docu}}}</p>
         <div id="drilldown-applicable-filters">
             {{{remainingHtml}}}
         </div>
