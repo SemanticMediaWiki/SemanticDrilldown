@@ -421,7 +421,7 @@ END;
 				$text .= Html::hidden( $key, $val );
 			}
 		}
-		$submitButton = Html::input( null, wfMessage( 'searchresultshead' )->text(), 'submit' );
+		$submitButton = Html::input( null, wfMessage( 'sd_browsedata_search' )->text(), 'submit' );
 		$text .= Html::rawElement( 'p', null, $submitButton );
 		$text .= "</form>";
 
