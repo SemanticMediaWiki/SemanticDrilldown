@@ -7,6 +7,8 @@
 			"Liuxinyu970226",
 			"Mywood",
 			"PhiLiP",
+			"Willy1018",
+			"Winston Sung",
 			"Yfdyh000"
 		]
 	},
@@ -16,7 +18,7 @@
 	"sd_browsedata_choosecategory": "选择一个分类",
 	"sd_browsedata_viewcategory": "查看分类",
 	"sd_browsedata_docu": "点击下面的一个或多个项目来缩小您的结果。",
-	"sd_browsedata_subcategory": "子类别",
+	"sd_browsedata_subcategory": "子分类",
 	"sd_browsedata_other": "其他",
 	"sd_browsedata_none": "无",
 	"sd_browsedata_filterbyvalue": "按此值筛选",
@@ -35,5 +37,6 @@
 	"sd_createfilter_usecategoryvalues": "从此分类中获取过滤器的值：",
 	"sd_createfilter_requirefilter": "在显示该过滤器之前，要求选择另一个过滤器：",
 	"sd-pageschemas-filter": "过滤器",
-	"sd-pageschemas-values": "取值"
+	"sd-pageschemas-values": "取值",
+	"sd_browsedata_search": "搜索"
 }

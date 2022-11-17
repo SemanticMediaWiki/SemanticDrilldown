@@ -3,6 +3,7 @@
  *
  * Javascript code for use by the Semantic Drilldown extension.
  *
+ * @param $
  * @author Sanyam Goyal
  */
 ( function ( $ ) {
@@ -11,7 +12,7 @@
 		var loc = item.label.search( re );
 		var t;
 		if ( loc >= 0 ) {
-			t = item.label.substr( 0, loc ) + '<strong>' + item.label.substr( loc, this.term.length ) + '</strong>' + item.label.substr( loc + this.term.length );
+			t = item.label.slice( 0, Math.max( 0, loc ) ) + '<strong>' + item.label.substr( loc, this.term.length ) + '</strong>' + item.label.slice( loc + this.term.length );
 		} else {
 			t = item.label;
 		}
@@ -31,14 +32,14 @@
 				.insertAfter( select )
 				.autocomplete( {
 					source: function ( request, response ) {
-						var matcher = new RegExp( '\\b' + request.term, 'i' );
+						var matcher = new RegExp( request.term, 'i' );
 						response( select.children( 'option' ).map( function () {
-							var text = $( this ).text();
+							var text = this.innerHTML;
 							if ( this.value && ( !request.term || matcher.test( text ) ) ) {
 								return {
 									id: this.value,
 									label: text,
-									value: text
+									value: this.value
 								};
 							}
 						} ) );
@@ -92,25 +93,33 @@
 		}
 	} );
 
-}( jQuery ) );
+	$.fn.toggleValuesDisplay = function () {
+		$.valuesDiv = $( this ).closest( '.drilldown-filter' )
+			.find( '.drilldown-filter-values' );
+		if ( $.valuesDiv.css( 'display' ) === 'none' ) {
+			$.valuesDiv.css( 'display', 'block' );
+			var downArrowImage = mediaWiki.config.get( 'sdgDownArrowImage' );
+			this.find( 'img' ).attr( 'src', downArrowImage );
+		} else {
+			$.valuesDiv.css( 'display', 'none' );
+			var rightArrowImage = mediaWiki.config.get( 'sdgRightArrowImage' );
+			this.find( 'img' ).attr( 'src', rightArrowImage );
+		}
+	};
 
-jQuery.fn.toggleValuesDisplay = function () {
-	jQuery.valuesDiv = jQuery( this ).closest( '.drilldown-filter' )
-		.find( '.drilldown-filter-values' );
-	if ( jQuery.valuesDiv.css( 'display' ) === 'none' ) {
-		jQuery.valuesDiv.css( 'display', 'block' );
-		var downArrowImage = mediaWiki.config.get( 'sdgDownArrowImage' );
-		this.find( 'img' ).attr( 'src', downArrowImage );
-	} else {
-		jQuery.valuesDiv.css( 'display', 'none' );
-		var rightArrowImage = mediaWiki.config.get( 'sdgRightArrowImage' );
-		this.find( 'img' ).attr( 'src', rightArrowImage );
+	function removePagingIfNotRequired() {
+		if ( $( '.drilldown-results-output-paged' ).length === 0 ) {
+			const pagingSectionSelectors = $( '#drilldown-top-paging, .mw-spcontent > p:last-of-type' );
+			$( pagingSectionSelectors ).remove();
+		}
 	}
-};
 
-jQuery( document ).ready( function () {
-	jQuery( '.semanticDrilldownCombobox' ).combobox();
-	jQuery( '.drilldown-values-toggle' ).click( function () {
-		jQuery( this ).toggleValuesDisplay();
+	$( function () {
+		removePagingIfNotRequired();
+		$( '.semanticDrilldownCombobox' ).combobox();
+		$( '.drilldown-values-toggle' ).click( function () {
+			$( this ).toggleValuesDisplay();
+		} );
 	} );
-} );
+
+}( jQuery ) );

@@ -1,0 +1,19 @@
+includes:
+	- phpstan-baseline.neon
+
+parameters:
+	level: 1
+	paths:
+	    - includes
+	    - languages
+	    - tests/phpunit
+	scanDirectories:
+		- ../SemanticMediaWiki/includes
+		- ../SemanticMediaWiki/src/Query
+		- ../SemanticMediaWiki/tests/phpunit
+		- ../PageSchemas/includes
+		- ../AdminLinks/includes
+		- ../../includes
+		- ../../languages
+		- ../../tests/phpunit
+		- ../../vendor

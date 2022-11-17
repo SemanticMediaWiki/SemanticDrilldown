@@ -1,0 +1,33 @@
+{
+	"description": "display of categories disabled",
+	"setup": [
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "Category1",
+			"contents": ""
+		}
+	],
+	"tests": [
+		{
+			"type": "special",
+			"about": "display of categories be disabled",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"not-contain": "Choose a category:"
+			}
+		}
+	],
+	"settings": {
+		"wgLang": "en",
+		"sdgHideCategoriesByDefault": true
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

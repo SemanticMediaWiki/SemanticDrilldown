@@ -1,0 +1,55 @@
+{
+	"description": "test 2",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeText",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "Category1",
+			"contents": "{{#drilldowninfo: filters=Text (property=SomeText)|display parameters=format=list}}"
+		},
+		{
+			"page": "Page2",
+			"contents": "[[Category:Category1]]{{#set: SomeText=ABC}}SomeText is {{#show: {{PAGENAME}}|?SomeText}}"
+		}
+	],
+	"tests": [
+		{
+			"type": "format",
+			"about": "2a",
+			"subject": "Page2",
+			"assert-output": {
+				"to-contain": [
+					"SomeText is ABC"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "2",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {
+					"Text": "ABC"
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Page2\" title=\"Page2\">Page2</a>"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgLang": "en"
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

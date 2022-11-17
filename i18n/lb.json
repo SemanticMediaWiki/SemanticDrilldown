@@ -30,5 +30,6 @@
 	"sd_createfilter_usecategoryvalues": "Werter fir dëse Filter vun dëser Kategorie kréien:",
 	"sd_createfilter_requirefilter": "Verlaangen dat en anere Filter gewielt gëtt ier dësen ugewise gëtt:",
 	"sd-pageschemas-filter": "Filter",
-	"sd-pageschemas-values": "Wäerter"
+	"sd-pageschemas-values": "Wäerter",
+	"sd_browsedata_search": "Sichen"
 }

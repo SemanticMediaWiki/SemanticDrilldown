@@ -1,0 +1,8 @@
+{{#categories}}
+    {{#isSelected}}
+        <li class="category selected">{{name}}</li>
+    {{/isSelected}}
+    {{^isSelected}}
+        <li class="category"><a href="{{url}}" title="{{msg_sd_browsedata_choosecategory}}">{{name}}</a></li>
+    {{/isSelected}}
+{{/categories}}

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="8"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    errorBaseline="psalm-baseline.xml"
+>
+    <projectFiles>
+        <directory name="includes" />
+        <directory name="languages" />
+        <directory name="tests/phpunit" />
+    </projectFiles>
+    <extraFiles>
+        <directory name="../SemanticMediaWiki/includes" />
+        <directory name="../SemanticMediaWiki/tests/phpunit" />
+        <directory name="../PageSchemas/includes" />
+        <directory name="../AdminLinks/includes" />
+        <directory name="../../includes" />
+        <directory name="../../languages" />
+        <directory name="../../tests/phpunit" />
+        <directory name="../../vendor/phpunit/phpunit" />
+        <directory name="../../vendor/wikimedia" />
+    </extraFiles>
+    <issueHandlers>
+      <UndefinedFunction>
+        <errorLevel type="suppress">
+          <referencedFunction name="wfMessage" />
+          <referencedFunction name="wfGetDB" />
+        </errorLevel>
+      </UndefinedFunction>
+    </issueHandlers>
+</psalm>

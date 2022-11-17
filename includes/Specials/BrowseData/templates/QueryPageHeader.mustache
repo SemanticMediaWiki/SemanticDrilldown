@@ -1,0 +1,51 @@
+{{#displayParametersWithUnknownFormat.0}}
+    <div id="semantic-drilldown-unknown-formats">
+        {{msg_sd_displayparameters_with_unknown_format}}
+        <ul>
+            {{#displayParametersWithUnknownFormat}}
+                <li>{{.}}</li>
+            {{/displayParametersWithUnknownFormat}}
+        </ul>
+    </div>
+{{/displayParametersWithUnknownFormat.0}}
+
+{{#displayParametersWithUnsupportedFormat.0}}
+    <div id="semantic-drilldown-unknown-formats">
+        {{msg_sd_displayparameters_with_unsupported_format}}
+        <ul>
+            {{#displayParametersWithUnsupportedFormat}}
+                <li>{{.}}</li>
+            {{/displayParametersWithUnsupportedFormat}}
+        </ul>
+    </div>
+{{/displayParametersWithUnsupportedFormat.0}}
+
+{{#header}}
+    <div id="drilldown-header">
+        {{{header}}}
+    </div>
+{{/header}}
+
+<div id="drilldown-filters">
+    {{#appliedFilters}}
+        <div id="drilldown-applied-filters">
+            <a href="{{categoryUrl}}" title="{{msg_sd_browsedata_resetfilters}}">{{category}}</a>
+            {{{remainingHtml}}}
+        </div>
+    {{/appliedFilters}}
+    {{#applicableFilters}}
+        <p>{{{msg_sd_browsedata_docu}}}</p>
+        <div id="drilldown-applicable-filters">
+            {{{remainingHtml}}}
+        </div>
+    {{/applicableFilters}}
+</div>
+
+{{#results.0}}  {{! .0 is undocumented, but working in PHP: require first element of results being not empty }}
+    <div class="drilldown-results-output drilldown-results-output-unpaged">
+        {{>Results}}
+    </div>
+{{/results.0}}
+
+<div id="drilldown-top-paging">
+    {{!to be closed in QueryPageOutput}}

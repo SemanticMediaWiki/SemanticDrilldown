@@ -1,0 +1,128 @@
+{
+	"description": "paged and unpaged result formats",
+	"setup": [
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "Category with only unpaged result formats",
+			"contents": "{{#drilldowninfo: display parameters=format=ul}}"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "Category with only paged result formats",
+			"contents": "{{#drilldowninfo: display parameters=format=ol}}"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "Category with mixed types of result formats",
+			"contents": "{{#drilldowninfo: display parameters=format=ul|display parameters=format=ol|display parameters=format=some-unsupported-format|display parameters=format=some-unknown-format}}"
+		},
+		{
+			"page": "Page1",
+			"contents": "[[Category:Category with only unpaged result formats]][[Category:Category with only paged result formats]][[Category:Category with mixed types of result formats]]"
+		},
+		{
+			"page": "Page2",
+			"contents": "[[Category:Category with only unpaged result formats]][[Category:Category with only paged result formats]][[Category:Category with mixed types of result formats]]"
+		}
+	],
+	"tests": [
+		{
+			"type": "special",
+			"about": "all pages are shown for unpaged result formats",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category with only unpaged result formats",
+				"request-parameters": {
+					"limit": 1
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<div class=\"drilldown-results-output drilldown-results-output-unpaged\">",
+					"<a href=\"/index.php/Page2\" title=\"Page2\">Page2</a>"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "if there are only unpaged result formats, the paged div is not printed",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category with only unpaged result formats",
+				"request-parameters": { }
+			},
+			"assert-output": {
+				"not-contain": [
+					"<div class=\"drilldown-results-output drilldown-results-output-paged\">"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "the number of results displayed is limited for paged result formats",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category with only paged result formats",
+				"request-parameters": {
+					"limit": 1
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<div class=\"drilldown-results-output drilldown-results-output-paged\">"
+				],
+				"not-contain": [
+					"<a href=\"/index.php/Page2\" title=\"Page2\">Page2</a>"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "if there are only paged result formats, the unpaged div is not printed",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category with only paged result formats",
+				"request-parameters": { }
+			},
+			"assert-output": {
+				"not-contain": [
+					"<div class=\"drilldown-results-output drilldown-results-output-unpaged\">"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "mixed types result formats are displayed as expected",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category with mixed types of result formats",
+				"request-parameters": { }
+			},
+			"assert-output": {
+				"contain": [
+					"<div id=\"semantic-drilldown-unknown-formats\">",
+					"<li>format=unknown-format</li>",
+					"<div id=\"semantic-drilldown-unsupported-formats\">",
+					"<li>format=unsupported-format</li>",
+					"<div class=\"drilldown-results-output drilldown-results-output-unpaged\">",
+					"<div class=\"drilldown-results-output drilldown-results-output-paged\">",
+					"<a href=\"/index.php/Page1\" title=\"Page1\">Page1</a>",
+					"<a href=\"/index.php/Page2\" title=\"Page2\">Page2</a>"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgLang": "en",
+		"sdgResultFormatTypes": {
+			"ul": "unpaged",
+			"ol": "paged",
+			"some-unsupported-format": "unsupported"
+		}
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

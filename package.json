@@ -1,12 +1,16 @@
 {
+	"name": "SemanticDrilldown",
 	"private": true,
 	"scripts": {
-		"test": "grunt test"
+		"test": "npm run analyze",
+		"test-coverage": "npm run analyze",
+		"analyze": "npm run eslint && npm run banana-checker",
+		"eslint": "eslint libs/**/*.js",
+		"eslint-fix": "npm run eslint -- --fix",
+		"banana-checker": "banana-checker i18n/"
 	},
 	"devDependencies": {
-		"eslint-config-wikimedia": "0.20.0",
-		"grunt": "1.4.0",
-		"grunt-banana-checker": "0.9.0",
-		"grunt-eslint": "23.0.0"
+		"eslint-config-wikimedia": "^0.20.0",
+		"grunt-banana-checker": "^0.9.0"
 	}
 }

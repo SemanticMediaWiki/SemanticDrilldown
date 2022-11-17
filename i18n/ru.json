@@ -3,6 +3,7 @@
 		"authors": [
 			"Ferrer",
 			"Innv",
+			"Kareyac",
 			"Lockal",
 			"Okras",
 			"Александр Сигачёв"
@@ -33,5 +34,6 @@
 	"sd_createfilter_usecategoryvalues": "Получить значения для фильтра из этой категории:",
 	"sd_createfilter_requirefilter": "Требовать выбора другого фильтра, перед тем, как отображать этот:",
 	"sd-pageschemas-filter": "Фильтр",
-	"sd-pageschemas-values": "Значения"
+	"sd-pageschemas-values": "Значения",
+	"sd_browsedata_search": "Поиск"
 }

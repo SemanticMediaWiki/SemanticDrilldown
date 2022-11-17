@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"McDutchie",
+			"Robin van der Vliet",
 			"SPQRobin",
 			"Siebrand"
 		]
@@ -31,5 +32,6 @@
 	"sd_createfilter_usecategoryvalues": "Waarden voor deze filter uit de volgende categorie halen:",
 	"sd_createfilter_requirefilter": "Selectie van een andere filter voor deze filter zichtbaar is vereisen:",
 	"sd-pageschemas-filter": "Filter",
-	"sd-pageschemas-values": "Waarden"
+	"sd-pageschemas-values": "Waarden",
+	"sd_browsedata_search": "Zoeken"
 }

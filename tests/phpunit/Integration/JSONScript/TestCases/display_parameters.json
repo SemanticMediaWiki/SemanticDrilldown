@@ -1,0 +1,39 @@
+{
+	"description": "display parameters",
+	"setup": [
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "Category1",
+			"contents": "{{#drilldowninfo: display parameters=caption=THIS IS THE CAPTION}}"
+		},
+		{
+			"page": "Page1",
+			"contents": "[[Category:Category1]]"
+		}	],
+	"tests": [
+		{
+			"type": "special",
+			"about": "Caption and results are wrapped in corresponding divs",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<div class=\"drilldown-result\">",
+					"<div class=\"drilldown-result-heading\">THIS IS THE CAPTION</div>",
+					"<div class=\"drilldown-result-body\">"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgLang": "en"
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

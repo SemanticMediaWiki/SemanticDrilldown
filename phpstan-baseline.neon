@@ -1,0 +1,56 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Constant SMW_NS_PROPERTY not found\\.$#"
+			count: 2
+			path: includes/Filter.php
+
+		-
+			message: "#^Variable \\$xml might not be defined\\.$#"
+			count: 2
+			path: includes/PageSchemas.php
+
+		-
+			message: "#^Constant SMW_NS_PROPERTY not found\\.$#"
+			count: 1
+			path: includes/ParserFunctions/DrilldownInfo.php
+
+		-
+			message: "#^Variable \\$current_filter_values might not be defined\\.$#"
+			count: 2
+			path: includes/Specials/BrowseData/GetApplicableFilters.php
+
+		-
+			message: "#^Variable \\$highest_num_results might not be defined\\.$#"
+			count: 2
+			path: includes/Specials/BrowseData/GetApplicableFilters.php
+
+		-
+			message: "#^Variable \\$lowest_num_results might not be defined\\.$#"
+			count: 4
+			path: includes/Specials/BrowseData/GetApplicableFilters.php
+
+		-
+			message: "#^Variable \\$scale_factor might not be defined\\.$#"
+			count: 2
+			path: includes/Specials/BrowseData/GetApplicableFilters.php
+
+		-
+			message: "#^Constant SMW_OUTPUT_WIKI not found\\.$#"
+			count: 1
+			path: includes/Specials/BrowseData/SemanticResultPrinter.php
+
+		-
+			message: "#^Constant SMW_NS_PROPERTY not found\\.$#"
+			count: 1
+			path: includes/Sql/SqlProvider.php
+
+		-
+			message: "#^Access to constant ID_TABLE on an unknown class SMW\\\\SQLStore\\\\SQLStore\\.$#"
+			count: 1
+			path: includes/Utils.php
+
+		-
+			message: "#^Call to an undefined static method MagicWord\\:\\:get\\(\\)\\.$#"
+			count: 2
+			path: includes/Utils.php

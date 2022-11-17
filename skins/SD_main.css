@@ -13,6 +13,8 @@ div#drilldown-categories-wrapper {
 ul#drilldown-categories {
 	border: 2px #888888 solid;
 	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
 ul#drilldown-categories li {
@@ -82,7 +84,7 @@ ul#drilldown-categories-tabs li.selected {
 
 /* End of categories-list CSS */
 
-div#drilldown-header {
+div#drilldown-applied-filters {
 	font-size: large;
 	font-weight: bold;
 }
@@ -91,7 +93,7 @@ span.drilldown-header-value {
 	font-weight: normal;
 }
 
-div.drilldown-filters {
+div#drilldown-applicable-filters {
 	margin-top: 10px;
 	padding-bottom: 8px;
 	margin-bottom: 8px;
@@ -111,6 +113,10 @@ span.drilldown-filter-notes {
 }
 
 div.drilldown-filter-values {
+}
+
+.is-applied .drilldown-filter-label {
+	font-style: italic;
 }
 
 .ui-button { margin-left: -1px; }

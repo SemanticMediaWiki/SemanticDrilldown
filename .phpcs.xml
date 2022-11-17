@@ -8,11 +8,13 @@
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingReturn" />
 		<exclude name="MediaWiki.Commenting.PropertyDocumentation.MissingDocumentationPublic" />
 		<exclude name="MediaWiki.Commenting.PropertyDocumentation.MissingDocumentationPrivate" />
+		<exclude name="MediaWiki.Commenting.PropertyDocumentation.MissingVar" />
 		<exclude name="MediaWiki.ControlStructures.AssignmentInControlStructures.AssignmentInControlStructures" />
 		<exclude name="MediaWiki.Usage.DbrQueryUsage.DbrQueryFound" />
 		<exclude name="MediaWiki.Usage.ExtendClassUsage.FunctionConfigUsage" />
 		<exclude name="MediaWiki.Usage.ExtendClassUsage.FunctionVarUsage" />
 		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment" />
+		<exclude name="MediaWiki.NamingConventions.ValidGlobalName.allowedPrefix" />
 	</rule>
 	<rule ref="Generic.Files.LineLength">
 		<properties>
@@ -21,7 +23,7 @@
 	</rule>
 	<rule ref="MediaWiki.NamingConventions.ValidGlobalName">
 		<properties>
-			<property name="ignoreList" type="array" value="$sdgFiltersLargestFontSize,$sdgFiltersSmallestFontSize,$sdgHideCategoriesByDefault,$sdgMinValuesForComboBox,$sdgNumRangesForNumberFilters,$sdgNumResultsPerPage,$sdgScriptPath,$sdgShowCategoriesAsTabs,$smwgContLang,$smwgDefaultStore" />
+			<property name="ignoreList" type="array" value="$sdgFiltersLargestFontSize,$sdgFiltersSmallestFontSize,$sdgHideCategoriesByDefault,$sdgMinValuesForComboBox,$sdgNumRangesForNumberFilters,$sdgNumResultsPerPage,$sdgShowCategoriesAsTabs,$smwgContLang,$smwgDefaultStore" />
 		</properties>
 	</rule>
 
@@ -36,7 +38,9 @@
 		<severity>0</severity>
 	</rule>
 
-	<file>.</file>
+	<file>includes</file>
+	<file>languages</file>
+	<file>tests/phpunit</file>
 	<arg name="extensions" value="php"/>
 	<arg name="encoding" value="UTF-8"/>
 </ruleset>

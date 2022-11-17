@@ -1,0 +1,63 @@
+{
+	"description": "header/footer",
+	"setup": [
+		{
+			"page": "Header",
+			"contents": "This is a Header"
+		},
+		{
+			"page": "Footer",
+			"contents": "This is a Footer"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "SomeCategory",
+			"contents": "{{#drilldowninfo: title=Exploring some category|header=Header|footer=Footer}}"
+		},
+		{
+			"//": "currently, display is only working correctly if there is at least one match",
+			"page": "SomePage",
+			"contents": "[[Category:SomeCategory]]"
+		}
+	],
+	"tests": [
+		{
+			"type": "special",
+			"about": "header and footer are displayed",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "SomeCategory",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"This is a Header",
+					"This is a Footer"
+				]
+			}
+		},
+		{
+			"//type": "special",
+			"//": "cannot be tested this way because the title is not part of the output",
+			"about": "custom title is used",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "SomeCategory",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"Exploring some category"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgLang": "en"
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}
