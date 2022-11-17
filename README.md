@@ -3,8 +3,6 @@
 
 # About
 
-Fork of MediaWiki extension SemanticDrilldown that aims to simplify contribution through hosting on GitHub instead of Gerrit, improved quality through better test coverage and continuous integration. 
-
 Semantic Drilldown is an extension to MediaWiki that works in conjunction with another extension, Semantic MediaWiki, to provide a drilldown interface for all the data on a site.
 
 For more information on Semantic Drilldown, see the extension homepage at:
