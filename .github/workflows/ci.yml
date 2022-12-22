@@ -25,14 +25,14 @@ jobs:
             smw_version: dev-master
             coverage: false
             experimental: false
-          - mediawiki_version: '1.36'
+          - mediawiki_version: '1.38'
             smw_version: dev-master
             coverage: false
             experimental: false
-          - mediawiki_version: '1.37'
+          - mediawiki_version: '1.39'
             smw_version: dev-master
             coverage: false
-            experimental: false
+            experimental: true
 
     env:
       MW_VERSION: ${{ matrix.mediawiki_version }}
