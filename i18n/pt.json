@@ -37,5 +37,7 @@
 	"sd_createfilter_requirefilter": "Exigir que outro filtro seja selecionado antes de apresentar este:",
 	"sd-pageschemas-filter": "Filtro",
 	"sd-pageschemas-values": "Valores",
-	"sd_browsedata_search": "Pesquisar"
+	"sd_browsedata_search": "Pesquisar",
+	"sd_displayparameters_with_unknown_format": "Parâmetros de apresentação com formato desconhecido",
+	"sd_displayparameters_with_unsupported_format": "Parâmetros de apresentação com formato não suportado"
 }

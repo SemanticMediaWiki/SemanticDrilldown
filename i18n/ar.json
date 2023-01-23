@@ -33,5 +33,6 @@
 	"sd_createfilter_usecategoryvalues": "احصل على القيم للفلتر من هذا التصنيف:",
 	"sd_createfilter_requirefilter": "يتطلب اختيار مُرشّح آخر قبل أن يتم عرض هذا:",
 	"sd-pageschemas-filter": "فلترة",
-	"sd-pageschemas-values": "القيم"
+	"sd-pageschemas-values": "القيم",
+	"sd_browsedata_search": "بحث"
 }

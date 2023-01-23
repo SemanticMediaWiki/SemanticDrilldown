@@ -4,7 +4,8 @@
 			"Eduardo.mps",
 			"Enqd",
 			"Giro720",
-			"Jaideraf"
+			"Jaideraf",
+			"Re demz"
 		]
 	},
 	"semanticdrilldown-desc": "Uma interface de introspecção para navegar através de dados semânticos",
@@ -32,5 +33,7 @@
 	"sd_createfilter_usecategoryvalues": "Obter valores de filtro a partir desta categoria:",
 	"sd_createfilter_requirefilter": "Necessita de outro filtro selecionado antes deste ser exibido:",
 	"sd-pageschemas-filter": "Filtro",
-	"sd-pageschemas-values": "Valores"
+	"sd-pageschemas-values": "Valores",
+	"sd_displayparameters_with_unknown_format": "Parâmetros de apresentação com formato desconhecido",
+	"sd_displayparameters_with_unsupported_format": "Parâmetros de aprensentação com formato desconhecido"
 }

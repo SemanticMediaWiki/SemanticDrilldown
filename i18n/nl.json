@@ -33,5 +33,7 @@
 	"sd_createfilter_requirefilter": "Selectie van een andere filter voor deze filter zichtbaar is vereisen:",
 	"sd-pageschemas-filter": "Filter",
 	"sd-pageschemas-values": "Waarden",
-	"sd_browsedata_search": "Zoeken"
+	"sd_browsedata_search": "Zoeken",
+	"sd_displayparameters_with_unknown_format": "Parameters met onbekend formaat tonen",
+	"sd_displayparameters_with_unsupported_format": "Parameters met niet-ondersteund formaat tonen"
 }

@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Cwlin0416",
+			"Kly",
 			"LNDDYL",
 			"Mark85296341",
 			"Oapbtommy",
@@ -35,5 +36,6 @@
 	"sd_createfilter_usecategoryvalues": "從該類別當中為篩選器獲取取值：",
 	"sd_createfilter_requirefilter": "在顯示該篩選器之前，要求選擇另一個篩選器：",
 	"sd-pageschemas-filter": "篩選器",
-	"sd-pageschemas-values": "取值"
+	"sd-pageschemas-values": "取值",
+	"sd_browsedata_search": "搜尋"
 }

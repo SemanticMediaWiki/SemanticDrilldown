@@ -7,6 +7,7 @@
 			"Dvdgmz",
 			"Fitoschido",
 			"Imre",
+			"JDíaz32",
 			"Macofe",
 			"MarcoAurelio",
 			"Mor",
@@ -39,5 +40,7 @@
 	"sd_createfilter_requirefilter": "Requiere otro filtro a ser seleccionado antes que este sea mostrado:",
 	"sd-pageschemas-filter": "Filtro",
 	"sd-pageschemas-values": "Valores",
-	"sd_browsedata_search": "Buscar"
+	"sd_browsedata_search": "Buscar",
+	"sd_displayparameters_with_unknown_format": "Mostrar parámetros con formato desconocido",
+	"sd_displayparameters_with_unsupported_format": "Mostrar parámetros con formato no compatible"
 }
