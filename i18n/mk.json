@@ -31,5 +31,7 @@
 	"sd_createfilter_requirefilter": "Побарувај да биде избран друг филтер пред да се прикаже овој:",
 	"sd-pageschemas-filter": "Филтер",
 	"sd-pageschemas-values": "Вредности",
-	"sd_browsedata_search": "Пребарај"
+	"sd_browsedata_search": "Пребарај",
+	"sd_displayparameters_with_unknown_format": "Прикажи параметри со непознат формат",
+	"sd_displayparameters_with_unsupported_format": "Прикажи параметри со неподдржан формат"
 }
