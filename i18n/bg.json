@@ -22,5 +22,6 @@
 	"sd_browsedata_addanothervalue": "Щракнете на стрелката за да добавите друга стойност",
 	"sd_browsedata_daterangeend": "Край:",
 	"sd_createfilter_requirefilter": "Изисква се да бъде избран друг филтър преди да може този да бъде показан:",
-	"sd-pageschemas-filter": "Филтър"
+	"sd-pageschemas-filter": "Филтър",
+	"sd_browsedata_search": "Търсене"
 }
