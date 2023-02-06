@@ -32,5 +32,7 @@
 	"sd_createfilter_requirefilter": "הצבת דרישה לבחירת מסנן אחר לפני שזה יוצג:",
 	"sd-pageschemas-filter": "מסנן",
 	"sd-pageschemas-values": "ערכים",
-	"sd_browsedata_search": "חיפוש"
+	"sd_browsedata_search": "חיפוש",
+	"sd_displayparameters_with_unknown_format": "הצגת פרמטרים עם תסדיר לא ידוע",
+	"sd_displayparameters_with_unsupported_format": "הצגת פרמטרים עם תסדיר לא נתמך"
 }
