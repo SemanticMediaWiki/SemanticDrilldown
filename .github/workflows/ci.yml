@@ -28,7 +28,7 @@ jobs:
           - mediawiki_version: '1.38'
             smw_version: dev-master
             coverage: false
-            experimental: false
+            experimental: true
           - mediawiki_version: '1.39'
             smw_version: dev-master
             coverage: false
@@ -51,7 +51,7 @@ jobs:
         if: matrix.coverage == true
 
       - name: Upload code coverage
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           files: coverage/php/coverage.xml
         if: matrix.coverage == true
