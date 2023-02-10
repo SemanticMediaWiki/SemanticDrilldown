@@ -28,7 +28,7 @@ jobs:
           - mediawiki_version: '1.38'
             smw_version: dev-master
             coverage: false
-            experimental: false
+            experimental: true
           - mediawiki_version: '1.39'
             smw_version: dev-master
             coverage: false
