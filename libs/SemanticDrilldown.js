@@ -26,9 +26,9 @@
 		_create: function () {
 			var self = this;
 			var select = this.element.hide();
-			var inp_id = select[ 0 ].options[ 0 ].value;
-			var curval = select[ 0 ].name;
-			var input = $( '<input id = "' + inp_id + '" type="text" name="' + inp_id + '" value="' + curval + '">' )
+			var inp_id = select.data( 'mwInputName' );
+			var filterName = select.data( 'mwFilterName' );
+			var input = $( '<input type="text" value="">' ).attr( { id: inp_id, name: inp_id } )
 				.insertAfter( select )
 				.autocomplete( {
 					source: function ( request, response ) {
@@ -56,6 +56,7 @@
 							item: select.find( '[value="' + ui.item.id + '"]' )
 						} );
 						setTimeout( function () {
+							input.attr( { name: filterName } );
 							select[ 0 ].form.submit();
 						}, 0 );
 

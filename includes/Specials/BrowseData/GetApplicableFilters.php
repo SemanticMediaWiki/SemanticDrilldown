@@ -338,50 +338,60 @@ END;
 
 		$filter_url = $this->getUrl( $this->query->category(), $this->query->appliedFilters(), $this->query->subcategory() );
 
-		$text = <<< END
-<form method="get" action="$filter_url">
-END;
-
+		$hiddenHtmlArray = [];
 		foreach ( $this->request->getValues() as $key => $val ) {
 			if ( $key != $inputName ) {
 				if ( is_array( $val ) ) {
 					foreach ( $val as $i => $realVal ) {
 						$keyString = $key . '[' . $i . ']';
-						$text .= Html::hidden( $keyString, $realVal );
+						$hiddenHtmlArray[] = Html::hidden( $keyString, $realVal );
 					}
 				} else {
-					$text .= Html::hidden( $key, $val );
+					$hiddenHtmlArray[] = Html::hidden( $key, $val );
 				}
 			}
 		}
 
-		$text .= <<< END
-	<div class="ui-widget">
-		<select class="semanticDrilldownCombobox" name="$cur_value">
-			<option value="$inputName"></option>;
-END;
+		$optionsHtmlArray = [];
 		foreach ( $possibleValues as $value ) {
 			if ( $value->value() != '_other' && $value->value() != '_none' ) {
-				$text .= Html::element(
+				$optionsHtmlArray[] = Html::element(
 					'option',
 					[ 'value' => str_replace( '_', ' ', $value->value() ) ],
 					$value->displayValue() );
 			}
 		}
 
-		$text .= <<<END
-		</select>
-	</div>
-END;
+		$selectHtml = Html::rawElement(
+			'select',
+			[
+				'class' => 'semanticDrilldownCombobox',
+				'style' => 'display: none;',
+				'data-mw-filter-name' => $filter_name,
+				'data-mw-input-name' => $inputName,
+			],
+			implode( "\n", $optionsHtmlArray )
+		);
 
-		$text .= Html::input(
+		$widgetHtml = Html::rawElement( 'div', [ 'class' => 'ui-widget' ], $selectHtml );
+
+		$submitHtml = Html::input(
 			null,
 			wfMessage( 'sd_browsedata_search' )->text(),
 			'submit',
 			[ 'style' => 'margin: 4px 0 8px 0;' ]
 		);
-		$text .= "</form>";
-		return $text;
+
+		$formHtml = Html::rawElement(
+			'form',
+			[
+				'method' => 'get',
+				'action' => $filter_url,
+			],
+			implode("\n", $hiddenHtmlArray) . "\n" . $widgetHtml . "\n" . $submitHtml
+		);
+
+		return $formHtml;
 	}
 
 	private function getDateInput( $input_name, $cur_value = null ): string {
