@@ -43,6 +43,6 @@
 	"sd-pageschemas-filter": "Filtre",
 	"sd-pageschemas-values": "Valeurs",
 	"sd_browsedata_search": "Rechercher",
-	"sd_displayparameters_with_unknown_format": "Afficher des paramètres de format inconnu",
+	"sd_displayparameters_with_unknown_format": "Paramètres d’affichage dans un format inconnu",
 	"sd_displayparameters_with_unsupported_format": "Paramètres d’affichage dans un format non pris en charge"
 }

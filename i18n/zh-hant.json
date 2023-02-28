@@ -37,5 +37,7 @@
 	"sd_createfilter_requirefilter": "在顯示該篩選器之前，要求選擇另一個篩選器：",
 	"sd-pageschemas-filter": "篩選器",
 	"sd-pageschemas-values": "取值",
-	"sd_browsedata_search": "搜尋"
+	"sd_browsedata_search": "搜尋",
+	"sd_displayparameters_with_unknown_format": "顯示未知格式的參數",
+	"sd_displayparameters_with_unsupported_format": "顯示不受支援格式的參數"
 }

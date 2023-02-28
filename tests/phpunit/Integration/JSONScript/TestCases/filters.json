@@ -71,8 +71,10 @@
 					"Date:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_2%2C_2000\" title=\"Filter by this value\">January 2, 2000&nbsp;(1)</a>",
-					"<input type='date' tabindex='0' aria-disabled='false' name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
-					"<input type='date' tabindex='0' aria-disabled='false' name='_upper_Date' value='2000-01-02' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
+					"<input type='date' tabindex='0'",
+					"name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
+					"<input type='date' tabindex='0'",
+					"name='_upper_Date' value='2000-01-02' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
 
 					"Page:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
@@ -186,7 +188,8 @@
 
 					"Date:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1&Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
-					"<input type='date' tabindex='0' aria-disabled='false' name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
+					"<input type='date' tabindex='0'",
+					"name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
 
 					"Page:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1&Page=Page1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
@@ -228,7 +231,8 @@
 
 					"Date:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
-					"<input type='date' tabindex='0' aria-disabled='false' name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
+					"<input type='date' tabindex='0'",
+					"name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
 
 					"Page:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1_2000&Page=Page1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
@@ -270,7 +274,8 @@
 
 					"Date:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page1&Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
-					"<input type='date' tabindex='0' aria-disabled='false' name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
+					"<input type='date' tabindex='0'",
+					"name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
 
 					"Page:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Page[0]=Page1&Page[1]=Page2\" title=\"Filter by this value\">Page2</a>",
@@ -312,7 +317,8 @@
 
 					"Date:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean=1&Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
-					"<input type='date' tabindex='0' aria-disabled='false' name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
+					"<input type='date' tabindex='0'",
+					"name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
 
 					"Page:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean=1&Page=Page1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
