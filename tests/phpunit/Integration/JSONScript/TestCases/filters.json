@@ -61,8 +61,8 @@
 			"assert-output": {
 				"to-contain": [
 					"Text:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Text=A\" title=\"Filter by this value\">A&nbsp;(1)</a",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Text=B\" title=\"Filter by this value\">B&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A\" title=\"Filter by this value\">A&nbsp;(1)</a",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=B\" title=\"Filter by this value\">B&nbsp;(1)</a>",
 
 					"Number:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1\">1 (1) </a>",

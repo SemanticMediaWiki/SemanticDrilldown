@@ -79,7 +79,7 @@
 					"> Page: <span class=\"drilldown-header-value\">Page1</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
 
 					"Page:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Page[0]=Page1&Page[1]=Page2\" title=\"Filter by this value\">DisplayTitle2</a>"
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page[0]=Page1&amp;Page[1]=Page2\" title=\"Filter by this value\">DisplayTitle2</a>"
 				]
 			}
 		}
