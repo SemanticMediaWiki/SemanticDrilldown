@@ -394,7 +394,7 @@ END;
 				'method' => 'get',
 				'action' => $filter_url,
 			],
-			implode("\n", $hiddenHtmlArray) . "\n" . $widgetHtml . "\n" . $submitHtml
+			implode( "\n", $hiddenHtmlArray ) . "\n" . $widgetHtml . "\n" . $submitHtml
 		);
 
 		return $formHtml;

@@ -23,8 +23,8 @@ class UrlService {
 	/**
 	 * @param string $category
 	 * @param AppliedFilter[] $applied_filters
-	 * @param string $subcategory
-	 * @param array $filter_to_remove
+	 * @param string|null $subcategory
+	 * @param array|null $filter_to_remove
 	 * @return string
 	 */
 	public function getUrl(
