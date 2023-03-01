@@ -77,8 +77,8 @@
 					"name='_upper_Date' value='2000-01-02' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
 
 					"Page:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page2\" title=\"Filter by this value\">Page2&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page[0]=Page1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page[0]=Page2\" title=\"Filter by this value\">Page2&nbsp;(1)</a>",
 
 					"Boolean:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean=1\" title=\"Filter by this value\">Yes&nbsp;(1)</a>",
