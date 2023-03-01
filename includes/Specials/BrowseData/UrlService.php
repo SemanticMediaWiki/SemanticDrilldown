@@ -2,6 +2,7 @@
 
 namespace SD\Specials\BrowseData;
 
+use SD\AppliedFilter;
 use SD\AppliedFilterValue;
 use WebRequest;
 
@@ -19,6 +20,13 @@ class UrlService {
 		$this->query = $query;
 	}
 
+	/**
+	 * @param string $category
+	 * @param AppliedFilter[] $applied_filters
+	 * @param string $subcategory
+	 * @param array $filter_to_remove
+	 * @return string
+	 */
 	public function getUrl(
 		$category, $applied_filters = [], $subcategory = null, $filter_to_remove = null
 	): string {
@@ -35,12 +43,7 @@ class UrlService {
 			if ( $af->filter->name() == $filter_to_remove ) {
 				continue;
 			}
-			if ( count( $af->values ) == 0 ) {
-				// do nothing
-			} elseif ( count( $af->values ) == 1 ) {
-				$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
-				$url .= urlencode( str_replace( ' ', '_', $af->filter->name() ) ) . "=" . urlencode( str_replace( ' ', '_', $af->values[0]->text ) );
-			} else {
+			if ( $af->values ) {
 				usort( $af->values, [ AppliedFilterValue::class, "compare" ] );
 				foreach ( $af->values as $j => $fv ) {
 					$url .= ( strpos( $url, '?' ) ) ? '&' : '?';

@@ -16,6 +16,10 @@ use SD\Sql\SqlProvider;
 
 class AppliedFilter {
 	public Filter $filter;
+
+	/**
+	 * @var AppliedFilterValue[]
+	 */
 	public $values = [];
 	public $search_terms;
 	public $lower_date;
