@@ -45,12 +45,8 @@ class UrlService {
 			}
 			if ( $af->values ) {
 				usort( $af->values, [ AppliedFilterValue::class, "compare" ] );
-				// Date does not require instance number
-				if ( $af->filter->propertyType() === 'date' && count( $af->values ) <= 1 ) {
-					$add_instance = false;
-				} else {
-					$add_instance = true;
-				}
+				// Some property types do not require instance number
+				$add_instance = in_array( $af->filter->propertyType(), [ 'date', 'boolean' ] ) && count( $af->values ) <= 1;
 				foreach ( $af->values as $j => $fv ) {
 					$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
 					$assignment = $add_instance ? "[$j]=" : '=';
