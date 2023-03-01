@@ -2,21 +2,37 @@
 	"description": "display parameters",
 	"setup": [
 		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Text",
+			"contents": "[[Has type::Text]]"
+		},
+		{
 			"namespace": "NS_CATEGORY",
-			"page": "Category1",
+			"page": "WithCaption",
 			"contents": "{{#drilldowninfo: display parameters=caption=THIS IS THE CAPTION}}"
 		},
 		{
+			"namespace": "NS_CATEGORY",
+			"page": "WithMainColumn",
+			"contents": "{{#drilldowninfo: display parameters=format=plainlist;headers=hide;?Text}}"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "WithoutMainColumn",
+			"contents": "{{#drilldowninfo: display parameters=format=plainlist;headers=hide;?Text;mainlabel=-}}"
+		},
+		{
 			"page": "Page1",
-			"contents": "[[Category:Category1]]"
-		}	],
+			"contents": "[[Category:WithCaption]] [[Category:WithMainColumn]] [[Category:WithoutMainColumn]] [[Text::MARKER TEXT]]"
+		}
+	],
 	"tests": [
 		{
 			"type": "special",
 			"about": "Caption and results are wrapped in corresponding divs",
 			"special-page": {
 				"page": "BrowseData",
-				"query-parameters": "Category1",
+				"query-parameters": "WithCaption",
 				"request-parameters": {}
 			},
 			"assert-output": {
@@ -25,6 +41,30 @@
 					"<div class=\"drilldown-result-heading\">THIS IS THE CAPTION</div>",
 					"<div class=\"drilldown-result-body\">"
 				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "The main column as shown by default",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "WithMainColumn",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": "<p><a href=\"/index.php/Page1\" title=\"Page1\">Page1</a> (MARKER TEXT)"
+			}
+		},
+		{
+			"type": "special",
+			"about": "The main column as removed with mainlabel=- as expected",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "WithoutMainColumn",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": "<p>MARKER TEXT"
 			}
 		}
 	],
