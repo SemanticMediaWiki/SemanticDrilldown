@@ -45,9 +45,16 @@ class UrlService {
 			}
 			if ( $af->values ) {
 				usort( $af->values, [ AppliedFilterValue::class, "compare" ] );
+				// Date does not require instance number
+				if ( $af->filter->propertyType() === 'date' && count( $af->values ) <= 1 ) {
+					$add_instance = false;
+				} else {
+					$add_instance = true;
+				}
 				foreach ( $af->values as $j => $fv ) {
 					$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
-					$url .= urlencode( str_replace( ' ', '_', $af->filter->name() ) ) . "[$j]=" . urlencode( str_replace( ' ', '_', $fv->text ) );
+					$assignment = $add_instance ? "[$j]=" : '=';
+					$url .= urlencode( str_replace( ' ', '_', $af->filter->name() ) ) . $assignment . urlencode( str_replace( ' ', '_', $fv->text ) );
 				}
 			}
 			if ( $af->search_terms != null ) {
