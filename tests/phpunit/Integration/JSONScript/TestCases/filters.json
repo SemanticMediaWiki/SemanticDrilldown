@@ -113,19 +113,19 @@
 					"> Text: <span class=\"drilldown-header-value\">A</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\"><img src=\"/extensions/SemanticDrilldown/skins/filter-x.png\" /></a>",
 
 					"Text:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&Text[1]=B\" title=\"Filter by this value\">B</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&amp;Text[1]=B\" title=\"Filter by this value\">B</a>",
 
 					"Number:",
-					"<div class=\"drilldown-filter-values\" ><a href=\"/index.php/Special:BrowseData/Category1?Text=A&Number=1\">1 (1) </a>",
+					"<div class=\"drilldown-filter-values\" ><a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&Number=1\">1 (1) </a>",
 
 					"Date:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Text=A&Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1%2C_2000&amp;Text[0]=A\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
 
 					"Page:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Text=A&Page=Page1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page[0]=Page1&amp;Text[0]=A\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
 
 					"Boolean:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Text=A&Boolean=1\" title=\"Filter by this value\">Yes&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean=1&amp;Text[0]=A\" title=\"Filter by this value\">Yes&nbsp;(1)</a>",
 
 					"Unused:",
 					"(There are no values for this filter)",
