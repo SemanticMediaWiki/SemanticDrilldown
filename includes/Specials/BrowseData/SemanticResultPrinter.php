@@ -69,10 +69,12 @@ class SemanticResultPrinter {
 		$furtherRes = $num !== null && $count > $num;
 
 		return static function ( $query, $mainlabel, $printouts ) use ( $qr, $store, $furtherRes ) {
-			$printrequest = new PrintRequest( PrintRequest::PRINT_THIS, $mainlabel );
-			$main_printout = [];
-			$main_printout[$printrequest->getHash()] = $printrequest;
-			$printouts = array_merge( $main_printout, $printouts );
+			if ( $mainlabel !== '-' ) {
+				$printrequest = new PrintRequest( PrintRequest::PRINT_THIS, $mainlabel );
+				$main_printout = [];
+				$main_printout[ $printrequest->getHash() ] = $printrequest;
+				$printouts = array_merge( $main_printout, $printouts );
+			}
 			return new QueryResult( $printouts, $query, $qr, $store, $furtherRes );
 		};
 	}
