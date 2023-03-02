@@ -181,7 +181,7 @@ END;
 		$or_values = $af->filter->allowedValues() ?: $af->getAllOrValues( $this->query->category() );
 		if ( $af->search_terms != null ) {
 			$curSearchTermNum = count( $af->search_terms );
-			$results_line = $this->getComboBoxInput( $af->filter->name(), $curSearchTermNum, $or_values );
+			$results_line = $this->getComboBoxInput( $af->filter->name(), $curSearchTermNum, $or_values, $af );
 			return $this->getFilterLine( $af->filter->name(), true, false, $results_line, $af->filter );
 			/*
 			} elseif ( $af->lower_date != null || $af->upper_date != null ) {
@@ -203,7 +203,7 @@ END;
 
 		if ( $or_values->count() >= $sdgMinValuesForComboBox ) {
 			$instance_num = count( $af->values );
-			$results_line = $this->getComboBoxInput( $af->filter->name(), $instance_num, $or_values );
+			$results_line = $this->getComboBoxInput( $af->filter->name(), $instance_num, $or_values, $af );
 			return $this->getFilterLine( $af->filter->name(), true, false, $results_line, $af->filter );
 		}
 
@@ -330,7 +330,7 @@ END;
 		return implode( '<span class="sep"> · </span>', $results );
 	}
 
-	private function getComboBoxInput( $filter_name, $instance_num, PossibleFilterValues $possibleValues, $cur_value = null ): string {
+	private function getComboBoxInput( $filter_name, $instance_num, PossibleFilterValues $possibleValues, ?AppliedFilter $af = null ): string {
 		$filter_name = str_replace( ' ', '_', $filter_name );
 
 		// Add on the instance number, since it can be one of a string
@@ -355,13 +355,22 @@ END;
 			}
 		}
 
+		$filter_values = [];
+		if ( $af ) {
+			foreach ( $af->values as $fv ) {
+				$filter_values[] = $fv->text;
+			}
+		}
+
 		$optionsHtmlArray = [];
 		foreach ( $possibleValues as $value ) {
-			if ( $value->value() != '_other' && $value->value() != '_none' ) {
-				$optionsHtmlArray[] = Html::element(
-					'option',
-					[ 'value' => str_replace( '_', ' ', $value->value() ) ],
-					$value->displayValue() );
+			$vv = str_replace( '_', ' ', $value->value() );
+			if ( $vv != '_other' && $vv != '_none' ) {
+				$attribs = [ 'value' => $vv ];
+				if ( $filter_values && in_array( $vv, $filter_values ) ) {
+					$attribs[] = 'disabled';
+				}
+				$optionsHtmlArray[] = Html::element( 'option', $attribs, $value->displayValue() );
 			}
 		}
 

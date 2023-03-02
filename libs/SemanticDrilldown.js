@@ -16,10 +16,14 @@
 		} else {
 			t = item.label;
 		}
-		return $( '<li></li>' )
+		$element = $( '<li></li>' )
 			.data( 'item.autocomplete', item )
 			.append( ' <a>' + t + '</a>' )
 			.appendTo( ul );
+		if ( item.disabled ) {
+			$element.addClass( 'ui-state-disabled' );
+		}
+		return $element;
 	};
 
 	$.widget( 'ui.combobox', {
@@ -37,6 +41,7 @@
 							var text = this.innerHTML;
 							if ( this.value && ( !request.term || matcher.test( text ) ) ) {
 								return {
+									disabled: this.disabled,
 									id: this.value,
 									label: text,
 									value: this.value
@@ -49,6 +54,9 @@
 						if ( !ui.item ) {
 							// if it didn't match anything,
 							// just leave it as it is
+							return false;
+						}
+						if ( ui.item.disabled ) {
 							return false;
 						}
 						select.val( ui.item.id );
