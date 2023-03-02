@@ -271,7 +271,7 @@
 					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&amp;Page[0]=Page1\" title=\"Filter by this value\">A&nbsp;(1)</a>",
 
 					"Number:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page1&amp;Number=1\">1&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page[0]=Page1&amp;Number=1\">1&nbsp;(1)</a>",
 
 					"Date:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1%2C_2000&amp;Page[0]=Page1\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
