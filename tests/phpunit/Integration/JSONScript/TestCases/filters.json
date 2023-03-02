@@ -228,7 +228,7 @@
 					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&amp;Date=January_1_2000\" title=\"Filter by this value\">A&nbsp;(1)</a>",
 
 					"Number:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1_2000&Number=1\">1&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1_2000&amp;Number=1\">1&nbsp;(1)</a>",
 
 					"Date:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
