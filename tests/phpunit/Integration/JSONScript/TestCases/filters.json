@@ -325,7 +325,7 @@
 					"<a href=\"/index.php/Special:BrowseData/Category1?Page[0]=Page1&amp;Boolean=1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
 
 					"Boolean:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean[0]=0&Boolean[1]=1\" title=\"Filter by this value\">No</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean[0]=0&amp;Boolean[1]=1\" title=\"Filter by this value\">No</a>",
 
 					"Unused:",
 					"(There are no values for this filter)",
