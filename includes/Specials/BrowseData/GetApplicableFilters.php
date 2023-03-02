@@ -270,7 +270,7 @@ END;
 		$results = [];
 		foreach ( $possibleValues as $value ) {
 			$num_results = $value->count();
-			$filter_text_ascaped = Utils::escapeString(
+			$filter_text_escaped = Utils::escapeString(
 				Utils::getNiceFilterValue( $f->propertyType(), $value->displayValue() )
 			) . "&nbsp;($num_results)";
 			$or_fv = AppliedFilterValue::create( $value->value(), $f );
@@ -288,7 +288,7 @@ END;
 				}
 				$linkAttribs['style'] = "font-size: ${font_size}px;";
 			}
-			$link = Html::rawElement( 'a', $linkAttribs, $filter_text_ascaped );
+			$link = Html::rawElement( 'a', $linkAttribs, $filter_text_escaped );
 			$results[] = '<span class="drilldown-filter-value">' . $link . '</span>';
 		}
 		return implode( '<span class="sep"> · </span>', $results );
