@@ -182,21 +182,21 @@
 					"> Number: <span class=\"drilldown-header-value\">1</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\"><img src=\"/extensions/SemanticDrilldown/skins/filter-x.png\" /></a>",
 
 					"Text:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1&Text=A\" title=\"Filter by this value\">A&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&amp;Number=1\" title=\"Filter by this value\">A&nbsp;(1)</a>",
 
 					"Number:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1\">1 (1) </a>",
 
 					"Date:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1&Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1%2C_2000&amp;Number=1\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
 					"<input type='date' tabindex='0'",
 					"name='_lower_Date' value='2000-01-01' placeholder='YYYY-MM-DD' class='oo-ui-inputWidget-input' />",
 
 					"Page:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1&Page=Page1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page[0]=Page1&amp;Number=1\" title=\"Filter by this value\">Page1&nbsp;(1)</a>",
 
 					"Boolean:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1&Boolean=1\" title=\"Filter by this value\">Yes&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean=1&amp;Number=1\" title=\"Filter by this value\">Yes&nbsp;(1)</a>",
 
 					"Unused:",
 					"(There are no values for this filter)",
