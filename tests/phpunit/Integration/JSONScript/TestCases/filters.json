@@ -65,8 +65,8 @@
 					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=B\" title=\"Filter by this value\">B&nbsp;(1)</a>",
 
 					"Number:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1\">1 (1) </a>",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Number=2\">2 (1) </a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1\">1&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Number=2\">2&nbsp;(1)</a>",
 
 					"Date:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
@@ -116,7 +116,7 @@
 					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&amp;Text[1]=B\" title=\"Filter by this value\">B</a>",
 
 					"Number:",
-					"<div class=\"drilldown-filter-values\" ><a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&amp;Number=1\">1 (1) </a>",
+					"<div class=\"drilldown-filter-values\" ><a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&amp;Number=1\">1&nbsp;(1)</a>",
 
 					"Date:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1%2C_2000&amp;Text[0]=A\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
@@ -159,7 +159,7 @@
 					"<option value=\"B\">B</option>",
 
 					"Number:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?_search_Text%5B0%5D=A&amp;Number=1\">1 (1) </a>"
+					"<a href=\"/index.php/Special:BrowseData/Category1?_search_Text%5B0%5D=A&amp;Number=1\">1&nbsp;(1)</a>"
 				],
 				"not-contain": [
 					"Category1TextBNumber2Date2Page2BoolN"
@@ -185,7 +185,7 @@
 					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&amp;Number=1\" title=\"Filter by this value\">A&nbsp;(1)</a>",
 
 					"Number:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1\">1 (1) </a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Number=1\">1&nbsp;(1)</a>",
 
 					"Date:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1%2C_2000&amp;Number=1\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
@@ -228,7 +228,7 @@
 					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&amp;Date=January_1_2000\" title=\"Filter by this value\">A&nbsp;(1)</a>",
 
 					"Number:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1_2000&Number=1\">1 (1) </a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1_2000&Number=1\">1&nbsp;(1)</a>",
 
 					"Date:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1%2C_2000\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
@@ -271,7 +271,7 @@
 					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&amp;Page[0]=Page1\" title=\"Filter by this value\">A&nbsp;(1)</a>",
 
 					"Number:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page1&amp;Number=1\">1 (1) </a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Page=Page1&amp;Number=1\">1&nbsp;(1)</a>",
 
 					"Date:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1%2C_2000&amp;Page[0]=Page1\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",
@@ -314,7 +314,7 @@
 					"<a href=\"/index.php/Special:BrowseData/Category1?Text[0]=A&amp;Boolean=1\" title=\"Filter by this value\">A&nbsp;(1)</a>",
 
 					"Number:",
-					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean=1&amp;Number=1\">1 (1) </a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Boolean=1&amp;Number=1\">1&nbsp;(1)</a>",
 
 					"Date:",
 					"<a href=\"/index.php/Special:BrowseData/Category1?Date=January_1%2C_2000&amp;Boolean=1\" title=\"Filter by this value\">January 1, 2000&nbsp;(1)</a>",

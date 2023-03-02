@@ -45,7 +45,7 @@ class UrlService {
 			}
 			if ( $af->values ) {
 				usort( $af->values, [ AppliedFilterValue::class, "compare" ] );
-				// Some property types do not require instance number
+				// Some property types do not require instance number (combobox is not used for them)
 				$add_instance = !( in_array( $af->filter->propertyType(), [ 'boolean', 'date', 'number' ] ) && count( $af->values ) <= 1 );
 				foreach ( $af->values as $j => $fv ) {
 					$url .= ( strpos( $url, '?' ) ) ? '&' : '?';

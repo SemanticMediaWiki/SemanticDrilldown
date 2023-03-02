@@ -320,7 +320,7 @@ END;
 			if ( $curBucket['higherNumber'] != null ) {
 				$curText .= ' - ' . number_format( $curBucket['higherNumber'] );
 			}
-			$curText .= '&nbsp;(' . $curBucket['numValues'] . ') ';
+			$curText .= '&nbsp;(' . $curBucket['numValues'] . ')';
 			$filterURL = $cur_url . "$filter_name_encoded=" . $curBucket['lowerNumber'];
 			if ( $curBucket['higherNumber'] != null ) {
 				$filterURL .= '-' . $curBucket['higherNumber'];
