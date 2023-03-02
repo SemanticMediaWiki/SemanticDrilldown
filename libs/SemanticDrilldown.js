@@ -10,20 +10,20 @@
 	$.ui.autocomplete.prototype._renderItem = function ( ul, item ) {
 		var re = new RegExp( '(?![^&;]+;)(?!<[^<>]*)(' + this.term.replace( /([^$()[]{}*.+?|\\])/gi, '\\$1' ) + ')(?![^<>]*>)(?![^&;]+;)', 'gi' );
 		var loc = item.label.search( re );
+		var $element = $( '<li></li>' );
 		var t;
 		if ( loc >= 0 ) {
 			t = item.label.slice( 0, Math.max( 0, loc ) ) + '<strong>' + item.label.substr( loc, this.term.length ) + '</strong>' + item.label.slice( loc + this.term.length );
 		} else {
 			t = item.label;
 		}
-		$element = $( '<li></li>' )
-			.data( 'item.autocomplete', item )
-			.append( ' <a>' + t + '</a>' )
-			.appendTo( ul );
 		if ( item.disabled ) {
 			$element.addClass( 'ui-state-disabled' );
 		}
-		return $element;
+		return $element
+			.data( 'item.autocomplete', item )
+			.append( ' <a>' + t + '</a>' )
+			.appendTo( ul );
 	};
 
 	$.widget( 'ui.combobox', {
