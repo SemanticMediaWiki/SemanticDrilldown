@@ -311,26 +311,23 @@ END;
 		// Put into numerical order.
 		sort( $numberArray );
 
-		$text = '';
+		$results = [];
 		$filterValues = NumberUtils::generateFilterValuesFromNumbers( $numberArray );
 		$filter_name_encoded = urlencode( $filter_name );
 		foreach ( $filterValues as $i => $curBucket ) {
-			if ( $i > 0 ) {
-				$text .= " &middot; ";
-			}
 			// number_format() adds in commas for each thousands place.
 			$curText = number_format( $curBucket['lowerNumber'] );
 			if ( $curBucket['higherNumber'] != null ) {
 				$curText .= ' - ' . number_format( $curBucket['higherNumber'] );
 			}
-			$curText .= ' (' . $curBucket['numValues'] . ') ';
+			$curText .= '&nbsp;(' . $curBucket['numValues'] . ') ';
 			$filterURL = $cur_url . "$filter_name_encoded=" . $curBucket['lowerNumber'];
 			if ( $curBucket['higherNumber'] != null ) {
 				$filterURL .= '-' . $curBucket['higherNumber'];
 			}
-			$text .= '<a href="' . $filterURL . '">' . $curText . '</a>';
+			$results[] = Html::rawElement( 'a', [ 'href' => $filterURL ], $curText );
 		}
-		return $text;
+		return implode( '<span class="sep"> · </span>', $results );
 	}
 
 	private function getComboBoxInput( $filter_name, $instance_num, PossibleFilterValues $possibleValues, $cur_value = null ): string {
