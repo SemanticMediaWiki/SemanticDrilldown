@@ -154,7 +154,8 @@
 					"> Text: <span class=\"drilldown-header-value\">~ 'A'</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\">",
 
 					"Text:",
-					"<option value=\"_search_Text[1]\"></option>",
+					"<select class=\"semanticDrilldownCombobox\" style=\"display: none;\" data-mw-filter-name=\"Text[1]\" data-mw-input-name=\"_search_Text[1]\">",
+					"<option value=\"A\">A</option>",
 					"<option value=\"B\">B</option>",
 
 					"Number:",
