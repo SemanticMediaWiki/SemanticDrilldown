@@ -124,8 +124,11 @@ END;
 		$max_date_padded = '';
 
 		$res = $dbw->query( $sql );
+		$timePeriod = $this->timePeriod();
 		while ( $row = $res->fetchRow() ) {
-			$timePeriod = $this->timePeriod();
+			if ( $row[0] === null ) {
+				continue;
+			}
 
 			/*
 				Some pages may have incomplete date (e.g. "February, 2019" or "2019" instead
@@ -236,7 +239,7 @@ END;
 		$smw_ids = $dbw->tableName( Utils::getIDsTableName() );
 		$prop_ns = SMW_NS_PROPERTY;
 		$sql = <<<END
-	SELECT $value_field as value, $displaytitle as displayTitle, count(DISTINCT sdv.id) as count 
+	SELECT $value_field as value, $displaytitle as displayTitle, count(DISTINCT sdv.id) as count
 	FROM semantic_drilldown_values sdv
 	JOIN $property_table_name p ON sdv.id = p.s_id
 END;
