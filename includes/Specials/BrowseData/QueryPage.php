@@ -63,8 +63,9 @@ class QueryPage extends \QueryPage {
 
 		$this->headerPage = $parameters->header();
 		$this->footerPage = $parameters->footer();
-		if ( $parameters->displayParametersList() ) {
-			foreach ( $parameters->displayParametersList() as $dps ) {
+		$displayParametersList = $parameters->displayParametersList();
+		if ( $displayParametersList && $displayParametersList->count() ) {
+			foreach ( $displayParametersList as $dps ) {
 				$format = $dps->format();
 				if ( !array_key_exists( $format, $resultFormatTypes ) ) {
 					$this->displayParametersWithUnknownFormat[] = $dps;
