@@ -6,6 +6,7 @@ use Closure;
 use PageProps;
 use RequestContext;
 use SD\DbService;
+use SD\Parameters\DisplayParameters;
 use SD\Parameters\Parameters;
 use SD\Sql\SqlProvider;
 use SMWOutputs;
@@ -75,6 +76,8 @@ class QueryPage extends \QueryPage {
 					$this->displayParametersWithUnsupportedFormat[] = $dps;
 				}
 			}
+		} else {
+			$this->pagedDisplayParametersList[] = new DisplayParameters();
 		}
 
 		$this->processTemplate = new ProcessTemplate;
