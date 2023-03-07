@@ -118,13 +118,13 @@ class GetApplicableFilters {
 	 * Create the full display of the filter line, once the text for
 	 * the "results" (values) for this filter has been created.
 	 */
-	private function getFilterLine( $filterName, $isApplied, $isNormalFilter, $resultsLine, $filter ): string {
+	private function getFilterLine( $filterName, $isApplied, $isNormalFilter, $resultsLine, Filter $filter ): string {
 		global $wgScriptPath;
 		global $sdgDisableFilterCollapsible;
 		$sdSkinsPath = "$wgScriptPath/extensions/SemanticDrilldown/skins";
 
-		if ( isset( $filter->int ) ) {
-			$filterName = wfMessage( $filter->int )->text();
+		if ( $filter->int() !== null ) {
+			$filterName = wfMessage( $filter->int() )->text();
 		}
 
 		$additionalClasses = '';
