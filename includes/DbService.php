@@ -97,8 +97,6 @@ END;
 	 * set of filters and either a new subcategory or a new filter.
 	 */
 	public function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
-		// Escape the given values to prevent SQL injection
-		$subcategory = $this->dbr->addQuotes( $subcategory );
 		foreach ( $subcategories as $key => $value ) {
 			$subcategories[$key] = $this->dbr->addQuotes( $value );
 		}
