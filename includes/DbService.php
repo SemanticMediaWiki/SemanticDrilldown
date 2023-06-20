@@ -144,9 +144,9 @@ END;
 		foreach ( $res as $row ) {
 			if ( $get_categories ) {
 				$subcategories[] = $row->page_title;
-				$pages[] = $row->page_namespace;
+				$pages[] = $row->page_title;
 			} else {
-				if ( $row->page_title == NS_CATEGORY ) {
+				if ( $row->page_namespace == NS_CATEGORY ) {
 					$subcategories[] = $row->page_title;
 				} else {
 					$pages[] = $row->page_title;
