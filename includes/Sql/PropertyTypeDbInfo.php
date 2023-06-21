@@ -12,6 +12,8 @@ class PropertyTypeDbInfo {
 				return 'smw_di_bool';
 			case 'date':
 				return 'smw_di_time';
+			case 'quantity':
+			case 'temperature':
 			case 'number':
 				return 'smw_di_number';
 			default:
@@ -27,6 +29,8 @@ class PropertyTypeDbInfo {
 			case 'boolean':
 				return 'o_value';
 			case 'date':
+			case 'quantity':
+			case 'temperature':
 			case 'number':
 				return 'o_serialized';
 			default:
