@@ -356,6 +356,30 @@ END;
 				$propertyType = 'boolean';
 			} elseif ( $typeValue == $datatypeLabels['_dat'] ) {
 				$propertyType = 'date';
+			} elseif ( $typeValue == $datatypeLabels['_qty'] ) {
+				$propertyType = 'quantity';
+			} elseif ( $typeValue == $datatypeLabels['_keyw'] ) {
+				$propertyType = 'keyword';
+			} elseif ( $typeValue == $datatypeLabels['_geo'] ) {
+				$propertyType = 'geographic coordinates';
+			} elseif ( $typeValue == $datatypeLabels['_tel'] ) {
+				$propertyType = 'telephone';
+			} elseif ( $typeValue == $datatypeLabels['_tem'] ) {
+				$propertyType = 'temperature';
+			} elseif ( $typeValue == $datatypeLabels['_mlt_rec'] ) {
+				$propertyType = 'monolingual text';
+			} elseif ( $typeValue == $datatypeLabels['_rec'] ) {
+				$propertyType = 'record';
+			} elseif ( $typeValue == $datatypeLabels['_ref_rec'] ) {
+				$propertyType = 'reference';
+			} elseif ( $typeValue == $datatypeLabels['_ema'] ) {
+				$propertyType = 'email';
+			} elseif ( $typeValue == $datatypeLabels['_anu'] ) {
+				$propertyType = 'annotation URI';
+			} elseif ( $typeValue == $datatypeLabels['_eid'] ) {
+				$propertyType = 'external identifier';
+			} elseif ( $typeValue == $datatypeLabels['_cod'] ) {
+				$propertyType = 'code';
 			} elseif ( $typeValue == $datatypeLabels['_eid'] ) {
 				$propertyType = 'external_id';
 			} else {
