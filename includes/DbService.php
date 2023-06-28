@@ -101,10 +101,6 @@ END;
 	 * set of filters and either a new subcategory or a new filter.
 	 */
 	public function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
-		foreach ( $subcategories as $key => $value ) {
-			$subcategories[$key] = $this->dbr->addQuotes( $value );
-		}
-
 		$sql = "SELECT COUNT(DISTINCT sdv.id) ";
 		if ( $new_filter ) {
 			$sql .= SqlProvider::getSQLFromClauseForField( $new_filter );
