@@ -7,15 +7,25 @@ class PropertyTypeDbInfo {
 	public static function tableName( string $propertyType ): ?string {
 		switch ( $propertyType ) {
 			case 'page':
+			case 'monolingual_text':
 				return 'smw_di_wikipage';
 			case 'boolean':
 				return 'smw_di_bool';
 			case 'date':
 				return 'smw_di_time';
+			case 'telephone_number':
+			case 'email':
+			case 'annotation_uri':
+			case 'URL':
+				return 'smw_di_uri';
+			case 'geographic_coord':
+				return 'smw_di_coords';
+			case 'number':
 			case 'quantity':
 			case 'temperature':
-			case 'number':
 				return 'smw_di_number';
+			// case 'monolingual_text':
+			// 	return 'smw_fpt_text';
 			default:
 				return 'smw_di_blob';
 		}
@@ -32,7 +42,16 @@ class PropertyTypeDbInfo {
 			case 'quantity':
 			case 'temperature':
 			case 'number':
+			case 'telephone_number':
+			case 'URL':
+			case 'annotation_uri':
+			case 'email':
+			case 'geographic_coord':		
 				return 'o_serialized';
+			case 'keyword':
+				return 'o_blob';
+				
+			// case 'monolingual_text':
 			default:
 				// CONVERT() is also supported in PostgreSQL,
 				// but it doesn't seem to work the same way.
