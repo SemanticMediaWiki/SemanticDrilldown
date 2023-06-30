@@ -55,7 +55,7 @@ jobs:
           - mediawiki_version: '1.39'
             smw_version: dev-master
             php_version: 8.1
-            database_type: mariadb
+            database_type: mysql
             database_image: "mariadb:latest"
             coverage: false
             experimental: true
