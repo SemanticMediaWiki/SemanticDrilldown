@@ -33,6 +33,7 @@ jobs:
             experimental: false
           - mediawiki_version: '1.38'
             smw_version: dev-master
+            php_version: 7.4
             database_type: mysql
             database_image: "mysql:5.7"
             coverage: false
@@ -53,7 +54,6 @@ jobs:
       DB_IMAGE: ${{ matrix.database_image }}
 
       
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
