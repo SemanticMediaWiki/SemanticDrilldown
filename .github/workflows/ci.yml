@@ -63,7 +63,7 @@ jobs:
             smw_version: dev-master
             php_version: 8.1
             database_type: postgres
-            database_image: "postgres:latest"
+            database_image: "postgres:14"
             coverage: false
             experimental: true
 
