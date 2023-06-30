@@ -175,6 +175,11 @@ class SqlProvider {
 			} else if ( $af->filter->propertyType() === 'monolingual_text' ) {
 				$property_field = "r$i.p_id";
 				$sql .= "\n	AND $property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE ( smw_title = '$property_value' OR smw_title = '$propKey' ) AND smw_namespace = $prop_ns) AND ";
+				if ( strncmp( $value_field, '(IF(o_blob IS NULL', 18 ) === 0 ) {
+					$value_field = str_replace( 'o_', "fpt_text$i.o_", $value_field );
+				} else {
+					$value_field = "fpt_text$i.$value_field";
+				}
 
 			} else {
 				$property_field = "a$i.p_id";
