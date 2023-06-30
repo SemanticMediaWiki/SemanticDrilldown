@@ -26,16 +26,21 @@ MAPS_VERSION=$(MAPS_VERSION) \
 SRF_VERSION=$(SRF_VERSION) \
 PHP_VERSION=$(PHP_VERSION) \
 DB_TYPE=$(DB_TYPE) \
-DB_IMAGE=$(DB_IMAGE)
+DB_IMAGE=$(DB_IMAGE) \
+EXTENSION_FOLDER=$(EXTENSION_FOLDER)
 
 compose = $(environment) docker-compose $(COMPOSE_ARGS)
+compose-build = $(environment) docker-compose -f docker-compose.yml -f docker-compose-build.yml $(COMPOSE_ARGS)
+compose-dev = $(environment) docker-compose -f docker-compose.yml -f docker-compose-dev.yml $(COMPOSE_ARGS)
+
 compose-run = $(compose) run -T --rm
 compose-exec-wiki = $(compose) exec -T wiki
 
-IMAGE_NAME := extension:test-$(MW_VERSION)-$(SMW_VERSION)-$(PS_VERSION)-$(AL_VERSION)-$(MAPS_VERSION)-$(SRF_VERSION)
+IMAGE_NAME := $(extension):test-$(MW_VERSION)-$(SMW_VERSION)-$(PS_VERSION)-$(AL_VERSION)-$(MAPS_VERSION)-$(SRF_VERSION)
+
 PWD := $(shell bash -c "pwd -W 2>/dev/null || pwd")# this way it works on Windows and Linux
-DOCKER_RUN_ARGS := --rm -v $(PWD)/coverage:$(EXTENSION_FOLDER)/coverage -w $(EXTENSION_FOLDER) $(IMAGE_NAME)
-docker_run := docker run $(DOCKER_RUN_ARGS)
+# DOCKER_RUN_ARGS := --rm -v $(PWD)/coverage:$(EXTENSION_FOLDER)/coverage -w $(EXTENSION_FOLDER) $(IMAGE_NAME)
+# docker_run := docker run $(DOCKER_RUN_ARGS)
 
 
 show-current-target = @echo; echo "======= $@ ========"
@@ -74,16 +79,16 @@ destroy: .init .destroy
 ci: install test
 
 .PHONY: ci-coverage
-ci-coverage: .init .build test-coverage
+ci-coverage: install test-coverage
 
 .PHONY: .build
 .build:
 	$(show-current-target)
-	$(compose) build wiki
+	$(compose-build) build wiki
 .PHONY: .up
 .up:
 	$(show-current-target)
-	$(compose) up -d
+	$(compose-build) up -d
 
 .PHONY: .install
 .install: .wait-for-db
@@ -99,12 +104,12 @@ ci-coverage: .init .build test-coverage
 .PHONY: .down
 .down:
 	$(show-current-target)
-	$(compose) down
+	$(compose-build) down
 
 .PHONY: .destroy
 .destroy:
 	$(show-current-target)
-	$(compose) down -v
+	$(compose-build) down -v
 
 .PHONY: .wait-for-db
 .wait-for-db:
@@ -115,9 +120,6 @@ else ifeq ($(DB_TYPE), postgres)
 	$(compose-run) wait-for $(DB_TYPE):5432 -t 120
 endif
 
-
-
-
 .PHONY: test
 test: composer-test npm-test
 
@@ -126,37 +128,36 @@ test-coverage: composer-test-coverage npm-test-coverage
 
 .PHONY: composer-test
 composer-test:
-	$(docker_run) composer test
+	$(show-current-target)
+	$(compose-exec-wiki) bash -c "cd $(EXTENSION_FOLDER) && composer test"
 
 .PHONY: composer-test-coverage
 composer-test-coverage:
-	$(docker_run) composer test-coverage
+	$(show-current-target)
+	$(compose-exec-wiki) bash -c "cd $(EXTENSION_FOLDER) && composer test-coverage"
 
 .PHONY: npm-test
 npm-test:
-	$(docker_run) npm run test
+	$(show-current-target)
+	$(compose-exec-wiki) bash -c "cd $(EXTENSION_FOLDER) && npm run test"
 
 .PHONY: npm-test-coverage
 npm-test-coverage:
-	$(docker_run) npm run test-coverage
+	$(show-current-target)
+	$(compose-exec-wiki) bash -c "cd $(EXTENSION_FOLDER) && npm run test-coverage"
 
 .PHONY: bash
-bash:
-	docker run -it -v $(PWD):/src $(DOCKER_RUN_ARGS) bash
+bash: .init
+	$(show-current-target)
+	$(compose-exec-wiki) bash -c "cd $(EXTENSION_FOLDER) && bash"
 
 .PHONY: dev-bash
-dev-bash:
-	docker run -it --rm -p 8080:8080 \
-		-v $(PWD):$(EXTENSION_FOLDER) \
-		-v $(EXTENSION_FOLDER)/vendor/ -v $(EXTENSION_FOLDER)/node_modules/ \
-		-w $(EXTENSION_FOLDER) $(IMAGE_NAME) bash -c 'service apache2 start && bash'
+dev-bash: .init
+	$(compose-dev) run -it wiki bash -c 'service apache2 start && bash'
 
 .PHONY: run
 run:
-	docker run -d -p 8080:8080 --name $(extension) \
-		-v $(PWD):$(EXTENSION_FOLDER) \
-		-v $(EXTENSION_FOLDER)/vendor/ -v $(EXTENSION_FOLDER)/node_modules/ \
-		$(IMAGE_NAME)
+	$(compose-dev) -f docker-compose-dev.yml run -it wiki
 
 # ======== Releasing ========
 
