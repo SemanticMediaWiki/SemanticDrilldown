@@ -37,7 +37,7 @@
 			"assert-output": {
 				"to-contain": [
 					"Text:",
-					"<p><strong>Subcategory:</strong> <a href=\"/mediawiki/index.php/Special:BrowseData/ParentCategory?_subcat=SubCategory\" title=\"Filter by this subcategory\">SubCategory (2)</a></p>"
+					"<p><strong>Subcategory:</strong> <a href=\"/index.php/Special:BrowseData/ParentCategory?_subcat=SubCategory\" title=\"Filter by this subcategory\">SubCategory (2)</a></p>"
 				]
 			}
 		}
