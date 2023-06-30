@@ -236,6 +236,12 @@ class AppliedFilter {
 	LEFT JOIN $page_props_table_name displaytitle ON $revision_table_name.rev_page = displaytitle.pp_page AND displaytitle.pp_propname = 'displaytitle'
 END;
 		}
+		if ( $this->filter->propertyType() === 'monolingual_text' ) {
+			$sql .= <<<END
+		JOIN $smw_ids o_ids ON p.o_id = o_ids.smw_id
+		JOIN smw_fpt_text fpt_text ON p.o_id = fpt_text.s_id
+END;
+		}
 		$sql .= "	JOIN $smwCategoryInstances insts ON p.s_id = insts.s_id
 	JOIN $smw_ids cat_ids ON insts.o_id = cat_ids.smw_id
 	WHERE p_ids.smw_title = $property_value

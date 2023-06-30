@@ -371,7 +371,7 @@ END;
 			return null;
 		}
 
-		// normalize as below
+		// normalize as before
 		$map =  [
 			'_wpg' => 'page',
 			'_txt' => 'string',
