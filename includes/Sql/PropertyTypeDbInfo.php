@@ -46,7 +46,7 @@ class PropertyTypeDbInfo {
 			case 'URL':
 			case 'annotation_uri':
 			case 'email':
-			case 'geographic_coord':	
+			case 'geographic_coord':
 				return 'o_serialized';
 			case 'keyword':
 				return 'o_blob';
