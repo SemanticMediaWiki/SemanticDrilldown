@@ -362,7 +362,7 @@ END;
 				} else {
 					$typeValue = $types[0]->getWikiValue();
 				}
-			}		
+			}
 		}
 
 		$propKey = array_search( $typeValue, $datatypeLabels );
@@ -373,7 +373,7 @@ END;
 			$this->propKey = '_wpg';
 			return $propertyType;
 		}
-		
+
 		// used to retrieve the value of
 		// properties set with the label of a
 		// predefined property, e.g. Email::email@test.com
