@@ -342,6 +342,7 @@ END;
 
 		// KnownTypeLabels
 		$isKnownLabel = false;
+		$typeValue = null;
 		if ( in_array( $property, $datatypeLabels ) ) {
 			$typeValue = $property;
 			$isKnownLabel = true;
