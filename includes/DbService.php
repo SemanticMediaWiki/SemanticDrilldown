@@ -78,7 +78,7 @@ END;
 		if ( $propertyType === 'monolingual_text' ) {
 			$sql .= "	JOIN smw_fpt_text fpt_text ON $valuesTable.o_id = fpt_text.s_id\n";
 		}
-		$sql .= "	WHERE ( p_ids.smw_title = '$query_property' OR p_ids.smw_title = '$propKey' )";	
+		$sql .= "	WHERE ( p_ids.smw_title = '$query_property' OR p_ids.smw_title = '$propKey' )";
 
 		$temporaryTableManager = new TemporaryTableManager( $this->dbw );
 		$temporaryTableManager->queryWithAutoCommit( $sql, __METHOD__ );

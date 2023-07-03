@@ -90,7 +90,7 @@ class Filter {
 	public function escapedProperty() {
 		return SqlProvider::escapedProperty( $this->property() );
 	}
-	
+
 	public function propKey() {
 		return $this->propKey;
 	}
@@ -252,7 +252,7 @@ END;
 	LEFT JOIN $page_props_table_name displaytitle ON $revision_table_name.rev_page = displaytitle.pp_page AND displaytitle.pp_propname = 'displaytitle'
 END;
 		}
-	if ( $this->propertyType === 'monolingual_text' ) {
+		if ( $this->propertyType === 'monolingual_text' ) {
 			$sql .= <<<END
 	JOIN smw_fpt_text fpt_text ON p.o_id = fpt_text.s_id
 END;
@@ -347,7 +347,7 @@ END;
 			$isKnownLabel = true;
 		} else {
 			$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
-		
+
 			if ( count( $types ) > 0 ) {
 				if ( $types[0] instanceof SMWDIWikiPage ) {
 					$typeValue = $types[0]->getDBkey();
@@ -362,14 +362,15 @@ END;
 				} else {
 					$typeValue = $types[0]->getWikiValue();
 				}
-			}			
+			}		
 		}
-				
+
 		$propKey = array_search( $typeValue, $datatypeLabels );
-		
+
 		if ( $propKey === false ) {
 			// This should hopefully never get called.
 			print "Error! Unsupported property type ($typeValue) for filter {$this->name}.";
+			$this->propKey = '_wpg';
 			return $propertyType;
 		}
 		
@@ -384,7 +385,7 @@ END;
 		}
 
 		// normalize as before
-		$map =  [
+		$map = [
 			'_wpg' => 'page',
 			'_txt' => 'string',
 			// _str stopped existing in SMW 1.9
