@@ -34,9 +34,16 @@ DB_TYPE=$(DB_TYPE) \
 DB_IMAGE=$(DB_IMAGE) \
 EXTENSION_FOLDER=$(EXTENSION_FOLDER)
 
-compose = $(environment) docker-compose $(COMPOSE_ARGS)
-compose-ci = $(environment) docker-compose -f docker-compose.yml -f docker-compose-ci.yml $(COMPOSE_ARGS)
-compose-dev = $(environment) docker-compose -f docker-compose.yml -f docker-compose-dev.yml $(COMPOSE_ARGS)
+COMPOSE_OVERRIDE=""
+
+ifneq (,$(wildcard ./docker-compose.override.yml))
+     COMPOSE_OVERRIDE=-f docker-compose.override.yml
+endif
+
+
+compose = $(environment) docker-compose $(COMPOSE_OVERRIDE) $(COMPOSE_ARGS)
+compose-ci = $(environment) docker-compose -f docker-compose.yml -f docker-compose-ci.yml $(COMPOSE_OVERRIDE) $(COMPOSE_ARGS)
+compose-dev = $(environment) docker-compose -f docker-compose.yml -f docker-compose-dev.yml $(COMPOSE_OVERRIDE) $(COMPOSE_ARGS)
 
 compose-run = $(compose) run -T --rm
 compose-exec-wiki = $(compose) exec -T wiki
