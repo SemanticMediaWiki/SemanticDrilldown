@@ -97,7 +97,7 @@ class SqlProvider {
 			if ( $includes_none ) {
 				$property_table_name = $dbr->tableName(
 					PropertyTypeDbInfo::tableName( $af->filter->propertyType() ) );
-				
+
 				if ( $af->filter->propertyType() === 'page' || $af->filter->propertyType() === 'monolingual_text' ) {
 					$property_table_nickname = "nr$i";
 					$property_field = 'p_id';
@@ -112,7 +112,7 @@ class SqlProvider {
 				// doesn't need to, because of occasional bugs
 				// in SMW where the same page gets two
 				// different SMW IDs.
-				
+
 				$propKey = $af->filter->propKey();
 
 				$sql .= "LEFT OUTER JOIN
@@ -126,7 +126,7 @@ class SqlProvider {
 			$sql .= "\n	";
 			$property_table_name = $dbr->tableName(
 				PropertyTypeDbInfo::tableName( $af->filter->propertyType() ) );
-			
+
 			if ( $af->filter->propertyType() === 'page' || $af->filter->propertyType() === 'monolingual_text' ) {
 				if ( $includes_none ) {
 					$sql .= "LEFT OUTER ";
@@ -163,7 +163,7 @@ class SqlProvider {
 			$propKey = $af->filter->propKey();
 			$property_value = $af->filter->escapedProperty();
 			$value_field = PropertyTypeDbInfo::valueField( $af->filter->propertyType() );
-		
+
 			if ( $af->filter->propertyType() === 'page' ) {
 				$property_field = "r$i.p_id";
 				$sql .= "\n	AND ($property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE ( smw_title = '$property_value' OR smw_title = '$propKey' ) AND smw_namespace = $prop_ns)";
@@ -172,7 +172,7 @@ class SqlProvider {
 				}
 				$sql .= ")\n	AND ";
 				$value_field = "o_ids$i.smw_title";
-			} else if ( $af->filter->propertyType() === 'monolingual_text' ) {
+			} elseif ( $af->filter->propertyType() === 'monolingual_text' ) {
 				$property_field = "r$i.p_id";
 				$sql .= "\n	AND $property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE ( smw_title = '$property_value' OR smw_title = '$propKey' ) AND smw_namespace = $prop_ns) AND ";
 				if ( strncmp( $value_field, '(IF(o_blob IS NULL', 18 ) === 0 ) {
@@ -192,7 +192,7 @@ class SqlProvider {
 			}
 			$sql .= $af->checkSQL( $value_field );
 		}
-		
+
 		return $sql;
 	}
 
