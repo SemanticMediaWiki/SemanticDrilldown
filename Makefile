@@ -34,7 +34,6 @@ DB_TYPE=$(DB_TYPE) \
 DB_IMAGE=$(DB_IMAGE) \
 EXTENSION_FOLDER=$(EXTENSION_FOLDER)
 
-COMPOSE_OVERRIDE=""
 
 ifneq (,$(wildcard ./docker-compose.override.yml))
      COMPOSE_OVERRIDE=-f docker-compose.override.yml
