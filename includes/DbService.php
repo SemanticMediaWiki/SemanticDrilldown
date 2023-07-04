@@ -97,12 +97,6 @@ END;
 	 * set of filters and either a new subcategory or a new filter.
 	 */
 	public function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
-		// Escape the given values to prevent SQL injection
-		$subcategory = $this->dbr->addQuotes( $subcategory );
-		foreach ( $subcategories as $key => $value ) {
-			$subcategories[$key] = $this->dbr->addQuotes( $value );
-		}
-
 		$sql = "SELECT COUNT(DISTINCT sdv.id) ";
 		if ( $new_filter ) {
 			$sql .= SqlProvider::getSQLFromClauseForField( $new_filter );
@@ -146,9 +140,9 @@ END;
 		foreach ( $res as $row ) {
 			if ( $get_categories ) {
 				$subcategories[] = $row->page_title;
-				$pages[] = $row->page_namespace;
+				$pages[] = $row->page_title;
 			} else {
-				if ( $row->page_title == NS_CATEGORY ) {
+				if ( $row->page_namespace == NS_CATEGORY ) {
 					$subcategories[] = $row->page_title;
 				} else {
 					$pages[] = $row->page_title;
