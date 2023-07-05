@@ -20,8 +20,6 @@ DB_TYPE ?= sqlite
 DB_IMAGE ?= ""
 
 
-# ======== Docker-Compose Commands ========
-
 environment = IMAGE_NAME=$(IMAGE_NAME) \
 MW_VERSION=$(MW_VERSION)  \
 SMW_VERSION=$(SMW_VERSION) \
