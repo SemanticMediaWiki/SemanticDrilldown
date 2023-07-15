@@ -1,0 +1,53 @@
+{
+	"description": "display of subcategories",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeText",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "ParentCategory",
+			"contents": "{{#drilldowninfo: filters=Text (property=SomeText)|display parameters=format=list}}"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "SubCategory",
+			"contents": "[[Category:ParentCategory]] {{#drilldowninfo: filters=Text (property=SomeText)|display parameters=format=list}}"
+		},
+		{
+			"page": "Page a",
+			"contents": "[[Category:SubCategory]][[SomeText::A]]"
+		},
+		{
+			"page": "Page b",
+			"contents": "[[Category:SubCategory]][[SomeText::B]]"
+		}
+	],
+	"tests": [
+		{
+			"type": "special",
+			"about": "no filter applied",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "ParentCategory",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"Text:",
+					"<p><strong>Subcategory:</strong> <a href=\"/index.php/Special:BrowseData/ParentCategory?_subcat=SubCategory\" title=\"Filter by this subcategory\">SubCategory (2)</a></p>"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgLang": "en"
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

@@ -1,0 +1,9 @@
+services:
+  wiki:
+    volumes:
+      - ./:${EXTENSION_FOLDER}
+      - ${EXTENSION_FOLDER}/vendor/
+      - ${EXTENSION_FOLDER}/node_modules/
+    ports:
+      - 8080:8080
+      
