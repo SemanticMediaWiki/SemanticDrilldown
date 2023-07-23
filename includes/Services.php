@@ -112,7 +112,7 @@ class Services {
 	}
 
 	private function getPageProps(): PageProps {
-		return PageProps::getInstance();
+		return MediaWikiServices::getInstance()->getPageProps();
 	}
 
 	private function getGetPageFromTitleText(): Closure {
