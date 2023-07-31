@@ -1,4 +1,17 @@
 {
+	"name": "mediawiki/semantic-drilldown",
+	"type": "mediawiki-extension",
+	"description": "Provides a page for drilling down into the category-based and semantic data of a site, using easily-created filters",
+	"keywords": [
+		"SD",
+		"Semantic Drilldown",
+		"SMW",
+		"Semantic MediaWiki",
+		"Wiki",
+		"MediaWiki"
+	],
+	"homepage": "https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown",
+	"license": "GPL-2.0-or-later",
 	"require": {
 		"php": ">=7.4"
 	},
