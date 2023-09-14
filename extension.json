@@ -9,7 +9,7 @@
 	"url": "https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown",
 	"descriptionmsg": "semanticdrilldown-desc",
 	"license-name": "GPL-2.0-or-later",
-	"type": "specialpage",
+	"type": "semantic",
 	"requires": {
 		"MediaWiki": ">= 1.35",
 		"platform": {
