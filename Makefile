@@ -1,13 +1,6 @@
 -include .env
 export
 
-# ======== Naming ========
-EXTENSION := SemanticDrilldown
-EXTENSION_FOLDER := /var/www/html/extensions/$(EXTENSION)
-extension := $(shell echo $(EXTENSION) | tr A-Z a-z})
-IMAGE_NAME := $(extension):test-$(MW_VERSION)-$(SMW_VERSION)-$(PS_VERSION)-$(AL_VERSION)-$(MAPS_VERSION)-$(SRF_VERSION)
-
-
 # ======== CI ENV Variables ========
 MW_VERSION ?= 1.35
 SMW_VERSION ?= 4.1.0
@@ -18,7 +11,6 @@ SRF_VERSION ?= 4.0.1
 PHP_VERSION ?= 7.4
 DB_TYPE ?= sqlite
 DB_IMAGE ?= ""
-
 
 environment = IMAGE_NAME=$(IMAGE_NAME) \
 MW_VERSION=$(MW_VERSION)  \
@@ -32,13 +24,17 @@ DB_TYPE=$(DB_TYPE) \
 DB_IMAGE=$(DB_IMAGE) \
 EXTENSION_FOLDER=$(EXTENSION_FOLDER)
 
+# ======== Naming ========
+EXTENSION := SemanticDrilldown
+EXTENSION_FOLDER := /var/www/html/extensions/$(EXTENSION)
+extension := $(shell echo $(EXTENSION) | tr A-Z a-z})
+IMAGE_NAME := $(extension):test-$(MW_VERSION)-$(SMW_VERSION)-$(PS_VERSION)-$(AL_VERSION)-$(MAPS_VERSION)-$(SRF_VERSION)
 
 ifneq (,$(wildcard ./docker-compose.override.yml))
      COMPOSE_OVERRIDE=-f docker-compose.override.yml
 endif
 
-
-compose = $(environment) docker-compose $(COMPOSE_OVERRIDE) $(COMPOSE_ARGS)
+compose = $(environment) docker-compose $(COMPOSE_ARGS)
 compose-ci = $(environment) docker-compose -f docker-compose.yml -f docker-compose-ci.yml $(COMPOSE_OVERRIDE) $(COMPOSE_ARGS)
 compose-dev = $(environment) docker-compose -f docker-compose.yml -f docker-compose-dev.yml $(COMPOSE_OVERRIDE) $(COMPOSE_ARGS)
 
@@ -69,7 +65,7 @@ down: .init .down
 destroy: .init .destroy
 
 .PHONY: bash
-bash: up .bash
+bash: .bash
 
 # ======== General Docker-Compose Helper Targets ========
 
@@ -106,7 +102,7 @@ bash: up .bash
 .PHONY: .bash
 .bash: .init
 	$(show-current-target)
-	$(compose-exec-wiki) bash -c "cd $(EXTENSION_FOLDER) && bash"
+	$(compose) exec wiki bash -c "cd $(EXTENSION_FOLDER) && bash"
 
 # ======== Test Targets ========
 

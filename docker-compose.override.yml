@@ -1,0 +1,6 @@
+services:
+  wiki:
+    volumes:
+      - ./:/var/www/html/extensions/SemanticDrilldown
+      - /var/www/html/extensions/SemanticDrilldown/vendor/
+      - /var/www/html/extensions/SemanticDrilldown/node_modules/
