@@ -112,7 +112,9 @@ class Services {
 	}
 
 	private function getPageProps(): PageProps {
-		return MediaWikiServices::getInstance()->getPageProps();
+		return method_exists( $this->services, 'getPageProps' ) // MW > 1.35
+			? $this->services->getPageProps()
+			: PageProps::getInstance();
 	}
 
 	private function getGetPageFromTitleText(): Closure {
