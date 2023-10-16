@@ -1,6 +1,7 @@
 ARG MW_VERSION
 ARG PHP_VERSION
 FROM gesinn/mediawiki-ci:${MW_VERSION}-php${PHP_VERSION}
+ENV EXTENSION=SemanticDrilldown
 
 ARG MW_VERSION
 ARG SMW_VERSION
@@ -13,17 +14,15 @@ ARG PHP_VERSION
 # get needed dependencies for this extension
 RUN sed -i s/80/8080/g /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
 
-RUN COMPOSER=composer.local.json composer require --no-update mediawiki/semantic-media-wiki ${SMW_VERSION}
-RUN curl -L https://github.com/wikimedia/mediawiki-extensions-PageSchemas/archive/refs/tags/${PS_VERSION}.tar.gz \
-        | tar zx --strip-components=1 --one-top-level=extensions/PageSchemas
-RUN curl -L https://github.com/wikimedia/mediawiki-extensions-AdminLinks/archive/refs/tags/${AL_VERSION}.tar.gz \
-        | tar zx --strip-components=1 --one-top-level=extensions/AdminLinks
-RUN COMPOSER=composer.local.json composer require --no-update mediawiki/maps ${MAPS_VERSION}
-RUN COMPOSER=composer.local.json composer require --no-update mediawiki/semantic-result-formats ${SRF_VERSION}
+RUN composer-require.sh mediawiki/semantic-media-wiki ${SMW_VERSION}
+RUN get-github-extension.sh PageSchemas ${PS_VERSION}
+RUN get-github-extension.sh AdminLinks ${AL_VERSION}
+RUN composer-require.sh mediawiki/maps ${MAPS_VERSION}
+RUN composer-require.sh mediawiki/semantic-result-formats ${SRF_VERSION}
 RUN composer update 
 
+RUN chown -R www-data:www-data /var/www/html/extensions/SemanticMediaWiki/
 
-ENV EXTENSION=SemanticDrilldown
 COPY composer*.json package*.json /var/www/html/extensions/$EXTENSION/
 
 RUN cd extensions/$EXTENSION && npm ci 
