@@ -35,7 +35,7 @@ class ProcessTemplate {
 			$msg[ "msg_$message" ] = wfMessage( $message )->text();
 		}
 
-		$html = $templateParser->processTemplate( $template, (array) $vm + $msg );
+		$html = $templateParser->processTemplate( $template, (array)$vm + $msg );
 
 		// Remove leading whitespace from all lines as the parser will interpret lines containing
 		// text starting with whitespace as preformatted text later;
