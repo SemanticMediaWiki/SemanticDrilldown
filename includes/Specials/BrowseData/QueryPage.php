@@ -7,10 +7,10 @@ use PageProps;
 use RequestContext;
 use SD\DbService;
 use SD\Parameters\Parameters;
-use SD\Sql\SqlProvider;
-use SMWOutputs;
-use SD\Utils;
 use SD\Sql\PropertyTypeDbInfo;
+use SD\Sql\SqlProvider;
+use SD\Utils;
+use SMWOutputs;
 use Title;
 use Wikimedia\Rdbms\Subquery;
 
