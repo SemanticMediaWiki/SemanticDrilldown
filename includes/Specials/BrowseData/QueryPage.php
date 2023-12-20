@@ -9,10 +9,10 @@ use SD\DbService;
 use SD\Parameters\Parameters;
 use SD\Sql\SqlProvider;
 use SMWOutputs;
-use Title;
 use SD\Utils;
-use Wikimedia\Rdbms\Subquery;
 use SD\Sql\PropertyTypeDbInfo;
+use Title;
+use Wikimedia\Rdbms\Subquery;
 
 class QueryPage extends \QueryPage {
 
@@ -189,7 +189,7 @@ class QueryPage extends \QueryPage {
 				];
 			}
 		}
-		foreach( $applied_filters as $i => $af ) {
+		foreach ( $applied_filters as $i => $af ) {
 			$property_table_name = $dbr->tableName(
 				PropertyTypeDbInfo::tableName( $af->filter->propertyType() ) );
 			if ( $af->filter->propertyType() === 'page' ) {
@@ -229,7 +229,7 @@ class QueryPage extends \QueryPage {
 		}
 		$category = $this->query->category();
 		$subcategory = $this->query->subcategory();
-		$actual_cat = str_replace( ' ', '_', ($subcategory) ? $subcategory : $category );
+		$actual_cat = str_replace( ' ', '_', ( $subcategory ) ? $subcategory : $category );
 		$actual_cat = str_replace( "'", "\'", $actual_cat );
 
 		$sql = "(SELECT smw_id FROM $smwIDs cat_ids WHERE smw_namespace = $cat_ns AND (smw_title = '$actual_cat'";
