@@ -214,7 +214,7 @@ class QueryPage extends \QueryPage {
 				$query[ 'join_conds' ][ 'o_ids' . $i ] = [
 					$sql,
 					[
-						"r$i.s_id = o_ids$i.smw_id"
+						"r$i.o_id = o_ids$i.smw_id"
 					]
 				];
 			} else {
@@ -238,31 +238,30 @@ class QueryPage extends \QueryPage {
 			$sql .= " OR smw_title = '{$subcat}'";
 		}
 		$sql .= ")) ";
-		$query['conds']['insts.o_id'] = new Subquery( $sql );
+		$query['conds'][] = "insts.o_id IN " . new Subquery( $sql );
 		foreach ( $applied_filters as $i => $af ) {
 			$property_value = $af->filter->escapedProperty();
-			$value_field = PropertyTypeDbInfo::valueField( $af->filter->propertyType() );//
+			$value_field = PropertyTypeDbInfo::valueField( $af->filter->propertyType() );
 			if ( $af->filter->propertyType() === 'page' ) {
 				$property_field = "r$i.p_id";
-				$sql = "($property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)";
-				if ( !$includes_none ) {
+				$sql = "SELECT MIN(smw_id) FROM $smwIDs WHERE (smw_title = '$property_value' AND smw_namespace = $prop_ns)";
+				if ( $includes_none ) {
 					$sql .= " OR $property_field IS NULL";
 				}
-				$sql .= ")";
+				$sql .= " AND ";
 				$value_field = "o_ids$i.smw_title";
-				$query[ 'conds' ][ $property_field ] = new Subquery( $sql );
 			} else {
 				$property_field = "a$i.p_id";
-				$sql = "(SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
+				$sql = "SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns AND ";
 				if ( strncmp( $value_field, '(IF(o_blob IS NULL', 18 ) === 0 ) {
 					$value_field = str_replace( 'o_', "a$i.o_", $value_field );
 				} else {
 					$value_field = "a$i.$value_field";
 				}
-				$query[ 'conds' ][ $property_field ] = new Subquery( $sql );
 			}
+			$sql .= $af->checkSQL( $value_field );
+			$query[ 'conds' ][] = "$property_field = " . new Subquery( $sql );
 		}
-
 		return $query;
 	}
 
