@@ -16,11 +16,6 @@ parameters:
 			path: includes/ParserFunctions/DrilldownInfo.php
 
 		-
-			message: "#^Variable \\$current_filter_values might not be defined\\.$#"
-			count: 2
-			path: includes/Specials/BrowseData/GetApplicableFilters.php
-
-		-
 			message: "#^Variable \\$highest_num_results might not be defined\\.$#"
 			count: 2
 			path: includes/Specials/BrowseData/GetApplicableFilters.php
