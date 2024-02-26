@@ -54,3 +54,8 @@ parameters:
 			message: "#^Call to an undefined static method MagicWord\\:\\:get\\(\\)\\.$#"
 			count: 2
 			path: includes/Utils.php
+
+		-
+			message: "#^Constant SMW_NS_PROPERTY not found\\.$#"
+			count: 1
+			path: includes/Specials/BrowseData/QueryPage.php
