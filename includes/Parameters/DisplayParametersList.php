@@ -48,4 +48,8 @@ class DisplayParametersList extends Parameter implements IteratorAggregate {
 		}
 	}
 
+	public function count(): int {
+		return count( $this->list );
+	}
+
 }
