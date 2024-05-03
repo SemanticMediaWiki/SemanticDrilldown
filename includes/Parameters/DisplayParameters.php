@@ -23,7 +23,7 @@ class DisplayParameters implements IteratorAggregate {
 	/**
 	 * @param string $displayParameters String of the form "x1=y1;...;xn=yn"
 	 */
-	public function __construct( string $displayParameters ) {
+	public function __construct( string $displayParameters = '' ) {
 		$displayParameters = array_map( 'trim', explode( self::SEP, $displayParameters ) );
 
 		foreach ( $displayParameters as $dp ) {

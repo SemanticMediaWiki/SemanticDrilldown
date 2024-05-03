@@ -6,6 +6,7 @@ use Closure;
 use PageProps;
 use RequestContext;
 use SD\DbService;
+use SD\Parameters\DisplayParameters;
 use SD\Parameters\Parameters;
 use SD\Sql\PropertyTypeDbInfo;
 use SD\Sql\SqlProvider;
@@ -65,8 +66,9 @@ class QueryPage extends \QueryPage {
 
 		$this->headerPage = $parameters->header();
 		$this->footerPage = $parameters->footer();
-		if ( $parameters->displayParametersList() ) {
-			foreach ( $parameters->displayParametersList() as $dps ) {
+		$displayParametersList = $parameters->displayParametersList();
+		if ( $displayParametersList && $displayParametersList->count() ) {
+			foreach ( $displayParametersList as $dps ) {
 				$format = $dps->format();
 				if ( !array_key_exists( $format, $resultFormatTypes ) ) {
 					$this->displayParametersWithUnknownFormat[] = $dps;
@@ -78,6 +80,8 @@ class QueryPage extends \QueryPage {
 					$this->displayParametersWithUnsupportedFormat[] = $dps;
 				}
 			}
+		} else {
+			$this->pagedDisplayParametersList[] = new DisplayParameters();
 		}
 
 		$this->processTemplate = new ProcessTemplate;
