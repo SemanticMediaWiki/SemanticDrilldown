@@ -17,11 +17,11 @@ DB_TYPE?=sqlite
 DB_IMAGE?=""
 
 # extensions
-SMW_VERSION?=4.1.2
+SMW_VERSION?=4.1.3
 PS_VERSION ?= 0.6.1
 AL_VERSION ?= 0.4.2
 MAPS_VERSION ?= 9.0.7
-SRF_VERSION ?= 4.0.1
+SRF_VERSION ?= 4.2.1
 
 # composer
 # Enables "composer update" inside of extension
