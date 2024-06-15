@@ -156,7 +156,8 @@ END;
 			} elseif ( $timePeriod == 'year' ) {
 				$date_string = $row[0];
 				$possible_dates[$date_string] = $count;
-			} else { // if ( $this->timePeriod() == 'decade' )
+			} else { 
+				// if ( $this->timePeriod() == 'decade' )
 				// Unfortunately, there's no SQL DECADE()
 				// function - so we have to take these values,
 				// which are grouped into year "buckets", and
@@ -179,7 +180,8 @@ END;
 				'month' => $row[1] ?? 0,
 				'day' => $row[2] ?? 0
 			];
-			$padded_date = sprintf( '%04d%02d%02d', // YYYYMMDD, for comparing with previous min/max date
+			// YYYYMMDD, for comparing with previous min/max date
+			$padded_date = sprintf( '%04d%02d%02d', 
 				$date['year'],
 				$date['month'],
 				$date['day']
@@ -285,7 +287,8 @@ END;
 END;
 		$res = $dbw->query( $sql );
 		$row = $res->fetchRow();
-		$minDate = str_replace( '-', '/', $row[0] ); // for sqlite
+		// for sqlite
+		$minDate = str_replace( '-', '/', $row[0] ); 
 		if ( $minDate === null ) {
 			return null;
 		}
@@ -296,7 +299,8 @@ END;
 			$minYear = $minDateParts[0];
 			$minMonth = $minDay = 0;
 		}
-		$maxDate = str_replace( '-', '/', $row[1] ); // for sqlite
+		// for sqlite
+		$maxDate = str_replace( '-', '/', $row[1] ); 
 		$maxDateParts = explode( '/', $maxDate );
 		if ( count( $maxDateParts ) == 3 ) {
 			list( $maxYear, $maxMonth, $maxDay ) = $maxDateParts;

@@ -175,7 +175,8 @@ class AppliedFilter {
 					$sql .= "$yearValue = {$fv->year} AND $monthValue = {$fv->month} ";
 				} elseif ( $fv->time_period == 'year' ) {
 					$sql .= "$yearValue = {$fv->year} ";
-				} else { // if ( $fv->time_period == 'year range' ) {
+				} else { 
+					// if ( $fv->time_period == 'year range' ) {
 					$sql .= "$yearValue >= {$fv->year} AND $yearValue <= {$fv->end_year} ";
 				}
 			} else {
@@ -218,7 +219,8 @@ class AppliedFilter {
 				$value_field = "$yearValue, $monthValue";
 			} elseif ( $this->filter->timePeriod() == 'year' ) {
 				$value_field = $yearValue;
-			} else { // if ( $this->filter->timePeriod() == 'year range' ) {
+			} else { 
+				// if ( $this->filter->timePeriod() == 'year range' ) {
 				$value_field = $yearValue;
 			}
 		}

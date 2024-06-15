@@ -189,7 +189,8 @@ class SqlProvider {
 			$yearValue = "cast(strftime('%Y', $dateDBField) as integer)";
 			$monthValue = "cast(strftime('%m', $dateDBField) as integer)";
 			$dayValue = "cast(strftime('%d', $dateDBField) as integer)";
-		} else { // MySQL
+		} else { 
+			// MySQL
 			$yearValue = "YEAR($dateDBField)";
 			$monthValue = "MONTH($dateDBField)";
 			$dayValue = "DAY($dateDBField)";

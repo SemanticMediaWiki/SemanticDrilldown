@@ -45,13 +45,13 @@ class AppliedFilterValue {
 			} else {
 				$date_parts = explode( ' ', $fv->text );
 				if ( count( $date_parts ) == 3 ) {
-					list( $month_str, $day_str, $year ) = explode( ' ', $fv->text );
+					[ $month_str, $day_str, $year ] = explode( ' ', $fv->text );
 					$fv->month = Utils::stringToMonth( $month_str );
 					$fv->day = str_replace( ',', '', $day_str );
 					$fv->year = $year;
 					$fv->time_period = 'day';
 				} elseif ( count( $date_parts ) == 2 ) {
-					list( $month_str, $year ) = explode( ' ', $fv->text );
+					[ $month_str, $year ] = explode( ' ', $fv->text );
 					$fv->month = Utils::stringToMonth( $month_str );
 					$fv->year = $year;
 					$fv->time_period = 'month';

@@ -77,7 +77,8 @@ class Utils {
 			return wfMessage( 'october' )->text();
 		} elseif ( $month == 11 ) {
 			return wfMessage( 'november' )->text();
-		} else { // if ($month == 12) {
+		} else { 
+			// if ($month == 12) {
 			return wfMessage( 'december' )->text();
 		}
 	}
@@ -105,7 +106,8 @@ class Utils {
 			return 10;
 		} elseif ( $str == wfMessage( 'november' )->text() ) {
 			return 11;
-		} else { // if ($strmonth == wfMessage('december')->text()) {
+		} else { 
+			// if ($strmonth == wfMessage('december')->text()) {
 			return 12;
 		}
 	}
@@ -120,7 +122,8 @@ class Utils {
 		if ( count( $words_array ) > $index_of_word ) {
 			$string_value = ucwords( $words_array[$index_of_word] );
 		} elseif ( count( $words_array ) == 0 ) {
-			$string_value = $bool_value; // a safe value if no words are found
+			// a safe value if no words are found
+			$string_value = $bool_value; 
 		} else {
 			$string_value = ucwords( $words_array[0] );
 		}
@@ -141,9 +144,9 @@ class Utils {
 	 */
 	public static function addMagicWordLanguage( &$magicWords, $langCode ) {
 		switch ( $langCode ) {
-		default:
-			$magicWords['MAG_HIDEFROMDRILLDOWN'] = [ 0, '__HIDEFROMDRILLDOWN__' ];
-			$magicWords['MAG_SHOWINDRILLDOWN'] = [ 0, '__SHOWINDRILLDOWN__' ];
+			default:
+				$magicWords['MAG_HIDEFROMDRILLDOWN'] = [ 0, '__HIDEFROMDRILLDOWN__' ];
+				$magicWords['MAG_SHOWINDRILLDOWN'] = [ 0, '__SHOWINDRILLDOWN__' ];
 		}
 		return true;
 	}
