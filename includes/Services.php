@@ -82,11 +82,11 @@ class Services {
 	private function getNewQueryPage(): Closure {
 		// Using a prefix different from wg, the ServiceOptions approach does not work anymore;
 		// use the global variable instead:
-		global $sdgResultFormatTypes;
+		global $wgSdgResultFormatTypes;
 
 		return fn( $context, $parameters, $query, $offset, $limit ) =>
 			new QueryPage(
-				$sdgResultFormatTypes,
+				$wgSdgResultFormatTypes,
 				$this->getDbService(), $this->getPageProps(), $this->getNewUrlService(),
 				$this->getGetPageFromTitleText(),
 				$context, $parameters, $query, $offset, $limit );
