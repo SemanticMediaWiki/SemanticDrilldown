@@ -149,7 +149,7 @@ class QueryPage extends \QueryPage {
 				'insts' => [
 					'JOIN',
 					[
-						'ids.smw_id = insts.s_id' ,
+						'ids.smw_id = insts.s_id',
 						'ids.smw_namespace != ' . $cat_ns
 					]
 				]
