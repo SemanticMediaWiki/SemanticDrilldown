@@ -48,7 +48,7 @@ class Services {
 	public static function onParserFirstCallInit( $parser ) {
 		foreach ( self::PARSER_FUNCTIONS as $name => $class ) {
 			$parser->setFunctionHook( $name,
-				fn( $parser, ...$params ) => ( new $class( $parser ) )( $params ) );
+				fn ( $parser, ...$params ) => ( new $class( $parser ) )( $params ) );
 		}
 	}
 
@@ -70,11 +70,11 @@ class Services {
 	}
 
 	private function getGetPageSchema(): Closure {
-		return fn( $category ) => class_exists( 'PSSchema' ) ? new \PSSchema( $category ) : null;
+		return fn ( $category ) => class_exists( 'PSSchema' ) ? new \PSSchema( $category ) : null;
 	}
 
 	private function getNewQuery(): Closure {
-		return fn( $category, $subcategory, $filters, $applied_filters, $remaining_filters ) =>
+		return fn ( $category, $subcategory, $filters, $applied_filters, $remaining_filters ) =>
 			new DrilldownQuery( $this->getDbService(),
 				$category, $subcategory, $filters, $applied_filters, $remaining_filters );
 	}
@@ -84,7 +84,7 @@ class Services {
 		// use the global variable instead:
 		global $wgSdgResultFormatTypes;
 
-		return fn( $context, $parameters, $query, $offset, $limit ) =>
+		return fn ( $context, $parameters, $query, $offset, $limit ) =>
 			new QueryPage(
 				$wgSdgResultFormatTypes,
 				$this->getDbService(), $this->getPageProps(), $this->getNewUrlService(),
@@ -94,14 +94,14 @@ class Services {
 
 	private function getNewUrlService(): Closure {
         // phpcs:ignore MediaWiki.Usage.AssignmentInReturn.AssignmentInReturn
-		return fn( WebRequest $request, ?DrilldownQuery $query = null ) =>
+		return fn ( WebRequest $request, ?DrilldownQuery $query = null ) =>
 			new UrlService(
 				SpecialPage::getTitleFor( 'BrowseData' )->getLocalURL(), $request, $query );
 	}
 
 	private function getNewFilter(): Closure {
 		// phpcs:ignore MediaWiki.Usage.AssignmentInReturn.AssignmentInReturn
-		return fn( $name, $property, $category, $requiredFilters, $int, $propertyType = null,
+		return fn ( $name, $property, $category, $requiredFilters, $int, $propertyType = null,
 				   $timePeriod = null, $allowedValues = null ) =>
 			new Filter( $this->getDbService(),
 			   $name, $property, $category, $requiredFilters, $int, $propertyType, $timePeriod, $allowedValues );

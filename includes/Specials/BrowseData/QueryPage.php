@@ -102,9 +102,9 @@ class QueryPage extends \QueryPage {
 	protected function getPageHeader(): string {
 		$vm = [
 			'displayParametersWithUnknownFormat' =>
-				array_map( fn( $x ) => "$x", $this->displayParametersWithUnknownFormat ),
+				array_map( fn ( $x ) => "$x", $this->displayParametersWithUnknownFormat ),
 			'displayParametersWithUnsupportedFormat' =>
-				array_map( fn( $x ) => "$x", $this->displayParametersWithUnsupportedFormat ),
+				array_map( fn ( $x ) => "$x", $this->displayParametersWithUnsupportedFormat ),
 			'header' => $this->getPageContent( $this->getOutput(), $this->headerPage ),
 		];
 
