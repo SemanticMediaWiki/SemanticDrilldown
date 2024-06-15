@@ -245,7 +245,7 @@ END;
 	AND cat_ids.smw_title = $category
 	GROUP BY $value_field
 	ORDER BY $value_field";
-		$res = $dbr->query( $sql );
+		$res = $dbr->select( $sql );
 		while ( $row = $res->fetchRow() ) {
 			if ( $this->filter->propertyType() == 'date' && $this->filter->timePeriod() == 'month' ) {
 				$value_string = Utils::monthToString( $row[1] ) . " " . $row['value'];
