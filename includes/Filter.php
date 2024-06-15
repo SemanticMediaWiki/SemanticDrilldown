@@ -102,7 +102,7 @@ class Filter {
 		$property_value = $this->escapedProperty();
 		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );
 		$dbw = wfGetDB( DB_MASTER );
-		list( $yearValue, $monthValue, $dayValue ) = SqlProvider::getDateFunctions( $date_field );
+		[ $yearValue, $monthValue, $dayValue ] = SqlProvider::getDateFunctions( $date_field );
 		$fields = "$yearValue, $monthValue, $dayValue";
 		$datesTable = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
 		$idsTable = $dbw->tableName( Utils::getIDsTableName() );
@@ -294,7 +294,7 @@ END;
 		}
 		$minDateParts = explode( '/', $minDate );
 		if ( count( $minDateParts ) == 3 ) {
-			list( $minYear, $minMonth, $minDay ) = $minDateParts;
+			[ $minYear, $minMonth, $minDay ] = $minDateParts;
 		} else {
 			$minYear = $minDateParts[0];
 			$minMonth = $minDay = 0;
@@ -303,7 +303,7 @@ END;
 		$maxDate = str_replace( '-', '/', $row[1] ); 
 		$maxDateParts = explode( '/', $maxDate );
 		if ( count( $maxDateParts ) == 3 ) {
-			list( $maxYear, $maxMonth, $maxDay ) = $maxDateParts;
+			[ $maxYear, $maxMonth, $maxDay ] = $maxDateParts;
 		} else {
 			$maxYear = $maxDateParts[0];
 			$maxMonth = $maxDay = 0;
