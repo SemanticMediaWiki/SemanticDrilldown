@@ -74,7 +74,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 			$parameters = ( $this->loadParameters )( $category );
 			$category_title = $parameters->title();
 			if ( $category_title === null ) {
-				$category_title = wfMessage( 'browsedata' )->text() . html_entity_decode( wfMessage( 'colon-separator' )->text() ) . str_replace( '_', ' ', $category );
+				$category_title = $this->msg( 'browsedata' )->text() . html_entity_decode( $this->msg( 'colon-separator' )->text() ) . str_replace( '_', ' ', $category );
 			}
 
 			[ $limit, $offset ] = $request->getLimitOffsetForUser(
@@ -91,7 +91,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 
 			$out->addHTML( "</div> <!-- drilldown-results -->\n" );
 		} else {
-			$category_title = wfMessage( 'browsedata' )->text();
+			$category_title = $this->msg( 'browsedata' )->text();
 		}
 
 		// This has to be set last, because otherwise the QueryPage
