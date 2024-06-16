@@ -29,6 +29,8 @@ class Utils {
 	/**
 	 * Helper function to get the SMW data store for different versions
 	 * of SMW.
+	 * 
+	 * @return \SMW\StoreFactory
 	 */
 	public static function getSMWStore() {
 		if ( class_exists( '\SMW\StoreFactory' ) ) {
@@ -132,6 +134,8 @@ class Utils {
 
 	/**
 	 * Register magic-word variable IDs
+	 * 
+	 * @return bool true or false
 	 */
 	public static function addMagicWordVariableIDs( &$magicWordVariableIDs ) {
 		$magicWordVariableIDs[] = 'MAG_HIDEFROMDRILLDOWN';
@@ -141,6 +145,8 @@ class Utils {
 
 	/**
 	 * Set the actual value of the magic words
+	 * 
+	 * @return bool true or false
 	 */
 	public static function addMagicWordLanguage( &$magicWords, $langCode ) {
 		switch ( $langCode ) {
@@ -154,6 +160,8 @@ class Utils {
 	/**
 	 * Set values in the page_props table based on the presence of the
 	 * 'HIDEFROMDRILLDOWN' and 'SHOWINDRILLDOWN' magic words in a page
+	 * 
+	 * @return bool true or false
 	 */
 	public static function handleShowAndHide( &$parser, &$text ) {
 		if ( class_exists( MagicWordFactory::class ) ) {

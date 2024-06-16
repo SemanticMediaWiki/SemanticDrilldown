@@ -84,6 +84,8 @@ class AppliedFilter {
 	/**
 	 * Convert value of datepicker field (e.g. "1760-11-23") into a human-readable representation
 	 * (e.g. "June 15, 2000").
+	 * 
+	 * @return string formatted date
 	 */
 	protected function lowerOrUpperDateToString( $date ) {
 		$ts = sprintf( '%04d%02d%02d000000', $date['year'], $date['month'], $date['day'] );
@@ -93,6 +95,8 @@ class AppliedFilter {
 	/**
 	 * Convert value of datepicker field (e.g. "1760-11-23") into value usable in SQL queries.
 	 * (e.g. DATE(...)).
+	 * 
+	 * @return string formatted date
 	 */
 	protected function lowerOrUpperDateToSql( $date ) {
 		return "DATE('" . $date['year'] . "-" . $date['month'] . "-" . $date['day'] . "')";
@@ -101,6 +105,8 @@ class AppliedFilter {
 	/**
 	 * Returns a string that adds a check for this filter/value
 	 * combination to an SQL "WHERE" clause.
+	 * 
+	 * @return string
 	 */
 	public function checkSQL( $value_field ) {
 		global $wgDBtype;
