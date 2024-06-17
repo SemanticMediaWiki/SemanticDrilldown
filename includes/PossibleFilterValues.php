@@ -48,8 +48,8 @@ class PossibleFilterValues implements IteratorAggregate {
 	 */
 	public function countRange(): array {
 		return [
-			min( array_map( fn( $v ) => $v->count(), $this->values ) ),
-			max( array_map( fn( $v ) => $v->count(), $this->values ) )
+			min( array_map( fn ( $v ) => $v->count(), $this->values ) ),
+			max( array_map( fn ( $v ) => $v->count(), $this->values ) )
 		];
 	}
 

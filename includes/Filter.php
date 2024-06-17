@@ -24,6 +24,11 @@ class Filter {
 	private ?string $timePeriod;
 	private $allowedValues;
 
+	/**
+	 * possible applied filters value
+	 *
+	 * @var array
+	 */
 	public $possible_applied_filters = [];
 
 	public function __construct(
@@ -102,7 +107,7 @@ class Filter {
 		$property_value = $this->escapedProperty();
 		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );
 		$dbw = wfGetDB( DB_MASTER );
-		list( $yearValue, $monthValue, $dayValue ) = SqlProvider::getDateFunctions( $date_field );
+		[ $yearValue, $monthValue, $dayValue ] = SqlProvider::getDateFunctions( $date_field );
 		$fields = "$yearValue, $monthValue, $dayValue";
 		$datesTable = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
 		$idsTable = $dbw->tableName( Utils::getIDsTableName() );
@@ -156,7 +161,8 @@ END;
 			} elseif ( $timePeriod == 'year' ) {
 				$date_string = $row[0];
 				$possible_dates[$date_string] = $count;
-			} else { // if ( $this->timePeriod() == 'decade' )
+			} else {
+				// if ( $this->timePeriod() == 'decade' )
 				// Unfortunately, there's no SQL DECADE()
 				// function - so we have to take these values,
 				// which are grouped into year "buckets", and
@@ -179,7 +185,8 @@ END;
 				'month' => $row[1] ?? 0,
 				'day' => $row[2] ?? 0
 			];
-			$padded_date = sprintf( '%04d%02d%02d', // YYYYMMDD, for comparing with previous min/max date
+			// YYYYMMDD, for comparing with previous min/max date
+			$padded_date = sprintf( '%04d%02d%02d',
 				$date['year'],
 				$date['month'],
 				$date['day']
@@ -285,21 +292,23 @@ END;
 END;
 		$res = $dbw->query( $sql );
 		$row = $res->fetchRow();
-		$minDate = str_replace( '-', '/', $row[0] ); // for sqlite
+		// for sqlite
+		$minDate = str_replace( '-', '/', $row[0] );
 		if ( $minDate === null ) {
 			return null;
 		}
 		$minDateParts = explode( '/', $minDate );
 		if ( count( $minDateParts ) == 3 ) {
-			list( $minYear, $minMonth, $minDay ) = $minDateParts;
+			[ $minYear, $minMonth, $minDay ] = $minDateParts;
 		} else {
 			$minYear = $minDateParts[0];
 			$minMonth = $minDay = 0;
 		}
-		$maxDate = str_replace( '-', '/', $row[1] ); // for sqlite
+		// for sqlite
+		$maxDate = str_replace( '-', '/', $row[1] );
 		$maxDateParts = explode( '/', $maxDate );
 		if ( count( $maxDateParts ) == 3 ) {
-			list( $maxYear, $maxMonth, $maxDay ) = $maxDateParts;
+			[ $maxYear, $maxMonth, $maxDay ] = $maxDateParts;
 		} else {
 			$maxYear = $maxDateParts[0];
 			$maxMonth = $maxDay = 0;

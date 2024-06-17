@@ -120,7 +120,7 @@ class GetApplicableFilters {
 	 */
 	private function getFilterLine( $filterName, $isApplied, $isNormalFilter, $resultsLine, Filter $filter ): string {
 		global $wgScriptPath;
-		global $sdgDisableFilterCollapsible;
+		global $wgSdgDisableFilterCollapsible;
 		$sdSkinsPath = "$wgScriptPath/extensions/SemanticDrilldown/skins";
 
 		if ( $filter->int() !== null ) {
@@ -135,7 +135,7 @@ class GetApplicableFilters {
 			$additionalClasses .= ' is-normal-filter';
 		}
 
-		if ( $sdgDisableFilterCollapsible ) {
+		if ( $wgSdgDisableFilterCollapsible ) {
 			$text  = '<div class="drilldown-filter' . $additionalClasses . '">';
 			$text .= "	<div class='drilldown-filter-label'>$filterName</div>";
 			$text .= '	<div class="drilldown-filter-values">' . $resultsLine . '</div>';
@@ -434,7 +434,7 @@ END;
 	 */
 	private function getUnappliedFilterLine( Filter $f ): string {
 		global $sdgMinValuesForComboBox;
-		global $sdgHideFiltersWithoutValues;
+		global $wgSdgHideFiltersWithoutValues;
 
 		$possibleValues = $this->getPossibleValues( $f );
 
@@ -460,7 +460,7 @@ END;
 
 		$text = $this->getFilterLine( $f->name(), false, $normal_filter, $results_line, $f );
 
-		if ( $sdgHideFiltersWithoutValues && $possibleValues->count() === 0 ) {
+		if ( $wgSdgHideFiltersWithoutValues && $possibleValues->count() === 0 ) {
 			$text = '';
 		}
 

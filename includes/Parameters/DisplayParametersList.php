@@ -24,7 +24,7 @@ class DisplayParametersList extends Parameter implements IteratorAggregate {
 
 	protected function propertyValue(): ?string {
 		return empty( $this->list ) ? null
-			: implode( '|',  array_map( fn( $dps ) => "$dps", $this->list ) );
+			: implode( '|', array_map( fn ( $dps ) => "$dps", $this->list ) );
 	}
 
 	public static function fromPropertyValue( ?string $value ): self {

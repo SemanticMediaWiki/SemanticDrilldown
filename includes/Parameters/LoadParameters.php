@@ -27,7 +27,7 @@ class LoadParameters {
 		}
 
 		$values = array_values( $properties )[0];
-		$get = fn( $propertyName ) =>
+		$get = fn ( $propertyName ) =>
 			array_key_exists( $propertyName, $values ) ? $values[ $propertyName ] : null;
 		return new Parameters(
 			Title::fromPropertyValue( $get( Title::PAGE_PROPERTY_NAME ) )->value,
