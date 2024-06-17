@@ -24,6 +24,11 @@ class Filter {
 	private ?string $timePeriod;
 	private $allowedValues;
 
+	/**
+	 * possible applied filters value
+	 *
+	 * @var array
+	 */
 	public $possible_applied_filters = [];
 
 	public function __construct(

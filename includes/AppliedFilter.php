@@ -15,12 +15,48 @@ use SD\Sql\SqlProvider;
  */
 
 class AppliedFilter {
+
+	/**
+	 * filter value
+	 *
+	 * @var Filter
+	 */
 	public Filter $filter;
+	/**
+	 * array of values
+	 *
+	 * @var array
+	 */
 	public $values = [];
+	/**
+	 * search terms value
+	 *
+	 * @var string
+	 */
 	public $search_terms;
+	/**
+	 * lower date value
+	 *
+	 * @var DateTime|null
+	 */
 	public $lower_date;
+	/**
+	 * upper date value
+	 *
+	 * @var DateTime|null
+	 */
 	public $upper_date;
+	/**
+	 * search terms value
+	 *
+	 * @var string
+	 */
 	public $lower_date_string;
+	/**
+	 * search terms value
+	 *
+	 * @var string
+	 */
 	public $upper_date_string;
 
 	public static function create( Filter $filter, $values, $search_terms = null, $lower_date = null, $upper_date = null ) {

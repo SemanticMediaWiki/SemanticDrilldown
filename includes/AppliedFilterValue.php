@@ -10,15 +10,65 @@ namespace SD;
  */
 
 class AppliedFilterValue {
+	/**
+	 * The text.
+	 *
+	 * @var string
+	 */
 	public $text;
+	/**
+	 * is none value
+	 *
+	 * @var bool
+	 */
 	public $is_none = false;
+	/**
+	 * is other value
+	 *
+	 * @var bool
+	 */
 	public $is_other = false;
+	/**
+	 * is numeric value
+	 *
+	 * @var bool
+	 */
 	public $is_numeric = false;
+	/**
+	 * lower limit value
+	 *
+	 * @var string
+	 */
 	public $lower_limit = null;
+	/**
+	 * upper limit value
+	 *
+	 * @var string
+	 */
 	public $upper_limit = null;
+	/**
+	 * year value
+	 *
+	 * @var string
+	 */
 	public $year = null;
+	/**
+	 * month value
+	 *
+	 * @var string
+	 */
 	public $month = null;
+	/**
+	 * day value
+	 *
+	 * @var string
+	 */
 	public $day = null;
+	/**
+	 * end year value
+	 *
+	 * @var string
+	 */
 	public $end_year = null;
 
 	public static function create( $actual_val, Filter $filter = null ) {
