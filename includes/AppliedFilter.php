@@ -120,7 +120,7 @@ class AppliedFilter {
 	/**
 	 * Convert value of datepicker field (e.g. "1760-11-23") into a human-readable representation
 	 * (e.g. "June 15, 2000").
-	 * 
+	 *
 	 * @return string formatted date
 	 */
 	protected function lowerOrUpperDateToString( $date ) {
@@ -131,7 +131,7 @@ class AppliedFilter {
 	/**
 	 * Convert value of datepicker field (e.g. "1760-11-23") into value usable in SQL queries.
 	 * (e.g. DATE(...)).
-	 * 
+	 *
 	 * @return string formatted date
 	 */
 	protected function lowerOrUpperDateToSql( $date ) {
@@ -141,7 +141,7 @@ class AppliedFilter {
 	/**
 	 * Returns a string that adds a check for this filter/value
 	 * combination to an SQL "WHERE" clause.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function checkSQL( $value_field ) {
@@ -217,7 +217,7 @@ class AppliedFilter {
 					$sql .= "$yearValue = {$fv->year} AND $monthValue = {$fv->month} ";
 				} elseif ( $fv->time_period == 'year' ) {
 					$sql .= "$yearValue = {$fv->year} ";
-				} else { 
+				} else {
 					// if ( $fv->time_period == 'year range' ) {
 					$sql .= "$yearValue >= {$fv->year} AND $yearValue <= {$fv->end_year} ";
 				}
@@ -261,7 +261,7 @@ class AppliedFilter {
 				$value_field = "$yearValue, $monthValue";
 			} elseif ( $this->filter->timePeriod() == 'year' ) {
 				$value_field = $yearValue;
-			} else { 
+			} else {
 				// if ( $this->filter->timePeriod() == 'year range' ) {
 				$value_field = $yearValue;
 			}

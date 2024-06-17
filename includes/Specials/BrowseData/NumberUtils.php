@@ -8,7 +8,7 @@ class NumberUtils {
 	 * Copied from Miga, also written by Yaron Koren
 	 * (https://github.com/yaronkoren/miga/blob/master/NumberUtils.js)
 	 * - though that one is in Javascript.
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function generateFilterValuesFromNumbers( array $numberArray ) {
@@ -103,7 +103,7 @@ class NumberUtils {
 	 * Copied from Miga, also written by Yaron Koren
 	 * (https://github.com/yaronkoren/miga/blob/master/NumberUtils.js)
 	 * - though that one is in Javascript.
-	 * 
+	 *
 	 * @return int
 	 */
 	private static function getNearestNiceNumber( $num, $previousNum, $nextNum ) {
@@ -144,7 +144,7 @@ class NumberUtils {
 	 * Copied from Miga, also written by Yaron Koren
 	 * (https://github.com/yaronkoren/miga/blob/master/NumberUtils.js)
 	 * - though that one is in Javascript.
-	 * 
+	 *
 	 * @return array
 	 */
 	private static function generateIndividualFilterValuesFromNumbers( $uniqueValues ) {

@@ -144,7 +144,7 @@ class AppliedFilterValue {
 
 	/**
 	 * Used in sorting, when BrowseDataPage creates a new URL.
-	 * 
+	 *
 	 * @return int
 	 */
 	public static function compare( $fv1, $fv2 ) {

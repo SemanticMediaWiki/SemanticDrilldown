@@ -22,7 +22,7 @@ class PageSchemas extends \PSExtensionHandler {
 	/**
 	 * Returns an object containing information on a filter, based on XML
 	 * from the Page Schemas extension.
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function createPageSchemasObject( $tagName, $xml ) {
@@ -66,7 +66,7 @@ class PageSchemas extends \PSExtensionHandler {
 	/**
 	 * Returns the HTML for setting the filter options, for the
 	 * Semantic Drilldown section in Page Schemas' "edit schema" page
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function getFieldEditingHTML( $psField ) {
@@ -150,7 +150,7 @@ class PageSchemas extends \PSExtensionHandler {
 	/**
 	 * Displays the information about the filter (if any exists)
 	 * for one field in the Page Schemas XML.
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function getFieldDisplayValues( $field_xml ) {

@@ -113,7 +113,7 @@ class Services {
 
 	private function getPageProps(): PageProps {
 		// MW > 1.35
-		return method_exists( $this->services, 'getPageProps' ) 
+		return method_exists( $this->services, 'getPageProps' )
 			? $this->services->getPageProps()
 			: PageProps::getInstance();
 	}

@@ -29,7 +29,7 @@ class Utils {
 	/**
 	 * Helper function to get the SMW data store for different versions
 	 * of SMW.
-	 * 
+	 *
 	 * @return \SMW\StoreFactory
 	 */
 	public static function getSMWStore() {
@@ -79,7 +79,7 @@ class Utils {
 			return wfMessage( 'october' )->text();
 		} elseif ( $month == 11 ) {
 			return wfMessage( 'november' )->text();
-		} else { 
+		} else {
 			// if ($month == 12) {
 			return wfMessage( 'december' )->text();
 		}
@@ -108,7 +108,7 @@ class Utils {
 			return 10;
 		} elseif ( $str == wfMessage( 'november' )->text() ) {
 			return 11;
-		} else { 
+		} else {
 			// if ($strmonth == wfMessage('december')->text()) {
 			return 12;
 		}
@@ -125,7 +125,7 @@ class Utils {
 			$string_value = ucwords( $words_array[$index_of_word] );
 		} elseif ( count( $words_array ) == 0 ) {
 			// a safe value if no words are found
-			$string_value = $bool_value; 
+			$string_value = $bool_value;
 		} else {
 			$string_value = ucwords( $words_array[0] );
 		}
@@ -134,7 +134,7 @@ class Utils {
 
 	/**
 	 * Register magic-word variable IDs
-	 * 
+	 *
 	 * @return bool true or false
 	 */
 	public static function addMagicWordVariableIDs( &$magicWordVariableIDs ) {
@@ -145,7 +145,7 @@ class Utils {
 
 	/**
 	 * Set the actual value of the magic words
-	 * 
+	 *
 	 * @return bool true or false
 	 */
 	public static function addMagicWordLanguage( &$magicWords, $langCode ) {
@@ -160,7 +160,7 @@ class Utils {
 	/**
 	 * Set values in the page_props table based on the presence of the
 	 * 'HIDEFROMDRILLDOWN' and 'SHOWINDRILLDOWN' magic words in a page
-	 * 
+	 *
 	 * @return bool true or false
 	 */
 	public static function handleShowAndHide( &$parser, &$text ) {

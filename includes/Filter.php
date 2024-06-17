@@ -161,7 +161,7 @@ END;
 			} elseif ( $timePeriod == 'year' ) {
 				$date_string = $row[0];
 				$possible_dates[$date_string] = $count;
-			} else { 
+			} else {
 				// if ( $this->timePeriod() == 'decade' )
 				// Unfortunately, there's no SQL DECADE()
 				// function - so we have to take these values,
@@ -186,7 +186,7 @@ END;
 				'day' => $row[2] ?? 0
 			];
 			// YYYYMMDD, for comparing with previous min/max date
-			$padded_date = sprintf( '%04d%02d%02d', 
+			$padded_date = sprintf( '%04d%02d%02d',
 				$date['year'],
 				$date['month'],
 				$date['day']
@@ -293,7 +293,7 @@ END;
 		$res = $dbw->query( $sql );
 		$row = $res->fetchRow();
 		// for sqlite
-		$minDate = str_replace( '-', '/', $row[0] ); 
+		$minDate = str_replace( '-', '/', $row[0] );
 		if ( $minDate === null ) {
 			return null;
 		}
@@ -305,7 +305,7 @@ END;
 			$minMonth = $minDay = 0;
 		}
 		// for sqlite
-		$maxDate = str_replace( '-', '/', $row[1] ); 
+		$maxDate = str_replace( '-', '/', $row[1] );
 		$maxDateParts = explode( '/', $maxDate );
 		if ( count( $maxDateParts ) == 3 ) {
 			[ $maxYear, $maxMonth, $maxDay ] = $maxDateParts;
