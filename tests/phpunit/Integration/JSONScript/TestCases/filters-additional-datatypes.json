@@ -1,0 +1,204 @@
+{
+	"description": "filters",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeAnnotationUri",
+			"contents": "[[Has type::Annotation Uri]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeGeographicCoordinates",
+			"contents": "[[Has type::Geographic coordinates]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeKeyword",
+			"contents": "[[Has type::Keyword]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeMonolingualText",
+			"contents": "[[Has type::Monolingual text]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeTelephoneNumber",
+			"contents": "[[Has type::Telephone number]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeTemperature",
+			"contents": "[[Has type::Temperature]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeURL",
+			"contents": "[[Has type::URL]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeQuantity",
+			"contents": "[[Has type::Quantity]][[Corresponds to::1 g]][[Corresponds to::1000 mg]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeCode",
+			"contents": "[[Has type::Code]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "SomeEmail",
+			"contents": "[[Has type::Email]]"
+		},
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "Unused",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "Category1",
+			"contents": "{{#drilldowninfo: filters=AnnotationUri (property=SomeAnnotationUri),GeographicCoordinates (property=SomeGeographicCoordinates),Keyword (property=SomeKeyword),MonolingualText (property=SomeMonolingualText),TelephoneNumber (property=SomeTelephoneNumber),Temperature (property=SomeTemperature),URL (property=SomeURL),Quantity (property=SomeQuantity),Code (property=SomeCode),Email (property=SomeEmail),Unused (property=Unused)|display parameters=format=list}}"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "Category2",
+			"contents": "{{#drilldowninfo: filters=AnnotationUri (property=SomeAnnotationUri),GeographicCoordinates (property=SomeGeographicCoordinates),Keyword (property=SomeKeyword),MonolingualText (property=SomeMonolingualText),TelephoneNumber (property=SomeTelephoneNumber),Temperature (property=SomeTemperature),URL (property=SomeURL),Quantity (property=SomeQuantity),Code (property=SomeCode),Email (property=SomeEmail),Unused (property=Unused)|display parameters=format=list}}"
+		},
+		{
+			"page": "Category2SetA",
+			"contents": "[[Category:Category2]]{{#set: SomeAnnotationUri=https://example.com/a/b|SomeGeographicCoordinates=55.3781, 3.4360|SomeKeyword=key123|SomeMonolingualText=text@en|SomeTelephoneNumber=+441939550000|SomeTemperature=37|SomeURL=https://example.com|SomeQuantity=34|SomeCode=code123|SomeEmail=test@example.com}}"
+		},
+		{
+			"page": "Category1SetA",
+			"contents": "[[Category:Category1]]{{#set: SomeAnnotationUri=https://example.com/a/b|SomeGeographicCoordinates=55.3781, 3.4360|SomeKeyword=key123|SomeMonolingualText=text@en|SomeTelephoneNumber=+441939550000|SomeTemperature=37|SomeURL=https://example.com|SomeQuantity=34|SomeCode=code123|SomeEmail=test@example.com}}"
+		},
+		{
+			"page": "Category1SetB",
+			"contents": "[[Category:Category1]]{{#set: SomeAnnotationUri=https://example.com/b/c|SomeGeographicCoordinates=35.3781, 30.4360|SomeKeyword=key456|SomeMonolingualText=text@de|SomeTelephoneNumber=+441939660000|SomeTemperature=36|SomeURL=https://test.com|SomeQuantity=36|SomeCode=code456|SomeEmail=test@test.com}}"
+		}
+	],
+	"tests": [
+		{
+			"type": "special",
+			"about": "no filter applied",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"AnnotationUri:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?AnnotationUri=https%3A%2F%2Fexample.com%2Fa%2Fb\" title=\"Filter by this value\">https://example.com/a/b&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?AnnotationUri=https%3A%2F%2Fexample.com%2Fb%2Fc\" title=\"Filter by this value\">https://example.com/b/c&nbsp;(1)</a>",
+
+					"GeographicCoordinates:",
+					"(There are no values for this filter)",
+
+					"Keyword:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Keyword=key123\" title=\"Filter by this value\">key123&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Keyword=key456\" title=\"Filter by this value\">key456&nbsp;(1)</a>",
+					
+					"TelephoneNumber:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?TelephoneNumber=tel%3A%2B441939550000\" title=\"Filter by this value\">tel:+441939550000&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?TelephoneNumber=tel%3A%2B441939660000\" title=\"Filter by this value\">tel:+441939660000&nbsp;(1)</a>",
+
+					"Temperature:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Temperature=36\" title=\"Filter by this value\">36&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Temperature=37\" title=\"Filter by this value\">37&nbsp;(1)</a>",
+
+					"URL:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?URL=https%3A%2F%2Fexample.com\" title=\"Filter by this value\">https://example.com&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?URL=https%3A%2F%2Ftest.com\" title=\"Filter by this value\">https://test.com&nbsp;(1)</a>",
+					
+					"Quantity:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Quantity=34\" title=\"Filter by this value\">34&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Quantity=36\" title=\"Filter by this value\">36&nbsp;(1)</a>",
+					
+					"Code:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Code=code123\" title=\"Filter by this value\">code123&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Code=code456\" title=\"Filter by this value\">code456&nbsp;(1)</a>",
+
+					"Email:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Email=mailto%3Atest%40example.com\" title=\"Filter by this value\">mailto:test@example.com&nbsp;(1)</a>",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Email=mailto%3Atest%40test.com\" title=\"Filter by this value\">mailto:test@test.com&nbsp;(1)</a>",
+
+					"Unused:",
+					"(There are no values for this filter)",
+
+					"<div class=\"drilldown-results-output drilldown-results-output-paged\">",
+					"<a href=\"/index.php/Category1SetA\" title=\"Category1SetA\">Category1SetA</a>",
+					"<a href=\"/index.php/Category1SetB\" title=\"Category1SetB\">Category1SetB</a>"
+				],
+				"not-contain": [
+					"Category2SetA",
+					"Special:BrowseData/Category1?Unused="
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "keyword filter applied",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "Category1",
+				"request-parameters": {
+					"Keyword": "key123"
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Special:BrowseData/Category1\" title=\"Reset filters\">Category1</a>",
+					"> Keyword: <span class=\"drilldown-header-value\">key123</span> <a href=\"/index.php/Special:BrowseData/Category1\" title=\"Remove this filter\"><img src=\"/extensions/SemanticDrilldown/skins/filter-x.png\" /></a>",
+
+					"AnnotationUri:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Keyword=key123&AnnotationUri=https%3A%2F%2Fexample.com%2Fa%2Fb\" title=\"Filter by this value\">https://example.com/a/b&nbsp;(1)</a>",
+
+					"GeographicCoordinates:",
+					"<div class=\"drilldown-filter-values\".*>(There are no values for this filter)",
+
+					"Keyword:",
+					"<div class=\"drilldown-filter-values\" style=\"display: none;\">key123 · <a href=\"/index.php/Special:BrowseData/Category1?Keyword[0]=key123&Keyword[1]=key456\" title=\"Filter by this value\">key456</a> · <a href=\"/index.php/Special:BrowseData/Category1?Keyword[0]=key123&Keyword[1]=_other\" title=\"Filter by this value\">Other</a> · <a href=\"/index.php/Special:BrowseData/Category1?Keyword[0]=key123&Keyword[1]=_none\" title=\"Filter by this value\">None</a>",
+
+					"TelephoneNumber:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Keyword=key123&TelephoneNumber=tel%3A%2B441939550000\" title=\"Filter by this value\">tel:+441939550000&nbsp;(1)</a>",
+
+					"Temperature:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Keyword=key123&Temperature=37\" title=\"Filter by this value\">37&nbsp;(1)</a>",
+
+					"URL:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Keyword=key123&URL=https%3A%2F%2Fexample.com\" title=\"Filter by this value\">https://example.com&nbsp;(1)</a>",
+
+					"Quantity:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Keyword=key123&Quantity=34\" title=\"Filter by this value\">34&nbsp;(1)</a>",
+
+					"Code:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Keyword=key123&Code=code123\" title=\"Filter by this value\">code123&nbsp;(1)</a>",
+
+					"Email:",
+					"<a href=\"/index.php/Special:BrowseData/Category1?Keyword=key123&Email=mailto%3Atest%40example.com\" title=\"Filter by this value\">mailto:test@example.com&nbsp;(1)</a>",
+
+					"Unused:",
+					"(There are no values for this filter)",
+
+					"<div class=\"drilldown-results-output drilldown-results-output-paged\">",
+					"<a href=\"/index.php/Category1SetA\" title=\"Category1SetA\">Category1SetA</a>"
+				],
+				"not-contain": [
+					"Category1SetB"
+				]
+			}
+		}
+
+	],
+	"settings": {
+		"wgLang": "en"
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}
