@@ -34,7 +34,7 @@
 		Set severity to 0 instead of excluding the rule entirely so that libup does not
 		try to autofix this in the future.
 	-->
-	<rule ref="MediaWiki.Usage.DeprecatedConstantUsage.DB_MASTER">
+	<rule ref="MediaWiki.Usage.DeprecatedConstantUsage.DB_PRIMARY">
 		<severity>0</severity>
 	</rule>
 
