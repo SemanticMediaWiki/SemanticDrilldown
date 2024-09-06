@@ -101,7 +101,7 @@ class Filter {
 		$possible_dates = [];
 		$property_value = $this->escapedProperty();
 		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 		list( $yearValue, $monthValue, $dayValue ) = SqlProvider::getDateFunctions( $date_field );
 		$fields = "$yearValue, $monthValue, $dayValue";
 		$datesTable = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
@@ -227,7 +227,7 @@ END;
 	public function getAllValues(): PossibleFilterValues {
 		$possible_values = [];
 		$property_value = $this->escapedProperty();
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 		$property_table_name = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
 		$revision_table_name = $dbw->tableName( 'revision' );
 		$page_props_table_name = $dbw->tableName( 'page_props' );
@@ -270,7 +270,7 @@ END;
 	}
 
 	private function getTimePeriod() {
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 		$property_value = $this->escapedProperty();
 		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );
 		$datesTable = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
