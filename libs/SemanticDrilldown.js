@@ -10,13 +10,17 @@
 	$.ui.autocomplete.prototype._renderItem = function ( ul, item ) {
 		var re = new RegExp( '(?![^&;]+;)(?!<[^<>]*)(' + this.term.replace( /([^$()[]{}*.+?|\\])/gi, '\\$1' ) + ')(?![^<>]*>)(?![^&;]+;)', 'gi' );
 		var loc = item.label.search( re );
+		var $element = $( '<li></li>' );
 		var t;
 		if ( loc >= 0 ) {
 			t = item.label.slice( 0, Math.max( 0, loc ) ) + '<strong>' + item.label.substr( loc, this.term.length ) + '</strong>' + item.label.slice( loc + this.term.length );
 		} else {
 			t = item.label;
 		}
-		return $( '<li></li>' )
+		if ( item.disabled ) {
+			$element.addClass( 'ui-state-disabled' );
+		}
+		return $element
 			.data( 'item.autocomplete', item )
 			.append( ' <a>' + t + '</a>' )
 			.appendTo( ul );
@@ -26,9 +30,9 @@
 		_create: function () {
 			var self = this;
 			var select = this.element.hide();
-			var inp_id = select[ 0 ].options[ 0 ].value;
-			var curval = select[ 0 ].name;
-			var input = $( '<input id = "' + inp_id + '" type="text" name="' + inp_id + '" value="' + curval + '">' )
+			var inp_id = select.data( 'mwInputName' );
+			var filterName = select.data( 'mwFilterName' );
+			var input = $( '<input type="text" value="">' ).attr( { id: inp_id, name: inp_id } )
 				.insertAfter( select )
 				.autocomplete( {
 					source: function ( request, response ) {
@@ -37,6 +41,7 @@
 							var text = this.innerHTML;
 							if ( this.value && ( !request.term || matcher.test( text ) ) ) {
 								return {
+									disabled: this.disabled,
 									id: this.value,
 									label: text,
 									value: this.value
@@ -51,11 +56,15 @@
 							// just leave it as it is
 							return false;
 						}
+						if ( ui.item.disabled ) {
+							return false;
+						}
 						select.val( ui.item.id );
 						self._trigger( 'selected', event, {
 							item: select.find( '[value="' + ui.item.id + '"]' )
 						} );
 						setTimeout( function () {
+							input.attr( { name: filterName } );
 							select[ 0 ].form.submit();
 						}, 0 );
 
