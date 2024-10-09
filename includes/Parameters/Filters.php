@@ -53,7 +53,7 @@ class Filters extends Parameter implements IteratorAggregate {
 
 	private static function parseFilters( $filtersStr ) {
 		$filters = [];
-		preg_match_all( '/(.*)\(([^)]*)\)/', $filtersStr, $matches );
+		preg_match_all( '/([^,]*)\(([^)]*)\)/', $filtersStr, $matches );
 		foreach ( $matches[1] as $i => $filterName ) {
 			$filterName = trim( $filterName, ", \t\n\r\0\x0B" );
 			$filters[$filterName] = [];
