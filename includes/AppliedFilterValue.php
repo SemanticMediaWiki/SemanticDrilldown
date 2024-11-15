@@ -95,13 +95,17 @@ class AppliedFilterValue {
 			} else {
 				$date_parts = explode( ' ', $fv->text );
 				if ( count( $date_parts ) == 3 ) {
-					[ $month_str, $day_str, $year ] = explode( ' ', $fv->text );
+					// check if array can be used instead of list
+					// [ $month_str, $day_str, $year ] = explode( ' ', $fv->text );
+					list( $month_str, $day_str, $year ) = explode( ' ', $fv->text );
 					$fv->month = Utils::stringToMonth( $month_str );
 					$fv->day = str_replace( ',', '', $day_str );
 					$fv->year = $year;
 					$fv->time_period = 'day';
 				} elseif ( count( $date_parts ) == 2 ) {
-					[ $month_str, $year ] = explode( ' ', $fv->text );
+					// check if array can be used instead of list
+					// [ $month_str, $year ] = explode( ' ', $fv->text );
+					list( $month_str, $year ) = explode( ' ', $fv->text );
 					$fv->month = Utils::stringToMonth( $month_str );
 					$fv->year = $year;
 					$fv->time_period = 'month';
