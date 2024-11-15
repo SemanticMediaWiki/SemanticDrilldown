@@ -31,7 +31,7 @@ class Services {
 			self::$instance = new Services();
 		}
 
-		return self::$instance;
+		return new Services();
 	}
 
 	private MediaWikiServices $services;
@@ -84,9 +84,10 @@ class Services {
 		// use the global variable instead:
 		global $wgSdgResultFormatTypes;
 
+		$resultFormatTypes = $wgSdgResultFormatTypes ?? [];
 		return fn ( $context, $parameters, $query, $offset, $limit ) =>
 			new QueryPage(
-				$wgSdgResultFormatTypes,
+				$resultFormatTypes,
 				$this->getDbService(), $this->getPageProps(), $this->getNewUrlService(),
 				$this->getGetPageFromTitleText(),
 				$context, $parameters, $query, $offset, $limit );
