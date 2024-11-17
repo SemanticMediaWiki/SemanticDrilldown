@@ -2,6 +2,7 @@
 
 namespace SD\Specials\BrowseData;
 
+use SD\AppliedFilter;
 use SD\DbService;
 
 class DrilldownQuery {
@@ -42,6 +43,9 @@ class DrilldownQuery {
 		return $this->filters;
 	}
 
+	/**
+	 * @return AppliedFilter[]
+	 */
 	public function appliedFilters() {
 		return $this->applied_filters;
 	}

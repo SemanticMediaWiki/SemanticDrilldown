@@ -96,7 +96,7 @@ class GetApplicableFilters {
 			foreach ( $this->query->appliedFilters() as $af ) {
 				if ( $af->filter->name() == $f->name() ) {
 					if ( $f->propertyType() == 'date' || $f->propertyType() == 'number' ) {
-						$remainingHtml .= $this->getUnappliedFilterLine( $f );
+						$remainingHtml .= $this->getUnappliedFilterLine( $f, $af );
 					} else {
 						$remainingHtml .= $this->getAppliedFilterLine( $af );
 					}
@@ -176,20 +176,12 @@ END;
 	 * at least one value set
 	 */
 	private function getAppliedFilterLine( AppliedFilter $af ): string {
-		$results_line = "";
-		foreach ( $this->query->appliedFilters() as $af2 ) {
-			if ( $af->filter->name() == $af2->filter->name() ) {
-				$current_filter_values = $af2->values;
-			}
-		}
-		if ( $af->filter->allowedValues() != null ) {
-			$or_values = $af->filter->allowedValues();
-		} else {
-			$or_values = $af->getAllOrValues( $this->query->category() );
-		}
+		global $sdgMinValuesForComboBox;
+
+		$or_values = $af->filter->allowedValues() ?: $af->getAllOrValues( $this->query->category() );
 		if ( $af->search_terms != null ) {
 			$curSearchTermNum = count( $af->search_terms );
-			$results_line = $this->getComboBoxInput( $af->filter->name(), $curSearchTermNum, $or_values );
+			$results_line = $this->getComboBoxInput( $af->filter->name(), $curSearchTermNum, $or_values, $af );
 			return $this->getFilterLine( $af->filter->name(), true, false, $results_line, $af->filter );
 			/*
 			} elseif ( $af->lower_date != null || $af->upper_date != null ) {
@@ -209,49 +201,62 @@ END;
 		$additional_or_values[] = new PossibleFilterValue( '_none' );
 		$or_values = $or_values->merge( $additional_or_values );
 
-		$i = 0;
-		foreach ( $or_values as $or_value ) {
-			$value = $or_value->value();
-			if ( $i++ > 0 ) {
-				$results_line .= " · ";
-			}
-			$filter_text = Utils::escapeString( Utils::getNiceFilterValue( $af->filter->propertyType(),
-				$or_value->displayValue() ) );
-			$applied_filters = $this->query->appliedFilters();
-			foreach ( $applied_filters as $af2 ) {
-				if ( $af->filter->name() == $af2->filter->name() ) {
-					$or_fv = AppliedFilterValue::create( $value, $af->filter );
-					$af2->values = array_merge( $current_filter_values, [ $or_fv ] );
+		if ( $or_values->count() >= $sdgMinValuesForComboBox ) {
+			$instance_num = count( $af->values );
+			$results_line = $this->getComboBoxInput( $af->filter->name(), $instance_num, $or_values, $af );
+			return $this->getFilterLine( $af->filter->name(), true, false, $results_line, $af->filter );
+		}
+
+		$af_clone = clone $af;
+		$filters_for_url = [ $af_clone ];
+		$current_filter_text_values = [];
+		$applied_filters = $this->query->appliedFilters();
+		foreach ( $applied_filters as $af2 ) {
+			if ( $af->filter->name() === $af2->filter->name() ) {
+				foreach ( $af2->values as $cfv ) {
+					$current_filter_text_values[] = $cfv->text;
 				}
-			}
-			// show the list of OR values, only linking
-			// the ones that haven't been used yet
-			$found_match = false;
-			foreach ( $current_filter_values as $fv ) {
-				if ( $value == $fv->text ) {
-					$found_match = true;
-					break;
-				}
-			}
-			if ( $found_match ) {
-				$results_line .= "$filter_text";
 			} else {
-				$filter_url = $this->getUrl( $this->query->category(), $applied_filters, $this->query->subcategory() );
-				$results_line .= '<a href="' . $filter_url . '" title="' . wfMessage( 'sd_browsedata_filterbyvalue' )->text() . '">' . $filter_text . '</a>';
-			}
-			foreach ( $applied_filters as $af2 ) {
-				if ( $af->filter->name() == $af2->filter->name() ) {
-					$af2->values = $current_filter_values;
-				}
+				$filters_for_url[] = $af2;
 			}
 		}
+
+		$results = [];
+		foreach ( $or_values as $or_value ) {
+			$value = $or_value->value();
+			$filter_text = Utils::getNiceFilterValue( $af->filter->propertyType(), $or_value->displayValue() );
+			// show the list of OR values, only linking
+			// the ones that haven't been used yet
+			$found_match = in_array( $value, $current_filter_text_values );
+			if ( $found_match ) {
+				$results[] = Utils::escapeString( $filter_text );
+			} else {
+				$or_fv = AppliedFilterValue::create( $value, $af->filter );
+				// Reset values
+				$af_clone->values = array_merge( $af->values, [ $or_fv ] );
+				$filter_url = $this->getUrl( $this->query->category(), $filters_for_url, $this->query->subcategory() );
+				$results[] = Html::element( 'a', [ 'href' => $filter_url, 'title' => wfMessage( 'sd_browsedata_filterbyvalue' )->text(), ], $filter_text );
+			}
+		}
+		$results_line = implode( ' · ', $results );
 		return $this->getFilterLine( $af->filter->name(), true, true, $results_line, $af->filter );
 	}
 
-	private function printUnappliedFilterValues( $cur_url, Filter $f, PossibleFilterValues $possibleValues ) {
+	private function printUnappliedFilterValues( Filter $f, PossibleFilterValues $possibleValues, ?AppliedFilter $af = null ) {
 		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
 
-		$results_line = "";
+		if ( !$af ) {
+			$af = AppliedFilter::create( $f, [] );
+		}
+		$af_clone = clone $af;
+		$filters_for_url = [ $af_clone ];
+		$applied_filters = $this->query->appliedFilters();
+		foreach ( $applied_filters as $af2 ) {
+			if ( $af->filter->name() !== $af2->filter->name() ) {
+				$filters_for_url[] = $af2;
+			}
+		}
+
 		// set font-size values for filter "tag cloud", if the
 		// appropriate global variables are set
 		if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
@@ -261,33 +266,36 @@ END;
 			}
 		}
 		// now print the values
-		$num_printed_values = 0;
 		$filterByValueMessage = wfMessage( 'sd_browsedata_filterbyvalue' )->text();
+		$results = [];
 		foreach ( $possibleValues as $value ) {
 			$num_results = $value->count();
-			if ( $num_printed_values++ > 0 ) {
-				$results_line .= "<span class=\"sep\"> · </span>";
-			}
-			$filter_text = Utils::escapeString( Utils::getNiceFilterValue( $f->propertyType(),
-				$value->displayValue() ) );
-			$filter_text .= "&nbsp;($num_results)";
-			$filter_url = $cur_url . urlencode( str_replace( ' ', '_', $f->name() ) ) . '=' . urlencode( str_replace( ' ', '_', $value->value() ) );
-			$styleAttribute = "";
+			$filter_text_escaped = Utils::escapeString(
+				Utils::getNiceFilterValue( $f->propertyType(), $value->displayValue() )
+			) . "&nbsp;($num_results)";
+			$or_fv = AppliedFilterValue::create( $value->value(), $f );
+			$af_clone->values = [ $or_fv ];
+			$filter_url = $this->getUrl( $this->query->category(), $filters_for_url, $this->query->subcategory() );
+			$linkAttribs = [
+				'href' => $filter_url,
+				'title' => $filterByValueMessage,
+			];
 			if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 				if ( $lowest_num_results != $highest_num_results ) {
 					$font_size = round( ( ( log( $num_results ) - log( $lowest_num_results ) ) * $scale_factor ) + $sdgFiltersSmallestFontSize );
 				} else {
 					$font_size = ( $sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize ) / 2;
 				}
-				$styleAttribute = " style=\"font-size: ${font_size}px;\"";
+				$linkAttribs['style'] = "font-size: ${font_size}px;";
 			}
-			$results_line .=
-				"<span class=\"drilldown-filter-value\"><a href=\"$filter_url\" title=\"$filterByValueMessage\"$styleAttribute>$filter_text</a></span>";
+			$link = Html::rawElement( 'a', $linkAttribs, $filter_text_escaped );
+			$results[] = '<span class="drilldown-filter-value">' . $link . '</span>';
 		}
-		return $results_line;
+		return implode( '<span class="sep"> · </span>', $results );
 	}
 
 	private function getNumberRanges( $filter_name, PossibleFilterValues $possibleValues ): string {
+		$filter_name = str_replace( ' ', '_', $filter_name );
 		// We generate $cur_url here, instead of passing it in, because
 		// if there's a previous value for this filter it may be
 		// removed.
@@ -303,32 +311,27 @@ END;
 		// Put into numerical order.
 		sort( $numberArray );
 
-		$text = '';
+		$results = [];
 		$filterValues = NumberUtils::generateFilterValuesFromNumbers( $numberArray );
+		$filter_name_encoded = urlencode( $filter_name );
 		foreach ( $filterValues as $i => $curBucket ) {
-			if ( $i > 0 ) {
-				$text .= " &middot; ";
-			}
 			// number_format() adds in commas for each thousands place.
 			$curText = number_format( $curBucket['lowerNumber'] );
 			if ( $curBucket['higherNumber'] != null ) {
 				$curText .= ' - ' . number_format( $curBucket['higherNumber'] );
 			}
-			$curText .= ' (' . $curBucket['numValues'] . ') ';
-			$filterURL = $cur_url . "$filter_name=" . $curBucket['lowerNumber'];
+			$curText .= '&nbsp;(' . $curBucket['numValues'] . ')';
+			$filterURL = $cur_url . "$filter_name_encoded=" . $curBucket['lowerNumber'];
 			if ( $curBucket['higherNumber'] != null ) {
 				$filterURL .= '-' . $curBucket['higherNumber'];
 			}
-			$text .= '<a href="' . $filterURL . '">' . $curText . '</a>';
+			$results[] = Html::rawElement( 'a', [ 'href' => $filterURL ], $curText );
 		}
-		return $text;
+		return implode( '<span class="sep"> · </span>', $results );
 	}
 
-	private function getComboBoxInput( $filter_name, $instance_num, PossibleFilterValues $possibleValues, $cur_value = null ): string {
+	private function getComboBoxInput( $filter_name, $instance_num, PossibleFilterValues $possibleValues, ?AppliedFilter $af = null ): string {
 		$filter_name = str_replace( ' ', '_', $filter_name );
-		// URL-decode the filter name - necessary if it contains
-		// any non-Latin characters.
-		$filter_name = urldecode( $filter_name );
 
 		// Add on the instance number, since it can be one of a string
 		// of values.
@@ -338,50 +341,69 @@ END;
 
 		$filter_url = $this->getUrl( $this->query->category(), $this->query->appliedFilters(), $this->query->subcategory() );
 
-		$text = <<< END
-<form method="get" action="$filter_url">
-END;
-
+		$hiddenHtmlArray = [];
 		foreach ( $this->request->getValues() as $key => $val ) {
-			if ( $key != $inputName ) {
+			if ( $key !== $inputName && $key !== 'title' ) {
 				if ( is_array( $val ) ) {
 					foreach ( $val as $i => $realVal ) {
 						$keyString = $key . '[' . $i . ']';
-						$text .= Html::hidden( $keyString, $realVal );
+						$hiddenHtmlArray[] = Html::hidden( $keyString, $realVal );
 					}
 				} else {
-					$text .= Html::hidden( $key, $val );
+					$hiddenHtmlArray[] = Html::hidden( $key, $val );
 				}
 			}
 		}
 
-		$text .= <<< END
-	<div class="ui-widget">
-		<select class="semanticDrilldownCombobox" name="$cur_value">
-			<option value="$inputName"></option>;
-END;
-		foreach ( $possibleValues as $value ) {
-			if ( $value->value() != '_other' && $value->value() != '_none' ) {
-				$text .= Html::element(
-					'option',
-					[ 'value' => str_replace( '_', ' ', $value->value() ) ],
-					$value->displayValue() );
+		$filter_values = [];
+		if ( $af ) {
+			foreach ( $af->values as $fv ) {
+				$filter_values[] = $fv->text;
 			}
 		}
 
-		$text .= <<<END
-		</select>
-	</div>
-END;
+		$optionsHtmlArray = [];
+		foreach ( $possibleValues as $value ) {
+			$vv = str_replace( '_', ' ', $value->value() );
+			if ( $vv != '_other' && $vv != '_none' ) {
+				$attribs = [ 'value' => $vv ];
+				if ( $filter_values && in_array( $vv, $filter_values ) ) {
+					$attribs[] = 'disabled';
+				}
+				$optionsHtmlArray[] = Html::element( 'option', $attribs, $value->displayValue() );
+			}
+		}
 
-		$text .= Html::input(
+		$selectHtml = Html::rawElement(
+			'select',
+			[
+				'class' => 'semanticDrilldownCombobox',
+				'style' => 'display: none;',
+				'data-mw-filter-name' => $filter_name,
+				'data-mw-input-name' => $inputName,
+			],
+			implode( "\n", $optionsHtmlArray )
+		);
+
+		$widgetHtml = Html::rawElement( 'div', [ 'class' => 'ui-widget' ], $selectHtml );
+
+		$submitHtml = Html::input(
 			null,
 			wfMessage( 'sd_browsedata_search' )->text(),
 			'submit',
 			[ 'style' => 'margin: 4px 0 8px 0;' ]
 		);
-		$text .= "</form>";
-		return $text;
+
+		$formHtml = Html::rawElement(
+			'form',
+			[
+				'method' => 'get',
+				'action' => $filter_url,
+			],
+			implode( "\n", $hiddenHtmlArray ) . "\n" . $widgetHtml . "\n" . $submitHtml
+		);
+
+		return $formHtml;
 	}
 
 	private function getDateInput( $input_name, $cur_value = null ): string {
@@ -396,6 +418,7 @@ END;
 	}
 
 	private function getDateRangeInput( $filter_name, $dateRange ): string {
+		$filter_name = str_replace( ' ', '_', $filter_name );
 		[ $lower_date, $upper_date ] = $dateRange;
 		$start_label = wfMessage( 'sd_browsedata_daterangestart' )->text();
 		$end_label = wfMessage( 'sd_browsedata_daterangeend' )->text();
@@ -432,30 +455,27 @@ END;
 	 * Print the line showing 'AND' values for a filter that has not
 	 * been applied to the drilldown
 	 */
-	private function getUnappliedFilterLine( Filter $f ): string {
+	private function getUnappliedFilterLine( Filter $f, ?AppliedFilter $af = null ): string {
 		global $sdgMinValuesForComboBox;
 		global $sdgHideFiltersWithoutValues;
 
 		$possibleValues = $this->getPossibleValues( $f );
 
-		$filter_name = urlencode( str_replace( ' ', '_', $f->name() ) );
 		$normal_filter = true;
 		if ( $possibleValues->count() == 0 ) {
 			$results_line = '(' . wfMessage( 'sd_browsedata_novalues' )->text() . ')';
 		} elseif ( $f->propertyType() == 'number' ) {
-			$results_line = $this->getNumberRanges( $filter_name, $possibleValues );
+			$results_line = $this->getNumberRanges( $f->name(), $possibleValues );
 		} elseif ( $possibleValues->count() >= $sdgMinValuesForComboBox ) {
-			$results_line = $this->getComboBoxInput( $filter_name, 0, $possibleValues );
+			$results_line = $this->getComboBoxInput( $f->name(), 0, $possibleValues );
 			$normal_filter = false;
 		} else {
-			$cur_url = $this->getUrl( $this->query->category(), $this->query->appliedFilters(), $this->query->subcategory(), $f->name() );
-			$cur_url .= ( strpos( $cur_url, '?' ) ) ? '&' : '?';
-			$results_line = $this->printUnappliedFilterValues( $cur_url, $f, $possibleValues );
+			$results_line = $this->printUnappliedFilterValues( $f, $possibleValues, $af );
 		}
 
 		// For dates additionally add two datepicker inputs (Start/End) to select a custom interval.
 		if ( $f->propertyType() == 'date' && $possibleValues->count() != 0 ) {
-			$results_line .= '<br>' . $this->getDateRangeInput( $filter_name, $possibleValues->dateRange() );
+			$results_line .= '<br>' . $this->getDateRangeInput( $f->name(), $possibleValues->dateRange() );
 		}
 
 		$text = $this->getFilterLine( $f->name(), false, $normal_filter, $results_line, $f );
