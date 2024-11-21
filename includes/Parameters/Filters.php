@@ -41,7 +41,7 @@ class Filters extends Parameter implements IteratorAggregate {
 
 	public function getIterator(): Generator {
 		foreach ( $this->filters as $name => $settings ) {
-			$value = fn( $key ) => array_key_exists( $key, $settings ) ? $settings[ $key ] : null;
+			$value = fn ( $key ) => array_key_exists( $key, $settings ) ? $settings[ $key ] : null;
 			yield new Filter( $name,
 				$value( 'property' ),
 				$value( 'category' ),

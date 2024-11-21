@@ -95,6 +95,8 @@ END;
 	/**
 	 * Gets the number of pages matching both the currently-selected
 	 * set of filters and either a new subcategory or a new filter.
+	 *
+	 * @return array
 	 */
 	public function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
 		$sql = "SELECT COUNT(DISTINCT sdv.id) ";
@@ -158,6 +160,8 @@ END;
 	/**
 	 * Returns the list of categories that will show up in the
 	 * header/sidebar of the 'BrowseData' special page.
+	 *
+	 * @return array
 	 */
 	public function getCategoriesForBrowsing() {
 		global $sdgHideCategoriesByDefault;
@@ -172,6 +176,8 @@ END;
 	/**
 	 * Gets the list of names of only those categories in the wiki
 	 * that have a __SHOWINDRILLDOWN__ declaration on their page.
+	 *
+	 * @return array
 	 */
 	private function getOnlyExplicitlyShownCategories() {
 		$shown_cats = [];
@@ -201,6 +207,8 @@ END;
 	 * children of some other category - this list additionally includes,
 	 * and excludes, categories that are manually set with
 	 * 'SHOWINDRILLDOWN' and 'HIDEFROMDRILLDOWN', respectively.
+	 *
+	 * @return array
 	 */
 	public function getTopLevelCategories() {
 		$categories = [];
