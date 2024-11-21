@@ -251,54 +251,66 @@ class AppliedFilter {
 		$revision_table_name = $dbr->tableName( 'revision' );
 		$page_props_table_name = $dbr->tableName( 'page_props' );
 		$category = $dbr->addQuotes( $category );
+
 		if ( $this->filter->propertyType() != 'date' ) {
 			$value_field = PropertyTypeDbInfo::valueField( $this->filter->propertyType() );
 		} else {
-			// Is this necessary?
 			$date_field = PropertyTypeDbInfo::dateField( $this->filter->propertyType() );
-			// check if the array can be used instead of list
-			// [ $yearValue, $monthValue, $dayValue ] = SqlProvider::getDateFunctions( $date_field );
 			list( $yearValue, $monthValue, $dayValue ) = SqlProvider::getDateFunctions( $date_field );
+
 			if ( $this->filter->timePeriod() == 'day' ) {
 				$value_field = "$yearValue, $monthValue, $dayValue";
 			} elseif ( $this->filter->timePeriod() == 'month' ) {
 				$value_field = "$yearValue, $monthValue";
-			} elseif ( $this->filter->timePeriod() == 'year' ) {
-				$value_field = $yearValue;
-			} else {
-				// if ( $this->filter->timePeriod() == 'year range' ) {
+			} else { // 'year' or 'year range'
 				$value_field = $yearValue;
 			}
 		}
+
 		$displaytitle = $this->filter->propertyType() === 'page' ? 'displaytitle.pp_value' : 'null';
 		$smw_ids = $dbr->tableName( Utils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
 		$cat_ns = NS_CATEGORY;
-		$sql = "SELECT $value_field as value, $displaytitle as displayTitle
-	FROM $property_table_name p
-	JOIN $smw_ids p_ids ON p.p_id = p_ids.smw_id\n";
+
+		// Construct SQL query
+		$sql = "SELECT $value_field AS value, $displaytitle AS displayTitle
+				FROM $property_table_name p
+				JOIN $smw_ids p_ids ON p.p_id = p_ids.smw_id\n";
+
 		if ( $this->filter->propertyType() === 'page' ) {
-			$sql .= <<<END
-	JOIN $smw_ids o_ids ON p.o_id = o_ids.smw_id
-	LEFT JOIN $revision_table_name ON $revision_table_name.rev_id = o_ids.smw_rev
-	LEFT JOIN $page_props_table_name displaytitle ON $revision_table_name.rev_page = displaytitle.pp_page AND displaytitle.pp_propname = 'displaytitle'
-END;
+			$sql .= <<<SQL
+				JOIN $smw_ids o_ids ON p.o_id = o_ids.smw_id
+				LEFT JOIN $revision_table_name ON $revision_table_name.rev_id = o_ids.smw_rev
+				LEFT JOIN $page_props_table_name displaytitle ON $revision_table_name.rev_page = displaytitle.pp_page 
+					AND displaytitle.pp_propname = 'displaytitle'
+				SQL;
 		}
-		$sql .= "	JOIN $smwCategoryInstances insts ON p.s_id = insts.s_id
-	JOIN $smw_ids cat_ids ON insts.o_id = cat_ids.smw_id
-	WHERE p_ids.smw_title = $property_value
-	AND cat_ids.smw_namespace = $cat_ns
-	AND cat_ids.smw_title = $category
-	GROUP BY $value_field
-	ORDER BY $value_field";
-		$res = $dbr->select( $sql );
+
+		$sql .= <<<SQL
+				JOIN $smwCategoryInstances insts ON p.s_id = insts.s_id
+				JOIN $smw_ids cat_ids ON insts.o_id = cat_ids.smw_id
+				WHERE p_ids.smw_title = $property_value
+					AND cat_ids.smw_namespace = $cat_ns
+					AND cat_ids.smw_title = $category
+				GROUP BY $value_field
+				ORDER BY $value_field
+				SQL;
+
+		// Execute query
+		$res = $dbr->query( $sql, __METHOD__ );
+
 		while ( $row = $res->fetchRow() ) {
 			if ( $this->filter->propertyType() == 'date' && $this->filter->timePeriod() == 'month' ) {
 				$value_string = Utils::monthToString( $row[1] ) . " " . $row['value'];
 			} else {
 				$value_string = str_replace( '_', ' ', $row['value'] );
 			}
-			$possible_values[] = new PossibleFilterValue( $value_string, null, htmlspecialchars_decode( $row['displayTitle'] ) );
+
+			$possible_values[] = new PossibleFilterValue(
+				$value_string,
+				null,
+				htmlspecialchars_decode( $row['displayTitle'] )
+			);
 		}
 		return new PossibleFilterValues( $possible_values );
 	}
