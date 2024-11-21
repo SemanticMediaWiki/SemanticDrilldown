@@ -262,7 +262,7 @@ class AppliedFilter {
 				$value_field = "$yearValue, $monthValue, $dayValue";
 			} elseif ( $this->filter->timePeriod() == 'month' ) {
 				$value_field = "$yearValue, $monthValue";
-			} else { // 'year' or 'year range'
+			} else {
 				$value_field = $yearValue;
 			}
 		}
