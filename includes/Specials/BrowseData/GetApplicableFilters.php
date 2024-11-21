@@ -434,7 +434,7 @@ END;
 	 */
 	private function getUnappliedFilterLine( Filter $f ): string {
 		global $sdgMinValuesForComboBox;
-		global $wgSdgHideFiltersWithoutValues;
+		global $sdgHideFiltersWithoutValues;
 
 		$possibleValues = $this->getPossibleValues( $f );
 
@@ -460,7 +460,7 @@ END;
 
 		$text = $this->getFilterLine( $f->name(), false, $normal_filter, $results_line, $f );
 
-		if ( $wgSdgHideFiltersWithoutValues && $possibleValues->count() === 0 ) {
+		if ( $sdgHideFiltersWithoutValues && $possibleValues->count() === 0 ) {
 			$text = '';
 		}
 

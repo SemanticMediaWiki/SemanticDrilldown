@@ -114,7 +114,7 @@
 	],
 	"settings": {
 		"wgLang": "en",
-		"wgSdgResultFormatTypes": {
+		"sdgResultFormatTypes": {
 			"ul": "unpaged",
 			"ol": "paged",
 			"some-unsupported-format": "unsupported"
