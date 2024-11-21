@@ -7,7 +7,8 @@
 			"Maikking",
 			"Maire",
 			"Sp5uhe",
-			"ToSter"
+			"ToSter",
+			"WaldiSt"
 		]
 	},
 	"semanticdrilldown-desc": "Interfejs umożliwiający zgłębianie danych semantycznych",
@@ -35,5 +36,6 @@
 	"sd_createfilter_usecategoryvalues": "Użyj wartości dla filtru z kategorii",
 	"sd_createfilter_requirefilter": "Wymagaj użycia innego filtru przed tym",
 	"sd-pageschemas-filter": "Filtr",
-	"sd-pageschemas-values": "Wartości"
+	"sd-pageschemas-values": "Wartości",
+	"sd_browsedata_search": "Szukaj"
 }
