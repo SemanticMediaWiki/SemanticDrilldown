@@ -15,12 +15,48 @@ use SD\Sql\SqlProvider;
  */
 
 class AppliedFilter {
+
+	/**
+	 * filter value
+	 *
+	 * @var Filter
+	 */
 	public Filter $filter;
+	/**
+	 * array of values
+	 *
+	 * @var array
+	 */
 	public $values = [];
+	/**
+	 * search terms value
+	 *
+	 * @var string
+	 */
 	public $search_terms;
+	/**
+	 * lower date value
+	 *
+	 * @var DateTime|null
+	 */
 	public $lower_date;
+	/**
+	 * upper date value
+	 *
+	 * @var DateTime|null
+	 */
 	public $upper_date;
+	/**
+	 * search terms value
+	 *
+	 * @var string
+	 */
 	public $lower_date_string;
+	/**
+	 * search terms value
+	 *
+	 * @var string
+	 */
 	public $upper_date_string;
 
 	public static function create( Filter $filter, $values, $search_terms = null, $lower_date = null, $upper_date = null ) {
@@ -84,6 +120,8 @@ class AppliedFilter {
 	/**
 	 * Convert value of datepicker field (e.g. "1760-11-23") into a human-readable representation
 	 * (e.g. "June 15, 2000").
+	 *
+	 * @return string formatted date
 	 */
 	protected function lowerOrUpperDateToString( $date ) {
 		$ts = sprintf( '%04d%02d%02d000000', $date['year'], $date['month'], $date['day'] );
@@ -93,6 +131,8 @@ class AppliedFilter {
 	/**
 	 * Convert value of datepicker field (e.g. "1760-11-23") into value usable in SQL queries.
 	 * (e.g. DATE(...)).
+	 *
+	 * @return string formatted date
 	 */
 	protected function lowerOrUpperDateToSql( $date ) {
 		return "DATE('" . $date['year'] . "-" . $date['month'] . "-" . $date['day'] . "')";
@@ -101,6 +141,8 @@ class AppliedFilter {
 	/**
 	 * Returns a string that adds a check for this filter/value
 	 * combination to an SQL "WHERE" clause.
+	 *
+	 * @return string
 	 */
 	public function checkSQL( $value_field ) {
 		global $wgDBtype;
@@ -168,6 +210,8 @@ class AppliedFilter {
 					$sql .= "$value_field < {$fv->upper_limit} ";
 				}
 			} elseif ( $this->filter->propertyType() == 'date' ) {
+				// check if the array can be used instead of list
+				// [ $yearValue, $monthValue, $dayValue ] = SqlProvider::getDateFunctions( $value_field );
 				list( $yearValue, $monthValue, $dayValue ) = SqlProvider::getDateFunctions( $value_field );
 				if ( $fv->time_period == 'day' ) {
 					$sql .= "$yearValue = {$fv->year} AND $monthValue = {$fv->month} AND $dayValue = {$fv->day} ";
@@ -175,7 +219,8 @@ class AppliedFilter {
 					$sql .= "$yearValue = {$fv->year} AND $monthValue = {$fv->month} ";
 				} elseif ( $fv->time_period == 'year' ) {
 					$sql .= "$yearValue = {$fv->year} ";
-				} else { // if ( $fv->time_period == 'year range' ) {
+				} else {
+					// if ( $fv->time_period == 'year range' ) {
 					$sql .= "$yearValue >= {$fv->year} AND $yearValue <= {$fv->end_year} ";
 				}
 			} else {
@@ -206,51 +251,66 @@ class AppliedFilter {
 		$revision_table_name = $dbr->tableName( 'revision' );
 		$page_props_table_name = $dbr->tableName( 'page_props' );
 		$category = $dbr->addQuotes( $category );
+
 		if ( $this->filter->propertyType() != 'date' ) {
 			$value_field = PropertyTypeDbInfo::valueField( $this->filter->propertyType() );
 		} else {
-			// Is this necessary?
 			$date_field = PropertyTypeDbInfo::dateField( $this->filter->propertyType() );
 			list( $yearValue, $monthValue, $dayValue ) = SqlProvider::getDateFunctions( $date_field );
+
 			if ( $this->filter->timePeriod() == 'day' ) {
 				$value_field = "$yearValue, $monthValue, $dayValue";
 			} elseif ( $this->filter->timePeriod() == 'month' ) {
 				$value_field = "$yearValue, $monthValue";
-			} elseif ( $this->filter->timePeriod() == 'year' ) {
-				$value_field = $yearValue;
-			} else { // if ( $this->filter->timePeriod() == 'year range' ) {
+			} else {
 				$value_field = $yearValue;
 			}
 		}
+
 		$displaytitle = $this->filter->propertyType() === 'page' ? 'displaytitle.pp_value' : 'null';
 		$smw_ids = $dbr->tableName( Utils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
 		$cat_ns = NS_CATEGORY;
-		$sql = "SELECT $value_field as value, $displaytitle as displayTitle
-	FROM $property_table_name p
-	JOIN $smw_ids p_ids ON p.p_id = p_ids.smw_id\n";
+
+		// Construct SQL query
+		$sql = "SELECT $value_field AS value, $displaytitle AS displayTitle
+				FROM $property_table_name p
+				JOIN $smw_ids p_ids ON p.p_id = p_ids.smw_id\n";
+
 		if ( $this->filter->propertyType() === 'page' ) {
-			$sql .= <<<END
-	JOIN $smw_ids o_ids ON p.o_id = o_ids.smw_id
-	LEFT JOIN $revision_table_name ON $revision_table_name.rev_id = o_ids.smw_rev
-	LEFT JOIN $page_props_table_name displaytitle ON $revision_table_name.rev_page = displaytitle.pp_page AND displaytitle.pp_propname = 'displaytitle'
-END;
+			$sql .= <<<SQL
+				JOIN $smw_ids o_ids ON p.o_id = o_ids.smw_id
+				LEFT JOIN $revision_table_name ON $revision_table_name.rev_id = o_ids.smw_rev
+				LEFT JOIN $page_props_table_name displaytitle ON $revision_table_name.rev_page = displaytitle.pp_page 
+					AND displaytitle.pp_propname = 'displaytitle'
+				SQL;
 		}
-		$sql .= "	JOIN $smwCategoryInstances insts ON p.s_id = insts.s_id
-	JOIN $smw_ids cat_ids ON insts.o_id = cat_ids.smw_id
-	WHERE p_ids.smw_title = $property_value
-	AND cat_ids.smw_namespace = $cat_ns
-	AND cat_ids.smw_title = $category
-	GROUP BY $value_field
-	ORDER BY $value_field";
-		$res = $dbr->query( $sql );
+
+		$sql .= <<<SQL
+				JOIN $smwCategoryInstances insts ON p.s_id = insts.s_id
+				JOIN $smw_ids cat_ids ON insts.o_id = cat_ids.smw_id
+				WHERE p_ids.smw_title = $property_value
+					AND cat_ids.smw_namespace = $cat_ns
+					AND cat_ids.smw_title = $category
+				GROUP BY $value_field
+				ORDER BY $value_field
+				SQL;
+
+		// Execute query
+		$res = $dbr->query( $sql, __METHOD__ );
+
 		while ( $row = $res->fetchRow() ) {
 			if ( $this->filter->propertyType() == 'date' && $this->filter->timePeriod() == 'month' ) {
 				$value_string = Utils::monthToString( $row[1] ) . " " . $row['value'];
 			} else {
 				$value_string = str_replace( '_', ' ', $row['value'] );
 			}
-			$possible_values[] = new PossibleFilterValue( $value_string, null, htmlspecialchars_decode( $row['displayTitle'] ) );
+
+			$possible_values[] = new PossibleFilterValue(
+				$value_string,
+				null,
+				htmlspecialchars_decode( $row['displayTitle'] )
+			);
 		}
 		return new PossibleFilterValues( $possible_values );
 	}

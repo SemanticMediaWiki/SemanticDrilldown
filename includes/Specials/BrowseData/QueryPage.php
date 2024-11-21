@@ -102,9 +102,9 @@ class QueryPage extends \QueryPage {
 	protected function getPageHeader(): string {
 		$vm = [
 			'displayParametersWithUnknownFormat' =>
-				array_map( fn( $x ) => "$x", $this->displayParametersWithUnknownFormat ),
+				array_map( fn ( $x ) => "$x", $this->displayParametersWithUnknownFormat ),
 			'displayParametersWithUnsupportedFormat' =>
-				array_map( fn( $x ) => "$x", $this->displayParametersWithUnsupportedFormat ),
+				array_map( fn ( $x ) => "$x", $this->displayParametersWithUnsupportedFormat ),
 			'header' => $this->getPageContent( $this->getOutput(), $this->headerPage ),
 		];
 
@@ -149,7 +149,7 @@ class QueryPage extends \QueryPage {
 				'insts' => [
 					'JOIN',
 					[
-						'ids.smw_id = insts.s_id' ,
+						'ids.smw_id = insts.s_id',
 						'ids.smw_namespace != ' . $cat_ns
 					]
 				]

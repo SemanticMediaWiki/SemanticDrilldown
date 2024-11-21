@@ -5,16 +5,12 @@
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingDocumentationPrivate" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingDocumentationProtected" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingParamTag" />
-		<exclude name="MediaWiki.Commenting.FunctionComment.MissingReturn" />
-		<exclude name="MediaWiki.Commenting.PropertyDocumentation.MissingDocumentationPublic" />
 		<exclude name="MediaWiki.Commenting.PropertyDocumentation.MissingDocumentationPrivate" />
-		<exclude name="MediaWiki.Commenting.PropertyDocumentation.MissingVar" />
-		<exclude name="MediaWiki.ControlStructures.AssignmentInControlStructures.AssignmentInControlStructures" />
-		<exclude name="MediaWiki.Usage.DbrQueryUsage.DbrQueryFound" />
 		<exclude name="MediaWiki.Usage.ExtendClassUsage.FunctionConfigUsage" />
-		<exclude name="MediaWiki.Usage.ExtendClassUsage.FunctionVarUsage" />
-		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment" />
+		<exclude name="Generic.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition" />
+		<exclude name="Universal.Lists.DisallowLongListSyntax.Found" />
 		<exclude name="MediaWiki.NamingConventions.ValidGlobalName.allowedPrefix" />
+		<exclude name="MediaWiki.Usage.DbrQueryUsage.DbrQueryFound" />
 	</rule>
 	<rule ref="Generic.Files.LineLength">
 		<properties>

@@ -10,15 +10,65 @@ namespace SD;
  */
 
 class AppliedFilterValue {
+	/**
+	 * The text.
+	 *
+	 * @var string
+	 */
 	public $text;
+	/**
+	 * is none value
+	 *
+	 * @var bool
+	 */
 	public $is_none = false;
+	/**
+	 * is other value
+	 *
+	 * @var bool
+	 */
 	public $is_other = false;
+	/**
+	 * is numeric value
+	 *
+	 * @var bool
+	 */
 	public $is_numeric = false;
+	/**
+	 * lower limit value
+	 *
+	 * @var string
+	 */
 	public $lower_limit = null;
+	/**
+	 * upper limit value
+	 *
+	 * @var string
+	 */
 	public $upper_limit = null;
+	/**
+	 * year value
+	 *
+	 * @var string
+	 */
 	public $year = null;
+	/**
+	 * month value
+	 *
+	 * @var string
+	 */
 	public $month = null;
+	/**
+	 * day value
+	 *
+	 * @var string
+	 */
 	public $day = null;
+	/**
+	 * end year value
+	 *
+	 * @var string
+	 */
 	public $end_year = null;
 
 	public static function create( $actual_val, Filter $filter = null ) {
@@ -45,12 +95,16 @@ class AppliedFilterValue {
 			} else {
 				$date_parts = explode( ' ', $fv->text );
 				if ( count( $date_parts ) == 3 ) {
+					// check if array can be used instead of list
+					// [ $month_str, $day_str, $year ] = explode( ' ', $fv->text );
 					list( $month_str, $day_str, $year ) = explode( ' ', $fv->text );
 					$fv->month = Utils::stringToMonth( $month_str );
 					$fv->day = str_replace( ',', '', $day_str );
 					$fv->year = $year;
 					$fv->time_period = 'day';
 				} elseif ( count( $date_parts ) == 2 ) {
+					// check if array can be used instead of list
+					// [ $month_str, $year ] = explode( ' ', $fv->text );
 					list( $month_str, $year ) = explode( ' ', $fv->text );
 					$fv->month = Utils::stringToMonth( $month_str );
 					$fv->year = $year;
@@ -94,6 +148,8 @@ class AppliedFilterValue {
 
 	/**
 	 * Used in sorting, when BrowseDataPage creates a new URL.
+	 *
+	 * @return int
 	 */
 	public static function compare( $fv1, $fv2 ) {
 		if ( $fv1->is_none ) {
