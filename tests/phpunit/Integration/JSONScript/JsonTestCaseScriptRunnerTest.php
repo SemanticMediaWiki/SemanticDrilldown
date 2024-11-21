@@ -2,9 +2,9 @@
 
 namespace SD\Tests\Integration\JSONScript;
 
-use SMW\Tests\Integration\JSONScript\JSONScriptTestCaseRunnerTest;
 use MediaWiki\MediaWikiServices;
 use SD\Services;
+use SMW\Tests\Integration\JSONScript\JSONScriptTestCaseRunnerTest;
 
 /**
  * @group SD
