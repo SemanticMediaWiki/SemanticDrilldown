@@ -28,6 +28,7 @@ class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
 		return array_merge( parent::getPermittedSettings(), [
 			"wgRestrictDisplayTitle",
 			"sdgHideCategoriesByDefault",
+			"sdgHideFiltersWithoutValues",
 			"sdgMinValuesForComboBox",
 			"sdgResultFormatTypes"
 		] );

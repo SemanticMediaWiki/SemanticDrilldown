@@ -1,0 +1,45 @@
+{
+    "description": "filters",
+    "setup": [
+        {
+            "namespace": "SMW_NS_PROPERTY",
+            "page": "SomePropertyWithValues",
+            "contents": "[[Has type::Text]]"
+        },
+        {
+            "namespace": "NS_CATEGORY",
+            "page": "SomeCategory",
+            "contents": "{{#drilldowninfo: filters=With Values (property=SomePropertyWithValues),Without Values (property=SomePropertyWithoutValues)|display parameters=format=list}}"
+        },
+        {
+            "page": "Page1",
+            "contents": "[[Category:SomeCategory]]{{#set: SomePropertyWithValues=A,B,C,D|+sep=,}}"
+        }
+    ],
+    "tests": [
+        {
+            "type": "special",
+            "about": "sdgHideFiltersWithoutValues=false",
+            "special-page": {
+                "page": "BrowseData",
+                "query-parameters": "SomeCategory",
+                "request-parameters": {}
+            },
+            "assert-output": {
+                "to-contain": [
+                    "Without Values:",
+                    "(There are no values for this filter)"
+                ]
+            }
+        }
+    ],
+    "settings": {
+        "wgLang": "en",
+        "sdgHideFiltersWithoutValues": false
+    },
+    "meta": {
+        "version": "2",
+        "is-incomplete": false,
+        "debug": false
+    }
+}
