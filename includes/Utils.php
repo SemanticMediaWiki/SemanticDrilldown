@@ -222,7 +222,7 @@ class Utils {
 	 * @return string
 	 */
 	public static function escapeString( $val ) {
-		return htmlspecialchars( $val, ENT_QUOTES, 'UTF-8' );
+		return htmlspecialchars( $val ?? '', ENT_QUOTES, 'UTF-8' );
 	}
 
 	/**

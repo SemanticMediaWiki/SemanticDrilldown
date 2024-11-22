@@ -270,7 +270,7 @@ END;
 			if ( $value_string === '' ) {
 				continue;
 			}
-			$possible_values[] = new PossibleFilterValue( $value_string, $row['count'], htmlspecialchars_decode( $row['displayTitle'] ) );
+			$possible_values[] = new PossibleFilterValue( $value_string, $row['count'], htmlspecialchars_decode( $row['displayTitle'] ?? '' ) );
 		}
 
 		return new PossibleFilterValues( $possible_values );

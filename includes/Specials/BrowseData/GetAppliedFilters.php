@@ -94,7 +94,7 @@ class GetAppliedFilters {
 		if ( $propertyType === 'page' ) {
 			$title = Title::newFromText( $value );
 			$displayTitle = $this->pageProps->getProperties( $title, 'displaytitle' );
-			$value = $displayTitle === [] ? $value : htmlspecialchars_decode( array_values( $displayTitle )[0] );
+			$value = $displayTitle === [] ? $value : htmlspecialchars_decode( array_values( $displayTitle )[0] ?? '' );
 		}
 
 		return Utils::getNiceFilterValue( $propertyType, $value );

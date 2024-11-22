@@ -97,7 +97,7 @@ class AppliedFilter {
 	 * @phan-return array{year:int,month:int,day:int}|null
 	 */
 	protected function parseUpperOrLowerDate( $raw_date, $is_upper ) {
-		$parts = array_filter( array_map( 'intval', explode( '-', $raw_date ) ) );
+		$parts = array_filter( array_map( 'intval', explode( '-', $raw_date ?? '' ) ) );
 		if ( !$parts ) {
 			return null;
 		}
@@ -309,7 +309,7 @@ class AppliedFilter {
 			$possible_values[] = new PossibleFilterValue(
 				$value_string,
 				null,
-				htmlspecialchars_decode( $row['displayTitle'] )
+				htmlspecialchars_decode( $row['displayTitle'] ?? '' )
 			);
 		}
 		return new PossibleFilterValues( $possible_values );

@@ -61,7 +61,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 
 		// get information on current category, subcategory and filters
 		// that have already been applied from the query string
-		$category = str_replace( '_', ' ', $request->getVal( '_cat' ) );
+		$category = str_replace( '_', ' ', $request->getVal( '_cat' ) ?? '' );
 		// if query string did not contain this variables, try the URL
 		if ( !$category ) {
 			$queryparts = explode( '/', $query, 1 );
