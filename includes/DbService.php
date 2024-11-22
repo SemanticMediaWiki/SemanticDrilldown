@@ -56,7 +56,7 @@ class DbService {
 	 * both for speeding up later queries (at least, that's the hope)
 	 * and for getting the set of 'None' values.
 	 */
-	public function createFilterValuesTempTable( $propertyType, $escaped_property ) {
+	public function createFilterValuesTempTable( $propertyType, $escaped_property, $propKey ) {
 		$smw_ids = $this->dbr->tableName( Utils::getIDsTableName() );
 
 		$valuesTable = $this->dbr->tableName( PropertyTypeDbInfo::tableName( $propertyType ) );
@@ -66,7 +66,7 @@ class DbService {
 
 		$sql = <<<END
 	CREATE TEMPORARY TABLE semantic_drilldown_filter_values
-	AS SELECT s_id AS id, $value_field AS value
+	AS SELECT $valuesTable.s_id AS id, $value_field AS value
 	FROM $valuesTable
 	JOIN $smw_ids p_ids ON $valuesTable.p_id = p_ids.smw_id
 
@@ -74,7 +74,11 @@ END;
 		if ( $propertyType === 'page' ) {
 			$sql .= "	JOIN $smw_ids o_ids ON $valuesTable.o_id = o_ids.smw_id\n";
 		}
-		$sql .= "	WHERE p_ids.smw_title = '$query_property'";
+
+		if ( $propertyType === 'monolingual_text' ) {
+			$sql .= "	JOIN smw_fpt_text fpt_text ON $valuesTable.o_id = fpt_text.s_id\n";
+		}
+		$sql .= "	WHERE ( p_ids.smw_title = '$query_property' OR p_ids.smw_title = '$propKey' )";
 
 		$temporaryTableManager = new TemporaryTableManager( $this->dbw );
 		$temporaryTableManager->queryWithAutoCommit( $sql, __METHOD__ );
@@ -154,6 +158,7 @@ END;
 		foreach ( $subcategories as $subcategory ) {
 			$pages = array_merge( $pages, $this->getCategoryChildren( $subcategory, $get_categories, $levels - 1 ) );
 		}
+
 		return $pages;
 	}
 

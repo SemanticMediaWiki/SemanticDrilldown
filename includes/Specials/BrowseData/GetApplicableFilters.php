@@ -468,7 +468,7 @@ END;
 	}
 
 	private function getPossibleValues( Filter $f ): PossibleFilterValues {
-		$this->db->createFilterValuesTempTable( $f->propertyType(), $f->escapedProperty() );
+		$this->db->createFilterValuesTempTable( $f->propertyType(), $f->escapedProperty(), $f->propKey() );
 		if ( empty( $f->allowedValues() ) ) {
 			$possibleFilterValues = $f->propertyType() == 'date'
 				? $f->getTimePeriodValues()

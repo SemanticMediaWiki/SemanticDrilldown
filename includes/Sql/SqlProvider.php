@@ -101,7 +101,8 @@ class SqlProvider {
 			if ( $includes_none ) {
 				$property_table_name = $dbr->tableName(
 					PropertyTypeDbInfo::tableName( $af->filter->propertyType() ) );
-				if ( $af->filter->propertyType() === 'page' ) {
+
+				if ( $af->filter->propertyType() === 'page' || $af->filter->propertyType() === 'monolingual_text' ) {
 					$property_table_nickname = "nr$i";
 					$property_field = 'p_id';
 				} else {
@@ -116,10 +117,12 @@ class SqlProvider {
 				// in SMW where the same page gets two
 				// different SMW IDs.
 
+				$propKey = $af->filter->propKey();
+
 				$sql .= "LEFT OUTER JOIN
 	(SELECT s_id
 	FROM $property_table_name
-	WHERE $property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)) $property_table_nickname
+	WHERE $property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE ( smw_title = '$property_value' OR smw_title = '$propKey' ) AND smw_namespace = $prop_ns)) $property_table_nickname
 	ON ids.smw_id = $property_table_nickname.s_id ";
 			}
 		}
@@ -127,7 +130,8 @@ class SqlProvider {
 			$sql .= "\n	";
 			$property_table_name = $dbr->tableName(
 				PropertyTypeDbInfo::tableName( $af->filter->propertyType() ) );
-			if ( $af->filter->propertyType() === 'page' ) {
+
+			if ( $af->filter->propertyType() === 'page' || $af->filter->propertyType() === 'monolingual_text' ) {
 				if ( $includes_none ) {
 					$sql .= "LEFT OUTER ";
 				}
@@ -136,6 +140,11 @@ class SqlProvider {
 					$sql .= "LEFT OUTER ";
 				}
 				$sql .= "JOIN $smwIDs o_ids$i ON r$i.o_id = o_ids$i.smw_id ";
+
+				if ( $af->filter->propertyType() === 'monolingual_text' ) {
+					$sql .= "JOIN smw_fpt_text fpt_text$i ON r$i.o_id = fpt_text$i.s_id ";
+				}
+
 			} else {
 				$sql .= "JOIN $property_table_name a$i ON ids.smw_id = a$i.s_id ";
 			}
@@ -155,19 +164,30 @@ class SqlProvider {
 		}
 		$sql .= ")) ";
 		foreach ( $applied_filters as $i => $af ) {
+			$propKey = $af->filter->propKey();
 			$property_value = $af->filter->escapedProperty();
 			$value_field = PropertyTypeDbInfo::valueField( $af->filter->propertyType() );
+
 			if ( $af->filter->propertyType() === 'page' ) {
 				$property_field = "r$i.p_id";
-				$sql .= "\n	AND ($property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)";
+				$sql .= "\n	AND ($property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE ( smw_title = '$property_value' OR smw_title = '$propKey' ) AND smw_namespace = $prop_ns)";
 				if ( $includes_none ) {
 					$sql .= " OR $property_field IS NULL";
 				}
 				$sql .= ")\n	AND ";
 				$value_field = "o_ids$i.smw_title";
+			} elseif ( $af->filter->propertyType() === 'monolingual_text' ) {
+				$property_field = "r$i.p_id";
+				$sql .= "\n	AND $property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE ( smw_title = '$property_value' OR smw_title = '$propKey' ) AND smw_namespace = $prop_ns) AND ";
+				if ( strncmp( $value_field, '(IF(o_blob IS NULL', 18 ) === 0 ) {
+					$value_field = str_replace( 'o_', "fpt_text$i.o_", $value_field );
+				} else {
+					$value_field = "fpt_text$i.$value_field";
+				}
+
 			} else {
 				$property_field = "a$i.p_id";
-				$sql .= "\n	AND $property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
+				$sql .= "\n	AND $property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE ( smw_title = '$property_value' OR smw_title = '$propKey' ) AND smw_namespace = $prop_ns) AND ";
 				if ( strncmp( $value_field, '(IF(o_blob IS NULL', 18 ) === 0 ) {
 					$value_field = str_replace( 'o_', "a$i.o_", $value_field );
 				} else {
@@ -176,6 +196,7 @@ class SqlProvider {
 			}
 			$sql .= $af->checkSQL( $value_field );
 		}
+
 		return $sql;
 	}
 

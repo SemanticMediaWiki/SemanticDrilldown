@@ -286,6 +286,13 @@ class AppliedFilter {
 				SQL;
 		}
 
+		if ( $this->filter->propertyType() === 'monolingual_text' ) {
+			$sql .= <<<SQL
+				JOIN $smw_ids o_ids ON p.o_id = o_ids.smw_id
+				JOIN smw_fpt_text fpt_text ON p.o_id = fpt_text.s_id
+				SQL;
+		}
+
 		$sql .= <<<SQL
 				JOIN $smwCategoryInstances insts ON p.s_id = insts.s_id
 				JOIN $smw_ids cat_ids ON insts.o_id = cat_ids.smw_id

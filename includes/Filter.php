@@ -30,6 +30,7 @@ class Filter {
 	 * @var array
 	 */
 	public $possible_applied_filters = [];
+	private $propKey;
 
 	public function __construct(
 		DbService $db,
@@ -93,6 +94,10 @@ class Filter {
 
 	public function escapedProperty() {
 		return SqlProvider::escapedProperty( $this->property() );
+	}
+
+	public function propKey() {
+		return $this->propKey;
 	}
 
 	/**
@@ -254,9 +259,14 @@ END;
 	LEFT JOIN $page_props_table_name displaytitle ON $revision_table_name.rev_page = displaytitle.pp_page AND displaytitle.pp_propname = 'displaytitle'
 END;
 		}
+		if ( $this->propertyType === 'monolingual_text' ) {
+			$sql .= <<<END
+	JOIN smw_fpt_text fpt_text ON p.o_id = fpt_text.s_id
+END;
+		}
 		$sql .= <<<END
 	JOIN $smw_ids p_ids ON p.p_id = p_ids.smw_id
-	WHERE p_ids.smw_title = '$property_value'
+	WHERE ( p_ids.smw_title = '$property_value' OR p_ids.smw_title = '$this->propKey' )
 	AND p_ids.smw_namespace = $prop_ns
 	GROUP BY $value_field
 	ORDER BY $value_field
@@ -340,44 +350,80 @@ END;
 		$store = Utils::getSMWStore();
 		$escapedProperty = $this->escapedProperty();
 		$propPage = new SMWDIWikiPage( $escapedProperty, SMW_NS_PROPERTY, '' );
-		$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
 		$datatypeLabels = Utils::getSMWContLang()->getDatatypeLabels();
-		if ( count( $types ) > 0 ) {
-			if ( $types[0] instanceof SMWDIWikiPage ) {
-				$typeValue = $types[0]->getDBkey();
-			} elseif ( $types[0] instanceof SMWDIURI ) {
-				// A bit inefficient, but it's the
-				// simplest approach.
-				$typeID = $types[0]->getFragment();
-				if ( $typeID == '_str' && !array_key_exists( '_str', $datatypeLabels ) ) {
-					$typeID = '_txt';
+		$property = $this->property();
+
+		// KnownTypeLabels
+		$isKnownLabel = false;
+		$typeValue = null;
+		if ( in_array( $property, $datatypeLabels ) ) {
+			$typeValue = $property;
+			$isKnownLabel = true;
+		} else {
+			$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
+
+			if ( count( $types ) > 0 ) {
+				if ( $types[0] instanceof SMWDIWikiPage ) {
+					$typeValue = $types[0]->getDBkey();
+				} elseif ( $types[0] instanceof SMWDIURI ) {
+					// A bit inefficient, but it's the
+					// simplest approach.
+					$typeID = $types[0]->getFragment();
+					if ( $typeID == '_str' && !array_key_exists( '_str', $datatypeLabels ) ) {
+						$typeID = '_txt';
+					}
+					$typeValue = $datatypeLabels[$typeID];
+				} else {
+					$typeValue = $types[0]->getWikiValue();
 				}
-				$typeValue = $datatypeLabels[$typeID];
-			} else {
-				$typeValue = $types[0]->getWikiValue();
-			}
-			if ( $typeValue == $datatypeLabels['_wpg'] ) {
-				$propertyType = 'page';
-				// _str stopped existing in SMW 1.9
-			} elseif ( array_key_exists( '_str', $datatypeLabels ) && $typeValue == $datatypeLabels['_str'] ) {
-				$propertyType = 'string';
-			} elseif ( !array_key_exists( '_str', $datatypeLabels ) && $typeValue == $datatypeLabels['_txt'] ) {
-				$propertyType = 'string';
-			} elseif ( $typeValue == $datatypeLabels['_num'] ) {
-				$propertyType = 'number';
-			} elseif ( $typeValue == $datatypeLabels['_boo'] ) {
-				$propertyType = 'boolean';
-			} elseif ( $typeValue == $datatypeLabels['_dat'] ) {
-				$propertyType = 'date';
-			} elseif ( $typeValue == $datatypeLabels['_eid'] ) {
-				$propertyType = 'external_id';
-			} else {
-				// This should hopefully never get called.
-				print "Error! Unsupported property type ($typeValue) for filter {$this->name}.";
 			}
 		}
 
-		return $propertyType;
+		$propKey = array_search( $typeValue, $datatypeLabels );
+
+		if ( $propKey === false ) {
+			// This should hopefully never get called.
+			print "Error! Unsupported property type ($typeValue) for filter {$this->name}.";
+			$this->propKey = '_wpg';
+			return $propertyType;
+		}
+
+		// used to retrieve the value of
+		// properties set with the label of a
+		// predefined property, e.g. Email::email@test.com
+		$this->propKey = $propKey;
+
+		// @see https://github.com/SemanticMediaWiki/SemanticDrilldown/pull/62
+		if ( $isKnownLabel && ( $propKey === '_rec' || $propKey === '_keyw' || $propKey === '_ref_rec' ) ) {
+			return $propertyType;
+		}
+
+		// normalize as before
+		$map = [
+			'_wpg' => 'page',
+			'_txt' => 'string',
+			// _str stopped existing in SMW 1.9
+			'_str' => 'string',
+			'_cod' => 'code',
+			'_boo' => 'boolean',
+			'_num' => 'number',
+			'_geo' => 'geographic_coord',
+			'_tem' => 'temperature',
+			'_dat' => 'date',
+			'_ema' => 'email',
+			'_uri' => 'URL',
+			'_anu' => 'annotation_uri',
+			'_tel' => 'telephone_number',
+			'_rec' => 'record',
+			'_qty' => 'quantity',
+			'_mlt_rec' => 'monolingual_text',
+			'_eid' => 'external_id',
+			'_keyw' => 'keyword',
+			'_ref_rec' => 'reference'
+		];
+
+		// propertyType
+		return $map[$propKey];
 	}
 
 }
