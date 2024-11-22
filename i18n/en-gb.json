@@ -6,8 +6,6 @@
 			"Valentine Badu"
 		]
 	},
-	"semanticdrilldown-desc": "A drilldown interface for navigating through semantic data",
-	"specialpages-group-sd_group": "Semantic Drilldown",
 	"browsedata": "Browse data",
 	"sd_browsedata_choosecategory": "Choose a category",
 	"sd_browsedata_viewcategory": "view category",
@@ -16,12 +14,10 @@
 	"sd_browsedata_other": "Other",
 	"sd_browsedata_none": "None",
 	"sd_browsedata_filterbyvalue": "Filter by this value",
-	"sd_browsedata_filterbysubcategory": "Filter by this subcategory",
 	"sd_browsedata_otherfilter": "Show pages with another value for this filter",
 	"sd_browsedata_nonefilter": "Show pages with no value for this filter",
 	"sd_browsedata_or": "or",
 	"sd_browsedata_removefilter": "Remove this filter",
-	"sd_browsedata_removesubcategoryfilter": "Remove this subcategory filter",
 	"sd_browsedata_resetfilters": "Reset filters",
 	"sd_browsedata_addanothervalue": "Click arrow to add another value",
 	"sd_browsedata_daterangestart": "Start:",

@@ -4,6 +4,7 @@ namespace SD;
 
 use Closure;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Page\WikiPageFactory;
 use PageProps;
 use SD\Parameters\LoadParameters;
 use SD\ParserFunctions\DrilldownInfo;
@@ -31,7 +32,7 @@ class Services {
 			self::$instance = new Services();
 		}
 
-		return self::$instance;
+		return new Services();
 	}
 
 	private MediaWikiServices $services;
@@ -48,7 +49,7 @@ class Services {
 	public static function onParserFirstCallInit( $parser ) {
 		foreach ( self::PARSER_FUNCTIONS as $name => $class ) {
 			$parser->setFunctionHook( $name,
-				fn( $parser, ...$params ) => ( new $class( $parser ) )( $params ) );
+				fn ( $parser, ...$params ) => ( new $class( $parser ) )( $params ) );
 		}
 	}
 
@@ -70,11 +71,11 @@ class Services {
 	}
 
 	private function getGetPageSchema(): Closure {
-		return fn( $category ) => class_exists( 'PSSchema' ) ? new \PSSchema( $category ) : null;
+		return fn ( $category ) => class_exists( 'PSSchema' ) ? new \PSSchema( $category ) : null;
 	}
 
 	private function getNewQuery(): Closure {
-		return fn( $category, $subcategory, $filters, $applied_filters, $remaining_filters ) =>
+		return fn ( $category, $subcategory, $filters, $applied_filters, $remaining_filters ) =>
 			new DrilldownQuery( $this->getDbService(),
 				$category, $subcategory, $filters, $applied_filters, $remaining_filters );
 	}
@@ -84,9 +85,10 @@ class Services {
 		// use the global variable instead:
 		global $sdgResultFormatTypes;
 
-		return fn( $context, $parameters, $query, $offset, $limit ) =>
+		$resultFormatTypes = $sdgResultFormatTypes ?? [];
+		return fn ( $context, $parameters, $query, $offset, $limit ) =>
 			new QueryPage(
-				$sdgResultFormatTypes,
+				$resultFormatTypes,
 				$this->getDbService(), $this->getPageProps(), $this->getNewUrlService(),
 				$this->getGetPageFromTitleText(),
 				$context, $parameters, $query, $offset, $limit );
@@ -94,14 +96,14 @@ class Services {
 
 	private function getNewUrlService(): Closure {
         // phpcs:ignore MediaWiki.Usage.AssignmentInReturn.AssignmentInReturn
-		return fn( WebRequest $request, ?DrilldownQuery $query = null ) =>
+		return fn ( WebRequest $request, ?DrilldownQuery $query = null ) =>
 			new UrlService(
 				SpecialPage::getTitleFor( 'BrowseData' )->getLocalURL(), $request, $query );
 	}
 
 	private function getNewFilter(): Closure {
 		// phpcs:ignore MediaWiki.Usage.AssignmentInReturn.AssignmentInReturn
-		return fn( $name, $property, $category, $requiredFilters, $int, $propertyType = null,
+		return fn ( $name, $property, $category, $requiredFilters, $int, $propertyType = null,
 				   $timePeriod = null, $allowedValues = null ) =>
 			new Filter( $this->getDbService(),
 			   $name, $property, $category, $requiredFilters, $int, $propertyType, $timePeriod, $allowedValues );
@@ -112,13 +114,22 @@ class Services {
 	}
 
 	private function getPageProps(): PageProps {
-		return PageProps::getInstance();
+		// MW > 1.35
+		return method_exists( $this->services, 'getPageProps' )
+			? $this->services->getPageProps()
+			: PageProps::getInstance();
 	}
 
 	private function getGetPageFromTitleText(): Closure {
 		return static function ( string $text ) {
 			$title = Title::newFromText( $text );
-			return WikiPage::factory( $title );
+			// use appropriate WikiPage function, factory() is deprecated and not exists in MW 1.42
+			if ( version_compare( MW_VERSION, '1.42', '<' ) ) {
+				return WikiPage::factory( $title );
+			}
+			if ( method_exists( WikiPageFactory::class, 'newFromTitle' ) ) {
+				return MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $title );
+			}
 		};
 	}
 

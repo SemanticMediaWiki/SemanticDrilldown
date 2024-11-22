@@ -1,11 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"Fahimrazick",
 			"Karthi.dr",
 			"Shanmugamp7"
 		]
 	},
-	"sd_browsedata_choosecategory": "ஒரு பகுப்பைத் தேர்ந்தெடுக்கவும்",
+	"sd_browsedata_choosecategory": "ஒரு பகுப்பைத் தெரிவு செய்",
 	"sd_browsedata_viewcategory": "பகுப்பைக் காண்",
 	"sd_browsedata_docu": "உங்கள் முடிவுகளை குறுக்க கீழே ஒன்று அல்லது அதற்கு மேற்பட்ட உருப்படிகளை சொடுக்கவும்",
 	"sd_browsedata_subcategory": "துணைப் பகுப்பு",

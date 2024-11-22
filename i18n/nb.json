@@ -33,5 +33,8 @@
 	"sd_createfilter_usecategoryvalues": "Få verdier for filteret fra denne kategorien:",
 	"sd_createfilter_requirefilter": "Krev at et annet filter velges før dette vises:",
 	"sd-pageschemas-filter": "Filter",
-	"sd-pageschemas-values": "Verdier"
+	"sd-pageschemas-values": "Verdier",
+	"sd_browsedata_search": "Søk",
+	"sd_displayparameters_with_unknown_format": "Vis parametre med ukjent format",
+	"sd_displayparameters_with_unsupported_format": "Vis parametre med ustøttet format"
 }

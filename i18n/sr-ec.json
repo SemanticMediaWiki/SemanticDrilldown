@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Kizule",
 			"Rancher",
 			"Sasa Stefanovic",
 			"Михајло Анђелковић"
@@ -13,5 +14,7 @@
 	"sd_browsedata_none": "Нема",
 	"sd_browsedata_or": "или",
 	"sd_browsedata_daterangestart": "Почетак:",
-	"sd_browsedata_daterangeend": "Крај:"
+	"sd_browsedata_daterangeend": "Крај:",
+	"sd-pageschemas-filter": "Филтер",
+	"sd-pageschemas-values": "Вредности"
 }

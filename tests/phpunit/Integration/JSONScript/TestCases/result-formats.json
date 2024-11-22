@@ -165,6 +165,9 @@
 		{
 			"type": "special",
 			"about": "result format map is supported",
+			"skip-on": {
+				"mediawiki": [ ">1.39.x", "Check assertions for MW higher then 1.39." ]
+			},
 			"special-page": {
 				"page": "BrowseData",
 				"query-parameters": "C-map",
