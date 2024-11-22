@@ -1,5 +1,5 @@
 [![CI](https://github.com/SemanticMediaWiki/SemanticDrilldown/actions/workflows/ci.yml/badge.svg)](https://github.com/SemanticMediaWiki/SemanticDrilldown/actions/workflows/ci.yml)
-![Codecov](https://img.shields.io/codecov/c/github/SemanticMediaWiki/SemanticDrilldown)
+[![codecov](https://codecov.io/gh/SemanticMediaWiki/SemanticDrilldown/graph/badge.svg?token=LJ6NL3RY12)](https://codecov.io/gh/SemanticMediaWiki/SemanticDrilldown)
 
 # About
 
