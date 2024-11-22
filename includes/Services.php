@@ -17,7 +17,6 @@ use SpecialPage;
 use Title;
 use WebRequest;
 use Wikimedia\Rdbms\DBConnRef;
-use WikiPage;
 
 /**
  * The service locator of the SemanticDrilldown extension.
