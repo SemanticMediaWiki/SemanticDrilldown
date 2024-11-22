@@ -33,25 +33,17 @@ class Utils {
 	 * @return \SMW\StoreFactory
 	 */
 	public static function getSMWStore() {
-		if ( class_exists( '\SMW\StoreFactory' ) ) {
-			// SMW 1.9+
-			return \SMW\StoreFactory::getStore();
-		} else {
-			return smwfGetStore();
-		}
+		return smwfGetStore();
 	}
 
 	/**
-	 * Helper function to have backward compatibility with SMW < 3.2
+	 * Helper function to have backward compatibility with SMW > 3.2 and MW > 1.39
 	 *
-	 * @return \SMW\Localizer\LocalLanguage\LocalLanguage
+	 * @return \SMW\Localizer\LocalLanguage\LocalLanguage Content language object
 	 */
 	public static function getSMWContLang() {
 		if ( function_exists( 'smwfContLang' ) ) {
 			return smwfContLang();
-		} else {
-			global $smwgContLang;
-			return $smwgContLang;
 		}
 	}
 
@@ -169,9 +161,6 @@ class Utils {
 			$factory = MediaWikiServices::getInstance()->getMagicWordFactory();
 			$mw_hide = $factory->get( 'MAG_HIDEFROMDRILLDOWN' );
 			$mw_show = $factory->get( 'MAG_SHOWINDRILLDOWN' );
-		} else {
-			$mw_hide = MagicWord::get( 'MAG_HIDEFROMDRILLDOWN' );
-			$mw_show = MagicWord::get( 'MAG_SHOWINDRILLDOWN' );
 		}
 		$parserOutput = $parser->getOutput();
 		if ( $mw_hide->matchAndRemove( $text ) ) {
