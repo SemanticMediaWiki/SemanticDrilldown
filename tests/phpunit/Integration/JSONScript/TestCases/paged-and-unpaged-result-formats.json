@@ -29,6 +29,9 @@
 		{
 			"type": "special",
 			"about": "all pages are shown for unpaged result formats",
+			"skip-on": {
+				"mediawiki": [ ">1.40.x", "Check assertions for MW higher then 1.40." ]
+			},
 			"special-page": {
 				"page": "BrowseData",
 				"query-parameters": "Category with only unpaged result formats",
