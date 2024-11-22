@@ -123,8 +123,8 @@ class Services {
 	private function getGetPageFromTitleText(): Closure {
 		return static function ( string $text ) {
 			$title = Title::newFromText( $text );
-			// use appropriate WikiPage function, factory() is deprecated and not exists in MW 1.42
-			if ( version_compare( MW_VERSION, '1.42', '<' ) ) {
+			// use appropriate WikiPage function, factory() is deprecated and not exists from MW 1.36
+			if ( version_compare( MW_VERSION, '1.36', '<' ) ) {
 				return WikiPage::factory( $title );
 			}
 			if ( method_exists( WikiPageFactory::class, 'newFromTitle' ) ) {
