@@ -4,7 +4,6 @@ namespace SD;
 
 use ALItem;
 use ALRow;
-use MagicWord;
 use MagicWordFactory;
 use MediaWiki\MediaWikiServices;
 use SMW\SQLStore\SQLStore;
