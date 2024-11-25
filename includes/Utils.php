@@ -25,27 +25,6 @@ class Utils {
 		return true;
 	}
 
-	/**
-	 * Helper function to get the SMW data store for different versions
-	 * of SMW.
-	 *
-	 * @return \SMW\StoreFactory
-	 */
-	public static function getSMWStore() {
-		return smwfGetStore();
-	}
-
-	/**
-	 * Helper function to have backward compatibility with SMW > 3.2 and MW > 1.39
-	 *
-	 * @return \SMW\Localizer\LocalLanguage\LocalLanguage Content language object
-	 */
-	public static function getSMWContLang() {
-		if ( function_exists( 'smwfContLang' ) ) {
-			return smwfContLang();
-		}
-	}
-
 	public static function monthToString( $month ) {
 		if ( $month == 1 ) {
 			return wfMessage( 'january' )->text();

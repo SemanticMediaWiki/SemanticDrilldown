@@ -3,7 +3,6 @@
 namespace SD\Specials\BrowseData;
 
 use Closure;
-use SD\Utils;
 use SMW\Query\PrintRequest;
 use SMW\Query\QueryResult;
 use SMWDIWikiPage;
@@ -55,7 +54,7 @@ class SemanticResultPrinter {
 	private static function createGetSmwQueryResult( $res, $num ) {
 		$qr = [];
 		$count = 0;
-		$store = Utils::getSMWStore();
+		$store = smwfGetStore();
 		while ( ( $num === null || $count < $num ) && $row = $res->fetchObject() ) {
 			$count++;
 			$qr[] = new SMWDIWikiPage( $row->t, $row->ns, '' );
