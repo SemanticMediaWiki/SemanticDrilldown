@@ -17,7 +17,6 @@ use SpecialPage;
 use Title;
 use WebRequest;
 use Wikimedia\Rdbms\DBConnRef;
-use WikiPage;
 
 /**
  * The service locator of the SemanticDrilldown extension.
@@ -114,7 +113,6 @@ class Services {
 	}
 
 	private function getPageProps(): PageProps {
-		// MW > 1.35
 		return method_exists( $this->services, 'getPageProps' )
 			? $this->services->getPageProps()
 			: PageProps::getInstance();
@@ -123,10 +121,6 @@ class Services {
 	private function getGetPageFromTitleText(): Closure {
 		return static function ( string $text ) {
 			$title = Title::newFromText( $text );
-			// use appropriate WikiPage function, factory() is deprecated and not exists from MW 1.36
-			if ( version_compare( MW_VERSION, '1.36', '<' ) ) {
-				return WikiPage::factory( $title );
-			}
 			if ( method_exists( WikiPageFactory::class, 'newFromTitle' ) ) {
 				return MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $title );
 			}

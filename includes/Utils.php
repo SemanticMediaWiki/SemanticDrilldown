@@ -4,7 +4,6 @@ namespace SD;
 
 use ALItem;
 use ALRow;
-use MagicWord;
 use MagicWordFactory;
 use MediaWiki\MediaWikiServices;
 use SMW\SQLStore\SQLStore;
@@ -24,35 +23,6 @@ class Utils {
 		$vars['sdgDownArrowImage'] = "$sdSkinsPath/down-arrow.png";
 		$vars['sdgRightArrowImage'] = "$sdSkinsPath/right-arrow.png";
 		return true;
-	}
-
-	/**
-	 * Helper function to get the SMW data store for different versions
-	 * of SMW.
-	 *
-	 * @return \SMW\StoreFactory
-	 */
-	public static function getSMWStore() {
-		if ( class_exists( '\SMW\StoreFactory' ) ) {
-			// SMW 1.9+
-			return \SMW\StoreFactory::getStore();
-		} else {
-			return smwfGetStore();
-		}
-	}
-
-	/**
-	 * Helper function to have backward compatibility with SMW < 3.2
-	 *
-	 * @return \SMW\Localizer\LocalLanguage\LocalLanguage
-	 */
-	public static function getSMWContLang() {
-		if ( function_exists( 'smwfContLang' ) ) {
-			return smwfContLang();
-		} else {
-			global $smwgContLang;
-			return $smwgContLang;
-		}
 	}
 
 	public static function monthToString( $month ) {
@@ -169,9 +139,6 @@ class Utils {
 			$factory = MediaWikiServices::getInstance()->getMagicWordFactory();
 			$mw_hide = $factory->get( 'MAG_HIDEFROMDRILLDOWN' );
 			$mw_show = $factory->get( 'MAG_SHOWINDRILLDOWN' );
-		} else {
-			$mw_hide = MagicWord::get( 'MAG_HIDEFROMDRILLDOWN' );
-			$mw_show = MagicWord::get( 'MAG_SHOWINDRILLDOWN' );
 		}
 		$parserOutput = $parser->getOutput();
 		if ( $mw_hide->matchAndRemove( $text ) ) {

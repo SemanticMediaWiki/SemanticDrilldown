@@ -337,11 +337,11 @@ END;
 		// default), in case there is no type set for this property.
 		$propertyType = 'page';
 
-		$store = Utils::getSMWStore();
+		$store = smwfGetStore();
 		$escapedProperty = $this->escapedProperty();
 		$propPage = new SMWDIWikiPage( $escapedProperty, SMW_NS_PROPERTY, '' );
 		$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
-		$datatypeLabels = Utils::getSMWContLang()->getDatatypeLabels();
+		$datatypeLabels = smwfContLang()->getDatatypeLabels();
 		if ( count( $types ) > 0 ) {
 			if ( $types[0] instanceof SMWDIWikiPage ) {
 				$typeValue = $types[0]->getDBkey();
