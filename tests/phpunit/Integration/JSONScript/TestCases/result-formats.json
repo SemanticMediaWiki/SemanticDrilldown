@@ -129,9 +129,6 @@
 		{
 			"type": "special",
 			"about": "jqplotseries format is supported",
-			"skip-on": {
-				"mediawiki": [ ">1.35.x", "Check assertions for MW higher then 1.35." ]
-			},
 			"special-page": {
 				"page": "BrowseData",
 				"query-parameters": "C-jqplotseries",
