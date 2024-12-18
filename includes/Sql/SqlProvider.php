@@ -2,6 +2,7 @@
 
 namespace SD\Sql;
 
+use MediaWiki\MediaWikiServices;
 use SD\AppliedFilter;
 use SD\Utils;
 
