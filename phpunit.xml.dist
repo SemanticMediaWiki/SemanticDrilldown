@@ -17,9 +17,9 @@
             <directory>tests/phpunit</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
+    <coverage includeUncoveredFiles="true">
+        <include>
             <directory suffix=".php">includes</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </coverage>
 </phpunit>
