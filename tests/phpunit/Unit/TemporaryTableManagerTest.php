@@ -2,17 +2,15 @@
 
 namespace SD\Tests\Unit;
 
-use DatabaseBase;
-use PHPUnit;
 use SD\TemporaryTableManager;
-use Wikimedia;
-use const DBO_TRX;
+use Wikimedia\Rdbms\Database;
+use Wikimedia\Rdbms\IDatabase ;
 
 /**
  * @covers \SD\TemporaryTableManager
  */
-class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
-	/** @var DatabaseBase|\Wikimedia\Rdbms\IDatabase */
+class TemporaryTableManagerTest extends \PHPUnit\Framework\TestCase {
+	/** @var Database|IDatabase */
 	private $databaseConnectionMock;
 
 	/** @var TemporaryTableManager */
@@ -22,8 +20,7 @@ class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
 		parent::setUp();
 
 		// Database::commit is final, cannot be mocked - we must use interface :/
-		$dbClassName = class_exists( DatabaseType::class ) ? DatabaseType::class : Wikimedia\Rdbms\IDatabase::class;
-		$this->databaseConnectionMock = $this->getMockBuilder( $dbClassName )
+		$this->databaseConnectionMock = $this->getMockBuilder( IDatabase::class )
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -37,7 +34,7 @@ class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
 	public function testTransactionStateAndFlagsAreNotManipulatedWhenDboTrxIsNotSet( $sqlQuery ) {
 		$this->databaseConnectionMock->expects( $this->any() )
 			->method( 'getFlag' )
-			->with( DBO_TRX )
+			->with( IDatabase::DBO_TRX )
 			->willReturn( false );
 
 		$this->databaseConnectionMock->expects( $this->once() )
@@ -61,7 +58,7 @@ class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
 	) {
 		$this->databaseConnectionMock->expects( $this->any() )
 			->method( 'getFlag' )
-			->with( DBO_TRX )
+			->with( IDatabase::DBO_TRX )
 			->willReturn( true );
 		$this->databaseConnectionMock->expects( $this->any() )
 			->method( 'trxLevel' )
@@ -75,7 +72,7 @@ class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
 			->method( 'startAtomic' );
 		$this->databaseConnectionMock->expects( $this->once() )
 			->method( 'setFlag' )
-			->with( DBO_TRX );
+			->with( IDatabase::DBO_TRX );
 
 		$this->temporaryTableManager->queryWithAutoCommit( $sqlQuery );
 	}
@@ -89,7 +86,7 @@ class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
 	) {
 		$this->databaseConnectionMock->expects( $this->any() )
 			->method( 'getFlag' )
-			->with( DBO_TRX )
+			->with( IDatabase::DBO_TRX )
 			->willReturn( true );
 		$this->databaseConnectionMock->expects( $this->any() )
 			->method( 'trxLevel' )
@@ -103,7 +100,7 @@ class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
 			->method( 'startAtomic' );
 		$this->databaseConnectionMock->expects( $this->once() )
 			->method( 'setFlag' )
-			->with( DBO_TRX );
+			->with( IDatabase::DBO_TRX );
 
 		$this->temporaryTableManager->queryWithAutoCommit( $sqlQuery );
 	}
