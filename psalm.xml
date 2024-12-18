@@ -27,7 +27,6 @@
       <UndefinedFunction>
         <errorLevel type="suppress">
           <referencedFunction name="wfMessage" />
-          <referencedFunction name="wfGetDB" />
         </errorLevel>
       </UndefinedFunction>
     </issueHandlers>
