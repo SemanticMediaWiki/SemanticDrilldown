@@ -10,6 +10,7 @@
          stopOnFailure="false"
          stopOnIncomplete="false"
          stopOnSkipped="false"
+         stderr="true"
          verbose="true">
     <testsuites>
         <testsuite name="semantic-drilldown">
