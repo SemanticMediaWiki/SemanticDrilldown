@@ -10,3 +10,9 @@ coverage
 .tmp
 coverage
 .env
+
+# Operating systems
+## Mac OS X
+.DS_Store
+## Windows
+Thumbs.db

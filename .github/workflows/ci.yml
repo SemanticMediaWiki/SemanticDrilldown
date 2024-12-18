@@ -34,7 +34,7 @@ jobs:
             coverage: true
             experimental: false
           - mediawiki_version: '1.42'
-            smw_version: dev-master
+            smw_version: dev-master#d33c709435ddee490cc61e14723eed94f3c023c2
             srf_version: dev-master
             php_version: 8.2
             al_version: 0.6.3
