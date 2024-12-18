@@ -279,7 +279,7 @@ END;
 				} else {
 					$font_size = ( $sdgFiltersSmallestFontSize + $sdgFiltersLargestFontSize ) / 2;
 				}
-				$styleAttribute = " style=\"font-size: ${font_size}px;\"";
+				$styleAttribute = " style=\"font-size: {$font_size}px;\"";
 			}
 			$results_line .=
 				"<span class=\"drilldown-filter-value\"><a href=\"$filter_url\" title=\"$filterByValueMessage\"$styleAttribute>$filter_text</a></span>";
