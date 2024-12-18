@@ -26,6 +26,7 @@ jobs:
             coverage: false
             experimental: false
           - mediawiki_version: '1.40'
+            smw_version: dev-master
             php_version: 8.1
             al_version: 0.6.3
             database_type: mysql
