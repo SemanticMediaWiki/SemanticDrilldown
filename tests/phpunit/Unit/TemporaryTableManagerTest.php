@@ -4,7 +4,7 @@ namespace SD\Tests\Unit;
 
 use SD\TemporaryTableManager;
 use Wikimedia\Rdbms\Database;
-use Wikimedia\Rdbms\IDatabase ;
+use Wikimedia\Rdbms\IDatabase;
 
 /**
  * @covers \SD\TemporaryTableManager
