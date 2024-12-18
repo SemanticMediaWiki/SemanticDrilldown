@@ -35,6 +35,7 @@ jobs:
             experimental: false
           - mediawiki_version: '1.42'
             smw_version: dev-master
+            srf_version: dev-master
             php_version: 8.2
             al_version: 0.6.3
             database_type: mysql
@@ -45,6 +46,7 @@ jobs:
     env:
       MW_VERSION: ${{ matrix.mediawiki_version }}
       SMW_VERSION: ${{ matrix.smw_version }}
+      SRF_VERSION: ${{ matrix.srf_version }}
       PHP_VERSION: ${{ matrix.php_version }}
       AL_VERSION: ${{ matrix.al_version }}
       DB_TYPE: ${{ matrix.database_type }}
