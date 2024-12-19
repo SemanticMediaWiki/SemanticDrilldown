@@ -3,6 +3,7 @@
 namespace SD;
 
 use Wikimedia\Rdbms\Database;
+use Wikimedia\Rdbms\IDatabase;
 
 /**
  * Provides helper method to execute SQL queries in auto-commit mode
@@ -28,8 +29,8 @@ class TemporaryTableManager {
 	 * @param string $method method name to log for query, defaults to this method
 	 */
 	public function queryWithAutoCommit( $sqlQuery, $method = __METHOD__ ) {
-		$wasAutoTrx = $this->databaseConnection->getFlag( DBO_TRX );
-		$this->databaseConnection->clearFlag( DBO_TRX );
+		$wasAutoTrx = $this->databaseConnection->getFlag( IDatabase::DBO_TRX );
+		$this->databaseConnection->clearFlag( IDatabase::DBO_TRX );
 
 		// If a transaction was automatically started on first query, make sure we commit it
 		if ( $wasAutoTrx && $this->databaseConnection->trxLevel() ) {
@@ -43,7 +44,7 @@ class TemporaryTableManager {
 		}
 
 		if ( $wasAutoTrx ) {
-			$this->databaseConnection->setFlag( DBO_TRX );
+			$this->databaseConnection->setFlag( IDatabase::DBO_TRX );
 		}
 	}
 }
