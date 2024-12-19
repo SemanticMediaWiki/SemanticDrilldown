@@ -1,6 +1,3 @@
--include .env
-export
-
 # setup for docker-compose-ci build directory
 # delete "build" directory to update docker-compose-ci
 
