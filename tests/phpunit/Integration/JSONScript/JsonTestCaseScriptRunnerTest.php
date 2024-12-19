@@ -2,8 +2,6 @@
 
 namespace SD\Tests\Integration\JSONScript;
 
-use MediaWiki\MediaWikiServices;
-use SD\Services;
 use SMW\Tests\Integration\JSONScript\JSONScriptTestCaseRunnerTest;
 
 /**
