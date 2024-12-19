@@ -2,14 +2,24 @@
 
 namespace SD\Tests\Integration\JSONScript;
 
+use MediaWiki\MediaWikiServices;
+use SD\Services;
 use SMW\Tests\Integration\JSONScript\JSONScriptTestCaseRunnerTest;
 
 /**
  * @group SD
  * @group SMWExtension
- * @group Database
  */
 class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
+
+	// Experimenting
+	protected function setUp(): void {
+		parent::setUp();
+
+		// register the parser functions for each test
+		$parser = MediaWikiServices::getInstance()->getParser();
+		Services::onParserFirstCallInit( $parser );
+	}
 
 	protected function getTestCaseLocation() {
 		return __DIR__ . '/TestCases';
