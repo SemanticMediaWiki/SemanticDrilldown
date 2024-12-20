@@ -2,6 +2,8 @@
 
 namespace SD\Tests\Integration\JSONScript;
 
+require_once __DIR__ . '/ExJSONScriptServicesTestCaseRunner.php';
+
 use ExtensionRegistry;
 
 /**
