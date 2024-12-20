@@ -24,6 +24,14 @@ class JsonTestCaseScriptRunnerTest extends JSONScriptServicesTestCaseRunner {
 		return __DIR__ . '/TestCases';
 	}
 
+	/**
+	 * @see JSONScriptTestCaseRunner::getRequiredJsonTestCaseMinVersion
+	 * @return string
+	 */
+	protected function getRequiredJsonTestCaseMinVersion() {
+		return '1';
+	}
+
 	protected function getPermittedSettings() {
 		return array_merge( parent::getPermittedSettings(), [
 			"wgRestrictDisplayTitle",
