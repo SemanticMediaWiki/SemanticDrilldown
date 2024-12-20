@@ -16,7 +16,6 @@ class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
 	protected function setUp(): void {
 		parent::setUp();
 
-		// register the parser functions for each test
 		$parser = MediaWikiServices::getInstance()->getParser();
 		Services::onParserFirstCallInit( $parser );
 	}
@@ -34,5 +33,4 @@ class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
 			"sdgResultFormatTypes"
 		] );
 	}
-
 }
