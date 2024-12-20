@@ -15,6 +15,11 @@ use SMW\Tests\Utils\Connection\TestDatabaseTableBuilder;
  */
 class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
 
+	/**
+	 * Table name prefix.
+	 */
+	public const DB_PREFIX = 'sunittest_';
+
 	protected function setUp(): void {
 		parent::setUp();
 
