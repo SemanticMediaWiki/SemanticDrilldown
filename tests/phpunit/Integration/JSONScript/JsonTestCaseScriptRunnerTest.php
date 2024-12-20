@@ -2,9 +2,11 @@
 
 namespace SD\Tests\Integration\JSONScript;
 
+use RuntimeException;
 use MediaWiki\MediaWikiServices;
 use SD\Services;
 use SMW\Tests\Integration\JSONScript\JSONScriptTestCaseRunnerTest;
+use SMW\Tests\Utils\Connection\TestDatabaseTableBuilder;
 
 /**
  * @group SD
@@ -15,6 +17,15 @@ class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
 
 	protected function setUp(): void {
 		parent::setUp();
+
+		$testDatabaseTableBuilder = TestDatabaseTableBuilder::getInstance(
+			$this->getStore()
+		);
+
+		try {
+			$testDatabaseTableBuilder->doBuild();
+		} catch ( RuntimeException $e ) {
+		}
 
 		$parser = MediaWikiServices::getInstance()->getParser();
 		Services::onParserFirstCallInit( $parser );
