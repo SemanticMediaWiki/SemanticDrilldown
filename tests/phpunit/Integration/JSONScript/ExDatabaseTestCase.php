@@ -14,6 +14,7 @@ use SMW\MediaWiki\LinkBatch;
 use SMW\PropertyRegistry;
 use SMW\Services\ServicesFactory;
 use SMW\StoreFactory;
+use SMW\Tests\TestEnvironment;
 use SMW\Tests\Utils\Connection\TestDatabaseTableBuilder;
 use SMWExporter as Exporter;
 use SMWQueryProcessor;
