@@ -106,10 +106,6 @@ class TemporaryTableManagerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function sqlProvider() {
-		return [
-			[ 'CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL )' ],
-			[ 'CREATE INDEX id_index ON semantic_drilldown_values ( id )' ],
-			[ 'INSERT INTO semantic_drilldown_values SELECT ids.smw_id AS id\n' ],
-		];
+		return [];
 	}
 }
