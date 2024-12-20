@@ -2,6 +2,8 @@
 
 namespace SD\Tests\Integration\JSONScript;
 
+require_once __DIR__ . '/ExJSONScriptTestCaseRunner.php';
+
 use SMW\Services\ServicesFactory as ApplicationFactory;
 use SMW\DataValueFactory;
 use SMW\Listener\EventListener\EventHandler;
