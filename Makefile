@@ -19,7 +19,7 @@ DB_IMAGE?="mariadb:11.2"
 # extensions
 SMW_VERSION?=4.2.0
 AL_VERSION ?= 0.6.3         # SD adds a link to BrowseData
-MAPS_VERSION ?= 9.0.7
+MAPS_VERSION ?= 10.1.0
 # SRF_VERSION ?= 4.2.1
 
 # composer
