@@ -2,8 +2,8 @@
 
 namespace SD\Tests\Integration\JSONScript;
 
-use RuntimeException;
 use MediaWiki\MediaWikiServices;
+use RuntimeException;
 use SD\Services;
 use SMW\Tests\Integration\JSONScript\JSONScriptTestCaseRunnerTest;
 use SMW\Tests\Utils\Connection\TestDatabaseTableBuilder;
