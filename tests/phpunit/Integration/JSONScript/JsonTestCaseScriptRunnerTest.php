@@ -4,14 +4,14 @@ namespace SD\Tests\Integration\JSONScript;
 
 use MediaWiki\MediaWikiServices;
 use SD\Services;
-use SMW\Tests\JSONScriptServicesTestCaseRunner;
+use SMW\Tests\Integration\JSONScript\JSONScriptTestCaseRunnerTest;
 
 /**
  * @group SD
  * @group SMWExtension
  * @group Database
  */
-class JsonTestCaseScriptRunnerTest extends JSONScriptServicesTestCaseRunner {
+class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -22,14 +22,6 @@ class JsonTestCaseScriptRunnerTest extends JSONScriptServicesTestCaseRunner {
 
 	protected function getTestCaseLocation() {
 		return __DIR__ . '/TestCases';
-	}
-
-	/**
-	 * @see JSONScriptTestCaseRunner::getRequiredJsonTestCaseMinVersion
-	 * @return string
-	 */
-	protected function getRequiredJsonTestCaseMinVersion() {
-		return '1';
 	}
 
 	protected function getPermittedSettings() {
