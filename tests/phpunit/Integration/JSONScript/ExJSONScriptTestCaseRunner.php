@@ -2,10 +2,10 @@
 
 namespace SD\Tests\Integration\JSONScript;
 
-require_once __DIR__ . '/ExSMWIntegrationTestCase.php';
 
 use MediaWiki\MediaWikiServices;
 use SMW\Localizer\Localizer;
+use SMW\Tests\DatabaseTestCase;
 use SMW\Tests\Utils\JSONScript\JsonTestCaseContentHandler;
 use SMW\Tests\Utils\JSONScript\JsonTestCaseFileHandler;
 use SMW\Tests\Utils\UtilityFactory;
@@ -28,7 +28,7 @@ use SMW\Tests\Utils\UtilityFactory;
  *
  * @author mwjames
  */
-abstract class ExJSONScriptTestCaseRunner extends ExSMWIntegrationTestCase {
+abstract class ExJSONScriptTestCaseRunner extends DatabaseTestCase {
 
 	/**
 	 * @var FileReader
