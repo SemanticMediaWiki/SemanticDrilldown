@@ -49,13 +49,4 @@ class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
 			"sdgResultFormatTypes"
 		] );
 	}
-
-	/**
-	 * @since 1.18
-	 *
-	 * @return string
-	 */
-	final protected static function dbPrefix() {
-		return 'sunittest_';
-	}
 }
