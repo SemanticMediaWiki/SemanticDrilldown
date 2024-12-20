@@ -48,7 +48,7 @@ jobs:
       MW_VERSION: ${{ matrix.mediawiki_version }}
       SMW_VERSION: ${{ matrix.smw_version }}
       # SRF_VERSION: ${{ matrix.srf_version }}
-      MAPS_VERSION: ${{ matrix.maps_version }}
+      # MAPS_VERSION: ${{ matrix.maps_version }}
       PHP_VERSION: ${{ matrix.php_version }}
       AL_VERSION: ${{ matrix.al_version }}
       DB_TYPE: ${{ matrix.database_type }}
