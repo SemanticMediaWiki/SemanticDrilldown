@@ -2,6 +2,8 @@
 
 namespace SD\Tests\Integration\JSONScript;
 
+require_once __DIR__ . '/ExSMWIntegrationTestCase.php';
+
 use MediaWiki\MediaWikiServices;
 use SMW\Localizer\Localizer;
 use SMW\Tests\Utils\JSONScript\JsonTestCaseContentHandler;
