@@ -2,7 +2,7 @@
 
 namespace SD\Tests\Integration\JSONScript;
 
-require_once __DIR__ . '/JSONScriptTestCaseRunnerTest.php';
+require_once __DIR__ . '/ExJSONScriptTestCaseRunnerTest.php';
 
 use MediaWiki\MediaWikiServices;
 use RuntimeException;
