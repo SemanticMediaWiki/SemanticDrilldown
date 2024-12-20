@@ -4,7 +4,6 @@ namespace SD\Tests\Integration\JSONScript;
 
 use MediaWiki\MediaWikiServices;
 use SMW\Localizer\Localizer;
-use SMW\Tests\SMWIntegrationTestCase;
 use SMW\Tests\Utils\JSONScript\JsonTestCaseContentHandler;
 use SMW\Tests\Utils\JSONScript\JsonTestCaseFileHandler;
 use SMW\Tests\Utils\UtilityFactory;
@@ -27,7 +26,7 @@ use SMW\Tests\Utils\UtilityFactory;
  *
  * @author mwjames
  */
-abstract class ExJSONScriptTestCaseRunner extends SMWIntegrationTestCase {
+abstract class ExJSONScriptTestCaseRunner extends ExSMWIntegrationTestCase {
 
 	/**
 	 * @var FileReader
