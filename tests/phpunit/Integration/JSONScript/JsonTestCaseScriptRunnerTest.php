@@ -2,6 +2,8 @@
 
 namespace SD\Tests\Integration\JSONScript;
 
+require_once __DIR__ . '/JSONScriptTestCaseRunnerTest.php';
+
 use MediaWiki\MediaWikiServices;
 use RuntimeException;
 use SD\Services;
@@ -13,7 +15,7 @@ use SMW\Tests\Utils\Connection\TestDatabaseTableBuilder;
  * @group SMWExtension
  * @group Database
  */
-class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
+class JsonTestCaseScriptRunnerTest extends ExJSONScriptTestCaseRunnerTest {
 
 	/**
 	 * Table name prefix.
