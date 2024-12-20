@@ -4,14 +4,14 @@ namespace SD\Tests\Integration\JSONScript;
 
 use MediaWiki\MediaWikiServices;
 use SD\Services;
-use SMW\Tests\Integration\JSONScript\JSONScriptTestCaseRunnerTest;
+use SMW\Tests\JSONScriptServicesTestCaseRunner;
 
 /**
  * @group SD
  * @group SMWExtension
  * @group Database
  */
-class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
+class JsonTestCaseScriptRunnerTest extends JSONScriptServicesTestCaseRunner {
 
 	protected function setUp(): void {
 		parent::setUp();
