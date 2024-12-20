@@ -12,7 +12,6 @@ use SMW\Tests\Integration\JSONScript\JSONScriptTestCaseRunnerTest;
  */
 class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
 
-	// Experimenting
 	protected function setUp(): void {
 		parent::setUp();
 
