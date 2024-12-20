@@ -13,8 +13,7 @@
 	"homepage": "https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown",
 	"license": "GPL-2.0-or-later",
 	"require": {
-		"php": ">=7.4",
-		"vimeo/psalm": "^5.26"
+		"php": ">=7.4"
 	},
 	"require-dev": {
 		"mediawiki/mediawiki-codesniffer": "44.0.0",
