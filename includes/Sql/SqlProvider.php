@@ -2,6 +2,7 @@
 
 namespace SD\Sql;
 
+use MediaWiki\MediaWikiServices;
 use SD\AppliedFilter;
 use SD\Utils;
 
@@ -47,7 +48,9 @@ class SqlProvider {
 	 * @return string
 	 */
 	public static function getSQLFromClauseForCategory( $subcategory, $child_subcategories ) {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()
+			->getDBLoadBalancer()
+			->getMaintenanceConnectionRef( DB_REPLICA );
 		$smwIDs = $dbr->tableName( Utils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
 		$ns_cat = NS_CATEGORY;
@@ -78,7 +81,9 @@ class SqlProvider {
 	 * @return string
 	 */
 	public static function getSQLFromClause( string $category, string $subcategory, array $subcategories, array $applied_filters ) {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()
+			->getDBLoadBalancer()
+			->getMaintenanceConnectionRef( DB_REPLICA );
 		$smwIDs = $dbr->tableName( Utils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
 		$cat_ns = NS_CATEGORY;
