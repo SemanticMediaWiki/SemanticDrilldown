@@ -19,6 +19,7 @@ jobs:
         include:
           - mediawiki_version: '1.39'
             smw_version: 4.2.0
+            srf_version: 4.2.1
             php_version: 8.1
             al_version: 0.6.3
             database_type: mysql
@@ -27,14 +28,25 @@ jobs:
             experimental: false
           - mediawiki_version: '1.40'
             smw_version: dev-master
+            srf_version: dev-master
             php_version: 8.1
             al_version: 0.6.3
             database_type: mysql
             database_image: "mariadb:11.2"
             coverage: true
             experimental: false
+          - mediawiki_version: '1.41'
+            smw_version: dev-master
+            srf_version: dev-master
+            php_version: 8.1
+            al_version: 0.6.3
+            database_type: mysql
+            database_image: "mariadb:11.2"
+            coverage: false
+            experimental: false
           - mediawiki_version: '1.42'
             smw_version: dev-master
+            srf_version: dev-master
             php_version: 8.2
             al_version: 0.6.3
             database_type: mysql
@@ -45,6 +57,7 @@ jobs:
     env:
       MW_VERSION: ${{ matrix.mediawiki_version }}
       SMW_VERSION: ${{ matrix.smw_version }}
+      SRF_VERSION: ${{ matrix.srf_version }}
       PHP_VERSION: ${{ matrix.php_version }}
       AL_VERSION: ${{ matrix.al_version }}
       DB_TYPE: ${{ matrix.database_type }}
