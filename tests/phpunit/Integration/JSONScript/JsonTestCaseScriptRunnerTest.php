@@ -8,6 +8,7 @@ use SMW\Tests\Integration\JSONScript\JSONScriptTestCaseRunnerTest;
 
 /**
  * @group SD
+ * @group Database
  * @group SMWExtension
  * @group Database
  */
