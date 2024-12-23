@@ -107,8 +107,8 @@ class PageSchemas extends \PSExtensionHandler {
 		$html_text .= Html::input( 'sd_values_source_num', 'category', 'radio', $fromCategoryAttrs ) . "\n";
 		$html_text .= "\t" . wfMessage( 'sd_createfilter_usecategoryvalues' )->text() . "\n";
 		$dbr = MediaWikiServices::getInstance()
- 				->getDBLoadBalancer()
- 				->getMaintenanceConnectionRef( DB_REPLICA );
+				->getDBLoadBalancer()
+				->getMaintenanceConnectionRef( DB_REPLICA );
 		$categories = ( new DbService( null, $dbr ) )->getTopLevelCategories();
 		$categoriesHTML = "";
 		foreach ( $categories as $category ) {
