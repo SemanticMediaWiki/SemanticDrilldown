@@ -18,7 +18,7 @@ jobs:
       matrix:
         include:
           - mediawiki_version: '1.39'
-            smw_version: 4.2.0
+            smw_version: dev-master
             srf_version: 4.2.1
             php_version: 8.1
             al_version: 0.6.3
