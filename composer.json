@@ -24,6 +24,13 @@
 		"phpstan/phpstan": "^1.7",
 		"vimeo/psalm": "^4.23"
 	},
+	"config": {
+		"process-timeout": 0,
+		"allow-plugins": {
+			"composer/installers": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
 	"scripts": {
 		"test": [
 			"@analyze",
