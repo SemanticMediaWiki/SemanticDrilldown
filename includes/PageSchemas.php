@@ -3,6 +3,7 @@
 namespace SD;
 
 use Html;
+use MediaWiki\MediaWikiServices;
 
 /**
  * Static functions for Semantic Drilldown, for use by the Page Schemas
@@ -105,7 +106,10 @@ class PageSchemas extends \PSExtensionHandler {
 		$html_text .= wfMessage( 'sd_createfilter_usepropertyvalues' )->text() . "\n";
 		$html_text .= Html::input( 'sd_values_source_num', 'category', 'radio', $fromCategoryAttrs ) . "\n";
 		$html_text .= "\t" . wfMessage( 'sd_createfilter_usecategoryvalues' )->text() . "\n";
-		$categories = ( new DbService( null, wfGetDB( DB_REPLICA ) ) )->getTopLevelCategories();
+		$dbr = MediaWikiServices::getInstance()
+			->getDBLoadBalancer()
+			->getMaintenanceConnectionRef( DB_REPLICA );
+		$categories = ( new DbService( null, $dbr ) )->getTopLevelCategories();
 		$categoriesHTML = "";
 		foreach ( $categories as $category ) {
 			$categoryOptionAttrs = [];
