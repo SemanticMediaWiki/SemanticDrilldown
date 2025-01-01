@@ -13,6 +13,11 @@ use SMW\Tests\Integration\JSONScript\JSONScriptTestCaseRunnerTest;
  */
 class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
 
+	protected function overrideMwServices( $configOverrides = null, array $services = [] ) {
+		$this->setCliArg( 'use-normal-tables', true );
+		parent::overrideMwServices( $configOverrides, $services );
+	}
+
 	protected function setUp(): void {
 		parent::setUp();
 
