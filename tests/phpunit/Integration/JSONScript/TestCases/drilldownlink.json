@@ -1,0 +1,71 @@
+{
+    "description": "drilldownlink",
+    "setup": [
+        {
+            "namespace": "NS_CATEGORY",
+            "page": "A",
+            "contents": "This is category A"
+        },
+        {
+            "namespace": "NS_CATEGORY",
+            "page": "Aa",
+            "contents": "[[Category:A]]"
+        },
+        {
+            "page": "A1",
+            "contents": "[[Category:A]]"
+        },
+        {
+            "page": "link to non-existing category",
+            "contents": "{{#drilldownlink:category=NonExisting}}"
+        },
+        {
+            "page": "link to category A",
+            "contents": "{{#drilldownlink:category=A}}"
+        },
+        {
+            "page": "link with subcategory Aa",
+            "contents": "{{#drilldownlink:category=A|subcategory=Aa}}"
+        }
+    ],
+    "tests": [
+        {
+            "type": "parser",
+            "about": "Special:BrowseData link to a non-existing category",
+            "subject": "link to non-existing category",
+            "assert-output": {
+                "to-contain": [
+                    "<a href=\"/index.php/Special:BrowseData/NonExisting\" title=\"\">NonExisting</a>"
+                ]
+            }
+        },
+        {
+            "type": "parser",
+            "about": "Special:BrowseData link to category A",
+            "subject": "link to category A",
+            "assert-output": {
+                "to-contain": [
+                    "<a href=\"/index.php/Special:BrowseData/A\" title=\"\">A</a>"
+                ]
+            }
+        },
+        {
+            "type": "parser",
+            "about": "Special:BrowseData link with subcategory Aa",
+            "subject": "link with subcategory Aa",
+            "assert-output": {
+                "to-contain": [
+                    "<a href=\"/index.php/Special:BrowseData/A?_subcat=Aa\" title=\"\">A</a>"
+                ]
+            }
+        }
+    ],
+    "settings": {
+        "wgLang": "en"
+    },
+    "meta": {
+        "version": "2",
+        "is-incomplete": false,
+        "debug": false
+    }
+}
