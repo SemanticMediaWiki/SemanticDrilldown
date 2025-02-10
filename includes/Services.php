@@ -62,7 +62,7 @@ class Services {
 	}
 
 	private function getDbService(): DbService {
-		return new DbService( $this->getPrimaryDbConnectionRef(), $this->getReplicaDbConnectionRef() );
+		return new DbService( $this->getPrimaryDbConnectionRef(), $this->getPrimaryDbConnectionRef() );
 	}
 
 	private function getBuildFilters(): BuildFilters {
