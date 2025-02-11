@@ -35,7 +35,7 @@ class SqlProvider {
 		$dbr = MediaWikiServices::getInstance()
 			->getDBLoadBalancer()
 			->getMaintenanceConnectionRef( DB_REPLICA );
- 		$tableName = $dbr->tableName( "semantic_drilldown_values" );
+		$tableName = $dbr->tableName( "semantic_drilldown_values" );
 		$sql = "FROM $tableName sdv
 	LEFT OUTER JOIN semantic_drilldown_filter_values sdfv
 	ON sdv.id = sdfv.id
