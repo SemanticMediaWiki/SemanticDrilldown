@@ -36,7 +36,7 @@ class DbService {
 		$temporaryTableManager = new TemporaryTableManager( $this->dbw );
 		$tableName = $this->dbr->tableName( "semantic_drilldown_values" );
 
- 		$sql0 = "DROP TABLE IF EXISTS $tableName;";
+		$sql0 = "DROP TABLE IF EXISTS $tableName;";
 		$temporaryTableManager->queryWithAutoCommit( $sql0, __METHOD__ );
 
 		$sql1 = "CREATE TEMPORARY TABLE $tableName ( id INT NOT NULL )";
