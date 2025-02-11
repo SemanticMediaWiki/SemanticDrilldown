@@ -33,8 +33,8 @@ class SqlProvider {
 	 */
 	public static function getSQLFromClauseForField( $new_filter ) {
 		$dbr = MediaWikiServices::getInstance()
- 			->getDBLoadBalancer()
- 			->getMaintenanceConnectionRef( DB_REPLICA );
+			->getDBLoadBalancer()
+			->getMaintenanceConnectionRef( DB_REPLICA );
  		$tableName = $dbr->tableName( "semantic_drilldown_values" );
 		$sql = "FROM $tableName sdv
 	LEFT OUTER JOIN semantic_drilldown_filter_values sdfv
