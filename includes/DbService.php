@@ -86,9 +86,11 @@ END;
 	 * Deletes the temporary table.
 	 */
 	public function dropFilterValuesTempTable() {
+		$tableName = $this->dbr->tableName( "semantic_drilldown_filter_values" );
+
 		// DROP TEMPORARY TABLE would be marginally safer, but it's
 		// not supported on all RDBMS's.
-		$sql = "DROP TABLE semantic_drilldown_filter_values";
+		$sql = "DROP TABLE $tableName";
 
 		$temporaryTableManager = new TemporaryTableManager( $this->dbw );
 		$temporaryTableManager->queryWithAutoCommit( $sql, __METHOD__ );
