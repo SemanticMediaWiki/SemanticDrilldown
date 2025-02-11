@@ -114,9 +114,10 @@ class Filter {
 		$fields = "$yearValue, $monthValue, $dayValue";
 		$datesTable = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
 		$idsTable = $dbw->tableName( Utils::getIDsTableName() );
+		$tableName = $dbw->tableName( "semantic_drilldown_values" );
 		$sql = <<<END
 	SELECT $fields, count(*) AS matches
-	FROM semantic_drilldown_values sdv
+	FROM $tableName sdv
 	JOIN $datesTable a ON sdv.id = a.s_id
 	JOIN $idsTable p_ids ON a.p_id = p_ids.smw_id
 	WHERE p_ids.smw_title = '$property_value'
@@ -247,9 +248,10 @@ END;
 		$displaytitle = $this->propertyType === 'page' ? 'displaytitle.pp_value' : 'null';
 		$smw_ids = $dbw->tableName( Utils::getIDsTableName() );
 		$prop_ns = SMW_NS_PROPERTY;
+		$tableName = $dbw->tableName( "semantic_drilldown_values" );
 		$sql = <<<END
 	SELECT $value_field as value, $displaytitle as displayTitle, count(DISTINCT sdv.id) as count 
-	FROM semantic_drilldown_values sdv
+	FROM $tableName sdv
 	JOIN $property_table_name p ON sdv.id = p.s_id
 END;
 		if ( $this->propertyType === 'page' ) {
@@ -289,9 +291,10 @@ END;
 		$date_field = PropertyTypeDbInfo::dateField( $this->propertyType() );
 		$datesTable = $dbw->tableName( PropertyTypeDbInfo::tableName( $this->propertyType() ) );
 		$idsTable = $dbw->tableName( Utils::getIDsTableName() );
+		$tableName = $dbw->tableName( "semantic_drilldown_values" );
 		$sql = <<<END
 	SELECT MIN($date_field), MAX($date_field)
-	FROM semantic_drilldown_values sdv
+	FROM $tableName sdv
 	JOIN $datesTable a ON sdv.id = a.s_id
 	JOIN $idsTable p_ids ON a.p_id = p_ids.smw_id
 	WHERE p_ids.smw_title = '$property_value'
