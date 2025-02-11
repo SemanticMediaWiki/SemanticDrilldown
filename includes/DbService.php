@@ -107,7 +107,7 @@ END;
 		} else {
 			$sql .= SqlProvider::getSQLFromClauseForCategory( $subcategory, $subcategories );
 		}
-		$res = $this->query( $sql );
+		$res = $this->dbw->query( $sql );
 		$row = $res->fetchRow();
 		return $row[0];
 	}
