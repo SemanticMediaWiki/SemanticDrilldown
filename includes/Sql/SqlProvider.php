@@ -32,7 +32,11 @@ class SqlProvider {
 	 * @return string
 	 */
 	public static function getSQLFromClauseForField( $new_filter ) {
-		$sql = "FROM semantic_drilldown_values sdv
+		$dbr = MediaWikiServices::getInstance()
+			->getDBLoadBalancer()
+			->getMaintenanceConnectionRef( DB_REPLICA );
+		$tableName = $dbr->tableName( "semantic_drilldown_values" );
+		$sql = "FROM $tableName sdv
 	LEFT OUTER JOIN semantic_drilldown_filter_values sdfv
 	ON sdv.id = sdfv.id
 	WHERE ";
@@ -55,7 +59,8 @@ class SqlProvider {
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
 		$ns_cat = NS_CATEGORY;
 		$subcategory_escaped = $dbr->addQuotes( $subcategory );
-		$sql = "FROM semantic_drilldown_values sdv
+		$tableName = $dbr->tableName( "semantic_drilldown_values" );
+		$sql = "FROM $tableName sdv
 	JOIN $smwCategoryInstances inst
 	ON sdv.id = inst.s_id
 	WHERE inst.o_id IN
