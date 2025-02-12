@@ -65,12 +65,13 @@ class DbService {
 
 		$query_property = $escaped_property;
 
+		$tableName = $this->dbr->tableName( "semantic_drilldown_filter_values" );
 		$temporaryTableManager = new TemporaryTableManager( $this->dbw );
-		$sql0 = "DROP TABLE IF EXISTS semantic_drilldown_filter_values";
+		$sql0 = "DROP TABLE IF EXISTS $tableName";
 		$temporaryTableManager->queryWithAutoCommit( $sql0, __METHOD__ );
 
 		$sql = <<<END
- 	CREATE TEMPORARY TABLE semantic_drilldown_filter_values
+ 	CREATE TEMPORARY TABLE $tableName
 	AS SELECT s_id AS id, $value_field AS value
 	FROM $valuesTable
 	JOIN $smw_ids p_ids ON $valuesTable.p_id = p_ids.smw_id
@@ -90,7 +91,8 @@ END;
 	public function dropFilterValuesTempTable() {
 		// DROP TEMPORARY TABLE would be marginally safer, but it's
 		// not supported on all RDBMS's.
-		$sql = "DROP TABLE semantic_drilldown_filter_values";
+		$tableName = $this->dbr->tableName( "semantic_drilldown_filter_values" );
+		$sql = "DROP TABLE $tableName";
 
 		$temporaryTableManager = new TemporaryTableManager( $this->dbw );
 		$temporaryTableManager->queryWithAutoCommit( $sql, __METHOD__ );

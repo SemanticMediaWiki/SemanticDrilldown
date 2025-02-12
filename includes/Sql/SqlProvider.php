@@ -36,8 +36,9 @@ class SqlProvider {
 			->getDBLoadBalancer()
 			->getMaintenanceConnectionRef( DB_REPLICA );
 		$tableName = $dbr->tableName( "semantic_drilldown_values" );
+		$tableNameFilter = $dbr->tableName( "semantic_drilldown_filter_values" );
 		$sql = "FROM $tableName sdv
-	LEFT OUTER JOIN semantic_drilldown_filter_values sdfv
+	LEFT OUTER JOIN $tableNameFilter sdfv
 	ON sdv.id = sdfv.id
 	WHERE ";
 		$sql .= $new_filter->checkSQL( "sdfv.value" );
