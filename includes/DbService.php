@@ -66,10 +66,6 @@ class DbService {
 		$query_property = $escaped_property;
 
 		$tableName = $this->dbr->tableName( "semantic_drilldown_filter_values" );
-		$temporaryTableManager = new TemporaryTableManager( $this->dbw );
-		$sql0 = "DROP TABLE IF EXISTS $tableName";
-		$temporaryTableManager->queryWithAutoCommit( $sql0, __METHOD__ );
-
 		$sql = <<<END
  	CREATE TEMPORARY TABLE $tableName
 	AS SELECT s_id AS id, $value_field AS value
@@ -82,6 +78,7 @@ END;
 		}
 		$sql .= "	WHERE p_ids.smw_title = '$query_property'";
 
+		$temporaryTableManager = new TemporaryTableManager( $this->dbw );
 		$temporaryTableManager->queryWithAutoCommit( $sql, __METHOD__ );
 	}
 
