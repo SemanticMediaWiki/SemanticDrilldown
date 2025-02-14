@@ -35,16 +35,17 @@ class DbService {
 	public function createTempTable( $category, $subcategory, $subcategories, $applied_filters ) {
 		$temporaryTableManager = new TemporaryTableManager( $this->dbw );
 
-		$sql0 = "DROP TABLE IF EXISTS semantic_drilldown_values;";
+		$tableName = $this->dbr->tableName( "semantic_drilldown_values" );
+		$sql0 = "DROP TABLE IF EXISTS $tableName;";
 		$temporaryTableManager->queryWithAutoCommit( $sql0, __METHOD__ );
 
-		$sql1 = "CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL )";
+		$sql1 = "CREATE TEMPORARY TABLE $tableName ( id INT NOT NULL )";
 		$temporaryTableManager->queryWithAutoCommit( $sql1, __METHOD__ );
 
-		$sql2 = "CREATE INDEX id_index ON semantic_drilldown_values ( id )";
+		$sql2 = "CREATE INDEX id_index ON $tableName ( id )";
 		$temporaryTableManager->queryWithAutoCommit( $sql2, __METHOD__ );
 
-		$sql3 = "INSERT INTO semantic_drilldown_values SELECT ids.smw_id AS id\n";
+		$sql3 = "INSERT INTO $tableName SELECT ids.smw_id AS id\n";
 		$sql3 .= SqlProvider::getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters );
 		$temporaryTableManager->queryWithAutoCommit( $sql3, __METHOD__ );
 	}
@@ -64,8 +65,9 @@ class DbService {
 
 		$query_property = $escaped_property;
 
+		$tableName = $this->dbr->tableName( "semantic_drilldown_filter_values" );
 		$sql = <<<END
-	CREATE TEMPORARY TABLE semantic_drilldown_filter_values
+ 	CREATE TEMPORARY TABLE $tableName
 	AS SELECT s_id AS id, $value_field AS value
 	FROM $valuesTable
 	JOIN $smw_ids p_ids ON $valuesTable.p_id = p_ids.smw_id
@@ -86,7 +88,8 @@ END;
 	public function dropFilterValuesTempTable() {
 		// DROP TEMPORARY TABLE would be marginally safer, but it's
 		// not supported on all RDBMS's.
-		$sql = "DROP TABLE semantic_drilldown_filter_values";
+		$tableName = $this->dbr->tableName( "semantic_drilldown_filter_values" );
+		$sql = "DROP TABLE $tableName";
 
 		$temporaryTableManager = new TemporaryTableManager( $this->dbw );
 		$temporaryTableManager->queryWithAutoCommit( $sql, __METHOD__ );
@@ -105,7 +108,7 @@ END;
 		} else {
 			$sql .= SqlProvider::getSQLFromClauseForCategory( $subcategory, $subcategories );
 		}
-		$res = $this->query( $sql );
+		$res = $this->dbw->query( $sql );
 		$row = $res->fetchRow();
 		return $row[0];
 	}
