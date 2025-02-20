@@ -3,9 +3,9 @@
 namespace SD\Specials\BrowseData;
 
 use Closure;
+use SMW\DIWikiPage;
 use SMW\Query\PrintRequest;
 use SMW\Query\QueryResult;
-use SMWDIWikiPage;
 use SMWQuery;
 use SMWQueryProcessor;
 
@@ -57,7 +57,7 @@ class SemanticResultPrinter {
 		$store = smwfGetStore();
 		while ( ( $num === null || $count < $num ) && $row = $res->fetchObject() ) {
 			$count++;
-			$qr[] = new SMWDIWikiPage( $row->t, $row->ns, '' );
+			$qr[] = new DIWikiPage( $row->t, $row->ns, '' );
 			if ( method_exists( $store, 'cacheSMWPageID' ) ) {
 				$store->cacheSMWPageID( $row->id, $row->t, $row->ns, $row->iw, '' );
 			}
