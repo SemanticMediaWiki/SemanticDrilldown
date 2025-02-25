@@ -5,9 +5,9 @@ namespace SD;
 use MediaWiki\MediaWikiServices;
 use SD\Sql\PropertyTypeDbInfo;
 use SD\Sql\SqlProvider;
-use SMWDIProperty;
+use SMW\DIProperty;
+use SMW\DIWikiPage;
 use SMWDIUri;
-use SMWDIWikiPage;
 
 /**
  * Defines a class, Filter, that holds the information in a filter.
@@ -349,11 +349,11 @@ END;
 
 		$store = smwfGetStore();
 		$escapedProperty = $this->escapedProperty();
-		$propPage = new SMWDIWikiPage( $escapedProperty, SMW_NS_PROPERTY, '' );
-		$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
+		$propPage = new DIWikiPage( $escapedProperty, SMW_NS_PROPERTY, '' );
+		$types = $store->getPropertyValues( $propPage, new DIProperty( '_TYPE' ) );
 		$datatypeLabels = smwfContLang()->getDatatypeLabels();
 		if ( count( $types ) > 0 ) {
-			if ( $types[0] instanceof SMWDIWikiPage ) {
+			if ( $types[0] instanceof DIWikiPage ) {
 				$typeValue = $types[0]->getDBkey();
 			} elseif ( $types[0] instanceof SMWDIURI ) {
 				// A bit inefficient, but it's the
