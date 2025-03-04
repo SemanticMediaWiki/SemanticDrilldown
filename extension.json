@@ -61,42 +61,62 @@
 		"ParserFirstCallInit": "SD\\Services::onParserFirstCallInit",
 		"UnitTestsList": "SD\\Utils::onUnitTestsList"
 	},
+	"config_prefix": "sdg",
 	"config": {
-		"HideCategoriesByDefault": false,
-		"NumResultsPerPage": 250,
-		"FiltersSmallestFontSize": -1,
-		"FiltersLargestFontSize": -1,
-		"ShowCategoriesAsTabs": false,
-		"MinValuesForComboBox": 40,
-		"NumRangesForNumberFilters": 6,
-		"HideFiltersWithoutValues": false,
-		"DisableFilterCollapsible": false,
-		"ResultFormatTypes": {
-			"broadtable": "paged",
-			"category": "paged",
-			"count": "unsupported",
-			"csv": "unsupported",
-			"debug": "unsupported",
-			"dsv": "unsupported",
-			"embedded": "paged",
-			"feed": "unsupported",
-			"gantt": "unsupported",
-			"icalendar": "unsupported",
-			"jqplotchart": "unsupported",
-			"jqplotseries": "paged",
-			"json": "unsupported",
-			"list": "paged",
-			"map": "unpaged",
-			"ol": "paged",
-			"plainlist": "paged",
-			"rdf": "unsupported",
-			"spreadsheet": "unsupported",
-			"table": "paged",
-			"template": "paged",
-			"templatefile": "unsupported",
-			"ul": "paged"
+		"HideCategoriesByDefault": {
+			"value": false
 		},
-		"_prefix": "sdg"
+		"NumResultsPerPage": {
+			"value": 250
+		},
+		"FiltersSmallestFontSize": {
+			"value": -1
+		},
+		"FiltersLargestFontSize": {
+			"value": -1
+		},
+		"ShowCategoriesAsTabs": {
+			"value": false
+		},
+		"MinValuesForComboBox": {
+			"value": 40
+		},
+		"NumRangesForNumberFilters": {
+			"value": 6
+		},
+		"HideFiltersWithoutValues": {
+			"value": false
+		},
+		"DisableFilterCollapsible": {
+			"value": false
+		},
+		"ResultFormatTypes": {
+			"value": {
+				"broadtable": "paged",
+				"category": "paged",
+				"count": "unsupported",
+				"csv": "unsupported",
+				"debug": "unsupported",
+				"dsv": "unsupported",
+				"embedded": "paged",
+				"feed": "unsupported",
+				"gantt": "unsupported",
+				"icalendar": "unsupported",
+				"jqplotchart": "unsupported",
+				"jqplotseries": "paged",
+				"json": "unsupported",
+				"list": "paged",
+				"map": "unpaged",
+				"ol": "paged",
+				"plainlist": "paged",
+				"rdf": "unsupported",
+				"spreadsheet": "unsupported",
+				"table": "paged",
+				"template": "paged",
+				"templatefile": "unsupported",
+				"ul": "paged"
+			}
+		}
 	},
-	"manifest_version": 1
+	"manifest_version": 2
 }
