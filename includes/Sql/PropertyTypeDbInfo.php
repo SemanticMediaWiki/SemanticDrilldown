@@ -14,6 +14,8 @@ class PropertyTypeDbInfo {
 				return 'smw_di_time';
 			case 'number':
 				return 'smw_di_number';
+			case 'uri':
+				return 'smw_di_uri';
 			default:
 				return 'smw_di_blob';
 		}
@@ -28,6 +30,7 @@ class PropertyTypeDbInfo {
 				return 'o_value';
 			case 'date':
 			case 'number':
+			case 'uri':
 				return 'o_serialized';
 			default:
 				// CONVERT() is also supported in PostgreSQL,
