@@ -9,8 +9,8 @@ use Wikimedia\Rdbms\IResultWrapper;
 
 class DbService {
 
-	private DBConnRef $dbw;
-	private DBConnRef $dbr;
+	private ?DBConnRef $dbw;
+	private ?DBConnRef $dbr;
 
 	public function __construct( ?DBConnRef $dbw, ?DBConnRef $dbr ) {
 		$this->dbw = $dbw;
