@@ -12,5 +12,7 @@
 	"sd_browsedata_none": "Nema",
 	"sd_browsedata_or": "ili",
 	"sd_browsedata_daterangestart": "Početak:",
-	"sd_browsedata_daterangeend": "Kraj:"
+	"sd_browsedata_daterangeend": "Kraj:",
+	"sd-pageschemas-filter": "Filter",
+	"sd-pageschemas-values": "Vrednosti"
 }
