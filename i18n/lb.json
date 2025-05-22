@@ -3,7 +3,8 @@
 		"authors": [
 			"Les Meloures",
 			"Robby",
-			"Soued031"
+			"Soued031",
+			"Volvox"
 		]
 	},
 	"semanticdrilldown-desc": "En ''Drilldown''-Interface, fir duerch semantesch Daten ze navigéieren",
@@ -17,7 +18,7 @@
 	"sd_browsedata_filterbyvalue": "Filter fir dëse Wäert",
 	"sd_browsedata_filterbysubcategory": "No dëser Ënnerkategorie filteren",
 	"sd_browsedata_otherfilter": "Säite weisen déi mat engem anere Wäert fir dëse Filter",
-	"sd_browsedata_nonefilter": "Säite weisen déi kee Wäert fir dëse Filter hunn",
+	"sd_browsedata_nonefilter": "Säite weisen, déi kee Wäert fir dëse Filter hunn",
 	"sd_browsedata_or": "oder",
 	"sd_browsedata_removefilter": "Dëse Filter ewechhuelen",
 	"sd_browsedata_removesubcategoryfilter": "Dëse Filter vun den Ënnerkategorien ewechhuelen",
