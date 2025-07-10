@@ -5,9 +5,20 @@
 			"Умар"
 		]
 	},
+	"specialpages-group-sd_group": "Шуьйра семантика",
 	"browsedata": "Хаамашка хьажар",
+	"sd_browsedata_choosecategory": "Харжа категори",
+	"sd_browsedata_viewcategory": "категори хьажар",
+	"sd_browsedata_subcategory": "Бухара категори",
 	"sd_browsedata_other": "Кхийерг",
 	"sd_browsedata_none": "ХӀан-хӀа",
 	"sd_browsedata_otherfilter": "Гайта хӀокху литтарца кхин маьӀна долу агӀонаш",
-	"sd_browsedata_or": "йа"
+	"sd_browsedata_or": "йа",
+	"sd_browsedata_removefilter": "ДӀайаккха хӀара фильтр",
+	"sd_browsedata_resetfilters": "Фильтр цӀанйан",
+	"sd_browsedata_daterangestart": "Долор:",
+	"sd_browsedata_daterangeend": "Чаккхе:",
+	"sd-pageschemas-filter": "Фильтр",
+	"sd-pageschemas-values": "МаьӀанаш",
+	"sd_browsedata_search": "Лахар"
 }
