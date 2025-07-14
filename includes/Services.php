@@ -128,11 +128,11 @@ class Services {
 	}
 
 	private function getPrimaryDbConnectionRef(): DBConnRef {
-		return $this->services->getDBLoadBalancer()->getConnectionRef( DB_PRIMARY );
+		return $this->services->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 	}
 
 	private function getReplicaDbConnectionRef(): DBConnRef {
-		return $this->services->getDBLoadBalancer()->getConnectionRef( DB_REPLICA );
+		return $this->services->getDBLoadBalancer()->getConnection( DB_REPLICA );
 	}
 
 }
