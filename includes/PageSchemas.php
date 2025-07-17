@@ -99,13 +99,13 @@ class PageSchemas extends \PSExtensionHandler {
 		}
 
 		$html_text = '<div class="editSchemaMinorFields">' . "\n";
-		$html_text .= '<p>' . wfMessage( 'ps-optional-name' )->text() . ' ';
+		$html_text .= '<p>' . wfMessage( 'ps-optional-name' )->escaped() . ' ';
 		$html_text .= Html::input( 'sd_filter_name_num', $filterName, 'text', [ 'size' => 25 ] ) . "</p>\n";
-		$html_text .= wfMessage( 'sd-pageschemas-values' )->text() . ":\n";
+		$html_text .= wfMessage( 'sd-pageschemas-values' )->escaped() . ":\n";
 		$html_text .= Html::input( 'sd_values_source_num', 'property', 'radio', $usePropertyValuesAttr ) . ' ';
-		$html_text .= wfMessage( 'sd_createfilter_usepropertyvalues' )->text() . "\n";
+		$html_text .= wfMessage( 'sd_createfilter_usepropertyvalues' )->escaped() . "\n";
 		$html_text .= Html::input( 'sd_values_source_num', 'category', 'radio', $fromCategoryAttrs ) . "\n";
-		$html_text .= "\t" . wfMessage( 'sd_createfilter_usecategoryvalues' )->text() . "\n";
+		$html_text .= "\t" . wfMessage( 'sd_createfilter_usecategoryvalues' )->escaped() . "\n";
 		$dbr = MediaWikiServices::getInstance()
 			->getDBLoadBalancer()
 			->getMaintenanceConnectionRef( DB_REPLICA );
