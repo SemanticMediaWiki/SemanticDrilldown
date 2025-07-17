@@ -3,7 +3,6 @@
 namespace SD\Parameters;
 
 use ParserOutput;
-use SD\Compat;
 
 /**
  * Allow classes a simple implementation of the IParameter interface by implementing
@@ -31,7 +30,7 @@ abstract class Parameter implements IParameter {
 	public function setPageProperty( ParserOutput $parserOutput ) {
 		$propertyValue = $this->propertyValue();
 		if ( $propertyValue !== null ) {
-			Compat::setPageProperty( $parserOutput, static::PAGE_PROPERTY_NAME, $propertyValue );
+			$parserOutput->setPageProperty( static::PAGE_PROPERTY_NAME, $propertyValue );
 		}
 	}
 

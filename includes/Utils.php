@@ -134,18 +134,16 @@ class Utils {
 	 * @return bool true or false
 	 */
 	public static function handleShowAndHide( &$parser, &$text ) {
-		if ( class_exists( MagicWordFactory::class ) ) {
-			// MW 1.32+
-			$factory = MediaWikiServices::getInstance()->getMagicWordFactory();
-			$mw_hide = $factory->get( 'MAG_HIDEFROMDRILLDOWN' );
-			$mw_show = $factory->get( 'MAG_SHOWINDRILLDOWN' );
-		}
+		$factory = MediaWikiServices::getInstance()->getMagicWordFactory();
+		$mw_hide = $factory->get( 'MAG_HIDEFROMDRILLDOWN' );
+		$mw_show = $factory->get( 'MAG_SHOWINDRILLDOWN' );
+
 		$parserOutput = $parser->getOutput();
 		if ( $mw_hide->matchAndRemove( $text ) ) {
-			Compat::setPageProperty( $parserOutput, 'hidefromdrilldown', 'y' );
+			$parserOutput->setPageProperty( 'hidefromdrilldown', 'y' );
 		}
 		if ( $mw_show->matchAndRemove( $text ) ) {
-			Compat::setPageProperty( $parserOutput, 'showindrilldown', 'y' );
+			$parserOutput->setPageProperty( 'showindrilldown', 'y' );
 		}
 		return true;
 	}
