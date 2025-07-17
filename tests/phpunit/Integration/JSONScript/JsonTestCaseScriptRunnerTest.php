@@ -14,6 +14,11 @@ use SMW\Tests\Integration\JSONScript\JSONScriptTestCaseRunnerTest;
 class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
 
 	protected function setUp(): void {
+		global $wgArticlePath;
+		$wgArticlePath = '/index.php/$1';
+
+		MediaWikiServices::resetGlobalInstance();
+
 		parent::setUp();
 
 		// register the parser functions for each test
