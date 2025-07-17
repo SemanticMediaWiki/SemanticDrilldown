@@ -12,6 +12,8 @@
 	"sd_browsedata_subcategory": "Бухара категори",
 	"sd_browsedata_other": "Кхийерг",
 	"sd_browsedata_none": "ХӀан-хӀа",
+	"sd_browsedata_filterbyvalue": "ХӀокху маьӀнаца фильтр йе",
+	"sd_browsedata_filterbysubcategory": "ХӀокху бухара категорехула фильтр йе",
 	"sd_browsedata_otherfilter": "Гайта хӀокху литтарца кхин маьӀна долу агӀонаш",
 	"sd_browsedata_or": "йа",
 	"sd_browsedata_removefilter": "ДӀайаккха хӀара фильтр",
