@@ -5,22 +5,32 @@
 			"Умар"
 		]
 	},
+	"semanticdrilldown-desc": "Семантикин хаамашна навигацин схьайиллина интерфейс",
 	"specialpages-group-sd_group": "Шуьйра семантика",
 	"browsedata": "Хаамашка хьажар",
 	"sd_browsedata_choosecategory": "Харжа категори",
 	"sd_browsedata_viewcategory": "категори хьажар",
+	"sd_browsedata_docu": "Цхьана йа масех элементанна тӀетаӀайе, хьайн жамӀаш кӀезиг дан.",
 	"sd_browsedata_subcategory": "Бухара категори",
 	"sd_browsedata_other": "Кхийерг",
 	"sd_browsedata_none": "ХӀан-хӀа",
 	"sd_browsedata_filterbyvalue": "ХӀокху маьӀнаца фильтр йе",
 	"sd_browsedata_filterbysubcategory": "ХӀокху бухара категорехула фильтр йе",
 	"sd_browsedata_otherfilter": "Гайта хӀокху литтарца кхин маьӀна долу агӀонаш",
+	"sd_browsedata_nonefilter": "ХӀокху фильтран маьӀнаш доцу агӀонаш гайта",
 	"sd_browsedata_or": "йа",
 	"sd_browsedata_removefilter": "ДӀайаккха хӀара фильтр",
+	"sd_browsedata_removesubcategoryfilter": "ХӀара фильтр дӀайаккха бухара категорешца",
 	"sd_browsedata_resetfilters": "Фильтр цӀанйан",
+	"sd_browsedata_addanothervalue": "Кхидолу маьӀна тӀетоха цхьамзин тӀетаӀайе",
 	"sd_browsedata_daterangestart": "Долор:",
 	"sd_browsedata_daterangeend": "Чаккхе:",
+	"sd_browsedata_novalues": "ХӀокху фильтран маьӀнаш дац",
+	"sd_createfilter_usepropertyvalues": "ХӀокху башхаллин массо а маьӀнаш леладе фильтран",
+	"sd_createfilter_usecategoryvalues": "ХӀокху категорин чуьра фильтран маьӀнаш схьаэца:",
+	"sd_createfilter_requirefilter": "ХӀара гайтале хьалха кхин фильтр схьахаржа йеза:",
 	"sd-pageschemas-filter": "Фильтр",
 	"sd-pageschemas-values": "МаьӀанаш",
-	"sd_browsedata_search": "Лахар"
+	"sd_browsedata_search": "Лахар",
+	"sd_displayparameters_with_unknown_format": "Ца йевза форматехь гайтаран параметраш"
 }
