@@ -120,7 +120,7 @@ class GetApplicableFilters {
 	 */
 	private function getFilterLine( $filterName, $isApplied, $isNormalFilter, $resultsLine, Filter $filter ): string {
 		global $wgScriptPath;
-		global $wgSdgDisableFilterCollapsible;
+		global $sdgDisableFilterCollapsible;
 		$sdSkinsPath = "$wgScriptPath/extensions/SemanticDrilldown/skins";
 
 		if ( $filter->int() !== null ) {
@@ -135,7 +135,7 @@ class GetApplicableFilters {
 			$additionalClasses .= ' is-normal-filter';
 		}
 
-		if ( $wgSdgDisableFilterCollapsible ) {
+		if ( $sdgDisableFilterCollapsible ) {
 			$text  = '<div class="drilldown-filter' . $additionalClasses . '">';
 			$text .= "	<div class='drilldown-filter-label'>$filterName</div>";
 			$text .= '	<div class="drilldown-filter-values">' . $resultsLine . '</div>';
