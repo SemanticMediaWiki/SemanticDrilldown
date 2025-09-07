@@ -2,7 +2,7 @@
 
 namespace SD\Specials\BrowseData;
 
-use TemplateParser;
+use MediaWiki\Html\TemplateParser;
 
 class ProcessTemplate {
 

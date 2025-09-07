@@ -2,19 +2,19 @@
 
 namespace SD;
 
-use DatabaseBase;
+use Wikimedia\Rdbms\Database;
 
 /**
  * Provides helper method to execute SQL queries in auto-commit mode
  */
 
 class TemporaryTableManager {
-	/** @var \Wikimedia\Rdbms\IDatabase|DatabaseBase */
+	/** @var \Wikimedia\Rdbms\IDatabase|Database */
 	private $databaseConnection;
 
 	/**
 	 * TemporaryTableManager constructor.
-	 * @param \Wikimedia\Rdbms\IDatabase|DatabaseBase $databaseConnection the DB connection to execute queries against
+	 * @param \Wikimedia\Rdbms\IDatabase|Database $databaseConnection the DB connection to execute queries against
 	 */
 	public function __construct( $databaseConnection ) {
 		$this->databaseConnection = $databaseConnection;

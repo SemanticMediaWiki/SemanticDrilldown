@@ -12,8 +12,8 @@ namespace SD\Specials\BrowseData;
  */
 
 use Closure;
-use IncludableSpecialPage;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\SpecialPage\IncludableSpecialPage;
 use SD\AppliedFilter;
 use SD\BuildFilters;
 use SD\DbService;

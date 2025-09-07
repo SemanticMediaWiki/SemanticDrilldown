@@ -2,9 +2,10 @@
 
 namespace SD\Specials\BrowseData;
 
-use Html;
+use MediaWiki\Html\Html;
+use MediaWiki\Output\OutputPage;
+use MediaWiki\Request\WebRequest;
 use MediaWiki\Widget\DateInputWidget;
-use OutputPage;
 use SD\AppliedFilter;
 use SD\AppliedFilterValue;
 use SD\DbService;
@@ -12,7 +13,6 @@ use SD\Filter;
 use SD\PossibleFilterValue;
 use SD\PossibleFilterValues;
 use SD\Utils;
-use WebRequest;
 
 class GetApplicableFilters {
 

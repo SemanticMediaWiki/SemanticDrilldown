@@ -3,8 +3,9 @@
 namespace SD\Specials\BrowseData;
 
 use Closure;
-use PageProps;
-use RequestContext;
+use MediaWiki\Context\RequestContext;
+use MediaWiki\Page\PageProps;
+use MediaWiki\Title\Title;
 use SD\DbService;
 use SD\Parameters\DisplayParameters;
 use SD\Parameters\Parameters;
@@ -12,7 +13,6 @@ use SD\Sql\PropertyTypeDbInfo;
 use SD\Sql\SqlProvider;
 use SD\Utils;
 use SMWOutputs;
-use Title;
 use Wikimedia\Rdbms\Subquery;
 
 class QueryPage extends \QueryPage {
