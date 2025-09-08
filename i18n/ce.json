@@ -32,5 +32,6 @@
 	"sd-pageschemas-filter": "Фильтр",
 	"sd-pageschemas-values": "МаьӀанаш",
 	"sd_browsedata_search": "Лахар",
-	"sd_displayparameters_with_unknown_format": "Ца йевза форматехь гайтаран параметраш"
+	"sd_displayparameters_with_unknown_format": "Ца йевза форматехь гайтаран параметраш",
+	"sd_displayparameters_with_unsupported_format": "Лелаш йоцу форматехь параметраш гайтар"
 }
