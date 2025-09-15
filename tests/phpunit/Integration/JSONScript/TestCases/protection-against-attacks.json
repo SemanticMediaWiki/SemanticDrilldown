@@ -56,6 +56,7 @@
 		}
 	],
 	"settings": {
+		"wgArticlePath": "/index.php/$1",
 		"wgLang": "en"
 	},
 	"meta": {
