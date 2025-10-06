@@ -3,8 +3,8 @@
 namespace SD\Specials\BrowseData;
 
 use Closure;
-use IContextSource;
-use OutputPage;
+use MediaWiki\Context\IContextSource;
+use MediaWiki\Output\OutputPage;
 
 /**
  * Return HTML and resource loader modules corresponding to a page

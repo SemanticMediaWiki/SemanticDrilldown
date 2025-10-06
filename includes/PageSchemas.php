@@ -2,7 +2,7 @@
 
 namespace SD;
 
-use Html;
+use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
 
 /**

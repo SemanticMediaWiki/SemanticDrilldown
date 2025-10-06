@@ -2,17 +2,17 @@
 
 namespace SD\Tests\Unit;
 
-use DatabaseBase;
 use PHPUnit;
 use SD\TemporaryTableManager;
 use Wikimedia;
+use Wikimedia\Rdbms\Database;
 use const DBO_TRX;
 
 /**
  * @covers \SD\TemporaryTableManager
  */
 class TemporaryTableManagerTest extends PHPUnit\Framework\TestCase {
-	/** @var DatabaseBase|\Wikimedia\Rdbms\IDatabase */
+	/** @var Database|\Wikimedia\Rdbms\IDatabase */
 	private $databaseConnectionMock;
 
 	/** @var TemporaryTableManager */

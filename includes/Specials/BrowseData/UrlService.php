@@ -2,8 +2,8 @@
 
 namespace SD\Specials\BrowseData;
 
+use MediaWiki\Request\WebRequest;
 use SD\AppliedFilterValue;
-use WebRequest;
 
 class UrlService {
 

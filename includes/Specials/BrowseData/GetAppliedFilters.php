@@ -2,9 +2,9 @@
 
 namespace SD\Specials\BrowseData;
 
-use PageProps;
+use MediaWiki\Page\PageProps;
+use MediaWiki\Title\Title;
 use SD\Utils;
-use Title;
 
 class GetAppliedFilters {
 

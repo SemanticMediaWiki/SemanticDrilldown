@@ -5,7 +5,7 @@ namespace SD;
 use Closure;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Page\WikiPageFactory;
-use PageProps;
+use MediaWiki\Title\Title;
 use SD\Parameters\LoadParameters;
 use SD\ParserFunctions\DrilldownInfo;
 use SD\ParserFunctions\DrilldownLink;
@@ -14,7 +14,6 @@ use SD\Specials\BrowseData\QueryPage;
 use SD\Specials\BrowseData\SpecialBrowseData;
 use SD\Specials\BrowseData\UrlService;
 use SpecialPage;
-use Title;
 use WebRequest;
 use Wikimedia\Rdbms\DBConnRef;
 
@@ -88,7 +87,7 @@ class Services {
 		return fn ( $context, $parameters, $query, $offset, $limit ) =>
 			new QueryPage(
 				$resultFormatTypes,
-				$this->getDbService(), $this->getPageProps(), $this->getNewUrlService(),
+				$this->getDbService(), $this->services->getPageProps(), $this->getNewUrlService(),
 				$this->getGetPageFromTitleText(),
 				$context, $parameters, $query, $offset, $limit );
 	}
@@ -109,13 +108,7 @@ class Services {
 	}
 
 	private function getLoadParameters(): LoadParameters {
-		return new LoadParameters( $this->getPageProps() );
-	}
-
-	private function getPageProps(): PageProps {
-		return method_exists( $this->services, 'getPageProps' )
-			? $this->services->getPageProps()
-			: PageProps::getInstance();
+		return new LoadParameters( $this->services->getPageProps() );
 	}
 
 	private function getGetPageFromTitleText(): Closure {
