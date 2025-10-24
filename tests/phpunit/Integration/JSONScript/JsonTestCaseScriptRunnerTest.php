@@ -27,6 +27,7 @@ class JsonTestCaseScriptRunnerTest extends JSONScriptTestCaseRunnerTest {
 
 	protected function getPermittedSettings() {
 		return array_merge( parent::getPermittedSettings(), [
+			"wgArticlePath",
 			"wgRestrictDisplayTitle",
 			"sdgHideCategoriesByDefault",
 			"sdgHideFiltersWithoutValues",
