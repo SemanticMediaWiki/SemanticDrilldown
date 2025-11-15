@@ -52,7 +52,7 @@
 				"request-parameters": {}
 			},
 			"assert-output": {
-				"to-contain": "<p><a href=\"/index.php/Page1\" title=\"Page1\">Page1</a> (MARKER TEXT)"
+				"to-contain": "<p><a href=\"/wiki/Page1\" title=\"Page1\">Page1</a> (MARKER TEXT)"
 			}
 		},
 		{
