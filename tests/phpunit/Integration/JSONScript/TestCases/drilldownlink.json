@@ -35,7 +35,7 @@
             "subject": "link to non-existing category",
             "assert-output": {
                 "to-contain": [
-                    "<a href=\"/index.php/Special:BrowseData/NonExisting\" title=\"\">NonExisting</a>"
+                    "<a href=\"/wiki/Special:BrowseData/NonExisting\" title=\"\">NonExisting</a>"
                 ]
             }
         },
@@ -45,7 +45,7 @@
             "subject": "link to category A",
             "assert-output": {
                 "to-contain": [
-                    "<a href=\"/index.php/Special:BrowseData/A\" title=\"\">A</a>"
+                    "<a href=\"/wiki/Special:BrowseData/A\" title=\"\">A</a>"
                 ]
             }
         },
@@ -55,7 +55,7 @@
             "subject": "link with subcategory Aa",
             "assert-output": {
                 "to-contain": [
-                    "<a href=\"/index.php/Special:BrowseData/A?_subcat=Aa\" title=\"\">A</a>"
+                    "<a href=\"/wiki/Special:BrowseData/A?_subcat=Aa\" title=\"\">A</a>"
                 ]
             }
         }
