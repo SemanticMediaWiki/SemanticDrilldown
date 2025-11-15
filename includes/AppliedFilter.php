@@ -2,8 +2,8 @@
 
 namespace SD;
 
+use MediaWiki\Context\RequestContext;
 use MediaWiki\MediaWikiServices;
-use RequestContext;
 use SD\Sql\PropertyTypeDbInfo;
 use SD\Sql\SqlProvider;
 

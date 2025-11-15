@@ -2,7 +2,7 @@
 
 namespace SD\Specials\BrowseData;
 
-use OutputPage;
+use MediaWiki\Output\OutputPage;
 
 class GetSemanticResults {
 

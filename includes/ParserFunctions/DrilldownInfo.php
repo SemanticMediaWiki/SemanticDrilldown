@@ -16,18 +16,19 @@
 
 namespace SD\ParserFunctions;
 
-use Html;
-use Parser;
+use MediaWiki\Html\Html;
+use MediaWiki\Parser\Parser;
+use MediaWiki\Title\Title;
 use SD\Parameters\DisplayParametersList;
 use SD\Parameters\Filters;
 use SD\Parameters\Footer;
 use SD\Parameters\Header;
-use SD\Parameters\Title;
+use SD\Parameters\Title as SDTitle;
 
 class DrilldownInfo {
 
 	private Parser $parser;
-	private Title $title;
+	private SDTitle $title;
 	private Filters $filters;
 	private Header $header;
 	private Footer $footer;
@@ -38,7 +39,7 @@ class DrilldownInfo {
 	}
 
 	public function __invoke( $params ): string {
-		$this->title = new Title;
+		$this->title = new SDTitle;
 		$this->filters = new Filters;
 		$this->header = new Header;
 		$this->footer = new Footer;
@@ -66,7 +67,7 @@ class DrilldownInfo {
 				continue;
 			}
 			if ( $param_name == 'title' ) {
-				$this->title = new Title( $value );
+				$this->title = new SDTitle( $value );
 			} elseif ( $param_name === 'header' ) {
 				$this->header = new Header( $value );
 			} elseif ( $param_name === 'footer' ) {
@@ -95,7 +96,7 @@ class DrilldownInfo {
 		$parserOutput->addModules( [ 'ext.semanticdrilldown.info' ] );
 
 		$text = "<table class=\"drilldownInfo mw-collapsible mw-collapsed\">\n";
-		$bd = \Title::makeTitleSafe( NS_SPECIAL, 'BrowseData' );
+		$bd = Title::makeTitleSafe( NS_SPECIAL, 'BrowseData' );
 		$bdURL = $bd->getLocalURL() . "/" . $curTitle->getPartialURL();
 		$bdLink = Html::rawElement( 'a', [ 'href' => $bdURL ], "Semantic Drilldown" );
 		$text .= "<tr><th colspan=\"2\">$bdLink</th></tr>\n";
@@ -109,10 +110,10 @@ class DrilldownInfo {
 				}
 				$text .= $key . ' = ';
 				if ( $key == 'property' ) {
-					$propertyTitle = \Title::makeTitleSafe( SMW_NS_PROPERTY, $value );
+					$propertyTitle = Title::makeTitleSafe( SMW_NS_PROPERTY, $value );
 					$text .= $this->parser->getLinkRenderer()->makeLink( $propertyTitle, $value );
 				} elseif ( $key == 'category' ) {
-					$categoryTitle = \Title::makeTitleSafe( NS_CATEGORY, $value );
+					$categoryTitle = Title::makeTitleSafe( NS_CATEGORY, $value );
 					$text .= $this->parser->getLinkRenderer()->makeLink( $categoryTitle, $value );
 				} elseif ( $key == 'requires' ) {
 					$text .= '<strong>' . $value . '</strong>';
