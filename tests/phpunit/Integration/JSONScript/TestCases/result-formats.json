@@ -82,7 +82,7 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Page1\" title=\"Page1\">Page1</a>"
+					"<a href=\"/wiki/Page1\" title=\"Page1\">Page1</a>"
 				],
 				"not-contain": [
 					"Display parameters with unknown format",
@@ -100,7 +100,7 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Page1\" title=\"Page1\">Page1</a>"
+					"<a href=\"/wiki/Page1\" title=\"Page1\">Page1</a>"
 				],
 				"not-contain": [
 					"Display parameters with unknown format",
@@ -118,7 +118,7 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Page1\" title=\"Page1\">Page1</a>"
+					"<a href=\"/wiki/Page1\" title=\"Page1\">Page1</a>"
 				],
 				"not-contain": [
 					"Display parameters with unknown format",
@@ -154,7 +154,7 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Page1\" title=\"Page1\">Page1</a>"
+					"<a href=\"/wiki/Page1\" title=\"Page1\">Page1</a>"
 				],
 				"not-contain": [
 					"Display parameters with unknown format",
@@ -189,7 +189,7 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Page1\" title=\"Page1\">Page1</a>"
+					"<a href=\"/wiki/Page1\" title=\"Page1\">Page1</a>"
 				],
 				"not-contain": [
 					"Display parameters with unknown format",
@@ -207,7 +207,7 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Page1\" title=\"Page1\">Page1</a>"
+					"<a href=\"/wiki/Page1\" title=\"Page1\">Page1</a>"
 				],
 				"not-contain": [
 					"Display parameters with unknown format",
@@ -225,7 +225,7 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Page1\" title=\"Page1\">Page1</a>"
+					"<a href=\"/wiki/Page1\" title=\"Page1\">Page1</a>"
 				],
 				"not-contain": [
 					"Display parameters with unknown format",
@@ -242,7 +242,7 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Page1\" title=\"Page1\">Page1</a>"
+					"<a href=\"/wiki/Page1\" title=\"Page1\">Page1</a>"
 				],
 				"not-contain": [
 					"Display parameters with unknown format",
@@ -260,7 +260,7 @@
 			},
 			"assert-output": {
 				"to-contain": [
-					"<a href=\"/index.php/Page1\" title=\"Page1\">Page1</a>"
+					"<a href=\"/wiki/Page1\" title=\"Page1\">Page1</a>"
 				],
 				"not-contain": [
 					"Display parameters with unknown format",
