@@ -42,7 +42,7 @@
 			"assert-output": {
 				"to-contain": [
 					"<div class=\"drilldown-results-output drilldown-results-output-unpaged\">",
-					"<a href=\"/index.php/Page2\" title=\"Page2\">Page2</a>"
+					"<a href=\"/wiki/Page2\" title=\"Page2\">Page2</a>"
 				]
 			}
 		},
@@ -75,7 +75,7 @@
 					"<div class=\"drilldown-results-output drilldown-results-output-paged\">"
 				],
 				"not-contain": [
-					"<a href=\"/index.php/Page2\" title=\"Page2\">Page2</a>"
+					"<a href=\"/wiki/Page2\" title=\"Page2\">Page2</a>"
 				]
 			}
 		},
@@ -109,8 +109,8 @@
 					"<li>format=unsupported-format</li>",
 					"<div class=\"drilldown-results-output drilldown-results-output-unpaged\">",
 					"<div class=\"drilldown-results-output drilldown-results-output-paged\">",
-					"<a href=\"/index.php/Page1\" title=\"Page1\">Page1</a>",
-					"<a href=\"/index.php/Page2\" title=\"Page2\">Page2</a>"
+					"<a href=\"/wiki/Page1\" title=\"Page1\">Page1</a>",
+					"<a href=\"/wiki/Page2\" title=\"Page2\">Page2</a>"
 				]
 			}
 		}
