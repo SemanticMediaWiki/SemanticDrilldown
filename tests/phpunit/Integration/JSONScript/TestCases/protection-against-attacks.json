@@ -47,7 +47,7 @@
 			"assert-output": {
 				"to-contain": [
 					"<span class=\"drilldown-header-value\">&lt;script&gt;attack()&lt;/script&gt;</span>",
-					"<a href=\"/index.php/Page1\" title=\"Page1\">Page1</a>"
+					"<a href=\"/wiki/Page1\" title=\"Page1\">Page1</a>"
 				],
 				"not-contain": [
 					"<script>attack()</script>"
