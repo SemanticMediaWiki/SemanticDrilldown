@@ -19,7 +19,7 @@
 			"assert-output": {
 				"to-contain": [
 					"Choose a category:",
-					"<li class=\"category\"><a href=\"/index.php/Special:BrowseData/Category1\" title=\"Choose a category\">Category1 (0)</a></li>"
+					"<li class=\"category\"><a href=\"/wiki/Special:BrowseData/Category1\" title=\"Choose a category\">Category1 (0)</a></li>"
 				],
 				"not-contain": "<li class=\"category selected\">Category1 (0)</li>"
 			}
