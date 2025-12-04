@@ -51,7 +51,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 			$parser->getOutput()->updateCacheExpiry( 0 );
 		}
 		$this->setHeaders();
-		$out->addModules( 'ext.semanticdrilldown.main' );
+		$out->addModules( [ 'ext.semanticdrilldown.main', 'ext.smw.styles' ] );
 		$out->addScript( '<!--[if IE]><link rel="stylesheet" href="' . $sdSkinsPath . '/SD_IEfixes.css" media="screen" /><![endif]-->' );
 
 		// set default
