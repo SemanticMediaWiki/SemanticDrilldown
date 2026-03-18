@@ -3,8 +3,18 @@ name: CI
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - README-source.adoc
+      - README.adoc
+      - .github/copilot-instructions-source.adoc
+      - .github/copilot-instructions.md
   pull_request:
     branches: [ master ]
+    paths-ignore:
+      - README-source.adoc
+      - README.adoc
+      - .github/copilot-instructions-source.adoc
+      - .github/copilot-instructions.md
   workflow_dispatch:
 
 jobs:
