@@ -124,8 +124,13 @@ END;
 		$pages = [];
 		$subcategories = [];
 
-		$queryInfo = $this->linksMigration->getQueryInfo( 'categorylinks' );
-		$useLinktarget = in_array( 'linktarget', $queryInfo['tables'], true );
+		// LinksMigration::getQueryInfo( 'categorylinks' ) is only available from MW 1.44+.
+		// In MW 1.43 the categorylinks table is not yet in the migration mapping.
+		$useLinktarget = false;
+		if ( version_compare( MW_VERSION, '1.44', '>=' ) ) {
+			$queryInfo = $this->linksMigration->getQueryInfo( 'categorylinks' );
+			$useLinktarget = in_array( 'linktarget', $queryInfo['tables'], true );
+		}
 
 		$tables = [ 'categorylinks', 'page' ];
 		$fields = [ 'page_title', 'page_namespace' ];
@@ -244,8 +249,13 @@ END;
 	 * @return array
 	 */
 	public function getTopLevelCategories() {
-		$queryInfo = $this->linksMigration->getQueryInfo( 'categorylinks' );
-		$useLinktarget = in_array( 'linktarget', $queryInfo['tables'], true );
+		// LinksMigration::getQueryInfo( 'categorylinks' ) is only available from MW 1.44+.
+		// In MW 1.43 the categorylinks table is not yet in the migration mapping.
+		$useLinktarget = false;
+		if ( version_compare( MW_VERSION, '1.44', '>=' ) ) {
+			$queryInfo = $this->linksMigration->getQueryInfo( 'categorylinks' );
+			$useLinktarget = in_array( 'linktarget', $queryInfo['tables'], true );
+		}
 
 		$categories = [];
 

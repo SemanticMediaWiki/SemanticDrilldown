@@ -17,25 +17,16 @@ jobs:
     strategy:
       matrix:
         include:
-          - mediawiki_version: '1.43.1'
-            smw_version: 5.0.2
-            srf_version: 5.0.0
-            php_version: 8.2
-            al_version: 0.6.3
-            database_type: mysql
-            database_image: "mariadb:11.2"
-            coverage: false
-            experimental: false
           - mediawiki_version: '1.43'
             smw_version: 6.0.1
-            srf_version: 5.1.0
+            srf_version: 5.2.0
             php_version: 8.2
             al_version: 0.6.3
             database_type: mysql
             database_image: "mariadb:11.2"
-            coverage: false
+            coverage: true
             experimental: false
-          - mediawiki_version: '1.44'
+          - mediawiki_version: '1.45'
             smw_version: dev-master
             srf_version: dev-master
             php_version: 8.2
@@ -57,7 +48,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: recursive
 
@@ -73,7 +64,7 @@ jobs:
         if: matrix.coverage == true
 
       - name: Upload code coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           files: coverage/php/coverage.xml
         if: matrix.coverage == true
