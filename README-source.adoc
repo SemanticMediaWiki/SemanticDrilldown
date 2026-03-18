@@ -32,9 +32,3 @@ Language translations were provided by many people; see the files in the `/i18n`
 == Credits to other projects
 
 * The Semantic Drilldown extension makes use of the jQuery and jQuery UI JavaScript libraries, embedded within MediaWiki.
-
----
-
-This extension is part of https://semantic.wiki/core[*semantic::core*] - Enterprise Class MediaWiki distribution.
-
-include::docs/gesinn-it-docs-master-pub/sections/contributing.adoc[]
