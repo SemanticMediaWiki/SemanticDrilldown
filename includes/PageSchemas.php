@@ -12,7 +12,6 @@ use MediaWiki\MediaWikiServices;
  * @author Yaron Koren
  * @author Ankit Garg
  */
-
 class PageSchemas extends \PSExtensionHandler {
 	public static function registerClass() {
 		global $wgPageSchemasHandlerClasses;

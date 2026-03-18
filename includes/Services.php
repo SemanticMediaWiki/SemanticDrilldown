@@ -47,7 +47,7 @@ class Services {
 	public static function onParserFirstCallInit( $parser ) {
 		foreach ( self::PARSER_FUNCTIONS as $name => $class ) {
 			$parser->setFunctionHook( $name,
-				fn ( $parser, ...$params ) => ( new $class( $parser ) )( $params ) );
+				static fn ( $parser, ...$params ) => ( new $class( $parser ) )( $params ) );
 		}
 	}
 
@@ -69,7 +69,7 @@ class Services {
 	}
 
 	private function getGetPageSchema(): Closure {
-		return fn ( $category ) => class_exists( 'PSSchema' ) ? new \PSSchema( $category ) : null;
+		return static fn ( $category ) => class_exists( 'PSSchema' ) ? new \PSSchema( $category ) : null;
 	}
 
 	private function getNewQuery(): Closure {
@@ -94,7 +94,7 @@ class Services {
 
 	private function getNewUrlService(): Closure {
         // phpcs:ignore MediaWiki.Usage.AssignmentInReturn.AssignmentInReturn
-		return fn ( WebRequest $request, ?DrilldownQuery $query = null ) =>
+		return static fn ( WebRequest $request, ?DrilldownQuery $query = null ) =>
 			new UrlService(
 				SpecialPage::getTitleFor( 'BrowseData' )->getLocalURL(), $request, $query );
 	}

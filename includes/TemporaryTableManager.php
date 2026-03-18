@@ -7,7 +7,6 @@ use Wikimedia\Rdbms\Database;
 /**
  * Provides helper method to execute SQL queries in auto-commit mode
  */
-
 class TemporaryTableManager {
 	/** @var \Wikimedia\Rdbms\IDatabase|Database */
 	private $databaseConnection;

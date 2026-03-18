@@ -29,7 +29,7 @@ class LoadParameters {
 		}
 
 		$values = array_values( $properties )[0];
-		$get = fn ( $propertyName ) =>
+		$get = static fn ( $propertyName ) =>
 			array_key_exists( $propertyName, $values ) ? $values[ $propertyName ] : null;
 		return new Parameters(
 			SDTitle::fromPropertyValue( $get( SDTitle::PAGE_PROPERTY_NAME ) )->value,

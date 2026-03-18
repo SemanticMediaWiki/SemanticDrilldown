@@ -106,10 +106,10 @@ class BuildFilters {
 				$result[] = ( $this->newFilter )(
 					$name,
 					$property,
-					$propertyType,
 					$category,
 					null,
 					null,
+					$propertyType,
 					$timePeriod,
 					$allowedValues
 				);

@@ -13,7 +13,6 @@ use SD\Sql\SqlProvider;
  *
  * @author Yaron Koren
  */
-
 class AppliedFilter {
 
 	/**

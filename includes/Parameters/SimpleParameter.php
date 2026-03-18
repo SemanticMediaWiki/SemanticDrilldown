@@ -8,8 +8,7 @@ namespace SD\Parameters;
  */
 class SimpleParameter extends Parameter {
 
-	/** @readonly */
-	public ?string $value;
+	public readonly ?string $value;
 
 	public function __construct( ?string $value = null ) {
 		$this->value = $value;
