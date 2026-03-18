@@ -8,7 +8,6 @@ namespace SD;
  *
  * @author Yaron Koren
  */
-
 class AppliedFilterValue {
 	/**
 	 * The text.
@@ -71,7 +70,7 @@ class AppliedFilterValue {
 	 */
 	public $end_year = null;
 
-	public static function create( $actual_val, Filter $filter = null ) {
+	public static function create( $actual_val, ?Filter $filter = null ) {
 		$fv = new AppliedFilterValue();
 		$fv->text = str_replace( '_', ' ', $actual_val );
 
@@ -167,7 +166,7 @@ class AppliedFilterValue {
 
 		if ( $fv1->year != null && $fv2->year != null ) {
 			if ( $fv1->year == $fv2->year ) {
-				if ( $fv1->month == $fv1->month ) {
+				if ( $fv1->month == $fv2->month ) {
 					return 0;
 				}
 				return ( $fv1->month > $fv2->month ) ? 1 : -1;

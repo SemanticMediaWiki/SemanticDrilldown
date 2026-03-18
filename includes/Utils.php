@@ -12,7 +12,6 @@ use SMW\SQLStore\SQLStore;
  *
  * @author Yaron Koren
  */
-
 class Utils {
 
 	public static function setGlobalJSVariables( &$vars ) {

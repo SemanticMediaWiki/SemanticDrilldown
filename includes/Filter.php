@@ -14,7 +14,6 @@ use SMWDIUri;
  *
  * @author Yaron Koren
  */
-
 class Filter {
 	private string $name;
 	private string $property;
