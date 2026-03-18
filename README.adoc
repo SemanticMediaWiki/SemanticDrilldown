@@ -16,21 +16,6 @@ image:https://codecov.io/gh/SemanticMediaWiki/SemanticDrilldown/graph/badge.svg?
 
 Semantic Drilldown is an extension to MediaWiki that works in conjunction with another extension, Semantic MediaWiki, to provide a drilldown interface for all the data on a site.
 
-== Documentation
-
-For documentation see: https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown
-
-=== Versioning
-
-We use http://semver.org/[SemVer] for versioning. See the tags in this repository for available versions.
-
-== Contributing
-We welcome contributions from the community to help make {project_name} better! Whether you're fixing bugs, adding new features, improving documentation, or anything else, your efforts are valuable.
-
-=== Conventional commits
-
-Commit messages follow the https://www.conventionalcommits.org/[Conventional Commits specification] to ensure consistent history and meaningful change logs.
-
 [NOTE]
 ====
 The repository contains
@@ -49,6 +34,21 @@ If not done when cloning, it can be done by
 > git submodule update
 ....
 ====
+
+== Documentation
+
+For documentation see: https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown
+
+:leveloffset: -1
+
+=== Versioning
+
+We use http://semver.org/[SemVer] for versioning. See the tags in this repository for available versions.
+
+:leveloffset!:
+
+== Contributing
+We welcome contributions from the community to help make {project_name} better! Whether you're fixing bugs, adding new features, improving documentation, or anything else, your efforts are valuable.
 
 .Click to see detailed *Contributing Guidelines*
 [%collapsible]
