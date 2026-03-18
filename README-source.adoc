@@ -13,11 +13,13 @@ image:https://codecov.io/gh/SemanticMediaWiki/SemanticDrilldown/graph/badge.svg?
 
 Semantic Drilldown is an extension to MediaWiki that works in conjunction with another extension, Semantic MediaWiki, to provide a drilldown interface for all the data on a site.
 
+include::docs/gesinn-it-docs-master-pub/snippets/note-contains-submodule.adoc[]
+
 == Documentation
 
 For documentation see: https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown
 
-include::docs/gesinn-it-docs-master-pub/snippets/semver.adoc[]
+include::docs/gesinn-it-docs-master-pub/snippets/semver.adoc[leveloffset=-1]
 
 include::docs/gesinn-it-docs-master-pub/sections/contributing.adoc[]
 
