@@ -7,16 +7,29 @@
  * @author Sanyam Goyal
  */
 ( function ( $ ) {
-	$.ui.autocomplete.prototype._renderItem = function ( ul, item ) {
-		var re = new RegExp( '(?![^&;]+;)(?!<[^<>]*)(' + this.term.replace( /([^$()[]{}*.+?|\\])/gi, '\\$1' ) + ')(?![^<>]*>)(?![^&;]+;)', 'gi' );
-		var loc = item.label.search( re );
-		var t;
+	const sd = window.sd = window.sd || {};
+
+	/**
+	 * Wraps the first occurrence of `term` in `label` with `<strong>` tags.
+	 * Returns `label` unchanged when no match is found.
+	 *
+	 * @param {string} term   Search term (regex-special characters are escaped)
+	 * @param {string} label  Display label to highlight
+	 * @return {string}
+	 */
+	sd.highlightMatch = function ( term, label ) {
+		const escapedTerm = term.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' );
+		const re = new RegExp( '(?![^&;]+;)(?!<[^<>]*)(' + escapedTerm + ')(?![^<>]*>)(?![^&;]+;)', 'gi' );
+		const loc = label.search( re );
 		if ( loc >= 0 ) {
-			t = item.label.slice( 0, Math.max( 0, loc ) ) + '<strong>' + item.label.substr( loc, this.term.length ) + '</strong>' + item.label.slice( loc + this.term.length );
-		} else {
-			t = item.label;
+			return label.slice( 0, Math.max( 0, loc ) ) + '<strong>' + label.slice( loc, loc + term.length ) + '</strong>' + label.slice( loc + term.length );
 		}
-		return $( '<li></li>' )
+		return label;
+	};
+
+	$.ui.autocomplete.prototype._renderItem = function ( ul, item ) {
+		const t = sd.highlightMatch( this.term, item.label );
+		return $( '<li>' )
 			.data( 'item.autocomplete', item )
 			.append( ' <a>' + t + '</a>' )
 			.appendTo( ul );
@@ -24,17 +37,17 @@
 
 	$.widget( 'ui.combobox', {
 		_create: function () {
-			var self = this;
-			var select = this.element.hide();
-			var inp_id = select[ 0 ].options[ 0 ].value;
-			var curval = select[ 0 ].name;
-			var input = $( '<input id = "' + inp_id + '" type="text" name="' + inp_id + '" value="' + curval + '">' )
+			const self = this;
+			const select = this.element.hide();
+			const inp_id = select[ 0 ].options[ 0 ].value;
+			const curval = select[ 0 ].name;
+			const input = $( '<input id = "' + inp_id + '" type="text" name="' + inp_id + '" value="' + curval + '">' )
 				.insertAfter( select )
 				.autocomplete( {
 					source: function ( request, response ) {
-						var matcher = new RegExp( request.term, 'i' );
+						const matcher = new RegExp( request.term, 'i' );
 						response( select.children( 'option' ).map( function () {
-							var text = this.innerHTML;
+							const text = this.innerHTML;
 							if ( this.value && ( !request.term || matcher.test( text ) ) ) {
 								return {
 									id: this.value,
@@ -55,7 +68,7 @@
 						self._trigger( 'selected', event, {
 							item: select.find( '[value="' + ui.item.id + '"]' )
 						} );
-						setTimeout( function () {
+						setTimeout( () => {
 							select[ 0 ].form.submit();
 						}, 0 );
 
@@ -80,7 +93,7 @@
 				// Unfortunately, calling .css() won't work, because
 				// it ignores '!important'.
 				.attr( 'style', 'width: 2.4em; margin: 0 !important; border-radius: 0' )
-				.click( function () {
+				.click( () => {
 					// close if already visible
 					if ( input.autocomplete( 'widget' ).is( ':visible' ) ) {
 						input.autocomplete( 'close' );
@@ -94,30 +107,30 @@
 	} );
 
 	$.fn.toggleValuesDisplay = function () {
-		$.valuesDiv = $( this ).closest( '.drilldown-filter' )
+		const $valuesDiv = $( this ).closest( '.drilldown-filter' )
 			.find( '.drilldown-filter-values' );
-		if ( $.valuesDiv.css( 'display' ) === 'none' ) {
-			$.valuesDiv.css( 'display', 'block' );
-			var downArrowImage = mediaWiki.config.get( 'sdgDownArrowImage' );
+		if ( $valuesDiv.css( 'display' ) === 'none' ) {
+			$valuesDiv.css( 'display', 'block' );
+			const downArrowImage = mediaWiki.config.get( 'sdgDownArrowImage' );
 			this.find( 'img' ).attr( 'src', downArrowImage );
 		} else {
-			$.valuesDiv.css( 'display', 'none' );
-			var rightArrowImage = mediaWiki.config.get( 'sdgRightArrowImage' );
+			$valuesDiv.css( 'display', 'none' );
+			const rightArrowImage = mediaWiki.config.get( 'sdgRightArrowImage' );
 			this.find( 'img' ).attr( 'src', rightArrowImage );
 		}
 	};
 
 	function removePagingIfNotRequired() {
 		if ( $( '.drilldown-results-output-paged' ).length === 0 ) {
-			const pagingSectionSelectors = $( '#drilldown-top-paging, .mw-spcontent > p:last-of-type' );
-			$( pagingSectionSelectors ).remove();
+			const $pagingSectionSelectors = $( '#drilldown-top-paging, .mw-spcontent > p:last-of-type' );
+			$pagingSectionSelectors.remove();
 		}
 	}
 
-	$( function () {
+	$( () => {
 		removePagingIfNotRequired();
 		$( '.semanticDrilldownCombobox' ).combobox();
-		$( '.drilldown-values-toggle' ).click( function () {
+		$( '.drilldown-values-toggle' ).on( 'click', function () {
 			$( this ).toggleValuesDisplay();
 		} );
 	} );

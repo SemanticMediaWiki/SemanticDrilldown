@@ -7,6 +7,7 @@
 /.eslintcache
 .phpunit.result.cache
 coverage
+.nyc_output
 .tmp
 coverage
 .env
