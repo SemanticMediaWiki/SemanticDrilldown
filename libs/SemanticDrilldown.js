@@ -7,15 +7,28 @@
  * @author Sanyam Goyal
  */
 ( function ( $ ) {
-	$.ui.autocomplete.prototype._renderItem = function ( ul, item ) {
-		const re = new RegExp( '(?![^&;]+;)(?!<[^<>]*)(' + this.term.replace( /([^$()[]{}*.+?|\\])/gi, '\\$1' ) + ')(?![^<>]*>)(?![^&;]+;)', 'gi' );
-		const loc = item.label.search( re );
-		let t;
+	const sd = window.sd = window.sd || {};
+
+	/**
+	 * Wraps the first occurrence of `term` in `label` with `<strong>` tags.
+	 * Returns `label` unchanged when no match is found.
+	 *
+	 * @param {string} term   Search term (regex-special characters are escaped)
+	 * @param {string} label  Display label to highlight
+	 * @return {string}
+	 */
+	sd.highlightMatch = function ( term, label ) {
+		const escapedTerm = term.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' );
+		const re = new RegExp( '(?![^&;]+;)(?!<[^<>]*)(' + escapedTerm + ')(?![^<>]*>)(?![^&;]+;)', 'gi' );
+		const loc = label.search( re );
 		if ( loc >= 0 ) {
-			t = item.label.slice( 0, Math.max( 0, loc ) ) + '<strong>' + item.label.slice( loc, loc + this.term.length ) + '</strong>' + item.label.slice( loc + this.term.length );
-		} else {
-			t = item.label;
+			return label.slice( 0, Math.max( 0, loc ) ) + '<strong>' + label.slice( loc, loc + term.length ) + '</strong>' + label.slice( loc + term.length );
 		}
+		return label;
+	};
+
+	$.ui.autocomplete.prototype._renderItem = function ( ul, item ) {
+		const t = sd.highlightMatch( this.term, item.label );
 		return $( '<li>' )
 			.data( 'item.autocomplete', item )
 			.append( ' <a>' + t + '</a>' )

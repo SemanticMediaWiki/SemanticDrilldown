@@ -2,16 +2,22 @@
 	"name": "SemanticDrilldown",
 	"private": true,
 	"scripts": {
-		"test": "npm run analyze",
-		"test-coverage": "npm run analyze",
+		"test": "npm run analyze && npm run node-qunit",
+		"test-coverage": "npm run analyze && npm run node-qunit-coverage",
 		"analyze": "npm run eslint && npm run banana-checker",
 		"eslint": "eslint 'libs/**/*.js'",
 		"eslint:fix": "npm run eslint -- --fix",
-		"banana-checker": "banana-checker i18n/"
+		"banana-checker": "banana-checker i18n/",
+		"node-qunit": "qunit --require ./tests/node-qunit/setup.js 'tests/node-qunit/**/*.test.js'",
+		"node-qunit-coverage": "nyc --reporter=text --reporter=html --reporter=clover --report-dir=coverage/js --all --include='libs/**' npm run node-qunit"
 	},
 	"devDependencies": {
 		"eslint": "^8.57.1",
 		"eslint-config-wikimedia": "0.32.3",
-		"grunt-banana-checker": "0.9.0"
+		"grunt-banana-checker": "0.9.0",
+		"jquery": "^3.7.1",
+		"jsdom": "^25.0.0",
+		"nyc": "^15.1.0",
+		"qunit": "^2.21.1"
 	}
 }
