@@ -67,6 +67,9 @@ class GetAppliedFilters {
 
 			if ( $af->search_terms != null ) {
 				foreach ( $af->search_terms as $j => $search_term ) {
+					if ( $search_term == '' ) {
+						continue;
+					}
 					if ( $j > 0 ) {
 						$remainingHtml .= ' <span class="drilldown-or">' . wfMessage( 'sd_browsedata_or' )->text() . '</span> ';
 					}
