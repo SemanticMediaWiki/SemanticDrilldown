@@ -30,7 +30,7 @@ jobs:
           - mediawiki_version: '1.43'
             smw_version: 6.0.1
             srf_version: 5.2.0
-            php_version: 8.1
+            php_version: 8.2
             al_version: 0.6.3
             database_type: mysql
             database_image: "mariadb:11.2"
@@ -39,7 +39,7 @@ jobs:
           - mediawiki_version: '1.43'
             smw_version: 6.0.1
             srf_version: 5.2.0
-            php_version: 8.1
+            php_version: 8.2
             al_version: 0.6.3
             database_type: mysql
             database_image: "mariadb:11.2"
@@ -48,7 +48,7 @@ jobs:
           - mediawiki_version: '1.44'
             smw_version: dev-master
             srf_version: dev-master
-            php_version: 8.2
+            php_version: 8.3
             al_version: 0.7
             database_type: mysql
             database_image: "mariadb:11.8"
@@ -57,7 +57,7 @@ jobs:
           - mediawiki_version: '1.45'
             smw_version: dev-master
             srf_version: dev-master
-            php_version: 8.3
+            php_version: 8.4
             al_version: 0.7
             database_type: mysql
             database_image: "mariadb:11.8"
