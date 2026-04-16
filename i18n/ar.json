@@ -32,7 +32,7 @@
 	"sd_createfilter_usepropertyvalues": "استخدم كل قيم هذه الخاصية للفلتر",
 	"sd_createfilter_usecategoryvalues": "احصل على القيم للفلتر من هذا التصنيف:",
 	"sd_createfilter_requirefilter": "يتطلب اختيار مُرشّح آخر قبل أن يتم عرض هذا:",
-	"sd-pageschemas-filter": "فلترة",
+	"sd-pageschemas-filter": "مرشح",
 	"sd-pageschemas-values": "القيم",
 	"sd_browsedata_search": "بحث",
 	"sd_displayparameters_with_unknown_format": "عرض المعلمات بتنسيق غير معروف",

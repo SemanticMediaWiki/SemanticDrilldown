@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Albamhandae",
-			"Priviet"
+			"Priviet",
+			"Tensama0415"
 		]
 	},
 	"semanticdrilldown-desc": "시맨틱 데이터를 탐색하기 위한 드릴다운 인터페이스",
@@ -30,5 +31,6 @@
 	"sd_createfilter_usecategoryvalues": "이 분류에서 필터를 위한 값 얻기:",
 	"sd_createfilter_requirefilter": "이 필터를 표시하기 전에 다른 필터가 선택되야 합니다:",
 	"sd-pageschemas-filter": "필터",
-	"sd-pageschemas-values": "값"
+	"sd-pageschemas-values": "값",
+	"sd_browsedata_search": "검색"
 }
