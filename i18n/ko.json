@@ -32,5 +32,7 @@
 	"sd_createfilter_requirefilter": "이 필터를 표시하기 전에 다른 필터가 선택되야 합니다:",
 	"sd-pageschemas-filter": "필터",
 	"sd-pageschemas-values": "값",
-	"sd_browsedata_search": "검색"
+	"sd_browsedata_search": "검색",
+	"sd_displayparameters_with_unknown_format": "알 수 없는 형식의 표시 매개변수",
+	"sd_displayparameters_with_unsupported_format": "지원되지 않는 형식의 표시 매개변수"
 }
