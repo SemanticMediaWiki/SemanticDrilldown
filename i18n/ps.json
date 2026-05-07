@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ahmed-Najib-Biabani-Ibrahimkhel"
+			"Ahmed-Najib-Biabani-Ibrahimkhel",
+			"شاه زمان پټان"
 		]
 	},
 	"browsedata": "مالومات سپړل",
@@ -10,7 +11,7 @@
 	"sd_browsedata_subcategory": "څېرمه وېشنيزه",
 	"sd_browsedata_other": "بل",
 	"sd_browsedata_none": "هېڅ",
-	"sd_browsedata_filterbysubcategory": "د همدې وړې-وېشنيزې له مخې چاڼول",
+	"sd_browsedata_filterbysubcategory": "د همدې څېرمه‌وېشنيزې له مخې چاڼول",
 	"sd_browsedata_or": "يا",
 	"sd_browsedata_removefilter": "همدا چاڼگر لرې کول",
 	"sd_browsedata_daterangestart": "پيل:",
