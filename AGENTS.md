@@ -1,5 +1,361 @@
 <!-- THIS FILE IS AUTO-GENERATED. Edit AGENTS-source.adoc instead. -->
 
+# Coding Conventions
+
+**Coding Conventions — General**
+
+All source files regardless of language must follow these baseline
+rules.
+
+- Encoding: UTF-8 without BOM
+
+- Line endings: Unix-style LF (not CR+LF)
+
+- Maximum line length: 120 characters
+
+- No trailing whitespace
+
+- Newline at end of file
+
+**Coding Conventions — PHP**
+
+Tooling:
+[mediawiki-codesniffer](https://github.com/wikimedia/mediawiki-tools-codesniffer)
+via PHPCS. Run locally: `make composer-phpcs` (or `make ci`).
+
+**File structure**
+
+- Every file starts with `declare( strict_types=1 );`
+
+- No closing `?>` tag
+
+- One class per file; filename matches class name (UpperCamelCase, e.g.
+  `MyClass.php`)
+
+- New code belongs in `src/` following PSR-4; `includes/` is legacy and
+  should be migrated incrementally
+
+**Namespaces and autoloading**
+
+- PSR-4 via Composer (`autoload.psr-4` in `composer.json`)
+
+- Top-level namespace = extension name (e.g.
+  `MediaWiki\Extension\FooBar...`)
+
+- Acronyms treated as single words: `HtmlId`, not `HTMLId`
+
+**Naming**
+
+| Element                     | Convention     | Example                |
+|-----------------------------|----------------|------------------------|
+| Classes, interfaces, traits | UpperCamelCase | `PageFormParser`       |
+| Methods, variables          | lowerCamelCase | `getFormContent()`     |
+| Constants                   | UPPER_CASE     | `MAX_FORM_SIZE`        |
+| Global variables            | `$wg` prefix   | `$wgPageFormsSettings` |
+
+**Type system**
+
+- Use native type declarations on all parameters, properties, and return
+  types
+
+- PHPDoc only when native types are insufficient (e.g. `string[]`,
+  `array<string, Foo>`)
+
+- Nullable parameters: `?Type`, not `Type $x = null`
+
+- Prefer `??` (null coalescing) and `??=` over ternary isset checks
+
+- Use arrow functions `fn( $x ) => $x * 2` for single-expression
+  closures
+
+**Modern PHP features (target: PHP 8.1+)**
+
+- Constructor property promotion
+
+- `readonly` properties for immutable value objects
+
+- `enum` instead of class constant groups
+
+- `match()` instead of `switch` when returning a value
+
+**Code style**
+
+- Indentation: tabs, not spaces
+
+- 1TBS brace style — opening brace on same line, `else`/`elseif` on
+  closing brace line
+
+- Always use braces, even for single-line blocks
+
+- Spaces inside parentheses: `getFoo( $bar )`, empty: `getBar()`
+
+- Spaces around binary operators: `$a = $b + $c`
+
+- Single quotes preferred; double quotes for string interpolation
+
+- `===` strict equality; `==` only when type coercion is intentional
+
+- No Yoda conditions: `$a === 'foo'`, not `'foo' === $a`
+
+- `elseif` not `else if`
+
+- `true`, `false`, `null` always lowercase
+
+**Architecture**
+
+- `private` by default; `protected` only when subclass access is needed
+
+- Dependency injection over direct instantiation — delegate `new Foo()`
+  to factories
+
+- Single Responsibility: one class, one concern
+
+- No superglobals (`$_GET`, `$_POST`) — use `WebRequest` via
+  `RequestContext`
+
+- No new global functions — use static utility classes (`Html`, `IP`) if
+  needed
+
+- Order class members: `public` → `protected` → `private`
+
+**Static Analysis — Phan**
+
+Tooling: [Phan](https://github.com/phan/phan) with
+[mediawiki-phan-config](https://github.com/wikimedia/mediawiki-phan-config).
+Run locally: `make composer-phan` (or `make dev-test`).
+
+**Setup**
+
+Add the Phan script to `composer.json`:
+
+``` json
+"scripts": {
+    "phan": "phan --allow-polyfill-parser"
+}
+```
+
+<div class="note">
+
+`--allow-polyfill-parser` activates a pure-PHP AST fallback. Required
+when the native `php-ast` extension is not available (e.g. Debian trixie
+/ PHP 8.3 where `php-ast` has no apt package). Without this flag Phan
+exits immediately if `php-ast` is absent.
+
+</div>
+
+Add the following targets to the extension `Makefile`:
+
+``` makefile
+composer-phan: .init ## Run Phan static analysis
+    $(compose-exec-wiki) bash -c "cd $(EXTENSION_FOLDER) && composer phan $(COMPOSER_PARAMS)"
+
+composer-phan-update-baseline: .init ## Re-generate baseline and fix indentation for PHPCS
+    $(compose-exec-wiki) bash -c "cd $(EXTENSION_FOLDER) && composer phan -- --save-baseline=.phan/baseline.php"
+    unexpand --first-only -t 4 .phan/baseline.php > /tmp/baseline.php && mv /tmp/baseline.php .phan/baseline.php
+```
+
+<div class="note">
+
+The `unexpand` post-processing step is required because Phan hardcodes
+4-space indentation in `BaselineSavingPlugin.php` — this cannot be
+configured via CLI or `config.php`. MediaWiki PHPCS enforces tabs, so
+committing the unmodified baseline will cause PHPCS failures. On macOS
+where `unexpand --first-only` is unavailable, use `sed` instead:  
+`sed -i 's/ /\t/g' .phan/baseline.php`
+
+</div>
+
+**Configuration**
+
+`.phan/config.php` inherits from `mediawiki-phan-config`:
+
+``` php
+$cfg = require __DIR__ . '/../vendor/mediawiki/mediawiki-phan-config/src/config.php';
+
+$cfg['baseline_path'] = __DIR__ . '/baseline.php';
+
+$cfg['directory_list'] = array_merge(
+    $cfg['directory_list'],
+    ['src', 'includes', 'specials']
+);
+
+$cfg['exclude_analysis_directory_list'] = array_merge(
+    $cfg['exclude_analysis_directory_list'],
+    ['vendor/']
+);
+
+return $cfg;
+```
+
+**Baseline**
+
+- `.phan/baseline.php` is auto-generated — do not edit it manually
+
+- New code must not introduce Phan issues beyond the current baseline
+
+- When deliberately deferring a pre-existing issue, update the baseline
+  via the dedicated target:  
+  `make composer-phan-update-baseline`  
+  This re-generates `.phan/baseline.php` and converts Phan’s hardcoded
+  4-space indentation to tabs (required by MediaWiki PHPCS). Never run
+  `--save-baseline` directly without this post-processing step.
+
+- When suppressing with `@suppress`, always add an explanatory comment
+
+**Coding Conventions — JavaScript**
+
+Tooling: [ESLint](https://eslint.org/) with
+[eslint-config-wikimedia](https://github.com/wikimedia/eslint-config-wikimedia).
+Run locally: `npm run lint:js` (or `make ci`).
+
+**ESLint configuration**
+
+Every repository must have a `.eslintrc.json` at root with
+`"root": true`:
+
+``` json
+{
+  "root": true,
+  "extends": [
+    "wikimedia/client/es2016",
+    "wikimedia/jquery",
+    "wikimedia/mediawiki"
+  ],
+  "env": { "commonjs": true }
+}
+```
+
+**Module system**
+
+- CommonJS modules: `require()` for imports, `module.exports` for
+  exports
+
+- Register modules with ResourceLoader; bundle name pattern:
+  `ext.myExtension`
+
+- JS class files match the class name exactly (`TitleWidget.js` for
+  `TitleWidget`)
+
+**Naming**
+
+- Variables and methods: lowerCamelCase
+
+- Constructors / classes: UpperCamelCase
+
+- jQuery objects: `$`-prefix (`$button`, not `button`)
+
+- Constants: `ALL_CAPS`
+
+- Acronyms as single words: `getHtmlApiSource`, not `getHTMLAPISource`
+
+**Code style**
+
+- Tabs for indentation; single quotes for string literals
+
+- `===` and `!==`; no Yoda conditions
+
+- Spaces inside parentheses: `if ( foo )`, `getFoo( bar )`
+
+- `const` and `let` — never `var` in new code
+
+- Arrow functions for callbacks
+
+**jQuery**
+
+- Prefer ES6/DOM equivalents over deprecated jQuery methods (`.each` →
+  `forEach`, etc.)
+
+- Never search the full DOM with `$( '#id' )` or `$( '.selector' )`; use
+  hook-provided `$content` and call `.find()` on it *(full-DOM queries
+  match stale or foreign nodes, break hook-lifecycle isolation, and
+  waste performance by traversing the entire document)*
+
+- Prefer `$( '<div>' ).text( value )` over `$( '<div>text</div>' )` to
+  avoid XSS
+
+**MediaWiki APIs**
+
+- Access configuration via `mw.config.get( 'wgFoo' )`, never direct
+  globals
+
+- Expose public API via `module.exports` or within the `mw` namespace
+  (e.g. `mw.echo.Foo`)
+
+- Use `mw.storage` / `mw.storage.session` for
+  localStorage/sessionStorage
+
+- Storage keys: `mw`-prefix + camelCase/hyphens (e.g.
+  `mwedit-state-foo`)
+
+**Coding Conventions — CSS / LESS**
+
+Tooling: [stylelint](https://stylelint.io/) via `npm run lint:styles`
+(or `make ci`). ResourceLoader natively compiles `.less` files; prefer
+LESS over plain CSS.
+
+**Naming**
+
+- Classes and IDs: all-lowercase, hyphen-separated
+
+- Use an extension-specific prefix to avoid conflicts (e.g. `pf-`,
+  `smw-`, `mw-`)
+
+- LESS mixin names: `mixin-` prefix + hyphen-case (e.g.
+  `mixin-screen-reader-text`)
+
+**Whitespace and formatting**
+
+- One selector per line, one property per line
+
+- Opening brace on the same line as the last selector
+
+- Tab indentation for properties and nested rules
+
+- Semicolon after every declaration, including the last
+
+- Empty line between rule sets
+
+**Colors**
+
+- Lowercase hex shorthand preferred: `#fff`, `#252525`
+
+- `rgba()` when alpha transparency is needed; `transparent` keyword
+  otherwise
+
+- No named color keywords (except `transparent`), no `rgb()`, `hsl()`,
+  `hsla()`
+
+- Ensure color contrast meets [WCAG 2.0
+  AA](https://www.w3.org/TR/WCAG20/)
+
+**LESS specifics**
+
+- CSS custom properties (design tokens) preferred over LESS variables
+  for new code
+
+- `@import` only for mixins and variables (`variables.less`,
+  `mixins.less`); do not use `@import` for bundling conceptually related
+  files
+
+- Omit `.less` extension in `@import` statements
+
+- Bundle related files via the `styles` array in `skin.json` /
+  `extension.json`
+
+**Anti-patterns to avoid**
+
+- `!important` — avoid except when overriding upstream code that also
+  uses it
+
+- `z-index` — use natural DOM stacking order where possible; document
+  exceptions
+
+- Inline `style` attributes — always use stylesheet classes instead
+
+- `float` / `text-align: left` hardcoded — use `/* @noflip */`
+  annotation when needed, otherwise ResourceLoader’s CSSJanus handles
+  RTL automatically
+
 # Test Workflow
 
 **Test-first approach**
@@ -59,6 +415,62 @@ make bash
 > composer phpunit -- --filter YourTestName
 ```
 
+**Phan — static analysis**
+
+Run Phan against the codebase:
+
+``` console
+make composer-phan
+```
+
+**Fixing issues**
+
+- Fix genuine type errors, undeclared-method, and undeclared-class
+  issues in new code
+
+- For issues in legacy code not touched by the current change, update
+  the baseline instead of adding `@suppress`:
+
+  ``` console
+  make composer-phan-update-baseline
+  ```
+
+  This target re-generates the baseline and post-processes it with
+  `unexpand` to convert Phan’s hardcoded 4-space indentation to tabs.
+  Never run `--save-baseline` directly — the unprocessed output fails
+  MediaWiki PHPCS.
+
+- When `@suppress` is unavoidable, add an explanatory comment directly
+  above it
+
+**Baseline updates**
+
+`.phan/baseline.php` is auto-generated. After updating it, commit it
+together with the code change that necessitated the update.
+
+**Node QUnit tests**
+
+Run all JavaScript tests:
+
+``` console
+make install npm-test
+```
+
+There is no direct `make` target for filtering individual tests. Bash
+into the running container to run a specific test file or test case:
+
+``` console
+make bash
+> npm run node-qunit -- tests/node-qunit/yourtest.test.js
+```
+
+Filter by test description:
+
+``` console
+make bash
+> npx qunit --require ./tests/node-qunit/setup.js 'tests/node-qunit/**/*.test.js' --filter "your test description"
+```
+
 **Pre-commit validation gate**
 
 Before every commit, run the full CI suite to confirm nothing is broken:
@@ -67,7 +479,15 @@ Before every commit, run the full CI suite to confirm nothing is broken:
 make ci
 ```
 
-# Conventional Commits
+For interactive use (volume-mounted extension, no container rebuild),
+use the faster pre-commit gate:
+
+``` console
+make dev-test
+```
+
+`dev-test` runs: lint → PHPCS → Phan → PHPUnit — without destroying
+Docker volumes. Reserve `make ci` for the full pipeline verification.
 
 # Conventional Commits Policy
 
