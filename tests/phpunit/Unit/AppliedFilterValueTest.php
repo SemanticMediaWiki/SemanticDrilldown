@@ -23,10 +23,8 @@ class AppliedFilterValueTest extends TestCase {
 	}
 
 	// ---------------------------------------------------------------------------
-	// Tests – create(): plain text / special values
-	// ---------------------------------------------------------------------------
 
-	/** */
+	/** Tests – create(): plain text / special values */
 	public function testCreateReplacesUnderscoresWithSpaces(): void {
 		$fv = AppliedFilterValue::create( 'hello_world' );
 		$this->assertSame( 'hello world', $fv->text );
@@ -61,10 +59,8 @@ class AppliedFilterValueTest extends TestCase {
 	}
 
 	// ---------------------------------------------------------------------------
-	// Tests – create(): numeric ranges (non-date filter)
-	// ---------------------------------------------------------------------------
 
-	/** */
+	/** Tests – create(): numeric ranges (non-date filter) */
 	public function testCreateUpperLimitNumeric(): void {
 		$fv = AppliedFilterValue::create( '<100', $this->filterWithType( 'page' ) );
 		$this->assertTrue( $fv->is_numeric );

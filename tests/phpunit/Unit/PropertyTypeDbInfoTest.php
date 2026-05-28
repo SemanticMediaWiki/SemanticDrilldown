@@ -11,10 +11,8 @@ use SD\Sql\PropertyTypeDbInfo;
 class PropertyTypeDbInfoTest extends TestCase {
 
 	// ---------------------------------------------------------------------------
-	// Tests – dateField()
-	// ---------------------------------------------------------------------------
 
-	/** */
+	/** Tests – dateField() */
 	public function testDateFieldMysqlPadsIncompleteYearOnlyDatesWithSlashZeroOneZeroOne(): void {
 		global $wgDBtype;
 		$wgDBtype = 'mysql';
