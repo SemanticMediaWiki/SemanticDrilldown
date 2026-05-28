@@ -5,19 +5,26 @@
 // NEVER edit or regenerate AGENTS.md manually.
 // ============================================================
 
+include::docs/attributes.adoc[]
+
 = Semantic Drilldown – Agent Instructions
 
 // TODO: Add project-specific instructions (architecture, coding conventions, known patterns, etc.)
+
+== Coding Conventions
+
+include::docs/gesinn-it-docs-master-pub/snippets/mediawiki/coding-conventions.adoc[]
 
 == Test Workflow
 
 include::docs/gesinn-it-docs-master-pub/snippets/mediawiki/test-first-approach.adoc[]
 include::docs/gesinn-it-docs-master-pub/snippets/mediawiki/ci-install.adoc[]
 include::docs/gesinn-it-docs-master-pub/snippets/mediawiki/ci-phpunit.adoc[]
+include::docs/gesinn-it-docs-master-pub/snippets/mediawiki/ci-phan.adoc[]
+include::docs/gesinn-it-docs-master-pub/snippets/mediawiki/ci-npm.adoc[]
 include::docs/gesinn-it-docs-master-pub/snippets/mediawiki/ci-pre-commit.adoc[]
 
-== Conventional Commits
-
+// == Conventional Commits
 include::docs/gesinn-it-docs-master-pub/sections/universal/conventional-commits-policy.adoc[]
 
 // == SemVer Policy

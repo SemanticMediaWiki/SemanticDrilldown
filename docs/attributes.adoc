@@ -1,0 +1,3 @@
+:project_name: Semantic Drilldown
+:project_type: mediawiki
+:phan:
