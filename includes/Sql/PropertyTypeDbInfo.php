@@ -57,7 +57,11 @@ class PropertyTypeDbInfo {
 					// segment is optional. All of these are valid: 2000, 2000/2, 2000/2/11.
 					// However, YEAR(), MONTH() and DAY() would return NULL for incomplete date,
 					// so STR_TO_DATE is required.
-					$result = "STR_TO_DATE(CONCAT(SUBSTR(o_serialized, 3, 100), '/01/01'), '%Y/%m/%d')";
+				// Pad incomplete dates (year-only: 'YYYY', month-precision: 'YYYY/MM') with
+				// '/01/01' so STR_TO_DATE('%Y/%m/%d') doesn't return NULL for them.
+				// MySQL silently ignores surplus input after the format is consumed, so
+				// appending '/01/01' to a full date like '1900/6/15/01/01' is harmless.
+				$result = "STR_TO_DATE(CONCAT($result, '/01/01'), '%Y/%m/%d')";
 				} elseif ( $wgDBtype == 'sqlite' ) {
 					// probably one of the greatest moments in software development:
 					$result = "DATE(SUBSTR(
