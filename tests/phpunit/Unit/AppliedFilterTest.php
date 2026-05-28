@@ -16,6 +16,7 @@ class AppliedFilterTest extends TestCase {
 	// Helpers
 	// ---------------------------------------------------------------------------
 
+	/** @param string $type */
 	private function filterWithType( string $type ): Filter {
 		$filter = $this->createMock( Filter::class );
 		$filter->method( 'propertyType' )->willReturn( $type );
@@ -40,6 +41,7 @@ class AppliedFilterTest extends TestCase {
 	// Tests – parseUpperOrLowerDate()
 	// ---------------------------------------------------------------------------
 
+	/** */
 	public function testParseUpperOrLowerDateNullReturnsNull(): void {
 		$result = $this->callProtected( $this->newAppliedFilter(), 'parseUpperOrLowerDate', [ null, false ] );
 		$this->assertNull( $result );
@@ -84,6 +86,7 @@ class AppliedFilterTest extends TestCase {
 	// Tests – lowerOrUpperDateToSql()
 	// ---------------------------------------------------------------------------
 
+	/** */
 	public function testLowerOrUpperDateToSql(): void {
 		$date = [ 'year' => 2020, 'month' => 6, 'day' => 15 ];
 		$result = $this->callProtected( $this->newAppliedFilter(), 'lowerOrUpperDateToSql', [ $date ] );
@@ -94,6 +97,7 @@ class AppliedFilterTest extends TestCase {
 	// Tests – create(): value construction
 	// ---------------------------------------------------------------------------
 
+	/** */
 	public function testCreateWithSingleStringValueCreatesOneFilterValue(): void {
 		$filter = $this->filterWithType( 'text' );
 		$af = AppliedFilter::create( $filter, 'hello' );

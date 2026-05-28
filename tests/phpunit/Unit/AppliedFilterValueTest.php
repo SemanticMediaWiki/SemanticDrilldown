@@ -15,6 +15,7 @@ class AppliedFilterValueTest extends TestCase {
 	// Helpers
 	// ---------------------------------------------------------------------------
 
+	/** @param string $type */
 	private function filterWithType( string $type ): Filter {
 		$filter = $this->createMock( Filter::class );
 		$filter->method( 'propertyType' )->willReturn( $type );
@@ -25,6 +26,7 @@ class AppliedFilterValueTest extends TestCase {
 	// Tests – create(): plain text / special values
 	// ---------------------------------------------------------------------------
 
+	/** */
 	public function testCreateReplacesUnderscoresWithSpaces(): void {
 		$fv = AppliedFilterValue::create( 'hello_world' );
 		$this->assertSame( 'hello world', $fv->text );
@@ -62,6 +64,7 @@ class AppliedFilterValueTest extends TestCase {
 	// Tests – create(): numeric ranges (non-date filter)
 	// ---------------------------------------------------------------------------
 
+	/** */
 	public function testCreateUpperLimitNumeric(): void {
 		$fv = AppliedFilterValue::create( '<100', $this->filterWithType( 'page' ) );
 		$this->assertTrue( $fv->is_numeric );
@@ -125,6 +128,7 @@ class AppliedFilterValueTest extends TestCase {
 	// Tests – compare()
 	// ---------------------------------------------------------------------------
 
+	/** @param array $props */
 	private function fv( array $props ): AppliedFilterValue {
 		$fv = new AppliedFilterValue();
 		foreach ( $props as $k => $v ) {
