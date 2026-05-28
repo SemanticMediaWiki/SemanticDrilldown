@@ -6,13 +6,15 @@
 		"wikimedia/mediawiki"
 	],
 	"globals": {
-		"mediaWiki": "readonly"
+		"mediaWiki": "readonly",
+		"jQuery": "readonly"
 	},
 	"rules": {
 		"no-underscore-dangle": "off",
 		"camelcase": "off",
 		"array-callback-return": "warn",
 		"no-jquery/no-parse-html-literal": "off",
-		"no-jquery/no-global-selector": "off"
+		"no-jquery/no-global-selector": "off",
+		"mediawiki/no-unlabeled-buttonwidget": "off"
 	}
 }
