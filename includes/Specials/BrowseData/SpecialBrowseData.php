@@ -123,6 +123,13 @@ class SpecialBrowseData extends IncludableSpecialPage {
 				foreach ( $search_terms as &$search_term ) {
 					$search_term = str_replace( '_', ' ', $search_term );
 				}
+				// Discard blank terms before creating the filter — a blank search
+				// term would otherwise generate "LIKE '%%'" in SQL, matching every
+				// page, while still rendering a spurious "~ ''" breadcrumb in the UI.
+				$search_terms = array_values( array_filter( $search_terms, static fn( $t ) => $t !== '' ) );
+				if ( $search_terms === [] ) {
+					continue;
+				}
 				$applied_filters[] = AppliedFilter::create( $filter, [], $search_terms );
 				$filter_used[$i] = true;
 			} elseif ( $lower_date != null || $upper_date != null ) {
