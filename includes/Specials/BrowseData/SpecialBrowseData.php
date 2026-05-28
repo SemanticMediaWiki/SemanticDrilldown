@@ -126,7 +126,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 				// Discard blank terms before creating the filter — a blank search
 				// term would otherwise generate "LIKE '%%'" in SQL, matching every
 				// page, while still rendering a spurious "~ ''" breadcrumb in the UI.
-				$search_terms = array_values( array_filter( $search_terms, static fn( $t ) => $t !== '' ) );
+					$search_terms = array_values( array_filter( $search_terms, static fn ( $t ) => $t !== '' ) );
 				if ( $search_terms === [] ) {
 					continue;
 				}
