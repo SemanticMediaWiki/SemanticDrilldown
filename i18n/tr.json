@@ -3,6 +3,7 @@
 		"authors": [
 			"BaRaN6161 TURK",
 			"Can",
+			"HakanIST",
 			"Karduelis",
 			"Suelnur",
 			"Vito Genovese"
@@ -34,5 +35,7 @@
 	"sd_createfilter_requirefilter": "Bu filtre gösterilmeden önce başka bir filtrenin seçilmesini iste:",
 	"sd-pageschemas-filter": "Süzgeç",
 	"sd-pageschemas-values": "Değerler",
-	"sd_browsedata_search": "Ara"
+	"sd_browsedata_search": "Ara",
+	"sd_displayparameters_with_unknown_format": "Bilinmeyen biçimle parametreleri göster",
+	"sd_displayparameters_with_unsupported_format": "Desteklenmeyen biçimle parametreleri göster"
 }
