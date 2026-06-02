@@ -108,7 +108,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 		$applied_filters = [];
 		$remaining_filters = [];
 		foreach ( $filters as $i => $filter ) {
-			$filter_name = str_replace( [ ' ', "'" ], [ '_', "\'" ], $filter->name() );
+			$filter_name = str_replace( ' ', '_', $filter->name() );
 			$search_terms = $request->getArray( '_search_' . $filter_name );
 			$lower_date = $request->getVal( '_lower_' . $filter_name );
 			$upper_date = $request->getVal( '_upper_' . $filter_name );
