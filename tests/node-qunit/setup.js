@@ -16,12 +16,20 @@ global.document = dom.window.document;
 const jQuery = require( 'jquery' );
 global.jQuery = global.$ = jQuery;
 
-// Stub jQuery UI — not available in Node.js
-jQuery.widget = function () {};
+// Stub jQuery UI — not available in Node.js.
+// Capture widget definitions so tests can exercise _create directly.
+global.sdWidgets = {};
+jQuery.widget = function ( name, definition ) {
+	global.sdWidgets[ name ] = definition;
+};
 jQuery.ui = { autocomplete: { prototype: {} } };
 
 // Pre-stub the combobox plugin that $.widget('ui.combobox') would normally register
 jQuery.fn.combobox = function () { return this; };
+// Stub $.fn.autocomplete so _create can call .autocomplete({...}) without errors.
+// Tests that need to capture the autocomplete options must override this.
+jQuery.fn.autocomplete = function () { return this; };
+jQuery.fn.button = function () { return this; };
 
 // Expose the sd namespace so SemanticDrilldown.js can attach helpers to it.
 // Must be set on dom.window (= global.window) so the IIFE's `window.sd` reference

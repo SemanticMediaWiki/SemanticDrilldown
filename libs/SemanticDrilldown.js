@@ -3,7 +3,7 @@
  *
  * Javascript code for use by the Semantic Drilldown extension.
  *
- * @param $
+ * @param {jQuery} $
  * @author Sanyam Goyal
  */
 ( function ( $ ) {
@@ -38,15 +38,15 @@
 	$.widget( 'ui.combobox', {
 		_create: function () {
 			const self = this;
-			const select = this.element.hide();
-			const inp_id = select.data( 'mwInputName' );
-			const filterName = select.data( 'mwFilterName' );
-			const input = $( '<input type="text" value="">' ).attr( { id: inp_id, name: inp_id } )
-				.insertAfter( select )
+			const $select = this.element.hide();
+			const inp_id = $select.data( 'mwInputName' );
+			const filterName = $select.data( 'mwFilterName' );
+			const $input = $( '<input type="text" value="">' ).attr( { id: inp_id, name: inp_id } )
+				.insertAfter( $select )
 				.autocomplete( {
 					source: function ( request, response ) {
 						const matcher = new RegExp( request.term, 'i' );
-						response( select.children( 'option' ).map( function () {
+						response( $select.children( 'option' ).map( function () {
 							const text = this.innerHTML;
 							if ( this.value && ( !request.term || matcher.test( text ) ) ) {
 								return {
@@ -55,6 +55,7 @@
 									value: this.value
 								};
 							}
+							return undefined;
 						} ) );
 					},
 					delay: 0,
@@ -64,16 +65,16 @@
 							// just leave it as it is
 							return false;
 						}
-						select.val( ui.item.id );
+						$select.val( ui.item.id );
 						self._trigger( 'selected', event, {
-							item: select.find( '[value="' + ui.item.id + '"]' )
+							item: $select.find( '[value="' + ui.item.id + '"]' )
 						} );
 						setTimeout( () => {
 							// Switch to the direct-match parameter name so that selecting a value
 							// from the dropdown behaves identically to clicking a filter link,
 							// avoiding the LIKE-search path that can mis-encode special characters.
-							input.attr( { name: filterName } );
-							select[ 0 ].form.submit();
+							$input.attr( { name: filterName } );
+							$select[ 0 ].form.submit();
 						}, 0 );
 
 					},
@@ -83,7 +84,7 @@
 			$( '<button type="button">&nbsp;</button>' )
 				.attr( 'tabIndex', -1 )
 				.attr( 'title', 'Show All Items' )
-				.insertAfter( input )
+				.insertAfter( $input )
 				.button( {
 					icons: {
 						primary: 'ui-icon-triangle-1-s'
@@ -99,13 +100,13 @@
 				.attr( 'style', 'width: 2.4em; margin: 0 !important; border-radius: 0' )
 				.click( () => {
 					// close if already visible
-					if ( input.autocomplete( 'widget' ).is( ':visible' ) ) {
-						input.autocomplete( 'close' );
+					if ( $input.autocomplete( 'widget' ).is( ':visible' ) ) {
+						$input.autocomplete( 'close' );
 						return;
 					}
 					// pass empty string as value to search for, displaying all results
-					input.autocomplete( 'search', '' );
-					input.focus();
+					$input.autocomplete( 'search', '' );
+					$input.trigger( 'focus' );
 				} );
 		}
 	} );
