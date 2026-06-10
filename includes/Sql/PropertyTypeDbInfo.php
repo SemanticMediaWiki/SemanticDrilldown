@@ -64,10 +64,12 @@ class PropertyTypeDbInfo {
 					$result = "STR_TO_DATE(CONCAT($result, '/01/01'), '%Y/%m/%d')";
 				} elseif ( $wgDBtype == 'sqlite' ) {
 					// probably one of the greatest moments in software development:
-					$result = "DATE(SUBSTR(
-						REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE($result || '/', '/', '//'), 
-						'/1/', '/01/'), '/2/', '/02/'), '/3/', '/03/'), '/4/', '/04/'), '/5/', '/05/'), '/6/', '/06/'), '/7/', '/07/'), '/8/', '/08/'), '/9/', '/09/'),
-						'//', '-'), 1, 10))";
+					$padded = "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE("
+						. "REPLACE(REPLACE($result || '/', '/', '//'),"
+						. " '/1/', '/01/'), '/2/', '/02/'), '/3/', '/03/'), '/4/', '/04/'),"
+						. " '/5/', '/05/'), '/6/', '/06/'), '/7/', '/07/'), '/8/', '/08/'),"
+						. " '/9/', '/09/')";
+					$result = "DATE(SUBSTR(REPLACE($padded, '//', '-'), 1, 10))";
 				}
 
 				return $result;

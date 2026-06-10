@@ -86,7 +86,9 @@ class SqlProvider {
 	 * @param AppliedFilter[] $applied_filters
 	 * @return string
 	 */
-	public static function getSQLFromClause( string $category, string $subcategory, array $subcategories, array $applied_filters ) {
+	public static function getSQLFromClause(
+		string $category, string $subcategory, array $subcategories, array $applied_filters
+	) {
 		$dbr = MediaWikiServices::getInstance()
 			->getDBLoadBalancer()
 			->getMaintenanceConnectionRef( DB_REPLICA );
@@ -130,7 +132,8 @@ class SqlProvider {
 				$sql .= "LEFT OUTER JOIN
 	(SELECT s_id
 	FROM $property_table_name
-	WHERE $property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)) $property_table_nickname
+	WHERE $property_field = (SELECT MIN(smw_id) FROM $smwIDs
+		WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)) $property_table_nickname
 	ON ids.smw_id = $property_table_nickname.s_id ";
 			}
 		}
@@ -170,7 +173,8 @@ class SqlProvider {
 			$value_field = PropertyTypeDbInfo::valueField( $af->filter->propertyType() );
 			if ( $af->filter->propertyType() === 'page' ) {
 				$property_field = "r$i.p_id";
-				$sql .= "\n	AND ($property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)";
+				$sql .= "\n	AND ($property_field = (SELECT MIN(smw_id) FROM $smwIDs"
+					. " WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)";
 				if ( $includes_none ) {
 					$sql .= " OR $property_field IS NULL";
 				}
@@ -178,7 +182,8 @@ class SqlProvider {
 				$value_field = "o_ids$i.smw_title";
 			} else {
 				$property_field = "a$i.p_id";
-				$sql .= "\n	AND $property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
+				$sql .= "\n	AND $property_field = (SELECT MIN(smw_id) FROM $smwIDs"
+					. " WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
 				if ( strncmp( $value_field, '(IF(o_blob IS NULL', 18 ) === 0 ) {
 					$value_field = str_replace( 'o_', "a$i.o_", $value_field );
 				} else {

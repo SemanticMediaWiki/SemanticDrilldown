@@ -70,9 +70,14 @@ class NumberUtils {
 		$bucketSeparators[0] = self::getNearestNiceNumber( $bucketSeparators[0], null,
 			$bucketSeparators[1] );
 		for ( $i = 1; $i < count( $bucketSeparators ) - 1; $i++ ) {
-			$bucketSeparators[$i] = self::getNearestNiceNumber( $bucketSeparators[$i], $bucketSeparators[$i - 1], $bucketSeparators[$i + 1] );
+			$bucketSeparators[$i] = self::getNearestNiceNumber(
+				$bucketSeparators[$i], $bucketSeparators[$i - 1], $bucketSeparators[$i + 1]
+			);
 		}
-		$bucketSeparators[count( $bucketSeparators ) - 1] = self::getNearestNiceNumber( $bucketSeparators[count( $bucketSeparators ) - 1], $bucketSeparators[count( $bucketSeparators ) - 2], null );
+		$lastIdx = count( $bucketSeparators ) - 1;
+		$bucketSeparators[$lastIdx] = self::getNearestNiceNumber(
+			$bucketSeparators[$lastIdx], $bucketSeparators[$lastIdx - 1], null
+		);
 
 		$oldSeparatorValue = $bucketSeparators[0];
 		for ( $i = 1; $i < count( $bucketSeparators ); $i++ ) {
@@ -89,7 +94,8 @@ class NumberUtils {
 		for ( $i = 0; $i < count( $numberArray ); $i++ ) {
 			if ( $curSeparator < count( $propertyValues ) - 1 ) {
 				$curNumber = $numberArray[$i];
-				while ( ( $curSeparator < count( $bucketSeparators ) - 2 ) && ( $curNumber >= $bucketSeparators[$curSeparator + 1] ) ) {
+				while ( ( $curSeparator < count( $bucketSeparators ) - 2 )
+					&& ( $curNumber >= $bucketSeparators[$curSeparator + 1] ) ) {
 					$curSeparator++;
 				}
 			}

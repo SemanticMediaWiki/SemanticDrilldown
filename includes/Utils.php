@@ -160,7 +160,9 @@ class Utils {
 		$sd_row->addItem( ALItem::newFromSpecialPage( 'BrowseData' ) );
 		$sd_name = wfMessage( 'specialpages-group-sd_group' )->text();
 		$sd_docu_label = wfMessage( 'adminlinks_documentation', $sd_name )->text();
-		$sd_row->addItem( ALItem::newFromExternalLink( "https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label ) );
+		$sd_row->addItem( ALItem::newFromExternalLink(
+			"https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label
+		) );
 
 		$browse_search_section->addRow( $sd_row );
 

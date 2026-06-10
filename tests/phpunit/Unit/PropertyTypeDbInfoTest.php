@@ -39,7 +39,9 @@ class PropertyTypeDbInfoTest extends TestCase {
 		// The fix appends '/01/01' so year-only (e.g. '1900') becomes
 		// '1900/01/01' – MySQL surplus-input tolerance makes this safe for
 		// full dates too (e.g. '1900/6/15/01/01' → 1900-06-15).
-		$this->assertStringContainsString( "STR_TO_DATE(CONCAT(SUBSTR(o_serialized, 3, 100), '/01/01'), '%Y/%m/%d')", $result );
+		$this->assertStringContainsString(
+			"STR_TO_DATE(CONCAT(SUBSTR(o_serialized, 3, 100), '/01/01'), '%Y/%m/%d')", $result
+		);
 	}
 
 	public function testDateFieldNonDateTypeReturnsNull(): void {

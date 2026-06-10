@@ -58,7 +58,9 @@ class AppliedFilter {
 	 */
 	public $upper_date_string;
 
-	public static function create( Filter $filter, $values, $search_terms = null, $lower_date = null, $upper_date = null ) {
+	public static function create(
+		Filter $filter, $values, $search_terms = null, $lower_date = null, $upper_date = null
+	) {
 		$af = new AppliedFilter();
 		$af->filter = $filter;
 		$af->search_terms = $search_terms;
@@ -191,7 +193,8 @@ class AppliedFilter {
 				$sql .= " OR ";
 			}
 			if ( $fv->is_other ) {
-				$checkNullOrEmptySql = "$value_field IS NULL " . ( $wgDBtype == 'postgres' ? '' : "OR $value_field = '' " );
+				$checkNullOrEmptySql = "$value_field IS NULL "
+					. ( $wgDBtype == 'postgres' ? '' : "OR $value_field = '' " );
 				$notOperatorSql = ( $wgDBtype == 'postgres' ? "not" : "!" );
 				$sql .= "($notOperatorSql ($checkNullOrEmptySql ";
 				foreach ( $this->filter->possible_applied_filters as $paf ) {
@@ -200,7 +203,8 @@ class AppliedFilter {
 				}
 				$sql .= "))";
 			} elseif ( $fv->is_none ) {
-				$checkNullOrEmptySql = ( $wgDBtype == 'postgres' ? '' : "$value_field = '' OR " ) . "$value_field IS NULL";
+				$checkNullOrEmptySql = ( $wgDBtype == 'postgres' ? '' : "$value_field = '' OR " )
+					. "$value_field IS NULL";
 				$sql .= "($checkNullOrEmptySql) ";
 			} elseif ( $fv->is_numeric ) {
 				if ( $fv->lower_limit && $fv->upper_limit ) {
@@ -211,9 +215,7 @@ class AppliedFilter {
 					$sql .= "$value_field < {$fv->upper_limit} ";
 				}
 			} elseif ( $this->filter->propertyType() == 'date' ) {
-				// check if the array can be used instead of list
-				// [ $yearValue, $monthValue, $dayValue ] = SqlProvider::getDateFunctions( $value_field );
-				list( $yearValue, $monthValue, $dayValue ) = SqlProvider::getDateFunctions( $value_field );
+				[ $yearValue, $monthValue, $dayValue ] = SqlProvider::getDateFunctions( $value_field );
 				if ( $fv->time_period == 'day' ) {
 					$sql .= "$yearValue = {$fv->year} AND $monthValue = {$fv->month} AND $dayValue = {$fv->day} ";
 				} elseif ( $fv->time_period == 'month' ) {
@@ -257,7 +259,7 @@ class AppliedFilter {
 			$value_field = PropertyTypeDbInfo::valueField( $this->filter->propertyType() );
 		} else {
 			$date_field = PropertyTypeDbInfo::dateField( $this->filter->propertyType() );
-			list( $yearValue, $monthValue, $dayValue ) = SqlProvider::getDateFunctions( $date_field );
+			[ $yearValue, $monthValue, $dayValue ] = SqlProvider::getDateFunctions( $date_field );
 
 			if ( $this->filter->timePeriod() == 'day' ) {
 				$value_field = "$yearValue, $monthValue, $dayValue";

@@ -52,7 +52,9 @@ class SpecialBrowseData extends IncludableSpecialPage {
 		}
 		$this->setHeaders();
 		$out->addModules( [ 'ext.semanticdrilldown.main', 'ext.smw.styles' ] );
-		$out->addScript( '<!--[if IE]><link rel="stylesheet" href="' . $sdSkinsPath . '/SD_IEfixes.css" media="screen" /><![endif]-->' );
+		$ieFixesCss = '<!--[if IE]><link rel="stylesheet" href="' . $sdSkinsPath
+			. '/SD_IEfixes.css" media="screen" /><![endif]-->';
+		$out->addScript( $ieFixesCss );
 
 		// set default
 		if ( $sdgNumResultsPerPage == null ) {
@@ -74,7 +76,9 @@ class SpecialBrowseData extends IncludableSpecialPage {
 			$parameters = ( $this->loadParameters )( $category );
 			$category_title = $parameters->title();
 			if ( $category_title === null ) {
-				$category_title = $this->msg( 'browsedata' )->text() . html_entity_decode( $this->msg( 'colon-separator' )->text() ) . str_replace( '_', ' ', $category );
+				$category_title = $this->msg( 'browsedata' )->text()
+					. html_entity_decode( $this->msg( 'colon-separator' )->text() )
+					. str_replace( '_', ' ', $category );
 			}
 
 			[ $limit, $offset ] = $request->getLimitOffsetForUser(

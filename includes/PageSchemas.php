@@ -118,7 +118,9 @@ class PageSchemas extends \PSExtensionHandler {
 			}
 			$categoriesHTML .= "\t" . Html::element( 'option', $categoryOptionAttrs, $category ) . "\n";
 		}
-		$html_text .= "\t" . Html::rawElement( 'select', [ 'id' => 'category_dropdown', 'name' => 'sd_category_name_num' ], "\n" . $categoriesHTML ) . "\n";
+		$html_text .= "\t" . Html::rawElement(
+			'select', [ 'id' => 'category_dropdown', 'name' => 'sd_category_name_num' ], "\n" . $categoriesHTML
+		) . "\n";
 		$html_text .= "\t</p>\n";
 		$html_text .= "\t</div>\n";
 
@@ -140,7 +142,9 @@ class PageSchemas extends \PSExtensionHandler {
 				$xml .= '>';
 			} elseif ( substr( $var, 0, 17 ) == 'sd_values_source_' ) {
 				if ( $val == 'category' ) {
-					$xml .= '<ValuesFromCategory>' . $wgRequest->getText( 'sd_category_name_' . $fieldNum ) . '</ValuesFromCategory>';
+					$xml .= '<ValuesFromCategory>'
+						. $wgRequest->getText( 'sd_category_name_' . $fieldNum )
+						. '</ValuesFromCategory>';
 				}
 				$xml .= '</semanticdrilldown_Filter>';
 				$xmlPerField[$fieldNum] = $xml;

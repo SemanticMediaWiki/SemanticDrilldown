@@ -113,7 +113,9 @@ class QueryPage extends \QueryPage {
 			$vm += [
 				'appliedFilters' => ( $this->getAppliedFilters )(),
 				'applicableFilters' => ( $this->getApplicableFilters )(),
-				'results' => ( $this->getSemanticResults )( $this->unpagedDisplayParametersList, $this->getOutput(), $res ),
+				'results' => ( $this->getSemanticResults )(
+					$this->unpagedDisplayParametersList, $this->getOutput(), $res
+				),
 			];
 		}
 
@@ -184,7 +186,11 @@ class QueryPage extends \QueryPage {
 				// doesn't need to, because of occasional bugs
 				// in SMW where the same page gets two
 				// different SMW IDs.
-				$query[ 'tables' ][ $property_table_nickname ] = new Subquery( "SELECT s_id FROM $property_table_name WHERE $property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)" );
+				$query[ 'tables' ][ $property_table_nickname ] = new Subquery(
+					"SELECT s_id FROM $property_table_name WHERE $property_field"
+					. " = (SELECT MIN(smw_id) FROM $smwIDs"
+					. " WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)"
+				);
 				$query[ 'join_conds' ][ $property_table_nickname ] = [
 					"LEFT OUTER JOIN",
 					[
@@ -248,7 +254,8 @@ class QueryPage extends \QueryPage {
 			$value_field = PropertyTypeDbInfo::valueField( $af->filter->propertyType() );
 			if ( $af->filter->propertyType() === 'page' ) {
 				$property_field = "r$i.p_id";
-				$sql = "SELECT MIN(smw_id) FROM $smwIDs WHERE (smw_title = '$property_value' AND smw_namespace = $prop_ns)";
+				$sql = "SELECT MIN(smw_id) FROM $smwIDs"
+					. " WHERE (smw_title = '$property_value' AND smw_namespace = $prop_ns)";
 				if ( $includes_none ) {
 					$sql .= " OR $property_field IS NULL";
 				}
@@ -256,7 +263,8 @@ class QueryPage extends \QueryPage {
 				$value_field = "o_ids$i.smw_title";
 			} else {
 				$property_field = "a$i.p_id";
-				$sql = "SELECT MIN(smw_id) FROM $smwIDs WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns AND ";
+				$sql = "SELECT MIN(smw_id) FROM $smwIDs"
+					. " WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns AND ";
 				if ( strncmp( $value_field, '(IF(o_blob IS NULL', 18 ) === 0 ) {
 					$value_field = str_replace( 'o_', "a$i.o_", $value_field );
 				} else {

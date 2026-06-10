@@ -39,18 +39,21 @@ class UrlService {
 				// do nothing
 			} elseif ( count( $af->values ) == 1 ) {
 				$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
-				$url .= urlencode( str_replace( ' ', '_', $af->filter->name() ) ) . "=" . urlencode( str_replace( ' ', '_', $af->values[0]->text ) );
+				$url .= urlencode( str_replace( ' ', '_', $af->filter->name() ) )
+					. "=" . urlencode( str_replace( ' ', '_', $af->values[0]->text ) );
 			} else {
 				usort( $af->values, [ AppliedFilterValue::class, "compare" ] );
 				foreach ( $af->values as $j => $fv ) {
 					$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
-					$url .= urlencode( str_replace( ' ', '_', $af->filter->name() ) ) . "[$j]=" . urlencode( str_replace( ' ', '_', $fv->text ) );
+					$url .= urlencode( str_replace( ' ', '_', $af->filter->name() ) )
+						. "[$j]=" . urlencode( str_replace( ' ', '_', $fv->text ) );
 				}
 			}
 			if ( $af->search_terms != null ) {
 				foreach ( $af->search_terms as $j => $search_term ) {
 					$url .= ( strpos( $url, '?' ) ) ? '&' : '?';
-					$url .= '_search_' . urlencode( str_replace( ' ', '_', $af->filter->name() ) . '[' . $j . ']' ) . "=" . urlencode( str_replace( ' ', '_', $search_term ) );
+					$url .= '_search_' . urlencode( str_replace( ' ', '_', $af->filter->name() ) . '[' . $j . ']' )
+						. "=" . urlencode( str_replace( ' ', '_', $search_term ) );
 				}
 			}
 		}
