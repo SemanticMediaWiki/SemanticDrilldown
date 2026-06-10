@@ -60,12 +60,14 @@ git checkout -b issue-1234
 
 '''
 
-*Coding Conventions — General*
+*Coding Conventions — MediaWiki*
 
 All source files regardless of language must follow these baseline rules.
+They are enforced by `make ci` (lint + phpcs + eslint).
 
 * Encoding: UTF-8 without BOM
 * Line endings: Unix-style LF (not CR+LF)
+* Indentation: tabs, not spaces
 * Maximum line length: 120 characters
 * No trailing whitespace
 * Newline at end of file
@@ -74,20 +76,15 @@ All source files regardless of language must follow these baseline rules.
 
 *Coding Conventions — PHP*
 
-Tooling: https://github.com/wikimedia/mediawiki-tools-codesniffer[mediawiki-codesniffer] via PHPCS.
-Run locally: `make composer-phpcs` (or `make ci`).
-
 *File structure*
 
 * Every file starts with `declare( strict_types=1 );`
 * No closing `?>` tag
 * One class per file; filename matches class name (UpperCamelCase, e.g. `MyClass.php`)
-* New code belongs in `src/` following PSR-4; `includes/` is legacy and should be migrated incrementally
 
 *Namespaces and autoloading*
 
 * PSR-4 via Composer (`autoload.psr-4` in `composer.json`)
-* Top-level namespace = extension name (e.g. `MediaWiki\Extension\FooBar\...`)
 * Acronyms treated as single words: `HtmlId`, not `HTMLId`
 
 *Naming*
@@ -107,10 +104,6 @@ Run locally: `make composer-phpcs` (or `make ci`).
 | Constants
 | UPPER_CASE
 | `MAX_FORM_SIZE`
-
-| Global variables
-| `$wg` prefix
-| `$wgPageFormsSettings`
 |===
 
 *Type system*
@@ -146,13 +139,35 @@ Run locally: `make composer-phpcs` (or `make ci`).
 * `private` by default; `protected` only when subclass access is needed
 * Dependency injection over direct instantiation — delegate `new Foo()` to factories
 * Single Responsibility: one class, one concern
-* No superglobals (`$_GET`, `$_POST`) — use `WebRequest` via `RequestContext`
-* No new global functions — use static utility classes (`Html`, `IP`) if needed
 * Order class members: `public` → `protected` → `private`
 
 '''
 
-*Static Analysis — Phan*
+*Coding Conventions — PHP · MediaWiki*
+
+Tooling: https://github.com/wikimedia/mediawiki-tools-codesniffer[mediawiki-codesniffer] via PHPCS.
+Run locally: `make composer-phpcs` (or `make ci`).
+
+*Source directories*
+
+* New code belongs in `src/` following PSR-4; `includes/` is legacy and should be migrated incrementally
+
+*Namespaces*
+
+* Top-level namespace = extension name (e.g. `MediaWiki\Extension\FooBar\...`)
+
+*Global variable prefix*
+
+* Global variables: `$wg` prefix (e.g. `$wgPageFormsSettings`)
+
+*Request handling*
+
+* No superglobals (`$_GET`, `$_POST`) — use `WebRequest` via `RequestContext`
+* No new global functions — use static utility classes (`Html`, `IP`) if needed
+
+'''
+
+*Static Analysis — Phan · PHP*
 
 Tooling: https://github.com/phan/phan[Phan] with https://github.com/wikimedia/mediawiki-phan-config[mediawiki-phan-config].
 Run locally: `make composer-phan` (or `make dev-test`).
@@ -224,7 +239,7 @@ return $cfg;
 
 '''
 
-*Coding Conventions — JavaScript*
+*Coding Conventions — JavaScript · MediaWiki*
 
 Tooling: https://eslint.org/[ESLint] with https://github.com/wikimedia/eslint-config-wikimedia[eslint-config-wikimedia].
 Run locally: `npm run lint:js` (or `make ci`).
@@ -285,12 +300,12 @@ Every repository must have a `.eslintrc.json` at root with `"root": true`:
 
 '''
 
-*Coding Conventions — CSS / LESS*
+*Coding Conventions — CSS/LESS · MediaWiki*
 
 Tooling: https://stylelint.io/[stylelint] via `npm run lint:styles` (or `make ci`).
 ResourceLoader natively compiles `.less` files; prefer LESS over plain CSS.
 
-*Naming*
+*Class and ID naming*
 
 * Classes and IDs: all-lowercase, hyphen-separated
 * Use an extension-specific prefix to avoid conflicts (e.g. `pf-`, `smw-`, `mw-`)
@@ -331,7 +346,7 @@ ResourceLoader natively compiles `.less` files; prefer LESS over plain CSS.
 
 '''
 
-*Test-first approach*
+*Procedure — test:write · MediaWiki*
 
 Before making any code changes to fix a bug or implement a feature:
 
@@ -340,9 +355,115 @@ Before making any code changes to fix a bug or implement a feature:
 . Only after a failing test exists, make the code changes.
 . Re-run the test to confirm it passes (green).
 
+*MediaWiki test base classes*
+
+Use the appropriate base class:
+
+* `MediaWikiUnitTestCase` — pure unit tests (no database, no service container); fastest
+* `MediaWikiIntegrationTestCase` — integration tests that need the service container or database
+* `MediaWikiLangTestCase` — when language handling is under test
+* `SpecialPageTestBase` — extends `MediaWikiIntegrationTestCase`; use when testing Special Pages
+* `HookRunnerTestBase` — unit test base for `HookRunner` classes; validates hook delegation automatically
+
+Do *not* extend `MediaWikiIntegrationTestCase` by default — use `MediaWikiUnitTestCase` unless integration with MW services is required.
+
+*Testing Special Pages with SpecialPageTestBase*
+
+Extend `SpecialPageTestBase` and implement `newSpecialPage()` to return the page instance:
+
+[source,php]
+----
+class SpecialFooTest extends SpecialPageTestBase {
+    protected function newSpecialPage() {
+        return MediaWikiServices::getInstance()
+            ->getSpecialPageFactory()->getPage( 'Foo' );
+    }
+}
+----
+
+Key methods available in tests:
+
+* `$this->executeSpecialPage( $subpage, new FauxRequest( $query, $isPosted ) )` — renders the special page and returns `[ $html, $context ]`
+* `$this->setUserLang( 'qqx' )` — use `qqx` locale so message keys appear literally in output, making assertions locale-independent
+* `$this->setGroupPermissions( '*', 'edit', false )` — adjust permissions; combine with `$this->expectException( PermissionsError::class )` to test access control
+* `$this->insertPage( $title, $content )` — create a page as fixture
+* `$this->getServiceContainer()` — access MW services
+
+Annotate the class with `@group Database` when the test writes to the database.
+
+If the special page requires a permission (e.g. `upload`), pass a matching performer as the fourth argument — otherwise `executeSpecialPage()` runs as an anonymous user and throws `PermissionsError`:
+
+[source,php]
+----
+$performer = $this->getTestUser( [ 'sysop' ] )->getAuthority();
+[ $html, ] = $this->executeSpecialPage( '', new FauxRequest( [] ), null, $performer );
+----
+
+If the page checks a feature flag via config (e.g. `UploadBase::isEnabled()` reads `wgEnableUploads`), set it before calling `executeSpecialPage()`:
+
+[source,php]
+----
+$this->setMwGlobals( 'wgEnableUploads', true );
+----
+
+*Asserting HTML output*
+
+Parse the returned `$html` with `DomDocument` and `DomXPath` to assert on form fields, links, or rendered content:
+
+[source,php]
+----
+[ $html, ] = $this->executeSpecialPage( '', new FauxRequest( [] ) );
+$dom = new DomDocument;
+$dom->loadHTML( $html );
+$xpath = new DomXpath( $dom );
+$input = $xpath->query( '//input[@name="wpFoo"]' )->item( 0 );
+$this->assertNotNull( $input );
+----
+
+*Testing HookRunner classes with HookRunnerTestBase*
+
+If the extension has a `HookRunner` class (a class that implements hook interfaces and delegates to `HookContainer::run()`), add a unit test that extends `HookRunnerTestBase`. This test automatically verifies that every hook method delegates correctly — right hook name, right argument signature.
+
+First check whether a `HookRunner` exists:
+
+[source,console]
+----
+find includes -name "*HookRunner.php" | head -1
+----
+
+If one exists, the test is a one-liner:
+
+[source,php]
+----
+use MediaWiki\Tests\HookContainer\HookRunnerTestBase;
+
+/**
+ * @covers \FooHookRunner
+ */
+class FooHookRunnerTest extends HookRunnerTestBase {
+    public static function provideHookRunners() {
+        yield FooHookRunner::class => [ FooHookRunner::class ];
+    }
+}
+----
+
+Place the test under `tests/phpunit/unit/` — no database needed.
+
+Do *not* introduce a `HookRunner` class just to have this test. Only add the test when the extension already uses the Hook Runner pattern.
+
+*Test fixtures*
+
+* Use `setUp()` and `tearDown()` for test-scoped fixtures
+* For database fixtures, use `addDBDataOnce()` (run once per class) or `addDBData()` (run per test)
+* Use `getMockBuilder()` / `createMock()` for dependencies; prefer constructor injection so mocks can be passed in
+
+*Running tests*
+
+See the *Execution — Install Dependencies · MediaWiki* and *Execution — Run Tests (PHPUnit) · MediaWiki* reference files loaded by this skill.
+
 '''
 
-*Test environment setup*
+*Execution — Install Dependencies · MediaWiki*
 
 All tests run inside a containerized MediaWiki environment managed via
 https://github.com/gesinn-it-pub/docker-compose-ci[docker-compose-ci] (the `build/` submodule).
@@ -352,6 +473,11 @@ Always run `make install` before executing tests to ensure that the latest file
 changes are copied into the container. Changes to source or test files on the
 host are *not* automatically reflected in a running container.
 
+NOTE: When a `docker-compose.override.yml` with a bind-mount of the extension
+source directory is active (local development setup), `make install` is only
+required at the start of a new session or after dependency changes. For
+iterative test runs, use `make php-test` or `make dev-test` directly.
+
 [source,console]
 ----
 make install
@@ -359,7 +485,7 @@ make install
 
 '''
 
-*PHPUnit tests*
+*Execution — Run Tests (PHPUnit) · MediaWiki*
 
 Run all PHPUnit tests:
 
@@ -392,7 +518,7 @@ make bash
 
 '''
 
-*Node QUnit tests*
+*Execution — Run Tests (QUnit) · MediaWiki*
 
 Run all JavaScript tests:
 
@@ -420,7 +546,7 @@ make bash
 
 '''
 
-*Pre-commit validation gate*
+*Execution — Pre-Commit Gate · MediaWiki*
 
 Before every commit, run the full CI suite to confirm nothing is broken:
 
@@ -443,6 +569,10 @@ Reserve `make ci` for the full pipeline verification.
 :leveloffset: +1
 
 == Conventional Commits Policy
+
+'''
+
+*Commit Convention — Conventional Commits*
 
 Commit messages follow the https://www.conventionalcommits.org/[Conventional Commits specification].
 
@@ -490,6 +620,11 @@ Guidelines:
 * Use the commit body to explain *why*, not only *what*
 * Scopes should be short, lowercase identifiers (e.g. `api`, `parser`, `smw`, `mediawiki`, `docker`)
 * Use `chore` only for repository maintenance tasks that do not affect runtime behavior, dependencies, CI configuration, or tests
+* Do *not* add a `Co-Authored-By:` trailer or any agent attribution line to the commit message
+
+Changelog:
+
+* After committing a `feat`, `fix`, `deps`, `refactor`, or `docs` change, add a corresponding entry to the `[Unreleased]` section of `CHANGELOG.md` — do not wait until release time.
 
 :leveloffset!:
 

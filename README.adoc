@@ -42,9 +42,32 @@ If not done when cloning, it can be done by
 
 For documentation see: https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown
 
-== Versioning
+'''
 
-We use http://semver.org/[SemVer] for versioning. See the tags in this repository for available versions.
+*Versioning Convention — Semantic Versioning*
+
+This project follows https://semver.org/[Semantic Versioning].
+
+Version numbers follow the format:
+
+`MAJOR.MINOR.PATCH`
+
+Version increment rules:
+
+* MAJOR — incompatible or breaking changes
+* MINOR — backwards-compatible feature additions
+* PATCH — backwards-compatible bug fixes
+
+Breaking changes include (but are not limited to):
+
+* incompatible API changes
+* removal or renaming of public interfaces
+* behavior changes that may break existing integrations
+* increased minimum runtime or dependency requirements
+* incompatible configuration or data format changes
+* dependency upgrades that introduce breaking changes for users
+
+Breaking changes must always increment the MAJOR version.
 
 == Contributing
 
