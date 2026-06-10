@@ -6,16 +6,20 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 
 ## [Unreleased]
 
+## [5.0.1] - 2026-06-10
+
+Patch release with bug fixes for filter behaviour, sorting, subcategory navigation, and combobox handling.
+
 ### Fixed
-- Fix `requires` filter option having no effect: filters with `requires=SomeFilter` were never shown because the required-filter name was iterated as individual characters instead of as a filter name ([#4](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/4))
-- Fix sorting to respect per-category sort keys (`[[Category:Foo|SortKey]]`) by joining `categorylinks` and using `cl_sortkey` instead of `smw_sortkey` alone ([#12](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/12))
-- Fix missing back-navigation when browsing subcategories of subcategories: encode the full subcategory path in `_subcat` (slash-separated), render each level as a separate breadcrumb with its own remove link, and use only the deepest segment for DB queries ([#15](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/15))
-- Fix "None(N)" filter returning fewer pages than its count: use `LEFT OUTER JOIN` for non-page property tables when the filter includes "none", allow `p_id IS NULL` in the WHERE clause for non-page types, and re-compute `$includes_none` per filter to prevent scoping bleed across multiple applied filters ([#17](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/17))
-- Fix combobox filter failing for property values containing `&`: replace the first-option-value hack with `data-mw-input-name`/`data-mw-filter-name` attributes; when a value is selected from the dropdown, submit it as a direct-match parameter instead of a search term, consistent with clicking a filter link ([#18](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/18))
+- Fix `requires` filter option having no effect: filters with `requires=SomeFilter` were never shown because the required-filter name was iterated as individual characters instead of as a filter name [`1b49cf3`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/1b49cf3) ([#4](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/4))
+- Fix sorting to respect per-category sort keys (`[[Category:Foo|SortKey]]`) by joining `categorylinks` and using `cl_sortkey` instead of `smw_sortkey` alone [`a804fee`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/a804fee) ([#12](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/12))
+- Fix missing back-navigation when browsing subcategories of subcategories: encode the full subcategory path in `_subcat` (slash-separated), render each level as a separate breadcrumb with its own remove link, and use only the deepest segment for DB queries [`6092eb7`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/6092eb7) ([#15](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/15))
+- Fix "None(N)" filter returning fewer pages than its count: use `LEFT OUTER JOIN` for non-page property tables when the filter includes "none", allow `p_id IS NULL` in the WHERE clause for non-page types, and re-compute `$includes_none` per filter to prevent scoping bleed across multiple applied filters [`8ba2dbc`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/8ba2dbc) ([#17](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/17))
+- Fix combobox filter failing for property values containing `&`: replace the first-option-value hack with `data-mw-input-name`/`data-mw-filter-name` attributes; when a value is selected from the dropdown, submit it as a direct-match parameter instead of a search term, consistent with clicking a filter link [`6f84591`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/6f84591) ([#18](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/18))
 
 ### Changed
 - Replace global config access with `getConfig()`/`GlobalVarConfig` in `SpecialBrowseData`; remove `FunctionConfigUsage` PHPCS exclude [`98a7d4e`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/98a7d4e) ([#139](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/139))
-- Apply JS coding conventions to `ui.combobox`: `$`-prefix for jQuery objects, explicit `return undefined` in `map` callback, `{jQuery}` JSDoc type, `.trigger('focus')` over `.focus()`; add 18 QUnit tests covering widget init, source callback, select handler, button click, `_renderItem`, `toggleValuesDisplay`, and `removePagingIfNotRequired` — raising statement coverage from 57 % to 98 % ([#142](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/142))
+- Apply JS coding conventions to `ui.combobox`: `$`-prefix for jQuery objects, explicit `return undefined` in `map` callback, `{jQuery}` JSDoc type, `.trigger('focus')` over `.focus()`; add 18 QUnit tests covering widget init, source callback, select handler, button click, `_renderItem`, `toggleValuesDisplay`, and `removePagingIfNotRequired` — raising statement coverage from 57 % to 98 % [`e926161`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/e926161) ([#142](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/142))
 
 ## [5.0.0] - 2026-06-10
 
@@ -33,5 +37,6 @@ Initial stable release. Establishes release management and changelog baseline.
 - Update docker-compose-ci submodule [`49c10d9`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/49c10d9)
 - Migrate to DOCSMP attributes file, add CONTRIBUTING guide [`0e13037`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/0e13037)
 
-[Unreleased]: https://github.com/SemanticMediaWiki/SemanticDrilldown/compare/5.0.0...HEAD
+[Unreleased]: https://github.com/SemanticMediaWiki/SemanticDrilldown/compare/5.0.1...HEAD
+[5.0.1]: https://github.com/SemanticMediaWiki/SemanticDrilldown/compare/5.0.0...5.0.1
 [5.0.0]: https://github.com/SemanticMediaWiki/SemanticDrilldown/releases/tag/5.0.0
