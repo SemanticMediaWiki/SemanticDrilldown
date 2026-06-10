@@ -36,7 +36,7 @@ class Services {
 	private function __construct() {
 	}
 
-	private function mwServices(): MediaWikiServices {
+	protected function mwServices(): MediaWikiServices {
 		return MediaWikiServices::getInstance();
 	}
 
