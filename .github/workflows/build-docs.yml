@@ -32,7 +32,7 @@ jobs:
       - name: Install tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y asciidoctor pandoc
+          sudo apt-get install -y asciidoctor pandoc python3-yaml
           sudo gem install asciidoctor-reducer --pre
 
       # --- README ---
@@ -90,11 +90,97 @@ jobs:
             AGENTS.adoc \
             AGENTS.xml
 
+      - name: Create CLAUDE.md from AGENTS.md
+        run: cp AGENTS.md .claude/CLAUDE.md
+
+      # --- Instructions ---
+
+      - name: Create output directories
+        run: |
+          mkdir -p .github/instructions
+          mkdir -p src libs tests .github
+
+      - name: Build instructions (scope loop)
+        shell: bash
+        run: |
+          BASE="docs/gesinn-it-docs-master-pub/documents/mediawiki/instructions"
+
+          declare -A APPLY_TO=(
+            [php]="**/*.php"
+            [js]="**/*.{js,css,less}"
+            [testing]="tests/**"
+            [ci]=".github/**,Makefile,build/**"
+          )
+
+          declare -A SUBTREE_DIR=(
+            [php]="src"
+            [js]="libs"
+            [testing]="tests"
+            [ci]=".github"
+          )
+
+          for SCOPE in php js testing ci; do
+            APPLYTO="${APPLY_TO[$SCOPE]}"
+            DIR="${SUBTREE_DIR[$SCOPE]}"
+
+            asciidoctor-reducer \
+              -a phan \
+              -o /tmp/${SCOPE}.adoc \
+              ${BASE}/${SCOPE}.adoc
+
+            asciidoctor \
+              -b docbook5 \
+              -o /tmp/${SCOPE}.xml \
+              /tmp/${SCOPE}.adoc
+
+            pandoc \
+              -f docbook \
+              -t gfm \
+              /tmp/${SCOPE}.xml \
+              -o /tmp/${SCOPE}.md
+
+            printf '%s\n%s\n%s\n%s\n\n' \
+              '---' \
+              "applyTo: \"${APPLYTO}\"" \
+              '---' \
+              "<!-- AUTO-GENERATED from docs/gesinn-it-docs-master-pub/documents/mediawiki/instructions/${SCOPE}.adoc -->" \
+              | cat - /tmp/${SCOPE}.md \
+              > .github/instructions/${SCOPE}.instructions.md
+
+            printf '%s\n\n' \
+              "<!-- AUTO-GENERATED from docs/gesinn-it-docs-master-pub/documents/mediawiki/instructions/${SCOPE}.adoc -->" \
+              | cat - /tmp/${SCOPE}.md \
+              > ${DIR}/AGENTS.md
+          done
+
+      # --- Skills ---
+
+      - name: Build skills
+        run: |
+          PROJECT_TYPE=$(grep ':project_type:' docs/attributes.adoc | sed 's/.*: *//')
+          python3 docs/gesinn-it-docs-master-pub/scripts/build-skills.py \
+            --manifests-dir docs/gesinn-it-docs-master-pub/skills/manifests \
+            --snippets-dir  docs/gesinn-it-docs-master-pub/snippets \
+            --claude-skills-dir .claude/skills \
+            --agents-skills-dir .agents/skills \
+            --scope "$PROJECT_TYPE"
+
       # --- Commit all generated files ---
 
       - name: Commit generated files
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v10
         with:
-          add: 'README.adoc docs/CONTRIBUTING.adoc AGENTS.md'
+          add: |
+            README.adoc
+            docs/CONTRIBUTING.adoc
+            AGENTS.md
+            .claude/CLAUDE.md
+            .github/instructions/
+            .github/AGENTS.md
+            src/AGENTS.md
+            libs/AGENTS.md
+            tests/AGENTS.md
+            .claude/skills/
+            .agents/skills/
           pull: '--rebase --autostash'
-          message: "docs(ci): update generated docs [skip ci]"
+          message: "docs(ci): update generated documentation [skip ci]"
