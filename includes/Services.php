@@ -30,13 +30,14 @@ class Services {
 			self::$instance = new Services();
 		}
 
-		return new Services();
+		return self::$instance;
 	}
 
-	private MediaWikiServices $services;
-
 	private function __construct() {
-		$this->services = MediaWikiServices::getInstance();
+	}
+
+	private function mwServices(): MediaWikiServices {
+		return MediaWikiServices::getInstance();
 	}
 
 	private const PARSER_FUNCTIONS = [
@@ -87,7 +88,7 @@ class Services {
 		return fn ( $context, $parameters, $query, $offset, $limit ) =>
 			new QueryPage(
 				$resultFormatTypes,
-				$this->getDbService(), $this->services->getPageProps(), $this->getNewUrlService(),
+				$this->getDbService(), $this->mwServices()->getPageProps(), $this->getNewUrlService(),
 				$this->getGetPageFromTitleText(),
 				$context, $parameters, $query, $offset, $limit );
 	}
@@ -108,7 +109,7 @@ class Services {
 	}
 
 	private function getLoadParameters(): LoadParameters {
-		return new LoadParameters( $this->services->getPageProps() );
+		return new LoadParameters( $this->mwServices()->getPageProps() );
 	}
 
 	private function getGetPageFromTitleText(): Closure {
@@ -121,11 +122,11 @@ class Services {
 	}
 
 	private function getPrimaryDbConnectionRef(): DBConnRef {
-		return $this->services->getDBLoadBalancer()->getConnection( DB_PRIMARY );
+		return $this->mwServices()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 	}
 
 	private function getReplicaDbConnectionRef(): DBConnRef {
-		return $this->services->getDBLoadBalancer()->getConnection( DB_REPLICA );
+		return $this->mwServices()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 	}
 
 }
