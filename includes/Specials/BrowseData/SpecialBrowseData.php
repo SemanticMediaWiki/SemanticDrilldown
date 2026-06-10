@@ -12,6 +12,7 @@ namespace SD\Specials\BrowseData;
  */
 
 use Closure;
+use MediaWiki\Config\GlobalVarConfig;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\SpecialPage\IncludableSpecialPage;
 use SD\AppliedFilter;
@@ -41,8 +42,8 @@ class SpecialBrowseData extends IncludableSpecialPage {
 	}
 
 	public function execute( $query ): void {
-		global $wgScriptPath, $sdgNumResultsPerPage;
-		$sdSkinsPath = "$wgScriptPath/extensions/SemanticDrilldown/skins";
+		$sdSkinsPath = $this->getConfig()->get( 'ScriptPath' ) . '/extensions/SemanticDrilldown/skins';
+		$numResultsPerPage = ( new GlobalVarConfig( 'sdg' ) )->get( 'NumResultsPerPage' );
 
 		$out = $this->getOutput();
 		$request = $this->getRequest();
@@ -55,11 +56,6 @@ class SpecialBrowseData extends IncludableSpecialPage {
 		$ieFixesCss = '<!--[if IE]><link rel="stylesheet" href="' . $sdSkinsPath
 			. '/SD_IEfixes.css" media="screen" /><![endif]-->';
 		$out->addScript( $ieFixesCss );
-
-		// set default
-		if ( $sdgNumResultsPerPage == null ) {
-			$sdgNumResultsPerPage = 250;
-		}
 
 		// get information on current category, subcategory and filters
 		// that have already been applied from the query string
@@ -83,7 +79,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 
 			[ $limit, $offset ] = $request->getLimitOffsetForUser(
 				$this->getUser(),
-				$sdgNumResultsPerPage,
+				$numResultsPerPage,
 				'sdlimit'
 			);
 
