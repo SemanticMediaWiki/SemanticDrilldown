@@ -383,11 +383,16 @@ END;
 			}
 		}
 
-		$text .= <<< END
-	<div class="ui-widget">
-		<select class="semanticDrilldownCombobox" name="$cur_value">
-			<option value="$inputName"></option>;
-END;
+		// data-mw-input-name: the name used for free-text search (_search_FilterName[N])
+		// data-mw-filter-name: the name used for direct-match selection (FilterName[N])
+		// The JS widget switches between these on submit depending on how the user interacts.
+		$text .= Html::openElement( 'div', [ 'class' => 'ui-widget' ] );
+		$text .= Html::openElement( 'select', [
+			'class' => 'semanticDrilldownCombobox',
+			'style' => 'display: none;',
+			'data-mw-input-name' => $inputName,
+			'data-mw-filter-name' => $filter_name,
+		] );
 		foreach ( $possibleValues as $value ) {
 			if ( $value->value() != '_other' && $value->value() != '_none' ) {
 				$text .= Html::element(
@@ -396,11 +401,8 @@ END;
 					$value->displayValue() );
 			}
 		}
-
-		$text .= <<<END
-		</select>
-	</div>
-END;
+		$text .= Html::closeElement( 'select' );
+		$text .= Html::closeElement( 'div' );
 
 		$text .= Html::input(
 			null,

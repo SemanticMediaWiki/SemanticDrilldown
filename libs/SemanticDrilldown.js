@@ -39,9 +39,9 @@
 		_create: function () {
 			const self = this;
 			const select = this.element.hide();
-			const inp_id = select[ 0 ].options[ 0 ].value;
-			const curval = select[ 0 ].name;
-			const input = $( '<input id = "' + inp_id + '" type="text" name="' + inp_id + '" value="' + curval + '">' )
+			const inp_id = select.data( 'mwInputName' );
+			const filterName = select.data( 'mwFilterName' );
+			const input = $( '<input type="text" value="">' ).attr( { id: inp_id, name: inp_id } )
 				.insertAfter( select )
 				.autocomplete( {
 					source: function ( request, response ) {
@@ -69,6 +69,10 @@
 							item: select.find( '[value="' + ui.item.id + '"]' )
 						} );
 						setTimeout( () => {
+							// Switch to the direct-match parameter name so that selecting a value
+							// from the dropdown behaves identically to clicking a filter link,
+							// avoiding the LIKE-search path that can mis-encode special characters.
+							input.attr( { name: filterName } );
 							select[ 0 ].form.submit();
 						}, 0 );
 
