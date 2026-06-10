@@ -39,7 +39,9 @@ class Filter {
 		$this->name = $name;
 		$this->property = $property;
 		$this->category = $category;
-		$this->requiredFilters = $requiredFilters ?? [];
+		$this->requiredFilters = is_array( $requiredFilters )
+			? $requiredFilters
+			: ( $requiredFilters !== null ? [ $requiredFilters ] : [] );
 		$this->int = $int;
 		$this->propertyType = $propertyType;
 		$this->timePeriod = $timePeriod;
