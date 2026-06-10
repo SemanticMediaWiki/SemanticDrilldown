@@ -98,6 +98,40 @@ class SqlProvider {
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
 		$pageTable = $dbr->tableName( 'page' );
 		$categorylinksTable = $dbr->tableName( 'categorylinks' );
+
+		$propertyTableNames = [];
+		foreach ( $applied_filters as $i => $af ) {
+			$propertyTableNames[$i] = $dbr->tableName(
+				PropertyTypeDbInfo::tableName( $af->filter->propertyType() ) );
+		}
+
+		return self::buildSQLFromClause(
+			$category, $subcategory, $subcategories, $applied_filters,
+			$smwIDs, $smwCategoryInstances, $pageTable, $categorylinksTable,
+			$propertyTableNames
+		);
+	}
+
+	/**
+	 * Pure SQL-string builder — no DB calls, fully unit-testable.
+	 * Receives all table names pre-resolved by getSQLFromClause().
+	 *
+	 * @param string $category
+	 * @param string $subcategory
+	 * @param string[] $subcategories
+	 * @param AppliedFilter[] $applied_filters
+	 * @param string $smwIDs
+	 * @param string $smwCategoryInstances
+	 * @param string $pageTable
+	 * @param string $categorylinksTable
+	 * @param string[] $propertyTableNames map of filter index to quoted table name
+	 * @return string
+	 */
+	public static function buildSQLFromClause(
+		string $category, string $subcategory, array $subcategories, array $applied_filters,
+		string $smwIDs, string $smwCategoryInstances, string $pageTable, string $categorylinksTable,
+		array $propertyTableNames
+	) {
 		$cat_ns = NS_CATEGORY;
 		$prop_ns = SMW_NS_PROPERTY;
 
@@ -115,22 +149,13 @@ class SqlProvider {
 		foreach ( $applied_filters as $i => $af ) {
 			// if any of this filter's values is 'none',
 			// include another table to get this information
-			$includes_none = false;
-			foreach ( $af->values as $fv ) {
-				if ( $fv->text === '_none' || $fv->text === ' none' ) {
-					$includes_none = true;
-					break;
-				}
-			}
+			$includes_none = self::filterIncludesNone( $af );
 			if ( $includes_none ) {
-				$property_table_name = $dbr->tableName(
-					PropertyTypeDbInfo::tableName( $af->filter->propertyType() ) );
+				$property_table_name = $propertyTableNames[$i];
 				if ( $af->filter->propertyType() === 'page' ) {
 					$property_table_nickname = "nr$i";
-					$property_field = 'p_id';
 				} else {
 					$property_table_nickname = "na$i";
-					$property_field = 'p_id';
 				}
 				$property_value = str_replace( ' ', '_', $af->filter->property() );
 				$property_value = str_replace( "'", "\'", $property_value );
@@ -143,15 +168,15 @@ class SqlProvider {
 				$sql .= "LEFT OUTER JOIN
 	(SELECT s_id
 	FROM $property_table_name
-	WHERE $property_field = (SELECT MIN(smw_id) FROM $smwIDs
+	WHERE p_id = (SELECT MIN(smw_id) FROM $smwIDs
 		WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)) $property_table_nickname
 	ON ids.smw_id = $property_table_nickname.s_id ";
 			}
 		}
 		foreach ( $applied_filters as $i => $af ) {
+			$includes_none = self::filterIncludesNone( $af );
 			$sql .= "\n	";
-			$property_table_name = $dbr->tableName(
-				PropertyTypeDbInfo::tableName( $af->filter->propertyType() ) );
+			$property_table_name = $propertyTableNames[$i];
 			if ( $af->filter->propertyType() === 'page' ) {
 				if ( $includes_none ) {
 					$sql .= "LEFT OUTER ";
@@ -162,6 +187,9 @@ class SqlProvider {
 				}
 				$sql .= "JOIN $smwIDs o_ids$i ON r$i.o_id = o_ids$i.smw_id ";
 			} else {
+				if ( $includes_none ) {
+					$sql .= "LEFT OUTER ";
+				}
 				$sql .= "JOIN $property_table_name a$i ON ids.smw_id = a$i.s_id ";
 			}
 		}
@@ -174,6 +202,7 @@ class SqlProvider {
 		}
 		$sql .= ")) ";
 		foreach ( $applied_filters as $i => $af ) {
+			$includes_none = self::filterIncludesNone( $af );
 			$property_value = $af->filter->escapedProperty();
 			$value_field = PropertyTypeDbInfo::valueField( $af->filter->propertyType() );
 			if ( $af->filter->propertyType() === 'page' ) {
@@ -187,8 +216,13 @@ class SqlProvider {
 				$value_field = "o_ids$i.smw_title";
 			} else {
 				$property_field = "a$i.p_id";
-				$sql .= "\n	AND $property_field = (SELECT MIN(smw_id) FROM $smwIDs"
-					. " WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns) AND ";
+				$sql .= "\n	AND (";
+				$sql .= "$property_field = (SELECT MIN(smw_id) FROM $smwIDs"
+					. " WHERE smw_title = '$property_value' AND smw_namespace = $prop_ns)";
+				if ( $includes_none ) {
+					$sql .= " OR $property_field IS NULL";
+				}
+				$sql .= ") AND ";
 				if ( strncmp( $value_field, '(IF(o_blob IS NULL', 18 ) === 0 ) {
 					$value_field = str_replace( 'o_', "a$i.o_", $value_field );
 				} else {
@@ -198,6 +232,15 @@ class SqlProvider {
 			$sql .= $af->checkSQL( $value_field );
 		}
 		return $sql;
+	}
+
+	private static function filterIncludesNone( AppliedFilter $af ): bool {
+		foreach ( $af->values as $fv ) {
+			if ( $fv->text === '_none' || $fv->text === ' none' ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static function getDateFunctions( $dateDBField ) {
