@@ -38,6 +38,22 @@ class DrilldownQuery {
 		return $this->subcategory;
 	}
 
+	/** @return string[] */
+	public function subcategoryPath(): array {
+		if ( !$this->subcategory ) {
+			return [];
+		}
+		return explode( '/', $this->subcategory );
+	}
+
+	public function parentSubcategory(): ?string {
+		$path = $this->subcategoryPath();
+		if ( count( $path ) <= 1 ) {
+			return null;
+		}
+		return implode( '/', array_slice( $path, 0, -1 ) );
+	}
+
 	public function filters() {
 		return $this->filters;
 	}
@@ -68,8 +84,12 @@ class DrilldownQuery {
 		return $this->all_subcategories;
 	}
 
-	private function actualCategory() {
-		return str_replace( ' ', '_', $this->subcategory ?: $this->category );
+	private function actualCategory(): string {
+		if ( !$this->subcategory ) {
+			return str_replace( ' ', '_', $this->category );
+		}
+		$path = $this->subcategoryPath();
+		return str_replace( ' ', '_', end( $path ) );
 	}
 
 }

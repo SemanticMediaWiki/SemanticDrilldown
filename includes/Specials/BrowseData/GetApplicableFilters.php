@@ -81,7 +81,9 @@ class GetApplicableFilters {
 						$results_line .= " · ";
 					}
 					$filter_text = str_replace( '_', ' ', $subcat ) . " ($num_results)";
-					$filter_url = $cur_url . '_subcat=' . urlencode( $subcat );
+					$currentSubcat = $this->query->subcategory();
+					$newSubcat = $currentSubcat ? $currentSubcat . '/' . $subcat : $subcat;
+					$filter_url = $cur_url . '_subcat=' . urlencode( $newSubcat );
 					if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 						if ( $lowest_num_results != $highest_num_results ) {
 							$font_size = round(

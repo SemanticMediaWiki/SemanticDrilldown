@@ -32,12 +32,20 @@ class GetAppliedFilters {
 		if ( $query->subcategory() ) {
 			$remainingHtml .= " > ";
 			$remainingHtml .= "$subcategory_text: ";
-			$subcat_string = str_replace( '_', ' ', $query->subcategory() );
-			$remove_filter_url = $this->getUrl( $query->category(), $query->appliedFilters() );
 			$removeTitle = wfMessage( 'sd_browsedata_removesubcategoryfilter' )->text();
-			$remainingHtml .= '<span class="drilldown-header-value">' . $subcat_string . '</span>'
-				. '<a href="' . $remove_filter_url . '" title="' . $removeTitle
-				. '"><img src="' . $sdSkinsPath . '/filter-x.png" /></a> ';
+			$path = $query->subcategoryPath();
+			foreach ( $path as $depth => $segment ) {
+				if ( $depth > 0 ) {
+					$remainingHtml .= ' / ';
+				}
+				$segmentLabel = str_replace( '_', ' ', $segment );
+				$parentPath = $depth > 0 ? implode( '/', array_slice( $path, 0, $depth ) ) : null;
+				$remove_url = $this->getUrl( $query->category(), $query->appliedFilters(), $parentPath );
+				$remainingHtml .= '<span class="drilldown-header-value">' . $segmentLabel . '</span>'
+					. '<a href="' . $remove_url . '" title="' . $removeTitle
+					. '"><img src="' . $sdSkinsPath . '/filter-x.png" /></a>';
+			}
+			$remainingHtml .= ' ';
 		}
 
 		foreach ( $query->appliedFilters() as $i => $af ) {

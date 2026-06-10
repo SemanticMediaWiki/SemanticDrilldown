@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 ### Fixed
 - Fix `requires` filter option having no effect: filters with `requires=SomeFilter` were never shown because the required-filter name was iterated as individual characters instead of as a filter name ([#4](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/4))
 - Fix sorting to respect per-category sort keys (`[[Category:Foo|SortKey]]`) by joining `categorylinks` and using `cl_sortkey` instead of `smw_sortkey` alone ([#12](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/12))
+- Fix missing back-navigation when browsing subcategories of subcategories: encode the full subcategory path in `_subcat` (slash-separated), render each level as a separate breadcrumb with its own remove link, and use only the deepest segment for DB queries ([#15](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/15))
 
 ### Changed
 - Replace global config access with `getConfig()`/`GlobalVarConfig` in `SpecialBrowseData`; remove `FunctionConfigUsage` PHPCS exclude [`98a7d4e`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/98a7d4e) ([#139](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/139))
