@@ -24,6 +24,9 @@ applyTo: "**/*.php"
 3.  Never fix code without a reproducing test — you cannot verify the
     fix is correct.
 
+4.  If the fix addresses a reported issue: after pushing, close the
+    issue in the issue tracker with a comment referencing the commit.
+
 **Procedure — code:refactor**
 
 1.  Run the full test suite first. All tests must be green before you
