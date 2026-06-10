@@ -45,7 +45,8 @@ jobs:
             database_type: mysql
             database_image: "mysql:8"
             coverage: false
-            experimental: false
+            # SMW 7 triggers "Error 1137: Can't reopen table" on MySQL 8; experimental until fixed upstream
+            experimental: true
           - mediawiki_version: '1.43'
             smw_version: 7.0.0
             # SRF 5.2.0 is incompatible with SMW 7 (missing return type on getParamDefinitions); use dev-master until a new SRF release is available
