@@ -132,6 +132,14 @@ class QueryPage extends \QueryPage {
 		$cat_ns = NS_CATEGORY;
 		$prop_ns = SMW_NS_PROPERTY;
 
+		$category = $this->query->category();
+		$subcategory = $this->query->subcategory();
+		$actual_cat = str_replace( ' ', '_', $subcategory ?: $category );
+		$actual_cat = str_replace( "'", "\'", $actual_cat );
+
+		$pageTable = $dbr->tableName( 'page' );
+		$categorylinksTable = $dbr->tableName( 'categorylinks' );
+
 		$query = [
 			'fields' => [
 				'title' => 'ids.smw_title',
@@ -141,11 +149,13 @@ class QueryPage extends \QueryPage {
 				'ns' => 'ids.smw_namespace',
 				'id' => 'ids.smw_id',
 				'iw' => 'ids.smw_iw',
-				'sortkey' => 'ids.smw_sortkey',
+				'sortkey' => 'COALESCE(cl.cl_sortkey, ids.smw_sortkey)',
 			],
 			'tables' => [
 				'ids' => $smwIDs,
-				'insts' => $smwCategoryInstances
+				'insts' => $smwCategoryInstances,
+				'pg' => $pageTable,
+				'cl' => $categorylinksTable,
 			],
 			'join_conds' => [
 				'insts' => [
@@ -154,7 +164,21 @@ class QueryPage extends \QueryPage {
 						'ids.smw_id = insts.s_id',
 						'ids.smw_namespace != ' . $cat_ns
 					]
-				]
+				],
+				'pg' => [
+					'LEFT JOIN',
+					[
+						'pg.page_title = ids.smw_title',
+						'pg.page_namespace = ids.smw_namespace',
+					]
+				],
+				'cl' => [
+					'LEFT JOIN',
+					[
+						'cl.cl_from = pg.page_id',
+						"cl.cl_to = '$actual_cat'",
+					]
+				],
 			],
 			'conds' => []
 		];
@@ -237,11 +261,6 @@ class QueryPage extends \QueryPage {
 				];
 			}
 		}
-		$category = $this->query->category();
-		$subcategory = $this->query->subcategory();
-		$actual_cat = str_replace( ' ', '_', ( $subcategory ) ? $subcategory : $category );
-		$actual_cat = str_replace( "'", "\'", $actual_cat );
-
 		$sql = "(SELECT smw_id FROM $smwIDs cat_ids WHERE smw_namespace = $cat_ns AND (smw_title = '$actual_cat'";
 		foreach ( $this->query->allSubcategories() as $subcat ) {
 			$subcat = str_replace( "'", "\'", $subcat );

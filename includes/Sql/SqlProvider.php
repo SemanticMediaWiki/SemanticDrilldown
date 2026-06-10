@@ -11,6 +11,8 @@ class SqlProvider {
 	public static function getSQL( $category, $subcategory, $all_subcategories, $applied_filters ) {
 		// QueryPage uses the value from this SQL in an ORDER clause,
 		// so return page_title as title.
+		// Use cl_sortkey from the categorylinks table so that per-category sort keys
+		// (e.g. [[Category:Foo|SortKey]]) are respected, falling back to smw_sortkey (DEFAULTSORT).
 		$sql = "SELECT DISTINCT ids.smw_title AS title,
 	ids.smw_title AS value,
 	ids.smw_title AS t,
@@ -18,7 +20,7 @@ class SqlProvider {
 	ids.smw_namespace AS ns,
 	ids.smw_id AS id,
 	ids.smw_iw AS iw,
-	ids.smw_sortkey AS sortkey\n";
+	COALESCE(cl.cl_sortkey, ids.smw_sortkey) AS sortkey\n";
 		$sql .= self::getSQLFromClause( $category, $subcategory, $all_subcategories, $applied_filters );
 		return $sql;
 	}
@@ -94,13 +96,22 @@ class SqlProvider {
 			->getMaintenanceConnectionRef( DB_REPLICA );
 		$smwIDs = $dbr->tableName( Utils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
+		$pageTable = $dbr->tableName( 'page' );
+		$categorylinksTable = $dbr->tableName( 'categorylinks' );
 		$cat_ns = NS_CATEGORY;
 		$prop_ns = SMW_NS_PROPERTY;
+
+		$actual_cat = str_replace( ' ', '_', $subcategory ?: $category );
+		$actual_cat = str_replace( "'", "\'", $actual_cat );
 
 		$sql = "FROM $smwIDs ids
 	JOIN $smwCategoryInstances insts
 	ON ids.smw_id = insts.s_id
-	AND ids.smw_namespace != $cat_ns ";
+	AND ids.smw_namespace != $cat_ns
+	LEFT JOIN $pageTable pg
+	ON pg.page_title = ids.smw_title AND pg.page_namespace = ids.smw_namespace
+	LEFT JOIN $categorylinksTable cl
+	ON cl.cl_from = pg.page_id AND cl.cl_to = '$actual_cat' ";
 		foreach ( $applied_filters as $i => $af ) {
 			// if any of this filter's values is 'none',
 			// include another table to get this information
@@ -154,12 +165,6 @@ class SqlProvider {
 				$sql .= "JOIN $property_table_name a$i ON ids.smw_id = a$i.s_id ";
 			}
 		}
-		if ( $subcategory ) {
-			$actual_cat = str_replace( ' ', '_', $subcategory );
-		} else {
-			$actual_cat = str_replace( ' ', '_', $category );
-		}
-		$actual_cat = str_replace( "'", "\'", $actual_cat );
 		$sql .= "WHERE insts.o_id IN
 	(SELECT smw_id FROM $smwIDs cat_ids
 	WHERE smw_namespace = $cat_ns AND (smw_title = '$actual_cat'";

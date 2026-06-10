@@ -1,0 +1,48 @@
+{
+	"description": "BrowseData results respect per-category sort keys (issue #12)",
+	"setup": [
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "SortTestCategory",
+			"contents": ""
+		},
+		{
+			"page": "ZSortPage",
+			"contents": "[[Category:SortTestCategory|A]]"
+		},
+		{
+			"page": "ASortPage",
+			"contents": "[[Category:SortTestCategory|Z]]"
+		}
+	],
+	"tests": [
+		{
+			"type": "special",
+			"about": "pages with per-category sort keys are ordered by cl_sortkey, not by page title",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "SortTestCategory",
+				"request-parameters": {
+					"limit": 1
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/ZSortPage\" title=\"ZSortPage\">ZSortPage</a>"
+				],
+				"not-contain": [
+					"<a href=\"/index.php/ASortPage\" title=\"ASortPage\">ASortPage</a>"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgArticlePath": "/index.php/$1",
+		"wgLang": "en"
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}
