@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 
 ## [Unreleased]
 
+### Changed
+- Replace global config access with `getConfig()`/`GlobalVarConfig` in `SpecialBrowseData`; remove `FunctionConfigUsage` PHPCS exclude [`98a7d4e`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/98a7d4e) ([#139](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/139))
+
 ## [5.0.0] - 2026-06-10
 
 Initial stable release. Establishes release management and changelog baseline.
