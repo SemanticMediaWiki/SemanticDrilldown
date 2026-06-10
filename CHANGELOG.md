@@ -15,6 +15,7 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 
 ### Changed
 - Replace global config access with `getConfig()`/`GlobalVarConfig` in `SpecialBrowseData`; remove `FunctionConfigUsage` PHPCS exclude [`98a7d4e`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/98a7d4e) ([#139](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/139))
+- Apply JS coding conventions to `ui.combobox`: `$`-prefix for jQuery objects, explicit `return undefined` in `map` callback, `{jQuery}` JSDoc type, `.trigger('focus')` over `.focus()`; add 18 QUnit tests covering widget init, source callback, select handler, button click, `_renderItem`, `toggleValuesDisplay`, and `removePagingIfNotRequired` — raising statement coverage from 57 % to 98 % ([#142](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/142))
 
 ## [5.0.0] - 2026-06-10
 
