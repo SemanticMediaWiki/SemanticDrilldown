@@ -38,7 +38,8 @@ jobs:
             experimental: false
           - mediawiki_version: '1.43'
             smw_version: 7.0.0
-            srf_version: 5.2.0
+            # SRF 5.2.0 is incompatible with SMW 7 (missing return type on getParamDefinitions); use dev-master until a new SRF release is available
+            srf_version: dev-master
             php_version: 8.3
             al_version: 0.6.3
             database_type: mysql
@@ -47,7 +48,8 @@ jobs:
             experimental: false
           - mediawiki_version: '1.43'
             smw_version: 7.0.0
-            srf_version: 5.2.0
+            # SRF 5.2.0 is incompatible with SMW 7 (missing return type on getParamDefinitions); use dev-master until a new SRF release is available
+            srf_version: dev-master
             php_version: 8.3
             al_version: 0.6.3
             database_type: mysql
