@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 
 - Filter lookup now works correctly when a property name contains an apostrophe character (e.g. `Date_d'écriture`). The apostrophe was previously escaped in the request-parameter key, causing a mismatch with the actual URL parameter sent by the browser. Fixes #55.
 - Temporary tables are now dropped with `DROP TEMPORARY TABLE` instead of `DROP TABLE`, so the web database user no longer requires the `DROP` privilege. Fixes #144.
+- Configuration values (`sdg*`) are now read via `GlobalVarConfig` instead of raw PHP globals, so they are correctly resolved from extension defaults during web-based upgrades (`mw-config` / `update.php`) where PHP globals are not populated. Values set in `LocalSettings.php` continue to work as before. Fixes #23.
 
 ## [5.0.1] - 2026-06-10
 
