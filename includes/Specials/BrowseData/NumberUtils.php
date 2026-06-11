@@ -2,6 +2,8 @@
 
 namespace SD\Specials\BrowseData;
 
+use MediaWiki\Config\GlobalVarConfig;
+
 class NumberUtils {
 
 	/**
@@ -12,12 +14,12 @@ class NumberUtils {
 	 * @return array
 	 */
 	public static function generateFilterValuesFromNumbers( array $numberArray ) {
-		global $sdgNumRangesForNumberFilters;
+		$numRangesForNumberFilters = ( new GlobalVarConfig( 'sdg' ) )->get( 'NumRangesForNumberFilters' );
 
 		$numNumbers = count( $numberArray );
 
 		// First, find the number of unique values - if it's the value
-		// of $sdgNumRangesForNumberFilters, or fewer, just display
+		// of NumRangesForNumberFilters, or fewer, just display
 		// each one as its own bucket.
 		$numUniqueValues = 0;
 		$uniqueValues = [];
@@ -25,7 +27,7 @@ class NumberUtils {
 			if ( !array_key_exists( $curNumber, $uniqueValues ) ) {
 				$uniqueValues[$curNumber] = 1;
 				$numUniqueValues++;
-				if ( $numUniqueValues > $sdgNumRangesForNumberFilters ) {
+				if ( $numUniqueValues > $numRangesForNumberFilters ) {
 					continue;
 				}
 			} else {
@@ -35,7 +37,7 @@ class NumberUtils {
 			}
 		}
 
-		if ( $numUniqueValues <= $sdgNumRangesForNumberFilters ) {
+		if ( $numUniqueValues <= $numRangesForNumberFilters ) {
 			return self::generateIndividualFilterValuesFromNumbers( $uniqueValues );
 		}
 
@@ -46,7 +48,7 @@ class NumberUtils {
 		// bucket.
 		// @HACK - add 3 to the number so that we don't end up with
 		// just one bucket ( 7 + 3 / 5 = 2).
-		$numBuckets = min( $sdgNumRangesForNumberFilters, floor( ( $numNumbers + 3 ) / 5 ) );
+		$numBuckets = min( $numRangesForNumberFilters, floor( ( $numNumbers + 3 ) / 5 ) );
 		$bucketSeparators = [];
 		$bucketSeparators[] = $numberArray[0];
 		for ( $i = 1; $i < $numBuckets; $i++ ) {

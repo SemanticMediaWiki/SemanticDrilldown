@@ -2,6 +2,7 @@
 
 namespace SD;
 
+use MediaWiki\Config\GlobalVarConfig;
 use MediaWiki\Linker\LinksMigration;
 use MediaWiki\MediaWikiServices;
 use SD\Sql\PropertyTypeDbInfo;
@@ -200,9 +201,7 @@ END;
 	 * @return array
 	 */
 	public function getCategoriesForBrowsing() {
-		global $sdgHideCategoriesByDefault;
-
-		if ( $sdgHideCategoriesByDefault ) {
+		if ( ( new GlobalVarConfig( 'sdg' ) )->get( 'HideCategoriesByDefault' ) ) {
 			return $this->getOnlyExplicitlyShownCategories();
 		} else {
 			return $this->getTopLevelCategories();

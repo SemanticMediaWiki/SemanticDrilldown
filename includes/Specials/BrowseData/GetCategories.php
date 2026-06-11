@@ -2,6 +2,7 @@
 
 namespace SD\Specials\BrowseData;
 
+use MediaWiki\Config\GlobalVarConfig;
 use SD\DbService;
 
 class GetCategories {
@@ -31,11 +32,10 @@ class GetCategories {
 			];
 		};
 
-		global $sdgShowCategoriesAsTabs;
 		$categories = $this->db->getCategoriesForBrowsing();
 
 		return [
-			'categoriesAsTabs' => $sdgShowCategoriesAsTabs,
+			'categoriesAsTabs' => ( new GlobalVarConfig( 'sdg' ) )->get( 'ShowCategoriesAsTabs' ),
 			'categories' => array_map( $toCategoryViewModel, $categories )
 		];
 	}

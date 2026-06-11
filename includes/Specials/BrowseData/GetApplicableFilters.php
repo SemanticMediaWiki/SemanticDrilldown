@@ -2,6 +2,7 @@
 
 namespace SD\Specials\BrowseData;
 
+use MediaWiki\Config\GlobalVarConfig;
 use MediaWiki\Html\Html;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Request\WebRequest;
@@ -34,7 +35,9 @@ class GetApplicableFilters {
 	}
 
 	public function __invoke(): array {
-		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
+		$sdgConfig = new GlobalVarConfig( 'sdg' );
+		$sdgFiltersSmallestFontSize = $sdgConfig->get( 'FiltersSmallestFontSize' );
+		$sdgFiltersLargestFontSize = $sdgConfig->get( 'FiltersLargestFontSize' );
 
 		$remainingHtml = '';
 		// display the list of subcategories on one line, and below
@@ -134,7 +137,7 @@ class GetApplicableFilters {
 	 */
 	private function getFilterLine( $filterName, $isApplied, $isNormalFilter, $resultsLine, Filter $filter ): string {
 		global $wgScriptPath;
-		global $sdgDisableFilterCollapsible;
+		$sdgDisableFilterCollapsible = ( new GlobalVarConfig( 'sdg' ) )->get( 'DisableFilterCollapsible' );
 		$sdSkinsPath = "$wgScriptPath/extensions/SemanticDrilldown/skins";
 
 		if ( $filter->int() !== null ) {
@@ -265,7 +268,9 @@ END;
 	}
 
 	private function printUnappliedFilterValues( $cur_url, Filter $f, PossibleFilterValues $possibleValues ) {
-		global $sdgFiltersSmallestFontSize, $sdgFiltersLargestFontSize;
+		$sdgConfig = new GlobalVarConfig( 'sdg' );
+		$sdgFiltersSmallestFontSize = $sdgConfig->get( 'FiltersSmallestFontSize' );
+		$sdgFiltersLargestFontSize = $sdgConfig->get( 'FiltersLargestFontSize' );
 
 		$results_line = "";
 		// set font-size values for filter "tag cloud", if the
@@ -463,8 +468,9 @@ END;
 	 * been applied to the drilldown
 	 */
 	private function getUnappliedFilterLine( Filter $f ): string {
-		global $sdgMinValuesForComboBox;
-		global $sdgHideFiltersWithoutValues;
+		$sdgConfig = new GlobalVarConfig( 'sdg' );
+		$sdgMinValuesForComboBox = $sdgConfig->get( 'MinValuesForComboBox' );
+		$sdgHideFiltersWithoutValues = $sdgConfig->get( 'HideFiltersWithoutValues' );
 
 		$possibleValues = $this->getPossibleValues( $f );
 

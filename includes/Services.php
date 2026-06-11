@@ -3,6 +3,7 @@
 namespace SD;
 
 use Closure;
+use MediaWiki\Config\GlobalVarConfig;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Page\WikiPageFactory;
 use MediaWiki\Title\Title;
@@ -80,11 +81,7 @@ class Services {
 	}
 
 	private function getNewQueryPage(): Closure {
-		// Using a prefix different from wg, the ServiceOptions approach does not work anymore;
-		// use the global variable instead:
-		global $sdgResultFormatTypes;
-
-		$resultFormatTypes = $sdgResultFormatTypes ?? [];
+		$resultFormatTypes = ( new GlobalVarConfig( 'sdg' ) )->get( 'ResultFormatTypes' );
 		return fn ( $context, $parameters, $query, $offset, $limit ) =>
 			new QueryPage(
 				$resultFormatTypes,
