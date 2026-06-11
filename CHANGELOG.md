@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 ### Fixed
 
 - Filter lookup now works correctly when a property name contains an apostrophe character (e.g. `Date_d'écriture`). The apostrophe was previously escaped in the request-parameter key, causing a mismatch with the actual URL parameter sent by the browser. Fixes #55.
+- Temporary tables are now dropped with `DROP TEMPORARY TABLE` instead of `DROP TABLE`, so the web database user no longer requires the `DROP` privilege. Fixes #144.
 
 ## [5.0.1] - 2026-06-10
 
