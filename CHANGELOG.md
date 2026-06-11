@@ -6,11 +6,15 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 
 ## [Unreleased]
 
+## [5.0.2] - 2026-06-11
+
+Patch release fixing apostrophe handling in filter parameters, DROP privilege requirement, and config resolution during web-based upgrades.
+
 ### Fixed
 
-- Filter lookup now works correctly when a property name contains an apostrophe character (e.g. `Date_d'écriture`). The apostrophe was previously escaped in the request-parameter key, causing a mismatch with the actual URL parameter sent by the browser. Fixes #55.
-- Temporary tables are now dropped with `DROP TEMPORARY TABLE` instead of `DROP TABLE`, so the web database user no longer requires the `DROP` privilege. Fixes #144.
-- Configuration values (`sdg*`) are now read via `GlobalVarConfig` instead of raw PHP globals, so they are correctly resolved from extension defaults during web-based upgrades (`mw-config` / `update.php`) where PHP globals are not populated. Values set in `LocalSettings.php` continue to work as before. Fixes #23.
+- Filter lookup now works correctly when a property name contains an apostrophe character (e.g. `Date_d'écriture`). The apostrophe was previously escaped in the request-parameter key, causing a mismatch with the actual URL parameter sent by the browser. [`a324514`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/a324514) ([#55](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/55))
+- Temporary tables are now dropped with `DROP TEMPORARY TABLE` instead of `DROP TABLE`, so the web database user no longer requires the `DROP` privilege. [`6a502b3`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/6a502b3) ([#144](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/144))
+- Configuration values (`sdg*`) are now read via `GlobalVarConfig` instead of raw PHP globals, so they are correctly resolved from extension defaults during web-based upgrades (`mw-config` / `update.php`) where PHP globals are not populated. Values set in `LocalSettings.php` continue to work as before. [`2494aad`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/2494aad) ([#23](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/23))
 
 ## [5.0.1] - 2026-06-10
 
@@ -43,6 +47,7 @@ Initial stable release. Establishes release management and changelog baseline.
 - Update docker-compose-ci submodule [`49c10d9`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/49c10d9)
 - Migrate to DOCSMP attributes file, add CONTRIBUTING guide [`0e13037`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/0e13037)
 
-[Unreleased]: https://github.com/SemanticMediaWiki/SemanticDrilldown/compare/5.0.1...HEAD
+[Unreleased]: https://github.com/SemanticMediaWiki/SemanticDrilldown/compare/5.0.2...HEAD
+[5.0.2]: https://github.com/SemanticMediaWiki/SemanticDrilldown/compare/5.0.1...5.0.2
 [5.0.1]: https://github.com/SemanticMediaWiki/SemanticDrilldown/compare/5.0.0...5.0.1
 [5.0.0]: https://github.com/SemanticMediaWiki/SemanticDrilldown/releases/tag/5.0.0
