@@ -97,11 +97,11 @@ class Filter {
 	public function escapedProperty() {
 		return SqlProvider::escapedProperty( $this->property() );
 	}
-	
+
 	public function propKey() {
 		return $this->propKey;
 	}
-	
+
 	/**
 	 * Gets an array of the possible time period values (e.g., years,
 	 * months) for this filter, and, for each one,
@@ -273,7 +273,7 @@ END;
 	JOIN smw_fpt_text fpt_text ON p.o_id = fpt_text.s_id
 END;
 		}
-	
+
 		$sql .= <<<END
 	JOIN $smw_ids p_ids ON p.p_id = p_ids.smw_id
 	WHERE ( p_ids.smw_title = '$property_value' OR p_ids.smw_title = '$this->propKey' )
