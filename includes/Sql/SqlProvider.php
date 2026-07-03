@@ -235,7 +235,7 @@ class SqlProvider {
 				} else {
 					$value_field = "fpt_text$i.$value_field";
 				}
-			
+
 			} else {
 				$property_field = "a$i.p_id";
 				$sql .= "\n	AND (";
