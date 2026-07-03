@@ -357,10 +357,10 @@ END;
 		// default), in case there is no type set for this property.
 		$propertyType = 'page';
 
-		$store = Utils::getSMWStore();
+		$store = smwfGetStore();
 		$escapedProperty = $this->escapedProperty();
 		$propPage = new DIWikiPage( $escapedProperty, SMW_NS_PROPERTY, '' );
-		$datatypeLabels = Utils::getSMWContLang()->getDatatypeLabels();
+		$datatypeLabels = smwfContLang()->getDatatypeLabels();
 		$property = $this->property();
 
 		// KnownTypeLabels
