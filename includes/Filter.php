@@ -271,6 +271,7 @@ END;
 		if ( $this->propertyType === 'monolingual_text' ) {
 			$sql .= <<<END
 	JOIN smw_fpt_text fpt_text ON p.o_id = fpt_text.s_id
+END;
 		}
 	
 		$sql .= <<<END
