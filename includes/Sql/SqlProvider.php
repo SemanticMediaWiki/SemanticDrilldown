@@ -171,7 +171,8 @@ class SqlProvider {
 	(SELECT s_id
 	FROM $property_table_name
 	WHERE p_id = (SELECT MIN(smw_id) FROM $smwIDs
-		WHERE ( smw_title = '$property_value' OR smw_title = '$propKey' ) AND smw_namespace = $prop_ns)) $property_table_nickname
+		WHERE ( smw_title = '$property_value' OR smw_title = '$propKey' )
+		AND smw_namespace = $prop_ns)) $property_table_nickname
 	ON ids.smw_id = $property_table_nickname.s_id ";
 			}
 		}
@@ -217,7 +218,8 @@ class SqlProvider {
 			if ( $af->filter->propertyType() === 'page' ) {
 				$property_field = "r$i.p_id";
 				$sql .= "\n	AND ($property_field = (SELECT MIN(smw_id) FROM $smwIDs"
-					. " WHERE ( smw_title = '$property_value' OR smw_title = '$propKey' ) AND smw_namespace = $prop_ns)";
+					. " WHERE ( smw_title = '$property_value' OR smw_title = '$propKey' )
+					AND smw_namespace = $prop_ns)";
 				if ( $includes_none ) {
 					$sql .= " OR $property_field IS NULL";
 				}
@@ -226,7 +228,8 @@ class SqlProvider {
 
 			} elseif ( $af->filter->propertyType() === 'monolingual_text' ) {
 				$property_field = "r$i.p_id";
-				$sql .= "\n	AND $property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE ( smw_title = '$property_value' OR smw_title = '$propKey' ) AND smw_namespace = $prop_ns) AND ";
+				$sql .= "\n	AND $property_field = (SELECT MIN(smw_id) FROM $smwIDs WHERE
+				( smw_title = '$property_value' OR smw_title = '$propKey' ) AND smw_namespace = $prop_ns) AND ";
 				if ( strncmp( $value_field, '(IF(o_blob IS NULL', 18 ) === 0 ) {
 					$value_field = str_replace( 'o_', "fpt_text$i.o_", $value_field );
 				} else {
@@ -237,7 +240,8 @@ class SqlProvider {
 				$property_field = "a$i.p_id";
 				$sql .= "\n	AND (";
 				$sql .= "$property_field = (SELECT MIN(smw_id) FROM $smwIDs"
-					. " WHERE ( smw_title = '$property_value' OR smw_title = '$propKey' ) AND smw_namespace = $prop_ns)";
+					. " WHERE ( smw_title = '$property_value' OR smw_title = '$propKey' )
+					AND smw_namespace = $prop_ns)";
 				if ( $includes_none ) {
 					$sql .= " OR $property_field IS NULL";
 				}
