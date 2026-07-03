@@ -27,10 +27,10 @@ class PropertyTypeDbInfo {
 			case 'annotation_uri':
 			case 'URL':
 				return 'smw_di_uri';
-		
+
 			case 'geographic_coord':
 				return 'smw_di_coords';
-	
+
 			default:
 				return 'smw_di_blob';
 		}
