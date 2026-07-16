@@ -37,7 +37,7 @@ jobs:
             coverage: true
             experimental: false
           - mediawiki_version: '1.43'
-            smw_version: 7.0.0
+            smw_version: 7.1.0
             # SRF 5.2.0 is incompatible with SMW 7 (missing return type on getParamDefinitions); use dev-master until a new SRF release is available
             srf_version: dev-master
             php_version: 8.3
@@ -45,10 +45,9 @@ jobs:
             database_type: mysql
             database_image: "mysql:8"
             coverage: false
-            # SMW 7 triggers "Error 1137: Can't reopen table" on MySQL 8; experimental until fixed upstream
-            experimental: true
+            experimental: false
           - mediawiki_version: '1.43'
-            smw_version: 7.0.0
+            smw_version: 7.1.0
             # SRF 5.2.0 is incompatible with SMW 7 (missing return type on getParamDefinitions); use dev-master until a new SRF release is available
             srf_version: dev-master
             php_version: 8.3
@@ -65,7 +64,16 @@ jobs:
             database_type: mysql
             database_image: "mariadb:11.8"
             coverage: false
-            experimental: true
+            experimental: false
+          - mediawiki_version: '1.46'
+            smw_version: dev-master
+            srf_version: dev-master
+            php_version: 8.4
+            al_version: 0.7.2
+            database_type: mysql
+            database_image: "mariadb:11.8"
+            coverage: false
+            experimental: false
 
     env:
       MW_VERSION: ${{ matrix.mediawiki_version }}
