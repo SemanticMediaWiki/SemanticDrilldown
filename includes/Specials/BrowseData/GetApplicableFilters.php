@@ -493,7 +493,10 @@ END;
 
 		// For dates additionally add two datepicker inputs (Start/End) to select a custom interval.
 		if ( $f->propertyType() == 'date' && $possibleValues->count() != 0 ) {
-			$results_line .= '<br>' . $this->getDateRangeInput( $filter_name, $possibleValues->dateRange() );
+			# $filter_name is alread urlencoded, and getDateRangeInput applies a second urlencode()
+			# so this breaks the URL sent to the browser. Use a raw filter name instead.
+			$raw_filter_name = str_replace( ' ', '_', $f->name() );   
+			$results_line .= '<br>' . $this->getDateRangeInput( $raw_filter_name, $possibleValues->dateRange() );
 		}
 
 		$text = $this->getFilterLine( $f->name(), false, $normal_filter, $results_line, $f );
