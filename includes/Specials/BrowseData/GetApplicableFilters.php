@@ -226,6 +226,13 @@ END;
 		$additional_or_values[] = new PossibleFilterValue( '_none' );
 		$or_values = $or_values->merge( $additional_or_values );
 
+        global $sdgMinValuesForComboBox;
+        if ( $or_values->count() >= $sdgMinValuesForComboBox ) {
+        	$curInstanceNum = count( $current_filter_values );
+	        $results_line = $this->getComboBoxInput( $af->filter->name(), $curInstanceNum, $or_values );
+        	return $this->getFilterLine( $af->filter->name(), true, false, $results_line, $af->filter );
+        }
+		
 		$i = 0;
 		foreach ( $or_values as $or_value ) {
 			$value = $or_value->value();
