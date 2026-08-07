@@ -19,7 +19,7 @@ class GetCategories {
 
 	public function __invoke( $selectedCategory ): ?array {
 		if ( $this->urlService->showSingleCat() ) {
-			return null;
+			return [];
 		}
 
 		$toCategoryViewModel = function ( $category ) use ( $selectedCategory ) {
