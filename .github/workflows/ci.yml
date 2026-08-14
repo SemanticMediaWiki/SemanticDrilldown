@@ -35,9 +35,7 @@ jobs:
             database_type: mysql
             database_image: "mariadb:11.2"
             coverage: true
-            # Phan static analysis runs here and currently has unfixed findings;
-            # experimental until those are addressed
-            experimental: true
+            experimental: false
           - mediawiki_version: '1.43'
             smw_version: 7.2.0
             # SRF 5.2.0 is incompatible with SMW 7 (missing return type on getParamDefinitions); use dev-master until a new SRF release is available
@@ -95,6 +93,7 @@ jobs:
       - name: Run Phan static analysis
         run: make install composer-phan
         if: matrix.coverage == true
+        continue-on-error: true
 
       - name: Run tests with coverage
         run: make ci-coverage
