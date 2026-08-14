@@ -1,4 +1,2 @@
-codecov: 
- token: f47de398-595b-4d71-ad36-e40f580e258b
 fixes:
   - "/var/www/html/extensions/SemanticDrilldown/::"
