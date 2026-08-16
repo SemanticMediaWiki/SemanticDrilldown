@@ -26,7 +26,7 @@ class PossibleFilterValues implements IteratorAggregate {
 	}
 
 	/**
-	 * @return Generator|PossibleFilterValue[]
+	 * @return Generator<PossibleFilterValue>
 	 */
 	public function getIterator(): Generator {
 		yield from $this->values;
@@ -37,7 +37,7 @@ class PossibleFilterValues implements IteratorAggregate {
 	}
 
 	/**
-	 * @return ?string[]
+	 * @return array<?string>
 	 */
 	public function dateRange(): array {
 		return [ $this->minDate, $this->maxDate ];

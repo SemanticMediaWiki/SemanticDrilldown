@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 - Fix undeclared-variable guards and type findings in `GetApplicableFilters` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 - Replace `empty()` checks on always-set values with direct truthiness/null checks in `SemanticResultPrinter` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 - Add proper `float`/`int` types to `NumberUtils`'s bucket-separator math instead of relying on implicit coercion ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Fix docblock/signature mismatches on `PossibleFilterValues`'s iterator methods ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 
 ## [5.0.2] - 2026-06-11
 
