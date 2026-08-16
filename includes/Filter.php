@@ -133,7 +133,7 @@ END;
 		$min_date_padded = '';
 		$max_date_padded = '';
 
-		$res = $dbw->query( $sql );
+		$res = $dbw->query( $sql, __METHOD__ );
 		while ( $row = $res->fetchRow() ) {
 			$timePeriod = $this->timePeriod();
 
@@ -271,7 +271,7 @@ END;
 	ORDER BY $value_field
 
 END;
-		$res = $dbw->query( $sql );
+		$res = $dbw->query( $sql, __METHOD__ );
 		while ( $row = $res->fetchRow() ) {
 			$value_string = str_replace( '_', ' ', $row['value'] );
 			// We check this here, and not in the SQL, because
@@ -304,13 +304,13 @@ END;
 	WHERE p_ids.smw_title = '$property_value'
 
 END;
-		$res = $dbw->query( $sql );
+		$res = $dbw->query( $sql, __METHOD__ );
 		$row = $res->fetchRow();
-		// for sqlite
-		$minDate = str_replace( '-', '/', $row[0] );
-		if ( $minDate === null ) {
+		if ( $row[0] === null ) {
 			return null;
 		}
+		// for sqlite
+		$minDate = str_replace( '-', '/', $row[0] );
 		$minDateParts = explode( '/', $minDate );
 		if ( count( $minDateParts ) == 3 ) {
 			[ $minYear, $minMonth, $minDay ] = $minDateParts;
@@ -327,8 +327,8 @@ END;
 			$maxYear = $maxDateParts[0];
 			$maxMonth = $maxDay = 0;
 		}
-		$yearDifference = $maxYear - $minYear;
-		$monthDifference = ( 12 * $yearDifference ) + ( $maxMonth - $minMonth );
+		$yearDifference = (int)$maxYear - (int)$minYear;
+		$monthDifference = ( 12 * $yearDifference ) + ( (int)$maxMonth - (int)$minMonth );
 		if ( $yearDifference > 30 ) {
 			$timePeriod = 'decade';
 		} elseif ( $yearDifference > 2 ) {
@@ -367,7 +367,7 @@ END;
 				$typeValue = $types[0]->getWikiValue();
 			}
 			if ( $typeValue == $datatypeLabels['_wpg'] ) {
-				$propertyType = 'page';
+				// $propertyType is already 'page' by default.
 				// _str stopped existing in SMW 1.9
 			} elseif ( array_key_exists( '_str', $datatypeLabels ) && $typeValue == $datatypeLabels['_str'] ) {
 				$propertyType = 'string';

@@ -6,6 +6,10 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix `Filter::getTimePeriod()`'s "no matching dates" guard being dead code: it checked the string produced by `str_replace()`, which is never `null`, instead of the raw (possibly-`null`) database value. A property with zero matching dates would fall through to further processing on an empty string instead of returning early. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+
 ### Changed
 
 - Teach Phan about SMW's runtime-defined `SMW_NS_PROPERTY` and sibling namespace constants, resolving `PhanUndeclaredConstant` findings ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
