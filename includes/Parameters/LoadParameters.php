@@ -24,7 +24,7 @@ class LoadParameters {
 			DisplayParametersList::PAGE_PROPERTY_NAME
 		] );
 
-		if ( empty( $properties ) ) {
+		if ( $properties === [] ) {
 			return new Parameters();
 		}
 

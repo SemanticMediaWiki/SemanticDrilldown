@@ -27,6 +27,10 @@ abstract class Parameter implements IParameter {
 	 */
 	abstract public static function fromPropertyValue( ?string $value ): self;
 
+	/**
+	 * @suppress PhanTypeMismatchArgument Every concrete subclass redeclares PAGE_PROPERTY_NAME
+	 * as a string; the null here is only the abstract contract's placeholder.
+	 */
 	public function setPageProperty( ParserOutput $parserOutput ) {
 		$propertyValue = $this->propertyValue();
 		if ( $propertyValue !== null ) {
