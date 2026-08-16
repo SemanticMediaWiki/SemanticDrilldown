@@ -27,6 +27,9 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 - Replace `empty()` with direct checks on always-set values across `includes/Parameters/*` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 - Declare `$msg` before populating it in `ProcessTemplate`, instead of relying on auto-vivification ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 - Simplify an `isset()` ternary to null coalescing in `SpecialBrowseData` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Remove a no-op `switch` with only a default case in `Utils::addMagicWordLanguage()` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+
+Resolves the Phan static analysis findings from [#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150); `includes/PageSchemas.php` was left untouched, as it is slated for removal ([#151](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/151)).
 
 ## [5.0.2] - 2026-06-11
 
