@@ -109,7 +109,8 @@ class QueryPage extends \QueryPage {
 		];
 
 		if ( $this->query ) {
-			$res = $this->db->query( $this->getSQL() );
+			// getSQL() only returns null when $this->query is falsy, which was just checked.
+			$res = $this->db->query( $this->getSQL() ?? '' );
 			$vm += [
 				'appliedFilters' => ( $this->getAppliedFilters )(),
 				'applicableFilters' => ( $this->getApplicableFilters )(),
@@ -124,7 +125,11 @@ class QueryPage extends \QueryPage {
 
 	public function getQueryInfo() {
 		if ( !$this->query ) {
-			return 'select null as sortkey where 0 = 1';
+			return [
+				'tables' => [],
+				'fields' => [ 'sortkey' => 'NULL' ],
+				'conds' => '0=1',
+			];
 		}
 		$dbr = \MediaWiki\MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 		$smwIDs = $dbr->tableName( Utils::getIDsTableName() );
@@ -186,14 +191,7 @@ class QueryPage extends \QueryPage {
 		foreach ( $applied_filters as $i => $af ) {
 			// if any of this filter's values is 'none',
 			// include another table to get this information
-			$includes_none = false;
-			foreach ( $af->values as $fv ) {
-				if ( $fv->text === '_none' || $fv->text === ' none' ) {
-					$includes_none = true;
-					break;
-				}
-			}
-			if ( $includes_none ) {
+			if ( SqlProvider::filterIncludesNone( $af ) ) {
 				$property_table_name = $dbr->tableName(
 					PropertyTypeDbInfo::tableName( $af->filter->propertyType() ) );
 				if ( $af->filter->propertyType() === 'page' ) {
@@ -226,6 +224,7 @@ class QueryPage extends \QueryPage {
 		foreach ( $applied_filters as $i => $af ) {
 			$property_table_name = $dbr->tableName(
 				PropertyTypeDbInfo::tableName( $af->filter->propertyType() ) );
+			$includes_none = SqlProvider::filterIncludesNone( $af );
 			if ( $af->filter->propertyType() === 'page' ) {
 				$sql = "";
 				if ( $includes_none ) {
@@ -271,6 +270,7 @@ class QueryPage extends \QueryPage {
 		foreach ( $applied_filters as $i => $af ) {
 			$property_value = $af->filter->escapedProperty();
 			$value_field = PropertyTypeDbInfo::valueField( $af->filter->propertyType() );
+			$includes_none = SqlProvider::filterIncludesNone( $af );
 			if ( $af->filter->propertyType() === 'page' ) {
 				$property_field = "r$i.p_id";
 				$sql = "SELECT MIN(smw_id) FROM $smwIDs"
@@ -354,7 +354,7 @@ class QueryPage extends \QueryPage {
 	}
 
 	protected function linkParameters() {
-		return $this->urlService->getLinkParameters( $this->getRequest(), $this->query );
+		return $this->urlService->getLinkParameters();
 	}
 
 }

@@ -234,7 +234,7 @@ class SqlProvider {
 		return $sql;
 	}
 
-	private static function filterIncludesNone( AppliedFilter $af ): bool {
+	public static function filterIncludesNone( AppliedFilter $af ): bool {
 		foreach ( $af->values as $fv ) {
 			if ( $fv->text === '_none' || $fv->text === ' none' ) {
 				return true;

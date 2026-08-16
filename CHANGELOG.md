@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 ### Fixed
 
 - Fix `Filter::getTimePeriod()`'s "no matching dates" guard being dead code: it checked the string produced by `str_replace()`, which is never `null`, instead of the raw (possibly-`null`) database value. A property with zero matching dates would fall through to further processing on an empty string instead of returning early. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Fix `Special:BrowseData`'s `QueryPage::getQueryInfo()` reusing the last applied filter's `$includes_none` value for every filter in later loops instead of recomputing it per filter, which could apply the wrong JOIN type or WHERE clause when combining a "None"-inclusive filter with regular filters. It now reuses `SqlProvider::filterIncludesNone()`, the same helper `SqlProvider`'s own query builder already used correctly. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Fix `QueryPage::getQueryInfo()`'s "no category selected" branch returning a raw SQL string instead of the array shape MediaWiki core's `QueryPage` expects, and `QueryPage::linkParameters()` passing two stale arguments to `UrlService::getLinkParameters()`, which no longer takes any. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 
 ### Changed
 
