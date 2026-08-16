@@ -26,6 +26,7 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 - Fix docblock/signature mismatches on `PossibleFilterValues`'s iterator methods ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 - Replace `empty()` with direct checks on always-set values across `includes/Parameters/*` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 - Declare `$msg` before populating it in `ProcessTemplate`, instead of relying on auto-vivification ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Simplify an `isset()` ternary to null coalescing in `SpecialBrowseData` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 
 ## [5.0.2] - 2026-06-11
 

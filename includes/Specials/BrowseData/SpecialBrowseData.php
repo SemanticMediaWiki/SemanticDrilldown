@@ -63,7 +63,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 		// if query string did not contain this variables, try the URL
 		if ( !$category ) {
 			$queryparts = explode( '/', $query, 1 );
-			$category = isset( $queryparts[0] ) ? $queryparts[0] : '';
+			$category = $queryparts[0] ?? '';
 		}
 
 		$out->addHtml( ( new ProcessTemplate )( 'Categories', ( $this->getCategories )( $category ) ) );
