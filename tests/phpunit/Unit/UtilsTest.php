@@ -27,7 +27,7 @@ class UtilsTest extends TestCase {
 
 	/**
 	 * @dataProvider stringToMonthProvider
-	 * @covers ::stringToMonth
+	 * @covers \SD\Utils::stringToMonth
 	 */
 	public function testStringToMonth( $monthNameKey, $expectedMonth ) {
 		// Mock wfMessage to return the correct month name
