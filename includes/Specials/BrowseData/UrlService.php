@@ -84,8 +84,8 @@ class UrlService {
 				// two-dimensional arrays, which is what we
 				// need - instead, add the brackets directly
 				// to the key string
-				foreach ( $af->values as $i => $value ) {
-					$key_string = str_replace( ' ', '_', $af->filter->name() . "[$i]" );
+				foreach ( $af->values as $j => $value ) {
+					$key_string = str_replace( ' ', '_', $af->filter->name() . "[$j]" );
 					$value_string = str_replace( ' ', '_', $value->text );
 					$params[$key_string] = $value_string;
 				}
