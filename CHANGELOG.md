@@ -6,6 +6,31 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix `Filter::getTimePeriod()`'s "no matching dates" guard being dead code: it checked the string produced by `str_replace()`, which is never `null`, instead of the raw (possibly-`null`) database value. A property with zero matching dates would fall through to further processing on an empty string instead of returning early. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Fix `Special:BrowseData`'s `QueryPage::getQueryInfo()` reusing the last applied filter's `$includes_none` value for every filter in later loops instead of recomputing it per filter, which could apply the wrong JOIN type or WHERE clause when combining a "None"-inclusive filter with regular filters. It now reuses `SqlProvider::filterIncludesNone()`, the same helper `SqlProvider`'s own query builder already used correctly. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Fix `QueryPage::getQueryInfo()`'s "no category selected" branch returning a raw SQL string instead of the array shape MediaWiki core's `QueryPage` expects, and `QueryPage::linkParameters()` passing two stale arguments to `UrlService::getLinkParameters()`, which no longer takes any. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Fix `UrlService::getLinkParameters()`'s inner loop over a multi-value filter's values overwriting the outer per-filter index, which could mismatch a search-term query key against the wrong filter. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Fix `#drilldowninfo`'s info box always rendering an (empty) "Title" row even when no title had been configured for the category. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+
+### Changed
+
+- Teach Phan about SMW's runtime-defined `SMW_NS_PROPERTY` and sibling namespace constants, resolving `PhanUndeclaredConstant` findings ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Drop the unreachable nullable return type from `PropertyTypeDbInfo::tableName()`/`valueField()` — both always match a switch case (or fall through to a still-string-returning default), so `?string` forced every caller to guard against a `null` that could never occur ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Switch `DbService`/`Services` from the deprecated `DBConnRef` API to `IDatabase`, matching the type MediaWiki core's `getConnection()` (the non-deprecated replacement for `getConnectionRef()`) actually returns; also fix `DbService::getNumResults()`'s docblock, which claimed an array return but always returned a scalar count ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Correct inaccurate docblock types on `AppliedFilter`/`AppliedFilterValue` (`lower_date`/`upper_date`, `search_terms`, `month`, and the previously-undeclared `time_period` property) to reflect the types the code has always actually used ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Fix undeclared-variable guards and type findings in `GetApplicableFilters` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Replace `empty()` checks on always-set values with direct truthiness/null checks in `SemanticResultPrinter` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Add proper `float`/`int` types to `NumberUtils`'s bucket-separator math instead of relying on implicit coercion ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Fix docblock/signature mismatches on `PossibleFilterValues`'s iterator methods ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Replace `empty()` with direct checks on always-set values across `includes/Parameters/*` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Declare `$msg` before populating it in `ProcessTemplate`, instead of relying on auto-vivification ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Simplify an `isset()` ternary to null coalescing in `SpecialBrowseData` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Remove a no-op `switch` with only a default case in `Utils::addMagicWordLanguage()` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+
+Resolves the Phan static analysis findings from [#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150); `includes/PageSchemas.php` was left untouched, as it is slated for removal ([#151](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/151)).
+
 ## [5.0.2] - 2026-06-11
 
 Patch release fixing apostrophe handling in filter parameters, DROP privilege requirement, and config resolution during web-based upgrades.

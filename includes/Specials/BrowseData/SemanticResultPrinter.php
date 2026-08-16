@@ -25,7 +25,7 @@ class SemanticResultPrinter {
 		[ $querystring, $params, $printouts ] =
 			SMWQueryProcessor::getComponentsFromFunctionParams( $displayParameters, false );
 
-		$query = !empty( $querystring )
+		$query = $querystring
 			? SMWQueryProcessor::createQuery( $querystring, $params )
 			: new SMWQuery();
 
@@ -51,6 +51,11 @@ class SemanticResultPrinter {
 		return $text;
 	}
 
+	/**
+	 * @suppress PhanUndeclaredMethod cacheSMWPageID was removed from current SMW; kept for
+	 * compatibility with older SMW versions that still have it, guarded by method_exists().
+	 * @return Closure
+	 */
 	private static function createGetSmwQueryResult( $res, $num ) {
 		$qr = [];
 		$count = 0;

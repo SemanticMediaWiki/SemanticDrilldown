@@ -30,19 +30,19 @@ class AppliedFilter {
 	/**
 	 * search terms value
 	 *
-	 * @var string
+	 * @var string[]|null
 	 */
 	public $search_terms;
 	/**
 	 * lower date value
 	 *
-	 * @var DateTime|null
+	 * @var array{year:int,month:int,day:int}|null
 	 */
 	public $lower_date;
 	/**
 	 * upper date value
 	 *
-	 * @var DateTime|null
+	 * @var array{year:int,month:int,day:int}|null
 	 */
 	public $upper_date;
 	/**
@@ -133,9 +133,10 @@ class AppliedFilter {
 	 * Convert value of datepicker field (e.g. "1760-11-23") into value usable in SQL queries.
 	 * (e.g. DATE(...)).
 	 *
+	 * @param array{year:int,month:int,day:int} $date
 	 * @return string formatted date
 	 */
-	protected function lowerOrUpperDateToSql( $date ) {
+	protected function lowerOrUpperDateToSql( array $date ) {
 		return "DATE('" . $date['year'] . "-" . $date['month'] . "-" . $date['day'] . "')";
 	}
 

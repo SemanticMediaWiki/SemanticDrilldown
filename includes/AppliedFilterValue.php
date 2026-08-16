@@ -54,7 +54,7 @@ class AppliedFilterValue {
 	/**
 	 * month value
 	 *
-	 * @var string
+	 * @var int|null
 	 */
 	public $month = null;
 	/**
@@ -69,6 +69,12 @@ class AppliedFilterValue {
 	 * @var string
 	 */
 	public $end_year = null;
+	/**
+	 * time period granularity for a date filter value: 'day', 'month', 'year' or 'year range'
+	 *
+	 * @var string|null
+	 */
+	public $time_period = null;
 
 	public static function create( $actual_val, ?Filter $filter = null ) {
 		$fv = new AppliedFilterValue();

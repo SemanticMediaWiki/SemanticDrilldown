@@ -117,11 +117,8 @@ class Utils {
 	 * @return bool true or false
 	 */
 	public static function addMagicWordLanguage( &$magicWords, $langCode ) {
-		switch ( $langCode ) {
-			default:
-				$magicWords['MAG_HIDEFROMDRILLDOWN'] = [ 0, '__HIDEFROMDRILLDOWN__' ];
-				$magicWords['MAG_SHOWINDRILLDOWN'] = [ 0, '__SHOWINDRILLDOWN__' ];
-		}
+		$magicWords['MAG_HIDEFROMDRILLDOWN'] = [ 0, '__HIDEFROMDRILLDOWN__' ];
+		$magicWords['MAG_SHOWINDRILLDOWN'] = [ 0, '__SHOWINDRILLDOWN__' ];
 		return true;
 	}
 

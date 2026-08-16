@@ -65,4 +65,12 @@ class DbServiceTest extends TestCase {
 			'dropFilterValuesTempTable must use DROP TEMPORARY TABLE, not DROP TABLE'
 		);
 	}
+
+	public function testCreateTempTableThrowsWithoutPrimaryConnection(): void {
+		$service = new DbService( null, $this->dbr );
+
+		$this->expectException( \LogicException::class );
+
+		$service->createTempTable( 'TestCategory', '', [], [] );
+	}
 }

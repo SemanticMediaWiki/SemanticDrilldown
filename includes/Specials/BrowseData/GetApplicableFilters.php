@@ -68,6 +68,9 @@ class GetApplicableFilters {
 			}
 			// get necessary values for creating the tag cloud,
 			// if appropriate
+			$lowest_num_results = null;
+			$highest_num_results = null;
+			$scale_factor = null;
 			if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 				$lowest_num_results = min( $subcat_values );
 				$highest_num_results = max( $subcat_values );
@@ -90,7 +93,7 @@ class GetApplicableFilters {
 					if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 						if ( $lowest_num_results != $highest_num_results ) {
 							$font_size = round(
-								( ( log( $num_results ) - log( $lowest_num_results ) ) * $scale_factor )
+								( ( log( (float)$num_results ) - log( (float)$lowest_num_results ) ) * $scale_factor )
 								+ $sdgFiltersSmallestFontSize
 							);
 						} else {
@@ -140,8 +143,9 @@ class GetApplicableFilters {
 		$sdgDisableFilterCollapsible = ( new GlobalVarConfig( 'sdg' ) )->get( 'DisableFilterCollapsible' );
 		$sdSkinsPath = "$wgScriptPath/extensions/SemanticDrilldown/skins";
 
-		if ( $filter->int() !== null ) {
-			$filterName = wfMessage( $filter->int() )->text();
+		$filterInt = $filter->int();
+		if ( $filterInt !== null ) {
+			$filterName = wfMessage( $filterInt )->text();
 		}
 
 		$additionalClasses = '';
@@ -194,6 +198,7 @@ END;
 	 */
 	private function getAppliedFilterLine( AppliedFilter $af ): string {
 		$results_line = "";
+		$current_filter_values = [];
 		foreach ( $this->query->appliedFilters() as $af2 ) {
 			if ( $af->filter->name() == $af2->filter->name() ) {
 				$current_filter_values = $af2->values;
@@ -275,6 +280,9 @@ END;
 		$results_line = "";
 		// set font-size values for filter "tag cloud", if the
 		// appropriate global variables are set
+		$lowest_num_results = null;
+		$highest_num_results = null;
+		$scale_factor = null;
 		if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 			[ $lowest_num_results, $highest_num_results ] = $possibleValues->countRange();
 			if ( $lowest_num_results != $highest_num_results ) {
@@ -299,7 +307,7 @@ END;
 			if ( $sdgFiltersSmallestFontSize > 0 && $sdgFiltersLargestFontSize > 0 ) {
 				if ( $lowest_num_results != $highest_num_results ) {
 					$font_size = round(
-						( ( log( $num_results ) - log( $lowest_num_results ) ) * $scale_factor )
+						( ( log( (float)$num_results ) - log( (float)$lowest_num_results ) ) * $scale_factor )
 						+ $sdgFiltersSmallestFontSize
 					);
 				} else {
@@ -353,8 +361,12 @@ END;
 		return $text;
 	}
 
+	/**
+	 * @suppress PhanTypeMismatchArgumentProbablyReal Html::input()'s null-valued attributes
+	 * (incl. "name") are dropped by Html::expandAttributes(); '' would render name="" instead.
+	 */
 	private function getComboBoxInput(
-		$filter_name, $instance_num, PossibleFilterValues $possibleValues, $cur_value = null
+		$filter_name, $instance_num, PossibleFilterValues $possibleValues
 	): string {
 		$filter_name = str_replace( ' ', '_', $filter_name );
 		// URL-decode the filter name - necessary if it contains
@@ -430,6 +442,10 @@ END;
 		return (string)$widget;
 	}
 
+	/**
+	 * @suppress PhanTypeMismatchArgumentProbablyReal Html::input()'s null-valued attributes
+	 * (incl. "name") are dropped by Html::expandAttributes(); '' would render name="" instead.
+	 */
 	private function getDateRangeInput( $filter_name, $dateRange ): string {
 		[ $lower_date, $upper_date ] = $dateRange;
 		$start_label = wfMessage( 'sd_browsedata_daterangestart' )->text();
@@ -457,7 +473,7 @@ END;
 			}
 		}
 		$submitButton = Html::input( null, wfMessage( 'sd_browsedata_search' )->text(), 'submit' );
-		$text .= Html::rawElement( 'p', null, $submitButton );
+		$text .= Html::rawElement( 'p', [], $submitButton );
 		$text .= "</form>";
 
 		return $text;
@@ -507,7 +523,7 @@ END;
 
 	private function getPossibleValues( Filter $f ): PossibleFilterValues {
 		$this->db->createFilterValuesTempTable( $f->propertyType(), $f->escapedProperty() );
-		if ( empty( $f->allowedValues() ) ) {
+		if ( !$f->allowedValues() ) {
 			$possibleFilterValues = $f->propertyType() == 'date'
 				? $f->getTimePeriodValues()
 				: $f->getAllValues();
@@ -530,7 +546,7 @@ END;
 		// Now get values for 'Other' and 'None', as well
 		// - don't show 'Other' if filter values were
 		// obtained dynamically.
-		if ( !empty( $f->allowedValues() ) ) {
+		if ( $f->allowedValues() ) {
 			$other_filter = AppliedFilter::create( $f, ' other' );
 			$num_results = $this->db->getNumResults(
 				$this->query->subcategory(), $this->query->allSubcategories(), $other_filter
@@ -541,8 +557,9 @@ END;
 		}
 		// Show 'None' only if any other results have been found, and
 		// if it's not a numeric filter.
-		if ( !empty( $f->allowedValues() ) ) {
-			$fv = AppliedFilterValue::create( $f->allowedValues()[0] );
+		$allowedValues = $f->allowedValues();
+		if ( $allowedValues ) {
+			$fv = AppliedFilterValue::create( $allowedValues[0] );
 			if ( !$fv->is_numeric ) {
 				$none_filter = AppliedFilter::create( $f, ' none' );
 				$num_results = $this->db->getNumResults(

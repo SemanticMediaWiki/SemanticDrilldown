@@ -31,7 +31,7 @@ class Filters extends Parameter implements IteratorAggregate {
 		$result = new self;
 
 		$filters = [];
-		if ( !empty( $value ) ) {
+		if ( $value !== null && $value !== '' ) {
 			$filters = unserialize( $value );
 		}
 

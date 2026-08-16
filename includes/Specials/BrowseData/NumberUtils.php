@@ -52,7 +52,7 @@ class NumberUtils {
 		$bucketSeparators = [];
 		$bucketSeparators[] = $numberArray[0];
 		for ( $i = 1; $i < $numBuckets; $i++ ) {
-			$separatorIndex = floor( $numNumbers * $i / $numBuckets ) - 1;
+			$separatorIndex = (int)floor( $numNumbers * $i / $numBuckets ) - 1;
 			$previousSeparatorValue = $separatorValue;
 			$separatorValue = $numberArray[$separatorIndex];
 			if ( $separatorValue == $previousSeparatorValue ) {
@@ -112,12 +112,12 @@ class NumberUtils {
 	 * (https://github.com/yaronkoren/miga/blob/master/NumberUtils.js)
 	 * - though that one is in Javascript.
 	 *
-	 * @return int
+	 * @return float
 	 */
-	private static function getNearestNiceNumber( $num, $previousNum, $nextNum ) {
-		if ( $previousNum == null ) {
+	private static function getNearestNiceNumber( float $num, ?float $previousNum, ?float $nextNum ): float {
+		if ( $previousNum === null ) {
 			$smallestDifference = $nextNum - $num;
-		} elseif ( $nextNum == null ) {
+		} elseif ( $nextNum === null ) {
 			$smallestDifference = $num - $previousNum;
 		} else {
 			$smallestDifference = min( $num - $previousNum, $nextNum - $num );
