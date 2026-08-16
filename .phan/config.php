@@ -39,4 +39,13 @@ foreach ( $dependencyExtensions as $ext ) {
 	$cfg['exclude_analysis_directory_list'][] = $IP . '/extensions/' . $ext;
 }
 
+// SMW_NS_PROPERTY and its sibling namespace constants are declared at runtime via
+// extension.json's "namespaces" block, not via a plain define() in SMW's own PHP source,
+// so Phan can't see them from the SemanticMediaWiki directory_list entry above. SMW ships
+// a stub with the same define()s it uses for its own Phan run; reuse it here too.
+$smwNamespaceStub = $IP . '/extensions/SemanticMediaWiki/.phan/stubs/namespaces.php';
+if ( is_file( $smwNamespaceStub ) ) {
+	$cfg['file_list'][] = $smwNamespaceStub;
+}
+
 return $cfg;

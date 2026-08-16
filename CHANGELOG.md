@@ -6,6 +6,10 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 
 ## [Unreleased]
 
+### Changed
+
+- Teach Phan about SMW's runtime-defined `SMW_NS_PROPERTY` and sibling namespace constants, resolving `PhanUndeclaredConstant` findings ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+
 ## [5.0.2] - 2026-06-11
 
 Patch release fixing apostrophe handling in filter parameters, DROP privilege requirement, and config resolution during web-based upgrades.
