@@ -91,13 +91,24 @@ class SqlProvider {
 	public static function getSQLFromClause(
 		string $category, string $subcategory, array $subcategories, array $applied_filters
 	) {
-		$dbr = MediaWikiServices::getInstance()
+		$services = MediaWikiServices::getInstance();
+		$dbr = $services
 			->getDBLoadBalancer()
 			->getMaintenanceConnectionRef( DB_REPLICA );
 		$smwIDs = $dbr->tableName( Utils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
 		$pageTable = $dbr->tableName( 'page' );
 		$categorylinksTable = $dbr->tableName( 'categorylinks' );
+
+		// LinksMigration::getQueryInfo( 'categorylinks' ) is only available from MW 1.44+.
+		// In MW 1.43 the categorylinks table is not yet in the migration mapping.
+		$linktargetTable = null;
+		if ( version_compare( MW_VERSION, '1.44', '>=' ) ) {
+			$queryInfo = $services->getLinksMigration()->getQueryInfo( 'categorylinks' );
+			if ( in_array( 'linktarget', $queryInfo['tables'], true ) ) {
+				$linktargetTable = $dbr->tableName( 'linktarget' );
+			}
+		}
 
 		$propertyTableNames = [];
 		foreach ( $applied_filters as $i => $af ) {
@@ -108,7 +119,7 @@ class SqlProvider {
 		return self::buildSQLFromClause(
 			$category, $subcategory, $subcategories, $applied_filters,
 			$smwIDs, $smwCategoryInstances, $pageTable, $categorylinksTable,
-			$propertyTableNames
+			$propertyTableNames, $linktargetTable
 		);
 	}
 
@@ -125,12 +136,14 @@ class SqlProvider {
 	 * @param string $pageTable
 	 * @param string $categorylinksTable
 	 * @param string[] $propertyTableNames map of filter index to quoted table name
+	 * @param string|null $linktargetTable pre-resolved linktarget table name, or null to
+	 *   join against categorylinks.cl_to directly (MW < 1.44, or 1.44+ before migration)
 	 * @return string
 	 */
 	public static function buildSQLFromClause(
 		string $category, string $subcategory, array $subcategories, array $applied_filters,
 		string $smwIDs, string $smwCategoryInstances, string $pageTable, string $categorylinksTable,
-		array $propertyTableNames
+		array $propertyTableNames, ?string $linktargetTable = null
 	) {
 		$cat_ns = NS_CATEGORY;
 		$prop_ns = SMW_NS_PROPERTY;
@@ -145,7 +158,13 @@ class SqlProvider {
 	LEFT JOIN $pageTable pg
 	ON pg.page_title = ids.smw_title AND pg.page_namespace = ids.smw_namespace
 	LEFT JOIN $categorylinksTable cl
-	ON cl.cl_from = pg.page_id AND cl.cl_to = '$actual_cat' ";
+	ON cl.cl_from = pg.page_id ";
+		if ( $linktargetTable !== null ) {
+			$sql .= "LEFT JOIN $linktargetTable lt
+	ON cl.cl_target_id = lt.lt_id AND lt.lt_namespace = $cat_ns AND lt.lt_title = '$actual_cat' ";
+		} else {
+			$sql .= "AND cl.cl_to = '$actual_cat' ";
+		}
 		foreach ( $applied_filters as $i => $af ) {
 			// if any of this filter's values is 'none',
 			// include another table to get this information
