@@ -28,6 +28,9 @@
 	"AutoloadNamespaces": {
 		"SD\\": "includes/"
 	},
+	"TestAutoloadNamespaces": {
+		"SD\\Tests\\": "tests/phpunit/"
+	},
 	"ResourceModules": {
 		"ext.semanticdrilldown.main": {
 			"scripts": "libs/SemanticDrilldown.js",
