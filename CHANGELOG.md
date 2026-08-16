@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 - Switch `DbService`/`Services` from the deprecated `DBConnRef` API to `IDatabase`, matching the type MediaWiki core's `getConnection()` (the non-deprecated replacement for `getConnectionRef()`) actually returns; also fix `DbService::getNumResults()`'s docblock, which claimed an array return but always returned a scalar count ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 - Correct inaccurate docblock types on `AppliedFilter`/`AppliedFilterValue` (`lower_date`/`upper_date`, `search_terms`, `month`, and the previously-undeclared `time_period` property) to reflect the types the code has always actually used ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 - Fix undeclared-variable guards and type findings in `GetApplicableFilters` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Replace `empty()` checks on always-set values with direct truthiness/null checks in `SemanticResultPrinter` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 
 ## [5.0.2] - 2026-06-11
 
