@@ -31,6 +31,7 @@ class ProcessTemplate {
 			'sd_displayparameters_with_unknown_format',
 			'sd_displayparameters_with_unsupported_format'
 		];
+		$msg = [];
 		foreach ( $messages as $message ) {
 			$msg[ "msg_$message" ] = wfMessage( $message )->text();
 		}
