@@ -46,7 +46,11 @@ class SqlProviderGetSQLFromClauseTest extends TestCase {
 		return $af;
 	}
 
-	private function buildSQL( array $appliedFilters, array $propertyTableNames = [] ): string {
+	private const LINKTARGET = 'linktarget';
+
+	private function buildSQL(
+		array $appliedFilters, array $propertyTableNames = [], ?string $linktargetTable = null
+	): string {
 		if ( $propertyTableNames === [] ) {
 			foreach ( $appliedFilters as $i => $af ) {
 				$propertyTableNames[$i] = 'prop_table_' . $i;
@@ -55,7 +59,7 @@ class SqlProviderGetSQLFromClauseTest extends TestCase {
 		return SqlProvider::buildSQLFromClause(
 			'TestCat', '', [], $appliedFilters,
 			self::SMW_IDS, self::SMW_CAT, self::PAGE, self::CATLINKS,
-			$propertyTableNames
+			$propertyTableNames, $linktargetTable
 		);
 	}
 
@@ -137,6 +141,44 @@ class SqlProviderGetSQLFromClauseTest extends TestCase {
 			'a1.p_id IS NULL',
 			$sql,
 			'WHERE clause for the second (regular) filter must not allow p_id IS NULL; scoping must not bleed'
+		);
+	}
+
+	public function testNoLinktargetTableJoinsCategorylinksOnClTo(): void {
+		$sql = $this->buildSQL( [] );
+
+		$this->assertStringContainsString(
+			"cl.cl_from = pg.page_id ",
+			$sql
+		);
+		$this->assertStringContainsString(
+			"AND cl.cl_to = 'TestCat'",
+			$sql,
+			'Without a linktarget table (MW < 1.44), the categorylinks join must filter on cl_to directly'
+		);
+		$this->assertStringNotContainsString( self::LINKTARGET, $sql );
+	}
+
+	public function testLinktargetTableJoinsViaClTargetId(): void {
+		$sql = $this->buildSQL( [], [], self::LINKTARGET );
+
+		$this->assertStringContainsString(
+			"LEFT JOIN " . self::LINKTARGET . " lt",
+			$sql,
+			'When a linktarget table is supplied (MW 1.44+ with migrated categorylinks), it must be joined'
+		);
+		$this->assertStringContainsString(
+			"cl.cl_target_id = lt.lt_id",
+			$sql
+		);
+		$this->assertStringContainsString(
+			"lt.lt_title = 'TestCat'",
+			$sql
+		);
+		$this->assertStringNotContainsString(
+			"cl.cl_to",
+			$sql,
+			'When using the linktarget table, the removed cl_to column must not appear in the SQL'
 		);
 	}
 }

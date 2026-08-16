@@ -131,7 +131,8 @@ class QueryPage extends \QueryPage {
 				'conds' => '0=1',
 			];
 		}
-		$dbr = \MediaWiki\MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
+		$services = \MediaWiki\MediaWikiServices::getInstance();
+		$dbr = $services->getDBLoadBalancer()->getConnection( DB_REPLICA );
 		$smwIDs = $dbr->tableName( Utils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( Utils::getCategoryInstancesTableName() );
 		$cat_ns = NS_CATEGORY;
@@ -144,6 +145,14 @@ class QueryPage extends \QueryPage {
 
 		$pageTable = $dbr->tableName( 'page' );
 		$categorylinksTable = $dbr->tableName( 'categorylinks' );
+
+		// LinksMigration::getQueryInfo( 'categorylinks' ) is only available from MW 1.44+.
+		// In MW 1.43 the categorylinks table is not yet in the migration mapping.
+		$useLinktarget = false;
+		if ( version_compare( MW_VERSION, '1.44', '>=' ) ) {
+			$queryInfo = $services->getLinksMigration()->getQueryInfo( 'categorylinks' );
+			$useLinktarget = in_array( 'linktarget', $queryInfo['tables'], true );
+		}
 
 		$query = [
 			'fields' => [
@@ -177,16 +186,36 @@ class QueryPage extends \QueryPage {
 						'pg.page_namespace = ids.smw_namespace',
 					]
 				],
-				'cl' => [
-					'LEFT JOIN',
-					[
-						'cl.cl_from = pg.page_id',
-						"cl.cl_to = '$actual_cat'",
-					]
-				],
 			],
 			'conds' => []
 		];
+
+		if ( $useLinktarget ) {
+			$linktargetTable = $dbr->tableName( 'linktarget' );
+			$query[ 'tables' ][ 'lt' ] = $linktargetTable;
+			$query[ 'join_conds' ][ 'cl' ] = [
+				'LEFT JOIN',
+				[
+					'cl.cl_from = pg.page_id',
+				]
+			];
+			$query[ 'join_conds' ][ 'lt' ] = [
+				'LEFT JOIN',
+				[
+					'cl.cl_target_id = lt.lt_id',
+					'lt.lt_namespace' => $cat_ns,
+					"lt.lt_title" => $actual_cat,
+				]
+			];
+		} else {
+			$query[ 'join_conds' ][ 'cl' ] = [
+				'LEFT JOIN',
+				[
+					'cl.cl_from = pg.page_id',
+					"cl.cl_to = '$actual_cat'",
+				]
+			];
+		}
 		$applied_filters = $this->query->appliedFilters();
 		foreach ( $applied_filters as $i => $af ) {
 			// if any of this filter's values is 'none',
