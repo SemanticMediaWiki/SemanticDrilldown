@@ -15,6 +15,7 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 - Teach Phan about SMW's runtime-defined `SMW_NS_PROPERTY` and sibling namespace constants, resolving `PhanUndeclaredConstant` findings ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 - Drop the unreachable nullable return type from `PropertyTypeDbInfo::tableName()`/`valueField()` — both always match a switch case (or fall through to a still-string-returning default), so `?string` forced every caller to guard against a `null` that could never occur ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 - Switch `DbService`/`Services` from the deprecated `DBConnRef` API to `IDatabase`, matching the type MediaWiki core's `getConnection()` (the non-deprecated replacement for `getConnectionRef()`) actually returns; also fix `DbService::getNumResults()`'s docblock, which claimed an array return but always returned a scalar count ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Correct inaccurate docblock types on `AppliedFilter`/`AppliedFilterValue` (`lower_date`/`upper_date`, `search_terms`, `month`, and the previously-undeclared `time_period` property) to reflect the types the code has always actually used ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 
 ## [5.0.2] - 2026-06-11
 
