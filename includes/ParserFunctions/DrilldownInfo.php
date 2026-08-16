@@ -124,7 +124,7 @@ class DrilldownInfo {
 			}
 			$text .= "</td></tr>\n";
 		}
-		if ( $this->title !== null ) {
+		if ( $this->title->value !== null ) {
 			$text .= "<tr class=\"drilldownInfoHeader\"><td colspan=\"2\">Title</td></tr>\n";
 			$text .= "<tr><td colspan=\"2\">$this->title</td></tr>\n";
 		}

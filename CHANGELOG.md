@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 - Fix `Special:BrowseData`'s `QueryPage::getQueryInfo()` reusing the last applied filter's `$includes_none` value for every filter in later loops instead of recomputing it per filter, which could apply the wrong JOIN type or WHERE clause when combining a "None"-inclusive filter with regular filters. It now reuses `SqlProvider::filterIncludesNone()`, the same helper `SqlProvider`'s own query builder already used correctly. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 - Fix `QueryPage::getQueryInfo()`'s "no category selected" branch returning a raw SQL string instead of the array shape MediaWiki core's `QueryPage` expects, and `QueryPage::linkParameters()` passing two stale arguments to `UrlService::getLinkParameters()`, which no longer takes any. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 - Fix `UrlService::getLinkParameters()`'s inner loop over a multi-value filter's values overwriting the outer per-filter index, which could mismatch a search-term query key against the wrong filter. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Fix `#drilldowninfo`'s info box always rendering an (empty) "Title" row even when no title had been configured for the category. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 
 ### Changed
 
