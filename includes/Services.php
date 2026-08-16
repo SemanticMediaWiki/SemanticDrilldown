@@ -16,7 +16,7 @@ use SD\Specials\BrowseData\SpecialBrowseData;
 use SD\Specials\BrowseData\UrlService;
 use SpecialPage;
 use WebRequest;
-use Wikimedia\Rdbms\DBConnRef;
+use Wikimedia\Rdbms\IDatabase;
 
 /**
  * The service locator of the SemanticDrilldown extension.
@@ -71,6 +71,9 @@ class Services {
 	}
 
 	private function getGetPageSchema(): Closure {
+		// PageSchemas is an optional dependency, not in Phan's analysis config;
+		// class_exists() guards this at runtime.
+		// @phan-suppress-next-line PhanUndeclaredClassMethod
 		return static fn ( $category ) => class_exists( 'PSSchema' ) ? new \PSSchema( $category ) : null;
 	}
 
@@ -118,11 +121,13 @@ class Services {
 		};
 	}
 
-	private function getPrimaryDbConnectionRef(): DBConnRef {
+	private function getPrimaryDbConnectionRef(): IDatabase {
+		// getConnection() only returns false when CONN_SILENCE_ERRORS is passed; it throws instead.
 		return $this->mwServices()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 	}
 
-	private function getReplicaDbConnectionRef(): DBConnRef {
+	private function getReplicaDbConnectionRef(): IDatabase {
+		// getConnection() only returns false when CONN_SILENCE_ERRORS is passed; it throws instead.
 		return $this->mwServices()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 	}
 

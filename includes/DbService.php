@@ -7,19 +7,31 @@ use MediaWiki\Linker\LinksMigration;
 use MediaWiki\MediaWikiServices;
 use SD\Sql\PropertyTypeDbInfo;
 use SD\Sql\SqlProvider;
-use Wikimedia\Rdbms\DBConnRef;
+use Wikimedia\Rdbms\IDatabase;
 use Wikimedia\Rdbms\IResultWrapper;
 
 class DbService {
 
-	private ?DBConnRef $dbw;
-	private ?DBConnRef $dbr;
+	private ?IDatabase $dbw;
+	private ?IDatabase $dbr;
 	private LinksMigration $linksMigration;
 
-	public function __construct( ?DBConnRef $dbw, ?DBConnRef $dbr ) {
+	public function __construct( ?IDatabase $dbw, ?IDatabase $dbr ) {
 		$this->dbw = $dbw;
 		$this->dbr = $dbr;
 		$this->linksMigration = MediaWikiServices::getInstance()->getLinksMigration();
+	}
+
+	/**
+	 * The primary connection, for methods that need write access (e.g. temporary tables).
+	 * Callers that only need read access, and may be constructed without a primary
+	 * connection (see PageSchemas.php), must not go through this.
+	 */
+	private function primaryDb(): IDatabase {
+		if ( $this->dbw === null ) {
+			throw new \LogicException( __CLASS__ . ' was constructed without a primary DB connection' );
+		}
+		return $this->dbw;
 	}
 
 	/**
@@ -29,7 +41,7 @@ class DbService {
 	 * @return bool|IResultWrapper
 	 */
 	public function query( string $sql ) {
-		return $this->dbr->query( $sql );
+		return $this->dbr->query( $sql, __METHOD__ );
 	}
 
 	/**
@@ -38,7 +50,7 @@ class DbService {
 	 * all remaining filters
 	 */
 	public function createTempTable( $category, $subcategory, $subcategories, $applied_filters ) {
-		$temporaryTableManager = new TemporaryTableManager( $this->dbw );
+		$temporaryTableManager = new TemporaryTableManager( $this->primaryDb() );
 
 		$tableName = $this->dbr->tableName( "semantic_drilldown_values" );
 		$sql0 = "DROP TEMPORARY TABLE IF EXISTS $tableName;";
@@ -83,7 +95,7 @@ END;
 		}
 		$sql .= "	WHERE p_ids.smw_title = '$query_property'";
 
-		$temporaryTableManager = new TemporaryTableManager( $this->dbw );
+		$temporaryTableManager = new TemporaryTableManager( $this->primaryDb() );
 		$temporaryTableManager->queryWithAutoCommit( $sql, __METHOD__ );
 	}
 
@@ -94,26 +106,24 @@ END;
 		$tableName = $this->dbr->tableName( "semantic_drilldown_filter_values" );
 		$sql = "DROP TEMPORARY TABLE $tableName";
 
-		$temporaryTableManager = new TemporaryTableManager( $this->dbw );
+		$temporaryTableManager = new TemporaryTableManager( $this->primaryDb() );
 		$temporaryTableManager->queryWithAutoCommit( $sql, __METHOD__ );
 	}
 
 	/**
 	 * Gets the number of pages matching both the currently-selected
 	 * set of filters and either a new subcategory or a new filter.
-	 *
-	 * @return array
 	 */
-	public function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
+	public function getNumResults( $subcategory, $subcategories, $new_filter = null ): int {
 		$sql = "SELECT COUNT(DISTINCT sdv.id) ";
 		if ( $new_filter ) {
 			$sql .= SqlProvider::getSQLFromClauseForField( $new_filter );
 		} else {
 			$sql .= SqlProvider::getSQLFromClauseForCategory( $subcategory, $subcategories );
 		}
-		$res = $this->dbw->query( $sql );
+		$res = $this->dbw->query( $sql, __METHOD__ );
 		$row = $res->fetchRow();
-		return $row[0];
+		return (int)$row[0];
 	}
 
 	public function getCategoryChildren( $category_name, $get_categories, $levels ) {
