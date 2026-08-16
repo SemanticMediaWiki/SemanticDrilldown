@@ -4,7 +4,7 @@ namespace SD\Sql;
 
 class PropertyTypeDbInfo {
 
-	public static function tableName( string $propertyType ): ?string {
+	public static function tableName( string $propertyType ): string {
 		switch ( $propertyType ) {
 			case 'page':
 				return 'smw_di_wikipage';
@@ -21,7 +21,7 @@ class PropertyTypeDbInfo {
 		}
 	}
 
-	public static function valueField( string $propertyType ): ?string {
+	public static function valueField( string $propertyType ): string {
 		global $wgDBtype;
 		switch ( $propertyType ) {
 			case 'page':

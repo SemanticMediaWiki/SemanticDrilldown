@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 ### Changed
 
 - Teach Phan about SMW's runtime-defined `SMW_NS_PROPERTY` and sibling namespace constants, resolving `PhanUndeclaredConstant` findings ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Drop the unreachable nullable return type from `PropertyTypeDbInfo::tableName()`/`valueField()` — both always match a switch case (or fall through to a still-string-returning default), so `?string` forced every caller to guard against a `null` that could never occur ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 
 ## [5.0.2] - 2026-06-11
 
