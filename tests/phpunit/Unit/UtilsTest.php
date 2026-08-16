@@ -87,6 +87,31 @@ class UtilsTest extends TestCase {
 	}
 
 	/**
+	 * @dataProvider addMagicWordLanguageProvider
+	 */
+	public function testAddMagicWordLanguage( $langCode ) {
+		$magicWords = [];
+		$result = Utils::addMagicWordLanguage( $magicWords, $langCode );
+
+		$this->assertTrue( $result );
+		$this->assertEquals( [ 0, '__HIDEFROMDRILLDOWN__' ], $magicWords['MAG_HIDEFROMDRILLDOWN'] );
+		$this->assertEquals( [ 0, '__SHOWINDRILLDOWN__' ], $magicWords['MAG_SHOWINDRILLDOWN'] );
+	}
+
+	/**
+	 * Provides language codes for addMagicWordLanguage() - the magic words are
+	 * language-independent, so every language code must produce the same result.
+	 *
+	 * @return array
+	 */
+	public function addMagicWordLanguageProvider() {
+		return [
+			'English' => [ 'en' ],
+			'German' => [ 'de' ],
+		];
+	}
+
+	/**
 	 * Helper method to override global functions like wfMessage.
 	 *
 	 * @param string $functionName
