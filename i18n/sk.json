@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Helix84",
-			"Teslaton"
+			"Teslaton",
+			"Wizzard"
 		]
 	},
 	"semanticdrilldown-desc": "Rozhranie na navigáciu sémantickými údajmi",
@@ -30,5 +31,8 @@
 	"sd_createfilter_usecategoryvalues": "Získať hodnoty filtra z tejto kategórie:",
 	"sd_createfilter_requirefilter": "Vyžadovať, aby bol vybraný iný filter než sa zobrazí tento:",
 	"sd-pageschemas-filter": "Filter",
-	"sd-pageschemas-values": "Hodnoty"
+	"sd-pageschemas-values": "Hodnoty",
+	"sd_browsedata_search": "Hľadať",
+	"sd_displayparameters_with_unknown_format": "Zobraziť parametre s neznámym formátom",
+	"sd_displayparameters_with_unsupported_format": "Zobraziť parametre s nepodporovaným formátom"
 }
