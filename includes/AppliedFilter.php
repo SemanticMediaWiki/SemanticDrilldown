@@ -8,7 +8,7 @@ use SD\Sql\PropertyTypeDbInfo;
 use SD\Sql\SqlProvider;
 
 /**
- * Defines a class, AppliedFilter, that adds a value or a value range
+ * Defines a class, AppliedFilter, that adds a value or a value range -ignore
  * onto a an Filter instance.
  *
  * @author Yaron Koren
