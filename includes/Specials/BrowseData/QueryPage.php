@@ -193,33 +193,14 @@ class QueryPage extends \QueryPage {
 			'options' => [ 'DISTINCT' ],
 		];
 
-		if ( $useLinktarget ) {
-			// The category condition has to be part of the categorylinks join itself. If it were
-			// only part of a following join on linktarget, every category link of a page would
-			// produce a row, i.e. a page in n categories would be listed n times.
-			// Hence, join only the links to the browsed category.
-			$linktargetTable = $dbr->tableName( 'linktarget' );
-			$categoryName = $dbr->addQuotes( str_replace( ' ', '_', $subcategory ?: $category ) );
-			$query[ 'tables' ][ 'cl' ] = new Subquery(
-				"SELECT cl_from, cl_sortkey FROM $categorylinksTable"
-				. " JOIN $linktargetTable ON cl_target_id = lt_id"
-				. " WHERE lt_namespace = $cat_ns AND lt_title = $categoryName"
-			);
-			$query[ 'join_conds' ][ 'cl' ] = [
-				'LEFT JOIN',
-				[
-					'cl.cl_from = pg.page_id',
-				]
-			];
-		} else {
-			$query[ 'join_conds' ][ 'cl' ] = [
-				'LEFT JOIN',
-				[
-					'cl.cl_from = pg.page_id',
-					"cl.cl_to = '$actual_cat'",
-				]
-			];
-		}
+		[ $categorylinks, $categorylinksJoinConds ] = SqlProvider::getCategorylinksJoin(
+			$categorylinksTable,
+			$useLinktarget ? $dbr->tableName( 'linktarget' ) : null,
+			$dbr->addQuotes( str_replace( ' ', '_', $subcategory ?: $category ) ),
+			$cat_ns
+		);
+		$query[ 'tables' ][ 'cl' ] = $categorylinks;
+		$query[ 'join_conds' ][ 'cl' ] = [ 'LEFT JOIN', $categorylinksJoinConds ];
 		$applied_filters = $this->query->appliedFilters();
 		foreach ( $applied_filters as $i => $af ) {
 			// if any of this filter's values is 'none',

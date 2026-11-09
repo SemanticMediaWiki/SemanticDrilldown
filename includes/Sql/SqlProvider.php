@@ -5,6 +5,7 @@ namespace SD\Sql;
 use MediaWiki\MediaWikiServices;
 use SD\AppliedFilter;
 use SD\Utils;
+use Wikimedia\Rdbms\Subquery;
 
 class SqlProvider {
 
@@ -255,6 +256,37 @@ class SqlProvider {
 			$sql .= $af->checkSQL( $value_field );
 		}
 		return $sql;
+	}
+
+	/**
+	 * Returns the categorylinks table (to be aliased "cl") and the condition of its LEFT JOIN with the
+	 * page table (aliased "pg") for QueryPage::getQueryInfo().
+	 *
+	 * The category has to restrict the categorylinks rows themselves. If it were only a condition of
+	 * a following join on linktarget, every category link of a page would produce a result row, i.e.
+	 * a page in n categories would be listed n times. Hence, with a linktarget table (MW 1.44+ with
+	 * migrated categorylinks), only the links to the category are joined, as a derived table.
+	 *
+	 * @param string $categorylinksTable
+	 * @param string|null $linktargetTable pre-resolved linktarget table name, or null to
+	 *   use categorylinks.cl_to directly
+	 * @param string $quotedCategory the category name (with underscores) as an SQL string literal
+	 * @param int $categoryNamespace
+	 * @return array{0: string|Subquery, 1: string[]} table and join conditions
+	 */
+	public static function getCategorylinksJoin(
+		string $categorylinksTable, ?string $linktargetTable, string $quotedCategory, int $categoryNamespace
+	): array {
+		if ( $linktargetTable === null ) {
+			return [ $categorylinksTable, [ 'cl.cl_from = pg.page_id', "cl.cl_to = $quotedCategory" ] ];
+		}
+
+		$links = new Subquery(
+			"SELECT cl_from, cl_sortkey FROM $categorylinksTable"
+			. " JOIN $linktargetTable ON cl_target_id = lt_id"
+			. " WHERE lt_namespace = $categoryNamespace AND lt_title = $quotedCategory"
+		);
+		return [ $links, [ 'cl.cl_from = pg.page_id' ] ];
 	}
 
 	public static function filterIncludesNone( AppliedFilter $af ): bool {
