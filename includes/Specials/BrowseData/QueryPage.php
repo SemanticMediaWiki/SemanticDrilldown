@@ -187,35 +187,20 @@ class QueryPage extends \QueryPage {
 					]
 				],
 			],
-			'conds' => []
+			'conds' => [],
+			// A page with several values matching a filter, or one that is a member of both a
+			// category and a subcategory, matches in several rows; list it only once.
+			'options' => [ 'DISTINCT' ],
 		];
 
-		if ( $useLinktarget ) {
-			$linktargetTable = $dbr->tableName( 'linktarget' );
-			$query[ 'tables' ][ 'lt' ] = $linktargetTable;
-			$query[ 'join_conds' ][ 'cl' ] = [
-				'LEFT JOIN',
-				[
-					'cl.cl_from = pg.page_id',
-				]
-			];
-			$query[ 'join_conds' ][ 'lt' ] = [
-				'LEFT JOIN',
-				[
-					'cl.cl_target_id = lt.lt_id',
-					'lt.lt_namespace' => $cat_ns,
-					"lt.lt_title" => $actual_cat,
-				]
-			];
-		} else {
-			$query[ 'join_conds' ][ 'cl' ] = [
-				'LEFT JOIN',
-				[
-					'cl.cl_from = pg.page_id',
-					"cl.cl_to = '$actual_cat'",
-				]
-			];
-		}
+		[ $categorylinks, $categorylinksJoinConds ] = SqlProvider::getCategorylinksJoin(
+			$categorylinksTable,
+			$useLinktarget ? $dbr->tableName( 'linktarget' ) : null,
+			$dbr->addQuotes( str_replace( ' ', '_', $subcategory ?: $category ) ),
+			$cat_ns
+		);
+		$query[ 'tables' ][ 'cl' ] = $categorylinks;
+		$query[ 'join_conds' ][ 'cl' ] = [ 'LEFT JOIN', $categorylinksJoinConds ];
 		$applied_filters = $this->query->appliedFilters();
 		foreach ( $applied_filters as $i => $af ) {
 			// if any of this filter's values is 'none',

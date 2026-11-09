@@ -1,0 +1,65 @@
+{
+	"description": "BrowseData lists every page once, however many categories or property values it has (issue #157)",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "DupDate",
+			"contents": "[[Has type::Date]]"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "DupCategory",
+			"contents": "{{#drilldowninfo: filters=Date (property=DupDate)|display parameters=format=list}}"
+		},
+		{
+			"page": "Page in three categories",
+			"contents": "[[Category:DupCategory]] [[Category:DupOtherA]] [[Category:DupOtherB]]"
+		},
+		{
+			"page": "Page with two dates",
+			"contents": "[[Category:DupCategory]] [[DupDate::2000-01-01]] [[DupDate::2000-01-02]]"
+		}
+	],
+	"tests": [
+		{
+			"type": "special",
+			"about": "a page in several categories is counted once; two pages in total",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "DupCategory",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"Showing below up to <strong>2</strong> results"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "a page with several values matching a date range filter is counted once",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "DupCategory",
+				"request-parameters": {
+					"_lower_Date": "2000-01-01",
+					"_upper_Date": "2000-12-31"
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"Showing below up to <strong>1</strong> result in range"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgArticlePath": "/index.php/$1",
+		"wgLang": "en"
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}
