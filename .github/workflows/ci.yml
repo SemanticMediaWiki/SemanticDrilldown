@@ -17,57 +17,29 @@ jobs:
 
   test:
 
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     continue-on-error: ${{ matrix.experimental }}
 
     strategy:
       matrix:
         include:
           - mediawiki_version: '1.43'
-            smw_version: 6.0.1
-            srf_version: 5.2.0
-            php_version: 8.2
-            al_version: 0.6.3
-            database_type: mysql
-            database_image: "mariadb:11.2"
-            coverage: true
-            experimental: false
-          - mediawiki_version: '1.43'
-            smw_version: 7.2.0
+            smw_version: 7.4.0
             # SRF 5.2.0 is incompatible with SMW 7 (missing return type on getParamDefinitions); use dev-master until a new SRF release is available
-            srf_version: dev-master
+            srf_version: 6.0.1
             php_version: 8.3
             al_version: 0.6.3
             database_type: mysql
             database_image: "mysql:8"
-            coverage: false
-            experimental: false
-          - mediawiki_version: '1.44'
-            smw_version: 7.2.0
-            # SRF 5.2.0 is incompatible with SMW 7 (missing return type on getParamDefinitions); use dev-master until a new SRF release is available
-            srf_version: dev-master
-            php_version: 8.3
-            al_version: 0.6.3
-            database_type: mysql
-            database_image: "mariadb:11.2"
-            coverage: false
-            experimental: false
-          - mediawiki_version: '1.45'
-            smw_version: dev-master
-            srf_version: dev-master
-            php_version: 8.4
-            al_version: 0.7
-            database_type: mysql
-            database_image: "mariadb:11.8"
-            coverage: false
+            coverage: true
             experimental: false
           - mediawiki_version: '1.46'
-            smw_version: dev-master
-            srf_version: dev-master
-            php_version: 8.4
+            smw_version: 7.4.0
+            srf_version: 6.0.1
+            php_version: 8.5
             al_version: 0.7
             database_type: mysql
-            database_image: "mariadb:11.8"
+            database_image: "mariadb:12.3"
             coverage: false
             experimental: false
 
