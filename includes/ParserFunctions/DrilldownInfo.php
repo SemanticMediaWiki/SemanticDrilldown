@@ -101,8 +101,14 @@ class DrilldownInfo {
 		$bdLink = Html::rawElement( 'a', [ 'href' => $bdURL ], "Semantic Drilldown" );
 		$text .= "<tr><th colspan=\"2\">$bdLink</th></tr>\n";
 		$text .= "<tr class=\"drilldownInfoHeader\"><td colspan=\"2\">Filters</td></tr>\n";
-		foreach ( $this->filters as $filterName => $filterInfo ) {
-			$text .= "<tr><td class=\"drilldownFilterName\">$filterName</td><td>\n";
+		foreach ( $this->filters as $filter ) {
+			$text .= "<tr><td class=\"drilldownFilterName\">{$filter->name()}</td><td>\n";
+			$filterInfo = array_filter( [
+				'property' => $filter->property(),
+				'category' => $filter->category(),
+				'requires' => $filter->requires(),
+				'int' => $filter->int(),
+			], static fn ( $value ) => $value !== null );
 			$i = 0;
 			foreach ( $filterInfo as $key => $value ) {
 				if ( $i++ > 0 ) {

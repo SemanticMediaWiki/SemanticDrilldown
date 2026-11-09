@@ -1,0 +1,42 @@
+{
+	"description": "the #drilldowninfo info box shows the configured filter names and settings (issue #157)",
+	"setup": [
+		{
+			"namespace": "SMW_NS_PROPERTY",
+			"page": "InfoBoxStatus",
+			"contents": "[[Has type::Text]]"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "InfoBoxCategory",
+			"contents": "{{#drilldowninfo: filters=Status (property=InfoBoxStatus),Reference date (property=InfoBoxStatus)}}"
+		}
+	],
+	"tests": [
+		{
+			"type": "parser",
+			"about": "filter names are shown instead of their positions",
+			"subject": "Category:InfoBoxCategory",
+			"assert-output": {
+				"to-contain": [
+					"<td class=\"drilldownFilterName\">Status</td>",
+					"<td class=\"drilldownFilterName\">Reference date</td>",
+					"property = <a href=\"/index.php/Property:InfoBoxStatus\""
+				],
+				"not-contain": [
+					"<td class=\"drilldownFilterName\">0</td>",
+					"<td class=\"drilldownFilterName\">1</td>"
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgArticlePath": "/index.php/$1",
+		"wgLang": "en"
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}
