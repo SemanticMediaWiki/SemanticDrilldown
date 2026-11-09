@@ -1,0 +1,101 @@
+{
+	"description": "BrowseData results can be sorted by last modification, newest first (issue #158)",
+	"setup": [
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "SortAlphabetical",
+			"contents": "{{#drilldowninfo: filters=}}"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "SortModified",
+			"contents": "{{#drilldowninfo: sort=modified}}"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "SortUnknown",
+			"contents": "{{#drilldowninfo: sort=no-such-order}}"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "SortModifiedUnpaged",
+			"contents": "{{#drilldowninfo: sort=modified|display parameters=format=ul}}"
+		},
+		{
+			"page": "Mango page",
+			"contents": "[[Category:SortAlphabetical]][[Category:SortModified]][[Category:SortUnknown]][[Category:SortModifiedUnpaged]]"
+		},
+		{
+			"page": "Apple page",
+			"contents": "[[Category:SortAlphabetical]][[Category:SortModified]][[Category:SortUnknown]][[Category:SortModifiedUnpaged]]"
+		},
+		{
+			"page": "Zebra page",
+			"contents": "[[Category:SortAlphabetical]][[Category:SortModified]][[Category:SortUnknown]][[Category:SortModifiedUnpaged]]"
+		}
+	],
+	"tests": [
+		{
+			"type": "special",
+			"about": "without a sort parameter, results are ordered alphabetically",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "SortAlphabetical",
+				"request-parameters": { "limit": 1 }
+			},
+			"assert-output": {
+				"to-contain": [ "<a href=\"/index.php/Apple_page\" title=\"Apple page\">Apple page</a>" ],
+				"not-contain": [ "<a href=\"/index.php/Zebra_page\" title=\"Zebra page\">Zebra page</a>" ]
+			}
+		},
+		{
+			"type": "special",
+			"about": "sort=modified lists the most recently changed page first",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "SortModified",
+				"request-parameters": { "limit": 1 }
+			},
+			"assert-output": {
+				"to-contain": [ "<a href=\"/index.php/Zebra_page\" title=\"Zebra page\">Zebra page</a>" ],
+				"not-contain": [ "<a href=\"/index.php/Apple_page\" title=\"Apple page\">Apple page</a>" ]
+			}
+		},
+		{
+			"type": "special",
+			"about": "an unknown sort value falls back to the alphabetical order",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "SortUnknown",
+				"request-parameters": { "limit": 1 }
+			},
+			"assert-output": {
+				"to-contain": [ "<a href=\"/index.php/Apple_page\" title=\"Apple page\">Apple page</a>" ],
+				"not-contain": [ "<a href=\"/index.php/Zebra_page\" title=\"Zebra page\">Zebra page</a>" ]
+			}
+		},
+		{
+			"type": "special",
+			"about": "sort=modified also orders the results of unpaged result formats",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "SortModifiedUnpaged",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"title=\"Zebra page\">Zebra page</a></span></span></li><li class=\"smw-row\"><span class=\"smw-field\"><span class=\"smw-value\"><a href=\"/index.php/Apple_page\" title=\"Apple page\">Apple page</a></span></span></li><li class=\"smw-row\"><span class=\"smw-field\"><span class=\"smw-value\"><a href=\"/index.php/Mango_page\""
+				]
+			}
+		}
+	],
+	"settings": {
+		"wgArticlePath": "/index.php/$1",
+		"wgLang": "en"
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}

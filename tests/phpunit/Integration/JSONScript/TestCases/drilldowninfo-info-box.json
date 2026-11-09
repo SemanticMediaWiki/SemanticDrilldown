@@ -10,6 +10,11 @@
 			"namespace": "NS_CATEGORY",
 			"page": "InfoBoxCategory",
 			"contents": "{{#drilldowninfo: filters=Status (property=InfoBoxStatus),Reference date (property=InfoBoxStatus)}}"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "InfoBoxSortedCategory",
+			"contents": "{{#drilldowninfo: filters=Status (property=InfoBoxStatus)|sort=modified}}"
 		}
 	],
 	"tests": [
@@ -26,6 +31,27 @@
 				"not-contain": [
 					"<td class=\"drilldownFilterName\">0</td>",
 					"<td class=\"drilldownFilterName\">1</td>"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "the sort parameter is shown",
+			"subject": "Category:InfoBoxSortedCategory",
+			"assert-output": {
+				"to-contain": [
+					"<td colspan=\"2\">Sort</td>",
+					"<td colspan=\"2\">modified</td>"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "no sort row if no sort parameter is given",
+			"subject": "Category:InfoBoxCategory",
+			"assert-output": {
+				"not-contain": [
+					"<td colspan=\"2\">Sort</td>"
 				]
 			}
 		}

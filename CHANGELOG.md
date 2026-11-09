@@ -6,6 +6,10 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 
 ## [Unreleased]
 
+### Added
+
+- Add the parameter `sort=modified` to `#drilldowninfo`, which lists the pages of a category with the most recently changed page first (by the timestamp of the latest revision, pages changed at the same second newest first) instead of alphabetically. The default is unchanged, and any other value keeps the alphabetical order. The order applies to paged and unpaged result formats; the default result format `category` groups the pages by the first letter of their sort key, so use a list or table format, e.g. `display parameters=format=ol`, to see the order. The category page has to be saved again after adding the parameter. ([#158](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/158))
+
 ### Fixed
 
 - Fix `Special:BrowseData` listing a page once per category it belongs to on MediaWiki versions whose `categorylinks` table no longer has a `cl_to` column (1.45+): the browsed category was only a condition of the join on `linktarget`, so it did not restrict the `categorylinks` rows; it is now part of the `categorylinks` join itself, in both `SqlProvider::buildSQLFromClause()` and `QueryPage::getQueryInfo()`. The paged result list now also lists a page only once when several of its values match a filter, or when it is a member of both a category and one of its subcategories. ([#157](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/157))

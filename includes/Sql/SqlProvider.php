@@ -9,7 +9,18 @@ use Wikimedia\Rdbms\Subquery;
 
 class SqlProvider {
 
-	public static function getSQL( $category, $subcategory, $all_subcategories, $applied_filters ) {
+	/**
+	 * @param string $category
+	 * @param string $subcategory
+	 * @param string[] $all_subcategories
+	 * @param AppliedFilter[] $applied_filters
+	 * @param bool $sortByModified order by the time of the last change, newest first, instead of
+	 *   leaving the order to the database (the paged list orders by itself, see QueryPage)
+	 * @return string
+	 */
+	public static function getSQL(
+		$category, $subcategory, $all_subcategories, $applied_filters, bool $sortByModified = false
+	) {
 		// QueryPage uses the value from this SQL in an ORDER clause,
 		// so return page_title as title.
 		// Use cl_sortkey from the categorylinks table so that per-category sort keys
@@ -21,8 +32,18 @@ class SqlProvider {
 	ids.smw_namespace AS ns,
 	ids.smw_id AS id,
 	ids.smw_iw AS iw,
-	COALESCE(cl.cl_sortkey, ids.smw_sortkey) AS sortkey\n";
-		$sql .= self::getSQLFromClause( $category, $subcategory, $all_subcategories, $applied_filters );
+	COALESCE(cl.cl_sortkey, ids.smw_sortkey) AS sortkey";
+		if ( $sortByModified ) {
+			$sql .= ",\n	rev.rev_timestamp AS sort_modified";
+		}
+		$sql .= "\n";
+		$sql .= self::getSQLFromClause(
+			$category, $subcategory, $all_subcategories, $applied_filters, $sortByModified
+		);
+		if ( $sortByModified ) {
+			// smw_id as the last key, so that pages changed at the same second keep a stable order
+			$sql .= "\nORDER BY sort_modified DESC, id DESC";
+		}
 		return $sql;
 	}
 
@@ -90,7 +111,8 @@ class SqlProvider {
 	 * @return string
 	 */
 	public static function getSQLFromClause(
-		string $category, string $subcategory, array $subcategories, array $applied_filters
+		string $category, string $subcategory, array $subcategories, array $applied_filters,
+		bool $withRevision = false
 	) {
 		$services = MediaWikiServices::getInstance();
 		$dbr = $services
@@ -120,7 +142,8 @@ class SqlProvider {
 		return self::buildSQLFromClause(
 			$category, $subcategory, $subcategories, $applied_filters,
 			$smwIDs, $smwCategoryInstances, $pageTable, $categorylinksTable,
-			$propertyTableNames, $linktargetTable
+			$propertyTableNames, $linktargetTable,
+			$withRevision ? $dbr->tableName( 'revision' ) : null
 		);
 	}
 
@@ -139,12 +162,14 @@ class SqlProvider {
 	 * @param string[] $propertyTableNames map of filter index to quoted table name
 	 * @param string|null $linktargetTable pre-resolved linktarget table name, or null to
 	 *   join against categorylinks.cl_to directly (MW < 1.44, or 1.44+ before migration)
+	 * @param string|null $revisionTable pre-resolved revision table name, to join the latest revision of
+	 *   each page as "rev" (for sorting by the time of the last change), or null to not join it
 	 * @return string
 	 */
 	public static function buildSQLFromClause(
 		string $category, string $subcategory, array $subcategories, array $applied_filters,
 		string $smwIDs, string $smwCategoryInstances, string $pageTable, string $categorylinksTable,
-		array $propertyTableNames, ?string $linktargetTable = null
+		array $propertyTableNames, ?string $linktargetTable = null, ?string $revisionTable = null
 	) {
 		$cat_ns = NS_CATEGORY;
 		$prop_ns = SMW_NS_PROPERTY;
@@ -158,6 +183,9 @@ class SqlProvider {
 	AND ids.smw_namespace != $cat_ns
 	LEFT JOIN $pageTable pg
 	ON pg.page_title = ids.smw_title AND pg.page_namespace = ids.smw_namespace ";
+		if ( $revisionTable !== null ) {
+			$sql .= "LEFT JOIN $revisionTable rev ON rev.rev_id = pg.page_latest ";
+		}
 		if ( $linktargetTable !== null ) {
 			// The category condition has to be part of the categorylinks join itself. If it were
 			// only part of a following join on linktarget, every category link of a page would
