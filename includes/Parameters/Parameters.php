@@ -9,16 +9,19 @@ class Parameters {
 	private ?string $footer;
 	private ?Filters $filters;
 	private ?DisplayParametersList $displayParametersList;
+	private ?string $sort;
 
 	public function __construct(
 		?string $title = null, ?string $header = null, ?string $footer = null,
-		?Filters $filters = null, ?DisplayParametersList $displayParameters = null
+		?Filters $filters = null, ?DisplayParametersList $displayParameters = null,
+		?string $sort = null
 	) {
 		$this->title = $title;
 		$this->header = $header;
 		$this->footer = $footer;
 		$this->filters = $filters;
 		$this->displayParametersList = $displayParameters;
+		$this->sort = $sort;
 	}
 
 	public function title(): ?string {
@@ -39,5 +42,9 @@ class Parameters {
 
 	public function displayParametersList(): ?DisplayParametersList {
 		return $this->displayParametersList;
+	}
+
+	public function sort(): ?string {
+		return $this->sort;
 	}
 }

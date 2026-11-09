@@ -9,6 +9,7 @@ use MediaWiki\Title\Title;
 use SD\DbService;
 use SD\Parameters\DisplayParameters;
 use SD\Parameters\Parameters;
+use SD\Parameters\Sort;
 use SD\Sql\PropertyTypeDbInfo;
 use SD\Sql\SqlProvider;
 use SD\Utils;
@@ -27,6 +28,7 @@ class QueryPage extends \QueryPage {
 	private ProcessTemplate $processTemplate;
 
 	private DrilldownQuery $query;
+	private bool $sortByModified;
 	private ?string $headerPage = null;
 	private ?string $footerPage = null;
 	private array $displayParametersWithUnknownFormat = [];
@@ -61,6 +63,7 @@ class QueryPage extends \QueryPage {
 		$this->db = $db;
 		$this->urlService = $urlService;
 		$this->query = $query;
+		$this->sortByModified = $parameters->sort() === Sort::MODIFIED;
 		$this->offset = $offset;
 		$this->limit = $limit;
 
@@ -201,6 +204,11 @@ class QueryPage extends \QueryPage {
 		);
 		$query[ 'tables' ][ 'cl' ] = $categorylinks;
 		$query[ 'join_conds' ][ 'cl' ] = [ 'LEFT JOIN', $categorylinksJoinConds ];
+		if ( $this->sortByModified ) {
+			$query[ 'fields' ][ 'sort_modified' ] = 'rev.rev_timestamp';
+			$query[ 'tables' ][ 'rev' ] = $dbr->tableName( 'revision' );
+			$query[ 'join_conds' ][ 'rev' ] = [ 'LEFT JOIN', [ 'rev.rev_id = pg.page_latest' ] ];
+		}
 		$applied_filters = $this->query->appliedFilters();
 		foreach ( $applied_filters as $i => $af ) {
 			// if any of this filter's values is 'none',
@@ -320,7 +328,7 @@ class QueryPage extends \QueryPage {
 		// This is strongly deprecated; getQueryInfo() should be overridden instead."
 		if ( $this->sql === null ) {
 			$this->sql = SqlProvider::getSQL( $this->query->category(), $this->query->subcategory(),
-				$this->query->allSubcategories(), $this->query->appliedFilters() );
+				$this->query->allSubcategories(), $this->query->appliedFilters(), $this->sortByModified );
 		}
 
 		// Note: we have to return the SQL here even if we already know that there are no paged
@@ -329,11 +337,13 @@ class QueryPage extends \QueryPage {
 	}
 
 	protected function getOrderFields() {
-		return [ 'sortkey' ];
+		// Core QueryPage applies one direction to all fields, so the id is descending as well,
+		// which keeps pages changed at the same second in the order of their creation, newest first.
+		return $this->sortByModified ? [ 'sort_modified', 'id' ] : [ 'sortkey' ];
 	}
 
 	protected function sortDescending() {
-		return false;
+		return $this->sortByModified;
 	}
 
 	protected function formatResult( $skin, $result ) {

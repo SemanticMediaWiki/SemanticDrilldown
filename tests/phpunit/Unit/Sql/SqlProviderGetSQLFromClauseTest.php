@@ -49,7 +49,8 @@ class SqlProviderGetSQLFromClauseTest extends TestCase {
 	private const LINKTARGET = 'linktarget';
 
 	private function buildSQL(
-		array $appliedFilters, array $propertyTableNames = [], ?string $linktargetTable = null
+		array $appliedFilters, array $propertyTableNames = [], ?string $linktargetTable = null,
+		?string $revisionTable = null
 	): string {
 		if ( $propertyTableNames === [] ) {
 			foreach ( $appliedFilters as $i => $af ) {
@@ -59,7 +60,7 @@ class SqlProviderGetSQLFromClauseTest extends TestCase {
 		return SqlProvider::buildSQLFromClause(
 			'TestCat', '', [], $appliedFilters,
 			self::SMW_IDS, self::SMW_CAT, self::PAGE, self::CATLINKS,
-			$propertyTableNames, $linktargetTable
+			$propertyTableNames, $linktargetTable, $revisionTable
 		);
 	}
 
@@ -197,5 +198,15 @@ class SqlProviderGetSQLFromClauseTest extends TestCase {
 			'The linktarget condition must be part of the join of the categorylinks table'
 		);
 		$this->assertStringNotContainsString( 'LEFT JOIN ' . self::LINKTARGET, $sql );
+	}
+
+	public function testRevisionTableIsJoinedOnPageLatestForSortingByModification(): void {
+		$sql = $this->buildSQL( [], [], null, 'revision' );
+
+		$this->assertStringContainsString( 'LEFT JOIN revision rev ON rev.rev_id = pg.page_latest', $sql );
+	}
+
+	public function testRevisionTableIsNotJoinedByDefault(): void {
+		$this->assertStringNotContainsString( 'revision', $this->buildSQL( [] ) );
 	}
 }
