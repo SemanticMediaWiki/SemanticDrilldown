@@ -22,7 +22,8 @@ class LoadParameters {
 			Footer::PAGE_PROPERTY_NAME,
 			Filters::PAGE_PROPERTY_NAME,
 			DisplayParametersList::PAGE_PROPERTY_NAME,
-			Sort::PAGE_PROPERTY_NAME
+			Sort::PAGE_PROPERTY_NAME,
+			ResultsPerPage::PAGE_PROPERTY_NAME
 		] );
 
 		if ( $properties === [] ) {
@@ -38,7 +39,8 @@ class LoadParameters {
 			Footer::fromPropertyValue( $get( Footer::PAGE_PROPERTY_NAME ) )->value,
 			Filters::fromPropertyValue( $get( Filters::PAGE_PROPERTY_NAME ) ),
 			DisplayParametersList::fromPropertyValue( $get( DisplayParametersList::PAGE_PROPERTY_NAME ) ),
-			Sort::fromPropertyValue( $get( Sort::PAGE_PROPERTY_NAME ) )->value
+			Sort::fromPropertyValue( $get( Sort::PAGE_PROPERTY_NAME ) )->value,
+			ResultsPerPage::fromPropertyValue( $get( ResultsPerPage::PAGE_PROPERTY_NAME ) )->value
 		);
 	}
 }

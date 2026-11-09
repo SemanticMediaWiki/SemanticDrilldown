@@ -79,7 +79,7 @@ class SpecialBrowseData extends IncludableSpecialPage {
 
 			[ $limit, $offset ] = $request->getLimitOffsetForUser(
 				$this->getUser(),
-				$numResultsPerPage,
+				$parameters->resultsPerPage() ?? $numResultsPerPage,
 				'sdlimit'
 			);
 

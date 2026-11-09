@@ -1,0 +1,167 @@
+{
+	"description": "the number of results per page of Special:BrowseData can be set for a category",
+	"setup": [
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "RppTwo",
+			"contents": "{{#drilldowninfo: results per page=2}}"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "RppNone",
+			"contents": "{{#drilldowninfo: filters=}}"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "RppInvalid",
+			"contents": "{{#drilldowninfo: results per page=many}}"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "RppZero",
+			"contents": "{{#drilldowninfo: results per page=0}}"
+		},
+		{
+			"page": "Rpp Alpha",
+			"contents": "[[Category:RppTwo]][[Category:RppNone]][[Category:RppInvalid]][[Category:RppZero]]"
+		},
+		{
+			"page": "Rpp Beta",
+			"contents": "[[Category:RppTwo]][[Category:RppNone]][[Category:RppInvalid]][[Category:RppZero]]"
+		},
+		{
+			"page": "Rpp Gamma",
+			"contents": "[[Category:RppTwo]][[Category:RppNone]][[Category:RppInvalid]][[Category:RppZero]]"
+		},
+		{
+			"page": "Rpp Delta",
+			"contents": "[[Category:RppTwo]][[Category:RppNone]][[Category:RppInvalid]][[Category:RppZero]]"
+		}
+	],
+	"tests": [
+		{
+			"type": "special",
+			"about": "results per page limits the number of results shown on a page",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "RppTwo",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Rpp_Alpha\" title=\"Rpp Alpha\">Rpp Alpha</a>",
+					"<a href=\"/index.php/Rpp_Beta\" title=\"Rpp Beta\">Rpp Beta</a>"
+				],
+				"not-contain": [
+					"<a href=\"/index.php/Rpp_Delta\" title=\"Rpp Delta\">Rpp Delta</a>",
+					"<a href=\"/index.php/Rpp_Gamma\" title=\"Rpp Gamma\">Rpp Gamma</a>"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "the limit from the URL takes precedence over results per page",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "RppTwo",
+				"request-parameters": {
+					"limit": 3
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Rpp_Alpha\" title=\"Rpp Alpha\">Rpp Alpha</a>",
+					"<a href=\"/index.php/Rpp_Beta\" title=\"Rpp Beta\">Rpp Beta</a>",
+					"<a href=\"/index.php/Rpp_Delta\" title=\"Rpp Delta\">Rpp Delta</a>"
+				],
+				"not-contain": [
+					"<a href=\"/index.php/Rpp_Gamma\" title=\"Rpp Gamma\">Rpp Gamma</a>"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "the next page continues after the results of the first page",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "RppTwo",
+				"request-parameters": {
+					"offset": 2
+				}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Rpp_Delta\" title=\"Rpp Delta\">Rpp Delta</a>",
+					"<a href=\"/index.php/Rpp_Gamma\" title=\"Rpp Gamma\">Rpp Gamma</a>"
+				],
+				"not-contain": [
+					"<a href=\"/index.php/Rpp_Alpha\" title=\"Rpp Alpha\">Rpp Alpha</a>",
+					"<a href=\"/index.php/Rpp_Beta\" title=\"Rpp Beta\">Rpp Beta</a>"
+				]
+			}
+		},
+		{
+			"type": "special",
+			"about": "without the parameter all results fit on the page",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "RppNone",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Rpp_Alpha\" title=\"Rpp Alpha\">Rpp Alpha</a>",
+					"<a href=\"/index.php/Rpp_Beta\" title=\"Rpp Beta\">Rpp Beta</a>",
+					"<a href=\"/index.php/Rpp_Delta\" title=\"Rpp Delta\">Rpp Delta</a>",
+					"<a href=\"/index.php/Rpp_Gamma\" title=\"Rpp Gamma\">Rpp Gamma</a>"
+				],
+				"not-contain": []
+			}
+		},
+		{
+			"type": "special",
+			"about": "a value that is not a number is ignored",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "RppInvalid",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Rpp_Alpha\" title=\"Rpp Alpha\">Rpp Alpha</a>",
+					"<a href=\"/index.php/Rpp_Beta\" title=\"Rpp Beta\">Rpp Beta</a>",
+					"<a href=\"/index.php/Rpp_Delta\" title=\"Rpp Delta\">Rpp Delta</a>",
+					"<a href=\"/index.php/Rpp_Gamma\" title=\"Rpp Gamma\">Rpp Gamma</a>"
+				],
+				"not-contain": []
+			}
+		},
+		{
+			"type": "special",
+			"about": "zero is ignored",
+			"special-page": {
+				"page": "BrowseData",
+				"query-parameters": "RppZero",
+				"request-parameters": {}
+			},
+			"assert-output": {
+				"to-contain": [
+					"<a href=\"/index.php/Rpp_Alpha\" title=\"Rpp Alpha\">Rpp Alpha</a>",
+					"<a href=\"/index.php/Rpp_Beta\" title=\"Rpp Beta\">Rpp Beta</a>",
+					"<a href=\"/index.php/Rpp_Delta\" title=\"Rpp Delta\">Rpp Delta</a>",
+					"<a href=\"/index.php/Rpp_Gamma\" title=\"Rpp Gamma\">Rpp Gamma</a>"
+				],
+				"not-contain": []
+			}
+		}
+	],
+	"settings": {
+		"wgArticlePath": "/index.php/$1",
+		"wgLang": "en"
+	},
+	"meta": {
+		"version": "2",
+		"is-incomplete": false,
+		"debug": false
+	}
+}
