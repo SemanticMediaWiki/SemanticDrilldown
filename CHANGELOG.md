@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 ### Added
 
 - Add the parameter `sort=modified` to `#drilldowninfo`, which lists the pages of a category with the most recently changed page first (by the timestamp of the latest revision, pages changed at the same second newest first) instead of alphabetically. The default is unchanged, and any other value keeps the alphabetical order. The order applies to paged and unpaged result formats; the default result format `category` groups the pages by the first letter of their sort key, so use a list or table format, e.g. `display parameters=format=ol`, to see the order. The category page has to be saved again after adding the parameter. ([#158](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/158))
+- Add the parameter `results per page` to `#drilldowninfo`, which sets the number of results shown on one page of `Special:BrowseData` for that category, instead of the global `$sdgNumResultsPerPage`. The value has to be a positive integer; anything else is ignored and the global setting applies. A `limit` in the URL still takes precedence, and MediaWiki caps the limit at 5000. The category page has to be saved again after adding the parameter.
 
 ### Fixed
 

@@ -15,6 +15,11 @@
 			"namespace": "NS_CATEGORY",
 			"page": "InfoBoxSortedCategory",
 			"contents": "{{#drilldowninfo: filters=Status (property=InfoBoxStatus)|sort=modified}}"
+		},
+		{
+			"namespace": "NS_CATEGORY",
+			"page": "InfoBoxResultsPerPageCategory",
+			"contents": "{{#drilldowninfo: filters=Status (property=InfoBoxStatus)|results per page=25}}"
 		}
 	],
 	"tests": [
@@ -52,6 +57,27 @@
 			"assert-output": {
 				"not-contain": [
 					"<td colspan=\"2\">Sort</td>"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "the results per page parameter is shown",
+			"subject": "Category:InfoBoxResultsPerPageCategory",
+			"assert-output": {
+				"to-contain": [
+					"<td colspan=\"2\">Results per page</td>",
+					"<td colspan=\"2\">25</td>"
+				]
+			}
+		},
+		{
+			"type": "parser",
+			"about": "no results per page row if no such parameter is given",
+			"subject": "Category:InfoBoxCategory",
+			"assert-output": {
+				"not-contain": [
+					"<td colspan=\"2\">Results per page</td>"
 				]
 			}
 		}

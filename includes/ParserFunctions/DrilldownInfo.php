@@ -23,6 +23,7 @@ use SD\Parameters\DisplayParametersList;
 use SD\Parameters\Filters;
 use SD\Parameters\Footer;
 use SD\Parameters\Header;
+use SD\Parameters\ResultsPerPage;
 use SD\Parameters\Sort;
 use SD\Parameters\Title as SDTitle;
 
@@ -34,6 +35,7 @@ class DrilldownInfo {
 	private Header $header;
 	private Footer $footer;
 	private Sort $sort;
+	private ResultsPerPage $resultsPerPage;
 	private DisplayParametersList $displayParametersList;
 
 	public function __construct( $parser ) {
@@ -46,6 +48,7 @@ class DrilldownInfo {
 		$this->header = new Header;
 		$this->footer = new Footer;
 		$this->sort = new Sort;
+		$this->resultsPerPage = new ResultsPerPage;
 		$this->displayParametersList = new DisplayParametersList;
 
 		if ( $this->parser->getTitle()->getNamespace() != NS_CATEGORY ) {
@@ -77,6 +80,8 @@ class DrilldownInfo {
 				$this->footer = new Footer( $value );
 			} elseif ( $param_name === 'sort' ) {
 				$this->sort = new Sort( $value );
+			} elseif ( $param_name === 'results per page' ) {
+				$this->resultsPerPage = new ResultsPerPage( $value );
 			} elseif ( $param_name == 'filters' ) {
 				$this->filters = new Filters( $value );
 			} elseif ( $param_name == 'display parameters' ) {
@@ -91,6 +96,7 @@ class DrilldownInfo {
 		$this->header->setPageProperty( $parserOutput );
 		$this->footer->setPageProperty( $parserOutput );
 		$this->sort->setPageProperty( $parserOutput );
+		$this->resultsPerPage->setPageProperty( $parserOutput );
 		$this->filters->setPageProperty( $parserOutput );
 		$this->displayParametersList->setPageProperty( $parserOutput );
 	}
@@ -143,6 +149,10 @@ class DrilldownInfo {
 		if ( $this->sort->value !== null ) {
 			$text .= "<tr class=\"drilldownInfoHeader\"><td colspan=\"2\">Sort</td></tr>\n";
 			$text .= "<tr><td colspan=\"2\">$this->sort</td></tr>\n";
+		}
+		if ( $this->resultsPerPage->value !== null ) {
+			$text .= "<tr class=\"drilldownInfoHeader\"><td colspan=\"2\">Results per page</td></tr>\n";
+			$text .= "<tr><td colspan=\"2\">$this->resultsPerPage</td></tr>\n";
 		}
 		$text .= "<tr class=\"drilldownInfoHeader\"><td colspan=\"2\">Display parameters</td></tr>\n";
 		foreach ( $this->displayParametersList->strings() as $displayParameters ) {
