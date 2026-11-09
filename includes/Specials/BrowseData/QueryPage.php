@@ -187,24 +187,28 @@ class QueryPage extends \QueryPage {
 					]
 				],
 			],
-			'conds' => []
+			'conds' => [],
+			// A page with several values matching a filter, or one that is a member of both a
+			// category and a subcategory, matches in several rows; list it only once.
+			'options' => [ 'DISTINCT' ],
 		];
 
 		if ( $useLinktarget ) {
+			// The category condition has to be part of the categorylinks join itself. If it were
+			// only part of a following join on linktarget, every category link of a page would
+			// produce a row, i.e. a page in n categories would be listed n times.
+			// Hence, join only the links to the browsed category.
 			$linktargetTable = $dbr->tableName( 'linktarget' );
-			$query[ 'tables' ][ 'lt' ] = $linktargetTable;
+			$categoryName = $dbr->addQuotes( str_replace( ' ', '_', $subcategory ?: $category ) );
+			$query[ 'tables' ][ 'cl' ] = new Subquery(
+				"SELECT cl_from, cl_sortkey FROM $categorylinksTable"
+				. " JOIN $linktargetTable ON cl_target_id = lt_id"
+				. " WHERE lt_namespace = $cat_ns AND lt_title = $categoryName"
+			);
 			$query[ 'join_conds' ][ 'cl' ] = [
 				'LEFT JOIN',
 				[
 					'cl.cl_from = pg.page_id',
-				]
-			];
-			$query[ 'join_conds' ][ 'lt' ] = [
-				'LEFT JOIN',
-				[
-					'cl.cl_target_id = lt.lt_id',
-					'lt.lt_namespace' => $cat_ns,
-					"lt.lt_title" => $actual_cat,
 				]
 			];
 		} else {

@@ -156,14 +156,18 @@ class SqlProvider {
 	ON ids.smw_id = insts.s_id
 	AND ids.smw_namespace != $cat_ns
 	LEFT JOIN $pageTable pg
-	ON pg.page_title = ids.smw_title AND pg.page_namespace = ids.smw_namespace
-	LEFT JOIN $categorylinksTable cl
-	ON cl.cl_from = pg.page_id ";
+	ON pg.page_title = ids.smw_title AND pg.page_namespace = ids.smw_namespace ";
 		if ( $linktargetTable !== null ) {
-			$sql .= "LEFT JOIN $linktargetTable lt
-	ON cl.cl_target_id = lt.lt_id AND lt.lt_namespace = $cat_ns AND lt.lt_title = '$actual_cat' ";
+			// The category condition has to be part of the categorylinks join itself. If it were
+			// only part of a following join on linktarget, every category link of a page would
+			// produce a row, i.e. a page in n categories would be listed n times.
+			$sql .= "LEFT JOIN ( $categorylinksTable cl
+	JOIN $linktargetTable lt
+	ON cl.cl_target_id = lt.lt_id AND lt.lt_namespace = $cat_ns AND lt.lt_title = '$actual_cat' )
+	ON cl.cl_from = pg.page_id ";
 		} else {
-			$sql .= "AND cl.cl_to = '$actual_cat' ";
+			$sql .= "LEFT JOIN $categorylinksTable cl
+	ON cl.cl_from = pg.page_id AND cl.cl_to = '$actual_cat' ";
 		}
 		foreach ( $applied_filters as $i => $af ) {
 			// if any of this filter's values is 'none',

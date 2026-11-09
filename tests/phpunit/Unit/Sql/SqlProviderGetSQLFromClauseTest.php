@@ -163,7 +163,7 @@ class SqlProviderGetSQLFromClauseTest extends TestCase {
 		$sql = $this->buildSQL( [], [], self::LINKTARGET );
 
 		$this->assertStringContainsString(
-			"LEFT JOIN " . self::LINKTARGET . " lt",
+			"JOIN " . self::LINKTARGET . " lt",
 			$sql,
 			'When a linktarget table is supplied (MW 1.44+ with migrated categorylinks), it must be joined'
 		);
@@ -180,5 +180,22 @@ class SqlProviderGetSQLFromClauseTest extends TestCase {
 			$sql,
 			'When using the linktarget table, the removed cl_to column must not appear in the SQL'
 		);
+	}
+
+	/**
+	 * A category condition that only restricts the linktarget join does not restrict the
+	 * categorylinks rows: a page in n categories would then yield n result rows (issue #157).
+	 */
+	public function testLinktargetConditionRestrictsTheCategorylinksJoin(): void {
+		$sql = $this->buildSQL( [], [], self::LINKTARGET );
+
+		$this->assertMatchesRegularExpression(
+			'/LEFT JOIN \( ' . self::CATLINKS . ' cl\s+JOIN ' . self::LINKTARGET . ' lt\s+'
+				. 'ON cl\.cl_target_id = lt\.lt_id AND lt\.lt_namespace = \d+ AND lt\.lt_title = \'TestCat\' \)\s+'
+				. 'ON cl\.cl_from = pg\.page_id/',
+			$sql,
+			'The linktarget condition must be part of the join of the categorylinks table'
+		);
+		$this->assertStringNotContainsString( 'LEFT JOIN ' . self::LINKTARGET, $sql );
 	}
 }
