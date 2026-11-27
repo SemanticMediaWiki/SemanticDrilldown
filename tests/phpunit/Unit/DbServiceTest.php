@@ -50,6 +50,44 @@ class DbServiceTest extends TestCase {
 		);
 	}
 
+	public function testCreateTempTableOnMySqlDeclaresIndexInTableDefinition(): void {
+		$this->dbw->method( 'getType' )->willReturn( 'mysql' );
+		$queries = [];
+		$this->dbw->method( 'query' )
+			->willReturnCallback( static function ( $sql ) use ( &$queries ) {
+				$queries[] = $sql;
+			} );
+
+		$this->service->createTempTable( 'TestCategory', '', [], [] );
+
+		foreach ( $queries as $sql ) {
+			$this->assertStringNotContainsString(
+				'CREATE INDEX',
+				$sql,
+				'CREATE INDEX commits the open transaction on MySQL, even on a temporary table'
+			);
+		}
+		$this->assertMatchesRegularExpression(
+			'/^CREATE TEMPORARY TABLE .*INDEX id_index \( id \)/s',
+			$queries[1],
+			'the index has to be part of CREATE TEMPORARY TABLE'
+		);
+	}
+
+	public function testCreateTempTableOnOtherBackendsKeepsSeparateCreateIndex(): void {
+		$this->dbw->method( 'getType' )->willReturn( 'sqlite' );
+		$queries = [];
+		$this->dbw->method( 'query' )
+			->willReturnCallback( static function ( $sql ) use ( &$queries ) {
+				$queries[] = $sql;
+			} );
+
+		$this->service->createTempTable( 'TestCategory', '', [], [] );
+
+		$this->assertStringNotContainsString( 'INDEX', $queries[1] );
+		$this->assertStringContainsString( 'CREATE INDEX id_index ON', $queries[2] );
+	}
+
 	public function testDropFilterValuesTempTableUsesDropTemporaryTable(): void {
 		$queries = [];
 		$this->dbw->method( 'query' )

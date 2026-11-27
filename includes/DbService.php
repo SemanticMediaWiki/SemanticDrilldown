@@ -56,11 +56,20 @@ class DbService {
 		$sql0 = "DROP TEMPORARY TABLE IF EXISTS $tableName;";
 		$temporaryTableManager->queryWithAutoCommit( $sql0, __METHOD__ );
 
-		$sql1 = "CREATE TEMPORARY TABLE $tableName ( id INT NOT NULL )";
+		// On MySQL 8 a separate CREATE INDEX commits the open transaction implicitly, even on a
+		// temporary table, which breaks the next SAVEPOINT of a job (error 1305; MariaDB is not
+		// affected). The index is therefore part of the table definition. Other backends do not
+		// accept an inline INDEX clause and have transactional DDL, so they keep the separate
+		// statement.
+		$inlineIndex = $this->primaryDb()->getType() === 'mysql';
+		$indexClause = $inlineIndex ? ', INDEX id_index ( id )' : '';
+		$sql1 = "CREATE TEMPORARY TABLE $tableName ( id INT NOT NULL$indexClause )";
 		$temporaryTableManager->queryWithAutoCommit( $sql1, __METHOD__ );
 
-		$sql2 = "CREATE INDEX id_index ON $tableName ( id )";
-		$temporaryTableManager->queryWithAutoCommit( $sql2, __METHOD__ );
+		if ( !$inlineIndex ) {
+			$sql2 = "CREATE INDEX id_index ON $tableName ( id )";
+			$temporaryTableManager->queryWithAutoCommit( $sql2, __METHOD__ );
+		}
 
 		$sql3 = "INSERT INTO $tableName SELECT ids.smw_id AS id\n";
 		$sql3 .= SqlProvider::getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters );
