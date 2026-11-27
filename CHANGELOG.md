@@ -25,6 +25,7 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 
 ### Changed
 
+- Document in `TemporaryTableManager` that it only wraps an implicitly started transaction, so that in a job only statements without an implicit commit may be passed to it ([#163](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/163))
 - Teach Phan about SMW's runtime-defined `SMW_NS_PROPERTY` and sibling namespace constants, resolving `PhanUndeclaredConstant` findings ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 - Drop the unreachable nullable return type from `PropertyTypeDbInfo::tableName()`/`valueField()` — both always match a switch case (or fall through to a still-string-returning default), so `?string` forced every caller to guard against a `null` that could never occur ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 - Switch `DbService`/`Services` from the deprecated `DBConnRef` API to `IDatabase`, matching the type MediaWiki core's `getConnection()` (the non-deprecated replacement for `getConnectionRef()`) actually returns; also fix `DbService::getNumResults()`'s docblock, which claimed an array return but always returned a scalar count ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
