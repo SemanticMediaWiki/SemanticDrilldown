@@ -6,40 +6,27 @@ This project adheres to [Semantic Versioning](https://semver.org/) and
 
 ## [Unreleased]
 
+## [5.1.0] - 2026-11-27
+
+Adds two options for category pages in `#drilldowninfo` and fixes several problems in `Special:BrowseData`, including support for MediaWiki 1.45 and background jobs.
+
 ### Added
 
-- Add the parameter `sort=modified` to `#drilldowninfo`, which lists the pages of a category with the most recently changed page first (by the timestamp of the latest revision, pages changed at the same second newest first) instead of alphabetically. The default is unchanged, and any other value keeps the alphabetical order. The order applies to paged and unpaged result formats; the default result format `category` groups the pages by the first letter of their sort key, so use a list or table format, e.g. `display parameters=format=ol`, to see the order. The category page has to be saved again after adding the parameter. ([#158](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/158))
-- Add the parameter `results per page` to `#drilldowninfo`, which sets the number of results shown on one page of `Special:BrowseData` for that category, instead of the global `$sdgNumResultsPerPage`. The value has to be a positive integer; anything else is ignored and the global setting applies. A `limit` in the URL still takes precedence, and MediaWiki caps the limit at 5000. The category page has to be saved again after adding the parameter.
-
-### Fixed
-
-- Fix jobs that re-parse a page transcluding `Special:BrowseData` (e.g. `smw.changePropagationUpdate`) failing with `Error 1305: SAVEPOINT wikimedia_rdbms_atomic1 does not exist` on MySQL 8 (MariaDB is not affected): `DbService::createTempTable()` issued a separate `CREATE INDEX` on the temporary table, which commits the open job transaction implicitly. The index is now declared in the `CREATE TEMPORARY TABLE` statement on MySQL and MariaDB; other database backends keep the separate statement. ([#163](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/163))
-- Fix `Special:BrowseData` listing a page once per category it belongs to on MediaWiki versions whose `categorylinks` table no longer has a `cl_to` column (1.45+): the browsed category was only a condition of the join on `linktarget`, so it did not restrict the `categorylinks` rows; it is now part of the `categorylinks` join itself, in both `SqlProvider::buildSQLFromClause()` and `QueryPage::getQueryInfo()`. The paged result list now also lists a page only once when several of its values match a filter, or when it is a member of both a category and one of its subcategories. ([#157](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/157))
-- Fix the `#drilldowninfo` info box showing the position (0, 1, 2, …) instead of the name of each filter, and none of its settings. ([#157](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/157))
-- Fix `Special:BrowseData` and the drilldown result query throwing `Unknown column 'cl.cl_to'` on MediaWiki 1.45+, where the `categorylinks` table no longer has a `cl_to` column; `SqlProvider::buildSQLFromClause()` and `QueryPage::getQueryInfo()` now join through the `linktarget` table when `LinksMigration` reports the migration has happened, matching the approach `DbService` already used, while still using `cl_to` directly on older MediaWiki versions. ([#143](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/143))
-- Fix `Filter::getTimePeriod()`'s "no matching dates" guard being dead code: it checked the string produced by `str_replace()`, which is never `null`, instead of the raw (possibly-`null`) database value. A property with zero matching dates would fall through to further processing on an empty string instead of returning early. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Fix `Special:BrowseData`'s `QueryPage::getQueryInfo()` reusing the last applied filter's `$includes_none` value for every filter in later loops instead of recomputing it per filter, which could apply the wrong JOIN type or WHERE clause when combining a "None"-inclusive filter with regular filters. It now reuses `SqlProvider::filterIncludesNone()`, the same helper `SqlProvider`'s own query builder already used correctly. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Fix `QueryPage::getQueryInfo()`'s "no category selected" branch returning a raw SQL string instead of the array shape MediaWiki core's `QueryPage` expects, and `QueryPage::linkParameters()` passing two stale arguments to `UrlService::getLinkParameters()`, which no longer takes any. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Fix `UrlService::getLinkParameters()`'s inner loop over a multi-value filter's values overwriting the outer per-filter index, which could mismatch a search-term query key against the wrong filter. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Fix `#drilldowninfo`'s info box always rendering an (empty) "Title" row even when no title had been configured for the category. ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Add the parameter `sort=modified` to `#drilldowninfo` to list the pages of a category with the most recently changed page first [`35b2e2b`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/35b2e2b) ([#158](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/158))
+- Add the parameter `results per page` to `#drilldowninfo` to set the number of results per page of `Special:BrowseData` for a category [`65ba30a`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/65ba30a)
 
 ### Changed
 
-- Document in `TemporaryTableManager` that it only wraps an implicitly started transaction, so that in a job only statements without an implicit commit may be passed to it ([#163](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/163))
-- Teach Phan about SMW's runtime-defined `SMW_NS_PROPERTY` and sibling namespace constants, resolving `PhanUndeclaredConstant` findings ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Drop the unreachable nullable return type from `PropertyTypeDbInfo::tableName()`/`valueField()` — both always match a switch case (or fall through to a still-string-returning default), so `?string` forced every caller to guard against a `null` that could never occur ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Switch `DbService`/`Services` from the deprecated `DBConnRef` API to `IDatabase`, matching the type MediaWiki core's `getConnection()` (the non-deprecated replacement for `getConnectionRef()`) actually returns; also fix `DbService::getNumResults()`'s docblock, which claimed an array return but always returned a scalar count ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Correct inaccurate docblock types on `AppliedFilter`/`AppliedFilterValue` (`lower_date`/`upper_date`, `search_terms`, `month`, and the previously-undeclared `time_period` property) to reflect the types the code has always actually used ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Fix undeclared-variable guards and type findings in `GetApplicableFilters` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Replace `empty()` checks on always-set values with direct truthiness/null checks in `SemanticResultPrinter` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Add proper `float`/`int` types to `NumberUtils`'s bucket-separator math instead of relying on implicit coercion ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Fix docblock/signature mismatches on `PossibleFilterValues`'s iterator methods ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Replace `empty()` with direct checks on always-set values across `includes/Parameters/*` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Declare `$msg` before populating it in `ProcessTemplate`, instead of relying on auto-vivification ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Simplify an `isset()` ternary to null coalescing in `SpecialBrowseData` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
-- Remove a no-op `switch` with only a default case in `Utils::addMagicWordLanguage()` ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Document that only statements without an implicit commit may be run for temporary tables inside a job [`a72f090`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/a72f090) ([#163](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/163))
 
-Resolves the Phan static analysis findings from [#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150); `includes/PageSchemas.php` was left untouched, as it is slated for removal ([#151](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/151)).
+### Fixed
+
+- Fix background jobs (e.g. `smw.changePropagationUpdate`) failing with `SAVEPOINT ... does not exist` for pages that include `Special:BrowseData` on MySQL 8 [`d6abecb`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/d6abecb) ([#163](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/163))
+- Fix `Special:BrowseData` listing a page several times when it belongs to several categories or matches several filter values [`3c78d30`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/3c78d30) ([#157](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/157))
+- Fix the `#drilldowninfo` info box showing numbers instead of filter names and none of their settings, and an empty "Title" row [`5165909`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/5165909) ([#157](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/157))
+- Fix `Special:BrowseData` failing with `Unknown column 'cl.cl_to'` on MediaWiki 1.45 and later [`aad00df`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/aad00df) ([#143](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/143))
+- Fix wrong results when combining a filter that includes "None" with other filters, and a wrong search term being matched to a multi-value filter [`5dd5d3e`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/5dd5d3e) ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
+- Fix `Special:BrowseData` without a selected category and several smaller type and null-check problems found by static analysis [`9af54d3`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/9af54d3) ([#150](https://github.com/SemanticMediaWiki/SemanticDrilldown/issues/150))
 
 ## [5.0.2] - 2026-06-11
 
@@ -82,7 +69,8 @@ Initial stable release. Establishes release management and changelog baseline.
 - Update docker-compose-ci submodule [`49c10d9`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/49c10d9)
 - Migrate to DOCSMP attributes file, add CONTRIBUTING guide [`0e13037`](https://github.com/SemanticMediaWiki/SemanticDrilldown/commit/0e13037)
 
-[Unreleased]: https://github.com/SemanticMediaWiki/SemanticDrilldown/compare/5.0.2...HEAD
+[Unreleased]: https://github.com/SemanticMediaWiki/SemanticDrilldown/compare/5.1.0...HEAD
+[5.1.0]: https://github.com/SemanticMediaWiki/SemanticDrilldown/compare/5.0.2...5.1.0
 [5.0.2]: https://github.com/SemanticMediaWiki/SemanticDrilldown/compare/5.0.1...5.0.2
 [5.0.1]: https://github.com/SemanticMediaWiki/SemanticDrilldown/compare/5.0.0...5.0.1
 [5.0.0]: https://github.com/SemanticMediaWiki/SemanticDrilldown/releases/tag/5.0.0
